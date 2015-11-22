@@ -11,7 +11,7 @@ Typopo:
 * replaces hyphen or en dash with em dash where needed
 * replaces (r) and (c) with ® and ©
 
-Take a look at [Roadmap](#Roadmap) to see what's planned next or give me a [feedback](#Feedback) on what could be improved.
+Take a look at [Roadmap](#roadmap) to see what's planned next or give me a [feedback](#feedback) on what could be improved.
 
 ## Usage
 I can imagine that Typopo could be utilized in following scenarios:
