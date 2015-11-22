@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        typopo — demo
+    </title>
+
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="http://tota.sk/less/bootstrap.css">
+
+</head>
+
+<body>
+
+    <script type="text/javascript" src="../build/typopo.min.js"></script>
+
+    <!-- tool — interface -->
+
+    <div class="tota-content tota-translit">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+
+                <h1 class="translit__title">typopo — demo</h1>
+
+                <div class="translit__action-area">
+                    <div class="translit__action-label">
+                        Correct typos
+                    </div>
+                    <button id="clean_typos_en" class="translit__action btn">
+                        English
+                    </button>
+                    <button id="clean_typos_rue" class="translit__action btn">
+                        Rusyn
+                    </button>
+                    <button id="clean_typos_sk" class="translit__action btn">
+                        Slovak
+                    </button>
+                    <button id="clean_typos_cz" class="translit__action btn">
+                        Czech
+                    </button>
+                </div>
+
+
+                <textarea id="textarea" placeholder="Enter some text" class="translit__textarea" autofocus>
+       The Caterpillar    and Alice looked at each other for    some time in silence  : at last the Caterpillar took the hookah out of its mouth, and addressed her in a languid, sleepy voice.
+"Who are you? ” said the Caterpillar .
+This was not an encouraging opening for a conversation. Alice replied, rather shyly, ”I - I hardly know, sir, just at present - at least I know who I was when I got up this morning, but I think I must have been changed several times since then."
+
+,,What do you mean by that  ?” said the Caterpillar sternly. ”Explain yourself!"
+” I can't explain myself , I'm afraid, sir" said Alice, “because I'm not myself, you see“.
+,,I don't see ,“ said the Caterpillar.
+				</textarea>
+
+
+                </div>
+            </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    <script>
+        $( "#clean_typos_en" ).click(function() {
+            $('#textarea').val(clean_typos($('#textarea').val(), 'en'));
+        });
+
+        $( "#clean_typos_rue" ).click(function() {
+			$('#textarea').val(clean_typos($('#textarea').val(), 'rue'));
+        });
+
+        $( "#clean_typos_sk" ).click(function() {
+			$('#textarea').val(clean_typos($('#textarea').val(), 'sk'));
+        });
+
+        $( "#clean_typos_cz" ).click(function() {
+			$('#textarea').val(clean_typos($('#textarea').val(), 'cs'));
+        });
+
+    </script>
+
+
+</body>
+
+</html>

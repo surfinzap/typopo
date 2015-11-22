@@ -1,15 +1,23 @@
 # Changelog for Typopo
 
+## 2015-11-22
+ * 0.07
+ * Typopo now corrects common typos in English language as well
+ * temporary removal of support for the correction of single quotes (in exchange for English support)
+ * corrects the apostrophes
+ * removes extra spaces between a word and ;
+ * minified version added  
+
 ## 2015-11-04
  * 0.06
- * support fo correction of two consequenting single quotes ''
+ * support for correction of two consequenting single quotes ''
  * swap quotes for punctuation .,?!
 
 ## 2015-11-03
  * 0.05
- * remove too many new lines between paragraphs
+ * removes too many new lines between paragraphs
  * removes spaces before additional punctuation [,:]
- * updates to: replaces hyphen or en dash with em dash
+ * updates for 
  * additional use cases to corrects „Slovak, Rusyn, Czech double quotation marks“
 
 ## 2015-11-02
