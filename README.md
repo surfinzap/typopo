@@ -15,7 +15,7 @@ Take a look at [Roadmap](#roadmap) to see what's planned next or give me a [feed
 
 ## Usage
 I can imagine that Typopo could be utilized in following scenarios:
-* you can copy-paste text into my demo, clean typos according your language and work with the result elsewhere
+* you can copy-paste text into [my demo](http://surfinzap.github.io/typopo/), clean typos according your language and work with the result elsewhere
 * you can call clean-up script everytime one of your editors saves text in CMS
 * you can hook up a special action in your favorite editor/CMS to clean typos anytime thatʼs needed; youʼll clean the most of typos before getting to manual proofreading
 * you can call once your content is loaded on a website and clean typos afterwards, if you are fine with just catching top typos
