@@ -82,7 +82,7 @@
         "INCHEBA '89" : "INCHEBA ʼ89",
         "69'ers" : "69ʼers",
 
-
+        // non-breaking space between single letter prepositions
 
         // // start sentence with a Capital letter
         // "One sentence ended. and another started." : "One sentence ended. And another started.",
@@ -90,7 +90,7 @@
         // Correct accidental upper case
         // "HEy JennIFer!" : "HEy JennIFer!",
 
-        // correct dash for hyphen, don§t forget counting on ščěčš
+        // correct dash for hyphen, don't forget counting on ščěčš
         // "two—year–old child" : "two-year-old child"
     }
 
