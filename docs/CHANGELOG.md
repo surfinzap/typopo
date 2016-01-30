@@ -1,5 +1,11 @@
 # Changelog for Typopo
 
+## 2016-01-30
+ * 0.08
+ * remove space arround slashes that are used in dramatic texts
+ * start sentence with a Capital letter
+ * correct dash for hyphen when it is used for joining words
+
 ## 2015-11-22
  * 0.07
  * Typopo now corrects common typos in English language as well
@@ -17,7 +23,7 @@
  * 0.05
  * removes too many new lines between paragraphs
  * removes spaces before additional punctuation [,:]
- * updates for 
+ * updates for
  * additional use cases to corrects „Slovak, Rusyn, Czech double quotation marks“
 
 ## 2015-11-02

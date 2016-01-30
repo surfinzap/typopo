@@ -82,16 +82,27 @@
         "INCHEBA '89" : "INCHEBA ʼ89",
         "69'ers" : "69ʼers",
 
+        // remove space arround slashes that are used in dramatic texts
+        "Kebŷ ňa moja mamyčka z nebočka viďily. / Posmotryť dohorŷ / Može bŷ i plakaly. Isto bŷ ňa požalovaly. / Pochterať si slyzu /" : "Kebŷ ňa moja mamyčka z nebočka viďily. /Posmotryť dohorŷ/ Može bŷ i plakaly. Isto bŷ ňa požalovaly. /Pochterať si slyzu/",
+
+
         // non-breaking space between single letter prepositions
 
-        // // start sentence with a Capital letter
-        // "One sentence ended. and another started." : "One sentence ended. And another started.",
+        // start sentence with a Capital letter
+        "One sentence ended. and another started." : "One sentence ended. And another started.",
+        "What? nothing." : "What? Nothing.",
+        "Hey! what?" : "Hey! What?",
+        "Jedna skončila. že, čo?" : "Jedna skončila. Že, čo?",
+        "Jedna skončila. ůe, čo?" : "Jedna skončila. Ůe, čo?",
+        "Jedna skončila. яe, čo?" : "Jedna skončila. Яe, čo?",
 
         // Correct accidental upper case
         // "HEy JennIFer!" : "HEy JennIFer!",
 
-        // correct dash for hyphen, don't forget counting on ščěčš
-        // "two—year–old child" : "two-year-old child"
+        //correct dash for hyphen
+        "two—year—old child" : "two-year-old child",
+        "two–year–old child" : "two-year-old child",
+        "zeleno–žltá" : "zeleno-žltá",
     }
 
     typos__en = {

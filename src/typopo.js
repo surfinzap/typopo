@@ -1,10 +1,10 @@
 ﻿/*!
- * Typopo 0.07
+ * Typopo 0.08
  *
- * Copyright 2015 Braňo Šandala
+ * Copyright 2015-16 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2015-11-22
+ * Date: 2016-01-30
  */
 
 (function(){
@@ -14,6 +14,8 @@ var essential_set = {
     '\\(R\\)': '®',
     '\\(r\\)': '®',
 }
+
+var lowercase_chars_en_sk_cz_rue = "a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюя";
 
 function replace_symbols(string, replacement_set) {
     for (var rule in essential_set) {
@@ -71,12 +73,22 @@ function replace_hyphen_with_dash(string) {
     return string.replace(/( [-|–] )/g, ' — ')
 }
 
+function replace_dash_with_hyphen(string){
+    var pattern = "(["+ lowercase_chars_en_sk_cz_rue +"])([–—])(["+ lowercase_chars_en_sk_cz_rue +"])";
+    var re = new RegExp(pattern, "g");
+    return string.replace(re, '$1-$3');
+}
+
 function remove_space_after_punctuation(string) {
 	return string.replace(/([\(])([ ])/g, '$1');
 }
 
 function remove_space_before_punctuation(string) {
 	return string.replace(/([ ])([\,\.\!\?\:\;\)])/g, '$2');
+}
+
+function remove_spaces_around_slashes(string) {
+    return string.replace(/\/ ?(.*?) ?\//g, '/$1/');
 }
 
 function remove_space_after_quotes(string, language) {
@@ -113,6 +125,18 @@ function remove_spaces_at_paragraph_beginning(string) {
     return lines.join('\n');
 }
 
+function start_sentence_w_capital_letter(string) {
+    // find all lowercase letters after sentence punctuation, then replace them
+    // with uppercase variant by calling another replace function
+    var pattern = "([\\.\\?\\!] )(["+ lowercase_chars_en_sk_cz_rue +"])";
+    var re = new RegExp(pattern, "g");
+    return string.replace(re, function(string,x,y){
+        return (string.replace(y, y.toUpperCase()));
+    });
+}
+
+
+
 // supported languages: en, sk, cs, rue
 function clean_typos(string, language) {
 	language = (typeof language === 'undefined') ? 'en' : language;
@@ -124,13 +148,16 @@ function clean_typos(string, language) {
     string = swap_quotes_and_punctuation(string);
     string = correct_apostrophes(string);
     // string = correct_single_quotes(string, language);
+    string = remove_spaces_around_slashes(string);
 	string = remove_space_after_quotes(string, language);
 	string = remove_space_before_quotes(string, language);
     string = correct_multiple_sign(string);
     string = replace_hyphen_with_dash(string);
+    string = replace_dash_with_hyphen(string);
 	string = remove_space_before_punctuation(string);
     string = remove_space_after_punctuation(string);
     string = remove_spaces_at_paragraph_beginning(string);
+    string = start_sentence_w_capital_letter(string);
     return string;
 }
 
