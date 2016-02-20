@@ -1,0 +1,30 @@
+{
+  "name": "typopo",
+  "version": "0.0.9",
+  "description": "Automatic correction of frequent typographic errors in English, Slovak, Czech and Rusyn language",
+  "license": "MIT",
+  "author": {
+    "name": "Braňo Šandala",
+    "email": "surfin.zap@gmail.com"
+  },
+  "scripts": {
+      "test": "echo \"Tests are run manually via calling test/test_typopo.js functions in browser.\" && exit 1"
+  },
+  "main": "build/typopo.min.js",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/surfinzap/typopo"
+  },
+  "keywords": [
+      "autocorrect",
+      "typos",
+      "typo",
+      "English",
+      "Slovak",
+      "Czech",
+      "Rusyn"
+],
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}
