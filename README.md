@@ -9,7 +9,11 @@ Typopo:
 * replaces multiple dots with ellipsis (…)
 * replaces x with multiplication sign (×) when appropriate
 * replaces hyphen or en dash with em dash where needed
-* replaces (r) and (c) with ® and respectively ©
+* replaces:
+	* (r) or (R) with ®
+	* (c) or (C) with ©
+	* (tm) or (TM) with ™
+	* +- or -+ with ±
 
 Take a look at [Roadmap](#roadmap) to see what's planned next or give me [feedback](#feedback) on what could be improved.
 

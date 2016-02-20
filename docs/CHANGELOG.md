@@ -1,5 +1,10 @@
 # Changelog for Typopo
 
+## 2016-02-20
+ * 0.0.9
+ * replace (tm) and (TM) with ™
+ * replace +- and -+ with ±
+
 ## 2016-01-30
  * 0.08
  * remove space arround slashes that are used in dramatic texts

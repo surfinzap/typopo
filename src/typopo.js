@@ -1,10 +1,10 @@
 ﻿/*!
- * Typopo 0.08
+ * Typopo 0.0.9
  *
  * Copyright 2015-16 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2016-01-30
+ * Date: 2016-02-20
  */
 
 (function(){
@@ -13,6 +13,10 @@ var essential_set = {
     '\\(c\\)': '©',
     '\\(R\\)': '®',
     '\\(r\\)': '®',
+    '\\(TM\\)': '™',
+    '\\(tm\\)': '™',
+    '\\+\\-': '±',
+    '\\-\\+': '±',
 }
 
 var lowercase_chars_en_sk_cz_rue = "a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюя";

@@ -11,6 +11,11 @@
         "(c) (c)" : "© ©",
         "(R) (R)" : "® ®",
         "(r) (r)" : "® ®",
+        "(tm) (tm)" : "™ ™",
+        "(TM) (TM)" : "™ ™",
+        "+- +-" :"± ±",
+        "-+ -+" :"± ±",
+
 
         // replace 2 and more periods to ellipsis …
         "sentence .. another sentence" : "sentence … another sentence",
