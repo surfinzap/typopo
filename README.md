@@ -33,11 +33,18 @@ Where I donʼt see Typopo being used (yet or never? — you tell me)
 	* itʼs not a good authoring experience when you get always corrected as you type (at least I wasnʼt satisfied with such results)
 	* some chunks of the script need to be aware of the context in order to find some of the typos
 
-### Technical details
+### Install & use
+NPM package install
+
+```
+npm install typopo
+```
+
 call a function:
 ```javascript
 clean_typos(string, language)
 ```
+
 supported languages:
 * "en" (English, default)
 * "rue" (Rusyn)
