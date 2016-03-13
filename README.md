@@ -34,11 +34,13 @@ Where I donʼt see Typopo being used (yet or never? — you tell me)
 	* some chunks of the script need to be aware of the context in order to find some of the typos
 
 ### Install & use
-NPM package install
+Install NPM package:
 
 ```
 npm install typopo
 ```
+
+Optionally, you can download typopo.min.js and load it directly to your project.
 
 call a function:
 ```javascript
