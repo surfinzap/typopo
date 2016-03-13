@@ -1,10 +1,10 @@
 ﻿/*!
- * Typopo 0.0.9
+ * Typopo 0.0.10
  *
  * Copyright 2015-16 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2016-02-20
+ * Date: 2016-03-13
  */
 
 (function(){
@@ -141,11 +141,10 @@ function start_sentence_w_capital_letter(string) {
 }
 
 function correct_accidental_uppercase(string) {
-    var pattern = "([a-z]+)(\\B[a-zA-Z]+\\B)([A-Z]+)|([A-Z]+)(\\B[a-zA-Z]+\\B)([a-z]+)|([a-z]+)(\\B[a-zA-Z]+\\B)([a-z]+)";
+    // var pattern = "[a-z]+[a-zA-Z]+[A-Z]+|[A-Z]+[a-zA-Z]+[a-z]+|[a-z]+[a-zA-Z]+[a-z]+";
+    var pattern = "["+ lowercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+["+ uppercase_chars_en_sk_cz_rue +"]+|["+ uppercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue +"]+|["+ lowercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue +"]+";
     var re = new RegExp(pattern, "g");
     return string.replace(re, function(string){
-        // console.log(string);
-        // console.log("----");
         return (string.substring(0,1) + string.substring(1).toLowerCase());
     });
 }
@@ -178,5 +177,9 @@ function clean_typos(string, language) {
     return string;
 }
 
-    window.clean_typos = clean_typos;
+    if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+        module.exports = clean_typos;
+    else
+        window.clean_typos = clean_typos;
+
 })();
