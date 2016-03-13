@@ -1,5 +1,9 @@
 # Changelog for Typopo
 
+## 2016-03-14
+ * 0.0.10
+ * remove accidental uPerRCase
+
 ## 2016-02-20
  * 0.0.9
  * replace (tm) and (TM) with ™
