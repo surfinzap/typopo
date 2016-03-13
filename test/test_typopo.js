@@ -101,8 +101,14 @@
         "Jedna skončila. ůe, čo?" : "Jedna skončila. Ůe, čo?",
         "Jedna skončila. яe, čo?" : "Jedna skončila. Яe, čo?",
 
-        // Correct accidental upper case
-        // "HEy JennIFer!" : "HEy JennIFer!",
+        // correct accidental upper case
+        "HEy, JennIFer!" : "Hey, Jennifer!",
+        "HEy, JeNnIFer!" : "Hey, Jennifer!",
+        "HEy, JENNIFEr!" : "Hey, Jennifer!",
+        "How about ABC?" : "How about ABC?",
+        "cAPSLOCK" : "capslock",
+        "tesT" : "test",
+        "Central Europe and Cyrillic tests — aĎiÉuБuГ" : "Central Europe and Cyrillic tests — aďiéuбuг",
 
         //correct dash for hyphen
         "two—year—old child" : "two-year-old child",

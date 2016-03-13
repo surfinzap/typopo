@@ -1,5 +1,10 @@
 # Changelog for Typopo
 
+## 2016-03-13
+ * 0.0.10
+ * correct accidental uPerRCase
+ * make typopo as an NPM package (thanks to Matus Duchon)
+
 ## 2016-02-20
  * 0.0.9
  * replace (tm) and (TM) with ™

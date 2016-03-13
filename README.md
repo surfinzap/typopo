@@ -4,8 +4,10 @@ Typopo is a JavaScript library that saves time by autocorrecting frequent typogr
 
 Typopo:
 * removes extra white spaces at the beginnings of sentences, between words and paragraphs, before or after punctuations
-* corrects double quotes
-* corrects apostrophes
+* corrects
+	* double quotes
+	* apostrophes
+	* accidental uPerRCase
 * replaces multiple dots with ellipsis (…)
 * replaces x with multiplication sign (×) when appropriate
 * replaces hyphen or en dash with em dash where needed

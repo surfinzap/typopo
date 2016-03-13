@@ -1,10 +1,10 @@
 ﻿/*!
- * Typopo 0.0.9
+ * Typopo 0.0.10
  *
  * Copyright 2015-16 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2016-02-20
+ * Date: 2016-03-13
  */
 
 (function(){
@@ -20,6 +20,7 @@ var essential_set = {
 }
 
 var lowercase_chars_en_sk_cz_rue = "a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюя";
+var uppercase_chars_en_sk_cz_rue = "A-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯ";
 
 function replace_symbols(string, replacement_set) {
     for (var rule in essential_set) {
@@ -134,10 +135,20 @@ function start_sentence_w_capital_letter(string) {
     // with uppercase variant by calling another replace function
     var pattern = "([\\.\\?\\!] )(["+ lowercase_chars_en_sk_cz_rue +"])";
     var re = new RegExp(pattern, "g");
-    return string.replace(re, function(string,x,y){
-        return (string.replace(y, y.toUpperCase()));
+    return string.replace(re, function(string,regex_group_one,regex_group_two){
+        return (string.replace(regex_group_two, regex_group_two.toUpperCase()));
     });
 }
+
+function correct_accidental_uppercase(string) {
+    // var pattern = "[a-z]+[a-zA-Z]+[A-Z]+|[A-Z]+[a-zA-Z]+[a-z]+|[a-z]+[a-zA-Z]+[a-z]+";
+    var pattern = "["+ lowercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+["+ uppercase_chars_en_sk_cz_rue +"]+|["+ uppercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue +"]+|["+ lowercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue +"]+";
+    var re = new RegExp(pattern, "g");
+    return string.replace(re, function(string){
+        return (string.substring(0,1) + string.substring(1).toLowerCase());
+    });
+}
+
 
 
 
@@ -162,8 +173,13 @@ function clean_typos(string, language) {
     string = remove_space_after_punctuation(string);
     string = remove_spaces_at_paragraph_beginning(string);
     string = start_sentence_w_capital_letter(string);
+    string = correct_accidental_uppercase(string);
     return string;
 }
 
-    window.clean_typos = clean_typos;
+    if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+        module.exports = clean_typos;
+    else
+        window.clean_typos = clean_typos;
+
 })();
