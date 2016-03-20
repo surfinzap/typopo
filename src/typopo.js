@@ -1,10 +1,10 @@
 ﻿/*!
- * Typopo 0.0.10
+ * Typopo 0.0.11
  *
  * Copyright 2015-16 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2016-03-13
+ * Date: 2016-03-20
  */
 
 (function(){
@@ -136,7 +136,7 @@ function start_sentence_w_capital_letter(string) {
     var pattern = "([\\.\\?\\!] )(["+ lowercase_chars_en_sk_cz_rue +"])";
     var re = new RegExp(pattern, "g");
     return string.replace(re, function(string,regex_group_one,regex_group_two){
-        return (string.replace(regex_group_two, regex_group_two.toUpperCase()));
+        return string.replace(regex_group_two, regex_group_two.toUpperCase());
     });
 }
 
@@ -149,8 +149,12 @@ function correct_accidental_uppercase(string) {
     });
 }
 
-
-
+function replace_with_nbsp(string) {
+    var pattern = "([  ])([aviuoszkAVIUOSZK]|&)( )";
+    var re = new RegExp(pattern, "g");
+    string = string.replace(re, '$1$2 '); //call it twice, for odd and even occurences
+    return string.replace(re, '$1$2 ');
+}
 
 // supported languages: en, sk, cs, rue
 function clean_typos(string, language) {
@@ -174,6 +178,7 @@ function clean_typos(string, language) {
     string = remove_spaces_at_paragraph_beginning(string);
     string = start_sentence_w_capital_letter(string);
     string = correct_accidental_uppercase(string);
+    string = replace_with_nbsp(string);
     return string;
 }
 

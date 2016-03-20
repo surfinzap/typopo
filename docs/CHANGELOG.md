@@ -1,5 +1,9 @@
 # Changelog for Typopo
 
+## 2016-03-20
+ * 0.0.11
+ * replace space with non-breaking space after one-word prepositions and "&"
+
 ## 2016-03-13
  * 0.0.10
  * correct accidental uPerRCase

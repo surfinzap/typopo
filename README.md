@@ -11,6 +11,7 @@ Typopo:
 * replaces multiple dots with ellipsis (…)
 * replaces x with multiplication sign (×) when appropriate
 * replaces hyphen or en dash with em dash where needed
+* replaces space with non-breaking space after one-word prepositions and "&"
 * replaces:
 	* (r) or (R) with ®
 	* (c) or (C) with ©

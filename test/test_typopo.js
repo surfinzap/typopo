@@ -88,10 +88,22 @@
         "69'ers" : "69ʼers",
 
         // remove space arround slashes that are used in dramatic texts
-        "Kebŷ ňa moja mamyčka z nebočka viďily. / Posmotryť dohorŷ / Može bŷ i plakaly. Isto bŷ ňa požalovaly. / Pochterať si slyzu /" : "Kebŷ ňa moja mamyčka z nebočka viďily. /Posmotryť dohorŷ/ Može bŷ i plakaly. Isto bŷ ňa požalovaly. /Pochterať si slyzu/",
+        "Kebŷ ňa moja mamyčka z nebočka viďily. / Posmotryť dohorŷ / Može bŷ i plakaly. Isto bŷ ňa požalovaly. / Pochterať si slyzu /" : "Kebŷ ňa moja mamyčka z nebočka viďily. /Posmotryť dohorŷ/ Može bŷ i plakaly. Isto bŷ ňa požalovaly. /Pochterať si slyzu/",
 
 
-        // non-breaking space between single letter prepositions
+        // replace space with non-breaking space after single letter prepositions
+        // it goes after after characters like "a", "v", "i", "u", "o", "s", "z", "k", "A", "V", "I", "U", "O", "S", "Z", "K", "&".
+        // positive examples
+        "Koniec. V potoku" : "Koniec. V potoku",
+        "Skace o tyči" : "Skace o tyči",
+        "v obchode a v hospode" : "v obchode a v hospode",
+        "Bed & Breakfast" : "Bed & Breakfast",
+        "v a v a v" : "v a v a v",
+        // false positives (ie. script shouldn't catch these)
+        "vo dvore" : "vo dvore",
+        "Ku komore" : "Ku komore",
+        "ňa moja" : "ňa moja", // regex \b does not catch words that start with non-latin character
+        "Ťa tvoja" : "Ťa tvoja", // regex \b again
 
         // start sentence with a Capital letter
         "One sentence ended. and another started." : "One sentence ended. And another started.",
