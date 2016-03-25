@@ -83,9 +83,9 @@
 
         // correct apostrophes
         // "Fish 'n' Chips" : "Fish ’n’ Chips",
-        "Hers'" : "Hersʼ",
-        "INCHEBA '89" : "INCHEBA ʼ89",
-        "69'ers" : "69ʼers",
+        "Hers'" : "Hers’",
+        "INCHEBA '89" : "INCHEBA ’89",
+        "69'ers" : "69’ers",
 
         // remove space arround slashes that are used in dramatic texts
         "Kebŷ ňa moja mamyčka z nebočka viďily. / Posmotryť dohorŷ / Može bŷ i plakaly. Isto bŷ ňa požalovaly. / Pochterať si slyzu /" : "Kebŷ ňa moja mamyčka z nebočka viďily. /Posmotryť dohorŷ/ Može bŷ i plakaly. Isto bŷ ňa požalovaly. /Pochterať si slyzu/",
@@ -236,6 +236,15 @@
     test__clean_typos_sk();
     test__clean_typos_cs();
     test__clean_typos_en();
+
+
+
+    function test__identify_common_apostrophes(batch) {
+        for (var key in batch){
+            assert(identify_common_apostrophes(key), (batch[key]),"Typo error uncorrected:\nOriginal:\t" + key + "\nResult:\t\t" + identify_common_apostrophes(key) + "\nExpected:\t" + batch[key]);
+        }
+    }
+
 
 
 })();

@@ -50,7 +50,7 @@ function correct_double_quotes(string, language) {
 }
 
 function correct_apostrophes(string) {
-    return string.replace(/[‘|']/g, "ʼ");
+    return string.replace(/[‘|'|ʼ]/g, "’");
 }
 
 // function correct_single_quotes(string, language) {
@@ -96,6 +96,8 @@ function remove_spaces_around_slashes(string) {
     return string.replace(/\/ ?(.*?) ?\//g, '/$1/');
 }
 
+
+//this needs refactoring
 function remove_space_after_quotes(string, language) {
 	switch (language) {
 		case 'rue':
@@ -107,6 +109,7 @@ function remove_space_after_quotes(string, language) {
 	}
 }
 
+//this needs refactoring
 function remove_space_before_quotes(string, language) {
 	switch (language) {
 		case 'rue':
@@ -114,7 +117,7 @@ function remove_space_before_quotes(string, language) {
 		case 'cs':
 			return string.replace(/([ ])([“‘])/g, '$2');
     	case 'en':
-			return string.replace(/([ ])([”’])/g, '$2');
+			return string.replace(/([ ])([”])/g, '$2');
 	}
 }
 
@@ -156,6 +159,42 @@ function replace_with_nbsp(string) {
     return string.replace(re, '$1$2 ');
 }
 
+/*
+    This function identifies and marks common apostrophes that are being used in the language
+
+    People use various characters for apostrophe, we're going to identify them all — '‘’
+    By common use of apostrophe, we mean an apostrophe that cannot be mistaken with a right single quote, just because of nature of it's placement.
+
+    Examples of common use of apostrophe:
+    Don’t, I’m (or other in-word ommision)
+    Fish ’n’ Chips (or other example of shortening —and—)
+    O’Doole (or other example of name)
+    ’70s (or other year)
+    69’ers
+
+    Examples of apostrophe use that we are not covering with this identification algorithm (and they'll be identified with certain probability in some other function)
+    hers’  (when apostrophe is placed at the end of the word, it can be mistaken for single right quote)
+    ’bout  (when apostrophe is placed at the beginning of the word, it can be mistaken for single left quote)
+
+    We mark apostrophes by replacing them with text {typopo-apostrophe}
+*/
+
+function identify_common_apostrophes(string) {
+    // identify
+    // Fish ’n’ Chips and alike
+    string = string.replace(/(['‘’])([nN])(['‘’])/g, '{typopo-apostrophe}$2{typopo-apostrophe}');
+
+    // identify
+    // Don’t, I’m (or other in-word ommision)
+    // O’Doole (or other example of name)
+    // 69’ers
+    var pattern = "([a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюяA-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯ0-9])(['‘’])([a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюяA-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯ0-9])";
+    var re = new RegExp(pattern, "g");
+
+    return string;
+}
+
+
 // supported languages: en, sk, cs, rue
 function clean_typos(string, language) {
 	language = (typeof language === 'undefined') ? 'en' : language;
@@ -186,5 +225,6 @@ function clean_typos(string, language) {
         module.exports = clean_typos;
     else
         window.clean_typos = clean_typos;
+        window.identify_common_apostrophes = identify_common_apostrophes;
 
 })();
