@@ -9,14 +9,14 @@
 
 (function(){
 var essential_set = {
-    '\\(C\\)': '©',
-    '\\(c\\)': '©',
-    '\\(R\\)': '®',
-    '\\(r\\)': '®',
-    '\\(TM\\)': '™',
-    '\\(tm\\)': '™',
-    '\\+\\-': '±',
-    '\\-\\+': '±',
+    "\\(C\\)": "©",
+    "\\(c\\)": "©",
+    "\\(R\\)": "®",
+    "\\(r\\)": "®",
+    "\\(TM\\)": "™",
+    "\\(tm\\)": "™",
+    "\\+\\-": "±",
+    "\\-\\+": "±",
 }
 
 var lowercase_chars_en_sk_cz_rue = "a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюя";
@@ -24,28 +24,28 @@ var uppercase_chars_en_sk_cz_rue = "A-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜ�
 
 function replace_symbols(string, replacement_set) {
     for (var rule in essential_set) {
-        var re = new RegExp(rule, 'g');
+        var re = new RegExp(rule, "g");
         string = string.replace(re, essential_set[rule]);
     }
     return string;
 }
 
 function replace_periods_with_ellipsis(string) {
-    return string.replace(/\.{2,}/g, '…');
+    return string.replace(/\.{2,}/g, "…");
 }
 
 function remove_multiple_spaces(string) {
-    return string.replace(/ {2,}/g, ' ');
+    return string.replace(/ {2,}/g, " ");
 }
 
 function correct_double_quotes(string, language) {
 	switch (language) {
-		case 'rue':
-		case 'sk':
-		case 'cs':
-			return string.replace(/([„|“|”|\"]|,{2,}|‘{2,}|’{2,}|'{2,})(.*?)([„|“|”|\"]|,{2,}|‘{2,}|’{2,}|'{2,})/g, '„$2“');
-    	case 'en':
-    		return string.replace(/([„|“|”|\"]|,{2,}|‘{2,}|’{2,}|'{2,})(.*?)([„|“|”|\"]|,{2,}|‘{2,}|’{2,}|'{2,})/g, '“$2”');
+		case "rue":
+		case "sk":
+		case "cs":
+			return string.replace(/([„|“|”|\"]|,{2,}|‘{2,}|’{2,}|'{2,})(.*?)([„|“|”|\"]|,{2,}|‘{2,}|’{2,}|'{2,})/g, "„$2“");
+    	case "en":
+    		return string.replace(/([„|“|”|\"]|,{2,}|‘{2,}|’{2,}|'{2,})(.*?)([„|“|”|\"]|,{2,}|‘{2,}|’{2,}|'{2,})/g, "“$2”");
 	}
 }
 
@@ -65,59 +65,59 @@ function correct_apostrophes(string) {
 // }
 
 function swap_quotes_and_punctuation(string) {
-    return string.replace(/([“”])([\.,!?])/g, '$2$1');
+    return string.replace(/([“”])([\.,!?])/g, "$2$1");
     //once we'll support single quotes
     //return string.replace(/([“‘’”])([\.,!?])/g, '$2$1');
 }
 
 function correct_multiple_sign(string) {
-    return remove_multiple_spaces(string.replace(/([1-9]+[ ]{0,1}[a-wz]*)([ ]{0,1}[x|×][ ]{0,1})([1-9]+[ ]{0,1}[a-wz]*)/g, '$1 × $3'));
+    return remove_multiple_spaces(string.replace(/([1-9]+[ ]{0,1}[a-wz]*)([ ]{0,1}[x|×][ ]{0,1})([1-9]+[ ]{0,1}[a-wz]*)/g, "$1 × $3"));
 }
 
 function replace_hyphen_with_dash(string) {
-    return string.replace(/( [-|–] )/g, ' — ')
+    return string.replace(/( [-|–] )/g, " — ")
 }
 
 function replace_dash_with_hyphen(string){
     var pattern = "(["+ lowercase_chars_en_sk_cz_rue +"])([–—])(["+ lowercase_chars_en_sk_cz_rue +"])";
     var re = new RegExp(pattern, "g");
-    return string.replace(re, '$1-$3');
+    return string.replace(re, "$1-$3");
 }
 
 function remove_space_after_punctuation(string) {
-	return string.replace(/([\(])([ ])/g, '$1');
+	return string.replace(/([\(])([ ])/g, "$1");
 }
 
 function remove_space_before_punctuation(string) {
-	return string.replace(/([ ])([\,\.\!\?\:\;\)])/g, '$2');
+	return string.replace(/([ ])([\,\.\!\?\:\;\)])/g, "$2");
 }
 
 function remove_spaces_around_slashes(string) {
-    return string.replace(/\/ ?(.*?) ?\//g, '/$1/');
+    return string.replace(/\/ ?(.*?) ?\//g, "/$1/");
 }
 
 
 //this needs refactoring
 function remove_space_after_quotes(string, language) {
 	switch (language) {
-		case 'rue':
-		case 'sk':
-		case 'cs':
-			return string.replace(/([„‚])([ ])/g, '$1');
-    	case 'en':
-			return string.replace(/([“‘])([ ])/g, '$1');
+		case "rue":
+		case "sk":
+		case "cs":
+			return string.replace(/([„‚])([ ])/g, "$1");
+    	case "en":
+			return string.replace(/([“‘])([ ])/g, "$1");
 	}
 }
 
 //this needs refactoring
 function remove_space_before_quotes(string, language) {
 	switch (language) {
-		case 'rue':
-		case 'sk':
-		case 'cs':
-			return string.replace(/([ ])([“‘])/g, '$2');
-    	case 'en':
-			return string.replace(/([ ])([”])/g, '$2');
+		case "rue":
+		case "sk":
+		case "cs":
+			return string.replace(/([ ])([“‘])/g, "$2");
+    	case "en":
+			return string.replace(/([ ])([”])/g, "$2");
 	}
 }
 
@@ -127,10 +127,10 @@ function remove_spaces_at_paragraph_beginning(string) {
     var lines_count = lines.length;
 
     for (var i = 0; i < lines_count; i++) {
-        lines[i] = lines[i].replace(/^\s+/, '');
+        lines[i] = lines[i].replace(/^\s+/, "");
     }
 
-    return lines.join('\n');
+    return lines.join("\n");
 }
 
 function start_sentence_w_capital_letter(string) {
@@ -155,8 +155,8 @@ function correct_accidental_uppercase(string) {
 function replace_with_nbsp(string) {
     var pattern = "([  ])([aviuoszkAVIUOSZK]|&)( )";
     var re = new RegExp(pattern, "g");
-    string = string.replace(re, '$1$2 '); //call it twice, for odd and even occurences
-    return string.replace(re, '$1$2 ');
+    string = string.replace(re, "$1$2 "); //call it twice, for odd and even occurences
+    return string.replace(re, "$1$2 ");
 }
 
 /*
@@ -182,7 +182,7 @@ function replace_with_nbsp(string) {
 function identify_common_apostrophes(string) {
     // identify
     // Fish ’n’ Chips and alike
-    string = string.replace(/(['‘’])([nN])(['‘’])/g, '{typopo-apostrophe}$2{typopo-apostrophe}');
+    string = string.replace(/(['‘’])([nN])(['‘’])/g, "{typopo-apostrophe}$2{typopo-apostrophe}");
 
     // identify
     // Don’t, I’m (or other in-word ommision)
@@ -190,11 +190,11 @@ function identify_common_apostrophes(string) {
     // 69’ers
     var pattern = "([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])(['‘’])([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])";
     var re = new RegExp(pattern, "g");
-    string = string.replace(re, '$1{typopo-apostrophe}$3');
+    string = string.replace(re, "$1{typopo-apostrophe}$3");
 
     //identify
     //’70s (or other year)
-    string = string.replace(/(['‘’])([0-9]{2}[s|S])/g, '{typopo-apostrophe}$2');
+    string = string.replace(/(['‘’])([0-9]{2}[s|S])/g, "{typopo-apostrophe}$2");
 
     return string;
 }
@@ -202,7 +202,7 @@ function identify_common_apostrophes(string) {
 
 // supported languages: en, sk, cs, rue
 function clean_typos(string, language) {
-	language = (typeof language === 'undefined') ? 'en' : language;
+	language = (typeof language === "undefined") ? "en" : language;
 
     string = replace_symbols(string, essential_set);
     string = replace_periods_with_ellipsis(string);
@@ -226,7 +226,7 @@ function clean_typos(string, language) {
     return string;
 }
 
-    if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+    if (typeof module !== "undefined" && typeof module.exports !== "undefined")
         module.exports = clean_typos;
     else
         window.clean_typos = clean_typos;

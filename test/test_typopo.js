@@ -212,23 +212,23 @@
     }
 
     function test__clean_typos_rue() {
-        test__batch(typos__generic, 'rue');
-        test__batch(typos__rue_sk_cz, 'rue');
+        test__batch(typos__generic, "rue");
+        test__batch(typos__rue_sk_cz, "rue");
     }
 
     function test__clean_typos_sk() {
-        test__batch(typos__generic, 'sk');
-        test__batch(typos__rue_sk_cz, 'sk');
+        test__batch(typos__generic, "sk");
+        test__batch(typos__rue_sk_cz, "sk");
     }
 
     function test__clean_typos_cs() {
-        test__batch(typos__generic, 'cs');
-        test__batch(typos__rue_sk_cz, 'cs');
+        test__batch(typos__generic, "cs");
+        test__batch(typos__rue_sk_cz, "cs");
     }
 
     function test__clean_typos_en() {
-        test__batch(typos__generic, 'en');
-        test__batch(typos__en, 'en');
+        test__batch(typos__generic, "en");
+        test__batch(typos__en, "en");
     }
 
 
