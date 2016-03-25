@@ -188,8 +188,13 @@ function identify_common_apostrophes(string) {
     // Don’t, I’m (or other in-word ommision)
     // O’Doole (or other example of name)
     // 69’ers
-    var pattern = "([a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюяA-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯ0-9])(['‘’])([a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюяA-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯ0-9])";
+    var pattern = "([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])(['‘’])([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])";
     var re = new RegExp(pattern, "g");
+    string = string.replace(re, '$1{typopo-apostrophe}$3');
+
+    //identify
+    //’70s (or other year)
+    string = string.replace(/(['‘’])([0-9]{2}[s|S])/g, '{typopo-apostrophe}$2');
 
     return string;
 }
