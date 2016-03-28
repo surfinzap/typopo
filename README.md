@@ -3,15 +3,16 @@
 Typopo is a JavaScript library that saves time by autocorrecting frequent typographic errors in English, Slovak, Czech and Rusyn language. Typopo is meant to make proofreading shorter, by filtering out the common errors first.
 
 Typopo:
-* removes extra white spaces: 
+* removes extra white spaces:
 	* at the beginnings of sentences
 	* between words and paragraphs
 	* before or after a punctuation
 * corrects:
 	* double quotes
-	* single quotes (with assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages)) and in pairs)
+	* single quotes (with assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages) and in pairs)
 	* apostrophes
 	* accidental uPerRCase
+	* Capital letter at the beginning of a sentence
 * replaces:
 	* multiple dots with ellipsis (…)
 	* x with multiplication sign (×) when appropriate
@@ -40,7 +41,7 @@ Where I donʼt see Typopo being used (yet or never? — you tell me)
 	* itʼs not a good authoring experience when you get always corrected as you type (at least I wasnʼt satisfied with such results)
 	* some chunks of the script need to be aware of the context in order to find some of the typos
 
-### Install & Use
+### Installation
 Install NPM package:
 
 ```
