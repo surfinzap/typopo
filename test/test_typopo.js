@@ -139,6 +139,7 @@
 
         // Correct apostrophes and ‘US English single quotation marks’
         "Let's test this: \"however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said\"" : "Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
+        "within double quotes “there are single 'quotes with mix’d punctuation,' you see.”" : "within double quotes “there are single ‘quotes with mix’d punctuation,’ you see.”",
 
         // swap quotes for punctuation .,?!
         "hey”," : "hey,”",
@@ -171,6 +172,7 @@
         "hey“." : "hey.“",
         "within double quotes „there are single ‚quotes with mixed punctuation‘, you see“" : "within double quotes „there are single ‚quotes with mixed punctuation,‘ you see“",
         "within double quotes „there are single ‚quotes with mixed punctuation‘? you see“" : "within double quotes „there are single ‚quotes with mixed punctuation?‘ you see“",
+        "within double quotes „there are single 'quotes with mix’d punctuation,' you see.“" : "within double quotes „there are single ‚quotes with mix’d punctuation,‘ you see.“",
 
         // remove extra spaces along „Slovak, Rusyn, Czech double quotation marks“
         "„ Ups, an extra space at the beginning“" : "„Ups, an extra space at the beginning“",

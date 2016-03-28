@@ -226,9 +226,9 @@ function identify_single_quotes(string) {
         $2 = $2.replace(re, "$1{typopo-left-single-quote--adept}$3");
 
         //identify {typopo-right-single-quote--adept}
-        var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])([" + single_quote_adepts + "])([ ]|[\.,!?])";
+        var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])([\.,!?])?([" + single_quote_adepts + "])([ ]|[\.,!?])";
         var re = new RegExp(pattern, "g");
-        $2 = $2.replace(re, "$1{typopo-right-single-quote--adept}$3");
+        $2 = $2.replace(re, "$1$2{typopo-right-single-quote--adept}$4");
 
         //identify single quote pairs
         var pattern = "({typopo-left-single-quote--adept})(.*?)({typopo-right-single-quote--adept})";
