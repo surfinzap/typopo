@@ -23,7 +23,7 @@ Typopo:
 	* (tm) or (TM) with ™
 	* +- or -+ with ±
 
-Take a look at [Roadmap](#roadmap) to see what's planned next or give me [feedback](#feedback) on what could be improved.
+Take a look at [Roadmap](#roadmap) to see whatʼs planned next or give me [feedback](#feedback) on what could be improved.
 
 ## Usage & Demo
 Demo — [http://surfinzap.github.io/typopo/](http://surfinzap.github.io/typopo/)
@@ -35,7 +35,7 @@ I can imagine that Typopo could be useful in following scenarios:
 * you can call it once your content is loaded on a website in order to correct typos
 * you can add Typopo to the process of generating a static website
 
-Where I donʼt see Typopo being used (yet or never? — you tell me)
+Where I donʼt see Typopo being used at the moment (but awaiting feedback)
 * to clean your typos in Markdown files (since script is stripping extra spaces between paragraphs)
 * to clean your typos as you type (real-time autocorrect) and thatʼs for 2 reasons:
 	* itʼs not a good authoring experience when you get always corrected as you type (at least I wasnʼt satisfied with such results)
