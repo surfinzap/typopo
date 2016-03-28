@@ -17,7 +17,7 @@
         "-+ -+" :"± ±",
 
 
-        // replace 2 and more periods to ellipsis …
+        // replace 2 and more periods with an ellipsis …
         "sentence .. another sentence" : "sentence … another sentence",
         "sentence ... another sentence" : "sentence … another sentence",
         "sentence .... another sentence" : "sentence … another sentence",
@@ -28,7 +28,7 @@
         "sentence ending...." : "sentence ending…",
     	"sentence ending....." : "sentence ending…",
 
-        // replace multiple spaces with single one
+        // replace multiple spaces with a single one
         "How  many spaces" : "How many spaces",
         "How   many" : "How many",
         "How    many" : "How many",
@@ -104,6 +104,10 @@
         "Ku komore" : "Ku komore",
         "ňa moja" : "ňa moja", // regex \b does not catch words that start with non-latin character
         "Ťa tvoja" : "Ťa tvoja", // regex \b again
+        //cyrilic letters і, а, з, в, к, ю, о, я, І, А, З, В, К, Ю, О, Я
+        "a з коминів" : "a з коминів" ,
+        "a я іду здоїти" : "a я іду здоїти",
+        "a в хырбетї" : "a в хырбетї",
 
         // start sentence with a Capital letter
         "One sentence ended. and another started." : "One sentence ended. And another started.",
@@ -222,3 +226,24 @@
 
 
 })();
+
+/*
+Backlog
+
+* bug: false positive on a single quote тепер‚… corrects to тепер’… (check what's the difference between comma and lower single quote)
+* bug: 20. новембра is replaced with 20. Новембра (ie. sentence case false positive)
+* add spacesn after punctuation to remove mistakes such end.something
+* rethink space around ellipsis (is there a chance to differ between word… word and another … word), example знать…Бо, eg. this рока… є вызначена vs. кабатиках, … а о пару
+    * „… да святить
+    * „Мамо, мамо …“
+    * „Нашу маму…?“
+    * „Мамо, я єм так добрї знала тот стишок…Таку ганьбу єм вам наробила…“
+* replace Capital letter at the beginning of the paragraph
+* replace Capital letter at the beginning of the sentence that starts with a double quote
+* what do with something like that? „Марьчо!,“ — Візвала ся
+* check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
+
+* add to documentation the intuition behind typopo
+* add a gif to show auto-correction
+
+*/

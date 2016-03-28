@@ -1,5 +1,9 @@
 # Changelog for Typopo
 
+## 2016-
+ * 1.0.1
+ * replace space with non-breaking space after one-word prepositions in Rusyn
+
 ## 2016-03-28
  * 1.0.0
  * correct single quotes and apostrophes
