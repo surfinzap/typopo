@@ -179,35 +179,35 @@
 
     function test__batch(batch, language) {
         for (var key in batch){
-            assert(clean_typos(key, language), (batch[key]),"Typo error uncorrected in " + language + ":\nOriginal:\t" + key + "\nResult:\t\t" + clean_typos(key, language) + "\nExpected:\t" + batch[key]);
+            assert(correct_typos(key, language), (batch[key]),"Typo error uncorrected in " + language + ":\nOriginal:\t" + key + "\nResult:\t\t" + correct_typos(key, language) + "\nExpected:\t" + batch[key]);
         }
     }
 
-    function test__clean_typos_rue() {
+    function test__correct_typos_rue() {
         test__batch(typos__generic, "rue");
         test__batch(typos__rue_sk_cz, "rue");
     }
 
-    function test__clean_typos_sk() {
+    function test__correct_typos_sk() {
         test__batch(typos__generic, "sk");
         test__batch(typos__rue_sk_cz, "sk");
     }
 
-    function test__clean_typos_cs() {
+    function test__correct_typos_cs() {
         test__batch(typos__generic, "cs");
         test__batch(typos__rue_sk_cz, "cs");
     }
 
-    function test__clean_typos_en() {
+    function test__correct_typos_en() {
         test__batch(typos__generic, "en");
         test__batch(typos__en, "en");
     }
 
 
-    test__clean_typos_rue();
-    test__clean_typos_sk();
-    test__clean_typos_cs();
-    test__clean_typos_en();
+    test__correct_typos_rue();
+    test__correct_typos_sk();
+    test__correct_typos_cs();
+    test__correct_typos_en();
 
 
 

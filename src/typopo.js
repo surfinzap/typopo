@@ -287,7 +287,6 @@ function correct_single_quotes_and_apostrophes(string, language) {
     //replace all identified apostrophes and quote adepts with apostrophes
     string = string.replace(/{typopo-apostrophe}|{typopo-left-single-quote--adept}|{typopo-right-single-quote--adept}/g, "’");
 
-
     //replace all identified quotes with appropriate quotes
     switch (language) {
 		case "rue":
@@ -306,7 +305,7 @@ function correct_single_quotes_and_apostrophes(string, language) {
 
 
 // supported languages: en, sk, cs, rue
-function clean_typos(string, language) {
+function correct_typos(string, language) {
 	language = (typeof language === "undefined") ? "en" : language;
 
     string = replace_symbols(string, essential_set);
@@ -332,14 +331,13 @@ function clean_typos(string, language) {
 
     string = start_sentence_w_capital_letter(string);
     string = correct_accidental_uppercase(string);
-    
+
     return string;
 }
 
     if (typeof module !== "undefined" && typeof module.exports !== "undefined")
-        module.exports = clean_typos;
+        module.exports = correct_typos;
     else
-        window.clean_typos = clean_typos;
-        window.correct_single_quotes_and_apostrophes = correct_single_quotes_and_apostrophes;
+        window.correct_typos = correct_typos;
 
 })();
