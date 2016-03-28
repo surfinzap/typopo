@@ -263,8 +263,7 @@ function identify_residual_apostrophes(string) {
     * Double quotes are used in pairs
     * Single quotes are used in pairs
     * Single quotes are used as secondary (ie. within double quotes, which is a convention for currently supported languages — en-US, sk, cs, rue — https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages)
-        * As thay are used as
-    * Intention to use quotes is shown by proper spacing, eg. _'word-beginning, word-end'_
+    * Single quotes are used with proper spacing, eg. _'word-beginning, word-end'_
         * Wrong intention that algorithm won’t be able to identify effectively, eg. _'_word-beginning, word-end_'_
 
     Algorithm
