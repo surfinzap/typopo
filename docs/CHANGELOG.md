@@ -1,5 +1,15 @@
 # Changelog for Typopo
 
+## 2016-03-28
+ * 1.0.0
+ * correct single quotes and apostrophes
+    * single quotes and apostrophes can be mixed and matched in various ways and it’s a bigger task to identify all of incorrectly used single quotes/apostrophes. However, we have thought about different means of how we could identify and correct the most common cases. We're now able to correct them with following assumptions:
+        * Double quotes are used in pairs
+        * Single quotes are used in pairs
+        * Single quotes are used as secondary (ie. within double quotes, which is a convention for currently supported languages — en-US, sk, cs, rue — [check wiki](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages))
+        * Single quotes are used with proper spacing (ie. a space before Left single quotation mark and a space after Right single quotation mark)
+ * [Breaking change] refactor clean_typos() to correct_typos()
+
 ## 2016-03-20
  * 0.0.11
  * replace space with non-breaking space after one-word prepositions and "&"

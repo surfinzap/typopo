@@ -83,9 +83,9 @@
 
         // correct apostrophes
         // "Fish 'n' Chips" : "Fish ’n’ Chips",
-        "Hers'" : "Hersʼ",
-        "INCHEBA '89" : "INCHEBA ʼ89",
-        "69'ers" : "69ʼers",
+        "Hers'" : "Hers’",
+        "INCHEBA '89" : "INCHEBA ’89",
+        "69'ers" : "69’ers",
 
         // remove space arround slashes that are used in dramatic texts
         "Kebŷ ňa moja mamyčka z nebočka viďily. / Posmotryť dohorŷ / Može bŷ i plakaly. Isto bŷ ňa požalovaly. / Pochterať si slyzu /" : "Kebŷ ňa moja mamyčka z nebočka viďily. /Posmotryť dohorŷ/ Može bŷ i plakaly. Isto bŷ ňa požalovaly. /Pochterať si slyzu/",
@@ -129,7 +129,7 @@
     }
 
     typos__en = {
-        // correct “English double quotation marks”
+        // correct “US English double quotation marks”
         "English „English„ „English„ English" : "English “English” “English” English",
         "“English double quotation marks“" : "“English double quotation marks”",
         "”English double quotation marks”" : "“English double quotation marks”",
@@ -137,37 +137,19 @@
         "Chto mu povisť slova  ,,Myžku, sŷnku mij‘‘" : "Chto mu povisť slova “Myžku, sŷnku mij”",
         "\"abc''" : "“abc”" ,
 
-        // // correct ‚English single quotation marks‘
-        // "English ‚English‚ ‚English‚ English" : "English ‘English’ ‘English’ English",
-        // "‘English double quotation marks‘" : "‘English double quotation marks’",
-        // "’English double quotation marks’" : "‘English double quotation marks’",
-        // "'English double quotation marks'" : "‘English double quotation marks’",
-        //
-        // // even when single quotation marks are mixed with apostrophes
-        // "'I can't explain myself, I'm afraid, sir' said Alice, 'because I'm not myself, you see.'" : "‘I can't explain myself, I'm afraid, sir’ said Alice, ‘because I'm not myself, you see.’",
-
-        // still cannot handle this guys, when they appear within sentence
-        // 'n' Hers’
-        // INCHEBA ’89
-        //  69’ers
+        // Correct apostrophes and ‘US English single quotation marks’
+        "Let's test this: \"however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said\"" : "Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
 
         // swap quotes for punctuation .,?!
         "hey”," : "hey,”",
         "hey”." : "hey.”",
-        // "hey’!" : "hey!’",
-        // "hey’?" : "hey?’",
+        "within double quotes “there are single ‘quotes with mixed punctuation’, you see”" : "within double quotes “there are single ‘quotes with mixed punctuation,’ you see”",
+        "within double quotes “there are single ‘quotes with mixed punctuation’? you see”" : "within double quotes “there are single ‘quotes with mixed punctuation?’ you see”",
+
 
         // remove extra spaces along „English double quotation marks“
         "“ Ups, an extra space at the beginning”" : "“Ups, an extra space at the beginning”",
         "“Ups, an extra space at the end ”" : "“Ups, an extra space at the end”",
-
-        // // remove extra spaces along ‚English single quotation marks‘
-        // "‘ Ups, an extra space at the beginning’" : "‘Ups, an extra space at the beginning’",
-        // "‘Ups, an extra space at the end ’" : "‘Ups, an extra space at the end’",
-
-        //tbd this test
-        // 'I can't explain myself, I'm afraid, sir' said Alice, 'because I'm not myself, you see.'
-
     }
 
     typos__rue_sk_cz = {
@@ -180,62 +162,61 @@
         "Chto mu povisť slova  ,,Myžku, sŷnku mij‘‘" : "Chto mu povisť slova „Myžku, sŷnku mij“",
         "\"abc''" : "„abc“" ,
 
-        // // correct ‚Slovak, Rusyn, Czech single quotation marks‘
-        // "Slovak ‚Slovak‚ ‚Slovak‚ Slovak" : "Slovak ‚Slovak‘ ‚Slovak‘ Slovak",
-        // "‘Slovak, Rusyn, Czech double quotation marks‘" : "‚Slovak, Rusyn, Czech double quotation marks‘",
-        // "’Slovak, Rusyn, Czech double quotation marks’" : "‚Slovak, Rusyn, Czech double quotation marks‘",
-        // "'Slovak, Rusyn, Czech double quotation marks'" : "‚Slovak, Rusyn, Czech double quotation marks‘",
-        //
-        // // even when single quotation marks are mixed with apostrophes
-        // "'I can't explain myself, I'm afraid, sir' said Alice, 'because I'm not myself, you see.'" : "‚I can't explain myself, I'm afraid, sir‘ said Alice, ‚because I'm not myself, you see.‘",
+        // Correct apostrophes and ‚Slovak, Rusyn, Czech quotation marks‘
+        "Hej: \"Vin mu povil, 'ta de jes' take vidil,' neviril\"" : "Hej: „Vin mu povil, ‚ta de jes‘ take vidil,’ neviril“",
+        "INCHEBA '89" : "INCHEBA ’89",
 
         // swap quotes for punctuation .,?!
         "hey“," : "hey,“",
         "hey“." : "hey.“",
-        // "hey‘!" : "hey!‘", //once we'll support single quotes
-        // "hey‘?" : "hey?‘", //once we'll support single quotes
+        "within double quotes „there are single ‚quotes with mixed punctuation‘, you see“" : "within double quotes „there are single ‚quotes with mixed punctuation,‘ you see“",
+        "within double quotes „there are single ‚quotes with mixed punctuation‘? you see“" : "within double quotes „there are single ‚quotes with mixed punctuation?‘ you see“",
 
         // remove extra spaces along „Slovak, Rusyn, Czech double quotation marks“
         "„ Ups, an extra space at the beginning“" : "„Ups, an extra space at the beginning“",
         "„Ups, an extra space at the end “" : "„Ups, an extra space at the end“",
-
-        // // remove extra spaces along ‚Slovak, Rusyn, Czech single quotation marks‘
-        // "‚ Ups, an extra space at the beginning‘" : "‚Ups, an extra space at the beginning‘",
-        // "‚Ups, an extra space at the end ‘" : "‚Ups, an extra space at the end‘",
-
     }
 
     function test__batch(batch, language) {
         for (var key in batch){
-            assert(clean_typos(key, language), (batch[key]),"Typo error uncorrected in " + language + ":\nOriginal:\t" + key + "\nResult:\t\t" + clean_typos(key, language) + "\nExpected:\t" + batch[key]);
+            assert(correct_typos(key, language), (batch[key]),"Typo error uncorrected in " + language + ":\nOriginal:\t" + key + "\nResult:\t\t" + correct_typos(key, language) + "\nExpected:\t" + batch[key]);
         }
     }
 
-    function test__clean_typos_rue() {
-        test__batch(typos__generic, 'rue');
-        test__batch(typos__rue_sk_cz, 'rue');
+    function test__correct_typos_rue() {
+        test__batch(typos__generic, "rue");
+        test__batch(typos__rue_sk_cz, "rue");
     }
 
-    function test__clean_typos_sk() {
-        test__batch(typos__generic, 'sk');
-        test__batch(typos__rue_sk_cz, 'sk');
+    function test__correct_typos_sk() {
+        test__batch(typos__generic, "sk");
+        test__batch(typos__rue_sk_cz, "sk");
     }
 
-    function test__clean_typos_cs() {
-        test__batch(typos__generic, 'cs');
-        test__batch(typos__rue_sk_cz, 'cs');
+    function test__correct_typos_cs() {
+        test__batch(typos__generic, "cs");
+        test__batch(typos__rue_sk_cz, "cs");
     }
 
-    function test__clean_typos_en() {
-        test__batch(typos__generic, 'en');
-        test__batch(typos__en, 'en');
+    function test__correct_typos_en() {
+        test__batch(typos__generic, "en");
+        test__batch(typos__en, "en");
     }
 
 
-    test__clean_typos_rue();
-    test__clean_typos_sk();
-    test__clean_typos_cs();
-    test__clean_typos_en();
+    test__correct_typos_rue();
+    test__correct_typos_sk();
+    test__correct_typos_cs();
+    test__correct_typos_en();
+
+
+
+    function test__identify_common_apostrophes(batch) {
+        for (var key in batch){
+            assert(identify_common_apostrophes(key), (batch[key]),"Typo error uncorrected:\nOriginal:\t" + key + "\nResult:\t\t" + identify_common_apostrophes(key) + "\nExpected:\t" + batch[key]);
+        }
+    }
+
 
 
 })();

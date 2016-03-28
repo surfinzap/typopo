@@ -3,38 +3,45 @@
 Typopo is a JavaScript library that saves time by autocorrecting frequent typographic errors in English, Slovak, Czech and Rusyn language. Typopo is meant to make proofreading shorter, by filtering out the common errors first.
 
 Typopo:
-* removes extra white spaces at the beginnings of sentences, between words and paragraphs, before or after punctuations
-* corrects
+* removes extra white spaces:
+	* at the beginnings of sentences
+	* between words and paragraphs
+	* before or after a punctuation
+* corrects:
 	* double quotes
+	* single quotes (with assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages) and in pairs)
 	* apostrophes
 	* accidental uPerRCase
-* replaces multiple dots with ellipsis (…)
-* replaces x with multiplication sign (×) when appropriate
-* replaces hyphen or en dash with em dash where needed
-* replaces space with non-breaking space after one-word prepositions and "&"
+	* Capital letter at the beginning of a sentence
 * replaces:
+	* multiple dots with ellipsis (…)
+	* x with multiplication sign (×) when appropriate
+	* hyphen or en dash with em dash where needed
+	* space with non-breaking space after one-word prepositions and "&"
 	* (r) or (R) with ®
 	* (c) or (C) with ©
 	* (tm) or (TM) with ™
 	* +- or -+ with ±
 
-Take a look at [Roadmap](#roadmap) to see what's planned next or give me [feedback](#feedback) on what could be improved.
+Take a look at [Roadmap](#roadmap) to see whatʼs planned next or give me [feedback](#feedback) on what could be improved.
 
-## Usage
+## Usage & Demo
+Demo — [http://surfinzap.github.io/typopo/](http://surfinzap.github.io/typopo/)
+
 I can imagine that Typopo could be useful in following scenarios:
-* you can copy-paste text into [my demo](http://surfinzap.github.io/typopo/), clean typos according your language and work with the result elsewhere
+* you can copy-paste text into [my demo](http://surfinzap.github.io/typopo/), correct typos according your language and work with the result elsewhere
 * you can call clean-up script everytime one of your editors saves text in a CMS
-* you can hook up a special action in your favorite editor/CMS to clean typos anytime needed; youʼll clean most typos before getting to manual proofreading
-* you can call it once your content is loaded on a website and clean typos afterwards, if you are fine with getting rid only of the most common typos
+* you can hook up a special action in your favorite editor/CMS to correct typos anytime needed; youʼll clean most typos before getting to manual proofreading
+* you can call it once your content is loaded on a website in order to correct typos
 * you can add Typopo to the process of generating a static website
 
-Where I donʼt see Typopo being used (yet or never? — you tell me)
+Where I donʼt see Typopo being used at the moment (but awaiting feedback)
 * to clean your typos in Markdown files (since script is stripping extra spaces between paragraphs)
 * to clean your typos as you type (real-time autocorrect) and thatʼs for 2 reasons:
 	* itʼs not a good authoring experience when you get always corrected as you type (at least I wasnʼt satisfied with such results)
 	* some chunks of the script need to be aware of the context in order to find some of the typos
 
-### Install & use
+### Installation
 Install NPM package:
 
 ```
@@ -45,7 +52,7 @@ Optionally, you can download typopo.min.js and load it directly to your project.
 
 call a function:
 ```javascript
-clean_typos(string, language)
+correct_typos(string, language)
 ```
 
 supported languages:
@@ -59,9 +66,8 @@ supported languages:
 
 ## Roadmap
 These are few things Iʼm planning to do, help me figure out whatʼs important to you, give me [feedback](#Feedback)
-* include autocorrect for single quotes
 * include autocorrect for other common typos (examples & tips are more than welcome)
-* figure out distribution (JS lib, NPM package, InDesign plugin, GDocs plugin or else?)
+* figure out primary distribution (JS lib, NPM package, InDesign plugin, GDocs plugin or else?)
 
 ## Feedback
 Iʼd love to hear:
