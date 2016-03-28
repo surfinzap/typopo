@@ -1,10 +1,10 @@
 ﻿/*!
- * Typopo 0.0.11
+ * Typopo 1.0.0
  *
  * Copyright 2015-16 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2016-03-20
+ * Date: 2016-03-28
  */
 
 (function(){
@@ -259,7 +259,7 @@ function identify_residual_apostrophes(string) {
 /*
     Identifies intended use of apostrophes and single quotes and adjusts them accordingly.
 
-    Assumptions (meaning that user will use quotes in the following manner):
+    Assumptions (meaning that author will use quotes in the following manner):
     * Double quotes are used in pairs
     * Single quotes are used in pairs
     * Single quotes are used as secondary (ie. within double quotes, which is a convention for currently supported languages — en-US, sk, cs, rue — https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages)
