@@ -156,6 +156,9 @@
         // remove extra spaces along „English double quotation marks“
         "“ Ups, an extra space at the beginning”" : "“Ups, an extra space at the beginning”",
         "“Ups, an extra space at the end ”" : "“Ups, an extra space at the end”",
+
+        // start quoted sentence with a Capital letter
+        "“one sentence ended. and another started.”" : "“One sentence ended. And another started.”",
     };
 
     typos__rue_sk_cz = {
@@ -236,7 +239,6 @@
 
 /*
 Backlog
-* replace Capital letter at the beginning of the sentence that starts with a double quote
 * add spaces after punctuation to remove mistakes such as: end.Something new
 * check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
 * rethink space around ellipsis (is there a chance to differ between word… word and another … word), example знать…Бо, eg. this рока… є вызначена vs. кабатиках, … а о пару
