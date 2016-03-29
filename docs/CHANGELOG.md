@@ -5,6 +5,7 @@
  * replace space with non-breaking space after one-word prepositions in Rusyn
  * fix false positives for sentence case on ordinal numbers in Slovak, Czech and Rusyn language
  * replace capital letter at the beginning of the paragraph
+ * add space after punctuation where it’s missing
 
 ## 2016-03-28
  * 1.0.0

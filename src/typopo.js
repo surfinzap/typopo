@@ -76,13 +76,35 @@ function replace_dash_with_hyphen(string){
     return string.replace(re, "$1-$3");
 }
 
-function remove_space_after_punctuation(string) {
-	return string.replace(/([\(])([ ])/g, "$1");
-}
+
 
 function remove_space_before_punctuation(string) {
-	return string.replace(/([ ])([\,\.\!\?\:\;\)])/g, "$2");
+    return string.replace(/([ ])([\,\.\!\?\:\;\)])/g, "$2");
 }
+
+
+
+function remove_space_after_punctuation(string) {
+    return string.replace(/([\(])([ ])/g, "$1");
+}
+
+
+
+function add_space_before_punctuation(string) {
+    var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])([\(])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+    var re = new RegExp(pattern, "g");
+    return string.replace(re, "$1 $2$3");
+}
+
+
+
+function add_space_after_punctuation(string) {
+    var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])([\,\.\!\?\:\;\)])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+    var re = new RegExp(pattern, "g");
+    return string.replace(re, "$1$2 $3");
+}
+
+
 
 function remove_spaces_around_slashes(string) {
     return string.replace(/\/ ?(.*?) ?\//g, "/$1/");
@@ -340,6 +362,8 @@ function correct_typos(string, language) {
     string = remove_multiple_spaces(string);
     string = remove_space_before_punctuation(string);
     string = remove_space_after_punctuation(string);
+    string = add_space_before_punctuation(string);
+    string = add_space_after_punctuation(string);
     string = remove_spaces_at_paragraph_beginning(string);
     string = replace_with_nbsp(string);
 

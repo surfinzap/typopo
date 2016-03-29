@@ -131,6 +131,18 @@
         "two—year—old child" : "two-year-old child",
         "two–year–old child" : "two-year-old child",
         "zeleno–žltá" : "zeleno-žltá",
+
+        //add spaces after punctuation
+        "One sentence ended.Another started." : "One sentence ended. Another started.",
+        "One sentence ended!Another started." : "One sentence ended! Another started.",
+        "One sentence ended?Another started." : "One sentence ended? Another started.",
+        "One sentence ended:another started." : "One sentence ended: another started.",
+        "One sentence ended;another started." : "One sentence ended; another started.",
+        "One sentence ended,another started." : "One sentence ended, another started.",
+        "Enclosed(in)the brackets." : "Enclosed (in) the brackets.",
+        //false positives, numbers
+        "15,4" : "15,4",
+        "15.4" : "15.4",
     };
 
     typos__en = {
@@ -239,7 +251,6 @@
 
 /*
 Backlog
-* add spaces after punctuation to remove mistakes such as: end.Something new
 * check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
 * rethink space around ellipsis (is there a chance to differ between word… word and another … word), example знать…Бо, eg. this рока… є вызначена vs. кабатиках, … а о пару
     * „… да святить
