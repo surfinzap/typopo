@@ -17,7 +17,7 @@ var essential_set = {
     "\\(tm\\)": "™",
     "\\+\\-": "±",
     "\\-\\+": "±",
-}
+};
 
 var lowercase_chars_en_sk_cz_rue = "a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюя";
 var uppercase_chars_en_sk_cz_rue = "A-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯ";
@@ -67,7 +67,7 @@ function correct_multiple_sign(string) {
 }
 
 function replace_hyphen_with_dash(string) {
-    return string.replace(/( [-|–] )/g, " — ")
+    return string.replace(/( [-|–] )/g, " — ");
 }
 
 function replace_dash_with_hyphen(string){
@@ -127,13 +127,31 @@ function remove_spaces_at_paragraph_beginning(string) {
 }
 
 function start_sentence_w_capital_letter(string) {
+    // Correct sentence for the first initial sentence
+    var lines = string.match(/[^\r\n]+/g);
+    var lines_count = lines.length;
+    var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])(.+?)([…\\.\\?\\!])";
+    var re = new RegExp(pattern);
+
+    for (var i = 0; i < lines_count; i++) {
+        lines[i] = lines[i].replace(re, function($0, $1, $2, $3){
+            return $1.toUpperCase() + $2 + $3;
+        });
+    }
+
+    string = lines.join("\n");
+
+
+    // Correct sentence case in the middle of the string
     // find all lowercase letters after sentence punctuation, then replace them
     // with uppercase variant by calling another replace function
-    var pattern = "([\\.\\?\\!] )(["+ lowercase_chars_en_sk_cz_rue +"])";
-    var re = new RegExp(pattern, "g");
-    return string.replace(re, function(string,regex_group_one,regex_group_two){
-        return string.replace(regex_group_two, regex_group_two.toUpperCase());
+    pattern = "([^0-9])([\\.\\?\\!] )(["+ lowercase_chars_en_sk_cz_rue +"])";
+    re = new RegExp(pattern, "g");
+    string = string.replace(re, function($0, $1, $2, $3){
+        return $1 + $2 + $3.toUpperCase();
     });
+
+    return string;
 }
 
 function correct_accidental_uppercase(string) {
@@ -187,15 +205,15 @@ function identify_common_apostrophes(string) {
     // Don’t, I’m (or other in-word ommision)
     // O’Doole (or other example of name)
     // 69’ers
-    var pattern = "([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])([" + single_quote_adepts + "])([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])";
-    var re = new RegExp(pattern, "g");
+    pattern = "([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])([" + single_quote_adepts + "])([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])";
+    re = new RegExp(pattern, "g");
     string = string.replace(re, "$1{typopo-apostrophe}$3");
 
     //identify
     //’70s (or other year)
     //INCHEBA ’89
-    var pattern = "([" + single_quote_adepts + "])([0-9]{2})";
-    var re = new RegExp(pattern, "g");
+    pattern = "([" + single_quote_adepts + "])([0-9]{2})";
+    re = new RegExp(pattern, "g");
     string = string.replace(re, "{typopo-apostrophe}$2");
 
     return string;
@@ -226,13 +244,13 @@ function identify_single_quotes(string) {
         $2 = $2.replace(re, "$1{typopo-left-single-quote--adept}$3");
 
         //identify {typopo-right-single-quote--adept}
-        var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])([\.,!?])?([" + single_quote_adepts + "])([ ]|[\.,!?])";
-        var re = new RegExp(pattern, "g");
+        pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])([\.,!?])?([" + single_quote_adepts + "])([ ]|[\.,!?])";
+        re = new RegExp(pattern, "g");
         $2 = $2.replace(re, "$1$2{typopo-right-single-quote--adept}$4");
 
         //identify single quote pairs
-        var pattern = "({typopo-left-single-quote--adept})(.*?)({typopo-right-single-quote--adept})";
-        var re = new RegExp(pattern, "g");
+        pattern = "({typopo-left-single-quote--adept})(.*?)({typopo-right-single-quote--adept})";
+        re = new RegExp(pattern, "g");
         $2 = $2.replace(re, "{typopo-left-single-quote}$2{typopo-right-single-quote}");
 
         return $1 + $2 + $3;
@@ -293,6 +311,7 @@ function correct_single_quotes_and_apostrophes(string, language) {
 		case "cs":
             string = string.replace(/{typopo-left-single-quote}/g, "‚");
 			string = string.replace(/{typopo-right-single-quote}/g, "‘");
+            break;
     	case "en":
             string = string.replace(/{typopo-left-single-quote}/g, "‘");
             string = string.replace(/{typopo-right-single-quote}/g, "’");

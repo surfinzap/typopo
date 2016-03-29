@@ -18,15 +18,15 @@
 
 
         // replace 2 and more periods with an ellipsis …
-        "sentence .. another sentence" : "sentence … another sentence",
-        "sentence ... another sentence" : "sentence … another sentence",
-        "sentence .... another sentence" : "sentence … another sentence",
-        "sentence ..... another sentence" : "sentence … another sentence",
-        "sentence ending." : "sentence ending.",
-        "sentence ending.." : "sentence ending…",
-        "sentence ending..." : "sentence ending…",
-        "sentence ending...." : "sentence ending…",
-    	"sentence ending....." : "sentence ending…",
+        "Sentence .. another sentence" : "Sentence … another sentence",
+        "Sentence ... another sentence" : "Sentence … another sentence",
+        "Sentence .... another sentence" : "Sentence … another sentence",
+        "Sentence ..... another sentence" : "Sentence … another sentence",
+        "Sentence ending." : "Sentence ending.",
+        "Sentence ending.." : "Sentence ending…",
+        "Sentence ending..." : "Sentence ending…",
+        "Sentence ending...." : "Sentence ending…",
+    	"Sentence ending....." : "Sentence ending…",
 
         // replace multiple spaces with a single one
         "How  many spaces" : "How many spaces",
@@ -52,7 +52,8 @@
         " What if paragraph starts with extra space at the beginning?" : "What if paragraph starts with extra space at the beginning?",
         "  What if paragraph starts with extra space at the beginning?" : "What if paragraph starts with extra space at the beginning?",
         "   What if paragraph starts with extra space at the beginning?" : "What if paragraph starts with extra space at the beginning?",
-        "…one sentence ends. And next one continues as it should" : "…one sentence ends. And next one continues as it should",
+        "One sentence ends. And next one continues as it should" : "One sentence ends. And next one continues as it should",
+        "first sentence.\nsecond sentence." : "First sentence.\nSecond sentence.",
 
 
         // remove extra tabs at the beginning of the paragraph
@@ -110,7 +111,7 @@
         "a в хырбетї" : "a в хырбетї",
 
         // start sentence with a Capital letter
-        "One sentence ended. and another started." : "One sentence ended. And another started.",
+        "one sentence ended. and another started." : "One sentence ended. And another started.",
         "What? nothing." : "What? Nothing.",
         "Hey! what?" : "Hey! What?",
         "Jedna skončila. že, čo?" : "Jedna skončila. Že, čo?",
@@ -130,7 +131,7 @@
         "two—year—old child" : "two-year-old child",
         "two–year–old child" : "two-year-old child",
         "zeleno–žltá" : "zeleno-žltá",
-    }
+    };
 
     typos__en = {
         // correct “US English double quotation marks”
@@ -143,19 +144,19 @@
 
         // Correct apostrophes and ‘US English single quotation marks’
         "Let's test this: \"however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said\"" : "Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
-        "within double quotes “there are single 'quotes with mix’d punctuation,' you see.”" : "within double quotes “there are single ‘quotes with mix’d punctuation,’ you see.”",
+        "within double quotes “there are single 'quotes with mix’d punctuation,' you see.”" : "Within double quotes “there are single ‘quotes with mix’d punctuation,’ you see.”",
 
         // swap quotes for punctuation .,?!
         "hey”," : "hey,”",
-        "hey”." : "hey.”",
-        "within double quotes “there are single ‘quotes with mixed punctuation’, you see”" : "within double quotes “there are single ‘quotes with mixed punctuation,’ you see”",
-        "within double quotes “there are single ‘quotes with mixed punctuation’? you see”" : "within double quotes “there are single ‘quotes with mixed punctuation?’ you see”",
+        "Hey”." : "Hey.”",
+        "Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation,’ you see.”",
+        "Within double quotes “there are single ‘quotes with mixed punctuation’? you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation?’ you see.”",
 
 
         // remove extra spaces along „English double quotation marks“
         "“ Ups, an extra space at the beginning”" : "“Ups, an extra space at the beginning”",
         "“Ups, an extra space at the end ”" : "“Ups, an extra space at the end”",
-    }
+    };
 
     typos__rue_sk_cz = {
 
@@ -173,15 +174,21 @@
 
         // swap quotes for punctuation .,?!
         "hey“," : "hey,“",
-        "hey“." : "hey.“",
-        "within double quotes „there are single ‚quotes with mixed punctuation‘, you see“" : "within double quotes „there are single ‚quotes with mixed punctuation,‘ you see“",
-        "within double quotes „there are single ‚quotes with mixed punctuation‘? you see“" : "within double quotes „there are single ‚quotes with mixed punctuation?‘ you see“",
-        "within double quotes „there are single 'quotes with mix’d punctuation,' you see.“" : "within double quotes „there are single ‚quotes with mix’d punctuation,‘ you see.“",
+        "Hey“." : "Hey.“",
+        "Within double quotes „there are single ‚quotes with mixed punctuation‘, you see“" : "Within double quotes „there are single ‚quotes with mixed punctuation,‘ you see“",
+        "Within double quotes „there are single ‚quotes with mixed punctuation‘? you see“" : "Within double quotes „there are single ‚quotes with mixed punctuation?‘ you see“",
+        "Within double quotes „there are single 'quotes with mix’d punctuation,' you see.“" : "Within double quotes „there are single ‚quotes with mix’d punctuation,‘ you see.“",
 
         // remove extra spaces along „Slovak, Rusyn, Czech double quotation marks“
         "„ Ups, an extra space at the beginning“" : "„Ups, an extra space at the beginning“",
         "„Ups, an extra space at the end “" : "„Ups, an extra space at the end“",
-    }
+
+        // start sentence with a Capital letter — false positives
+        "25. február" : "25. február",
+        "158. pluk" : "158. pluk",
+        "1432. v poradí" : "1432. v poradí",
+        "20. новембра" : "20. новембра",
+    };
 
     function test__batch(batch, language) {
         for (var key in batch){
@@ -229,21 +236,19 @@
 
 /*
 Backlog
-
-* bug: false positive on a single quote тепер‚… corrects to тепер’… (check what's the difference between comma and lower single quote)
-* bug: 20. новембра is replaced with 20. Новембра (ie. sentence case false positive)
-* add spacesn after punctuation to remove mistakes such end.something
+* replace Capital letter at the beginning of the paragraph
+* replace Capital letter at the beginning of the sentence that starts with a double quote
+* add spaces after punctuation to remove mistakes such as: end.Something new
+* check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
 * rethink space around ellipsis (is there a chance to differ between word… word and another … word), example знать…Бо, eg. this рока… є вызначена vs. кабатиках, … а о пару
     * „… да святить
     * „Мамо, мамо …“
     * „Нашу маму…?“
     * „Мамо, я єм так добрї знала тот стишок…Таку ганьбу єм вам наробила…“
-* replace Capital letter at the beginning of the paragraph
-* replace Capital letter at the beginning of the sentence that starts with a double quote
-* what do with something like that? „Марьчо!,“ — Візвала ся
-* check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
-
 * add to documentation the intuition behind typopo
 * add a gif to show auto-correction
+
+* what do with something like that? „Марьчо!,“ — Візвала ся
+* behavior: (once) people use lower single quote instead of comma
 
 */
