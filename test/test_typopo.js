@@ -236,7 +236,6 @@
 
 /*
 Backlog
-* replace Capital letter at the beginning of the paragraph
 * replace Capital letter at the beginning of the sentence that starts with a double quote
 * add spaces after punctuation to remove mistakes such as: end.Something new
 * check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
