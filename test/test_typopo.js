@@ -251,15 +251,29 @@
 
 /*
 Backlog
-* check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
 * rethink space around ellipsis (is there a chance to differ between word… word and another … word), example знать…Бо, eg. this рока… є вызначена vs. кабатиках, … а о пару
     * „… да святить
     * „Мамо, мамо …“
     * „Нашу маму…?“
     * „Мамо, я єм так добрї знала тот стишок…Таку ганьбу єм вам наробила…“
+
 * add to documentation the intuition behind typopo
 * add a gif to show auto-correction
 
+* correct numeral format
+
+* numeral range check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
+    * 5–6 eggs
+    * 1st—5th October
+    * 1.–13. marca
+    * 1,15—3,25
+    * 1 000–5 000.25
+    * 1.15–1,000.25
+    * typos
+        * 5 - 6
+        * wrong numeral format
+
+====
 * what do with something like that? „Марьчо!,“ — Візвала ся
 * behavior: (once) people use lower single quote instead of comma
 
