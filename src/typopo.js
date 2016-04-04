@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * Typopo 1.0.0
  *
  * Copyright 2015-16 Braňo Šandala

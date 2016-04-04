@@ -1,4 +1,4 @@
-﻿(function(){
+(function(){
     function assert(expected,actual,message){
         if(expected !== actual){
             console.error(message);
@@ -263,6 +263,7 @@ Backlog
 
 ===r1.0.2
 * correct numeral format
+* rethink Rusyn quotation marks
 
 ===r1.0.3
 * numeral range check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
