@@ -1,6 +1,6 @@
 # Typopo
 
-Typopo is a JavaScript library that saves time by autocorrecting frequent typographic errors in English, Slovak, Czech and Rusyn language. Typopo is meant to make proofreading shorter, by filtering out the common errors first.
+Typopo is a JavaScript library that saves time by autocorrecting frequent typographic errors in English, Slovak, Czech and Rusyn language. Make your proofreading quicker by auto-correcting the common typos first.
 
 Typopo:
 * removes extra white spaces:

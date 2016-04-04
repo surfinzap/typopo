@@ -251,6 +251,7 @@
 
 /*
 Backlog
+===r1.0.1
 * rethink space around ellipsis (is there a chance to differ between word… word and another … word), example знать…Бо, eg. this рока… є вызначена vs. кабатиках, … а о пару
     * „… да святить
     * „Мамо, мамо …“
@@ -260,8 +261,10 @@ Backlog
 * add to documentation the intuition behind typopo
 * add a gif to show auto-correction
 
+===r1.0.2
 * correct numeral format
 
+===r1.0.3
 * numeral range check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
     * 5–6 eggs
     * 1st—5th October
