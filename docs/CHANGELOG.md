@@ -2,10 +2,13 @@
 
 ## 2016-
  * 1.0.1
- * replace space with non-breaking space after one-word prepositions in Rusyn
- * fix false positives for sentence case on ordinal numbers in Slovak, Czech and Rusyn language
- * replace capital letter at the beginning of the paragraph
- * add space after punctuation where it’s missing
+ * New stuff
+     * replace space with non-breaking space after one-word prepositions in Rusyn
+     * fix false positives for sentence case on ordinal numbers in Slovak, Czech and Rusyn language
+     * replace capital letter at the beginning of the paragraph
+     * add space after punctuation where it’s missing
+ * Stuff we put away
+    * remove spaces around slashes that are used in dramatic texts (since slashes can be used in various contexts and current implementation was not able to detect them all)
 
 ## 2016-03-28
  * 1.0.0

@@ -17,7 +17,23 @@
         "-+ -+" :"± ±",
 
 
-        // replace 2 and more periods with an ellipsis …
+
+        /*
+            Ellipsis & Aposiopesis
+
+
+            Ellipsis (as a character) is used for 2 different purposes
+            — as an ellipsis to ommit a piece of information deliberately
+            — as an aposiopesis; a figure of speech wherein a sentence is deliberately broken off and left unfinished
+
+            Ellipsis & Aposiopesis require different use of spacing around them — that is why we cannot cover all cases for proper spacing as we are missing context. However, we can still correct some typographic errors
+
+            sources
+            https://en.wikipedia.org/wiki/Ellipsis
+            https://en.wikipedia.org/wiki/Aposiopesis
+            http://www.liteera.cz/slovnik/vypustka
+        */
+        /* replace 2 and more periods with an ellipsis …*/
         "Sentence .. another sentence" : "Sentence … another sentence",
         "Sentence ... another sentence" : "Sentence … another sentence",
         "Sentence .... another sentence" : "Sentence … another sentence",
@@ -27,6 +43,32 @@
         "Sentence ending..." : "Sentence ending…",
         "Sentence ending...." : "Sentence ending…",
     	"Sentence ending....." : "Sentence ending…",
+        /* remove space before aposiopesis, that is ending a sentence*/
+        "Sentence ending … And another starting" : "Sentence ending… And another starting",
+        /* keep space before aposiopesis, that is used in the middle of a sentence*/
+        "Sentence using … aposiopesis in the middle of a sentence." : "Sentence using … aposiopesis in the middle of a sentence.",
+        /* space ellipsis correctly, when used around commas*/
+        "We sell apples, oranges,…, pens." : "We sell apples, oranges, …, pens.",
+        "We sell apples, oranges,… , pens." : "We sell apples, oranges, …, pens.",
+        "We sell apples, oranges, … , pens." : "We sell apples, oranges, …, pens.",
+        /* remove spaces when ellipsis is used in brackets*/
+        "Something ( …) something else" :  "Something (…) something else",
+        "Something ( … ) something else" : "Something (…) something else",
+        "Something (… ) something else" :  "Something (…) something else",
+        "Something [ …] something else" :  "Something […] something else",
+        "Something [ … ] something else" : "Something […] something else",
+        "Something [… ] something else" :  "Something […] something else",
+        /* remove space when aposiopesis is followed by punctuation (language-specific examples are located in corresponding sets)*/
+        "Sentence and… !" : "Sentence and…!",
+        "Sentence and… ?" : "Sentence and…?",
+        "Sentence and… :" : "Sentence and…:",
+        "Sentence and… , else" : "Sentence and…, else",
+        "Sentence and… ; else" : "Sentence and…; else",
+        /* remove space when aposiopesis is used at the beginning of the sentence*/
+        "Sentence ended. … and we were there." : "Sentence ended. …and we were there.",
+        "Sentence ended! … and we were there." : "Sentence ended! …and we were there.",
+        "Sentence ended? … and we were there." : "Sentence ended? …and we were there.",
+
 
         // replace multiple spaces with a single one
         "How  many spaces" : "How many spaces",
@@ -88,9 +130,6 @@
         "INCHEBA '89" : "INCHEBA ’89",
         "69'ers" : "69’ers",
 
-        // remove space arround slashes that are used in dramatic texts
-        "Kebŷ ňa moja mamyčka z nebočka viďily. / Posmotryť dohorŷ / Može bŷ i plakaly. Isto bŷ ňa požalovaly. / Pochterať si slyzu /" : "Kebŷ ňa moja mamyčka z nebočka viďily. /Posmotryť dohorŷ/ Može bŷ i plakaly. Isto bŷ ňa požalovaly. /Pochterať si slyzu/",
-
 
         // replace space with non-breaking space after single letter prepositions
         // it goes after after characters like "a", "v", "i", "u", "o", "s", "z", "k", "A", "V", "I", "U", "O", "S", "Z", "K", "&".
@@ -110,13 +149,21 @@
         "a я іду здоїти" : "a я іду здоїти",
         "a в хырбетї" : "a в хырбетї",
 
-        // start sentence with a Capital letter
+        /*
+            Start sentence with a Capital letter
+
+            false positives — auto-correcting ellipsis/aposiopesis
+            [1] Sentence continues after aposiopesis is being used
+            [2] Ellipsis is being used in the middle of the sentence
+        */
         "one sentence ended. and another started." : "One sentence ended. And another started.",
         "What? nothing." : "What? Nothing.",
         "Hey! what?" : "Hey! What?",
         "Jedna skončila. že, čo?" : "Jedna skončila. Že, čo?",
         "Jedna skončila. ůe, čo?" : "Jedna skončila. Ůe, čo?",
         "Jedna skončila. яe, čo?" : "Jedna skončila. Яe, čo?",
+        /*[1]*/"V Jednotě je… silný zápach." : "V Jednotě je… silný zápach.",
+        /*[2]*/"Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let." : "Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let.",
 
         // correct accidental upper case
         "HEy, JennIFer!" : "Hey, Jennifer!",
@@ -145,6 +192,8 @@
         "15.4" : "15.4",
     };
 
+
+
     typos__en = {
         // correct “US English double quotation marks”
         "English „English„ „English„ English" : "English “English” “English” English",
@@ -171,7 +220,12 @@
 
         // start quoted sentence with a Capital letter
         "“one sentence ended. and another started.”" : "“One sentence ended. And another started.”",
+
+        /* remove space when aposiopesis is followed by punctuation*/
+        "“Sentence and… ”" : "“Sentence and…”",
     };
+
+
 
     typos__rue_sk_cz = {
 
@@ -197,6 +251,9 @@
         // remove extra spaces along „Slovak, Rusyn, Czech double quotation marks“
         "„ Ups, an extra space at the beginning“" : "„Ups, an extra space at the beginning“",
         "„Ups, an extra space at the end “" : "„Ups, an extra space at the end“",
+
+        /* remove space when aposiopesis is followed by punctuation*/
+        "„Sentence and… “" : "„Sentence and…“",
 
         // start sentence with a Capital letter — false positives
         "25. február" : "25. február",
@@ -263,7 +320,7 @@ Backlog
 
 ===r1.0.2
 * correct numeral format
-* rethink Rusyn quotation marks
+* rethink Rusyn quotation marks — « „ “ »
 
 ===r1.0.3
 * numeral range check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.

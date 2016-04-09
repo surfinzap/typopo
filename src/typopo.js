@@ -106,11 +106,6 @@ function add_space_after_punctuation(string) {
 
 
 
-function remove_spaces_around_slashes(string) {
-    return string.replace(/\/ ?(.*?) ?\//g, "/$1/");
-}
-
-
 
 function remove_space_after_double_quotes(string, language) {
 	switch (language) {
@@ -357,7 +352,6 @@ function correct_typos(string, language) {
 
 	string = remove_space_after_double_quotes(string, language);
 	string = remove_space_before_double_quotes(string, language);
-    string = remove_spaces_around_slashes(string);
 
     string = remove_multiple_spaces(string);
     string = remove_space_before_punctuation(string);
