@@ -1,13 +1,17 @@
 # Changelog for Typopo
 
-## 2016-
+## 2016-04-10
  * 1.0.1
  * New stuff
      * replace space with non-breaking space after one-word prepositions in Rusyn
      * fix false positives for sentence case on ordinal numbers in Slovak, Czech and Rusyn language
      * replace capital letter at the beginning of the paragraph
      * add space after punctuation where it’s missing
- * Stuff we put away
+     * remove space before aposiopesis, that is ending a sentence
+     * space ellipsis correctly, when used around commas
+     * remove spaces when ellipsis is used in brackets
+     * remove space when aposiopesis is used at the beginning of the sentence
+ * Stuff that went away
     * remove spaces around slashes that are used in dramatic texts (since slashes can be used in various contexts and current implementation was not able to detect them all)
 
 ## 2016-03-28

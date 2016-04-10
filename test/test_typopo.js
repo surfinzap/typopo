@@ -45,6 +45,7 @@
     	"Sentence ending....." : "Sentence ending…",
         /* remove space before aposiopesis, that is ending a sentence*/
         "Sentence ending … And another starting" : "Sentence ending… And another starting",
+        "Sentence ending …" : "Sentence ending…",
         /* keep space before aposiopesis, that is used in the middle of a sentence*/
         "Sentence using … aposiopesis in the middle of a sentence." : "Sentence using … aposiopesis in the middle of a sentence.",
         /* space ellipsis correctly, when used around commas*/

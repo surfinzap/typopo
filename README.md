@@ -7,6 +7,7 @@ Typopo:
 	* at the beginnings of sentences
 	* between words and paragraphs
 	* before or after a punctuation
+	* around ellipsis and aposiopesis, when applicable
 * corrects:
 	* double quotes
 	* single quotes (with assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages) and in pairs)
@@ -26,7 +27,10 @@ Typopo:
 Take a look at [Roadmap](#roadmap) to see whatʼs planned next or give me [feedback](#feedback) on what could be improved.
 
 ## Usage & Demo
+
 Demo — [http://surfinzap.github.io/typopo/](http://surfinzap.github.io/typopo/)
+
+![alt Typopo auto-correct animation](https://github.com/surfinzap/docs/typopo-demo.gif "Typopo auto-correct animation")
 
 I can imagine that Typopo could be useful in following scenarios:
 * you can copy-paste text into [my demo](http://surfinzap.github.io/typopo/), correct typos according your language and work with the result elsewhere
@@ -67,12 +71,12 @@ supported languages:
 ## Roadmap
 These are few things Iʼm planning to do, help me figure out whatʼs important to you, give me [feedback](#Feedback)
 * include autocorrect for other common typos (examples & tips are more than welcome)
-* figure out primary distribution (JS lib, NPM package, InDesign plugin, GDocs plugin or else?)
+* figure out the primary distribution (JS lib, NPM package, InDesign plugin, GDocs plugin or else?)
 
 ## Feedback
 Iʼd love to hear:
 * how do you use or plan to use Typopo
-* what's missing
+* whatʼs missing
 * when you expect Typopo to behave differently; in such cases following example would help the most:
 	* your input: [provide your text example here]
 	* expected output: [show how you want your example to be corrected]
