@@ -1,6 +1,6 @@
 {
   "name": "typopo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Automatic correction of frequent typographic errors in English, Slovak, Czech and Rusyn language",
   "license": "MIT",
   "author": {

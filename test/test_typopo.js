@@ -1,4 +1,4 @@
-﻿(function(){
+(function(){
     function assert(expected,actual,message){
         if(expected !== actual){
             console.error(message);
@@ -17,18 +17,61 @@
         "-+ -+" :"± ±",
 
 
-        // replace 2 and more periods to ellipsis …
-        "sentence .. another sentence" : "sentence … another sentence",
-        "sentence ... another sentence" : "sentence … another sentence",
-        "sentence .... another sentence" : "sentence … another sentence",
-        "sentence ..... another sentence" : "sentence … another sentence",
-        "sentence ending." : "sentence ending.",
-        "sentence ending.." : "sentence ending…",
-        "sentence ending..." : "sentence ending…",
-        "sentence ending...." : "sentence ending…",
-    	"sentence ending....." : "sentence ending…",
 
-        // replace multiple spaces with single one
+        /*
+            Ellipsis & Aposiopesis
+
+
+            Ellipsis (as a character) is used for 2 different purposes
+            — as an ellipsis to ommit a piece of information deliberately
+            — as an aposiopesis; a figure of speech wherein a sentence is deliberately broken off and left unfinished
+
+            Ellipsis & Aposiopesis require different use of spacing around them — that is why we cannot cover all cases for proper spacing as we are missing context. However, we can still correct some typographic errors
+
+            sources
+            https://en.wikipedia.org/wiki/Ellipsis
+            https://en.wikipedia.org/wiki/Aposiopesis
+            http://www.liteera.cz/slovnik/vypustka
+        */
+        /* replace 2 and more periods with an ellipsis …*/
+        "Sentence .. another sentence" : "Sentence … another sentence",
+        "Sentence ... another sentence" : "Sentence … another sentence",
+        "Sentence .... another sentence" : "Sentence … another sentence",
+        "Sentence ..... another sentence" : "Sentence … another sentence",
+        "Sentence ending." : "Sentence ending.",
+        "Sentence ending.." : "Sentence ending…",
+        "Sentence ending..." : "Sentence ending…",
+        "Sentence ending...." : "Sentence ending…",
+    	"Sentence ending....." : "Sentence ending…",
+        /* remove space before aposiopesis, that is ending a sentence*/
+        "Sentence ending … And another starting" : "Sentence ending… And another starting",
+        "Sentence ending …" : "Sentence ending…",
+        /* keep space before aposiopesis, that is used in the middle of a sentence*/
+        "Sentence using … aposiopesis in the middle of a sentence." : "Sentence using … aposiopesis in the middle of a sentence.",
+        /* space ellipsis correctly, when used around commas*/
+        "We sell apples, oranges,…, pens." : "We sell apples, oranges, …, pens.",
+        "We sell apples, oranges,… , pens." : "We sell apples, oranges, …, pens.",
+        "We sell apples, oranges, … , pens." : "We sell apples, oranges, …, pens.",
+        /* remove spaces when ellipsis is used in brackets*/
+        "Something ( …) something else" :  "Something (…) something else",
+        "Something ( … ) something else" : "Something (…) something else",
+        "Something (… ) something else" :  "Something (…) something else",
+        "Something [ …] something else" :  "Something […] something else",
+        "Something [ … ] something else" : "Something […] something else",
+        "Something [… ] something else" :  "Something […] something else",
+        /* remove space when aposiopesis is followed by punctuation (language-specific examples are located in corresponding sets)*/
+        "Sentence and… !" : "Sentence and…!",
+        "Sentence and… ?" : "Sentence and…?",
+        "Sentence and… :" : "Sentence and…:",
+        "Sentence and… , else" : "Sentence and…, else",
+        "Sentence and… ; else" : "Sentence and…; else",
+        /* remove space when aposiopesis is used at the beginning of the sentence*/
+        "Sentence ended. … and we were there." : "Sentence ended. …and we were there.",
+        "Sentence ended! … and we were there." : "Sentence ended! …and we were there.",
+        "Sentence ended? … and we were there." : "Sentence ended? …and we were there.",
+
+
+        // replace multiple spaces with a single one
         "How  many spaces" : "How many spaces",
         "How   many" : "How many",
         "How    many" : "How many",
@@ -52,7 +95,8 @@
         " What if paragraph starts with extra space at the beginning?" : "What if paragraph starts with extra space at the beginning?",
         "  What if paragraph starts with extra space at the beginning?" : "What if paragraph starts with extra space at the beginning?",
         "   What if paragraph starts with extra space at the beginning?" : "What if paragraph starts with extra space at the beginning?",
-        "…one sentence ends. And next one continues as it should" : "…one sentence ends. And next one continues as it should",
+        "One sentence ends. And next one continues as it should" : "One sentence ends. And next one continues as it should",
+        "first sentence.\nsecond sentence." : "First sentence.\nSecond sentence.",
 
 
         // remove extra tabs at the beginning of the paragraph
@@ -87,9 +131,6 @@
         "INCHEBA '89" : "INCHEBA ’89",
         "69'ers" : "69’ers",
 
-        // remove space arround slashes that are used in dramatic texts
-        "Kebŷ ňa moja mamyčka z nebočka viďily. / Posmotryť dohorŷ / Može bŷ i plakaly. Isto bŷ ňa požalovaly. / Pochterať si slyzu /" : "Kebŷ ňa moja mamyčka z nebočka viďily. /Posmotryť dohorŷ/ Može bŷ i plakaly. Isto bŷ ňa požalovaly. /Pochterať si slyzu/",
-
 
         // replace space with non-breaking space after single letter prepositions
         // it goes after after characters like "a", "v", "i", "u", "o", "s", "z", "k", "A", "V", "I", "U", "O", "S", "Z", "K", "&".
@@ -104,14 +145,26 @@
         "Ku komore" : "Ku komore",
         "ňa moja" : "ňa moja", // regex \b does not catch words that start with non-latin character
         "Ťa tvoja" : "Ťa tvoja", // regex \b again
+        //cyrilic letters і, а, з, в, к, ю, о, я, І, А, З, В, К, Ю, О, Я
+        "a з коминів" : "a з коминів" ,
+        "a я іду здоїти" : "a я іду здоїти",
+        "a в хырбетї" : "a в хырбетї",
 
-        // start sentence with a Capital letter
-        "One sentence ended. and another started." : "One sentence ended. And another started.",
+        /*
+            Start sentence with a Capital letter
+
+            false positives — auto-correcting ellipsis/aposiopesis
+            [1] Sentence continues after aposiopesis is being used
+            [2] Ellipsis is being used in the middle of the sentence
+        */
+        "one sentence ended. and another started." : "One sentence ended. And another started.",
         "What? nothing." : "What? Nothing.",
         "Hey! what?" : "Hey! What?",
         "Jedna skončila. že, čo?" : "Jedna skončila. Že, čo?",
         "Jedna skončila. ůe, čo?" : "Jedna skončila. Ůe, čo?",
         "Jedna skončila. яe, čo?" : "Jedna skončila. Яe, čo?",
+        /*[1]*/"V Jednotě je… silný zápach." : "V Jednotě je… silný zápach.",
+        /*[2]*/"Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let." : "Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let.",
 
         // correct accidental upper case
         "HEy, JennIFer!" : "Hey, Jennifer!",
@@ -126,7 +179,21 @@
         "two—year—old child" : "two-year-old child",
         "two–year–old child" : "two-year-old child",
         "zeleno–žltá" : "zeleno-žltá",
-    }
+
+        //add spaces after punctuation
+        "One sentence ended.Another started." : "One sentence ended. Another started.",
+        "One sentence ended!Another started." : "One sentence ended! Another started.",
+        "One sentence ended?Another started." : "One sentence ended? Another started.",
+        "One sentence ended:another started." : "One sentence ended: another started.",
+        "One sentence ended;another started." : "One sentence ended; another started.",
+        "One sentence ended,another started." : "One sentence ended, another started.",
+        "Enclosed(in)the brackets." : "Enclosed (in) the brackets.",
+        //false positives, numbers
+        "15,4" : "15,4",
+        "15.4" : "15.4",
+    };
+
+
 
     typos__en = {
         // correct “US English double quotation marks”
@@ -139,19 +206,27 @@
 
         // Correct apostrophes and ‘US English single quotation marks’
         "Let's test this: \"however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said\"" : "Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
-        "within double quotes “there are single 'quotes with mix’d punctuation,' you see.”" : "within double quotes “there are single ‘quotes with mix’d punctuation,’ you see.”",
+        "within double quotes “there are single 'quotes with mix’d punctuation,' you see.”" : "Within double quotes “there are single ‘quotes with mix’d punctuation,’ you see.”",
 
         // swap quotes for punctuation .,?!
         "hey”," : "hey,”",
-        "hey”." : "hey.”",
-        "within double quotes “there are single ‘quotes with mixed punctuation’, you see”" : "within double quotes “there are single ‘quotes with mixed punctuation,’ you see”",
-        "within double quotes “there are single ‘quotes with mixed punctuation’? you see”" : "within double quotes “there are single ‘quotes with mixed punctuation?’ you see”",
+        "Hey”." : "Hey.”",
+        "Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation,’ you see.”",
+        "Within double quotes “there are single ‘quotes with mixed punctuation’? you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation?’ you see.”",
 
 
         // remove extra spaces along „English double quotation marks“
         "“ Ups, an extra space at the beginning”" : "“Ups, an extra space at the beginning”",
         "“Ups, an extra space at the end ”" : "“Ups, an extra space at the end”",
-    }
+
+        // start quoted sentence with a Capital letter
+        "“one sentence ended. and another started.”" : "“One sentence ended. And another started.”",
+
+        /* remove space when aposiopesis is followed by punctuation*/
+        "“Sentence and… ”" : "“Sentence and…”",
+    };
+
+
 
     typos__rue_sk_cz = {
 
@@ -169,15 +244,24 @@
 
         // swap quotes for punctuation .,?!
         "hey“," : "hey,“",
-        "hey“." : "hey.“",
-        "within double quotes „there are single ‚quotes with mixed punctuation‘, you see“" : "within double quotes „there are single ‚quotes with mixed punctuation,‘ you see“",
-        "within double quotes „there are single ‚quotes with mixed punctuation‘? you see“" : "within double quotes „there are single ‚quotes with mixed punctuation?‘ you see“",
-        "within double quotes „there are single 'quotes with mix’d punctuation,' you see.“" : "within double quotes „there are single ‚quotes with mix’d punctuation,‘ you see.“",
+        "Hey“." : "Hey.“",
+        "Within double quotes „there are single ‚quotes with mixed punctuation‘, you see“" : "Within double quotes „there are single ‚quotes with mixed punctuation,‘ you see“",
+        "Within double quotes „there are single ‚quotes with mixed punctuation‘? you see“" : "Within double quotes „there are single ‚quotes with mixed punctuation?‘ you see“",
+        "Within double quotes „there are single 'quotes with mix’d punctuation,' you see.“" : "Within double quotes „there are single ‚quotes with mix’d punctuation,‘ you see.“",
 
         // remove extra spaces along „Slovak, Rusyn, Czech double quotation marks“
         "„ Ups, an extra space at the beginning“" : "„Ups, an extra space at the beginning“",
         "„Ups, an extra space at the end “" : "„Ups, an extra space at the end“",
-    }
+
+        /* remove space when aposiopesis is followed by punctuation*/
+        "„Sentence and… “" : "„Sentence and…“",
+
+        // start sentence with a Capital letter — false positives
+        "25. február" : "25. február",
+        "158. pluk" : "158. pluk",
+        "1432. v poradí" : "1432. v poradí",
+        "20. новембра" : "20. новембра",
+    };
 
     function test__batch(batch, language) {
         for (var key in batch){
@@ -222,3 +306,37 @@
 
 
 })();
+
+/*
+Backlog
+===r1.0.1
+* rethink space around ellipsis (is there a chance to differ between word… word and another … word), example знать…Бо, eg. this рока… є вызначена vs. кабатиках, … а о пару
+    * „… да святить
+    * „Мамо, мамо …“
+    * „Нашу маму…?“
+    * „Мамо, я єм так добрї знала тот стишок…Таку ганьбу єм вам наробила…“
+
+* add to documentation the intuition behind typopo
+* add a gif to show auto-correction
+
+===r1.0.2
+* correct numeral format
+* rethink Rusyn quotation marks — « „ “ »
+
+===r1.0.3
+* numeral range check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
+    * 5–6 eggs
+    * 1st—5th October
+    * 1.–13. marca
+    * 1,15—3,25
+    * 1 000–5 000.25
+    * 1.15–1,000.25
+    * typos
+        * 5 - 6
+        * wrong numeral format
+
+====
+* what do with something like that? „Марьчо!,“ — Візвала ся
+* behavior: (once) people use lower single quote instead of comma
+
+*/
