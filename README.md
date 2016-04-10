@@ -30,7 +30,7 @@ Take a look at [Roadmap](#roadmap) to see whatʼs planned next or give me [feedb
 
 Demo — [http://surfinzap.github.io/typopo/](http://surfinzap.github.io/typopo/)
 
-![alt Typopo auto-correct animation](https://github.com/surfinzap/docs/typopo-demo.gif "Typopo auto-correct animation")
+![alt Typopo auto-correct animation](/docs/typopo-demo.gif?raw=true "Typopo auto-correct animation")
 
 I can imagine that Typopo could be useful in following scenarios:
 * you can copy-paste text into [my demo](http://surfinzap.github.io/typopo/), correct typos according your language and work with the result elsewhere
