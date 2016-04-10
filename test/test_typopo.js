@@ -309,16 +309,6 @@
 
 /*
 Backlog
-===r1.0.1
-* rethink space around ellipsis (is there a chance to differ between word… word and another … word), example знать…Бо, eg. this рока… є вызначена vs. кабатиках, … а о пару
-    * „… да святить
-    * „Мамо, мамо …“
-    * „Нашу маму…?“
-    * „Мамо, я єм так добрї знала тот стишок…Таку ганьбу єм вам наробила…“
-
-* add to documentation the intuition behind typopo
-* add a gif to show auto-correction
-
 ===r1.0.2
 * correct numeral format
 * rethink Rusyn quotation marks — « „ “ »
