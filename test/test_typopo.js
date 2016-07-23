@@ -145,10 +145,7 @@
 		"Ku komore" : "Ku komore",
 		"ňa moja" : "ňa moja", // regex \b does not catch words that start with non-latin character
 		"Ťa tvoja" : "Ťa tvoja", // regex \b again
-		//cyrilic letters і, а, з, в, к, ю, о, я, І, А, З, В, К, Ю, О, Я
-		"a з коминів" : "a з коминів" ,
-		"a я іду здоїти" : "a я іду здоїти",
-		"a в хырбетї" : "a в хырбетї",
+
 
 		/*
 				Start sentence with a Capital letter
@@ -293,6 +290,13 @@
 
 		// start sentence with a Capital letter — false positives
 		"20. новембра" : "20. новембра",
+
+		//single space prepositions cyrilic letters ї, є, і, а, з, в, к, ю, о, я, Ї, Є, І, А, З, В, К, Ю, О, Я
+		"a з коминів" : "a з коминів" ,
+		"a я іду здоїти" : "a я іду здоїти",
+		"a в хырбетї" : "a в хырбетї",
+		"што є му вытыкане" : "што є му вытыкане",
+		"ся ї не" : "ся ї не"
 	};
 
 	function test__batch(batch, language) {
@@ -340,9 +344,10 @@
 /*
 Backlog
 ===r1.0.2
-* add ї, є (russian) as single space before
-* double-check em rules for english language
 * remove nedelitelnu medzeru medzi viacpismenovymi vyrazmi
+* double-check em rules for english language
+* replace -- with – and --- with —
+
 * change „… да святить ся into „…да святить ся
 * Але теперь‚… is incorrectly corrected into Але теперь’…
 „Joj! Što to?!“– Ďivčata s’a storhly > „Joj! Što to?!“ — Ďivčata s’a storhly
@@ -350,8 +355,6 @@ Backlog
 * zistit ci pomlcka nemoze byt na zaciatku alebo na konci a podla toho pred nu dat medzeru
 * remove spaces after the last paragraph
 * fix false positives for URL www. Tota. Sk (ie. skip URLs from parsing)
-* replace -- with – and --- with —
-* rethink Rusyn quotation marks — « „ “ »
 * correct numeral format
 
 ===r1.0.3

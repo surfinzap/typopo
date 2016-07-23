@@ -202,7 +202,7 @@ function correct_accidental_uppercase(string) {
 }
 
 function replace_with_nbsp(string) {
-		var pattern = "([  ])([aviuoszkAVIUOSZKавіуосзкюяАВІУОСЗКЮЯ]|&)( )";
+		var pattern = "([  ])([aviuoszkAVIUOSZKїєавіуосзкюяЇЄАВІУОСЗКЮЯ]|&)( )";
 		var re = new RegExp(pattern, "g");
 		string = string.replace(re, "$1$2 "); //call it twice, for odd and even occurences
 		return string.replace(re, "$1$2 ");

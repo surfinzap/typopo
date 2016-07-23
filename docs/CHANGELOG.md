@@ -3,6 +3,8 @@
 ## 2016-X
  * 1.0.3
  * add support for Rusyn double quotes «, » and single quoutes ‹, ›
+ * fixes
+	 * insert non-breaking space before other cyrillic single characters (ї, є, Ї, Є)
 
 ## 2016-07-10
  * 1.0.2
