@@ -309,6 +309,14 @@
 /*
 Backlog
 ===r1.0.2
+* add ї, є (russian) as single space before
+* double-check em rules for english language
+* remove nedelitelnu medzeru medzi viacpismenovymi vyrazmi
+* change „… да святить ся into „…да святить ся
+* Але теперь‚… is incorrectly corrected into Але теперь’…
+„Joj! Što to?!“– Ďivčata s’a storhly > „Joj! Što to?!“ — Ďivčata s’a storhly
+
+* zistit ci pomlcka nemoze byt na zaciatku alebo na konci a podla toho pred nu dat medzeru
 * remove spaces after the last paragraph
 * fix false positives for URL www. Tota. Sk (ie. skip URLs from parsing)
 * replace -- with – and --- with —
