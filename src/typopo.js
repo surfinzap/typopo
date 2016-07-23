@@ -57,8 +57,8 @@ function correct_double_quotes(string, language) {
 		case "sk":
 		case "cs":
 			return string.replace(re, "„$2“");
-			case "en":
-				return string.replace(re, "“$2”");
+		case "en":
+			return string.replace(re, "“$2”");
 	}
 }
 
