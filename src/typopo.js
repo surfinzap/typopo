@@ -23,8 +23,8 @@ var essential_set = {
 
 var lowercase_chars_en_sk_cz_rue = "a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
 var uppercase_chars_en_sk_cz_rue = "A-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ";
-var single_quote_adepts = "‚'‘’‛";
-var double_quote_adepts = "[„|“|”|\"]|,{2,}|‘{2,}|’{2,}|'{2,}";
+var single_quote_adepts = "‚|'|‘|’|‛|‹|›";
+var double_quote_adepts = "„|“|”|\"|«|»|,{2,}|‘{2,}|’{2,}|'{2,}|‹{2,}|›{2,}";
 
 function replace_symbols(string, replacement_set) {
 		for (var rule in essential_set) {
@@ -54,6 +54,7 @@ function correct_double_quotes(string, language) {
 
 	switch (language) {
 		case "rue":
+			return string.replace(re, "«$2»");
 		case "sk":
 		case "cs":
 			return string.replace(re, "„$2“");
@@ -65,9 +66,9 @@ function correct_double_quotes(string, language) {
 
 
 function swap_quotes_and_punctuation(string) {
-		//once we'll support single quotes
-		return string.replace(/([“‘’”])([\.,!?])/g, '$2$1');
-		// return string.replace(/([“”])([\.,!?])/g, "$2$1");
+		var pattern = "("+ double_quote_adepts + "|" +  single_quote_adepts +")([\.,!?])";
+		var re = new RegExp(pattern, "g");
+		return string.replace(re, '$2$1');
 }
 
 
@@ -124,10 +125,11 @@ function add_space_after_punctuation(string) {
 function remove_space_after_double_quotes(string, language) {
 	switch (language) {
 		case "rue":
+			return string.replace(/([«])([ ])/g, "$1");
 		case "sk":
 		case "cs":
 			return string.replace(/([„])([ ])/g, "$1");
-			case "en":
+		case "en":
 			return string.replace(/([“])([ ])/g, "$1");
 	}
 }
@@ -137,10 +139,11 @@ function remove_space_after_double_quotes(string, language) {
 function remove_space_before_double_quotes(string, language) {
 	switch (language) {
 		case "rue":
+			return string.replace(/([ ])([»])/g, "$2");
 		case "sk":
 		case "cs":
 			return string.replace(/([ ])([“])/g, "$2");
-			case "en":
+		case "en":
 			return string.replace(/([ ])([”])/g, "$2");
 	}
 }
@@ -232,7 +235,7 @@ function identify_common_apostrophes(string) {
 
 		// identify
 		// Fish ’n’ Chips and alike
-		var pattern = "([" + single_quote_adepts + "])([nN])([" + single_quote_adepts + "])";
+		var pattern = "(" + single_quote_adepts + ")([nN])(" + single_quote_adepts + ")";
 		var re = new RegExp(pattern, "g");
 		string = string.replace(re, "{typopo-apostrophe}$2{typopo-apostrophe}");
 
@@ -240,14 +243,14 @@ function identify_common_apostrophes(string) {
 		// Don’t, I’m (or other in-word ommision)
 		// O’Doole (or other example of name)
 		// 69’ers
-		pattern = "([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])([" + single_quote_adepts + "])([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])";
+		pattern = "([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])(" + single_quote_adepts + ")([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])";
 		re = new RegExp(pattern, "g");
 		string = string.replace(re, "$1{typopo-apostrophe}$3");
 
 		//identify
 		//’70s (or other year)
 		//INCHEBA ’89
-		pattern = "([" + single_quote_adepts + "])([0-9]{2})";
+		pattern = "(" + single_quote_adepts + ")([0-9]{2})";
 		re = new RegExp(pattern, "g");
 		string = string.replace(re, "{typopo-apostrophe}$2");
 
@@ -275,12 +278,12 @@ function identify_single_quotes(string) {
 		return string.replace(re, function($0, $1, $2, $3){
 
 				//identify {typopo-left-single-quote--adept}
-				var pattern = "( )([" + single_quote_adepts + "])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])";
+				var pattern = "( )(" + single_quote_adepts + ")(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])";
 				var re = new RegExp(pattern, "g");
 				$2 = $2.replace(re, "$1{typopo-left-single-quote--adept}$3");
 
 				//identify {typopo-right-single-quote--adept}
-				pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])([\.,!?])?([" + single_quote_adepts + "])([ ]|[\.,!?])";
+				pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])([\.,!?])?(" + single_quote_adepts + ")([ ]|[\.,!?])";
 				re = new RegExp(pattern, "g");
 				$2 = $2.replace(re, "$1$2{typopo-right-single-quote--adept}$4");
 
@@ -303,7 +306,7 @@ function identify_single_quotes(string) {
 		@returns {string} — output with identified apostrophes
 */
 function identify_residual_apostrophes(string) {
-		var pattern = "([" + single_quote_adepts + "])";
+		var pattern = "(" + single_quote_adepts + ")";
 		var re = new RegExp(pattern, "g");
 		return string.replace(re, "{typopo-apostrophe}");
 }
@@ -373,14 +376,17 @@ function correct_single_quotes_and_apostrophes(string, language) {
 		//replace all identified quotes with appropriate quotes
 		switch (language) {
 		case "rue":
+			string = string.replace(/{typopo-left-single-quote}/g, "‹");
+			string = string.replace(/{typopo-right-single-quote}/g, "›");
+			break;
 		case "sk":
 		case "cs":
-						string = string.replace(/{typopo-left-single-quote}/g, "‚");
+			string = string.replace(/{typopo-left-single-quote}/g, "‚");
 			string = string.replace(/{typopo-right-single-quote}/g, "‘");
-						break;
-			case "en":
-						string = string.replace(/{typopo-left-single-quote}/g, "‘");
-						string = string.replace(/{typopo-right-single-quote}/g, "’");
+			break;
+		case "en":
+			string = string.replace(/{typopo-left-single-quote}/g, "‘");
+			string = string.replace(/{typopo-right-single-quote}/g, "’");
 	}
 
 		return string;
@@ -408,8 +414,8 @@ function correct_typos(string, language) {
 		string = correct_single_quotes_and_apostrophes(string, language);
 		string = swap_quotes_and_punctuation(string);
 
-	string = remove_space_after_double_quotes(string, language);
-	string = remove_space_before_double_quotes(string, language);
+		string = remove_space_after_double_quotes(string, language);
+		string = remove_space_before_double_quotes(string, language);
 
 		string = remove_multiple_spaces(string);
 		string = remove_space_before_punctuation(string);

@@ -229,7 +229,7 @@
 
 
 
-	typos__rue_sk_cz = {
+	typos__sk_cz = {
 
 		// correct „Slovak, Rusyn, Czech double quotation marks“
 		"Slovak „Slovak„ „Slovak„ Slovak" : "Slovak „Slovak“ „Slovak“ Slovak",
@@ -264,6 +264,37 @@
 		"20. новембра" : "20. новембра",
 	};
 
+	typos__rue = {
+
+		// correct „Slovak, Rusyn, Czech double quotation marks“
+		"Slovak „Slovak„ „Slovak„ Slovak" : "Slovak «Slovak» «Slovak» Slovak",
+		"“Slovak, Rusyn, Czech double quotation marks“" : "«Slovak, Rusyn, Czech double quotation marks»",
+		"”Slovak, Rusyn, Czech double quotation marks”" : "«Slovak, Rusyn, Czech double quotation marks»",
+		"\"Slovak, Rusyn, Czech double quotation marks\"" : "«Slovak, Rusyn, Czech double quotation marks»",
+		"Chto mu povisť slova  ,,Myžku, sŷnku mij‘‘" : "Chto mu povisť slova «Myžku, sŷnku mij»",
+		"\"abc''" : "«abc»" ,
+
+		// Correct apostrophes and ‚Slovak, Rusyn, Czech quotation marks‘
+		"Hej: \"Vin mu povil, 'ta de jes' take vidil,' neviril\"" : "Hej: «Vin mu povil, ‹ta de jes› take vidil,’ neviril»",
+		"INCHEBA '89" : "INCHEBA ’89",
+
+		// swap quotes for punctuation .,?!
+		"hey»," : "hey,»",
+		"Hey»." : "Hey.»",
+		"Within double quotes „there are single ‹quotes with mixed punctuation›? you see“" : "Within double quotes «there are single ‹quotes with mixed punctuation?› you see»",
+		"Within double quotes „there are single 'quotes with mix’d punctuation,' you see.“" : "Within double quotes «there are single ‹quotes with mix’d punctuation,› you see.»",
+
+		// remove extra spaces along «Slovak, Rusyn, Czech double quotation marks»
+		"« Ups, an extra space at the beginning»" : "«Ups, an extra space at the beginning»",
+		"«Ups, an extra space at the end »" : "«Ups, an extra space at the end»",
+
+		/* remove space when aposiopesis is followed by punctuation*/
+		"«Sentence and… »" : "«Sentence and…»",
+
+		// start sentence with a Capital letter — false positives
+		"20. новембра" : "20. новембра",
+	};
+
 	function test__batch(batch, language) {
 		for (var key in batch){
 			assert(correct_typos(key, language), (batch[key]),"Typo error uncorrected in " + language + ":\nOriginal:\t" + key + "\nResult:\t\t" + correct_typos(key, language) + "\nExpected:\t" + batch[key]);
@@ -272,17 +303,17 @@
 
 	function test__correct_typos_rue() {
 		test__batch(typos__generic, "rue");
-		test__batch(typos__rue_sk_cz, "rue");
+		test__batch(typos__rue, "rue");
 	}
 
 	function test__correct_typos_sk() {
 		test__batch(typos__generic, "sk");
-		test__batch(typos__rue_sk_cz, "sk");
+		test__batch(typos__sk_cz, "sk");
 	}
 
 	function test__correct_typos_cs() {
 		test__batch(typos__generic, "cs");
-		test__batch(typos__rue_sk_cz, "cs");
+		test__batch(typos__sk_cz, "cs");
 	}
 
 	function test__correct_typos_en() {

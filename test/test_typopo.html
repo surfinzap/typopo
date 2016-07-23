@@ -2,15 +2,60 @@
 <html>
 
 <head>
-    <title>
-        typopo tests
-    </title>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>
+		typopo tests
+	</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+	<style>
+		.typopo__textarea {
+			width: 100%;
+			min-height: 400px;
+		}
+	</style>
 
 </head>
 
 <body>
-    <script type="text/javascript" src="../src/typopo.js" ></script>
-    <script type="text/javascript" src="test_typopo.js" ></script>
+	<script type="text/javascript" src="../src/typopo.js" ></script>
+	<script type="text/javascript" src="test_typopo.js" ></script>
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<div class="translit__action-area">
+		<button id="correct_typos_en">
+			English
+		</button>
+		<button id="correct_typos_rue">
+			Rusyn
+		</button>
+		<button id="correct_typos_sk">
+			Slovak
+		</button>
+		<button id="correct_typos_cz">
+			Czech
+		</button>
+	</div>
+
+	<textarea id="textarea" class="typopo__textarea" placeholder="Enter some text" class="translit__textarea" autofocus></textarea>
+
+
+	<script>
+		$("#correct_typos_en").click(function() {
+			$('#textarea').val(correct_typos($('#textarea').val(), 'en'));
+		});
+
+		$("#correct_typos_rue").click(function() {
+			$('#textarea').val(correct_typos($('#textarea').val(), 'rue'));
+		});
+
+		$("#correct_typos_sk").click(function() {
+			$('#textarea').val(correct_typos($('#textarea').val(), 'sk'));
+		});
+
+		$("#correct_typos_cz").click(function() {
+			$('#textarea').val(correct_typos($('#textarea').val(), 'cs'));
+		});
+	</script>
+
 </body>
 </html>
