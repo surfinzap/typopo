@@ -1,10 +1,10 @@
 /*!
- * Typopo 1.0.2
+ * Typopo 1.0.3
  *
  * Copyright 2015-16 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2016-07-10
+ * Date: 2016-08-24
  */
 
 (function(){

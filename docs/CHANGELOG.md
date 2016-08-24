@@ -1,6 +1,6 @@
 # Changelog for Typopo
 
-## 2016-X
+## 2016-08-24
  * 1.0.3
  * add support for Rusyn double quotes «, » and single quoutes ‹, ›
  * fixes
