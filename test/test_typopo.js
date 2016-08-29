@@ -110,11 +110,11 @@
 
 		// replace x by itself by a multiplier ×
 		// set up correct typography for multiplication sign
-		"5 mm x 5 mm" : "5 mm × 5 mm",
-		"5cm x 5cm" : "5cm × 5cm",
-		"5 x 4" : "5 × 4",
-		"12x3" : "12 × 3",
-		"12×3" : "12 × 3",
+		"5 mm x 5 mm" : "5 mm × 5 mm",
+		"5cm x 5cm" : "5cm × 5cm",
+		"5 x 4" : "5 × 4",
+		"12x3" : "12 × 3",
+		"12×3" : "12 × 3",
 
 
 		// replace hyphen or en dash with em dash
@@ -140,12 +140,19 @@
 		"v obchode a v hospode" : "v obchode a v hospode",
 		"Bed & Breakfast" : "Bed & Breakfast",
 		"v a v a v" : "v a v a v",
+		//non-breaking space after the numbers
+		"16 mm" : "16 mm",
+		"1540 bytes" : "1540 bytes",
 		// false positives (ie. script shouldn't catch these)
 		"vo dvore" : "vo dvore",
 		"Ku komore" : "Ku komore",
 		"ňa moja" : "ňa moja", // regex \b does not catch words that start with non-latin character
 		"Ťa tvoja" : "Ťa tvoja", // regex \b again
-
+		// // badly-placed non-breaking spaces between multi-character words
+		"vo dvore" : "vo dvore",
+		"Ku komore" : "Ku komore",
+		"ňa moja" : "ňa moja",
+		"Ťa tvoja" : "Ťa tvoja",
 
 		/*
 				Start sentence with a Capital letter
@@ -161,7 +168,7 @@
 		"Jedna skončila. ůe, čo?" : "Jedna skončila. Ůe, čo?",
 		"Jedna skončila. яe, čo?" : "Jedna skončila. Яe, čo?",
 		/*[1]*/"V Jednotě je… silný zápach." : "V Jednotě je… silný zápach.",
-		/*[2]*/"Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let." : "Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let.",
+		/*[2]*/"Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let." : "Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let.",
 		"„Хто ті дав?" : "„Хто ті дав?",
 
 		// correct accidental upper case

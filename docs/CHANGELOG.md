@@ -1,5 +1,9 @@
 # Changelog for Typopo
 
+## 2016-08-x
+  * 1.0.4
+  * consolidate placement of non-breaking spaces for multi-character words and numerals
+
 ## 2016-08-24
  * 1.0.3
  * add support for Rusyn double quotes «, » and single quoutes ‹, ›

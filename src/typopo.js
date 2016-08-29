@@ -201,11 +201,39 @@ function correct_accidental_uppercase(string) {
 	});
 }
 
-function replace_with_nbsp(string) {
-	var pattern = "([  ])([aviuoszkAVIUOSZKїєавіуосзкюяЇЄАВІУОСЗКЮЯ]|&)( )";
+/*
+	Consolidates the use of non-breaking spaces
+
+	* adds non-breaking spaces after single-character prepositions
+	* adds non-breaking spaces after numerals
+	* adds non-breaking spaces around ×
+	* removes characters between multi-character words
+
+	@param {string} string — input text for identification
+	@returns {string} — output with correctly placed non-breaking space
+*/
+function consolidate_nbsp(string) {
+	// removes non-breaking spaces between multi-character words
+	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})([ ])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})";
 	var re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$2 "); //call it twice, for odd and even occurences
-	return string.replace(re, "$1$2 ");
+	string =  string.replace(re, "$1 $3");
+
+
+	// adds non-breaking spaces after numerals
+	pattern = "([0-9]+)( )(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+)";
+	re = new RegExp(pattern, "g");
+	string =  string.replace(re, "$1 $3");
+
+	// adds non-breaking spaces around ×
+	string = string.replace(/([ ])([×])([ ])/g, " $2 ");
+
+	// adds non-breaking spaces after single-character prepositions
+	pattern = "([  ])([aviuoszkAVIUOSZKїєавіуосзкюяЇЄАВІУОСЗКЮЯ]|&)( )";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1$2 ");
+	string = string.replace(re, "$1$2 "); //called twice to catch odd and even occurences
+
+	return string;
 }
 
 
@@ -417,17 +445,18 @@ function correct_typos(string, language) {
 	string = remove_space_after_double_quotes(string, language);
 	string = remove_space_before_double_quotes(string, language);
 
+	string = correct_multiple_sign(string);
+
 	string = remove_multiple_spaces(string);
 	string = remove_space_before_punctuation(string);
 	string = remove_space_after_punctuation(string);
 	string = add_space_before_punctuation(string);
 	string = add_space_after_punctuation(string);
 	string = remove_spaces_at_paragraph_beginning(string);
-	string = replace_with_nbsp(string);
+	string = consolidate_nbsp(string);
 	string = space_ellispsis_around_commas(string);
 	string = correct_spaces_around_aposiopesis(string);
 
-	string = correct_multiple_sign(string);
 	string = replace_hyphen_with_dash(string);
 	string = replace_dash_with_hyphen(string);
 

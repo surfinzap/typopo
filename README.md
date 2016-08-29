@@ -8,6 +8,7 @@ Typopo:
 	* between words and paragraphs
 	* before or after a punctuation
 	* around ellipsis and aposiopesis, when applicable
+  * non-breaking spaces between multi-character words
 * corrects:
 	* double quotes
 	* single quotes (with assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages) and in pairs)
@@ -18,7 +19,7 @@ Typopo:
 	* multiple dots with ellipsis (…)
 	* x with multiplication sign (×) when appropriate
 	* hyphen or en dash with em dash where needed
-	* space with non-breaking space after one-word prepositions and "&"
+	* space with non-breaking space after one-word prepositions, numerals and "&"
 	* (r) or (R) with ®
 	* (c) or (C) with ©
 	* (tm) or (TM) with ™
