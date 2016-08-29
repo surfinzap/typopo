@@ -1,9 +1,10 @@
 # Changelog for Typopo
 
-## 2016-08-x
+## 2016-08-29
   * 1.0.4
   * consolidate placement of non-breaking spaces for multi-character words and numerals
   * consolidate dash replacement (replace -- with – and --- with —)
+  * remove trailing spaces
 
 ## 2016-08-24
  * 1.0.3

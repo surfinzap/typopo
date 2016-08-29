@@ -77,6 +77,11 @@
 		"How    many" : "How many",
 		"How     many" : "How many",
 
+		// remove trailing spaces at the end of the paragraphs
+		"trailing spaces    " : "trailing spaces",
+		"trailing spaces.    " : "Trailing spaces.",
+		"trailing spaces;    " : "trailing spaces;",
+
 		// remove extra spaces between word and punctuation
 		"Hey ." : "Hey.",
 		"Hey !" : "Hey!",

@@ -1,10 +1,10 @@
 /*!
- * Typopo 1.0.3
+ * Typopo 1.0.4
  *
  * Copyright 2015-16 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2016-08-24
+ * Date: 2016-08-29
  */
 
 (function(){
@@ -110,6 +110,10 @@ function remove_space_before_punctuation(string) {
 
 function remove_space_after_punctuation(string) {
 	return string.replace(/([\(\[\{])([ ])/g, "$1");
+}
+
+function remove_trailing_spaces(string) {
+	return string.trim();
 }
 
 
@@ -459,6 +463,7 @@ function correct_typos(string, language) {
 	string = remove_multiple_spaces(string);
 	string = remove_space_before_punctuation(string);
 	string = remove_space_after_punctuation(string);
+	string = remove_trailing_spaces(string);
 	string = add_space_before_punctuation(string);
 	string = add_space_after_punctuation(string);
 	string = remove_spaces_at_paragraph_beginning(string);
