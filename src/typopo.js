@@ -80,7 +80,16 @@ function correct_multiple_sign(string) {
 
 
 function replace_hyphen_with_dash(string) {
-	return string.replace(/( [-|–] )/g, " — ");
+	// replace 3 hyphens with em dash
+	string = string.replace(/(---)/g, "—");
+
+	// replace 2 hyphens with en dash
+	string = string.replace(/(--)/g, "–");
+
+	//replace en dash with em dash, when appropriate
+	string = string.replace(/( [-|–] )/g, " — ");
+
+	return string;
 }
 
 

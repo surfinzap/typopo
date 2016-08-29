@@ -119,6 +119,8 @@
 
 		// replace hyphen or en dash with em dash
 		"and - she said" : "and — she said",
+		"Brno--Praha" : "Brno–Praha",
+		"and --- she said" : "and — she said",
 		"and – she said" : "and — she said",
 		"vopros - što" : "vopros — što",
 

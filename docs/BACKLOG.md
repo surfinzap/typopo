@@ -1,12 +1,10 @@
 Backlog for typopo
 
 ## 1.0.4
-* remove non-breaking space between multiple-letter expressions
-* replace -- with – and --- with —
 * remove trailing spaces after the last paragraph
-* add nbsp before/after dash, depending on its preferred position at the end of the paragraph
 
 ## 1.0.5
+* add nbsp before/after dash, depending on its preferred position at the end of the paragraph
 * double-check em rules for english language
 * fix false positives for URL www. Tota. Sk (ie. skip URLs from parsing)
 * fix extra punctuation in direct speech, ie. "?,", "!,", ".,", ...
