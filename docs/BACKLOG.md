@@ -1,6 +1,7 @@
 Backlog for typopo
 
 ## 1.0.4
+* fix e.g. special rule for eg. it's correcting e. g. to —> E. G.
 * remove non-breaking space between multiple-letter expressions
 * replace -- with – and --- with —
 * remove trailing spaces after the last paragraph
