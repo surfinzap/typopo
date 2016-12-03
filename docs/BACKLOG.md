@@ -8,7 +8,8 @@ Backlog for typopo
 * add nbsp before/after dash, depending on its preferred position at the end of the paragraph
 
 ## 1.0.5
-* double-check em rules for english language
+* differentiate em rules for english language and other languages
+* add more use-cases for apostrophes, primes, etc.
 * fix false positives for URL www. Tota. Sk (ie. skip URLs from parsing)
 * fix extra punctuation in direct speech, ie. "?,", "!,", ".,", ...
 

@@ -6,7 +6,9 @@
 	}
 
 	typos__generic = {
-		// replace some characters
+		/*
+				Basic string replacements
+		*/
 		"(C) (C)" : "© ©",
 		"(c) (c)" : "© ©",
 		"(R) (R)" : "® ®",
@@ -43,15 +45,19 @@
 		"Sentence ending..." : "Sentence ending…",
 		"Sentence ending...." : "Sentence ending…",
 		"Sentence ending....." : "Sentence ending…",
+
 		/* remove space before aposiopesis, that is ending a sentence*/
 		"Sentence ending … And another starting" : "Sentence ending… And another starting",
 		"Sentence ending …" : "Sentence ending…",
+
 		/* keep space before aposiopesis, that is used in the middle of a sentence*/
 		"Sentence using … aposiopesis in the middle of a sentence." : "Sentence using … aposiopesis in the middle of a sentence.",
+
 		/* space ellipsis correctly, when used around commas*/
 		"We sell apples, oranges,…, pens." : "We sell apples, oranges, …, pens.",
 		"We sell apples, oranges,… , pens." : "We sell apples, oranges, …, pens.",
 		"We sell apples, oranges, … , pens." : "We sell apples, oranges, …, pens.",
+
 		/* remove spaces when ellipsis is used in brackets*/
 		"Something ( …) something else" :  "Something (…) something else",
 		"Something ( … ) something else" : "Something (…) something else",
@@ -59,12 +65,14 @@
 		"Something [ …] something else" :  "Something […] something else",
 		"Something [ … ] something else" : "Something […] something else",
 		"Something [… ] something else" :  "Something […] something else",
+
 		/* remove space when aposiopesis is followed by punctuation (language-specific examples are located in corresponding sets)*/
 		"Sentence and… !" : "Sentence and…!",
 		"Sentence and… ?" : "Sentence and…?",
 		"Sentence and… :" : "Sentence and…:",
 		"Sentence and… , else" : "Sentence and…, else",
 		"Sentence and… ; else" : "Sentence and…; else",
+
 		/* remove space when aposiopesis is used at the beginning of the sentence*/
 		"Sentence ended. … and we were there." : "Sentence ended. …and we were there.",
 		"Sentence ended! … and we were there." : "Sentence ended! …and we were there.",
@@ -211,7 +219,6 @@
 			"Hey”." : "Hey.”",
 			"Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation,’ you see.”",
 			"Within double quotes “there are single ‘quotes with mixed punctuation’? you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation?’ you see.”",
-
 
 			// remove extra spaces along „English double quotation marks“
 			"“ Ups, an extra space at the beginning”" : "“Ups, an extra space at the beginning”",
