@@ -26,7 +26,7 @@ var uppercase_chars_en_sk_cz_rue = "A-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜ�
 var single_quote_adepts = "‚|'|‘|’|‛|‹|›";
 var double_quote_adepts = "„|“|”|\"|«|»|,{2,}|‘{2,}|’{2,}|'{2,}|‹{2,}|›{2,}";
 
-function replace_symbols(string, replacement_set) {
+function replace_symbols(string) {
 		for (var rule in essential_set) {
 				var re = new RegExp(rule, "g");
 				string = string.replace(re, essential_set[rule]);
@@ -181,7 +181,8 @@ function start_sentence_w_capital_letter(string) {
 		// Correct sentence case in the middle of the string
 		// find all lowercase letters after sentence punctuation, then replace them
 		// with uppercase variant by calling another replace function
-		pattern = "([^0-9])([\\.\\?\\!] )(["+ lowercase_chars_en_sk_cz_rue +"])";
+		// Exceptions: dates, numerical values, i.e., e.g.,
+		pattern = "([^0-9|i.e.|e.g.])([\\.\\?\\!] )(["+ lowercase_chars_en_sk_cz_rue +"])";
 		re = new RegExp(pattern, "g");
 		string = string.replace(re, function($0, $1, $2, $3){
 				return $1 + $2 + $3.toUpperCase();
@@ -393,6 +394,7 @@ function correct_single_quotes_and_apostrophes(string, language) {
 }
 
 
+
 /*
 		Sets proper spacing, when ellipsis used used around commas
 
@@ -403,16 +405,38 @@ function space_ellispsis_around_commas(string) {
 		return string.replace(/, ?… ?,/g, ", …,");
 }
 
+
+
+/*
+		Identifies incorrect spelling of e.g. and i.e. and replaces it with a correct one
+
+		Even though replacement occurs in one language, we run it though it all languages as it is interdependent with following functions:
+		start_sentence_w_capital_letter()
+
+		@param {string} string — input text for identification
+		@returns {string} — corrected output
+*/
+function correct_eg_ie(string) {
+	string = string.replace(/\b[eE]\.? ?[gG]\.? ?\b/g, "e.g. ");
+	string = string.replace(/\b[iI]\.? ?[eE]\.? ?\b/g, "i.e. ");
+	return string;
+}
+
+
+
 // supported languages: en, sk, cs, rue
 function correct_typos(string, language) {
 	language = (typeof language === "undefined") ? "en" : language;
 
-		string = replace_symbols(string, essential_set);
+		string = replace_symbols(string);
 		string = replace_periods_with_ellipsis(string);
 
 		string = correct_double_quotes(string, language);
 		string = correct_single_quotes_and_apostrophes(string, language);
 		string = swap_quotes_and_punctuation(string);
+
+		// needs to go before punctuation fixes
+		string = correct_eg_ie(string);
 
 		string = remove_space_after_double_quotes(string, language);
 		string = remove_space_before_double_quotes(string, language);
@@ -433,6 +457,12 @@ function correct_typos(string, language) {
 
 		string = start_sentence_w_capital_letter(string);
 		string = correct_accidental_uppercase(string);
+
+		// functions add_space_before_punctuation(), add_space_after_punctuation()
+		// break e.g., i.e. down, so that's why we're calling this function twice
+		string = correct_eg_ie(string);
+
+
 
 		return string;
 }

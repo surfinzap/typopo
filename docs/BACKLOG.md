@@ -1,11 +1,10 @@
 Backlog for typopo
 
 ## 1.0.4
-* fix e.g. special rule for eg. it's correcting e. g. to —> E. G.
 * remove non-breaking space between multiple-letter expressions
-* replace -- with – and --- with —
 * remove trailing spaces after the last paragraph
 * add nbsp before/after dash, depending on its preferred position at the end of the paragraph
+* replace -- with – and --- with —
 
 ## 1.0.5
 * differentiate em rules for english language and other languages

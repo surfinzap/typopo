@@ -14,6 +14,7 @@ Typopo:
 	* apostrophes
 	* accidental uPerRCase
 	* Capital letter at the beginning of a sentence
+	* spelling of e.g. and i.e.
 * replaces:
 	* multiple dots with ellipsis (…)
 	* x with multiplication sign (×) when appropriate

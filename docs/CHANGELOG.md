@@ -1,5 +1,10 @@
 # Changelog for Typopo
 
+## 2016-12
+* 1.0.4
+* New stuff
+  * correct spelling of e.g. and i.e.
+
 ## 2016-08-24
  * 1.0.3
  * add support for Rusyn double quotes «, » and single quoutes ‹, ›

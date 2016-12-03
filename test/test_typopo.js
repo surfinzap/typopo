@@ -161,6 +161,7 @@
 				false positives — auto-correcting ellipsis/aposiopesis
 				[1] Sentence continues after aposiopesis is being used
 				[2] Ellipsis is being used in the middle of the sentence
+				[3] When e.g. or i.e. is used in the sentence
 		*/
 		"one sentence ended. and another started." : "One sentence ended. And another started.",
 		"What? nothing." : "What? Nothing.",
@@ -170,6 +171,8 @@
 		"Jedna skončila. яe, čo?" : "Jedna skončila. Яe, čo?",
 		/*[1]*/"V Jednotě je… silný zápach." : "V Jednotě je… silný zápach.",
 		/*[2]*/"Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let." : "Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let.",
+		/*[3]*/"e.g. oranges, apples" : "e.g. oranges, apples",
+		/*[4]*/"i.e. oranges, apples" : "i.e. oranges, apples",
 		"„Хто ті дав?" : "„Хто ті дав?",
 
 		// correct accidental upper case
@@ -194,6 +197,7 @@
 		"One sentence ended;another started." : "One sentence ended; another started.",
 		"One sentence ended,another started." : "One sentence ended, another started.",
 		"Enclosed(in)the brackets." : "Enclosed (in) the brackets.",
+
 		//false positives, numbers
 		"15,4" : "15,4",
 		"15.4" : "15.4",
@@ -227,8 +231,24 @@
 			// start quoted sentence with a Capital letter
 			"“one sentence ended. and another started.”" : "“One sentence ended. And another started.”",
 
-			/* remove space when aposiopesis is followed by punctuation*/
+			// remove space when aposiopesis is followed by punctuation
 			"“Sentence and… ”" : "“Sentence and…”",
+
+			// spell e.g. and i.e. correctly (incl. false positives)
+			"E. g. something" : "e.g. something",
+			"E. G. something" : "e.g. something",
+			"E.G. something" : "e.g. something",
+			"eg. something" : "e.g. something",
+			"eg something" : "e.g. something",
+			"I. e. something" : "i.e. something",
+			"I. E. something" : "i.e. something",
+			"I.E. something" : "i.e. something",
+			"ie. something" : "i.e. something",
+			"ie something" : "i.e. something",
+			"brie cheese" : "brie cheese",
+			"Greg Snow" : "Greg Snow",
+			"eggnog" : "eggnog",
+			"Pam Grier" : "Pam Grier"
 	};
 
 
