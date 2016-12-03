@@ -1,10 +1,10 @@
 Backlog for typopo
 
 ## 1.0.4
-* remove non-breaking space between multiple-letter expressions
 * remove trailing spaces after the last paragraph
 * add nbsp before/after dash, depending on its preferred position at the end of the paragraph
 * replace -- with – and --- with —
+* make fixing i.e., e.g. by removing them before replacement and pasting them after replacement + make a initial support for such exceptions
 
 ## 1.0.5
 * differentiate em rules for english language and other languages

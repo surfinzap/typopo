@@ -15,11 +15,11 @@ Typopo:
 	* accidental uPerRCase
 	* Capital letter at the beginning of a sentence
 	* spelling of e.g. and i.e.
+	* non-breaking spaces (adds them after one-word prepositions and "&" and removes them between multi-letter words)
 * replaces:
 	* multiple dots with ellipsis (…)
 	* x with multiplication sign (×) when appropriate
 	* hyphen or en dash with em dash where needed
-	* space with non-breaking space after one-word prepositions and "&"
 	* (r) or (R) with ®
 	* (c) or (C) with ©
 	* (tm) or (TM) with ™

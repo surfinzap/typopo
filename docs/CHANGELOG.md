@@ -4,6 +4,7 @@
 * 1.0.4
 * New stuff
   * correct spelling of e.g. and i.e.
+  * remove non-breaking spaces between multi-letter words
 
 ## 2016-08-24
  * 1.0.3

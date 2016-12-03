@@ -202,11 +202,35 @@ function correct_accidental_uppercase(string) {
 		});
 }
 
-function replace_with_nbsp(string) {
-		var pattern = "([  ])([aviuoszkAVIUOSZKїєавіуосзкюяЇЄАВІУОСЗКЮЯ]|&)( )";
-		var re = new RegExp(pattern, "g");
-		string = string.replace(re, "$1$2 "); //call it twice, for odd and even occurences
-		return string.replace(re, "$1$2 ");
+
+
+/*
+		Adds non-breaking space after single-letter prepositions and &
+
+		@param {string} string — input text
+		@returns {string} — output with added non-breaking spaces, where applicable
+*/
+function add_nbsp(string) {
+	var pattern = "([  ])([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]|&)( )";
+	var re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1$2 ");
+	string = string.replace(re, "$1$2 "); //call it twice, for odd and even occurences
+	return string;
+}
+
+
+/*
+		Remove non-breaking space between multi-letter words
+
+		@param {string} string — input text
+		@returns {string} — output with removed non-breaking spaces, where applicable
+*/
+function remove_nbsp(string) {
+	var pattern = "([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]{2,})( )([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]+)";
+	var re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1 $3");
+	string = string.replace(re, "$1 $3"); //calling it twice, for odd and even occurences
+	return string;
 }
 
 
@@ -401,7 +425,7 @@ function correct_single_quotes_and_apostrophes(string, language) {
 		@param {string} string — input text for identification
 		@returns {string} — corrected output
 */
-function space_ellispsis_around_commas(string) {
+function space_ellipsis_around_commas(string) {
 		return string.replace(/, ?… ?,/g, ", …,");
 }
 
@@ -438,6 +462,10 @@ function correct_typos(string, language) {
 		// needs to go before punctuation fixes
 		string = correct_eg_ie(string);
 
+		string = correct_multiple_sign(string);
+		string = replace_hyphen_with_dash(string);
+		string = replace_dash_with_hyphen(string);
+
 		string = remove_space_after_double_quotes(string, language);
 		string = remove_space_before_double_quotes(string, language);
 
@@ -447,13 +475,12 @@ function correct_typos(string, language) {
 		string = add_space_before_punctuation(string);
 		string = add_space_after_punctuation(string);
 		string = remove_spaces_at_paragraph_beginning(string);
-		string = replace_with_nbsp(string);
-		string = space_ellispsis_around_commas(string);
+		string = add_nbsp(string);
+		string = remove_nbsp(string);
+		string = space_ellipsis_around_commas(string);
 		string = correct_spaces_around_aposiopesis(string);
 
-		string = correct_multiple_sign(string);
-		string = replace_hyphen_with_dash(string);
-		string = replace_dash_with_hyphen(string);
+
 
 		string = start_sentence_w_capital_letter(string);
 		string = correct_accidental_uppercase(string);

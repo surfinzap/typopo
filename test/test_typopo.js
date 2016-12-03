@@ -79,6 +79,10 @@
 		"Sentence ended? … and we were there." : "Sentence ended? …and we were there.",
 
 
+
+		/*
+				Handling of spaces
+		*/
 		// replace multiple spaces with a single one
 		"How  many spaces" : "How many spaces",
 		"How   many" : "How many",
@@ -93,11 +97,9 @@
 		"Hey ;" : "Hey;",
 		"Hey , what?" : "Hey, what?",
 
-
 		// remove extra spaces between parentheses ()
 		"( Ups, an extra space at the beginning)" : "(Ups, an extra space at the beginning)",
 		"(Ups, an extra space at the end )" : "(Ups, an extra space at the end)",
-
 
 		// remove extra spaces at the beginning of the paragraph
 		" What if paragraph starts with extra space at the beginning?" : "What if paragraph starts with extra space at the beginning?",
@@ -106,7 +108,6 @@
 		"One sentence ends. And next one continues as it should" : "One sentence ends. And next one continues as it should",
 		"first sentence.\nsecond sentence." : "First sentence.\nSecond sentence.",
 
-
 		// remove extra tabs at the beginning of the paragraph
 		"			What if sentence starts with tabs?" : "What if sentence starts with tabs?",
 		"		What if sentence starts with tabs?" : "What if sentence starts with tabs?",
@@ -114,6 +115,35 @@
 
 		// check, if spaces/tabs aren't removed so fiercely that paragraphs are merged together
 		"If there is one line \nand another" : "If there is one line \nand another" ,
+
+
+
+		/*
+			Handling of non-breaking spaces
+
+			[1] Add non-breaking space after single letter prepositions
+			[2] False positive — do not add nbsp between multicharacter words
+			[3] False positive — do not take non-latin multi-character words as a single prepositions (javascript regex \b limitation)
+			[4] Remove non-breaking space between multi-letter words
+		*/
+		// [1]
+		"Koniec. V potoku" : "Koniec. V potoku",
+		"Skace o tyči" : "Skace o tyči",
+		"v obchode a v hospode" : "v obchode a v hospode",
+		"Bed & Breakfast" : "Bed & Breakfast",
+		"v a v a v" : "v a v a v",
+		// [2]
+		"vo dvore" : "vo dvore",
+		"Ku komore" : "Ku komore",
+		// [3]
+		"ňa moja" : "ňa moja",
+		"Ťa tvoja" : "Ťa tvoja",
+		// [4]
+		"vo dvore" : "vo dvore",
+		"Ku komore" : "Ku komore",
+		"vo vo vo vo" : "vo vo vo vo",
+
+
 
 
 		// replace x by itself by a multiplier ×
@@ -140,19 +170,7 @@
 		"69'ers" : "69’ers",
 
 
-		// replace space with non-breaking space after single letter prepositions
-		// it goes after after characters like "a", "v", "i", "u", "o", "s", "z", "k", "A", "V", "I", "U", "O", "S", "Z", "K", "&".
-		// positive examples
-		"Koniec. V potoku" : "Koniec. V potoku",
-		"Skace o tyči" : "Skace o tyči",
-		"v obchode a v hospode" : "v obchode a v hospode",
-		"Bed & Breakfast" : "Bed & Breakfast",
-		"v a v a v" : "v a v a v",
-		// false positives (ie. script shouldn't catch these)
-		"vo dvore" : "vo dvore",
-		"Ku komore" : "Ku komore",
-		"ňa moja" : "ňa moja", // regex \b does not catch words that start with non-latin character
-		"Ťa tvoja" : "Ťa tvoja", // regex \b again
+
 
 
 		/*
