@@ -1,14 +1,13 @@
 Backlog for typopo
 
-## 1.0.4
-* remove trailing spaces after the last paragraph
-* add nbsp before/after dash, depending on its preferred position at the end of the paragraph
-* replace -- with – and --- with —
-* make fixing i.e., e.g. by removing them before replacement and pasting them after replacement + make a initial support for such exceptions
-
 ## 1.0.5
+* make fixing i.e., e.g. by removing them before replacement and pasting them after replacement + make a initial support for such exceptions
+* double-check em rules for english language
+* add nbsp before/after dash, depending on its preferred position at the end of the paragraph
 * differentiate em rules for english language and other languages
 * add more use-cases for apostrophes, primes, etc.
+
+## 1.0.6
 * fix false positives for URL www. Tota. Sk (ie. skip URLs from parsing)
 * fix extra punctuation in direct speech, ie. "?,", "!,", ".,", ...
 

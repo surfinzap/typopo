@@ -4,7 +4,7 @@ Typopo is a JavaScript library that saves time by autocorrecting frequent typogr
 
 Typopo:
 * removes extra white spaces:
-	* at the beginnings of sentences
+	* at the beginning and the end of sentences (leading and trailing spaces)
 	* between words and paragraphs
 	* before or after a punctuation
 	* around ellipsis and aposiopesis, when applicable

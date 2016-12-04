@@ -89,6 +89,11 @@
 		"How    many" : "How many",
 		"How     many" : "How many",
 
+		// remove trailing spaces at the end of the paragraphs
+		"trailing spaces    " : "trailing spaces",
+		"trailing spaces.    " : "Trailing spaces.",
+		"trailing spaces;    " : "trailing spaces;",
+
 		// remove extra spaces between word and punctuation
 		"Hey ." : "Hey.",
 		"Hey !" : "Hey!",
@@ -148,15 +153,17 @@
 
 		// replace x by itself by a multiplier ×
 		// set up correct typography for multiplication sign
-		"5 mm x 5 mm" : "5 mm × 5 mm",
-		"5cm x 5cm" : "5cm × 5cm",
-		"5 x 4" : "5 × 4",
-		"12x3" : "12 × 3",
-		"12×3" : "12 × 3",
+		"5 mm x 5 mm" : "5 mm × 5 mm",
+		"5cm x 5cm" : "5cm × 5cm",
+		"5 x 4" : "5 × 4",
+		"12x3" : "12 × 3",
+		"12×3" : "12 × 3",
 
 
 		// replace hyphen or en dash with em dash
 		"and - she said" : "and — she said",
+		"Brno--Praha" : "Brno–Praha",
+		"and --- she said" : "and — she said",
 		"and – she said" : "and — she said",
 		"vopros - što" : "vopros — što",
 
@@ -168,9 +175,6 @@
 		"Hers'" : "Hers’",
 		"INCHEBA '89" : "INCHEBA ’89",
 		"69'ers" : "69’ers",
-
-
-
 
 
 		/*
@@ -188,7 +192,7 @@
 		"Jedna skončila. ůe, čo?" : "Jedna skončila. Ůe, čo?",
 		"Jedna skončila. яe, čo?" : "Jedna skončila. Яe, čo?",
 		/*[1]*/"V Jednotě je… silný zápach." : "V Jednotě je… silný zápach.",
-		/*[2]*/"Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let." : "Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let.",
+		/*[2]*/"Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let." : "Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let.",
 		/*[3]*/"e.g. oranges, apples" : "e.g. oranges, apples",
 		/*[4]*/"i.e. oranges, apples" : "i.e. oranges, apples",
 		"„Хто ті дав?" : "„Хто ті дав?",
