@@ -1,7 +1,7 @@
 # Changelog for Typopo
 
 
-## 2016-12
+## 2016-12-04
 * 1.0.5
 * New stuff
   * correct spelling of e.g. and i.e.
