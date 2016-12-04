@@ -1,10 +1,10 @@
 # Backlog for typopo
 
-## 1.0.6
+## 1.0.7
 * add more use-cases for apostrophes, primes, etc.
 * fix accidental swapping of single quotes in Rusyn language with punctuation
 
-## 1.0.7
+## 1.0.8
 * fix false positives for URL www. Tota. Sk (ie. skip URLs from parsing)
 * review algorithms with spaces and adjust them to work with all kinds of spaces
 	* remove_space_before_punctuation()
