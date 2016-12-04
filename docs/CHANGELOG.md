@@ -6,8 +6,9 @@
 * New stuff
   * correct spelling of e.g. and i.e.
   * add narrow non-breaking spaces and hair spaces around em dash
+  * remove extra punctuation, e.g. “Hey!,” she said. → “Hey!” she said.
 * Code update
-  * increase code readability by translating different spaces to variables
+  * increase code readability by translating different spaces into variables
 
 ## 2016-08-29
   * 1.0.4

@@ -1,11 +1,8 @@
-Backlog for typopo
-
-## 1.0.5
-* fix extra punctuation in direct speech, ie. "?,", "!,", ".,", ...
-* make fixing i.e., e.g. by removing them before replacement and pasting them after replacement + make a initial support for such exceptions
+# Backlog for typopo
 
 ## 1.0.6
 * add more use-cases for apostrophes, primes, etc.
+* fix accidental swapping of single quotes in Rusyn language with punctuation
 
 ## 1.0.7
 * fix false positives for URL www. Tota. Sk (ie. skip URLs from parsing)
@@ -15,6 +12,7 @@ Backlog for typopo
 	* remove_trailing_spaces()
 	* remove_spaces_at_paragraph_beginning()
 	* space_ellispsis_around_commas()
+* review how punctuation is handled and make it more robust
 
 ## Backlog pool
 * correct numeral format

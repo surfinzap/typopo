@@ -8,6 +8,8 @@ Typopo:
 	* between words and paragraphs
 	* before or after a punctuation
 	* around ellipsis and aposiopesis, when applicable
+* removes:
+	* extra punctuation typed in accidentally
 * corrects:
 	* double quotes
 	* single quotes (with assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages) and in pairs)

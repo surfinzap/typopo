@@ -151,7 +151,7 @@
 
 
 
-		// replace x by itself by a multiplier ×
+		// replace x with a multiplier ×
 		// set up correct typography for multiplication sign
 		"5 mm x 5 mm" : "5 mm × 5 mm",
 		"5cm x 5cm" : "5cm × 5cm",
@@ -193,8 +193,8 @@
 		"Jedna skončila. яe, čo?" : "Jedna skončila. Яe, čo?",
 		/*[1]*/"V Jednotě je… silný zápach." : "V Jednotě je… silný zápach.",
 		/*[2]*/"Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let." : "Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let.",
-		/*[3]*/"e.g. oranges, apples" : "e.g. oranges, apples",
-		/*[4]*/"i.e. oranges, apples" : "i.e. oranges, apples",
+		/*[3]*/"e.g. oranges, apples" : "e.g. oranges, apples",
+		/*[4]*/"i.e. oranges, apples" : "i.e. oranges, apples",
 		"„Хто ті дав?" : "„Хто ті дав?",
 
 		// correct accidental upper case
@@ -228,6 +228,9 @@
 
 
 	typos__en = {
+			/*
+					Quotation marks
+			*/
 			// correct “US English double quotation marks”
 			"English „English„ „English„ English" : "English “English” “English” English",
 			"“English double quotation marks“" : "“English double quotation marks”",
@@ -256,17 +259,23 @@
 			// remove space when aposiopesis is followed by punctuation
 			"“Sentence and… ”" : "“Sentence and…”",
 
+			// remove extra sentence punctuation
+			// some people tend to do extra comma after other punctuation
+			// it happens often in direct speech, e.g.:
+			"“Hey!,” she said" : "“Hey!” she said",
+
+
 			// spell e.g. and i.e. correctly (incl. false positives)
-			"E. g. something" : "e.g. something",
-			"E. G. something" : "e.g. something",
-			"E.G. something" : "e.g. something",
-			"eg. something" : "e.g. something",
-			"eg something" : "e.g. something",
-			"I. e. something" : "i.e. something",
-			"I. E. something" : "i.e. something",
-			"I.E. something" : "i.e. something",
-			"ie. something" : "i.e. something",
-			"ie something" : "i.e. something",
+			"E. g. something" : "e.g. something",
+			"E. G. something" : "e.g. something",
+			"E.G. something" : "e.g. something",
+			"eg. something" : "e.g. something",
+			"eg something" : "e.g. something",
+			"I. e. something" : "i.e. something",
+			"I. E. something" : "i.e. something",
+			"I.E. something" : "i.e. something",
+			"ie. something" : "i.e. something",
+			"ie something" : "i.e. something",
 			"brie cheese" : "brie cheese",
 			"Greg Snow" : "Greg Snow",
 			"eggnog" : "eggnog",

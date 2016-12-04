@@ -30,6 +30,9 @@ var nbsp = " ";
 var hair_space = " "; //&#8202;
 var narrow_nbsp = " "; //&#8239;
 var spaces = space + nbsp + hair_space + narrow_nbsp;
+var sentence_punctuation = "\,\.\!\?\:\;"; // there is no ellipsis in the set as it is being used throughout a sentence in the middle. Rethink this group to split it into end-sentence punctuation and middle sentence punctuation
+
+
 
 function replace_symbols(string) {
 	for (var rule in essential_set) {
@@ -201,8 +204,8 @@ function start_sentence_w_capital_letter(string) {
 	// Correct sentence case in the middle of the string
 	// find all lowercase letters after sentence punctuation, then replace them
 	// with uppercase variant by calling another replace function
-	// Exceptions: dates, numerical values, i.e., e.g.,
-	pattern = "([^0-9|i.e.|e.g.])([\\.\\?\\!] )(["+ lowercase_chars_en_sk_cz_rue +"])";
+	// Exceptions: dates, numerical values
+	pattern = "([^0-9])([\\.\\?\\!] )(["+ lowercase_chars_en_sk_cz_rue +"])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, function($0, $1, $2, $3){
 			return $1 + $2 + $3.toUpperCase();
@@ -401,7 +404,7 @@ function correct_spaces_around_aposiopesis(string) {
 /*
 	Identifies intended use of apostrophes and single quotes and adjusts them accordingly.
 
-	Assumptions (meaning that author will use quotes in the following manner):
+	Assumptions (that author will use quotes in the following manner):
 	* Double quotes are used in pairs
 	* Single quotes are used in pairs
 	* Single quotes are used as secondary (ie. within double quotes, which is a convention for currently supported languages — en-US, sk, cs, rue — https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages)
@@ -414,7 +417,7 @@ function correct_spaces_around_aposiopesis(string) {
 		* identify all left-single quote and right-single-quote adepts
 		* identify single quote pairs
 	* identify the rest of apostrophes
-	* replace identified characters accordingly:
+	* replace identified characters accordingly
 
 	@param {string} string — input text for identification
 	@param {string} language — language options
@@ -463,23 +466,61 @@ function space_ellispsis_around_commas(string) {
 
 
 /*
-	Identifies incorrect spelling of e.g. and i.e. and replaces it with a correct one
+	Identifies differently-spelled e.g. and i.e. and replaces it with {eg}, {ie}
 
-	Even though replacement occurs in one language, we run it though it all languages as it is interdependent with following functions:
-	start_sentence_w_capital_letter()
-
-	@param {string} string — input text for identification
-	@returns {string} — corrected output
+	@param {string} input text for identification
+	@returns {string} corrected output
 */
-function correct_eg_ie(string) {
-	string = string.replace(/\b[eE]\.? ?[gG]\.? ?\b/g, "e.g. ");
-	string = string.replace(/\b[iI]\.? ?[eE]\.? ?\b/g, "i.e. ");
+function identify_eg_ie(string) {
+	string = string.replace(/\b[eE]\.? ?[gG]\.? ?\b/g, "{eg}" + nbsp);
+	string = string.replace(/\b[iI]\.? ?[eE]\.? ?\b/g, "{ie}" + nbsp);
 	return string;
 }
 
 
 
-// supported languages: en, sk, cs, rue
+/*
+	Replaces {eg}, {ie} wiht e.g., i.e.
+
+	@param {string} input text for identification
+	@returns {string} corrected output
+*/
+function place_eg_ie(string) {
+	string = string.replace(/{eg}/g, "e.g.");
+	string = string.replace(/{ie}/g, "i.e.");
+	return string;
+}
+
+
+
+/*
+	Removes extra punctuation
+
+	People tend to type in unnecessary punctuation, here are the observed cases:
+	[1] extra comma after punctuation in direct speech, e.g. "“Hey!,” she said"
+
+	@param {string} input text for correction
+	@returns {string} — corrected output
+*/
+function remove_extra_punctuation(string) {
+	// [1]
+	var pattern = "([" + sentence_punctuation + "])([\,])";
+	var re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1")
+
+	return string;
+}
+
+
+
+/*
+	Corrrect typos in the predefined order
+
+
+	@param {string} input text for correction
+	@param {language} language option to correct specific typos; supported languages: en, sk, cs, rue. if not specified, English typos are corrected
+	@returns {string} — corrected output
+*/
 function correct_typos(string, language) {
 	language = (typeof language === "undefined") ? "en" : language;
 
@@ -491,7 +532,7 @@ function correct_typos(string, language) {
 	string = swap_quotes_and_punctuation(string);
 
 	// needs to go before punctuation fixes
-	string = correct_eg_ie(string);
+	string = identify_eg_ie(string);
 
 	string = remove_space_after_double_quotes(string, language);
 	string = remove_space_before_double_quotes(string, language);
@@ -509,15 +550,16 @@ function correct_typos(string, language) {
 	string = space_ellispsis_around_commas(string);
 	string = correct_spaces_around_aposiopesis(string);
 
+	string = remove_extra_punctuation(string);
+
 	string = replace_hyphen_with_dash(string);
 	string = replace_dash_with_hyphen(string);
 
 	string = start_sentence_w_capital_letter(string);
 	string = correct_accidental_uppercase(string);
 
-	// functions add_space_before_punctuation(), add_space_after_punctuation()
-	// break e.g., i.e. down, so that's why we're calling this function twice
-	string = correct_eg_ie(string);
+	// placing identified e.g., i.e. after punctuation fixes
+	string = place_eg_ie(string);
 
 	return string;
 }
