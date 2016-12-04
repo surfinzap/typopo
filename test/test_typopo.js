@@ -161,17 +161,17 @@
 
 
 		// replace hyphen or en dash with em dash
-		"and - she said" : "and — she said",
+		"and - she said" : "and — she said",
 		"Brno--Praha" : "Brno–Praha",
-		"and --- she said" : "and — she said",
-		"and – she said" : "and — she said",
-		"vopros - što" : "vopros — što",
+		"and --- she said" : "and — she said",
+		"and – she said" : "and — she said",
+		"vopros - što" : "vopros — što",
 
 		// remove too many new lines between paragraphs
 		"something here\nand over there\n\nand over there\n\n\nand over there" : "something here\nand over there\nand over there\nand over there",
 
 		// correct apostrophes
-		// "Fish 'n' Chips" : "Fish ’n’ Chips",
+		// TBD "Fish 'n' Chips" : "Fish ’n’ Chips",
 		"Hers'" : "Hers’",
 		"INCHEBA '89" : "INCHEBA ’89",
 		"69'ers" : "69’ers",
@@ -204,7 +204,7 @@
 		"How about ABC?" : "How about ABC?",
 		"cAPSLOCK" : "capslock",
 		"tesT" : "test",
-		"Central Europe and Cyrillic tests — aĎiÉuБuГ" : "Central Europe and Cyrillic tests — aďiéuбuг",
+		"Central Europe and Cyrillic tests: aĎiÉuБuГ" : "Central Europe and Cyrillic tests: aďiéuбuг",
 
 		//correct dash for hyphen
 		"two—year—old child" : "two-year-old child",

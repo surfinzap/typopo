@@ -1,15 +1,20 @@
 Backlog for typopo
 
 ## 1.0.5
+* fix extra punctuation in direct speech, ie. "?,", "!,", ".,", ...
 * make fixing i.e., e.g. by removing them before replacement and pasting them after replacement + make a initial support for such exceptions
-* double-check em rules for english language
-* add nbsp before/after dash, depending on its preferred position at the end of the paragraph
-* differentiate em rules for english language and other languages
-* add more use-cases for apostrophes, primes, etc.
 
 ## 1.0.6
+* add more use-cases for apostrophes, primes, etc.
+
+## 1.0.7
 * fix false positives for URL www. Tota. Sk (ie. skip URLs from parsing)
-* fix extra punctuation in direct speech, ie. "?,", "!,", ".,", ...
+* review algorithms with spaces and adjust them to work with all kinds of spaces
+	* remove_space_before_punctuation()
+	* remove_space_after_punctuation()
+	* remove_trailing_spaces()
+	* remove_spaces_at_paragraph_beginning()
+	* space_ellispsis_around_commas()
 
 ## Backlog pool
 * correct numeral format
@@ -27,5 +32,4 @@ Backlog for typopo
 * rethink swapping interunction based on context, ie. http://prirucka.ujc.cas.cz/?id=162
 * change „… да святить ся into „…да святить ся
 * Але теперь‚… is incorrectly corrected into Але теперь’…
-* „Joj! Što to?!“– Ďivčata s’a storhly > „Joj! Što to?!“ — Ďivčata s’a storhly
 * behavior: (once) people use lower single quote instead of comma

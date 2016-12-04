@@ -25,7 +25,7 @@ Typopo:
 	* (tm) or (TM) with ™
 	* +- or -+ with ±
 
-Take a look at [Roadmap](#roadmap) to see whatʼs planned next or give me [feedback](#feedback) on what could be improved.
+Give me [feedback](#feedback) on what should be improved.
 
 ## Usage & Demo
 
@@ -67,12 +67,6 @@ supported languages:
 * "cs" (Czech)
 
 
-
-
-## Roadmap
-These are few things Iʼm planning to do, help me figure out whatʼs important to you, give me [feedback](#Feedback)
-* include autocorrect for other common typos (examples & tips are more than welcome)
-* figure out the primary distribution (JS lib, NPM package, InDesign plugin, GDocs plugin or else?)
 
 ## Feedback
 Iʼd love to hear:

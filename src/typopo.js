@@ -25,6 +25,11 @@ var lowercase_chars_en_sk_cz_rue = "a-záäčďéěíĺľňóôöőŕřšťúü�
 var uppercase_chars_en_sk_cz_rue = "A-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ";
 var single_quote_adepts = "‚|'|‘|’|‛|‹|›";
 var double_quote_adepts = "„|“|”|\"|«|»|,{2,}|‘{2,}|’{2,}|'{2,}|‹{2,}|›{2,}";
+var space = " ";
+var nbsp = " ";
+var hair_space = " "; //&#8202;
+var narrow_nbsp = " "; //&#8239;
+var spaces = space + nbsp + hair_space + narrow_nbsp;
 
 function replace_symbols(string) {
 	for (var rule in essential_set) {
@@ -86,8 +91,11 @@ function replace_hyphen_with_dash(string) {
 	// replace 2 hyphens with en dash
 	string = string.replace(/(--)/g, "–");
 
-	//replace en dash with em dash, when appropriate
-	string = string.replace(/( [-|–] )/g, " — ");
+	//replace en dash with em dash, when appropriate and set proper spacing
+	var pattern = "[" + spaces + "][-|–|—][" + spaces + "]";
+	var re = new RegExp(pattern, "g");
+	var replacement = narrow_nbsp + "—" + hair_space;
+	string = string.replace(re, replacement);
 
 	return string;
 }
@@ -227,25 +235,30 @@ function correct_accidental_uppercase(string) {
 */
 function consolidate_nbsp(string) {
 	// removes non-breaking spaces between multi-character words
-	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})([ ])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})";
+	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})(["+ nbsp + narrow_nbsp +"])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})";
 	var re = new RegExp(pattern, "g");
 	string =  string.replace(re, "$1 $3");
-	string =  string.replace(re, "$1 $3");
+	string =  string.replace(re, "$1 $3"); //calling it twice to catch odd/even occurences
 
 
 	// adds non-breaking spaces after numerals
 	pattern = "([0-9]+)( )(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+)";
 	re = new RegExp(pattern, "g");
-	string =  string.replace(re, "$1 $3");
+	var replacement = "$1" + nbsp + "$3";
+	string =  string.replace(re, replacement);
 
 	// adds non-breaking spaces around ×
-	string = string.replace(/([ ])([×])([ ])/g, " $2 ");
+	pattern = "([" + spaces + "])([×])([" + spaces + "])";
+	re = new RegExp(pattern, "g");
+	replacement = nbsp + "$2" + nbsp;
+	string = string.replace(re, replacement);
 
 	// adds non-breaking spaces after single-character prepositions
-	pattern = "([  ])([aviuoszkAVIUOSZKїєавіуосзкюяЇЄАВІУОСЗКЮЯ]|&)( )";
+	pattern = "([  ])([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]|&)( )";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$2 ");
-	string = string.replace(re, "$1$2 "); //called twice to catch odd and even occurences
+	replacement = "$1$2" + nbsp;
+	string = string.replace(re, replacement);
+	string = string.replace(re, replacement); //calling it twice to catch odd/even occurences
 
 	return string;
 }
