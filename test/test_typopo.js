@@ -7,7 +7,7 @@
 
 	typos__generic = {
 		/*
-				Basic string replacements
+			Basic string replacements
 		*/
 		"(C) (C)" : "© ©",
 		"(c) (c)" : "© ©",
@@ -19,21 +19,30 @@
 		"-+ -+" :"± ±",
 
 
+		/*
+			Utility tests
+
+			We are using temporary {variables} in curly brackets as text replacement in some functions.
+			We have included couple of tests to make sure that variables in curly brackets do not change as we carry other replacements.
+		*/
+		"{test-variable}" : "{test-variable}",
+		"{test-variable} at the beginning of the sentence." : "{test-variable} at the beginning of the sentence.",
+		"And {test-variable} in the middle of the sentence." : "And {test-variable} in the middle of the sentence.",
 
 		/*
-				Ellipsis & Aposiopesis
+			Ellipsis & Aposiopesis
 
 
-				Ellipsis (as a character) is used for 2 different purposes
-				— as an ellipsis to ommit a piece of information deliberately
-				— as an aposiopesis; a figure of speech wherein a sentence is deliberately broken off and left unfinished
+			Ellipsis (as a character) is used for 2 different purposes
+			— as an ellipsis to ommit a piece of information deliberately
+			— as an aposiopesis; a figure of speech wherein a sentence is deliberately broken off and left unfinished
 
-				Ellipsis & Aposiopesis require different use of spacing around them — that is why we cannot cover all cases for proper spacing as we are missing context. However, we can still correct some typographic errors
+			Ellipsis & Aposiopesis require different use of spacing around them — that is why we cannot cover all cases for proper spacing as we are missing context. However, we can still correct some typographic errors
 
-				sources
-				https://en.wikipedia.org/wiki/Ellipsis
-				https://en.wikipedia.org/wiki/Aposiopesis
-				http://www.liteera.cz/slovnik/vypustka
+			sources
+			https://en.wikipedia.org/wiki/Ellipsis
+			https://en.wikipedia.org/wiki/Aposiopesis
+			http://www.liteera.cz/slovnik/vypustka
 		*/
 		/* replace 2 and more periods with an ellipsis …*/
 		"Sentence .. another sentence" : "Sentence … another sentence",

@@ -472,8 +472,14 @@ function space_ellispsis_around_commas(string) {
 	@returns {string} corrected output
 */
 function identify_eg_ie(string) {
-	string = string.replace(/\b[eE]\.? ?[gG]\.? ?\b/g, "{eg}" + nbsp);
-	string = string.replace(/\b[iI]\.? ?[eE]\.? ?\b/g, "{ie}" + nbsp);
+	var pattern = "\\b[eE]\\.?["+ spaces +"]?[gG]\\.?["+ spaces +"]?[^" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]";
+	var re = new RegExp(pattern, "g");
+	string = string.replace(re, "{eg}");
+
+	var pattern = "\\b[iI]\\.?["+ spaces +"]?[eE]\\.?["+ spaces +"]?[^" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]";
+	var re = new RegExp(pattern, "g");
+	string = string.replace(re, "{ie}");
+
 	return string;
 }
 
@@ -486,8 +492,8 @@ function identify_eg_ie(string) {
 	@returns {string} corrected output
 */
 function place_eg_ie(string) {
-	string = string.replace(/{eg}/g, "e.g.");
-	string = string.replace(/{ie}/g, "i.e.");
+	string = string.replace(/{eg}/g, "e.g." + nbsp);
+	string = string.replace(/{ie}/g, "i.e." + nbsp);
 	return string;
 }
 
