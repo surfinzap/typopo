@@ -1,5 +1,5 @@
 /*!
- * Typopo 1.0.5
+ * Typopo 1.0.6
  *
  * Copyright 2015-16 Braňo Šandala
  * Released under the MIT license
@@ -190,7 +190,7 @@ function remove_spaces_at_paragraph_beginning(string) {
 
 	Comments
 	[1] Note that "{" in regex is to catch variables in curly brackets that may appear at the beginning of the sentence. It is to prevent capitalization of the next letter which in this case would be a variable name
-		
+
 	@param {string} input text for identification
 	@returns {string} output with capitalized first letter of each sentence
 */
