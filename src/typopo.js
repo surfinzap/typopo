@@ -185,12 +185,20 @@ function remove_spaces_at_paragraph_beginning(string) {
 }
 
 
+/*
+	Changes small letters at the beginning of the sentence to upper case
 
+	Comments
+	[1] Note that "{" in regex is to catch variables in curly brackets that may appear at the beginning of the sentence. It is to prevent capitalization of the next letter which in this case would be a variable name
+		
+	@param {string} input text for identification
+	@returns {string} output with capitalized first letter of each sentence
+*/
 function start_sentence_w_capital_letter(string) {
-	// Correct sentence for the first initial sentence
+	// Correct capital letter in the first sentence of the paragraph
 	var lines = string.match(/[^\r\n]+/g);
 	var lines_count = lines.length;
-	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])(.+?)([…\\.\\?\\!])";
+	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"{])(.+?)([…\\.\\?\\!])"; //[1]
 	var re = new RegExp(pattern);
 
 	for (var i = 0; i < lines_count; i++) {
