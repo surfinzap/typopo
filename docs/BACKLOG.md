@@ -13,6 +13,7 @@
 	* remove_spaces_at_paragraph_beginning()
 	* space_ellispsis_around_commas()
 * review how punctuation is handled and make it more robust
+* fix space after arc
 
 ## Backlog pool
 * correct numeral format
@@ -27,7 +28,7 @@
 				* 5 - 6
 				* wrong numeral format
 
-* rethink swapping interunction based on context, ie. http://prirucka.ujc.cas.cz/?id=162
+* rethink swapping interpunction based on context, ie. http://prirucka.ujc.cas.cz/?id=162
 * change „… да святить ся into „…да святить ся
 * Але теперь‚… is incorrectly corrected into Але теперь’…
 * behavior: (once) people use lower single quote instead of comma

@@ -90,7 +90,7 @@
 
 
 		/*
-				Handling of spaces
+				Handling spaces
 		*/
 		// replace multiple spaces with a single one
 		"How  many spaces" : "How many spaces",
@@ -133,7 +133,7 @@
 
 
 		/*
-			Handling of non-breaking spaces
+			Handling non-breaking spaces
 
 			[1] Add non-breaking space after single letter prepositions
 			[2] False positive — do not add nbsp between multicharacter words
@@ -159,7 +159,6 @@
 
 
 
-
 		// replace x with a multiplier ×
 		// set up correct typography for multiplication sign
 		"5 mm x 5 mm" : "5 mm × 5 mm",
@@ -167,6 +166,7 @@
 		"5 x 4" : "5 × 4",
 		"12x3" : "12 × 3",
 		"12×3" : "12 × 3",
+
 
 
 		// replace hyphen or en dash with em dash
@@ -180,10 +180,17 @@
 		"something here\nand over there\n\nand over there\n\n\nand over there" : "something here\nand over there\nand over there\nand over there",
 
 		// correct apostrophes
-		// TBD "Fish 'n' Chips" : "Fish ’n’ Chips",
+		"Fish 'n' Chips" : "Fish ’n’ Chips",
+		"Find 'em!" : "Find ’em!",
+		"Just 'cause I wanna." : "Just ’cause I wanna.",
+		"'Tis the season" : "’Tis the season",
+		"'Twas the Night Before Christmas" : "’Twas the Night Before Christmas",
+		"'Til The Season Comes 'Round Again" : "’Til The Season Comes ’Round Again",
 		"Hers'" : "Hers’",
 		"INCHEBA '89" : "INCHEBA ’89",
 		"69'ers" : "69’ers",
+		"iPhone6's" : "iPhone6’s",
+		"1990's" : "1990’s",
 
 
 		/*
@@ -204,7 +211,6 @@
 		/*[2]*/"Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let." : "Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let.",
 		/*[3]*/"e.g. oranges, apples" : "e.g. oranges, apples",
 		/*[4]*/"i.e. oranges, apples" : "i.e. oranges, apples",
-		"„Хто ті дав?" : "„Хто ті дав?",
 
 		// correct accidental upper case
 		"HEy, JennIFer!" : "Hey, Jennifer!",
@@ -252,6 +258,29 @@
 			"Let's test this: \"however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said\"" : "Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
 			"within double quotes “there are single 'quotes with mix’d punctuation,' you see.”" : "Within double quotes “there are single ‘quotes with mix’d punctuation,’ you see.”",
 
+			// Use-cases for mixing double quotes and primes
+			"He said: \"Here's 12\" record.\"" : "He said: “Here’s 12″ record.”",
+			"He said: \"He was 12.\"" : "He said: “He was 12.”", //false positive
+			//error of wrongly identified primes due to swapped punctuation
+			"He said: \"He was 12\". And then he added: \"Maybe he was 13\"." : "He said: “He was 12.” And then he added: “Maybe he was 13.”",
+
+			// Best-effort for unclosed double quotes
+			"\"Even when left double quote is missing its right counterpart." : "“Even when left double quote is missing its right counterpart.",
+			"Even when right double quote is missing its left counterpart.\"" : "Even when right double quote is missing its left counterpart.”",
+			"We’ll remove a quote, \" when it is hanging spaced around in the middle" : "We’ll remove a quote, when it is hanging spaced around in the middle",
+
+			// Mixing quotes and primes
+			"12' 45\"" : "12′ 45″",
+			"3° 5' 30\"" : "3° 5′ 30″",
+
+			// Improperly spaced primes
+			"12 ′ 45 ″" : "12′ 45″",
+			"3 ° 5 ′ 30 ″" : "3° 5′ 30″",
+
+
+
+
+
 			// swap quotes for punctuation .,?!
 			"hey”," : "hey,”",
 			"Hey”." : "Hey.”",
@@ -272,6 +301,9 @@
 			// some people tend to do extra comma after other punctuation
 			// it happens often in direct speech, e.g.:
 			"“Hey!,” she said" : "“Hey!” she said",
+
+			// Start a sentence with a capital letter
+			"“Хто ті дав?”" : "“Хто ті дав?”",
 
 
 			// spell e.g. and i.e. correctly (incl. false positives)
@@ -313,6 +345,7 @@
 		"Within double quotes „there are single ‚quotes with mixed punctuation‘, you see“" : "Within double quotes „there are single ‚quotes with mixed punctuation,‘ you see“",
 		"Within double quotes „there are single ‚quotes with mixed punctuation‘? you see“" : "Within double quotes „there are single ‚quotes with mixed punctuation?‘ you see“",
 		"Within double quotes „there are single 'quotes with mix’d punctuation,' you see.“" : "Within double quotes „there are single ‚quotes with mix’d punctuation,‘ you see.“",
+		"„Och, što teper’?!“ obertaly s’a skoro kolečka Myž’ovy v holovi." : "„Och, što teper’?!“ obertaly s’a skoro kolečka Myž’ovy v holovi.", //false positive
 
 		// remove extra spaces along „Slovak, Rusyn, Czech double quotation marks“
 		"„ Ups, an extra space at the beginning“" : "„Ups, an extra space at the beginning“",

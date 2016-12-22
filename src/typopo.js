@@ -7,7 +7,13 @@
  * Date: 2016-12-04
  */
 
+
 (function(){
+
+/*----------------------------------------------------------------------------*\
+	Variables & Character replacement sets
+\*----------------------------------------------------------------------------*/
+
 var essential_set = {
 	"\\(C\\)": "©",
 	"\\(c\\)": "©",
@@ -23,16 +29,24 @@ var essential_set = {
 
 var lowercase_chars_en_sk_cz_rue = "a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
 var uppercase_chars_en_sk_cz_rue = "A-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ";
-var single_quote_adepts = "‚|'|‘|’|‛|‹|›";
-var double_quote_adepts = "„|“|”|\"|«|»|,{2,}|‘{2,}|’{2,}|'{2,}|‹{2,}|›{2,}";
+var single_quote_adepts = "‚|'|‘|’|‛|′|‹|›";
+var double_quote_adepts = "„|“|”|\"|«|»|″|,{2,}|‘{2,}|’{2,}|'{2,}|‹{2,}|›{2,}|′{2,}";
 var space = " ";
 var nbsp = " ";
 var hair_space = " "; //&#8202;
 var narrow_nbsp = " "; //&#8239;
 var spaces = space + nbsp + hair_space + narrow_nbsp;
 var sentence_punctuation = "\,\.\!\?\:\;"; // there is no ellipsis in the set as it is being used throughout a sentence in the middle. Rethink this group to split it into end-sentence punctuation and middle sentence punctuation
+var ellipsis = "…";
 
 
+
+
+
+
+/*----------------------------------------------------------------------------*\
+	Esential replacements
+\*----------------------------------------------------------------------------*/
 
 function replace_symbols(string) {
 	for (var rule in essential_set) {
@@ -69,6 +83,218 @@ function correct_double_quotes(string, language) {
 	case "en":
 		return string.replace(re, "“$2”");
 	}
+}
+
+
+
+
+
+
+/*----------------------------------------------------------------------------*\
+	Quotes, primes & apostrophes
+\*----------------------------------------------------------------------------*/
+
+
+
+/*
+	Corrects improper use of double quotes and double primes
+
+	Assumptions and Limitations
+	This function assumes that double quotes are always used in pair,
+	i.e. authors did not forget to close double quotes in their text.
+
+	Algorithm
+	[1] Swap right double quote adepts with a punctuation
+	    (this comes first as it is a quite common mistake that may eventually
+		  lead to improper identification of double primes)
+	[2] Identify inches, arcseconds, seconds
+	[3] Identify closed double quotes
+	[4] Identify the rest as unclosed double quotes (best-effort replacement)
+	[5] Fix spacing around quotes and primes
+	[6] Replace all identified punctuation with appropriate punctuation in
+	    given language
+
+	@param {string} string — input text for identification
+	@param {string} language — language option
+	@returns {string} output with properly replaces double qoutes and double primes
+*/
+function correct_double_quotes_and_primes(string, language) {
+
+	/* [1] Swap right double quote adepts with a punctuation */
+	var pattern = "("+ double_quote_adepts + ")([\.,!?])";
+	var re = new RegExp(pattern, "g");
+	string = string.replace(re, '$2$1');
+
+
+	/* [2] Identify inches, arcseconds, seconds */
+	string = string.replace(/(\d ?)(“|”|\"|″|‘{2,}|’{2,}|'{2,}|′{2,})/g, "$1{typopo__double-prime}");
+
+
+	/* [3] Identify closed double quotes */
+	pattern = "(" + double_quote_adepts + ")(.*?)(" + double_quote_adepts + ")";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "{typopo__left-double-quote}$2{typopo__right-double-quote}");
+
+
+	/* [4.1] Identify unclosed left double quote */
+	pattern = "(" + double_quote_adepts + ")([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "{typopo__left-double-quote}$2");
+
+
+	/* [4.2] Identify unclosed right double quote */
+	pattern = "([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + sentence_punctuation + ellipsis + "])(" + double_quote_adepts + ")";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1{typopo__right-double-quote}");
+
+
+	/* [4.3] Remove remaining unidentified double quote */
+	pattern = "([" + spaces + "])(" + double_quote_adepts + ")([" + spaces + "])";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1$3");
+
+
+	/* [5] Fix spacing around quotes and prime */
+	string = string.replace(/({typopo__left-double-quote})( )/g, "$1");
+	string = string.replace(/( )({typopo__right-double-quote})/g, "$2");
+	string = string.replace(/( )({typopo__double-prime})/g, "$2");
+
+
+	/* [6] Punctuation replacement */
+	string = string.replace(/({typopo__double-prime})/g, "″");
+
+	switch (language) {
+		case "rue":
+			string = string.replace(/({typopo__left-double-quote})/g, "«");
+			string = string.replace(/({typopo__right-double-quote})/g, "»");
+		case "sk":
+		case "cs":
+			string = string.replace(/({typopo__left-double-quote})/g, "„");
+			string = string.replace(/({typopo__right-double-quote})/g, "“");
+		case "en":
+			string = string.replace(/({typopo__left-double-quote})/g, "“");
+			string = string.replace(/({typopo__right-double-quote})/g, "”");
+	}
+
+	return string;
+}
+
+
+/*
+	Corrects improper use of single quotes, single primes and apostrophes
+
+	Assumptions and Limitations
+	This function assumes that double quotes are always used in pair,
+	i.e. authors did not forget to close double quotes in their text.
+	Further, single quotes are used as secondary and they're properly spaced,
+	e.g. ␣'word or sentence portion'␣ (and not like ␣'␣word␣'␣)
+
+	Algorithm
+	[1] Identify feet, arcminutes, minutes
+	[2] Identify common apostrohe contractions
+	[3] Identify single quotes
+	[4] Identify residual apostrophes that have left
+	[5] Swap right single quote adepts with a puntuation
+			(not primes or apostrohes)
+	?[6] Fix spacing around quotes, primes and apostrophes
+	[7] Replace all identified punctuation with appropriate punctuation in
+	    given language
+
+	@param {string} string — input text for identification
+	@param {string} language — language options
+	@returns {string} — corrected output
+*/
+function correct_single_quotes_primes_and_apostrophes(string, language) {
+
+	// /* [1] Identify feet, arcminutes, minutes */
+	string = string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1{typopo__single-prime}");
+
+
+	/* [2.2] Identify ’n’ contractions */
+	var pattern = "(" + single_quote_adepts + ")(n)(" + single_quote_adepts + ")";
+	var re = new RegExp(pattern, "gi");
+	string = string.replace(re, "{typopo__apostrophe}$2{typopo__apostrophe}");
+
+
+	/* [2.2] Identify common contractions at the beginning or at the end
+					 of the word, e.g. Fish ’n’ Chips, ’em, ’cause,… */
+	var contraction_examples = "em|cause|twas|tis|til|round"
+	pattern = "(" + single_quote_adepts + ")(" + contraction_examples + ")";
+	re = new RegExp(pattern, "gi");
+	string = string.replace(re, "{typopo__apostrophe}$2");
+
+
+	/* [2.3] Identify in-word contractions,
+					 e.g. Don’t, I’m, O’Doole, 69’ers */
+	var character_adepts = "0-9" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue;
+	pattern = "(["+ character_adepts +"])(" + single_quote_adepts + ")(["+ character_adepts +"])";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1{typopo__apostrophe}$3");
+
+
+	/* [2.4] Identify year contractions
+		 e.g. ’70s, INCHEBA ’89,… */
+	pattern = "(" + single_quote_adepts + ")([0-9]{2})";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "{typopo__apostrophe}$2");
+
+
+	/* [3] Identify single quotes within double quotes */
+	pattern = "(" + double_quote_adepts + ")(.*?)(" + double_quote_adepts + ")";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, function($0, $1, $2, $3){
+
+		//identify {typopo__left-single-quote--adept}
+		var pattern = "( )(" + single_quote_adepts + ")(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])";
+		var re = new RegExp(pattern, "g");
+		$2 = $2.replace(re, "$1{typopo__left-single-quote--adept}$3");
+
+		//identify {typopo__right-single-quote--adept}
+		pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])([\.,!?])?(" + single_quote_adepts + ")([ ]|[\.,!?])";
+		re = new RegExp(pattern, "g");
+		$2 = $2.replace(re, "$1$2{typopo__right-single-quote--adept}$4");
+
+		//identify single quote pairs
+		pattern = "({typopo__left-single-quote--adept})(.*?)({typopo__right-single-quote--adept})";
+		re = new RegExp(pattern, "g");
+		$2 = $2.replace(re, "{typopo__left-single-quote}$2{typopo__right-single-quote}");
+
+		return $1 + $2 + $3;
+	});
+
+
+	/* [4] Identify residual apostrophes that have left */
+	pattern = "(" + single_quote_adepts + ")";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "{typopo__apostrophe}");
+
+
+	/* [5] Swap right single quote adepts with a puntuation */
+	pattern = "({typopo__right-single-quote})([\.,!?])";
+	re = new RegExp(pattern, "g");
+	string =  string.replace(re, '$2$1');
+
+
+	/* [7] Punctuation replacement */
+	string = string.replace(/({typopo__single-prime})/g, "′");
+	string = string.replace(/{typopo__apostrophe}|{typopo__left-single-quote--adept}|{typopo__right-single-quote--adept}/g, "’");
+
+	switch (language) {
+	case "rue":
+		string = string.replace(/{typopo__left-single-quote}/g, "‹");
+		string = string.replace(/{typopo__right-single-quote}/g, "›");
+		break;
+	case "sk":
+	case "cs":
+		string = string.replace(/{typopo__left-single-quote}/g, "‚");
+		string = string.replace(/{typopo__right-single-quote}/g, "‘");
+		break;
+	case "en":
+		string = string.replace(/{typopo__left-single-quote}/g, "‘");
+		string = string.replace(/{typopo__right-single-quote}/g, "’");
+	}
+
+	return string;
 }
 
 
@@ -189,7 +415,9 @@ function remove_spaces_at_paragraph_beginning(string) {
 	Changes small letters at the beginning of the sentence to upper case
 
 	Comments
-	[1] Note that "{" in regex is to catch variables in curly brackets that may appear at the beginning of the sentence. It is to prevent capitalization of the next letter which in this case would be a variable name
+	[1] Note that "{" in regex is to catch variables in curly brackets that
+	may appear at the beginning of the sentence. It is to prevent capitalization
+	of the next letter which in this case would be a variable name
 
 	@param {string} input text for identification
 	@returns {string} output with capitalized first letter of each sentence
@@ -306,7 +534,7 @@ function identify_common_apostrophes(string) {
 	string = string.replace(re, "{typopo-apostrophe}$2{typopo-apostrophe}");
 
 	// identify
-	// Don’t, I’m (or other in-word ommision)
+	// Don’t, I’m (or other in-word omission)
 	// O’Doole (or other example of name)
 	// 69’ers
 	pattern = "([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])(" + single_quote_adepts + ")([0-9"+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])";
@@ -484,8 +712,8 @@ function identify_eg_ie(string) {
 	var re = new RegExp(pattern, "g");
 	string = string.replace(re, "{eg}");
 
-	var pattern = "\\b[iI]\\.?["+ spaces +"]?[eE]\\.?["+ spaces +"]?[^" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]";
-	var re = new RegExp(pattern, "g");
+	pattern = "\\b[iI]\\.?["+ spaces +"]?[eE]\\.?["+ spaces +"]?[^" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]";
+	re = new RegExp(pattern, "g");
 	string = string.replace(re, "{ie}");
 
 	return string;
@@ -528,7 +756,7 @@ function remove_extra_punctuation(string) {
 
 
 /*
-	Corrrect typos in the predefined order
+	Correct typos in the predefined order
 
 
 	@param {string} input text for correction
@@ -541,15 +769,26 @@ function correct_typos(string, language) {
 	string = replace_symbols(string, essential_set);
 	string = replace_periods_with_ellipsis(string);
 
-	string = correct_double_quotes(string, language);
-	string = correct_single_quotes_and_apostrophes(string, language);
-	string = swap_quotes_and_punctuation(string);
+	// string = correct_double_quotes(string, language);
+	string = correct_double_quotes_and_primes(string, language);
+	// string = correct_single_quotes_and_apostrophes(string, language);
+	string = correct_single_quotes_primes_and_apostrophes(string, language);
+	// string = swap_quotes_and_punctuation(string);
+
+	// string = remove_space_after_double_quotes(string, language);
+	// string = remove_space_before_double_quotes(string, language);
+
+	/*
+		# Suggested order for the new function correct_quotes()
+
+* ? add nbsp between minutes and seconds
+
+	*/
+
 
 	// needs to go before punctuation fixes
 	string = identify_eg_ie(string);
 
-	string = remove_space_after_double_quotes(string, language);
-	string = remove_space_before_double_quotes(string, language);
 
 	string = correct_multiple_sign(string);
 
