@@ -314,7 +314,7 @@ function replace_dash_with_hyphen(string){
 
 
 function remove_space_before_punctuation(string) {
-	return string.replace(/([ ])([\,\.\!\?\:\;\)\]\}])/g, "$2");
+	return string.replace(/([ ])([\,\.\!\?\:\;\)\]\}°])/g, "$2");
 }
 
 
