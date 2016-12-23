@@ -213,13 +213,12 @@
 		/*[4]*/"i.e. oranges, apples" : "i.e. oranges, apples",
 
 		// correct accidental upper case
-		"HEy, JennIFer!" : "Hey, Jennifer!",
-		"HEy, JeNnIFer!" : "Hey, Jennifer!",
-		"HEy, JENNIFEr!" : "Hey, Jennifer!",
+		"HEy, JEnnifer!" : "Hey, Jennifer!",
 		"How about ABC?" : "How about ABC?",
 		"cAPSLOCK" : "capslock",
-		"tesT" : "test",
-		"Central Europe and Cyrillic tests: aĎiÉuБuГ" : "Central Europe and Cyrillic tests: aďiéuбuг",
+		"iPhone" : "iPhone",
+		"iT" : "it",
+		"Central Europe and Cyrillic tests: aĎIÉUБUГ" : "Central Europe and Cyrillic tests: aďiéuбuг",
 
 		//correct dash for hyphen
 		"two—year—old child" : "two-year-old child",

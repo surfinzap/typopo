@@ -397,15 +397,50 @@ function start_sentence_w_capital_letter(string) {
 }
 
 
+/*
+	Corrects accidental uppercase
 
+	Best-effort function to fix most common accidental uppercase errors, namely:
+	[1] 2 first uppercase letters (ie. UPpercase)
+	[2] Swapped cases (ie. uPPERCASE)
+
+	Algorithm does not fix other uppercase eventualities,
+	e.g. mixed case (UppERcaSe) as there are many cases for corporate brands
+	that could potentially match the algorithm as false positive.
+
+	@param {string} string — input text for identification
+	@returns {string} — output with corrected accidental uppercase
+*/
 function correct_accidental_uppercase(string) {
-	// var pattern = "[a-z]+[a-zA-Z]+[A-Z]+|[A-Z]+[a-zA-Z]+[a-z]+|[a-z]+[a-zA-Z]+[a-z]+";
-	var pattern = "["+ lowercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+["+ uppercase_chars_en_sk_cz_rue +"]+|["+ uppercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue +"]+|["+ lowercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+["+ lowercase_chars_en_sk_cz_rue +"]+";
+
+	/* [1] two first uppercase letters (i.e. UPpercase) */
+	var pattern = "["+ uppercase_chars_en_sk_cz_rue +"]{2,2}["+ lowercase_chars_en_sk_cz_rue +"]+";
 	var re = new RegExp(pattern, "g");
-	return string.replace(re, function(string){
+	string = string.replace(re, function(string){
 		return (string.substring(0,1) + string.substring(1).toLowerCase());
 	});
+
+	/* [2.1] Swapped cases (2-letter cases, i.e. iT)
+			Note that this is divided into 2 separate cases as \b in JavaScript regex
+			does not take non-latin characters into a cosnideration
+	*/
+	pattern = "["+ lowercase_chars_en_sk_cz_rue +"]["+ uppercase_chars_en_sk_cz_rue +"]\\b";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, function(string){
+		return (string.substring(0,1) + string.substring(1).toLowerCase());
+	});
+
+	/* [2.2] Swapped cases (n-letter cases, i.e. uPPERCASE) */
+	pattern = "["+ lowercase_chars_en_sk_cz_rue +"]+["+ uppercase_chars_en_sk_cz_rue +"]{2,}";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, function(string){
+		return (string.substring(0,1) + string.substring(1).toLowerCase());
+	});
+
+	return string;
 }
+
+
 
 /*
 	Consolidates the use of non-breaking spaces
@@ -452,7 +487,9 @@ function consolidate_nbsp(string) {
 
 /*
 	Corrects improper spacing around aposiopesis
-	Due to the fact that ellipsis character is being used both as an ellipsis and as an aposiopesis, we are able to auto-correct these scenarios:
+
+	Due to the fact that ellipsis character is being used both as an ellipsis
+	and as an aposiopesis, we are able to auto-correct these scenarios:
 	[1] remove space before aposiopesis, that is ending a sentence
 	[2] remove space when aposiopesis is used at the beginning of the sentence
 
