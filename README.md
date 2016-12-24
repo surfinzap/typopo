@@ -14,7 +14,7 @@ Typopo:
 	* double quotes
 	* single quotes (with assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages) and in pairs)
 	* apostrophes
-	* accidental uPerRCase
+	* accidental uPPERCASE
 	* Capital letter at the beginning of a sentence
 	* spelling of e.g. and i.e.
 	* non-breaking spaces (adds them after one-word prepositions and "&" and removes them between multi-letter words)
@@ -35,12 +35,13 @@ Demo — [http://surfinzap.github.io/typopo/](http://surfinzap.github.io/typopo/
 
 ![alt Typopo auto-correct animation](/docs/typopo-demo.gif?raw=true "Typopo auto-correct animation")
 
-I can imagine that Typopo could be useful in following scenarios:
-* you can copy-paste text into [my demo](http://surfinzap.github.io/typopo/), correct typos according your language and work with the result elsewhere
-* you can call clean-up script everytime one of your editors saves text in a CMS
-* you can hook up a special action in your favorite editor/CMS to correct typos anytime needed; youʼll clean most typos before getting to manual proofreading
-* you can call it once your content is loaded on a website in order to correct typos
-* you can add Typopo to the process of generating a static website
+Typopo is useful in following scenarios:
+* copy-paste text into [my demo](http://surfinzap.github.io/typopo/), correct typos according your language and work with the result elsewhere; this useful especially:
+	* for typesetter, who wants to proofread raw text before pasting into InDesign
+	* for developer, who pastes User Interface messages, as it (besides everything else) replaces programmatic quotes with appropriate ones, and no further work with a text (like escaping characters) is necessary
+* clean-up script every time one of your editors saves text in a CMS
+* trigger an action in your favorite editor/CMS to correct typos anytime needed; youʼll clean most typos before getting to manual proofreading
+* call a script once your web content is loaded on a website to correct typos ad-hoc (or add Typopo to the process of generating a static website)
 
 Where I donʼt see Typopo being used at the moment (but awaiting feedback)
 * to clean your typos in Markdown files (since script is stripping extra spaces between paragraphs)

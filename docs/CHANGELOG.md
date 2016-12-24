@@ -1,6 +1,12 @@
 # Changelog for Typopo
 
 
+## 1.1.0 // 2016-12-24
+* Refactor how double and single quotes, primes and apostrophes are handled, whic results in following improvements
+  * add more use-cases for identifying double/single primes and apostrophes
+  * fix accidental swapping of single quotes in Rusyn language with a punctuation
+  * fix space after arc
+
 ## 2016-12-04
 * 1.0.6
 * fix replacement of i.e., e.g.

@@ -1,8 +1,5 @@
 # Backlog for typopo
 
-## 1.0.7
-* add more use-cases for apostrophes, primes, etc.
-* fix accidental swapping of single quotes in Rusyn language with punctuation
 
 ## 1.0.8
 * fix false positives for URL www. Tota. Sk (ie. skip URLs from parsing)
@@ -13,7 +10,6 @@
 	* remove_spaces_at_paragraph_beginning()
 	* space_ellispsis_around_commas()
 * review how punctuation is handled and make it more robust
-* fix space after arc
 
 ## Backlog pool
 * correct numeral format
@@ -30,5 +26,5 @@
 
 * rethink swapping interpunction based on context, ie. http://prirucka.ujc.cas.cz/?id=162
 * change „… да святить ся into „…да святить ся
-* Але теперь‚… is incorrectly corrected into Але теперь’…
+* Але теперь‚… is incorrectly corrected into Але теперь’… (issue left-single quote is incorrectly used instead of comma)
 * behavior: (once) people use lower single quote instead of comma
