@@ -38,10 +38,63 @@ var narrow_nbsp = " "; //&#8239;
 var spaces = space + nbsp + hair_space + narrow_nbsp;
 var sentence_punctuation = "\,\.\!\?\:\;"; // there is no ellipsis in the set as it is being used throughout a sentence in the middle. Rethink this group to split it into end-sentence punctuation and middle sentence punctuation
 var ellipsis = "…";
+/*
+	Source for web_url_pattern, email_address_pattern
+	http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/2.0_r1/android/text/util/Regex.java#Regex.0WEB_URL_PATTERN
+*/
+var web_url_pattern = "((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)" +
+                      "\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,64}(?:\\:(?:[a-zA-Z0-9\\$\\-\\_" +
+                      "\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,25})?\\@)?)?" +
+                      "((?:(?:[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}\\.)+" +  // named host
+                      "(?:" + // plus top level domain
+                      "(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])" +
+                      "|(?:biz|b[abdefghijmnorstvwyz])" +
+                      "|(?:cat|com|coop|c[acdfghiklmnoruvxyz])" +
+                      "|d[ejkmoz]" +
+                      "|(?:edu|e[cegrstu])" +
+                      "|f[ijkmor]" +
+                      "|(?:gov|g[abdefghilmnpqrstuwy])" +
+                      "|h[kmnrtu]" +
+                      "|(?:info|int|i[delmnoqrst])" +
+                      "|(?:jobs|j[emop])" +
+                      "|k[eghimnrwyz]" +
+                      "|l[abcikrstuvy]" +
+                      "|(?:mil|mobi|museum|m[acdghklmnopqrstuvwxyz])" +
+                      "|(?:name|net|n[acefgilopruz])" +
+                      "|(?:org|om)" +
+                      "|(?:pro|p[aefghklmnrstwy])" +
+                      "|qa" +
+                      "|r[eouw]" +
+                      "|s[abcdeghijklmnortuvyz]" +
+                      "|(?:tel|travel|t[cdfghjklmnoprtvwz])" +
+                      "|u[agkmsyz]" +
+                      "|v[aceginu]" +
+                      "|w[fs]" +
+                      "|y[etu]" +
+                      "|z[amw]))" +
+                      "|(?:(?:25[0-5]|2[0-4]" + // or ip address
+                      "[0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(?:25[0-5]|2[0-4][0-9]" +
+                      "|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1]" +
+                      "[0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}" +
+                      "|[1-9][0-9]|[0-9])))" +
+                      "(?:\\:\\d{1,5})?)" + // plus option port number +
+                      "(\\/(?:(?:[a-zA-Z0-9\\;\\/\\?\\:\\@\\&\\=\\#\\~" + // plus option query params
+                      "\\-\\.\\+\\!\\*\\'\\(\\)\\,\\_])|(?:\\%[a-fA-F0-9]{2}))*)?" +
+                      "(?:\\b|$)"; // and finally, a word boundary or end of
+                                     // input.  This is to stop foo.sure from
+                                     // matching as foo.su
 
 
 
+var email_address_pattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-]{1,256}" +
+            "\\@" +
+            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+            "(" +
+                "\\." +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+            ")+";
 
+var exceptions = [];
 
 
 /*----------------------------------------------------------------------------*\
@@ -588,7 +641,7 @@ function identify_eg_ie(string) {
 
 
 /*
-	Replaces {eg}, {ie} wiht e.g., i.e.
+	Replaces {eg}, {ie} with e.g., i.e.
 
 	@param {string} input text for identification
 	@returns {string} corrected output
@@ -621,6 +674,93 @@ function remove_extra_punctuation(string) {
 
 
 
+
+
+
+/*----------------------------------------------------------------------------*\
+	Exceptions
+\*----------------------------------------------------------------------------*/
+
+
+/*
+	Identifies exceptions that will be ommited from correction of any sort
+
+	Algorithm
+	[1] Identify email adresses
+	[2] Identify web URLs and IPs
+	[3] Mark them as temporary exceptions in format {typopo__exception-[i]}
+
+	@param {string} input text for identification of exceptions
+	@returns {string} — output with identified exceptions in format {typopo__exception-[i]}
+*/
+function identify_exceptions(string) {
+
+	/* [1] Identify email adresses */
+	identify_exception_set(string, email_address_pattern);
+
+
+	/* [2] Identify web URLs and IPs */
+	identify_exception_set(string, web_url_pattern);
+
+
+	/* [3] Mark them as temporary exceptions in format {typopo__exception-[i]} */
+	for (var i = 0; i < exceptions.length; i++) {
+		var replacement = "{typopo__exception-" + i + "}";
+		string = string.replace(exceptions[i], replacement);
+	}
+
+	return string;
+}
+
+
+
+/*
+	Identifies set of exceptions for given pattern
+	Used as helper function for identify_exceptions(string)
+
+	@param {string} input text for identification of exceptions
+	@param {pattern} regular expression pattern to match exception
+*/
+function identify_exception_set(string, pattern) {
+	var re = new RegExp(pattern, "g");
+	var matched_exceptions = string.match(re);
+	if (matched_exceptions != null) {
+		exceptions = exceptions.concat(matched_exceptions);
+	}
+}
+
+
+
+/*
+	Replaces identified exceptions with real ones by change their
+	temporary representation in format {typopo__exception-[i]} with its
+	corresponding representation
+
+	@param {string} input text with identified exceptions
+	@returns {string} output with placed exceptions
+*/
+function place_exceptions(string) {
+	for (var i = 0; i < exceptions.length; i++) {
+		var pattern = "{typopo__exception-" + i + "}"
+		var re = new RegExp(pattern, "g");
+		var replacement = exceptions[i];
+		string = string.replace(re, replacement);
+	}
+
+	return string;
+}
+
+
+
+
+
+
+/*----------------------------------------------------------------------------*\
+	Main script
+\*----------------------------------------------------------------------------*/
+
+
+
 /*
 	Correct typos in the predefined order
 
@@ -631,6 +771,8 @@ function remove_extra_punctuation(string) {
 */
 function correct_typos(string, language) {
 	language = (typeof language === "undefined") ? "en" : language;
+
+	string = identify_exceptions(string);
 
 	string = replace_symbols(string, essential_set);
 	string = replace_periods_with_ellipsis(string);
@@ -663,6 +805,7 @@ function correct_typos(string, language) {
 
 	// placing identified e.g., i.e. after punctuation fixes
 	string = place_eg_ie(string);
+	string = place_exceptions(string);
 
 	return string;
 }
