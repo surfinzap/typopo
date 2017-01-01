@@ -1,6 +1,6 @@
 {
   "name": "typopo",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Typopo is a JavaScript library that saves time by autocorrecting frequent typographic errors in English, Slovak, Czech and Rusyn language. Make your proofreading quicker by auto-correcting the common typos first.",
   "license": "MIT",
   "author": {
@@ -8,7 +8,7 @@
     "email": "surfin.zap@gmail.com"
   },
   "scripts": {
-      "test": "echo \"Tests are run manually via calling test/test_typopo.js functions in browser.\" && exit 1"
+      "test": "echo \"Tests are run manually via calling test/test_typopo.js functions in the browser.\" && exit 1"
   },
   "main": "build/typopo.min.js",
   "repository": {
