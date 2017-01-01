@@ -1,9 +1,7 @@
 # Backlog for typopo
 
-
+## vNext
 * fix false positives for URL www. Tota. Sk (ie. skip URLs from parsing)
-* review algorithms with spaces and adjust them to work with all kinds of spaces
-	* space_ellispsis_around_commas()
 * review how punctuation is handled and make it more robust
 
 ## Backlog pool
@@ -18,8 +16,3 @@
 		* typos
 				* 5 - 6
 				* wrong numeral format
-
-* rethink swapping interpunction based on context, ie. http://prirucka.ujc.cas.cz/?id=162
-* change „… да святить ся into „…да святить ся
-* Але теперь‚… is incorrectly corrected into Але теперь’… (issue left-single quote is incorrectly used instead of comma)
-* behavior: (once) people use lower single quote instead of comma
