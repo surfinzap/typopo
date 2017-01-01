@@ -313,15 +313,30 @@ function replace_dash_with_hyphen(string){
 
 
 
+
+
+
+/*----------------------------------------------------------------------------*\
+	Consolidation of spaces
+\*----------------------------------------------------------------------------*/
+
+
+
 function remove_space_before_punctuation(string) {
-	return string.replace(/([ ])([\,\.\!\?\:\;\)\]\}°])/g, "$2");
+	var pattern = "([" + spaces + "])([\\,\\.\\!\\?\\:\\;\\)\\]\\}°])";
+	var re = new RegExp(pattern, "g");
+	return string.replace(re, "$2");
 }
 
 
 
 function remove_space_after_punctuation(string) {
-	return string.replace(/([\(\[\{])([ ])/g, "$1");
+	var pattern = "([\\(\\[\\{])([" + spaces + "])";
+	var re = new RegExp(pattern, "g");
+	return string.replace(re, "$1");
 }
+
+
 
 function remove_trailing_spaces(string) {
 	return string.trim();
@@ -355,6 +370,116 @@ function remove_spaces_at_paragraph_beginning(string) {
 
 	return lines.join("\n");
 }
+
+
+
+/*
+	Consolidates the use of non-breaking spaces
+
+	* adds non-breaking spaces after single-character prepositions
+	* adds non-breaking spaces after numerals
+	* adds non-breaking spaces around ×
+	* removes characters between multi-character words
+
+	@param {string} string — input text for identification
+	@returns {string} — output with correctly placed non-breaking space
+*/
+function consolidate_nbsp(string) {
+	// removes non-breaking spaces between multi-character words
+	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})(["+ nbsp + narrow_nbsp +"])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})";
+	var re = new RegExp(pattern, "g");
+	string =  string.replace(re, "$1 $3");
+	string =  string.replace(re, "$1 $3"); //calling it twice to catch odd/even occurences
+
+
+	// adds non-breaking spaces after numerals
+	pattern = "([0-9]+)( )(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+)";
+	re = new RegExp(pattern, "g");
+	var replacement = "$1" + nbsp + "$3";
+	string =  string.replace(re, replacement);
+
+	// adds non-breaking spaces around ×
+	pattern = "([" + spaces + "])([×])([" + spaces + "])";
+	re = new RegExp(pattern, "g");
+	replacement = nbsp + "$2" + nbsp;
+	string = string.replace(re, replacement);
+
+	// adds non-breaking spaces after single-character prepositions
+	pattern = "([  ])([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]|&)( )";
+	re = new RegExp(pattern, "g");
+	replacement = "$1$2" + nbsp;
+	string = string.replace(re, replacement);
+	string = string.replace(re, replacement); //calling it twice to catch odd/even occurences
+
+	return string;
+}
+
+
+
+/*
+	Corrects improper spacing around ellipsis and aposiopesis
+
+	Ellipsis (as a character) is used for 2 different purposes:
+	1. as an ellipsis to ommit a piece of information deliberately
+	2. as an aposiopesis; a figure of speech wherein a sentence is
+	deliberately broken off and left unfinished
+
+	sources
+	https://en.wikipedia.org/wiki/Ellipsis
+	https://en.wikipedia.org/wiki/Aposiopesis
+	http://www.liteera.cz/slovnik/vypustka
+
+	Algorithm
+	Ellipsis & Aposiopesis require different use of spacing around them,
+	that is why we are correcting only following cases:
+	errors:
+	[1] correct spacing, when ellipsis used used around commas
+	[2] correct spacing for aposiopesis at the end of the sentence in the middle of the paragraph
+	[3] correct spacing for aposiopesis at the beginning of the sentence in the middle of the paragraph
+	[4] correct spacing for aposiopesis at the beginning of the sentence at the beginning of the paragraph
+	[5] correct spacing for aposiopesis at the end of the sentence at the end of the paragraph
+
+	@param {string} string — input text for identification
+	@returns {string} — output with corrected spacing around aposiopesis
+*/
+function correct_spaces_around_ellipsis(string) {
+
+	/* [1] correct spacing, when ellipsis used used around commas */
+	var pattern = ",[" + spaces +  "]?…[" + spaces +  "]?,";
+	var re = new RegExp(pattern, "g");
+	string = string.replace(re, ", …,");
+
+
+	/* [2] correct spacing for aposiopesis at the end of the sentence
+				 in the middle of the paragraph */
+	pattern = "([" + lowercase_chars_en_sk_cz_rue + "])([" + spaces + "])(…[" + spaces + "][" + uppercase_chars_en_sk_cz_rue + "])";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1$3");
+
+
+	/* [3] correct spacing for aposiopesis at the beginning of the sentence
+				 in the middle of the paragraph */
+	pattern = "([" + sentence_punctuation + "][" + spaces + "]…)([" + spaces + "])([" + lowercase_chars_en_sk_cz_rue +"])";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1$3");
+
+
+	/* [4] correct spacing for aposiopesis at the beginning of the sentence
+				 at the beginning of the paragraph */
+	pattern = "(^…)([" + spaces + "])([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+	re = new RegExp(pattern, "gm");
+	string = string.replace(re, "$1$3");
+
+
+	/* [5] correct spacing for aposiopesis at the end of the sentence
+				 at the end of the paragraph */
+	pattern = "([" + lowercase_chars_en_sk_cz_rue + sentence_punctuation + "])( )(…)(?![ " + sentence_punctuation + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1$3");
+
+	return string;
+}
+
 
 
 /*
@@ -443,94 +568,6 @@ function correct_accidental_uppercase(string) {
 
 
 /*
-	Consolidates the use of non-breaking spaces
-
-	* adds non-breaking spaces after single-character prepositions
-	* adds non-breaking spaces after numerals
-	* adds non-breaking spaces around ×
-	* removes characters between multi-character words
-
-	@param {string} string — input text for identification
-	@returns {string} — output with correctly placed non-breaking space
-*/
-function consolidate_nbsp(string) {
-	// removes non-breaking spaces between multi-character words
-	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})(["+ nbsp + narrow_nbsp +"])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})";
-	var re = new RegExp(pattern, "g");
-	string =  string.replace(re, "$1 $3");
-	string =  string.replace(re, "$1 $3"); //calling it twice to catch odd/even occurences
-
-
-	// adds non-breaking spaces after numerals
-	pattern = "([0-9]+)( )(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+)";
-	re = new RegExp(pattern, "g");
-	var replacement = "$1" + nbsp + "$3";
-	string =  string.replace(re, replacement);
-
-	// adds non-breaking spaces around ×
-	pattern = "([" + spaces + "])([×])([" + spaces + "])";
-	re = new RegExp(pattern, "g");
-	replacement = nbsp + "$2" + nbsp;
-	string = string.replace(re, replacement);
-
-	// adds non-breaking spaces after single-character prepositions
-	pattern = "([  ])([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]|&)( )";
-	re = new RegExp(pattern, "g");
-	replacement = "$1$2" + nbsp;
-	string = string.replace(re, replacement);
-	string = string.replace(re, replacement); //calling it twice to catch odd/even occurences
-
-	return string;
-}
-
-
-
-/*
-	Corrects improper spacing around aposiopesis
-
-	Due to the fact that ellipsis character is being used both as an ellipsis
-	and as an aposiopesis, we are able to auto-correct these scenarios:
-	[1] remove space before aposiopesis, that is ending a sentence
-	[2] remove space when aposiopesis is used at the beginning of the sentence
-
-	@param {string} string — input text for identification
-	@returns {string} — output with identified apostrophes
-*/
-function correct_spaces_around_aposiopesis(string) {
-	/*[1] catching ending sentences in the middle of the paragraph*/
-	var pattern = "([" + lowercase_chars_en_sk_cz_rue + "])( )(… [" + uppercase_chars_en_sk_cz_rue + "])";
-	var re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$3");
-
-	/*[1] catching ending sentences at the end of the paragraph*/
-	pattern = "([" + lowercase_chars_en_sk_cz_rue +"])( )(…)(?![ " + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
-	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$3");
-
-	/*[2]*/
-	pattern = "([\.\?\!] …)( )([" + lowercase_chars_en_sk_cz_rue +"])";
-	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$3");
-
-	return string;
-}
-
-
-
-/*
-	Sets proper spacing, when ellipsis used used around commas
-
-	@param {string} string — input text for identification
-	@returns {string} — corrected output
-*/
-
-function space_ellispsis_around_commas(string) {
-	return string.replace(/, ?… ?,/g, ", …,");
-}
-
-
-
-/*
 	Identifies differently-spelled e.g. and i.e. and replaces it with {eg}, {ie}
 
 	@param {string} input text for identification
@@ -614,8 +651,7 @@ function correct_typos(string, language) {
 	string = add_space_after_punctuation(string);
 	string = remove_spaces_at_paragraph_beginning(string);
 	string = consolidate_nbsp(string);
-	string = space_ellispsis_around_commas(string);
-	string = correct_spaces_around_aposiopesis(string);
+	string = correct_spaces_around_ellipsis(string);
 
 	string = remove_extra_punctuation(string);
 

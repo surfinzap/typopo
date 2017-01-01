@@ -32,12 +32,10 @@
 		/*
 			Ellipsis & Aposiopesis
 
-
-			Ellipsis (as a character) is used for 2 different purposes
-			— as an ellipsis to ommit a piece of information deliberately
-			— as an aposiopesis; a figure of speech wherein a sentence is deliberately broken off and left unfinished
-
-			Ellipsis & Aposiopesis require different use of spacing around them — that is why we cannot cover all cases for proper spacing as we are missing context. However, we can still correct some typographic errors
+			Ellipsis (as a character) is used for 2 different purposes:
+			1. as an ellipsis to ommit a piece of information deliberately
+			2. as an aposiopesis; a figure of speech wherein a sentence is
+			deliberately broken off and left unfinished
 
 			sources
 			https://en.wikipedia.org/wiki/Ellipsis
@@ -58,14 +56,22 @@
 		/* remove space before aposiopesis, that is ending a sentence*/
 		"Sentence ending … And another starting" : "Sentence ending… And another starting",
 		"Sentence ending …" : "Sentence ending…",
+		"Give me some example, e.g. apples, oranges, …" : "Give me some example, e.g. apples, oranges,…",
 
-		/* keep space before aposiopesis, that is used in the middle of a sentence*/
+		/* remove space */
+		"… да святить ся" : "…да святить ся",
+		"… да святить ся\n… multiline test" : "…да святить ся\n…multiline test",
+
+		/* keep spaces around aposiopesis, that is used in the middle of a sentence*/
 		"Sentence using … aposiopesis in the middle of a sentence." : "Sentence using … aposiopesis in the middle of a sentence.",
 
 		/* space ellipsis correctly, when used around commas*/
 		"We sell apples, oranges,…, pens." : "We sell apples, oranges, …, pens.",
 		"We sell apples, oranges,… , pens." : "We sell apples, oranges, …, pens.",
 		"We sell apples, oranges, … , pens." : "We sell apples, oranges, …, pens.",
+		"We sell apples, oranges, … , pens." : "We sell apples, oranges, …, pens.", // nbsp
+		"We sell apples, oranges, … , pens." : "We sell apples, oranges, …, pens.", // hair_space
+		"We sell apples, oranges, … , pens." : "We sell apples, oranges, …, pens.", //narrow_nbsp
 
 		/* remove spaces when ellipsis is used in brackets*/
 		"Something ( …) something else" :  "Something (…) something else",
@@ -100,11 +106,17 @@
 
 		// remove trailing spaces at the end of the paragraphs
 		"trailing spaces    " : "trailing spaces",
+		"trailing spaces    " : "trailing spaces", // nbsp
+		"trailing spaces    " : "trailing spaces", // hair_space
+		"trailing spaces    " : "trailing spaces", // narrow_nbsp
 		"trailing spaces.    " : "Trailing spaces.",
 		"trailing spaces;    " : "trailing spaces;",
 
 		// remove extra spaces between word and punctuation
 		"Hey ." : "Hey.",
+		"Hey ." : "Hey.", // nbsp
+		"Hey ." : "Hey.", // hair_space
+		"Hey ." : "Hey.", // narrow_nbsp
 		"Hey !" : "Hey!",
 		"Hey ?" : "Hey?",
 		"Hey :" : "Hey:",
@@ -113,6 +125,9 @@
 
 		// remove extra spaces between parentheses ()
 		"( Ups, an extra space at the beginning)" : "(Ups, an extra space at the beginning)",
+		"( Ups, an extra space at the beginning)" : "(Ups, an extra space at the beginning)", // nbsp
+		"( Ups, an extra space at the beginning)" : "(Ups, an extra space at the beginning)", // hair_space
+		"( Ups, an extra space at the beginning)" : "(Ups, an extra space at the beginning)", // narrow_nbsp
 		"(Ups, an extra space at the end )" : "(Ups, an extra space at the end)",
 
 		// remove extra spaces at the beginning of the paragraph

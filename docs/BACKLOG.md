@@ -1,13 +1,8 @@
 # Backlog for typopo
 
 
-## 1.0.8
 * fix false positives for URL www. Tota. Sk (ie. skip URLs from parsing)
 * review algorithms with spaces and adjust them to work with all kinds of spaces
-	* remove_space_before_punctuation()
-	* remove_space_after_punctuation()
-	* remove_trailing_spaces()
-	* remove_spaces_at_paragraph_beginning()
 	* space_ellispsis_around_commas()
 * review how punctuation is handled and make it more robust
 
