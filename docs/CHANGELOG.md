@@ -2,6 +2,7 @@
 
 ## 1.1.2 //
 * improve removing of extra spaces around punctuation and at the end of the sentences, by including non-breaking spaces, hair spaces and narrow spaces
+* improve spacing correction around ellipsis and aposiopesis
 
 ## 1.1.0 // 2016-12-24
 * Refactor how double and single quotes, primes and apostrophes are handled, whic results in following improvements
