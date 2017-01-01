@@ -2,6 +2,7 @@
 
 ## vNext
 * fix false positives for URL www. Tota. Sk (ie. skip URLs from parsing)
+	* http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/2.0_r1/android/text/util/Regex.java#Regex.0WEB_URL_PATTERN
 * review how punctuation is handled and make it more robust
 
 ## Backlog pool
