@@ -36,8 +36,13 @@ var nbsp = " ";
 var hair_space = " "; //&#8202;
 var narrow_nbsp = " "; //&#8239;
 var spaces = space + nbsp + hair_space + narrow_nbsp;
-var sentence_punctuation = "\,\.\!\?\:\;"; // there is no ellipsis in the set as it is being used throughout a sentence in the middle. Rethink this group to split it into end-sentence punctuation and middle sentence punctuation
+var terminal_punctuation = "\.\!\?";
+var sentence_punctuation = "\,\:\;" + terminal_punctuation; // there is no ellipsis in the set as it is being used throughout a sentence in the middle. Rethink this group to split it into end-sentence punctuation and middle sentence punctuation
+var opening_brackets = "\\(\\[\\{";
+var closing_brackets = "\\)\\]\\}";
 var ellipsis = "…";
+var degree = "°";
+
 /*
 	Source for web_url_pattern, email_address_pattern
 	http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/2.0_r1/android/text/util/Regex.java#Regex.0WEB_URL_PATTERN
@@ -162,7 +167,9 @@ function correct_double_quotes_and_primes(string, language) {
 	string = string.replace(re, '$2$1');
 
 
-	/* [2] Identify inches, arcseconds, seconds */
+	/* [2] Identify inches, arcseconds, seconds
+				 Note: we’re not using double_quote_adepts variable
+				 as commas and low-positioned quotes are ommited*/
 	string = string.replace(/(\d ?)(“|”|\"|″|‘{2,}|’{2,}|'{2,}|′{2,})/g, "$1{typopo__double-prime}");
 
 
@@ -214,6 +221,7 @@ function correct_double_quotes_and_primes(string, language) {
 
 	return string;
 }
+
 
 
 /*
@@ -294,7 +302,9 @@ function correct_single_quotes_primes_and_apostrophes(string, language) {
 	});
 
 
-	/* [3] Identify feet, arcminutes, minutes */
+	/* [3] Identify feet, arcminutes, minutes
+				 Note: we’re not using single_quote_adepts variable
+				 as commas and low-positioned quotes are ommited*/
 	string = string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1{typopo__single-prime}");
 
 
@@ -305,7 +315,7 @@ function correct_single_quotes_primes_and_apostrophes(string, language) {
 
 
 	/* [5] Swap right single quote adepts with a puntuation */
-	pattern = "({typopo__right-single-quote})([\.,!?])";
+	pattern = "({typopo__right-single-quote})([" + sentence_punctuation + "])";
 	re = new RegExp(pattern, "g");
 	string =  string.replace(re, '$2$1');
 
@@ -313,6 +323,7 @@ function correct_single_quotes_primes_and_apostrophes(string, language) {
 	/* [6] Punctuation replacement */
 	string = string.replace(/({typopo__single-prime})/g, "′");
 	string = string.replace(/{typopo__apostrophe}|{typopo__left-single-quote--adept}|{typopo__right-single-quote--adept}/g, "’");
+
 
 	switch (language) {
 	case "rue":
@@ -348,7 +359,7 @@ function replace_hyphen_with_dash(string) {
 	string = string.replace(/(--)/g, "–");
 
 	//replace en dash with em dash, when appropriate and set proper spacing
-	var pattern = "[" + spaces + "][-|–|—][" + spaces + "]";
+	var pattern = "[" + spaces + "][-–—][" + spaces + "]";
 	var re = new RegExp(pattern, "g");
 	var replacement = narrow_nbsp + "—" + hair_space;
 	string = string.replace(re, replacement);
@@ -376,7 +387,7 @@ function replace_dash_with_hyphen(string){
 
 
 function remove_space_before_punctuation(string) {
-	var pattern = "([" + spaces + "])([\\,\\.\\!\\?\\:\\;\\)\\]\\}°])";
+	var pattern = "([" + spaces + "])([" + sentence_punctuation + closing_brackets + degree + "])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$2");
 }
@@ -384,7 +395,7 @@ function remove_space_before_punctuation(string) {
 
 
 function remove_space_after_punctuation(string) {
-	var pattern = "([\\(\\[\\{])([" + spaces + "])";
+	var pattern = "([" + opening_brackets + "])([" + spaces + "])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$1");
 }
@@ -398,7 +409,7 @@ function remove_trailing_spaces(string) {
 
 
 function add_space_before_punctuation(string) {
-	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])([\(])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])([" + opening_brackets + "])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$1 $2$3");
 }
@@ -406,7 +417,7 @@ function add_space_before_punctuation(string) {
 
 
 function add_space_after_punctuation(string) {
-	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])([\,\.\!\?\:\;\)])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])([" + sentence_punctuation + closing_brackets + "])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$1$2 $3");
 }
@@ -451,11 +462,13 @@ function consolidate_nbsp(string) {
 	var replacement = "$1" + nbsp + "$3";
 	string =  string.replace(re, replacement);
 
+
 	// adds non-breaking spaces around ×
 	pattern = "([" + spaces + "])([×])([" + spaces + "])";
 	re = new RegExp(pattern, "g");
 	replacement = nbsp + "$2" + nbsp;
 	string = string.replace(re, replacement);
+
 
 	// adds non-breaking spaces after single-character prepositions
 	pattern = "([  ])([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]|&)( )";
@@ -498,21 +511,21 @@ function consolidate_nbsp(string) {
 function correct_spaces_around_ellipsis(string) {
 
 	/* [1] correct spacing, when ellipsis used used around commas */
-	var pattern = ",[" + spaces +  "]?…[" + spaces +  "]?,";
+	var pattern = ",[" + spaces + "]?" + ellipsis + "[" + spaces + "]?,";
 	var re = new RegExp(pattern, "g");
 	string = string.replace(re, ", …,");
 
 
 	/* [2] correct spacing for aposiopesis at the end of the sentence
 				 in the middle of the paragraph */
-	pattern = "([" + lowercase_chars_en_sk_cz_rue + "])([" + spaces + "])(…[" + spaces + "][" + uppercase_chars_en_sk_cz_rue + "])";
+	pattern = "([" + lowercase_chars_en_sk_cz_rue + "])([" + spaces + "])(" + ellipsis + "[" + spaces + "][" + uppercase_chars_en_sk_cz_rue + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3");
 
 
 	/* [3] correct spacing for aposiopesis at the beginning of the sentence
 				 in the middle of the paragraph */
-	pattern = "([" + sentence_punctuation + "][" + spaces + "]…)([" + spaces + "])([" + lowercase_chars_en_sk_cz_rue +"])";
+	pattern = "([" + sentence_punctuation + "][" + spaces + "]" + ellipsis +")([" + spaces + "])([" + lowercase_chars_en_sk_cz_rue +"])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3");
 
@@ -526,7 +539,7 @@ function correct_spaces_around_ellipsis(string) {
 
 	/* [5] correct spacing for aposiopesis at the end of the sentence
 				 at the end of the paragraph */
-	pattern = "([" + lowercase_chars_en_sk_cz_rue + sentence_punctuation + "])( )(…)(?![ " + sentence_punctuation + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+	pattern = "([" + lowercase_chars_en_sk_cz_rue + sentence_punctuation + "])([" + spaces + "])(" + ellipsis + ")(?![ " + sentence_punctuation + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3");
 
@@ -550,7 +563,7 @@ function start_sentence_w_capital_letter(string) {
 	// Correct capital letter in the first sentence of the paragraph
 	var lines = string.match(/[^\r\n]+/g);
 	var lines_count = lines.length;
-	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"{])(.+?)([…\\.\\?\\!])"; //[1]
+	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"{])(.+?)([" +ellipsis + terminal_punctuation +"])"; //[1], [2]
 	var re = new RegExp(pattern);
 
 	for (var i = 0; i < lines_count; i++) {
@@ -565,7 +578,7 @@ function start_sentence_w_capital_letter(string) {
 	// find all lowercase letters after sentence punctuation, then replace them
 	// with uppercase variant by calling another replace function
 	// Exceptions: dates, numerical values
-	pattern = "([^0-9])([\\.\\?\\!] )(["+ lowercase_chars_en_sk_cz_rue +"])";
+	pattern = "([^0-9])([" + terminal_punctuation + "][" + spaces + "])(["+ lowercase_chars_en_sk_cz_rue +"])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, function($0, $1, $2, $3){
 			return $1 + $2 + $3.toUpperCase();
@@ -621,19 +634,19 @@ function correct_accidental_uppercase(string) {
 
 
 /*
-	Identifies differently-spelled e.g. and i.e. and replaces it with {eg}, {ie}
+	Identifies differently-spelled e.g. and i.e. and replaces it with {{typopo__eg}}, {{typopo__ie}}
 
 	@param {string} input text for identification
 	@returns {string} corrected output
 */
 function identify_eg_ie(string) {
-	var pattern = "\\b[eE]\\.?["+ spaces +"]?[gG]\\.?["+ spaces +"]?[^" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]";
-	var re = new RegExp(pattern, "g");
-	string = string.replace(re, "{eg}");
+	var pattern = "\\b[e]\\.?["+ spaces +"]?[g]\\.?["+ spaces +"]?[^" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]";
+	var re = new RegExp(pattern, "gi");
+	string = string.replace(re, "{{typopo__eg}}");
 
-	pattern = "\\b[iI]\\.?["+ spaces +"]?[eE]\\.?["+ spaces +"]?[^" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]";
-	re = new RegExp(pattern, "g");
-	string = string.replace(re, "{ie}");
+	pattern = "\\b[i]\\.?["+ spaces +"]?[e]\\.?["+ spaces +"]?[^" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]";
+	re = new RegExp(pattern, "gi");
+	string = string.replace(re, "{{typopo__ie}}");
 
 	return string;
 }
@@ -641,14 +654,14 @@ function identify_eg_ie(string) {
 
 
 /*
-	Replaces {eg}, {ie} with e.g., i.e.
+	Replaces {{typopo__eg}}, {{typopo__ie}} with e.g., i.e.
 
 	@param {string} input text for identification
 	@returns {string} corrected output
 */
 function place_eg_ie(string) {
-	string = string.replace(/{eg}/g, "e.g." + nbsp);
-	string = string.replace(/{ie}/g, "i.e." + nbsp);
+	string = string.replace(/{{typopo__eg}}/g, "e.g." + nbsp);
+	string = string.replace(/{{typopo__ie}}/g, "i.e." + nbsp);
 	return string;
 }
 

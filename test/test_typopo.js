@@ -25,9 +25,9 @@
 			We are using temporary {variables} in curly brackets as text replacement in some functions.
 			We have included couple of tests to make sure that variables in curly brackets do not change as we carry other replacements.
 		*/
-		"{test-variable}" : "{test-variable}",
-		"{test-variable} at the beginning of the sentence." : "{test-variable} at the beginning of the sentence.",
-		"And {test-variable} in the middle of the sentence." : "And {test-variable} in the middle of the sentence.",
+		"{{test-variable}}" : "{{test-variable}}",
+		"{{test-variable}} at the beginning of the sentence." : "{{test-variable}} at the beginning of the sentence.",
+		"And {{test-variable}} in the middle of the sentence." : "And {{test-variable}} in the middle of the sentence.",
 
 
 

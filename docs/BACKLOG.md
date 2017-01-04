@@ -2,6 +2,9 @@
 
 ## vNext
 * review how punctuation is handled and make it more robust
+* refactor curly brackets
+* find proper label for terminal punctuation
+
 * correct numeral format
 * numeral range check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
 		* 5–6 eggs
