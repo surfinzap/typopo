@@ -1,8 +1,6 @@
 # Backlog for typopo
 
 ## vNext
-* review how punctuation is handled and make it more robust
-* refactor curly brackets
 * find proper label for terminal punctuation
 
 * correct numeral format

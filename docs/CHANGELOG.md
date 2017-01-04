@@ -1,5 +1,11 @@
 # Changelog for Typopo
 
+## 1.2.1 // 2017-01
+
+Code refactoring resulting in catching more corner cases
+* refactor sentence punctuation references
+* refactor variable references
+
 ## 1.2.0 // 2017-01-01
 * improve removing of extra spaces around punctuation and at the end of the sentences, by including non-breaking spaces, hair spaces and narrow spaces
 * improve spacing correction around ellipsis and aposiopesis

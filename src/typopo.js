@@ -170,25 +170,25 @@ function correct_double_quotes_and_primes(string, language) {
 	/* [2] Identify inches, arcseconds, seconds
 				 Note: we’re not using double_quote_adepts variable
 				 as commas and low-positioned quotes are ommited*/
-	string = string.replace(/(\d ?)(“|”|\"|″|‘{2,}|’{2,}|'{2,}|′{2,})/g, "$1{typopo__double-prime}");
+	string = string.replace(/(\d ?)(“|”|\"|″|‘{2,}|’{2,}|'{2,}|′{2,})/g, "$1{{typopo__double-prime}}");
 
 
 	/* [3] Identify closed double quotes */
 	pattern = "(" + double_quote_adepts + ")(.*?)(" + double_quote_adepts + ")";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "{typopo__left-double-quote}$2{typopo__right-double-quote}");
+	string = string.replace(re, "{{typopo__left-double-quote}}$2{{typopo__right-double-quote}}");
 
 
 	/* [4.1] Identify unclosed left double quote */
 	pattern = "(" + double_quote_adepts + ")([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "{typopo__left-double-quote}$2");
+	string = string.replace(re, "{{typopo__left-double-quote}}$2");
 
 
 	/* [4.2] Identify unclosed right double quote */
 	pattern = "([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + sentence_punctuation + ellipsis + "])(" + double_quote_adepts + ")";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1{typopo__right-double-quote}");
+	string = string.replace(re, "$1{{typopo__right-double-quote}}");
 
 
 	/* [4.3] Remove remaining unidentified double quote */
@@ -198,25 +198,25 @@ function correct_double_quotes_and_primes(string, language) {
 
 
 	/* [5] Fix spacing around quotes and prime */
-	string = string.replace(/({typopo__left-double-quote})( )/g, "$1");
-	string = string.replace(/( )({typopo__right-double-quote})/g, "$2");
-	string = string.replace(/( )({typopo__double-prime})/g, "$2");
+	string = string.replace(/({{typopo__left-double-quote}})( )/g, "$1");
+	string = string.replace(/( )({{typopo__right-double-quote}})/g, "$2");
+	string = string.replace(/( )({{typopo__double-prime}})/g, "$2");
 
 
 	/* [6] Punctuation replacement */
-	string = string.replace(/({typopo__double-prime})/g, "″");
+	string = string.replace(/({{typopo__double-prime}})/g, "″");
 
 	switch (language) {
 		case "rue":
-			string = string.replace(/({typopo__left-double-quote})/g, "«");
-			string = string.replace(/({typopo__right-double-quote})/g, "»");
+			string = string.replace(/({{typopo__left-double-quote}})/g, "«");
+			string = string.replace(/({{typopo__right-double-quote}})/g, "»");
 		case "sk":
 		case "cs":
-			string = string.replace(/({typopo__left-double-quote})/g, "„");
-			string = string.replace(/({typopo__right-double-quote})/g, "“");
+			string = string.replace(/({{typopo__left-double-quote}})/g, "„");
+			string = string.replace(/({{typopo__right-double-quote}})/g, "“");
 		case "en":
-			string = string.replace(/({typopo__left-double-quote})/g, "“");
-			string = string.replace(/({typopo__right-double-quote})/g, "”");
+			string = string.replace(/({{typopo__left-double-quote}})/g, "“");
+			string = string.replace(/({{typopo__right-double-quote}})/g, "”");
 	}
 
 	return string;
@@ -252,7 +252,7 @@ function correct_single_quotes_primes_and_apostrophes(string, language) {
 	/* [1.1] Identify ’n’ contractions */
 	var pattern = "(" + single_quote_adepts + ")(n)(" + single_quote_adepts + ")";
 	var re = new RegExp(pattern, "gi");
-	string = string.replace(re, "{typopo__apostrophe}$2{typopo__apostrophe}");
+	string = string.replace(re, "{{typopo__apostrophe}}$2{{typopo__apostrophe}}");
 
 
 	/* [1.2] Identify common contractions at the beginning or at the end
@@ -260,7 +260,7 @@ function correct_single_quotes_primes_and_apostrophes(string, language) {
 	var contraction_examples = "em|cause|twas|tis|til|round"
 	pattern = "(" + single_quote_adepts + ")(" + contraction_examples + ")";
 	re = new RegExp(pattern, "gi");
-	string = string.replace(re, "{typopo__apostrophe}$2");
+	string = string.replace(re, "{{typopo__apostrophe}}$2");
 
 
 	/* [1.3] Identify in-word contractions,
@@ -268,14 +268,14 @@ function correct_single_quotes_primes_and_apostrophes(string, language) {
 	var character_adepts = "0-9" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue;
 	pattern = "(["+ character_adepts +"])(" + single_quote_adepts + ")(["+ character_adepts +"])";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1{typopo__apostrophe}$3");
+	string = string.replace(re, "$1{{typopo__apostrophe}}$3");
 
 
 	/* [1.4] Identify year contractions
 		 e.g. ’70s, INCHEBA ’89,… */
 	pattern = "(" + single_quote_adepts + ")([0-9]{2})";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "{typopo__apostrophe}$2");
+	string = string.replace(re, "{{typopo__apostrophe}}$2");
 
 
 	/* [2] Identify single quotes within double quotes */
@@ -283,20 +283,20 @@ function correct_single_quotes_primes_and_apostrophes(string, language) {
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, function($0, $1, $2, $3){
 
-		//identify {typopo__left-single-quote--adept}
+		//identify {{typopo__left-single-quote--adept}}
 		var pattern = "( )(" + single_quote_adepts + ")(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])";
 		var re = new RegExp(pattern, "g");
-		$2 = $2.replace(re, "$1{typopo__left-single-quote--adept}$3");
+		$2 = $2.replace(re, "$1{{typopo__left-single-quote--adept}}$3");
 
-		//identify {typopo__right-single-quote--adept}
+		//identify {{typopo__right-single-quote--adept}}
 		pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])([\.,!?])?(" + single_quote_adepts + ")([ ]|[\.,!?])";
 		re = new RegExp(pattern, "g");
-		$2 = $2.replace(re, "$1$2{typopo__right-single-quote--adept}$4");
+		$2 = $2.replace(re, "$1$2{{typopo__right-single-quote--adept}}$4");
 
 		//identify single quote pairs
-		pattern = "({typopo__left-single-quote--adept})(.*?)({typopo__right-single-quote--adept})";
+		pattern = "({{typopo__left-single-quote--adept}})(.*?)({{typopo__right-single-quote--adept}})";
 		re = new RegExp(pattern, "g");
-		$2 = $2.replace(re, "{typopo__left-single-quote}$2{typopo__right-single-quote}");
+		$2 = $2.replace(re, "{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}");
 
 		return $1 + $2 + $3;
 	});
@@ -305,39 +305,39 @@ function correct_single_quotes_primes_and_apostrophes(string, language) {
 	/* [3] Identify feet, arcminutes, minutes
 				 Note: we’re not using single_quote_adepts variable
 				 as commas and low-positioned quotes are ommited*/
-	string = string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1{typopo__single-prime}");
+	string = string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1{{typopo__single-prime}}");
 
 
 	/* [4] Identify residual apostrophes that have left */
 	pattern = "(" + single_quote_adepts + ")";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "{typopo__apostrophe}");
+	string = string.replace(re, "{{typopo__apostrophe}}");
 
 
 	/* [5] Swap right single quote adepts with a puntuation */
-	pattern = "({typopo__right-single-quote})([" + sentence_punctuation + "])";
+	pattern = "({{typopo__right-single-quote}})([" + sentence_punctuation + "])";
 	re = new RegExp(pattern, "g");
 	string =  string.replace(re, '$2$1');
 
 
 	/* [6] Punctuation replacement */
-	string = string.replace(/({typopo__single-prime})/g, "′");
-	string = string.replace(/{typopo__apostrophe}|{typopo__left-single-quote--adept}|{typopo__right-single-quote--adept}/g, "’");
+	string = string.replace(/({{typopo__single-prime}})/g, "′");
+	string = string.replace(/{{typopo__apostrophe}}|{{typopo__left-single-quote--adept}}|{{typopo__right-single-quote--adept}}/g, "’");
 
 
 	switch (language) {
 	case "rue":
-		string = string.replace(/{typopo__left-single-quote}/g, "‹");
-		string = string.replace(/{typopo__right-single-quote}/g, "›");
+		string = string.replace(/{{typopo__left-single-quote}}/g, "‹");
+		string = string.replace(/{{typopo__right-single-quote}}/g, "›");
 		break;
 	case "sk":
 	case "cs":
-		string = string.replace(/{typopo__left-single-quote}/g, "‚");
-		string = string.replace(/{typopo__right-single-quote}/g, "‘");
+		string = string.replace(/{{typopo__left-single-quote}}/g, "‚");
+		string = string.replace(/{{typopo__right-single-quote}}/g, "‘");
 		break;
 	case "en":
-		string = string.replace(/{typopo__left-single-quote}/g, "‘");
-		string = string.replace(/{typopo__right-single-quote}/g, "’");
+		string = string.replace(/{{typopo__left-single-quote}}/g, "‘");
+		string = string.replace(/{{typopo__right-single-quote}}/g, "’");
 	}
 
 	return string;
@@ -701,10 +701,10 @@ function remove_extra_punctuation(string) {
 	Algorithm
 	[1] Identify email adresses
 	[2] Identify web URLs and IPs
-	[3] Mark them as temporary exceptions in format {typopo__exception-[i]}
+	[3] Mark them as temporary exceptions in format {{typopo__exception-[i]}}
 
 	@param {string} input text for identification of exceptions
-	@returns {string} — output with identified exceptions in format {typopo__exception-[i]}
+	@returns {string} — output with identified exceptions in format {{typopo__exception-[i]}}
 */
 function identify_exceptions(string) {
 
@@ -716,9 +716,9 @@ function identify_exceptions(string) {
 	identify_exception_set(string, web_url_pattern);
 
 
-	/* [3] Mark them as temporary exceptions in format {typopo__exception-[i]} */
+	/* [3] Mark them as temporary exceptions in format {{typopo__exception-[i]}} */
 	for (var i = 0; i < exceptions.length; i++) {
-		var replacement = "{typopo__exception-" + i + "}";
+		var replacement = "{{typopo__exception-" + i + "}}";
 		string = string.replace(exceptions[i], replacement);
 	}
 
@@ -746,7 +746,7 @@ function identify_exception_set(string, pattern) {
 
 /*
 	Replaces identified exceptions with real ones by change their
-	temporary representation in format {typopo__exception-[i]} with its
+	temporary representation in format {{typopo__exception-[i]}} with its
 	corresponding representation
 
 	@param {string} input text with identified exceptions
@@ -754,7 +754,7 @@ function identify_exception_set(string, pattern) {
 */
 function place_exceptions(string) {
 	for (var i = 0; i < exceptions.length; i++) {
-		var pattern = "{typopo__exception-" + i + "}"
+		var pattern = "{{typopo__exception-" + i + "}}"
 		var re = new RegExp(pattern, "g");
 		var replacement = exceptions[i];
 		string = string.replace(re, replacement);
