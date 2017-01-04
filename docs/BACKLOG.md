@@ -14,3 +14,5 @@
 		* typos
 				* 5 - 6
 				* wrong numeral format
+
+* improve identification of double quotes that are next to a punctuation but that are not enclosing the whole sentence.
