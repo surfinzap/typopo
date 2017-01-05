@@ -2,7 +2,6 @@
 
 ## 1.2.1 // 2017-01
 
-Code refactoring resulting in catching more corner cases
 * refactor sentence punctuation references
 * refactor variable references
 
