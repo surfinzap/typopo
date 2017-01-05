@@ -15,6 +15,10 @@
       "type": "git",
       "url": "https://github.com/surfinzap/typopo"
   },
+  "bugs": {
+    "url": "https://github.com/surfinzap/typopo/issues"
+  },
+  "license": "MIT",
   "keywords": [
       "autocorrect",
       "typos",
