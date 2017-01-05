@@ -1,7 +1,6 @@
 # Changelog for Typopo
 
-## 1.2.1 // 2017-01
-
+## 1.2.1 // 2017-01-05
 * refactor sentence punctuation references
 * refactor variable references
 

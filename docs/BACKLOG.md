@@ -1,8 +1,6 @@
 # Backlog for typopo
 
 ## vNext
-* find proper label for terminal punctuation
-
 * correct numeral format
 * numeral range check how we aproach auto-correction of dashes among numerals, eg. 3–4 годины дообіда.
 		* 5–6 eggs
@@ -14,5 +12,5 @@
 		* typos
 				* 5 - 6
 				* wrong numeral format
-
 * improve identification of double quotes that are next to a punctuation but that are not enclosing the whole sentence.
+* consider resolving single-word widows
