@@ -8,7 +8,7 @@
  */
 
 
-(function(){
+(function () {
 
 /*----------------------------------------------------------------------------*\
 	Variables & Character replacement sets
@@ -24,8 +24,6 @@ var essential_set = {
 	"\\+\\-": "±",
 	"\\-\\+": "±",
 };
-
-
 
 var lowercase_chars_en_sk_cz_rue = "a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
 var uppercase_chars_en_sk_cz_rue = "A-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ";
@@ -117,7 +115,18 @@ function replace_symbols(string) {
 
 
 function replace_periods_with_ellipsis(string) {
-	return string.replace(/\.{2,}/g, "…");
+	/* [1] replace 3 and more dots with an ellipsis */
+	string = string.replace(/\.{3,}/g, "…");
+
+	/* [2] replace 2 dots in the middle of the sentecne with an aposiopesis */
+	var pattern = "[" + spaces + "]\\.{2}[" + spaces + "]";
+	var re = new RegExp(pattern, "g");
+	string = string.replace(re, " … ");
+
+	/* [3] replace 2 dots at the end of the sentecne with full stop */
+	string = string.replace(/\.{2}/g, ".");
+
+	return string;
 }
 
 
@@ -145,6 +154,7 @@ function remove_multiple_spaces(string) {
 	i.e. authors did not forget to close double quotes in their text.
 
 	Algorithm
+	[0] Remove extra terminal punctuation around double quotes
 	[1] Swap right double quote adepts with a punctuation
 	    (this comes first as it is a quite common mistake that may eventually
 		  lead to improper identification of double primes)
@@ -152,7 +162,8 @@ function remove_multiple_spaces(string) {
 	[3] Identify closed double quotes
 	[4] Identify the rest as unclosed double quotes (best-effort replacement)
 	[5] Fix spacing around quotes and primes
-	[6] Replace all identified punctuation with appropriate punctuation in
+	[6] Remove extra punctuation around quotes
+	[7] Replace all identified punctuation with appropriate punctuation in
 	    given language
 
 	@param {string} string — input text for identification
@@ -161,11 +172,16 @@ function remove_multiple_spaces(string) {
 */
 function correct_double_quotes_and_primes(string, language) {
 
-	/* [1] Swap right double quote adepts with a punctuation */
-	var pattern = "("+ double_quote_adepts + ")([\.,!?])";
+	/* [0] Remove extra terminal punctuation around double quotes
+					 e.g. “We will continue tomorrow.”. */
+	var pattern = "([" + sentence_punctuation + "])("+ double_quote_adepts + ")([" + sentence_punctuation + "])";
 	var re = new RegExp(pattern, "g");
-	string = string.replace(re, '$2$1');
+	string = string.replace(re, "$1$2");
 
+	/* [1] Swap right double quote adepts with a punctuation */
+	pattern = "("+ double_quote_adepts + ")([\.,!?])";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, '$2$1');
 
 	/* [2] Identify inches, arcseconds, seconds
 				 Note: we’re not using double_quote_adepts variable
@@ -203,7 +219,17 @@ function correct_double_quotes_and_primes(string, language) {
 	string = string.replace(/( )({{typopo__double-prime}})/g, "$2");
 
 
-	/* [6] Punctuation replacement */
+	/* [6] Remove extra comma after punctuation in direct speech,
+					 e.g. "“Hey!,” she said" */
+	pattern = "([" + sentence_punctuation + "])([\,])";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1");
+
+
+
+
+
+	/* [7] Punctuation replacement */
 	string = string.replace(/({{typopo__double-prime}})/g, "″");
 
 	switch (language) {
@@ -633,20 +659,47 @@ function correct_accidental_uppercase(string) {
 
 
 
+
+
+
+/*----------------------------------------------------------------------------*\
+	Abbreviations
+\*----------------------------------------------------------------------------*/
 /*
-	Identifies differently-spelled e.g. and i.e. and replaces it with {{typopo__eg}}, {{typopo__ie}}
+	Identifies differently-spelled abbreviations and replaces it with
+	a temp variable, {{typopo__[abbr]}}
+
+	Identifies given abbreviations:
+	a.m., p.m., e.g., i.e.
+
+	Algorithm
+	[1] Identify e.g., i.e.
+	[2] Identify a.m., p.m. (different match to avoid false positives such as:
+			I am, He is the PM.)
 
 	@param {string} input text for identification
 	@returns {string} corrected output
 */
-function identify_eg_ie(string) {
-	var pattern = "\\b[e]\\.?["+ spaces +"]?[g]\\.?["+ spaces +"]?[^" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]";
-	var re = new RegExp(pattern, "gi");
-	string = string.replace(re, "{{typopo__eg}}");
+function identify_common_abbreviations(string) {
 
-	pattern = "\\b[i]\\.?["+ spaces +"]?[e]\\.?["+ spaces +"]?[^" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]";
-	re = new RegExp(pattern, "gi");
-	string = string.replace(re, "{{typopo__ie}}");
+	/* [1] Identify e.g., i.e. */
+	var abbreviations = ["eg", "ie"];
+	for (var i = 0; i < abbreviations.length; i++) {
+		var pattern = "(\\b[" + abbreviations[i][0] + "]\\.?["+ spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ spaces +"]?)(\\b)";
+		var re = new RegExp(pattern, "gi");
+		replacement = "{{typopo__" + abbreviations[i] + "}} ";
+		string = string.replace(re, replacement);
+	}
+
+
+	/* [2] Identify a.m., p.m. */
+	abbreviations = ["am", "pm"];
+	for (var i = 0; i < abbreviations.length; i++) {
+		var pattern = "(\\d)([" + spaces + "]?)(\\b[" + abbreviations[i][0] + "]\\.?["+ spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ spaces +"]?)(\\b|\\B)";
+		var re = new RegExp(pattern, "gi");
+		replacement = "$1 {{typopo__" + abbreviations[i] + "}} ";
+		string = string.replace(re, replacement);
+	}
 
 	return string;
 }
@@ -654,36 +707,24 @@ function identify_eg_ie(string) {
 
 
 /*
-	Replaces {{typopo__eg}}, {{typopo__ie}} with e.g., i.e.
+	Replaces identified temp abbreviation variable like {{typopo__eg}},
+	with their actual representation
 
 	@param {string} input text for identification
 	@returns {string} corrected output
 */
-function place_eg_ie(string) {
-	string = string.replace(/{{typopo__eg}}/g, "e.g." + nbsp);
-	string = string.replace(/{{typopo__ie}}/g, "i.e." + nbsp);
-	return string;
-}
-
-
-
-/*
-	Removes extra punctuation
-
-	People tend to type in unnecessary punctuation, here are the observed cases:
-	[1] extra comma after punctuation in direct speech, e.g. "“Hey!,” she said"
-
-	@param {string} input text for correction
-	@returns {string} — corrected output
-*/
-function remove_extra_punctuation(string) {
-	// [1]
-	var pattern = "([" + sentence_punctuation + "])([\,])";
-	var re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1")
+function place_common_abbreviations(string) {
+	var abbreviations = ["eg", "ie", "am", "pm"];
+	for (var i = 0; i < abbreviations.length; i++) {
+		var pattern = "{{typopo__" + abbreviations[i] + "}}";
+		var re = new RegExp(pattern, "g");
+		replacement = abbreviations[i][0] + "." + abbreviations[i][1] + ".";
+		string = string.replace(re, replacement);
+	}
 
 	return string;
 }
+
 
 
 
@@ -786,15 +827,13 @@ function correct_typos(string, language) {
 	language = (typeof language === "undefined") ? "en" : language;
 
 	string = identify_exceptions(string);
+	string = identify_common_abbreviations(string); // needs to go before punctuation fixes
 
 	string = replace_symbols(string, essential_set);
 	string = replace_periods_with_ellipsis(string);
 
 	string = correct_double_quotes_and_primes(string, language);
 	string = correct_single_quotes_primes_and_apostrophes(string, language);
-
-	// needs to go before punctuation fixes
-	string = identify_eg_ie(string);
 
 	string = correct_multiple_sign(string);
 
@@ -808,18 +847,17 @@ function correct_typos(string, language) {
 	string = consolidate_nbsp(string);
 	string = correct_spaces_around_ellipsis(string);
 
-	string = remove_extra_punctuation(string);
-
 	string = replace_hyphen_with_dash(string);
 	string = replace_dash_with_hyphen(string);
 
 	string = start_sentence_w_capital_letter(string);
 	string = correct_accidental_uppercase(string);
 
-	// placing identified e.g., i.e. after punctuation fixes
-	string = place_eg_ie(string);
+	string = place_common_abbreviations(string); // needs to go after punctuation fixes
 	string = place_exceptions(string);
 
+	string = replace_periods_with_ellipsis(string);
+	
 	return string;
 }
 

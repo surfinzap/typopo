@@ -50,7 +50,7 @@
 		"Sentence .... another sentence" : "Sentence … another sentence",
 		"Sentence ..... another sentence" : "Sentence … another sentence",
 		"Sentence ending." : "Sentence ending.",
-		"Sentence ending.." : "Sentence ending…",
+		"Sentence ending.." : "Sentence ending.",
 		"Sentence ending..." : "Sentence ending…",
 		"Sentence ending...." : "Sentence ending…",
 		"Sentence ending....." : "Sentence ending…",
@@ -58,7 +58,7 @@
 		/* remove space before aposiopesis, that is ending a sentence*/
 		"Sentence ending … And another starting" : "Sentence ending… And another starting",
 		"Sentence ending …" : "Sentence ending…",
-		"Give me some example, e.g. apples, oranges, …" : "Give me some example, e.g. apples, oranges,…",
+		"Give me some example, e.g. apples, oranges, …" : "Give me some example, e.g. apples, oranges,…",
 
 		/* remove space */
 		"… да святить ся" : "…да святить ся",
@@ -159,7 +159,7 @@
 		*/
 		// [1]
 		"Koniec. V potoku" : "Koniec. V potoku",
-		"Skace o tyči" : "Skace o tyči",
+		"Skáče o tyči" : "Skáče o tyči",
 		"v obchode a v hospode" : "v obchode a v hospode",
 		"Bed & Breakfast" : "Bed & Breakfast",
 		"v a v a v" : "v a v a v",
@@ -216,7 +216,6 @@
 				false positives — auto-correcting ellipsis/aposiopesis
 				[1] Sentence continues after aposiopesis is being used
 				[2] Ellipsis is being used in the middle of the sentence
-				[3] When e.g. or i.e. is used in the sentence
 		*/
 		"one sentence ended. and another started." : "One sentence ended. And another started.",
 		"What? nothing." : "What? Nothing.",
@@ -226,8 +225,7 @@
 		"Jedna skončila. яe, čo?" : "Jedna skončila. Яe, čo?",
 		/*[1]*/"V Jednotě je… silný zápach." : "V Jednotě je… silný zápach.",
 		/*[2]*/"Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let." : "Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let.",
-		/*[3]*/"e.g. oranges, apples" : "e.g. oranges, apples",
-		/*[4]*/"i.e. oranges, apples" : "i.e. oranges, apples",
+
 
 		// correct accidental upper case
 		"HEy, JEnnifer!" : "Hey, Jennifer!",
@@ -338,34 +336,59 @@
 
 			// start quoted sentence with a Capital letter
 			"“one sentence ended. and another started.”" : "“One sentence ended. And another started.”",
+			"“хто ті дав?”" : "“Хто ті дав?”",
+
 
 			// remove space when aposiopesis is followed by punctuation
 			"“Sentence and… ”" : "“Sentence and…”",
 
-			// remove extra sentence punctuation
-			// some people tend to do extra comma after other punctuation
-			// it happens often in direct speech, e.g.:
-			"“Hey!,” she said" : "“Hey!” she said",
+			/* Remove extra sentence punctuation
 
-			// Start a sentence with a capital letter
-			"“Хто ті дав?”" : "“Хто ті дав?”",
+				 [1] extra comma after terminal punctuation, it it happens often in direct speech
+				 [2] extra dot at the end of a direct speech ending with abbreviation
+				 [3] extra dot at the end of a sentence ending with abbreviation */
+			/*[1]*/"“Hey!,” she said" : "“Hey!” she said",
+			/*[2]*/"“We will continue this tomorrow at 8:00 a.m.”.": "“We will continue this tomorrow at 8:00 a.m.”",
+			/*[3]*/"He is a vice president at Apple Inc..":"He is a vice president at Apple Inc.",
 
 
-			// spell e.g. and i.e. correctly (incl. false positives)
-			"E. g. something" : "e.g. something",
-			"E. G. something" : "e.g. something",
-			"E.G. something" : "e.g. something",
-			"eg. something" : "e.g. something",
-			"eg something" : "e.g. something",
-			"I. e. something" : "i.e. something",
-			"I. E. something" : "i.e. something",
-			"I.E. something" : "i.e. something",
-			"ie. something" : "i.e. something",
-			"ie something" : "i.e. something",
-			"brie cheese" : "brie cheese",
-			"Greg Snow" : "Greg Snow",
-			"eggnog" : "eggnog",
-			"Pam Grier" : "Pam Grier"
+
+
+			/*
+				Spell common abbreviations correctly
+
+				Supported:
+				e.g., i.e., a.m., p.m.
+			*/
+			"E. g. something" : "e.g. something",
+			"E. g.something" : "e.g. something",
+			"E. G. something" : "e.g. something",
+			"E.G. something" : "e.g. something",
+			"eg. something" : "e.g. something",
+			"eg something" : "e.g. something",
+			"Greg Snow" : "Greg Snow", // false positive
+			"eggnog" : "eggnog", // false positive
+
+			"I. e. something" : "i.e. something",
+			"I. e.something" : "i.e. something",
+			"I. E. something" : "i.e. something",
+			"I.E. something" : "i.e. something",
+			"ie. something" : "i.e. something",
+			"ie something" : "i.e. something",
+			"brie cheese" : "brie cheese", // false positive
+			"Pam Grier" : "Pam Grier", // false positive
+
+			"5 am" : "5 a.m.",
+			"5 am in the morning" : "5 a.m. in the morning",
+			"5 AM" : "5 a.m.",
+			"5 a.m." : "5 a.m.",
+			"I am from nowhere." : "I am from nowhere.", // false positive
+
+			"4.20 pm" : "4.20 p.m.",
+			"4.20 PM" : "4.20 p.m.",
+			"4.20 p.m." : "4.20 p.m.",
+			"4.20 p.m. in the afternoon" : "4.20 p.m. in the afternoon",
+			"She is the PM of the UK." : "She is the PM of the UK.", // false positive
 	};
 
 

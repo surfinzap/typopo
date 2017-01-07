@@ -1,5 +1,8 @@
 # Changelog for Typopo
 
+## 1. // 2017-01
+* identifies and corrects a.m., p.m.
+
 ## 1.2.1 // 2017-01-05
 * refactor sentence punctuation references
 * refactor variable references

@@ -16,7 +16,7 @@ Typopo:
 	* apostrophes
 	* accidental uPPERCASE
 	* Capital letter at the beginning of a sentence
-	* spelling of e.g. and i.e.
+	* spelling of e.g., i.e., a.m. and p.m.
 	* non-breaking spaces (adds them after one-word prepositions and "&" and removes them between multi-letter words)
 * replaces:
 	* multiple dots with ellipsis (…)
