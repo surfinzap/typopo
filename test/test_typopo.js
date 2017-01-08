@@ -286,109 +286,131 @@
 
 
 	typos__en = {
-			/*
-					Quotation marks
-			*/
-			// correct “US English double quotation marks”
-			"English „English„ „English„ English" : "English “English” “English” English",
-			"“English double quotation marks“" : "“English double quotation marks”",
-			"”English double quotation marks”" : "“English double quotation marks”",
-			"\"English double quotation marks\"" : "“English double quotation marks”",
-			"Chto mu povisť slova  ,,Myžku, sŷnku mij‘‘" : "Chto mu povisť slova “Myžku, sŷnku mij”",
-			"\"abc''" : "“abc”" ,
+		/*
+				Quotation marks
+		*/
+		// correct “US English double quotation marks”
+		"English „English„ „English„ English" : "English “English” “English” English",
+		"“English double quotation marks“" : "“English double quotation marks”",
+		"”English double quotation marks”" : "“English double quotation marks”",
+		"\"English double quotation marks\"" : "“English double quotation marks”",
+		"Chto mu povisť slova  ,,Myžku, sŷnku mij‘‘" : "Chto mu povisť slova “Myžku, sŷnku mij”",
+		"\"abc''" : "“abc”" ,
 
-			// Correct apostrophes and ‘US English single quotation marks’
-			"Let's test this: \"however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said\"" : "Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
-			"within double quotes “there are single 'quotes with mix’d punctuation,' you see.”" : "Within double quotes “there are single ‘quotes with mix’d punctuation,’ you see.”",
+		// Correct apostrophes and ‘US English single quotation marks’
+		"Let's test this: \"however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said\"" : "Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
+		"within double quotes “there are single 'quotes with mix’d punctuation,' you see.”" : "Within double quotes “there are single ‘quotes with mix’d punctuation,’ you see.”",
 
-			// Use-cases for mixing double quotes and primes
-			"He said: \"Here's 12\" record.\"" : "He said: “Here’s 12″ record.”",
-			"He said: \"He was 12.\"" : "He said: “He was 12.”", //false positive
-			//error of wrongly identified primes due to swapped punctuation
-			"He said: \"He was 12\". And then he added: \"Maybe he was 13\"." : "He said: “He was 12.” And then he added: “Maybe he was 13.”",
+		// Use-cases for mixing double quotes and primes
+		"He said: \"Here's 12\" record.\"" : "He said: “Here’s 12″ record.”",
+		"He said: \"He was 12.\"" : "He said: “He was 12.”", //false positive
+		//error of wrongly identified primes due to swapped punctuation
+		"He said: \"He was 12\". And then he added: \"Maybe he was 13\"." : "He said: “He was 12.” And then he added: “Maybe he was 13.”",
 
-			// Best-effort for unclosed double quotes
-			"\"Even when left double quote is missing its right counterpart." : "“Even when left double quote is missing its right counterpart.",
-			"Even when right double quote is missing its left counterpart.\"" : "Even when right double quote is missing its left counterpart.”",
-			"We’ll remove a quote, \" when it is hanging spaced around in the middle" : "We’ll remove a quote, when it is hanging spaced around in the middle",
+		// Best-effort for unclosed double quotes
+		"\"Even when left double quote is missing its right counterpart." : "“Even when left double quote is missing its right counterpart.",
+		"Even when right double quote is missing its left counterpart.\"" : "Even when right double quote is missing its left counterpart.”",
+		"We’ll remove a quote, \" when it is hanging spaced around in the middle" : "We’ll remove a quote, when it is hanging spaced around in the middle",
 
-			// Mixing quotes and primes
-			"12' 45\"" : "12′ 45″",
-			"3° 5' 30\"" : "3° 5′ 30″",
+		// Mixing quotes and primes
+		"12' 45\"" : "12′ 45″",
+		"3° 5' 30\"" : "3° 5′ 30″",
 
-			// Improperly spaced primes
-			"12 ′ 45 ″" : "12′ 45″",
-			"3 ° 5 ′ 30 ″" : "3° 5′ 30″",
-
-
-
-
-
-			// swap quotes for punctuation .,?!
-			"hey”," : "hey,”",
-			"Hey”." : "Hey.”",
-			"Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation,’ you see.”",
-			"Within double quotes “there are single ‘quotes with mixed punctuation’? you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation?’ you see.”",
-
-			// remove extra spaces along „English double quotation marks“
-			"“ Ups, an extra space at the beginning”" : "“Ups, an extra space at the beginning”",
-			"“Ups, an extra space at the end ”" : "“Ups, an extra space at the end”",
-
-			// start quoted sentence with a Capital letter
-			"“one sentence ended. and another started.”" : "“One sentence ended. And another started.”",
-			"“хто ті дав?”" : "“Хто ті дав?”",
-
-
-			// remove space when aposiopesis is followed by punctuation
-			"“Sentence and… ”" : "“Sentence and…”",
-
-			/* Remove extra sentence punctuation
-
-				 [1] extra comma after terminal punctuation, it it happens often in direct speech
-				 [2] extra dot at the end of a direct speech ending with abbreviation
-				 [3] extra dot at the end of a sentence ending with abbreviation */
-			/*[1]*/"“Hey!,” she said" : "“Hey!” she said",
-			/*[2]*/"“We will continue this tomorrow at 8:00 a.m.”.": "“We will continue this tomorrow at 8:00 a.m.”",
-			/*[3]*/"He is a vice president at Apple Inc..":"He is a vice president at Apple Inc.",
+		// Improperly spaced primes
+		"12 ′ 45 ″" : "12′ 45″",
+		"3 ° 5 ′ 30 ″" : "3° 5′ 30″",
 
 
 
 
-			/*
-				Spell common abbreviations correctly
 
-				Supported:
-				e.g., i.e., a.m., p.m.
-			*/
-			"E. g. something" : "e.g. something",
-			"E. g.something" : "e.g. something",
-			"E. G. something" : "e.g. something",
-			"E.G. something" : "e.g. something",
-			"eg. something" : "e.g. something",
-			"eg something" : "e.g. something",
-			"Greg Snow" : "Greg Snow", // false positive
-			"eggnog" : "eggnog", // false positive
+		// swap quotes for punctuation .,?!
+		"hey”," : "hey,”",
+		"Hey”." : "Hey.”",
+		"Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation,’ you see.”",
+		"Within double quotes “there are single ‘quotes with mixed punctuation’? you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation?’ you see.”",
 
-			"I. e. something" : "i.e. something",
-			"I. e.something" : "i.e. something",
-			"I. E. something" : "i.e. something",
-			"I.E. something" : "i.e. something",
-			"ie. something" : "i.e. something",
-			"ie something" : "i.e. something",
-			"brie cheese" : "brie cheese", // false positive
-			"Pam Grier" : "Pam Grier", // false positive
+		// remove extra spaces along „English double quotation marks“
+		"“ Ups, an extra space at the beginning”" : "“Ups, an extra space at the beginning”",
+		"“Ups, an extra space at the end ”" : "“Ups, an extra space at the end”",
 
-			"5 am" : "5 a.m.",
-			"5 am in the morning" : "5 a.m. in the morning",
-			"5 AM" : "5 a.m.",
-			"5 a.m." : "5 a.m.",
-			"I am from nowhere." : "I am from nowhere.", // false positive
+		// start quoted sentence with a Capital letter
+		"“one sentence ended. and another started.”" : "“One sentence ended. And another started.”",
+		"“хто ті дав?”" : "“Хто ті дав?”",
 
-			"4.20 pm" : "4.20 p.m.",
-			"4.20 PM" : "4.20 p.m.",
-			"4.20 p.m." : "4.20 p.m.",
-			"4.20 p.m. in the afternoon" : "4.20 p.m. in the afternoon",
-			"She is the PM of the UK." : "She is the PM of the UK.", // false positive
+
+		// remove space when aposiopesis is followed by punctuation
+		"“Sentence and… ”" : "“Sentence and…”",
+
+		/* Remove extra sentence punctuation
+
+			 [1] extra comma after terminal punctuation, it it happens often in direct speech
+			 [2] extra dot at the end of a direct speech ending with abbreviation
+			 [3] extra dot at the end of a sentence ending with abbreviation */
+		/*[1]*/"“Hey!,” she said" : "“Hey!” she said",
+		/*[2]*/"“We will continue this tomorrow at 8:00 a.m.”.": "“We will continue this tomorrow at 8:00 a.m.”",
+		/*[3]*/"He is a vice president at Apple Inc..":"He is a vice president at Apple Inc.",
+
+
+
+
+		/*
+			Spell common abbreviations correctly
+
+			Supported:
+			e.g., i.e., a.m., p.m.
+		*/
+		"E. g. something" : "e.g. something",
+		"E. g.something" : "e.g. something",
+		"E. G. something" : "e.g. something",
+		"E.G. something" : "e.g. something",
+		"eg. something" : "e.g. something",
+		"eg something" : "e.g. something",
+		"Greg Snow" : "Greg Snow", // false positive
+		"eggnog" : "eggnog", // false positive
+
+		"I. e. something" : "i.e. something",
+		"I. e.something" : "i.e. something",
+		"I. E. something" : "i.e. something",
+		"I.E. something" : "i.e. something",
+		"ie. something" : "i.e. something",
+		"ie something" : "i.e. something",
+		"brie cheese" : "brie cheese", // false positive
+		"Pam Grier" : "Pam Grier", // false positive
+
+		"5 am" : "5 a.m.",
+		"5 am in the morning" : "5 a.m. in the morning",
+		"5 AM" : "5 a.m.",
+		"5 a.m." : "5 a.m.",
+		"I am from nowhere." : "I am from nowhere.", // false positive
+
+		"4.20 pm" : "4.20 p.m.",
+		"4.20 PM" : "4.20 p.m.",
+		"4.20 p.m." : "4.20 p.m.",
+		"4.20 p.m. in the afternoon" : "4.20 p.m. in the afternoon",
+		"She is the PM of the UK." : "She is the PM of the UK.", // false positive
+
+
+
+		/*
+			Correct dashes for number ranges
+		*/
+		"5-6 eggs" : "5–6 eggs",
+		"5 -6 eggs" : "5–6 eggs",
+		"5- 6 eggs" : "5–6 eggs",
+		"5 - 6 eggs" : "5–6 eggs",
+		"5—6 eggs" : "5–6 eggs",
+
+		"5-12″ long" : "5–12″ long",
+		"In 5.25-10.75 range" : "In 5.25–10.75 range",
+		"In 5,000.25-10,000.75 range" : "In 5,000.25–10,000.75 range",
+		"1st-5th August" : "1st–5th August",
+		"1st -5th August" : "1st–5th August",
+		"1st- 5th August" : "1st–5th August",
+		"1st - 5th August" : "1st–5th August",
+
+		"v rozmedzí 5,25-10,75" : "v rozmedzí 5,25–10,75",
+		"v rozmedzí 5 000,25-10 000,75" : "v rozmedzí 5 000,25–10 000,75",
 	};
 
 
@@ -427,6 +449,16 @@
 		"158. pluk" : "158. pluk",
 		"1432. v poradí" : "1432. v poradí",
 		"20. новембра" : "20. новембра",
+
+		/*
+			Correct dashes for ordinal number ranges
+		*/
+		"v rozmedzí 5,25-10,75" : "v rozmedzí 5,25–10,75",
+		"v rozmedzí 5 000,25-10 000,75" : "v rozmedzí 5 000,25–10 000,75",
+		"1.-5. augusta" : "1.–5. augusta",
+		"1. -5. augusta" : "1.–5. augusta",
+		"1.- 5. augusta" : "1.–5. augusta",
+		"1. - 5. augusta" : "1.–5. augusta",
 	};
 
 	typos__rue = {
@@ -464,7 +496,18 @@
 		"a я іду здоїти" : "a я іду здоїти",
 		"a в хырбетї" : "a в хырбетї",
 		"што є му вытыкане" : "што є му вытыкане",
-		"ся ї не" : "ся ї не"
+		"ся ї не" : "ся ї не",
+
+		/*
+			Correct dashes for ordinal number ranges
+		*/
+		"v rozmedzí 5,25-10,75" : "v rozmedzí 5,25–10,75",
+		"v rozmedzí 5 000,25-10 000,75" : "v rozmedzí 5 000,25–10 000,75",
+		"1.-5. augusta" : "1.–5. augusta",
+		"1. -5. augusta" : "1.–5. augusta",
+		"1.- 5. augusta" : "1.–5. augusta",
+		"1. - 5. augusta" : "1.–5. augusta",
+
 	};
 
 	function test__batch(batch, language) {
@@ -473,24 +516,29 @@
 		}
 	}
 
+
 	function test__correct_typos_rue() {
 		test__batch(typos__generic, "rue");
 		test__batch(typos__rue, "rue");
+		console.log("Test cases for Rusyn language done: " + new Date(Date.now()));
 	}
 
 	function test__correct_typos_sk() {
 		test__batch(typos__generic, "sk");
 		test__batch(typos__sk_cz, "sk");
+		console.log("Test cases for Slovak language done: " + new Date(Date.now()));
 	}
 
 	function test__correct_typos_cs() {
 		test__batch(typos__generic, "cs");
 		test__batch(typos__sk_cz, "cs");
+		console.log("Test cases for Czech language done: " + new Date(Date.now()));
 	}
 
 	function test__correct_typos_en() {
 		test__batch(typos__generic, "en");
 		test__batch(typos__en, "en");
+		console.log("Test cases for English language done: " + new Date(Date.now()));
 	}
 
 
