@@ -236,13 +236,16 @@ function correct_double_quotes_and_primes(string, language) {
 		case "rue":
 			string = string.replace(/({{typopo__left-double-quote}})/g, "«");
 			string = string.replace(/({{typopo__right-double-quote}})/g, "»");
+			break;
 		case "sk":
 		case "cs":
 			string = string.replace(/({{typopo__left-double-quote}})/g, "„");
 			string = string.replace(/({{typopo__right-double-quote}})/g, "“");
+			break;
 		case "en":
 			string = string.replace(/({{typopo__left-double-quote}})/g, "“");
 			string = string.replace(/({{typopo__right-double-quote}})/g, "”");
+			break;
 	}
 
 	return string;
@@ -264,8 +267,10 @@ function correct_double_quotes_and_primes(string, language) {
 	[2] Identify single quotes
 	[3] Identify feet, arcminutes, minutes
 	[4] Identify residual apostrophes that have left
-	[5] Swap right single quote adepts with a puntuation
-			(not primes or apostrohes)
+	[?] Swap right single quote adepts with a puntuation
+			(We were swapping single quotes as part of algorithm a while a back,
+			but since it is more probable that single quotes are in the middle of the
+			sentence, we havae dropped swapping as a part of the algorithm)
 	[6] Replace all identified punctuation with appropriate punctuation in
 	    given language
 
@@ -340,13 +345,8 @@ function correct_single_quotes_primes_and_apostrophes(string, language) {
 	string = string.replace(re, "{{typopo__apostrophe}}");
 
 
-	/* [5] Swap right single quote adepts with a puntuation */
-	pattern = "({{typopo__right-single-quote}})([" + sentence_punctuation + "])";
-	re = new RegExp(pattern, "g");
-	string =  string.replace(re, '$2$1');
 
-
-	/* [6] Punctuation replacement */
+	/* [5] Punctuation replacement */
 	string = string.replace(/({{typopo__single-prime}})/g, "′");
 	string = string.replace(/{{typopo__apostrophe}}|{{typopo__left-single-quote--adept}}|{{typopo__right-single-quote--adept}}/g, "’");
 

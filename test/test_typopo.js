@@ -223,6 +223,7 @@
 		"Jedna skončila. že, čo?" : "Jedna skončila. Že, čo?",
 		"Jedna skončila. ůe, čo?" : "Jedna skončila. Ůe, čo?",
 		"Jedna skončila. яe, čo?" : "Jedna skončila. Яe, čo?",
+		"There is (urgent need to ise 15.4 inches) in the brackets." : "There is (urgent need to ise 15.4 inches) in the brackets.",
 		/*[1]*/"V Jednotě je… silný zápach." : "V Jednotě je… silný zápach.",
 		/*[2]*/"Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let." : "Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let.",
 
@@ -299,7 +300,7 @@
 
 		// Correct apostrophes and ‘US English single quotation marks’
 		"Let's test this: \"however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said\"" : "Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
-		"within double quotes “there are single 'quotes with mix’d punctuation,' you see.”" : "Within double quotes “there are single ‘quotes with mix’d punctuation,’ you see.”",
+		"Within double quotes “there are single 'quotes with mix’d punctuation', you see.”" : "Within double quotes “there are single ‘quotes with mix’d punctuation’, you see.”",
 
 		// Use-cases for mixing double quotes and primes
 		"He said: \"Here's 12\" record.\"" : "He said: “Here’s 12″ record.”",
@@ -322,13 +323,12 @@
 
 
 
-
-
 		// swap quotes for punctuation .,?!
 		"hey”," : "hey,”",
 		"Hey”." : "Hey.”",
-		"Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation,’ you see.”",
-		"Within double quotes “there are single ‘quotes with mixed punctuation’? you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation?’ you see.”",
+		"Hey”?" : "Hey?”",
+		"Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”",
+		"Within double quotes “there are single ‘quotes with mixed punctuation’?”" : "Within double quotes “there are single ‘quotes with mixed punctuation’?”",
 
 		// remove extra spaces along „English double quotation marks“
 		"“ Ups, an extra space at the beginning”" : "“Ups, an extra space at the beginning”",
@@ -432,9 +432,9 @@
 		// swap quotes for punctuation .,?!
 		"hey“," : "hey,“",
 		"Hey“." : "Hey.“",
-		"Within double quotes „there are single ‚quotes with mixed punctuation‘, you see“" : "Within double quotes „there are single ‚quotes with mixed punctuation,‘ you see“",
-		"Within double quotes „there are single ‚quotes with mixed punctuation‘? you see“" : "Within double quotes „there are single ‚quotes with mixed punctuation?‘ you see“",
-		"Within double quotes „there are single 'quotes with mix’d punctuation,' you see.“" : "Within double quotes „there are single ‚quotes with mix’d punctuation,‘ you see.“",
+		"Within double quotes „there are single ‚quotes with mixed punctuation‘, you see“" : "Within double quotes „there are single ‚quotes with mixed punctuation‘, you see“",
+		"Within double quotes „there are single ‚quotes with mixed punctuation‘?“" : "Within double quotes „there are single ‚quotes with mixed punctuation‘?“",
+		"Within double quotes „there are single 'quotes with mix’d punctuation', you see.“" : "Within double quotes „there are single ‚quotes with mix’d punctuation‘, you see.“",
 		"„Och, što teper’?!“ obertaly s’a skoro kolečka Myž’ovy v holovi." : "„Och, što teper’?!“ obertaly s’a skoro kolečka Myž’ovy v holovi.", //false positive
 
 		// remove extra spaces along „Slovak, Rusyn, Czech double quotation marks“
@@ -478,8 +478,8 @@
 		// swap quotes for punctuation .,?!
 		"hey»," : "hey,»",
 		"Hey»." : "Hey.»",
-		"Within double quotes „there are single ‹quotes with mixed punctuation›? you see“" : "Within double quotes «there are single ‹quotes with mixed punctuation?› you see»",
-		"Within double quotes „there are single 'quotes with mix’d punctuation,' you see.“" : "Within double quotes «there are single ‹quotes with mix’d punctuation,› you see.»",
+		"Within double quotes „there are single ‹quotes with mixed punctuation›?“" : "Within double quotes «there are single ‹quotes with mixed punctuation›?»",
+		"Within double quotes „there are single 'quotes with mix’d punctuation', you see.“" : "Within double quotes «there are single ‹quotes with mix’d punctuation›, you see.»",
 
 		// remove extra spaces along «Slovak, Rusyn, Czech double quotation marks»
 		"« Ups, an extra space at the beginning»" : "«Ups, an extra space at the beginning»",
