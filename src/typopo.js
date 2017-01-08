@@ -162,8 +162,9 @@ function remove_multiple_spaces(string) {
 	[3] Identify closed double quotes
 	[4] Identify the rest as unclosed double quotes (best-effort replacement)
 	[5] Fix spacing around quotes and primes
-	[6] Remove extra punctuation around quotes
-	[7] Replace all identified punctuation with appropriate punctuation in
+	[6] Swap back some of the double quotes with a punctuation
+	[7] Remove extra punctuation around quotes
+	[8] Replace all identified punctuation with appropriate punctuation in
 	    given language
 
 	@param {string} string — input text for identification
@@ -178,8 +179,8 @@ function correct_double_quotes_and_primes(string, language) {
 	var re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$2");
 
-	/* [1] Swap right double quote adepts with a punctuation */
-	pattern = "("+ double_quote_adepts + ")([\.,!?])";
+	/* [1] Swap right double quote adepts with a terminal punctuation */
+	pattern = "("+ double_quote_adepts + ")([" + terminal_punctuation + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, '$2$1');
 
@@ -219,17 +220,35 @@ function correct_double_quotes_and_primes(string, language) {
 	string = string.replace(/( )({{typopo__double-prime}})/g, "$2");
 
 
-	/* [6] Remove extra comma after punctuation in direct speech,
+	/* [6] Swap back some of the double quotes with a punctuation
+
+		 Idea
+		 In [1] we have swapped all double right quotes by default with a terminal
+		 punctuation. However, not all double quotes wrap the whole sentence and
+		 there are cases when few words are quoted within a sentence. Take a look at
+		 examples:
+		 “Sentence qouted as a whole.” (full stop is placed within double quotes)
+		 This is “quoted expression.” (full stop is placed outside double quotes)
+
+		 Algorithm
+		 Match all the double quote pairs that do not precede sentence punctuation
+		 (and thus must be used within a sentence) and swap right double with
+		 a terminal punctuation.
+		 */
+	pattern = "([^" + sentence_punctuation + "][" + spaces + "]{{typopo__left-double-quote}}.+?)([" + terminal_punctuation + "])({{typopo__right-double-quote}})";
+	// console.log(pattern);
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1$3$2");
+
+
+	/* [7] Remove extra comma after punctuation in direct speech,
 					 e.g. "“Hey!,” she said" */
 	pattern = "([" + sentence_punctuation + "])([\,])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1");
 
 
-
-
-
-	/* [7] Punctuation replacement */
+	/* [8] Punctuation replacement */
 	string = string.replace(/({{typopo__double-prime}})/g, "″");
 
 	switch (language) {
@@ -875,13 +894,14 @@ function correct_typos(string, language) {
 
 	string = replace_symbols(string, essential_set);
 	string = replace_periods_with_ellipsis(string);
+	string = remove_multiple_spaces(string);
+
 
 	string = correct_double_quotes_and_primes(string, language);
 	string = correct_single_quotes_primes_and_apostrophes(string, language);
 
 	string = correct_multiple_sign(string);
 
-	string = remove_multiple_spaces(string);
 	string = remove_space_before_punctuation(string);
 	string = remove_space_after_punctuation(string);
 	string = remove_trailing_spaces(string);

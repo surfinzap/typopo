@@ -300,7 +300,7 @@
 
 		// Correct apostrophes and ‘US English single quotation marks’
 		"Let's test this: \"however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said\"" : "Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
-		"Within double quotes “there are single 'quotes with mix’d punctuation', you see.”" : "Within double quotes “there are single ‘quotes with mix’d punctuation’, you see.”",
+		"Within double quotes “there are single 'quotes with mix’d punctuation', you see.”" : "Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
 
 		// Use-cases for mixing double quotes and primes
 		"He said: \"Here's 12\" record.\"" : "He said: “Here’s 12″ record.”",
@@ -322,13 +322,17 @@
 		"3 ° 5 ′ 30 ″" : "3° 5′ 30″",
 
 
-
 		// swap quotes for punctuation .,?!
-		"hey”," : "hey,”",
 		"Hey”." : "Hey.”",
 		"Hey”?" : "Hey?”",
-		"Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”",
-		"Within double quotes “there are single ‘quotes with mixed punctuation’?”" : "Within double quotes “there are single ‘quotes with mixed punctuation’?”",
+		"Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”" : "Within double quotes “there are single ‘quotes with mixed punctuation’, you see”.",
+		"“We swap punctuation and double quotes in case of the whole sentence”." : "“We swap punctuation and double quotes in case of the whole sentence.”",
+		// but we won’t swap it when only portion of a sentence is double-quoted
+		"Because of this, it’s common to have “namespace pollution”, where completely unrelated code shares global variables." : "Because of this, it’s common to have “namespace pollution”, where completely unrelated code shares global variables.",
+		"He was like “namespace pollution”." : "He was like “namespace pollution”.",
+		"He was like “Georgia”." : "He was like “Georgia”.",
+		"He was ok. “He was ok”." : "He was ok. “He was ok.”",
+		"“Zest”, that’s an interesting name." : "“Zest”, that’s an interesting name.",
 
 		// remove extra spaces along „English double quotation marks“
 		"“ Ups, an extra space at the beginning”" : "“Ups, an extra space at the beginning”",
@@ -414,7 +418,6 @@
 	};
 
 
-
 	typos__sk_cz = {
 
 		// correct „Slovak, Rusyn, Czech double quotation marks“
@@ -430,11 +433,9 @@
 		"INCHEBA '89" : "INCHEBA ’89",
 
 		// swap quotes for punctuation .,?!
-		"hey“," : "hey,“",
 		"Hey“." : "Hey.“",
 		"Within double quotes „there are single ‚quotes with mixed punctuation‘, you see“" : "Within double quotes „there are single ‚quotes with mixed punctuation‘, you see“",
-		"Within double quotes „there are single ‚quotes with mixed punctuation‘?“" : "Within double quotes „there are single ‚quotes with mixed punctuation‘?“",
-		"Within double quotes „there are single 'quotes with mix’d punctuation', you see.“" : "Within double quotes „there are single ‚quotes with mix’d punctuation‘, you see.“",
+		"Within double quotes „there are single 'quotes with mix’d punctuation', you see.“" : "Within double quotes „there are single ‚quotes with mix’d punctuation‘, you see“.",
 		"„Och, što teper’?!“ obertaly s’a skoro kolečka Myž’ovy v holovi." : "„Och, što teper’?!“ obertaly s’a skoro kolečka Myž’ovy v holovi.", //false positive
 
 		// remove extra spaces along „Slovak, Rusyn, Czech double quotation marks“
@@ -476,10 +477,8 @@
 		"INCHEBA '89" : "INCHEBA ’89",
 
 		// swap quotes for punctuation .,?!
-		"hey»," : "hey,»",
 		"Hey»." : "Hey.»",
-		"Within double quotes „there are single ‹quotes with mixed punctuation›?“" : "Within double quotes «there are single ‹quotes with mixed punctuation›?»",
-		"Within double quotes „there are single 'quotes with mix’d punctuation', you see.“" : "Within double quotes «there are single ‹quotes with mix’d punctuation›, you see.»",
+		"Within double quotes „there are single 'quotes with mix’d punctuation', you see.“" : "Within double quotes «there are single ‹quotes with mix’d punctuation›, you see».",
 
 		// remove extra spaces along «Slovak, Rusyn, Czech double quotation marks»
 		"« Ups, an extra space at the beginning»" : "«Ups, an extra space at the beginning»",
@@ -546,13 +545,5 @@
 	test__correct_typos_sk();
 	test__correct_typos_cs();
 	test__correct_typos_en();
-
-
-
-	function test__identify_common_apostrophes(batch) {
-		for (var key in batch){
-			assert(identify_common_apostrophes(key), (batch[key]),"Typo error uncorrected:\nOriginal:\t" + key + "\nResult:\t\t" + identify_common_apostrophes(key) + "\nExpected:\t" + batch[key]);
-		}
-	}
 
 })();

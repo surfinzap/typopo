@@ -1,11 +1,11 @@
 # Changelog for Typopo
 
-## 1. // 2017-01
+## 1.3.0 // 2017-01-08
 * identify and correct a.m., p.m.
 * replace hyphen or dash, placed between 2 ordinal numbers with an en dash
 * replace hyphen or dash, placed between 2 cardinal numbers with an en dash
 * remove cases when single right quote is swapped with a punctuation
-
+* improve cases when double right quote is swapped with a punctuation
 
 ## 1.2.1 // 2017-01-05
 * refactor sentence punctuation references
