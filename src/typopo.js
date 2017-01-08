@@ -1,5 +1,5 @@
 /*!
- * Typopo 1.3.0
+ * Typopo 1.3.1
  *
  * Copyright 2015-17 Braňo Šandala
  * Released under the MIT license
