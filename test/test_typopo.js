@@ -381,12 +381,16 @@
 		"ie something" : "i.e. something",
 		"brie cheese" : "brie cheese", // false positive
 		"Pam Grier" : "Pam Grier", // false positive
+		"najkrajšie" : "najkrajšie", // false positive for non-latin boundaries
+		"ieš" : "ieš", // false positive for non-latin boundaries
 
 		"5 am" : "5 a.m.",
 		"5 am in the morning" : "5 a.m. in the morning",
 		"5 AM" : "5 a.m.",
 		"5 a.m." : "5 a.m.",
 		"I am from nowhere." : "I am from nowhere.", // false positive
+		"5 šam" : "5 šam", // false positive for non-latin boundaries
+		"5 amš" : "5 amš", // false positive for non-latin boundaries
 
 		"4.20 pm" : "4.20 p.m.",
 		"4.20 PM" : "4.20 p.m.",

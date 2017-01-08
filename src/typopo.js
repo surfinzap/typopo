@@ -24,9 +24,12 @@ var essential_set = {
 	"\\+\\-": "±",
 	"\\-\\+": "±",
 };
-
-var lowercase_chars_en_sk_cz_rue = "a-záäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
-var uppercase_chars_en_sk_cz_rue = "A-ZÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ";
+var non_latin_lowercase = "áäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
+var non_latin_uppercase = "ÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ";
+var non_latin_chars = non_latin_lowercase + non_latin_uppercase;
+var lowercase_chars_en_sk_cz_rue = "a-z" + non_latin_lowercase;
+var uppercase_chars_en_sk_cz_rue = "A-Z" + non_latin_uppercase;
+var all_chars = lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue;
 var single_quote_adepts = "‚|'|‘|’|‛|′|‹|›";
 var double_quote_adepts = "„|“|”|\"|«|»|″|,{2,}|‘{2,}|’{2,}|'{2,}|‹{2,}|›{2,}|′{2,}";
 var space = " ";
@@ -739,6 +742,7 @@ function correct_accidental_uppercase(string) {
 	[1] Identify e.g., i.e.
 	[2] Identify a.m., p.m. (different match to avoid false positives such as:
 			I am, He is the PM.)
+	[3] Exclude false identifications
 
 	@param {string} input text for identification
 	@returns {string} corrected output
@@ -749,10 +753,13 @@ function identify_common_abbreviations(string) {
 	var abbreviations = ["eg", "ie"];
 	for (var i = 0; i < abbreviations.length; i++) {
 		var pattern = "(\\b[" + abbreviations[i][0] + "]\\.?["+ spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ spaces +"]?)(\\b)";
+		// console.log(pattern);
 		var re = new RegExp(pattern, "gi");
 		replacement = "{{typopo__" + abbreviations[i] + "}} ";
 		string = string.replace(re, replacement);
 	}
+
+
 
 
 	/* [2] Identify a.m., p.m. */
@@ -761,6 +768,26 @@ function identify_common_abbreviations(string) {
 		var pattern = "(\\d)([" + spaces + "]?)(\\b[" + abbreviations[i][0] + "]\\.?["+ spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ spaces +"]?)(\\b|\\B)";
 		var re = new RegExp(pattern, "gi");
 		replacement = "$1 {{typopo__" + abbreviations[i] + "}} ";
+		string = string.replace(re, replacement);
+	}
+
+
+	/* [3] Exclude false identifications
+		 Regex \b does not catch non-latin characters so we need to exclude false
+		 identifications
+	*/
+	abbreviations = ["eg", "ie", "am", "pm"];
+	for (var i = 0; i < abbreviations.length; i++) {
+		// non-latin character at the beginning
+		var pattern = "([" + non_latin_chars + "])({{typopo__" + abbreviations[i] + "}})";
+		var re = new RegExp(pattern, "g");
+		replacement = "$1" + abbreviations[i];
+		string = string.replace(re, replacement);
+
+		// non-latin character at the end
+		pattern = "({{typopo__" + abbreviations[i] + "}} )([" + non_latin_chars + "])";
+		re = new RegExp(pattern, "g");
+		replacement = abbreviations[i] + "$2";
 		string = string.replace(re, replacement);
 	}
 

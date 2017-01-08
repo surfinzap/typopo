@@ -1,5 +1,8 @@
 # Changelog for Typopo
 
+## 1.3.1 // 2017-01-08
+* (hotfix) exclude false identification of i.e., e.g., a.m., p.m. 
+
 ## 1.3.0 // 2017-01-08
 * identify and correct a.m., p.m.
 * replace hyphen or dash, placed between 2 ordinal numbers with an en dash
