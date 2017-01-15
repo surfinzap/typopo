@@ -1,10 +1,10 @@
 /*!
- * Typopo 1.3.1
+ * Typopo 1.4.0
  *
  * Copyright 2015-17 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2017-01-08
+ * Date: 2017-01-15
  */
 
 
@@ -910,7 +910,7 @@ function place_exceptions(string) {
 
 	@param {string} string — input text for correction
 	@param {language} string — language option to correct specific typos; supported languages: en, sk, cs, rue. if not specified, English typos are corrected
-	@param {remove_lines} boolean — optional parameter allowing you to choose whether to remove empty lines or not 
+	@param {remove_lines} boolean — optional parameter allowing you to choose whether to remove empty lines or not
 	@returns {string} — corrected output
 */
 function correct_typos(string, language, remove_lines) {
