@@ -1,7 +1,5 @@
 # Backlog for typopo
 
-
-* include option for disabling line removal
 * add non-breaking space after ordinal/cardinal numbers
 * non-breaking space between dates 2. díl, 4. januar, 4th Janary, 20. novembra, 15. 2. 2016
 * non-breaking space for names F. X. Šalda, K. Čapek
@@ -9,6 +7,9 @@
 	* {findWhat:"(č\\.|s\\.|fol\\.|str\\.|r\\.|odst\\.|§) (\\d)"}
 	* {findWhat:"(©|℗|sv\\.|tj\\.|tzv\\.|čl\\.) (\\w+)"}
 	* {findWhat:"(hl\\.)\\s?(m\\.)"}
+
+* tech debt — adjust tests for different attributes (e.g. keep lines)
+
 
 * non-breaking space between Roman numerals {findWhat:"(\\u\\w+)\\s(I\\.|II\\.|III\\.|IV\\.|V\\.|VI\\.|VII\\.|VIII\\.|IX\\.|X\\.)"}
 * non-breaking space between currency and number

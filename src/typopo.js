@@ -526,15 +526,44 @@ function add_space_after_punctuation(string) {
 
 
 
-function remove_spaces_at_paragraph_beginning(string) {
-	var lines = string.match(/[^\r\n]+/g);
-	var lines_count = lines.length;
+/*
+	Removes extra spaces at the beginning of each paragraph
 
-	for (var i = 0; i < lines_count; i++) {
+	This could be done with a one-liner:
+	return string.replace(/^\s+/gm, "");
+
+	However, it also removes empty lines. Since, we want to handle this change
+	separately, we need to
+	[1] split the lines manually
+	[2] and remove extra spaces at the begining of each line
+	[3] join lines together to a single string
+
+	@param {string} string — input text for identification
+	@returns {string} — output with removed spaces at the beginning of paragraphs
+*/
+function remove_spaces_at_paragraph_beginning(string) {
+	/* [1] split the lines manually */
+	lines = string.split(/\r?\n/);
+
+	/* [2] and remove extra spaces at the begining of each line */
+	for (var i = 0; i < lines.length; i++) {
 		lines[i] = lines[i].replace(/^\s+/, "");
 	}
 
+	/* [3] join lines together to a single string */
 	return lines.join("\n");
+}
+
+
+
+/*
+	Removes empty lines
+
+	@param {string} string — input text for identification
+	@returns {string} — output with removed empty lines
+*/
+function remove_empty_lines(string) {
+	return string.replace(/^\s+/gm, "");
 }
 
 
@@ -879,12 +908,14 @@ function place_exceptions(string) {
 	Correct typos in the predefined order
 
 
-	@param {string} input text for correction
-	@param {language} language option to correct specific typos; supported languages: en, sk, cs, rue. if not specified, English typos are corrected
+	@param {string} string — input text for correction
+	@param {language} string — language option to correct specific typos; supported languages: en, sk, cs, rue. if not specified, English typos are corrected
+	@param {remove_lines} boolean — optional parameter allowing you to choose whether to remove empty lines or not 
 	@returns {string} — corrected output
 */
-function correct_typos(string, language) {
+function correct_typos(string, language, remove_lines) {
 	language = (typeof language === "undefined") ? "en" : language;
+	remove_lines = (typeof remove_lines === "undefined") ? true : remove_lines;
 
 	string = identify_exceptions(string);
 	string = identify_common_abbreviations(string); // needs to go before punctuation fixes
@@ -905,6 +936,11 @@ function correct_typos(string, language) {
 	string = add_space_before_punctuation(string);
 	string = add_space_after_punctuation(string);
 	string = remove_spaces_at_paragraph_beginning(string);
+
+	if(remove_lines) {
+		string = remove_empty_lines(string);
+	}
+
 	string = consolidate_nbsp(string);
 	string = correct_spaces_around_ellipsis(string);
 

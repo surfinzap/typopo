@@ -1,6 +1,7 @@
 # Changelog for Typopo
 
 ## 1.4.0 // 2017-01-15
+* “Removing empty lines” is now an optional parameter (in case you want to correct your plain-text based content or an email). By default, empty lines are removed
 * Dropped support for correcting capital letter at the beginning of the sentence. It yielded too much false positives. Feature may be re-introduced later in the future
 
 ## 1.3.1 // 2017-01-08
