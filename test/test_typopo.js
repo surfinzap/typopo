@@ -111,7 +111,7 @@
 		"trailing spaces    " : "trailing spaces", // nbsp
 		"trailing spaces    " : "trailing spaces", // hair_space
 		"trailing spaces    " : "trailing spaces", // narrow_nbsp
-		"trailing spaces.    " : "Trailing spaces.",
+		"trailing spaces.    " : "trailing spaces.",
 		"trailing spaces;    " : "trailing spaces;",
 
 		// remove extra spaces between word and punctuation
@@ -137,7 +137,6 @@
 		"  What if paragraph starts with extra space at the beginning?" : "What if paragraph starts with extra space at the beginning?",
 		"   What if paragraph starts with extra space at the beginning?" : "What if paragraph starts with extra space at the beginning?",
 		"One sentence ends. And next one continues as it should" : "One sentence ends. And next one continues as it should",
-		"first sentence.\nsecond sentence." : "First sentence.\nSecond sentence.",
 
 		// remove extra tabs at the beginning of the paragraph
 		"			What if sentence starts with tabs?" : "What if sentence starts with tabs?",
@@ -210,22 +209,6 @@
 		"1990's" : "1990’s",
 
 
-		/*
-				Start sentence with a Capital letter
-
-				false positives — auto-correcting ellipsis/aposiopesis
-				[1] Sentence continues after aposiopesis is being used
-				[2] Ellipsis is being used in the middle of the sentence
-		*/
-		"one sentence ended. and another started." : "One sentence ended. And another started.",
-		"What? nothing." : "What? Nothing.",
-		"Hey! what?" : "Hey! What?",
-		"Jedna skončila. že, čo?" : "Jedna skončila. Že, čo?",
-		"Jedna skončila. ůe, čo?" : "Jedna skončila. Ůe, čo?",
-		"Jedna skončila. яe, čo?" : "Jedna skončila. Яe, čo?",
-		"There is (urgent need to ise 15.4 inches) in the brackets." : "There is (urgent need to ise 15.4 inches) in the brackets.",
-		/*[1]*/"V Jednotě je… silný zápach." : "V Jednotě je… silný zápach.",
-		/*[2]*/"Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let." : "Pustili ho na § 9. … Pak, inspirován Watergatem, dostal 30 let.",
 
 
 		// correct accidental upper case
@@ -337,11 +320,6 @@
 		// remove extra spaces along „English double quotation marks“
 		"“ Ups, an extra space at the beginning”" : "“Ups, an extra space at the beginning”",
 		"“Ups, an extra space at the end ”" : "“Ups, an extra space at the end”",
-
-		// start quoted sentence with a Capital letter
-		"“one sentence ended. and another started.”" : "“One sentence ended. And another started.”",
-		"“хто ті дав?”" : "“Хто ті дав?”",
-
 
 		// remove space when aposiopesis is followed by punctuation
 		"“Sentence and… ”" : "“Sentence and…”",

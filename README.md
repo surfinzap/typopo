@@ -15,7 +15,6 @@ Typopo:
 	* single quotes (with assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages) and in pairs)
 	* apostrophes
 	* accidental uPPERCASE
-	* Capital letter at the beginning of a sentence
 	* spelling of e.g., i.e., a.m. and p.m.
 	* non-breaking spaces (adds them after one-word prepositions and "&" and removes them between multi-letter words)
 	* hyphens, en dashes and em dashes

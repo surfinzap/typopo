@@ -30,7 +30,17 @@ var non_latin_chars = non_latin_lowercase + non_latin_uppercase;
 var lowercase_chars_en_sk_cz_rue = "a-z" + non_latin_lowercase;
 var uppercase_chars_en_sk_cz_rue = "A-Z" + non_latin_uppercase;
 var all_chars = lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue;
-var single_quote_adepts = "‚|'|‘|’|‛|′|‹|›";
+/*
+	 (39)			dumb single quote
+	 (8216)		left single quotation mark
+	 (8217)		right single quotation mark
+	 (700)		modifier letter apostrophe; https://en.wikipedia.org/wiki/Modifier_letter_apostrophe
+	 (8219)		single high-reversed-9 quotation mark
+	 (8242)		prime
+	 (8249)		single left-pointing angle quotation mark
+	 (8250)		single right-pointing angle quotation mark
+*/
+var single_quote_adepts = "‚|'|‘|’|ʼ|‛|′|‹|›";
 var double_quote_adepts = "„|“|”|\"|«|»|″|,{2,}|‘{2,}|’{2,}|'{2,}|‹{2,}|›{2,}|′{2,}";
 var space = " ";
 var nbsp = " ";
@@ -641,46 +651,6 @@ function correct_spaces_around_ellipsis(string) {
 
 
 /*
-	Changes small letters at the beginning of the sentence to upper case
-
-	Comments
-	[1] Note that "{" in regex is to catch variables in curly brackets that
-	may appear at the beginning of the sentence. It is to prevent capitalization
-	of the next letter which in this case would be a variable name
-
-	@param {string} input text for identification
-	@returns {string} output with capitalized first letter of each sentence
-*/
-function start_sentence_w_capital_letter(string) {
-	// Correct capital letter in the first sentence of the paragraph
-	var lines = string.match(/[^\r\n]+/g);
-	var lines_count = lines.length;
-	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"{])(.+?)([" +ellipsis + terminal_punctuation +"])"; //[1], [2]
-	var re = new RegExp(pattern);
-
-	for (var i = 0; i < lines_count; i++) {
-		lines[i] = lines[i].replace(re, function($0, $1, $2, $3){
-			return $1.toUpperCase() + $2 + $3;
-		});
-	}
-
-	string = lines.join("\n");
-
-	// Correct sentence case in the middle of the string
-	// find all lowercase letters after sentence punctuation, then replace them
-	// with uppercase variant by calling another replace function
-	// Exceptions: dates, numerical values
-	pattern = "([^0-9])([" + terminal_punctuation + "][" + spaces + "])(["+ lowercase_chars_en_sk_cz_rue +"])";
-	re = new RegExp(pattern, "g");
-	string = string.replace(re, function($0, $1, $2, $3){
-			return $1 + $2 + $3.toUpperCase();
-	});
-
-	return string;
-}
-
-
-/*
 	Corrects accidental uppercase
 
 	Best-effort function to fix most common accidental uppercase errors, namely:
@@ -941,7 +911,6 @@ function correct_typos(string, language) {
 	string = replace_hyphen_with_dash(string, language);
 	string = replace_dash_with_hyphen(string);
 
-	string = start_sentence_w_capital_letter(string);
 	string = correct_accidental_uppercase(string);
 
 	string = place_common_abbreviations(string); // needs to go after punctuation fixes

@@ -1,7 +1,10 @@
 # Changelog for Typopo
 
+## 1.4.0 // 2017-01-15
+* Dropped support for correcting capital letter at the beginning of the sentence. It yielded too much false positives. Feature may be re-introduced later in the future
+
 ## 1.3.1 // 2017-01-08
-* (hotfix) exclude false identification of i.e., e.g., a.m., p.m. 
+* (hotfix) exclude false identification of i.e., e.g., a.m., p.m.
 
 ## 1.3.0 // 2017-01-08
 * identify and correct a.m., p.m.
