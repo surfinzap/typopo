@@ -10,6 +10,7 @@
 
 * tech debt — adjust tests for different attributes (e.g. keep lines)
 
+* fix that: He said:“Here’s a 12″ record.”
 
 * non-breaking space between Roman numerals {findWhat:"(\\u\\w+)\\s(I\\.|II\\.|III\\.|IV\\.|V\\.|VI\\.|VII\\.|VIII\\.|IX\\.|X\\.)"}
 * non-breaking space between currency and number

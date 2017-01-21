@@ -38,9 +38,9 @@ Give me [feedback](#feedback) on what can be done better.
 
 ## Usage & Demo
 
-Demo — [http://surfinzap.github.io/typopo/](http://surfinzap.github.io/typopo/)
+### Demo — [http://typopo.tota.sk/](http://typopo.tota.sk/)
 
-![alt Typopo auto-correct animation](/docs/typopo-demo.gif?raw=true "Typopo auto-correct animation")
+![alt correct typos with typopo](http://typopo.tota.sk/img/typopo--og-9000.png "correct typos with typopo")
 
 
 ### Installation
