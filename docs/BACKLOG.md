@@ -3,6 +3,8 @@
 * add non-breaking space after ordinal/cardinal numbers
 * non-breaking space between dates 2. díl, 4. januar, 4th Janary, 20. novembra, 15. 2. 2016
 * non-breaking space for names F. X. Šalda, K. Čapek
+* non-breaking space between Roman numerals {findWhat:"(\\u\\w+)\\s(I\\.|II\\.|III\\.|IV\\.|V\\.|VI\\.|VII\\.|VIII\\.|IX\\.|X\\.)"}
+
 * special cases for non-braking spaces between abbreviations and numbers
 	* {findWhat:"(č\\.|s\\.|fol\\.|str\\.|r\\.|odst\\.|§) (\\d)"}
 	* {findWhat:"(©|℗|sv\\.|tj\\.|tzv\\.|čl\\.) (\\w+)"}
@@ -12,14 +14,17 @@
 
 * fix that: He said:“Here’s a 12″ record.”
 * fix that: „nova-produkt-4“ na napr. "cervenyj-bereh“
+* fix that: - dashes at the beginning of the sentence
 
-* non-breaking space between Roman numerals {findWhat:"(\\u\\w+)\\s(I\\.|II\\.|III\\.|IV\\.|V\\.|VI\\.|VII\\.|VIII\\.|IX\\.|X\\.)"}
 * non-breaking space between currency and number
 
 * consider resolving single-word widows
 
 * add support for math equations spacing
 * fix numeral format
+* fix this:  30.000,-. > 30.000,—
+* fix this e- shopu
+
 
 * split script in isolated options, set up architecture
 	* Modules
