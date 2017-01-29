@@ -571,15 +571,16 @@ function remove_empty_lines(string) {
 /*
 	Consolidates the use of non-breaking spaces
 
-	* adds non-breaking spaces after single-character prepositions
-	* adds non-breaking spaces after numerals
-	* adds non-breaking spaces around ×
 	* removes characters between multi-character words
+	* adds non-breaking spaces after cardinal numbers
+	* adds non-breaking spaces around ×
+	* adds non-breaking spaces after single-character prepositions
 
 	@param {string} string — input text for identification
 	@returns {string} — output with correctly placed non-breaking space
 */
 function consolidate_nbsp(string) {
+
 	// removes non-breaking spaces between multi-character words
 	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})(["+ nbsp + narrow_nbsp +"])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})";
 	var re = new RegExp(pattern, "g");
@@ -587,7 +588,7 @@ function consolidate_nbsp(string) {
 	string =  string.replace(re, "$1 $3"); //calling it twice to catch odd/even occurences
 
 
-	// adds non-breaking spaces after numerals
+	// adds non-breaking spaces after cardinal numbers
 	pattern = "([0-9]+)( )(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+)";
 	re = new RegExp(pattern, "g");
 	var replacement = "$1" + nbsp + "$3";
