@@ -1,4 +1,4 @@
-import {correct_typos} from '../typopo.js';
+import {removeEmptyLines} from "../lib/empty-lines";
 import assert from 'assert';
 
 describe('Remove empty lines\n', () => {
@@ -10,7 +10,7 @@ describe('Remove empty lines\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should remove excessive empty lines", () => {
-			assert.equal(correct_typos(key), testCase[key]);
+			assert.equal(removeEmptyLines(key), testCase[key]);
 		});
 	});
 });
