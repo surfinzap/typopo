@@ -72,7 +72,7 @@ gulp.task('server', ['copy typopo-demo to build'], function (done) {
 
 gulp.task('watch', ['build-dev', 'build-browser-dev', 'server'], function () {
   livereload.listen();
-  gulp.watch(['./src/**/*.js', './src/*.js'], ['build-dev', 'build-browser-dev']);
+  gulp.watch(['./src/**/*.js', './src/*.js', './demo/*.html'], ['build-dev', 'build-browser-dev', 'copy typopo-demo to build']);
 });
 
 gulp.task('default', ['watch']);
