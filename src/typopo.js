@@ -8,118 +8,19 @@
  */
 
 import {removeEmptyLines} from "./lib/empty-lines";
+import constants from './lib/constants';
 
-/*----------------------------------------------------------------------------*\
-	Variables & Character replacement sets
-\*----------------------------------------------------------------------------*/
-
-var essential_set = {
-	"\\(C\\)": "©",
-	"\\(c\\)": "©",
-	"\\(R\\)": "®",
-	"\\(r\\)": "®",
-	"\\(TM\\)": "™",
-	"\\(tm\\)": "™",
-	"\\+\\-": "±",
-	"\\-\\+": "±",
-};
-var non_latin_lowercase = "áäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
-var non_latin_uppercase = "ÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ";
-var non_latin_chars = non_latin_lowercase + non_latin_uppercase;
-var lowercase_chars_en_sk_cz_rue = "a-z" + non_latin_lowercase;
-var uppercase_chars_en_sk_cz_rue = "A-Z" + non_latin_uppercase;
-var all_chars = lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue;
-/*
-	 (39)			dumb single quote
-	 (8216)		left single quotation mark
-	 (8217)		right single quotation mark
-	 (700)		modifier letter apostrophe; https://en.wikipedia.org/wiki/Modifier_letter_apostrophe
-	 (8219)		single high-reversed-9 quotation mark
-	 (8242)		prime
-	 (8249)		single left-pointing angle quotation mark
-	 (8250)		single right-pointing angle quotation mark
-*/
-var single_quote_adepts = "‚|'|‘|’|ʼ|‛|′|‹|›";
-var double_quote_adepts = "„|“|”|\"|«|»|″|,{2,}|‘{2,}|’{2,}|'{2,}|‹{2,}|›{2,}|′{2,}";
-var space = " ";
-var nbsp = " ";
-var hair_space = " "; //&#8202;
-var narrow_nbsp = " "; //&#8239;
-var spaces = space + nbsp + hair_space + narrow_nbsp;
-var terminal_punctuation = "\.\!\?";
-var sentence_punctuation = "\,\:\;" + terminal_punctuation; // there is no ellipsis in the set as it is being used throughout a sentence in the middle. Rethink this group to split it into end-sentence punctuation and middle sentence punctuation
-var opening_brackets = "\\(\\[\\{";
-var closing_brackets = "\\)\\]\\}";
-var ellipsis = "…";
-var degree = "°";
-
-/*
-	Source for web_url_pattern, email_address_pattern
-	http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/2.0_r1/android/text/util/Regex.java#Regex.0WEB_URL_PATTERN
-*/
-var web_url_pattern = "((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)" +
-                      "\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,64}(?:\\:(?:[a-zA-Z0-9\\$\\-\\_" +
-                      "\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,25})?\\@)?)?" +
-                      "((?:(?:[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}\\.)+" +  // named host
-                      "(?:" + // plus top level domain
-                      "(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])" +
-                      "|(?:biz|b[abdefghijmnorstvwyz])" +
-                      "|(?:cat|com|coop|c[acdfghiklmnoruvxyz])" +
-                      "|d[ejkmoz]" +
-                      "|(?:edu|e[cegrstu])" +
-                      "|f[ijkmor]" +
-                      "|(?:gov|g[abdefghilmnpqrstuwy])" +
-                      "|h[kmnrtu]" +
-                      "|(?:info|int|i[delmnoqrst])" +
-                      "|(?:jobs|j[emop])" +
-                      "|k[eghimnrwyz]" +
-                      "|l[abcikrstuvy]" +
-                      "|(?:mil|mobi|museum|m[acdghklmnopqrstuvwxyz])" +
-                      "|(?:name|net|n[acefgilopruz])" +
-                      "|(?:org|om)" +
-                      "|(?:pro|p[aefghklmnrstwy])" +
-                      "|qa" +
-                      "|r[eouw]" +
-                      "|s[abcdeghijklmnortuvyz]" +
-                      "|(?:tel|travel|t[cdfghjklmnoprtvwz])" +
-                      "|u[agkmsyz]" +
-                      "|v[aceginu]" +
-                      "|w[fs]" +
-                      "|y[etu]" +
-                      "|z[amw]))" +
-                      "|(?:(?:25[0-5]|2[0-4]" + // or ip address
-                      "[0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(?:25[0-5]|2[0-4][0-9]" +
-                      "|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1]" +
-                      "[0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}" +
-                      "|[1-9][0-9]|[0-9])))" +
-                      "(?:\\:\\d{1,5})?)" + // plus option port number +
-                      "(\\/(?:(?:[a-zA-Z0-9\\;\\/\\?\\:\\@\\&\\=\\#\\~" + // plus option query params
-                      "\\-\\.\\+\\!\\*\\'\\(\\)\\,\\_])|(?:\\%[a-fA-F0-9]{2}))*)?" +
-                      "(?:\\b|$)"; // and finally, a word boundary or end of
-                                     // input.  This is to stop foo.sure from
-                                     // matching as foo.su
-
-
-
-var email_address_pattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-]{1,256}" +
-            "\\@" +
-            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-            "(" +
-                "\\." +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-            ")+";
 
 var exceptions = [];
-
 
 /*----------------------------------------------------------------------------*\
 	Esential replacements
 \*----------------------------------------------------------------------------*/
 
 function replace_symbols(string) {
-	for (var rule in essential_set) {
+	for (var rule in constants.essentialSet) {
 			var re = new RegExp(rule, "g");
-			string = string.replace(re, essential_set[rule]);
+			string = string.replace(re, constants.essentialSet[rule]);
 	}
 	return string;
 }
@@ -131,7 +32,7 @@ function replace_periods_with_ellipsis(string) {
 	string = string.replace(/\.{3,}/g, "…");
 
 	/* [2] replace 2 dots in the middle of the sentecne with an aposiopesis */
-	var pattern = "[" + spaces + "]\\.{2}[" + spaces + "]";
+	var pattern = "[" + constants.spaces + "]\\.{2}[" + constants.spaces + "]";
 	var re = new RegExp(pattern, "g");
 	string = string.replace(re, " … ");
 
@@ -187,41 +88,41 @@ function correct_double_quotes_and_primes(string, language) {
 
 	/* [0] Remove extra terminal punctuation around double quotes
 					 e.g. “We will continue tomorrow.”. */
-	var pattern = "([" + sentence_punctuation + "])("+ double_quote_adepts + ")([" + sentence_punctuation + "])";
+	var pattern = "([" + constants.sentencePunctuation + "])("+ constants.doubleQuoteAdepts + ")([" + constants.sentencePunctuation + "])";
 	var re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$2");
 
 	/* [1] Swap right double quote adepts with a terminal punctuation */
-	pattern = "("+ double_quote_adepts + ")([" + terminal_punctuation + "])";
+	pattern = "("+ constants.doubleQuoteAdepts + ")([" + constants.terminalPunctuation + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, '$2$1');
 
 	/* [2] Identify inches, arcseconds, seconds
-				 Note: we’re not using double_quote_adepts variable
+				 Note: we’re not using constants.doubleQuoteAdepts variable
 				 as commas and low-positioned quotes are ommited*/
 	string = string.replace(/(\d ?)(“|”|\"|″|‘{2,}|’{2,}|'{2,}|′{2,})/g, "$1{{typopo__double-prime}}");
 
 
 	/* [3] Identify closed double quotes */
-	pattern = "(" + double_quote_adepts + ")(.*?)(" + double_quote_adepts + ")";
+	pattern = "(" + constants.doubleQuoteAdepts + ")(.*?)(" + constants.doubleQuoteAdepts + ")";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "{{typopo__left-double-quote}}$2{{typopo__right-double-quote}}");
 
 
 	/* [4.1] Identify unclosed left double quote */
-	pattern = "(" + double_quote_adepts + ")([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+	pattern = "(" + constants.doubleQuoteAdepts + ")([" + constants.lowercaseChars + constants.uppercaseChars + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "{{typopo__left-double-quote}}$2");
 
 
 	/* [4.2] Identify unclosed right double quote */
-	pattern = "([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + sentence_punctuation + ellipsis + "])(" + double_quote_adepts + ")";
+	pattern = "([" + constants.lowercaseChars + constants.uppercaseChars + constants.sentencePunctuation + constants.ellipsis + "])(" + constants.doubleQuoteAdepts + ")";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1{{typopo__right-double-quote}}");
 
 
 	/* [4.3] Remove remaining unidentified double quote */
-	pattern = "([" + spaces + "])(" + double_quote_adepts + ")([" + spaces + "])";
+	pattern = "([" + constants.spaces + "])(" + constants.doubleQuoteAdepts + ")([" + constants.spaces + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3");
 
@@ -247,7 +148,7 @@ function correct_double_quotes_and_primes(string, language) {
 		 (and thus must be used within a sentence) and swap right double with
 		 a terminal punctuation.
 		 */
-	pattern = "([^" + sentence_punctuation + "][" + spaces + "]{{typopo__left-double-quote}}.+?)([" + terminal_punctuation + "])({{typopo__right-double-quote}})";
+	pattern = "([^" + constants.sentencePunctuation + "][" + constants.spaces + "]{{typopo__left-double-quote}}.+?)([" + constants.terminalPunctuation + "])({{typopo__right-double-quote}})";
 	// console.log(pattern);
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3$2");
@@ -255,7 +156,7 @@ function correct_double_quotes_and_primes(string, language) {
 
 	/* [7] Remove extra comma after punctuation in direct speech,
 					 e.g. "“Hey!,” she said" */
-	pattern = "([" + sentence_punctuation + "])([\,])";
+	pattern = "([" + constants.sentencePunctuation + "])([\,])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1");
 
@@ -312,7 +213,7 @@ function correct_double_quotes_and_primes(string, language) {
 function correct_single_quotes_primes_and_apostrophes(string, language) {
 
 	/* [1.1] Identify ’n’ contractions */
-	var pattern = "(" + single_quote_adepts + ")(n)(" + single_quote_adepts + ")";
+	var pattern = "(" + constants.singleQuoteAdepts + ")(n)(" + constants.singleQuoteAdepts + ")";
 	var re = new RegExp(pattern, "gi");
 	string = string.replace(re, "{{typopo__apostrophe}}$2{{typopo__apostrophe}}");
 
@@ -320,38 +221,38 @@ function correct_single_quotes_primes_and_apostrophes(string, language) {
 	/* [1.2] Identify common contractions at the beginning or at the end
 					 of the word, e.g. Fish ’n’ Chips, ’em, ’cause,… */
 	var contraction_examples = "em|cause|twas|tis|til|round"
-	pattern = "(" + single_quote_adepts + ")(" + contraction_examples + ")";
+	pattern = "(" + constants.singleQuoteAdepts + ")(" + contraction_examples + ")";
 	re = new RegExp(pattern, "gi");
 	string = string.replace(re, "{{typopo__apostrophe}}$2");
 
 
 	/* [1.3] Identify in-word contractions,
 					 e.g. Don’t, I’m, O’Doole, 69’ers */
-	var character_adepts = "0-9" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue;
-	pattern = "(["+ character_adepts +"])(" + single_quote_adepts + ")(["+ character_adepts +"])";
+	var character_adepts = "0-9" + constants.lowercaseChars + constants.uppercaseChars;
+	pattern = "(["+ character_adepts +"])(" + constants.singleQuoteAdepts + ")(["+ character_adepts +"])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1{{typopo__apostrophe}}$3");
 
 
 	/* [1.4] Identify year contractions
 		 e.g. ’70s, INCHEBA ’89,… */
-	pattern = "(" + single_quote_adepts + ")([0-9]{2})";
+	pattern = "(" + constants.singleQuoteAdepts + ")([0-9]{2})";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "{{typopo__apostrophe}}$2");
 
 
 	/* [2] Identify single quotes within double quotes */
-	pattern = "(" + double_quote_adepts + ")(.*?)(" + double_quote_adepts + ")";
+	pattern = "(" + constants.doubleQuoteAdepts + ")(.*?)(" + constants.doubleQuoteAdepts + ")";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, function($0, $1, $2, $3){
 
 		//identify {{typopo__left-single-quote--adept}}
-		var pattern = "( )(" + single_quote_adepts + ")(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])";
+		var pattern = "( )(" + constants.singleQuoteAdepts + ")(["+ constants.lowercaseChars + constants.uppercaseChars +"])";
 		var re = new RegExp(pattern, "g");
 		$2 = $2.replace(re, "$1{{typopo__left-single-quote--adept}}$3");
 
 		//identify {{typopo__right-single-quote--adept}}
-		pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"])([\.,!?])?(" + single_quote_adepts + ")([ ]|[\.,!?])";
+		pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars +"])([\.,!?])?(" + constants.singleQuoteAdepts + ")([ ]|[\.,!?])";
 		re = new RegExp(pattern, "g");
 		$2 = $2.replace(re, "$1$2{{typopo__right-single-quote--adept}}$4");
 
@@ -365,13 +266,13 @@ function correct_single_quotes_primes_and_apostrophes(string, language) {
 
 
 	/* [3] Identify feet, arcminutes, minutes
-				 Note: we’re not using single_quote_adepts variable
+				 Note: we’re not using constants.singleQuoteAdepts variable
 				 as commas and low-positioned quotes are ommited*/
 	string = string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1{{typopo__single-prime}}");
 
 
 	/* [4] Identify residual apostrophes that have left */
-	pattern = "(" + single_quote_adepts + ")";
+	pattern = "(" + constants.singleQuoteAdepts + ")";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "{{typopo__apostrophe}}");
 
@@ -433,16 +334,16 @@ function replace_hyphen_with_dash(string, language) {
 
 
 	/* [3] Replace any hyphen or dash surrounded with spaces with an em dash */
-	var pattern = "[" + spaces + "][" + dashes + "][" + spaces + "]";
+	var pattern = "[" + constants.spaces + "][" + dashes + "][" + constants.spaces + "]";
 	var re = new RegExp(pattern, "g");
-	var replacement = narrow_nbsp + "—" + hair_space;
+	var replacement = constants.narrowNbsp + "—" + constants.hairSpace;
 	string = string.replace(re, replacement);
 
 	/* [4.1] Replace hyphen or dash, placed between 2 cardinal numbers,
 					 with an en dash; including cases when there is an extra space
 					 from either one side or both sides of the dash */
 	var cardinal_number = "\\d+";
-	pattern = "(" + cardinal_number + ")([" + spaces + "]?[" + dashes + "][" + spaces + "]?)(" + cardinal_number + ")";
+	pattern = "(" + cardinal_number + ")([" + constants.spaces + "]?[" + dashes + "][" + constants.spaces + "]?)(" + cardinal_number + ")";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1–$3");
 
@@ -461,7 +362,7 @@ function replace_hyphen_with_dash(string, language) {
 			ordinal_indicator = "st|nd|rd|th";
 			break;
 	}
-	pattern = "(" + cardinal_number + ")(" + ordinal_indicator + ")([" + spaces + "]?[" + dashes + "][" + spaces + "]?)(" + cardinal_number + ")(" + ordinal_indicator + ")";
+	pattern = "(" + cardinal_number + ")(" + ordinal_indicator + ")([" + constants.spaces + "]?[" + dashes + "][" + constants.spaces + "]?)(" + cardinal_number + ")(" + ordinal_indicator + ")";
 	re = new RegExp(pattern, "gi");
 	string = string.replace(re, "$1$2–$4$5");
 
@@ -471,7 +372,7 @@ function replace_hyphen_with_dash(string, language) {
 
 
 function replace_dash_with_hyphen(string){
-	var pattern = "(["+ lowercase_chars_en_sk_cz_rue +"])([–—])(["+ lowercase_chars_en_sk_cz_rue +"])";
+	var pattern = "(["+ constants.lowercaseChars +"])([–—])(["+ constants.lowercaseChars +"])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$1-$3");
 }
@@ -488,7 +389,7 @@ function replace_dash_with_hyphen(string){
 
 
 function remove_space_before_punctuation(string) {
-	var pattern = "([" + spaces + "])([" + sentence_punctuation + closing_brackets + degree + "])";
+	var pattern = "([" + constants.spaces + "])([" + constants.sentencePunctuation + constants.closingBrackets + constants.degree + "])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$2");
 }
@@ -496,7 +397,7 @@ function remove_space_before_punctuation(string) {
 
 
 function remove_space_after_punctuation(string) {
-	var pattern = "([" + opening_brackets + "])([" + spaces + "])";
+	var pattern = "([" + constants.openingBrackets + "])([" + constants.spaces + "])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$1");
 }
@@ -510,7 +411,7 @@ function remove_trailing_spaces(string) {
 
 
 function add_space_before_punctuation(string) {
-	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])([" + opening_brackets + "])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+	var pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars + "])([" + constants.openingBrackets + "])(["+ constants.lowercaseChars + constants.uppercaseChars + "])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$1 $2$3");
 }
@@ -518,7 +419,7 @@ function add_space_before_punctuation(string) {
 
 
 function add_space_after_punctuation(string) {
-	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])([" + sentence_punctuation + closing_brackets + "])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+	var pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars + "])([" + constants.sentencePunctuation + constants.closingBrackets + "])(["+ constants.lowercaseChars + constants.uppercaseChars + "])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$1$2 $3");
 }
@@ -569,30 +470,30 @@ function remove_spaces_at_paragraph_beginning(string) {
 function consolidate_nbsp(string) {
 
 	// removes non-breaking spaces between multi-character words
-	var pattern = "(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})(["+ nbsp + narrow_nbsp +"])(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]{2,})";
+	var pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars +"]{2,})(["+ constants.nbsp + constants.narrowNbsp +"])(["+ constants.lowercaseChars + constants.uppercaseChars +"]{2,})";
 	var re = new RegExp(pattern, "g");
 	string =  string.replace(re, "$1 $3");
 	string =  string.replace(re, "$1 $3"); //calling it twice to catch odd/even occurences
 
 
 	// adds non-breaking spaces after cardinal numbers
-	pattern = "([0-9]+)( )(["+ lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue +"]+)";
+	pattern = "([0-9]+)( )(["+ constants.lowercaseChars + constants.uppercaseChars +"]+)";
 	re = new RegExp(pattern, "g");
-	var replacement = "$1" + nbsp + "$3";
+	var replacement = "$1" + constants.nbsp + "$3";
 	string =  string.replace(re, replacement);
 
 
 	// adds non-breaking spaces around ×
-	pattern = "([" + spaces + "])([×])([" + spaces + "])";
+	pattern = "([" + constants.spaces + "])([×])([" + constants.spaces + "])";
 	re = new RegExp(pattern, "g");
-	replacement = nbsp + "$2" + nbsp;
+	replacement = constants.nbsp + "$2" + constants.nbsp;
 	string = string.replace(re, replacement);
 
 
 	// adds non-breaking spaces after single-character prepositions
-	pattern = "([  ])([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "]|&)( )";
+	pattern = "([  ])([" + constants.lowercaseChars + constants.uppercaseChars + "]|&)( )";
 	re = new RegExp(pattern, "g");
-	replacement = "$1$2" + nbsp;
+	replacement = "$1$2" + constants.nbsp;
 	string = string.replace(re, replacement);
 	string = string.replace(re, replacement); //calling it twice to catch odd/even occurences
 
@@ -630,35 +531,35 @@ function consolidate_nbsp(string) {
 function correct_spaces_around_ellipsis(string) {
 
 	/* [1] correct spacing, when ellipsis used used around commas */
-	var pattern = ",[" + spaces + "]?" + ellipsis + "[" + spaces + "]?,";
+	var pattern = ",[" + constants.spaces + "]?" + constants.ellipsis + "[" + constants.spaces + "]?,";
 	var re = new RegExp(pattern, "g");
 	string = string.replace(re, ", …,");
 
 
 	/* [2] correct spacing for aposiopesis at the end of the sentence
 				 in the middle of the paragraph */
-	pattern = "([" + lowercase_chars_en_sk_cz_rue + "])([" + spaces + "])(" + ellipsis + "[" + spaces + "][" + uppercase_chars_en_sk_cz_rue + "])";
+	pattern = "([" + constants.lowercaseChars + "])([" + constants.spaces + "])(" + constants.ellipsis + "[" + constants.spaces + "][" + constants.uppercaseChars + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3");
 
 
 	/* [3] correct spacing for aposiopesis at the beginning of the sentence
 				 in the middle of the paragraph */
-	pattern = "([" + sentence_punctuation + "][" + spaces + "]" + ellipsis +")([" + spaces + "])([" + lowercase_chars_en_sk_cz_rue +"])";
+	pattern = "([" + constants.sentencePunctuation + "][" + constants.spaces + "]" + constants.ellipsis +")([" + constants.spaces + "])([" + constants.lowercaseChars +"])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3");
 
 
 	/* [4] correct spacing for aposiopesis at the beginning of the sentence
 				 at the beginning of the paragraph */
-	pattern = "(^…)([" + spaces + "])([" + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+	pattern = "(^…)([" + constants.spaces + "])([" + constants.lowercaseChars + constants.uppercaseChars + "])";
 	re = new RegExp(pattern, "gm");
 	string = string.replace(re, "$1$3");
 
 
 	/* [5] correct spacing for aposiopesis at the end of the sentence
 				 at the end of the paragraph */
-	pattern = "([" + lowercase_chars_en_sk_cz_rue + sentence_punctuation + "])([" + spaces + "])(" + ellipsis + ")(?![ " + sentence_punctuation + lowercase_chars_en_sk_cz_rue + uppercase_chars_en_sk_cz_rue + "])";
+	pattern = "([" + constants.lowercaseChars + constants.sentencePunctuation + "])([" + constants.spaces + "])(" + constants.ellipsis + ")(?![ " + constants.sentencePunctuation + constants.lowercaseChars + constants.uppercaseChars + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3");
 
@@ -684,7 +585,7 @@ function correct_spaces_around_ellipsis(string) {
 function correct_accidental_uppercase(string) {
 
 	/* [1] two first uppercase letters (i.e. UPpercase) */
-	var pattern = "["+ uppercase_chars_en_sk_cz_rue +"]{2,2}["+ lowercase_chars_en_sk_cz_rue +"]+";
+	var pattern = "["+ constants.uppercaseChars +"]{2,2}["+ constants.lowercaseChars +"]+";
 	var re = new RegExp(pattern, "g");
 	string = string.replace(re, function(string){
 		return (string.substring(0,1) + string.substring(1).toLowerCase());
@@ -694,14 +595,14 @@ function correct_accidental_uppercase(string) {
 			Note that this is divided into 2 separate cases as \b in JavaScript regex
 			does not take non-latin characters into a cosnideration
 	*/
-	pattern = "["+ lowercase_chars_en_sk_cz_rue +"]["+ uppercase_chars_en_sk_cz_rue +"]\\b";
+	pattern = "["+ constants.lowercaseChars +"]["+ constants.uppercaseChars +"]\\b";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, function(string){
 		return (string.substring(0,1) + string.substring(1).toLowerCase());
 	});
 
 	/* [2.2] Swapped cases (n-letter cases, i.e. uPPERCASE) */
-	pattern = "["+ lowercase_chars_en_sk_cz_rue +"]+["+ uppercase_chars_en_sk_cz_rue +"]{2,}";
+	pattern = "["+ constants.lowercaseChars +"]+["+ constants.uppercaseChars +"]{2,}";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, function(string){
 		return (string.substring(0,1) + string.substring(1).toLowerCase());
@@ -739,7 +640,7 @@ function identify_common_abbreviations(string) {
 	/* [1] Identify e.g., i.e. */
 	var abbreviations = ["eg", "ie"];
 	for (var i = 0; i < abbreviations.length; i++) {
-		var pattern = "(\\b[" + abbreviations[i][0] + "]\\.?["+ spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ spaces +"]?)(\\b)";
+		var pattern = "(\\b[" + abbreviations[i][0] + "]\\.?["+ constants.spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ constants.spaces +"]?)(\\b)";
 		// console.log(pattern);
 		var re = new RegExp(pattern, "gi");
 		var replacement = "{{typopo__" + abbreviations[i] + "}} ";
@@ -752,7 +653,7 @@ function identify_common_abbreviations(string) {
 	/* [2] Identify a.m., p.m. */
 	abbreviations = ["am", "pm"];
 	for (var i = 0; i < abbreviations.length; i++) {
-		var pattern = "(\\d)([" + spaces + "]?)(\\b[" + abbreviations[i][0] + "]\\.?["+ spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ spaces +"]?)(\\b|\\B)";
+		var pattern = "(\\d)([" + constants.spaces + "]?)(\\b[" + abbreviations[i][0] + "]\\.?["+ constants.spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ constants.spaces +"]?)(\\b|\\B)";
 		var re = new RegExp(pattern, "gi");
 		replacement = "$1 {{typopo__" + abbreviations[i] + "}} ";
 		string = string.replace(re, replacement);
@@ -766,13 +667,13 @@ function identify_common_abbreviations(string) {
 	abbreviations = ["eg", "ie", "am", "pm"];
 	for (var i = 0; i < abbreviations.length; i++) {
 		// non-latin character at the beginning
-		var pattern = "([" + non_latin_chars + "])({{typopo__" + abbreviations[i] + "}})";
+		var pattern = "([" + constants.nonLatinChars + "])({{typopo__" + abbreviations[i] + "}})";
 		var re = new RegExp(pattern, "g");
 		replacement = "$1" + abbreviations[i];
 		string = string.replace(re, replacement);
 
 		// non-latin character at the end
-		pattern = "({{typopo__" + abbreviations[i] + "}} )([" + non_latin_chars + "])";
+		pattern = "({{typopo__" + abbreviations[i] + "}} )([" + constants.nonLatinChars + "])";
 		re = new RegExp(pattern, "g");
 		replacement = abbreviations[i] + "$2";
 		string = string.replace(re, replacement);
@@ -827,11 +728,11 @@ function place_common_abbreviations(string) {
 function identify_exceptions(string) {
 
 	/* [1] Identify email adresses */
-	identify_exception_set(string, email_address_pattern);
+	identify_exception_set(string, constants.emailAddressPattern);
 
 
 	/* [2] Identify web URLs and IPs */
-	identify_exception_set(string, web_url_pattern);
+	identify_exception_set(string, constants.webUrlPattern);
 
 
 	/* [3] Mark them as temporary exceptions in format {{typopo__exception-[i]}} */
@@ -911,7 +812,7 @@ export function correct_typos(string, language, configuration) {
 	string = identify_exceptions(string);
 	string = identify_common_abbreviations(string); // needs to go before punctuation fixes
 
-	string = replace_symbols(string, essential_set);
+	string = replace_symbols(string);
 	string = replace_periods_with_ellipsis(string);
 	string = remove_multiple_spaces(string);
 
