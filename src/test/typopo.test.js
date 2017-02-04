@@ -184,9 +184,6 @@ describe('One off tests', () => {
     "and – she said": "and — she said",
     "vopros - što": "vopros — što",
 
-    // remove too many new lines between paragraphs
-    "something here\nand over there\n\nand over there\n\n\nand over there": "something here\nand over there\nand over there\nand over there",
-
     // correct apostrophes
     "Fish 'n' Chips": "Fish ’n’ Chips",
     "Find 'em!": "Find ’em!",
@@ -498,25 +495,21 @@ describe('One off tests', () => {
   function test__correct_typos_rue() {
     test__batch(typos__generic, "rue");
     test__batch(typos__rue, "rue");
-    console.log("Test cases for Rusyn language done: " + new Date(Date.now()));
   }
 
   function test__correct_typos_sk() {
     test__batch(typos__generic, "sk");
     test__batch(typos__sk_cz, "sk");
-    console.log("Test cases for Slovak language done: " + new Date(Date.now()));
   }
 
   function test__correct_typos_cs() {
     test__batch(typos__generic, "cs");
     test__batch(typos__sk_cz, "cs");
-    console.log("Test cases for Czech language done: " + new Date(Date.now()));
   }
 
   function test__correct_typos_en() {
     test__batch(typos__generic, "en");
     test__batch(typos__en, "en");
-    console.log("Test cases for English language done: " + new Date(Date.now()));
   }
 
 

@@ -7,7 +7,7 @@
  * Date: 2017-01-15
  */
 
-
+import {removeEmptyLines} from "./lib/empty-lines";
 
 /*----------------------------------------------------------------------------*\
 	Variables & Character replacement sets
@@ -556,18 +556,6 @@ function remove_spaces_at_paragraph_beginning(string) {
 
 
 /*
-	Removes empty lines
-
-	@param {string} string — input text for identification
-	@returns {string} — output with removed empty lines
-*/
-function remove_empty_lines(string) {
-	return string.replace(/^\s+/gm, "");
-}
-
-
-
-/*
 	Consolidates the use of non-breaking spaces
 
 	* removes characters between multi-character words
@@ -941,7 +929,7 @@ export function correct_typos(string, language, configuration) {
 	string = remove_spaces_at_paragraph_beginning(string);
 
 	if(configuration.removeLines) {
-		string = remove_empty_lines(string);
+		string = removeEmptyLines(string);
 	}
 
 	string = consolidate_nbsp(string);
