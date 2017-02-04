@@ -13,6 +13,7 @@ const st = require('st');
 const buildPath = './build/';
 
 
+
 gulp.task('build-dev', function () {
   return browserify({entries: './src/typopo.js', debug: true})
     .transform("babelify", {presets: ["es2015"]})

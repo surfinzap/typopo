@@ -913,9 +913,12 @@ function place_exceptions(string) {
 	@param {remove_lines} boolean — optional parameter allowing you to choose whether to remove empty lines or not
 	@returns {string} — corrected output
 */
-export function correct_typos(string, language, remove_lines) {
+export function correct_typos(string, language, configuration) {
 	language = (typeof language === "undefined") ? "en" : language;
-	remove_lines = (typeof remove_lines === "undefined") ? true : remove_lines;
+
+	configuration = (typeof configuration === "undefined") ? {
+		removeLines : true,
+	} : configuration;
 
 	string = identify_exceptions(string);
 	string = identify_common_abbreviations(string); // needs to go before punctuation fixes
@@ -937,7 +940,7 @@ export function correct_typos(string, language, remove_lines) {
 	string = add_space_after_punctuation(string);
 	string = remove_spaces_at_paragraph_beginning(string);
 
-	if(remove_lines) {
+	if(configuration.removeLines) {
 		string = remove_empty_lines(string);
 	}
 
