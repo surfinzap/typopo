@@ -8,8 +8,7 @@
     "email": "surfin.zap@gmail.com"
   },
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register **/*.test.js -R min",
-    "test-watch": "mocha --compilers js:babel-core/register **/*.test.js -R min -w"
+    "test": "mocha --compilers js:babel-core/register **/*.test.js -R min -w",
   },
   "main": "dist/typopo_dist.min.js",
   "repository": {
