@@ -1,4 +1,4 @@
-import {correct_typos} from '../src/typopo.js';
+import {correct_typos} from '../typopo.js';
 import assert from 'assert';
 
 describe('One off tests', () => {
