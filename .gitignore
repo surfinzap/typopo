@@ -42,6 +42,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Build files
+build/
+
 # Libraries
 node_modules/
 
