@@ -7,6 +7,7 @@
  * Date: 2017-01-15
  */
 
+import {replaceSymbols} from "./lib/symbol-replacements";
 import {removeEmptyLines} from "./lib/empty-lines";
 import constants from './lib/constants';
 
@@ -16,14 +17,6 @@ var exceptions = [];
 /*----------------------------------------------------------------------------*\
 	Esential replacements
 \*----------------------------------------------------------------------------*/
-
-function replace_symbols(string) {
-	for (var rule in constants.essentialSet) {
-			var re = new RegExp(rule, "g");
-			string = string.replace(re, constants.essentialSet[rule]);
-	}
-	return string;
-}
 
 
 
@@ -812,7 +805,7 @@ export function correct_typos(string, language, configuration) {
 	string = identify_exceptions(string);
 	string = identify_common_abbreviations(string); // needs to go before punctuation fixes
 
-	string = replace_symbols(string);
+	string = replaceSymbols(string);
 	string = replace_periods_with_ellipsis(string);
 	string = remove_multiple_spaces(string);
 

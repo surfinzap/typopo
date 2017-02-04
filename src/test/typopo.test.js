@@ -3,20 +3,6 @@ import assert from 'assert';
 
 describe('One off tests', () => {
   let typos__generic = {
-    /*
-     Basic string replacements
-     */
-    "(C) (C)": "© ©",
-    "(c) (c)": "© ©",
-		"(P) (P)": "Ⓟ Ⓟ",
-		"(p) (p)": "Ⓟ Ⓟ",
-    "(R) (R)": "® ®",
-    "(r) (r)": "® ®",
-    "(tm) (tm)": "™ ™",
-    "(TM) (TM)": "™ ™",
-    "+- +-": "± ±",
-    "-+ -+": "± ±",
-
 
     /*
      Utility tests

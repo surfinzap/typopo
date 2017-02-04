@@ -2,18 +2,7 @@
  Variables & Character replacement sets
 \*----------------------------------------------------------------------------*/
 
-const essentialSet = {
-  "\\(C\\)": "©",
-  "\\(c\\)": "©",
-	"\\(P\\)": "Ⓟ",
-	"\\(p\\)": "Ⓟ",
-  "\\(R\\)": "®",
-  "\\(r\\)": "®",
-  "\\(TM\\)": "™",
-  "\\(tm\\)": "™",
-  "\\+\\-": "±",
-  "\\-\\+": "±",
-};
+
 const nonLatinLowercase = "áäčďéěíĺľňóôöőŕřšťúüűůýžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
 const nonLatinUppercase = "ÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ";
 const nonLatinChars = nonLatinLowercase + nonLatinUppercase;
@@ -100,7 +89,6 @@ const emailAddressPattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-]{1,256}" +
   ")+";
 
 export default {
-  essentialSet,
   nonLatinLowercase,
   nonLatinUppercase,
   nonLatinChars,
