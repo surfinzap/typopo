@@ -1,3 +1,3 @@
-import {createCorrector, getDefaultConfiguration} from './typopo';
+import { correct_typos } from './typopo';
 
-window.Typopo = {createCorrector, getDefaultConfiguration};
+window.correct_typos = correct_typos;

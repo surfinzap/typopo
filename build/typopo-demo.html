@@ -65,20 +65,20 @@
 
 
 <script>
-  $("#correct_typos_en").click(function () {
-    $('#textarea').val(Typopo.createCorrector({language:'en'})($('#textarea').val()));
+  $("#correct_typos_en").click(function() {
+    $('#textarea').val(correct_typos($('#textarea').val(), 'en'));
   });
 
-  $("#correct_typos_rue").click(function () {
-    $('#textarea').val(Typopo.createCorrector({language:'rue'})($('#textarea').val()));
+  $("#correct_typos_rue").click(function() {
+    $('#textarea').val(correct_typos($('#textarea').val(), 'rue'));
   });
 
-  $("#correct_typos_sk").click(function () {
-    $('#textarea').val(Typopo.createCorrector({language:'sk'})($('#textarea').val()));
+  $("#correct_typos_sk").click(function() {
+    $('#textarea').val(correct_typos($('#textarea').val(), 'sk'));
   });
 
-  $("#correct_typos_cz").click(function () {
-    $('#textarea').val(Typopo.createCorrector({language:'cs'})($('#textarea').val()));
+  $("#correct_typos_cz").click(function() {
+    $('#textarea').val(correct_typos($('#textarea').val(), 'cs'));
   });
 </script>
 

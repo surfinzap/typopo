@@ -1,4 +1,4 @@
-import {createCorrector, getDefaultConfiguration} from '../src/typopo.js';
+import {correct_typos} from '../src/typopo.js';
 import assert from 'assert';
 
 describe('One off tests', () => {
@@ -479,10 +479,8 @@ describe('One off tests', () => {
 
   };
 
-  function test__batch(batch, language) {
-    const config = getDefaultConfiguration();
-    config.language = language;
-    const correct_typos = createCorrector(config);
+
+	function test__batch(batch, language) {
     Object.keys(batch).forEach((key) => {
       it(`Corrects '${key}' in ${({
         en: 'English',
@@ -490,10 +488,11 @@ describe('One off tests', () => {
         cz: 'Czech',
         rue: 'Rusyn',
       }[language])} correctly`, () => {
-        assert.equal(correct_typos(key, language), (batch[key]), "Typo error uncorrected in " + language + ":\nOriginal:\t" + key + "\nResult:\t\t" + correct_typos(key, language) + "\nExpected:\t" + batch[key]);
-      });
+  			assert.equal(correct_typos(key, language), (batch[key]),"Typo error uncorrected in " + language + ":\nOriginal:\t" + key + "\nResult:\t\t" + correct_typos(key, language) + "\nExpected:\t" + batch[key]);
+  		});
     });
-  }
+	}
+
 
 
   function test__correct_typos_rue() {
