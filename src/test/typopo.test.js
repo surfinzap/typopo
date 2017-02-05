@@ -93,13 +93,6 @@ describe('One off tests', () => {
 
 
 
-    // correct accidental upper case
-    "HEy, JEnnifer!": "Hey, Jennifer!",
-    "How about ABC?": "How about ABC?",
-    "cAPSLOCK": "capslock",
-    "iPhone": "iPhone",
-    "iT": "it",
-    "Central Europe and Cyrillic tests: aĎIÉUБUГ": "Central Europe and Cyrillic tests: aďiéuбuг",
 
     //correct dash for hyphen
     "two—year—old child": "two-year-old child",
