@@ -16,9 +16,11 @@ import {fixEllipsis} from "./lib/punctuation/ellipsis";
 import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
 import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
 import {fixAbbreviations} from "./lib/words/abbreviations";
+import {excludeExceptions,
+				placeExceptions} from "./lib/words/exceptions";
 
 
-var exceptions = [];
+
 
 
 function correct_multiple_sign(string) {
@@ -209,101 +211,6 @@ function correct_accidental_uppercase(string) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-/*----------------------------------------------------------------------------*\
-	Exceptions
-\*----------------------------------------------------------------------------*/
-
-
-/*
-	Identifies exceptions that will be ommited from correction of any sort
-
-	Algorithm
-	[1] Identify email adresses
-	[2] Identify web URLs and IPs
-	[3] Mark them as temporary exceptions in format {{typopo__exception-[i]}}
-
-	@param {string} input text for identification of exceptions
-	@returns {string} — output with identified exceptions in format {{typopo__exception-[i]}}
-*/
-function identify_exceptions(string) {
-
-	/* [1] Identify email adresses */
-	identify_exception_set(string, constants.emailAddressPattern);
-
-
-	/* [2] Identify web URLs and IPs */
-	identify_exception_set(string, constants.webUrlPattern);
-
-
-	/* [3] Mark them as temporary exceptions in format {{typopo__exception-[i]}} */
-	for (var i = 0; i < exceptions.length; i++) {
-		var replacement = "{{typopo__exception-" + i + "}}";
-		string = string.replace(exceptions[i], replacement);
-	}
-
-	return string;
-}
-
-
-
-/*
-	Identifies set of exceptions for given pattern
-	Used as helper function for identify_exceptions(string)
-
-	@param {string} input text for identification of exceptions
-	@param {pattern} regular expression pattern to match exception
-*/
-function identify_exception_set(string, pattern) {
-	var re = new RegExp(pattern, "g");
-	var matched_exceptions = string.match(re);
-	if (matched_exceptions != null) {
-		exceptions = exceptions.concat(matched_exceptions);
-	}
-}
-
-
-
-/*
-	Replaces identified exceptions with real ones by change their
-	temporary representation in format {{typopo__exception-[i]}} with its
-	corresponding representation
-
-	@param {string} input text with identified exceptions
-	@returns {string} output with placed exceptions
-*/
-function place_exceptions(string) {
-	for (var i = 0; i < exceptions.length; i++) {
-		var pattern = "{{typopo__exception-" + i + "}}"
-		var re = new RegExp(pattern, "g");
-		var replacement = exceptions[i];
-		string = string.replace(re, replacement);
-	}
-
-	return string;
-}
-
-
-
-
-
-
-/*----------------------------------------------------------------------------*\
-	Main script
-\*----------------------------------------------------------------------------*/
-
-
-
 /*
 	Correct typos in the predefined order
 
@@ -320,8 +227,7 @@ export function correct_typos(string, locale, configuration) {
 		removeLines : true,
 	} : configuration;
 
-	string = identify_exceptions(string);
-
+	string = excludeExceptions(string);
 
 	if(configuration.removeLines) {
 		string = removeEmptyLines(string);
@@ -351,7 +257,7 @@ export function correct_typos(string, locale, configuration) {
 	string = correct_accidental_uppercase(string);
 
 
-	string = place_exceptions(string);
+	string = placeExceptions(string);
 
 
 

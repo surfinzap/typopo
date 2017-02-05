@@ -16,6 +16,19 @@ describe('Single quotes in default language (en)\n', () => {
 		/* Improperly spaced primes, left for single quotes */
 		"12 ′ 45″": "12′ 45″",
 		"3° 5 ′ 30″": "3° 5′ 30″",
+
+		/* apostrophes */
+		"Fish 'n' Chips": "Fish ’n’ Chips",
+		"Find 'em!": "Find ’em!",
+		"Just 'cause I wanna.": "Just ’cause I wanna.",
+		"'Tis the season": "’Tis the season",
+		"'Twas the Night Before Christmas": "’Twas the Night Before Christmas",
+		"'Til The Season Comes 'Round Again": "’Til The Season Comes ’Round Again",
+		"Hers'": "Hers’",
+		"INCHEBA '89": "INCHEBA ’89",
+		"69'ers": "69’ers",
+		"iPhone6's": "iPhone6’s",
+		"1990's": "1990’s",
 	};
 
 
