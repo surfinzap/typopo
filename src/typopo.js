@@ -11,7 +11,7 @@ import constants from "./lib/constants";
 import {removeEmptyLines} from "./lib/rhythm/lines";
 import {fixNbsp} from "./lib/rhythm/nbsp";
 import {fixSpaces} from "./lib/rhythm/spaces";
-import {replaceSymbols} from "./lib/symbol-replacements";
+import {replaceSymbols} from "./lib/symbols/replacements";
 import {fixPeriod} from "./lib/punctuation/period";
 import {fixEllipsis} from "./lib/punctuation/ellipsis";
 import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";

@@ -1,4 +1,4 @@
-import {replaceSymbols} from "../lib/symbol-replacements";
+import {replaceSymbols} from "../../lib/symbols/replacements";
 import assert from 'assert';
 
 describe('Replace following symbols\n', () => {
