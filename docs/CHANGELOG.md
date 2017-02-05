@@ -3,7 +3,7 @@
 ## 2.0.0 // 2017-02-
 * Complete refactoring
 * Support for (P)
-* breaking changes en > en-us
+* breaking changes en > en
 
 ## 1.4.0 // 2017-01-15
 * “Removing empty lines” is now an optional parameter (in case you want to correct your plain-text based content or an email). By default, empty lines are removed
@@ -86,7 +86,7 @@
 		* single quotes and apostrophes can be mixed and matched in various ways and it’s a bigger task to identify all of incorrectly used single quotes/apostrophes. However, we have thought about different means of how we could identify and correct the most common cases. We're now able to correct them with following assumptions:
 				* Double quotes are used in pairs
 				* Single quotes are used in pairs
-				* Single quotes are used as secondary (ie. within double quotes, which is a convention for currently supported languages — en-US, sk, cs, rue — [check wiki](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages))
+				* Single quotes are used as secondary (ie. within double quotes, which is a convention for currently supported languages — en, sk, cs, rue — [check wiki](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages))
 				* Single quotes are used with proper spacing (ie. a space before Left single quotation mark and a space after Right single quotation mark)
  * [Breaking change] refactor clean_typos() to correct_typos()
 

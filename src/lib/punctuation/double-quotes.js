@@ -111,7 +111,7 @@ export function correctDoubleQuotesAndPrimes(string, locale) {
 	let leftDoubleQuote = loc.locale[locale].quotes.leftDoubleQuote;
 	let rightDoubleQuote = loc.locale[locale].quotes.rightDoubleQuote;
 
-	string = string.replace(/({{typopo__left-double-quote}})/g, leftDoubleQuote );
+	string = string.replace(/({{typopo__left-double-quote}})/g, leftDoubleQuote);
 	string = string.replace(/({{typopo__right-double-quote}})/g, rightDoubleQuote);
 
 	return string;

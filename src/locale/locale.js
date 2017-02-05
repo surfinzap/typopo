@@ -1,11 +1,11 @@
 import localeCs from "./cs";
-import localeEnUs from "./en-us";
+import localeEn from "./en";
 import localeRue from "./rue";
 import localeSk from "./sk";
 
 const locale = {
 	"cs" : localeCs,
-	"en-us" : localeEnUs,
+	"en" : localeEn,
 	"rue" : localeRue,
 	"sk" : localeSk,
 }

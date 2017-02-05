@@ -144,7 +144,7 @@ function correct_single_quotes_primes_and_apostrophes(string, language) {
 		string = string.replace(/{{typopo__left-single-quote}}/g, "‚");
 		string = string.replace(/{{typopo__right-single-quote}}/g, "‘");
 		break;
-	case "en-us":
+	case "en":
 		string = string.replace(/{{typopo__left-single-quote}}/g, "‘");
 		string = string.replace(/{{typopo__right-single-quote}}/g, "’");
 	}
@@ -209,7 +209,7 @@ function replace_hyphen_with_dash(string, language) {
 		case "cs":
 			ordinal_indicator = "\\.";
 			break;
-		case "en-us":
+		case "en":
 			ordinal_indicator = "st|nd|rd|th";
 			break;
 	}
@@ -590,7 +590,7 @@ function place_exceptions(string) {
 	@returns {string} — corrected output
 */
 export function correct_typos(string, locale, configuration) {
-	locale = (typeof locale === "undefined") ? "en-us" : locale;
+	locale = (typeof locale === "undefined") ? "en" : locale;
 
 	configuration = (typeof configuration === "undefined") ? {
 		removeLines : true,

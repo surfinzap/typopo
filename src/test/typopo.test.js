@@ -355,7 +355,7 @@ describe('One off tests', () => {
 	function test__batch(batch, language) {
     Object.keys(batch).forEach((key) => {
       it(`Corrects '${key}' in ${({
-        "en-us": 'English',
+        "en": 'English',
         "sk": 'Slovak',
         "cs": 'Czech',
         "rue": 'Rusyn',
@@ -383,8 +383,8 @@ describe('One off tests', () => {
   }
 
   function test__correct_typos_en() {
-    test__batch(typos__generic, "en-us");
-    test__batch(typos__en, "en-us");
+    test__batch(typos__generic, "en");
+    test__batch(typos__en, "en");
   }
 
 
