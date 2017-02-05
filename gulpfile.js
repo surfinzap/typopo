@@ -66,7 +66,7 @@ gulp.task('copy typopo-demo to build', function () {
 
 gulp.task('server', ['copy typopo-demo to build'], function (done) {
   http.createServer(
-    st({path: __dirname + '/build/', index: 'demo/typopo-demo.html', cache: false})
+    st({path: __dirname + '/build/', index: 'typopo-demo.html', cache: false})
   ).listen(8080, done);
 });
 
