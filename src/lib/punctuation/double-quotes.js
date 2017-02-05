@@ -116,7 +116,7 @@ export function correctDoubleQuotesAndPrimes(string, language) {
 			string = string.replace(/({{typopo__left-double-quote}})/g, "„");
 			string = string.replace(/({{typopo__right-double-quote}})/g, "“");
 			break;
-		case "en":
+		case "en-us":
 			string = string.replace(/({{typopo__left-double-quote}})/g, "“");
 			string = string.replace(/({{typopo__right-double-quote}})/g, "”");
 			break;

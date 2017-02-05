@@ -385,8 +385,8 @@ describe('One off tests', () => {
   }
 
   function test__correct_typos_en() {
-    test__batch(typos__generic, "en");
-    test__batch(typos__en, "en");
+    test__batch(typos__generic, "en-us");
+    test__batch(typos__en, "en-us");
   }
 
 

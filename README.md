@@ -61,7 +61,7 @@ correct_typos(string, language)
 ```
 
 supported languages:
-* "en" (English, default)
+* "en-us" (English, default)
 * "rue" (Rusyn)
 * "sk" (Slovak)
 * "cs" (Czech)

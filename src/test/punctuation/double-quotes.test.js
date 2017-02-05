@@ -73,7 +73,7 @@ describe('Double quotes in default language (en-us)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should replace multiple dots with an ellipsis", () => {
-			assert.equal(correctDoubleQuotesAndPrimes(key, "en"), testCase[key]);
+			assert.equal(correctDoubleQuotesAndPrimes(key, "en-us"), testCase[key]);
 		});
 	});
 });
