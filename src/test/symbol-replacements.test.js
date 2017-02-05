@@ -5,8 +5,8 @@ describe('Replace following symbols\n', () => {
 	let testCase = {
 		"(C) (C)": "© ©",
 		"(c) (c)": "© ©",
-		"(P) (P)": "Ⓟ Ⓟ",
-		"(p) (p)": "Ⓟ Ⓟ",
+		"(P) (P)": "℗ ℗",
+		"(p) (p)": "℗ ℗",
 		"(R) (R)": "® ®",
 		"(r) (r)": "® ®",
 		"(tm) (tm)": "™ ™",
