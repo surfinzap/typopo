@@ -9,6 +9,7 @@
 
 import constants from "./lib/constants";
 import {removeEmptyLines} from "./lib/rhythm/lines";
+import {fixSpaces} from "./lib/rhythm/spaces";
 import {replaceSymbols} from "./lib/symbol-replacements";
 import {fixEllipsis} from "./lib/punctuation/ellipsis";
 import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
@@ -16,22 +17,6 @@ import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quot
 
 
 var exceptions = [];
-
-/*----------------------------------------------------------------------------*\
-	Esential replacements
-\*----------------------------------------------------------------------------*/
-
-
-function remove_multiple_spaces(string) {
-	return string.replace(/ {2,}/g, " ");
-}
-
-
-
-
-
-
-
 
 
 function correct_multiple_sign(string) {
@@ -119,71 +104,11 @@ function replace_dash_with_hyphen(string){
 
 
 
-function remove_space_before_punctuation(string) {
-	var pattern = "([" + constants.spaces + "])([" + constants.sentencePunctuation + constants.closingBrackets + constants.degree + "])";
-	var re = new RegExp(pattern, "g");
-	return string.replace(re, "$2");
-}
 
 
 
-function remove_space_after_punctuation(string) {
-	var pattern = "([" + constants.openingBrackets + "])([" + constants.spaces + "])";
-	var re = new RegExp(pattern, "g");
-	return string.replace(re, "$1");
-}
 
 
-
-function remove_trailing_spaces(string) {
-	return string.trim();
-}
-
-
-
-function add_space_before_punctuation(string) {
-	var pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars + "])([" + constants.openingBrackets + "])(["+ constants.lowercaseChars + constants.uppercaseChars + "])";
-	var re = new RegExp(pattern, "g");
-	return string.replace(re, "$1 $2$3");
-}
-
-
-
-function add_space_after_punctuation(string) {
-	var pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars + "])([" + constants.sentencePunctuation + constants.closingBrackets + "])(["+ constants.lowercaseChars + constants.uppercaseChars + "])";
-	var re = new RegExp(pattern, "g");
-	return string.replace(re, "$1$2 $3");
-}
-
-
-
-/*
-	Removes extra spaces at the beginning of each paragraph
-
-	This could be done with a one-liner:
-	return string.replace(/^\s+/gm, "");
-
-	However, it also removes empty lines. Since, we want to handle this change
-	separately, we need to
-	[1] split the lines manually
-	[2] and remove extra spaces at the begining of each line
-	[3] join lines together to a single string
-
-	@param {string} string — input text for identification
-	@returns {string} — output with removed spaces at the beginning of paragraphs
-*/
-function remove_spaces_at_paragraph_beginning(string) {
-	/* [1] split the lines manually */
-	var lines = string.split(/\r?\n/);
-
-	/* [2] and remove extra spaces at the begining of each line */
-	for (var i = 0; i < lines.length; i++) {
-		lines[i] = lines[i].replace(/^\s+/, "");
-	}
-
-	/* [3] join lines together to a single string */
-	return lines.join("\n");
-}
 
 
 
@@ -483,27 +408,14 @@ export function correct_typos(string, locale, configuration) {
 		string = removeEmptyLines(string);
 	}
 
-	string = remove_multiple_spaces(string);
-	string = remove_spaces_at_paragraph_beginning(string);
-
-	string = remove_space_before_punctuation(string);
-	string = remove_space_after_punctuation(string);
-
-	string = add_space_before_punctuation(string);
-	string = add_space_after_punctuation(string);
-	string = remove_trailing_spaces(string);
-
-
-
-
 	string = replaceSymbols(string);
-	
+	string = fixSpaces(string);
 	string = fixEllipsis(string);
 	string = fixDoubleQuotesAndPrimes(string, locale);
 	string = fixSingleQuotesPrimesAndApostrophes(string, locale);
 
 
-	string = correct_multiple_sign(string);
+	// string = correct_multiple_sign(string);
 
 
 
@@ -519,13 +431,10 @@ export function correct_typos(string, locale, configuration) {
 
 	string = identify_common_abbreviations(string); // needs to go before punctuation fixes
 	string = place_common_abbreviations(string); // needs to go after punctuation fixes
-	string = remove_trailing_spaces(string);
+	// string = remove_trailing_spaces(string);
 
 	string = place_exceptions(string);
 
-	// string = replace_periods_with_ellipsis(string);
-	// change for period script
-	string = fixEllipsis(string);
 
 
 	return string;

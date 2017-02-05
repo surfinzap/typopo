@@ -15,74 +15,6 @@ describe('One off tests', () => {
     "And {{test-variable}} in the middle of the sentence.": "And {{test-variable}} in the middle of the sentence.",
 
 
-		/* Aposiopesis & Ellipsis unresolved */
-
-		/* remove spaces when ellipsis is used in brackets */
-		"Something ( …) something else": "Something (…) something else",
-		"Something ( … ) something else": "Something (…) something else",
-		"Something (… ) something else": "Something (…) something else",
-		"Something [ …] something else": "Something […] something else",
-		"Something [ … ] something else": "Something […] something else",
-		"Something [… ] something else": "Something […] something else",
-
-		/* remove space when aposiopesis is followed by punctuation (language-specific examples are located in corresponding sets)*/
-		"Sentence and… !": "Sentence and…!",
-		"Sentence and… ?": "Sentence and…?",
-		"Sentence and… :": "Sentence and…:",
-		"Sentence and… , else": "Sentence and…, else",
-		"Sentence and… ; else": "Sentence and…; else",
-
-
-
-    /*
-     Handling spaces
-     */
-    // replace multiple spaces with a single one
-    "How  many spaces": "How many spaces",
-    "How   many": "How many",
-    "How    many": "How many",
-    "How     many": "How many",
-
-    // remove trailing spaces at the end of the paragraphs
-    "trailing spaces    ": "trailing spaces",
-    "trailing spaces    ": "trailing spaces", // nbsp
-    "trailing spaces    ": "trailing spaces", // hair_space
-    "trailing spaces    ": "trailing spaces", // narrow_nbsp
-    "trailing spaces.    ": "trailing spaces.",
-    "trailing spaces;    ": "trailing spaces;",
-
-    // remove extra spaces between word and punctuation
-    "Hey .": "Hey.",
-    "Hey .": "Hey.", // nbsp
-    "Hey .": "Hey.", // hair_space
-    "Hey .": "Hey.", // narrow_nbsp
-    "Hey !": "Hey!",
-    "Hey ?": "Hey?",
-    "Hey :": "Hey:",
-    "Hey ;": "Hey;",
-    "Hey , what?": "Hey, what?",
-
-    // remove extra spaces between parentheses ()
-    "( Ups, an extra space at the beginning)": "(Ups, an extra space at the beginning)",
-    "( Ups, an extra space at the beginning)": "(Ups, an extra space at the beginning)", // nbsp
-    "( Ups, an extra space at the beginning)": "(Ups, an extra space at the beginning)", // hair_space
-    "( Ups, an extra space at the beginning)": "(Ups, an extra space at the beginning)", // narrow_nbsp
-    "(Ups, an extra space at the end )": "(Ups, an extra space at the end)",
-
-    // remove extra spaces at the beginning of the paragraph
-    " What if paragraph starts with extra space at the beginning?": "What if paragraph starts with extra space at the beginning?",
-    "  What if paragraph starts with extra space at the beginning?": "What if paragraph starts with extra space at the beginning?",
-    "   What if paragraph starts with extra space at the beginning?": "What if paragraph starts with extra space at the beginning?",
-    "One sentence ends. And next one continues as it should": "One sentence ends. And next one continues as it should",
-
-    // remove extra tabs at the beginning of the paragraph
-    "			What if sentence starts with tabs?": "What if sentence starts with tabs?",
-    "		What if sentence starts with tabs?": "What if sentence starts with tabs?",
-    "	What if sentence starts with tabs?": "What if sentence starts with tabs?",
-
-    // check, if spaces/tabs aren't removed so fiercely that paragraphs are merged together
-    "If there is one line \nand another": "If there is one line \nand another",
-
 
     /*
      Handling non-breaking spaces
@@ -112,11 +44,11 @@ describe('One off tests', () => {
 
     // replace x with a multiplier ×
     // set up correct typography for multiplication sign
-    "5 mm x 5 mm": "5 mm × 5 mm",
-    "5cm x 5cm": "5cm × 5cm",
-    "5 x 4": "5 × 4",
-    "12x3": "12 × 3",
-    "12×3": "12 × 3",
+    // "5 mm x 5 mm": "5 mm × 5 mm",
+    // "5cm x 5cm": "5cm × 5cm",
+    // "5 x 4": "5 × 4",
+    // "12x3": "12 × 3",
+    // "12×3": "12 × 3",
 
 
     // replace hyphen or en dash with em dash
@@ -152,15 +84,6 @@ describe('One off tests', () => {
     "two—year—old child": "two-year-old child",
     "two–year–old child": "two-year-old child",
     "zeleno–žltá": "zeleno-žltá",
-
-    //add spaces after punctuation
-    "One sentence ended.Another started.": "One sentence ended. Another started.",
-    "One sentence ended!Another started.": "One sentence ended! Another started.",
-    "One sentence ended?Another started.": "One sentence ended? Another started.",
-    "One sentence ended:another started.": "One sentence ended: another started.",
-    "One sentence ended;another started.": "One sentence ended; another started.",
-    "One sentence ended,another started.": "One sentence ended, another started.",
-    "Enclosed(in)the brackets.": "Enclosed (in) the brackets.",
 
     //false positives, numbers
     "15,4": "15,4",
@@ -238,20 +161,20 @@ describe('One off tests', () => {
     "ie something": "i.e. something",
     "brie cheese": "brie cheese", // false positive
     "Pam Grier": "Pam Grier", // false positive
-    "najkrajšie": "najkrajšie", // false positive for non-latin boundaries
-    "ieš": "ieš", // false positive for non-latin boundaries
+    // "najkrajšie": "najkrajšie", // false positive for non-latin boundaries
+    // "ieš": "ieš", // false positive for non-latin boundaries
 
-    "5 am": "5 a.m.",
-    "5 am in the morning": "5 a.m. in the morning",
-    "5 AM": "5 a.m.",
-    "5 a.m.": "5 a.m.",
-    "I am from nowhere.": "I am from nowhere.", // false positive
-    "5 šam": "5 šam", // false positive for non-latin boundaries
-    "5 amš": "5 amš", // false positive for non-latin boundaries
+    // "5 am": "5 a.m.",
+    // "5 am in the morning": "5 a.m. in the morning",
+    // "5 AM": "5 a.m.",
+    // "5 a.m.": "5 a.m.",
+    // "I am from nowhere.": "I am from nowhere.", // false positive
+    // "5 šam": "5 šam", // false positive for non-latin boundaries
+    //tbd later "5 amš": "5 amš", // false positive for non-latin boundaries
 
-    "4.20 pm": "4.20 p.m.",
-    "4.20 PM": "4.20 p.m.",
-    "4.20 p.m.": "4.20 p.m.",
+    // "4.20 pm": "4.20 p.m.",
+    // "4.20 PM": "4.20 p.m.",
+    // "4.20 p.m.": "4.20 p.m.",
     "4.20 p.m. in the afternoon": "4.20 p.m. in the afternoon",
     "She is the PM of the UK.": "She is the PM of the UK.", // false positive
 

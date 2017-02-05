@@ -4,6 +4,7 @@
 * Complete refactoring
 * Support for (P)
 * breaking changes en > en
+* fix to remove multiple spaces, even they are different
 
 ## 1.4.0 // 2017-01-15
 * “Removing empty lines” is now an optional parameter (in case you want to correct your plain-text based content or an email). By default, empty lines are removed
