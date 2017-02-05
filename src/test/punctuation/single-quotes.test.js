@@ -44,8 +44,8 @@ describe('Single quotes in Slovak and Czech language (sk, cs)\n', () => {
 		"„double quotes 'and single quotes' within“":
 		"„double quotes ‚and single quotes‘ within“",
 
-		// "Hej: „Vin mu povil, 'ta de jes' take vidil' i neviril“":
-		// "Hej: „Vin mu povil, ‚ta de jes’ take vidil‘ i neviril“",
+		"Hej: „Vin mu povil, 'ta de jes' take vidil' i neviril“":
+		"Hej: „Vin mu povil, ‚ta de jes’ take vidil‘ i neviril“",
 
 		"INCHEBA '89": "INCHEBA ’89",
 	};
@@ -64,8 +64,8 @@ describe('Single quotes in Rusyn language (rue)\n', () => {
 		"«double quotes 'and single quotes' within»":
 		"«double quotes ‹and single quotes› within»",
 
-		// "Hej: «Vin mu povil, 'ta de jes' take vidil' i neviril»":
-		// "Hej: «Vin mu povil, ‹ta de jes’ take vidil› i neviril»",
+		"Hej: «Vin mu povil, 'ta de jes' take vidil' i neviril»":
+		"Hej: «Vin mu povil, ‹ta de jes’ take vidil› i neviril»",
 
 		"INCHEBA '89": "INCHEBA ’89",
 
