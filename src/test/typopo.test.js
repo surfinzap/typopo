@@ -16,7 +16,7 @@ describe('One off tests', () => {
 
 
 		/* Aposiopesis & Ellipsis unresolved */
-		
+
 		/* remove spaces when ellipsis is used in brackets */
 		"Something ( …) something else": "Something (…) something else",
 		"Something ( … ) something else": "Something (…) something else",
@@ -197,59 +197,26 @@ describe('One off tests', () => {
 
 
   let typos__en = {
-    /*
-     Quotation marks
-     */
-    // correct “US English double quotation marks”
-    "English „English„ „English„ English": "English “English” “English” English",
-    "“English double quotation marks“": "“English double quotation marks”",
-    "”English double quotation marks”": "“English double quotation marks”",
-    "\"English double quotation marks\"": "“English double quotation marks”",
-    "Chto mu povisť slova  ,,Myžku, sŷnku mij‘‘": "Chto mu povisť slova “Myžku, sŷnku mij”",
-    "\"abc''": "“abc”",
+
 
     // Correct apostrophes and ‘US English single quotation marks’
     "Let's test this: \"however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said\"": "Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
     "Within double quotes “there are single 'quotes with mix’d punctuation', you see.”": "Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
+		//one case left for single quotes
+		"He said: \"Here's 12\" record.\"": "He said: “Here’s 12″ record.”",
 
-    // Use-cases for mixing double quotes and primes
-    "He said: \"Here's 12\" record.\"": "He said: “Here’s 12″ record.”",
-    "He said: \"He was 12.\"": "He said: “He was 12.”", //false positive
-    //error of wrongly identified primes due to swapped punctuation
-    "He said: \"He was 12\". And then he added: \"Maybe he was 13\".": "He said: “He was 12.” And then he added: “Maybe he was 13.”",
-
-    // Best-effort for unclosed double quotes
-    "\"Even when left double quote is missing its right counterpart.": "“Even when left double quote is missing its right counterpart.",
-    "Even when right double quote is missing its left counterpart.\"": "Even when right double quote is missing its left counterpart.”",
-    "We’ll remove a quote, \" when it is hanging spaced around in the middle": "We’ll remove a quote, when it is hanging spaced around in the middle",
-
-    // Mixing quotes and primes
+    // Mixing quotes and primes, left for single quotes
     "12' 45\"": "12′ 45″",
     "3° 5' 30\"": "3° 5′ 30″",
 
-    // Improperly spaced primes
+    // Improperly spaced primes, left for single quotes
     "12 ′ 45 ″": "12′ 45″",
     "3 ° 5 ′ 30 ″": "3° 5′ 30″",
 
 
-    // swap quotes for punctuation .,?!
-    "Hey”.": "Hey.”",
-    "Hey”?": "Hey?”",
-    "Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”": "Within double quotes “there are single ‘quotes with mixed punctuation’, you see”.",
-    "“We swap punctuation and double quotes in case of the whole sentence”.": "“We swap punctuation and double quotes in case of the whole sentence.”",
-    // but we won’t swap it when only portion of a sentence is double-quoted
-    "Because of this, it’s common to have “namespace pollution”, where completely unrelated code shares global variables.": "Because of this, it’s common to have “namespace pollution”, where completely unrelated code shares global variables.",
-    "He was like “namespace pollution”.": "He was like “namespace pollution”.",
-    "He was like “Georgia”.": "He was like “Georgia”.",
-    "He was ok. “He was ok”.": "He was ok. “He was ok.”",
-    "“Zest”, that’s an interesting name.": "“Zest”, that’s an interesting name.",
 
-    // remove extra spaces along „English double quotation marks“
-    "“ Ups, an extra space at the beginning”": "“Ups, an extra space at the beginning”",
-    "“Ups, an extra space at the end ”": "“Ups, an extra space at the end”",
 
-    // remove space when aposiopesis is followed by punctuation
-    "“Sentence and… ”": "“Sentence and…”",
+
 
     /* Remove extra sentence punctuation
 
@@ -329,30 +296,15 @@ describe('One off tests', () => {
 
   let typos__sk_cz = {
 
-    // correct „Slovak, Rusyn, Czech double quotation marks“
-    "Slovak „Slovak„ „Slovak„ Slovak": "Slovak „Slovak“ „Slovak“ Slovak",
-    "“Slovak, Rusyn, Czech double quotation marks“": "„Slovak, Rusyn, Czech double quotation marks“",
-    "”Slovak, Rusyn, Czech double quotation marks”": "„Slovak, Rusyn, Czech double quotation marks“",
-    "\"Slovak, Rusyn, Czech double quotation marks\"": "„Slovak, Rusyn, Czech double quotation marks“",
-    "Chto mu povisť slova  ,,Myžku, sŷnku mij‘‘": "Chto mu povisť slova „Myžku, sŷnku mij“",
-    "\"abc''": "„abc“",
 
     // Correct apostrophes and ‚Slovak, Rusyn, Czech quotation marks‘
     "Hej: \"Vin mu povil, 'ta de jes' take vidil,' neviril\"": "Hej: „Vin mu povil, ‚ta de jes‘ take vidil,’ neviril“",
     "INCHEBA '89": "INCHEBA ’89",
 
     // swap quotes for punctuation .,?!
-    "Hey“.": "Hey.“",
     "Within double quotes „there are single ‚quotes with mixed punctuation‘, you see“": "Within double quotes „there are single ‚quotes with mixed punctuation‘, you see“",
     "Within double quotes „there are single 'quotes with mix’d punctuation', you see.“": "Within double quotes „there are single ‚quotes with mix’d punctuation‘, you see“.",
     "„Och, što teper’?!“ obertaly s’a skoro kolečka Myž’ovy v holovi.": "„Och, što teper’?!“ obertaly s’a skoro kolečka Myž’ovy v holovi.", //false positive
-
-    // remove extra spaces along „Slovak, Rusyn, Czech double quotation marks“
-    "„ Ups, an extra space at the beginning“": "„Ups, an extra space at the beginning“",
-    "„Ups, an extra space at the end “": "„Ups, an extra space at the end“",
-
-    /* remove space when aposiopesis is followed by punctuation*/
-    "„Sentence and… “": "„Sentence and…“",
 
     // start sentence with a Capital letter — false positives
     "25. február": "25. február",
@@ -373,28 +325,11 @@ describe('One off tests', () => {
 
   let typos__rue = {
 
-    // correct „Slovak, Rusyn, Czech double quotation marks“
-    "Slovak „Slovak„ „Slovak„ Slovak": "Slovak «Slovak» «Slovak» Slovak",
-    "“Slovak, Rusyn, Czech double quotation marks“": "«Slovak, Rusyn, Czech double quotation marks»",
-    "”Slovak, Rusyn, Czech double quotation marks”": "«Slovak, Rusyn, Czech double quotation marks»",
-    "\"Slovak, Rusyn, Czech double quotation marks\"": "«Slovak, Rusyn, Czech double quotation marks»",
-    "Chto mu povisť slova  ,,Myžku, sŷnku mij‘‘": "Chto mu povisť slova «Myžku, sŷnku mij»",
-    "\"abc''": "«abc»",
+
 
     // Correct apostrophes and ‚Slovak, Rusyn, Czech quotation marks‘
     "Hej: \"Vin mu povil, 'ta de jes' take vidil,' neviril\"": "Hej: «Vin mu povil, ‹ta de jes› take vidil,’ neviril»",
     "INCHEBA '89": "INCHEBA ’89",
-
-    // swap quotes for punctuation .,?!
-    "Hey».": "Hey.»",
-    "Within double quotes „there are single 'quotes with mix’d punctuation', you see.“": "Within double quotes «there are single ‹quotes with mix’d punctuation›, you see».",
-
-    // remove extra spaces along «Slovak, Rusyn, Czech double quotation marks»
-    "« Ups, an extra space at the beginning»": "«Ups, an extra space at the beginning»",
-    "«Ups, an extra space at the end »": "«Ups, an extra space at the end»",
-
-    /* remove space when aposiopesis is followed by punctuation*/
-    "«Sentence and… »": "«Sentence and…»",
 
     // start sentence with a Capital letter — false positives
     "20. новембра": "20. новембра",
