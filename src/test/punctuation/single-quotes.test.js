@@ -1,4 +1,4 @@
-import {correctSingleQuotesPrimesAndApostrophes} from "../../lib/punctuation/single-quotes";
+import {fixSingleQuotesPrimesAndApostrophes} from "../../lib/punctuation/single-quotes";
 import assert from 'assert';
 
 describe('Single quotes in default language (en)\n', () => {
@@ -21,7 +21,7 @@ describe('Single quotes in default language (en)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should replace multiple dots with an ellipsis", () => {
-			assert.equal(correctSingleQuotesPrimesAndApostrophes(key, "en"), testCase[key]);
+			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, "en"), testCase[key]);
 		});
 	});
 });
@@ -40,8 +40,8 @@ describe('Single quotes in Slovak and Czech language (sk, cs)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should replace multiple dots with an ellipsis", () => {
-			assert.equal(correctSingleQuotesPrimesAndApostrophes(key, "sk"), testCase[key]);
-			assert.equal(correctSingleQuotesPrimesAndApostrophes(key, "cs"), testCase[key]);
+			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, "sk"), testCase[key]);
+			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, "cs"), testCase[key]);
 		});
 	});
 });
@@ -61,7 +61,7 @@ describe('Single quotes in Rusyn language (rue)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should replace multiple dots with an ellipsis", () => {
-			assert.equal(correctSingleQuotesPrimesAndApostrophes(key, "rue"), testCase[key]);
+			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, "rue"), testCase[key]);
 		});
 	});
 });

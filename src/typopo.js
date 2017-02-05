@@ -11,8 +11,8 @@ import constants from "./lib/constants";
 import {removeEmptyLines} from "./lib/empty-lines";
 import {replaceSymbols} from "./lib/symbol-replacements";
 import {fixEllipsis} from "./lib/punctuation/ellipsis";
-import {correctDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
-import {correctSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
+import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
+import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
 
 
 var exceptions = [];
@@ -482,8 +482,8 @@ export function correct_typos(string, locale, configuration) {
 	string = replaceSymbols(string);
 	string = fixEllipsis(string);
 
-	string = correctDoubleQuotesAndPrimes(string, locale);
-	string = correctSingleQuotesPrimesAndApostrophes(string, locale);
+	string = fixDoubleQuotesAndPrimes(string, locale);
+	string = fixSingleQuotesPrimesAndApostrophes(string, locale);
 
 
 	string = correct_multiple_sign(string);

@@ -28,7 +28,7 @@ import loc from "../../locale/locale";
 	@param {string} language — language option
 	@returns {string} output with properly replaces double qoutes and double primes
 */
-export function correctDoubleQuotesAndPrimes(string, locale) {
+export function fixDoubleQuotesAndPrimes(string, locale) {
 
 	/* [0] Remove extra terminal punctuation around double quotes
 					 e.g. “We will continue tomorrow.”. */

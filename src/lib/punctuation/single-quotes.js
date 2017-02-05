@@ -26,7 +26,7 @@ import loc from "../../locale/locale";
 	@param {string} language — language options
 	@returns {string} — corrected output
 */
-export function correctSingleQuotesPrimesAndApostrophes(string, locale) {
+export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 	/* [1.1] Identify ’n’ contractions */
 	var pattern = "(" + constants.singleQuoteAdepts + ")(n)(" + constants.singleQuoteAdepts + ")";
