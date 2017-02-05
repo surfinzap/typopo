@@ -9,6 +9,7 @@
 
 import constants from "./lib/constants";
 import {removeEmptyLines} from "./lib/rhythm/lines";
+import {fixNbsp} from "./lib/rhythm/nbsp";
 import {fixSpaces} from "./lib/rhythm/spaces";
 import {replaceSymbols} from "./lib/symbol-replacements";
 import {fixPeriod} from "./lib/punctuation/period";
@@ -103,64 +104,6 @@ function replace_dash_with_hyphen(string){
 
 
 
-/*----------------------------------------------------------------------------*\
-	Consolidation of spaces
-\*----------------------------------------------------------------------------*/
-
-
-
-
-
-
-
-
-
-
-
-/*
-	Consolidates the use of non-breaking spaces
-
-	* removes characters between multi-character words
-	* adds non-breaking spaces after cardinal numbers
-	* adds non-breaking spaces around ×
-	* adds non-breaking spaces after single-character prepositions
-
-	@param {string} string — input text for identification
-	@returns {string} — output with correctly placed non-breaking space
-*/
-function consolidate_nbsp(string) {
-
-	// removes non-breaking spaces between multi-character words
-	var pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars +"]{2,})(["+ constants.nbsp + constants.narrowNbsp +"])(["+ constants.lowercaseChars + constants.uppercaseChars +"]{2,})";
-	var re = new RegExp(pattern, "g");
-	string =  string.replace(re, "$1 $3");
-	string =  string.replace(re, "$1 $3"); //calling it twice to catch odd/even occurences
-
-
-	// adds non-breaking spaces after cardinal numbers
-	pattern = "([0-9]+)( )(["+ constants.lowercaseChars + constants.uppercaseChars +"]+)";
-	re = new RegExp(pattern, "g");
-	var replacement = "$1" + constants.nbsp + "$3";
-	string =  string.replace(re, replacement);
-
-
-	// adds non-breaking spaces around ×
-	pattern = "([" + constants.spaces + "])([×])([" + constants.spaces + "])";
-	re = new RegExp(pattern, "g");
-	replacement = constants.nbsp + "$2" + constants.nbsp;
-	string = string.replace(re, replacement);
-
-
-	// adds non-breaking spaces after single-character prepositions
-	pattern = "([  ])([" + constants.lowercaseChars + constants.uppercaseChars + "]|&)( )";
-	re = new RegExp(pattern, "g");
-	replacement = "$1$2" + constants.nbsp;
-	string = string.replace(re, replacement);
-	string = string.replace(re, replacement); //calling it twice to catch odd/even occurences
-
-	return string;
-}
-
 
 
 
@@ -200,22 +143,15 @@ export function correct_typos(string, locale, configuration) {
 	string = fixSingleQuotesPrimesAndApostrophes(string, locale);
 
 	string = replaceSymbols(string);
+	// string = correct_multiple_sign(string);
 
 	string = fixCase(string);
 	string = fixAbbreviations(string);
 
-
-	// string = correct_multiple_sign(string);
-
-
-
-	string = consolidate_nbsp(string);
-
-
 	string = replace_hyphen_with_dash(string, locale);
 	string = replace_dash_with_hyphen(string);
 
-	// string = correct_accidental_uppercase(string);
+	string = fixNbsp(string);
 
 	string = placeExceptions(string);
 
