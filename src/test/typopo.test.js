@@ -62,14 +62,10 @@ describe('One off tests', () => {
 
 
 
-    //correct dash for hyphen
-    "two—year—old child": "two-year-old child",
-    "two–year–old child": "two-year-old child",
-    "zeleno–žltá": "zeleno-žltá",
 
-    //false positives, numbers
-    "15,4": "15,4",
-    "15.4": "15.4",
+    // //false positives, numbers
+    // "15,4": "15,4",
+    // "15.4": "15.4",
 
 
   };

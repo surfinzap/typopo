@@ -13,6 +13,7 @@ import {fixNbsp} from "./lib/rhythm/nbsp";
 import {fixSpaces} from "./lib/rhythm/spaces";
 import {fixPeriod} from "./lib/punctuation/period";
 import {fixEllipsis} from "./lib/punctuation/ellipsis";
+import {fixHyphen} from "./lib/punctuation/hyphen";
 import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
 import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
 import {replaceSymbols} from "./lib/symbols/replacements";
@@ -88,11 +89,7 @@ function replace_hyphen_with_dash(string, language) {
 
 
 
-function replace_dash_with_hyphen(string){
-	var pattern = "(["+ constants.lowercaseChars +"])([–—])(["+ constants.lowercaseChars +"])";
-	var re = new RegExp(pattern, "g");
-	return string.replace(re, "$1-$3");
-}
+
 
 
 
@@ -122,6 +119,8 @@ export function correct_typos(string, locale, configuration) {
 
 	string = fixPeriod(string);
 	string = fixEllipsis(string);
+	string = replace_hyphen_with_dash(string, locale);
+	string = fixHyphen(string);
 	string = fixDoubleQuotesAndPrimes(string, locale);
 	string = fixSingleQuotesPrimesAndApostrophes(string, locale);
 
@@ -130,9 +129,6 @@ export function correct_typos(string, locale, configuration) {
 
 	string = fixCase(string);
 	string = fixAbbreviations(string);
-
-	string = replace_hyphen_with_dash(string, locale);
-	string = replace_dash_with_hyphen(string);
 
 	string = fixNbsp(string);
 
