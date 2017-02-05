@@ -11,6 +11,7 @@ import constants from "./lib/constants";
 import {removeEmptyLines} from "./lib/rhythm/lines";
 import {fixSpaces} from "./lib/rhythm/spaces";
 import {replaceSymbols} from "./lib/symbol-replacements";
+import {fixPeriod} from "./lib/punctuation/period";
 import {fixEllipsis} from "./lib/punctuation/ellipsis";
 import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
 import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
@@ -410,6 +411,7 @@ export function correct_typos(string, locale, configuration) {
 
 	string = replaceSymbols(string);
 	string = fixSpaces(string);
+	string = fixPeriod(string);
 	string = fixEllipsis(string);
 	string = fixDoubleQuotesAndPrimes(string, locale);
 	string = fixSingleQuotesPrimesAndApostrophes(string, locale);
