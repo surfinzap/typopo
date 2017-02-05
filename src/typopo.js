@@ -8,7 +8,7 @@
  */
 
 import constants from "./lib/constants";
-import {removeEmptyLines} from "./lib/empty-lines";
+import {removeEmptyLines} from "./lib/rhythm/lines";
 import {replaceSymbols} from "./lib/symbol-replacements";
 import {fixEllipsis} from "./lib/punctuation/ellipsis";
 import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
@@ -477,28 +477,37 @@ export function correct_typos(string, locale, configuration) {
 	} : configuration;
 
 	string = identify_exceptions(string);
-	string = identify_common_abbreviations(string); // needs to go before punctuation fixes
+
+
+	if(configuration.removeLines) {
+		string = removeEmptyLines(string);
+	}
+
+	string = remove_multiple_spaces(string);
+	string = remove_spaces_at_paragraph_beginning(string);
+
+	string = remove_space_before_punctuation(string);
+	string = remove_space_after_punctuation(string);
+
+	string = add_space_before_punctuation(string);
+	string = add_space_after_punctuation(string);
+	string = remove_trailing_spaces(string);
+
+
+
 
 	string = replaceSymbols(string);
+	
 	string = fixEllipsis(string);
-
 	string = fixDoubleQuotesAndPrimes(string, locale);
 	string = fixSingleQuotesPrimesAndApostrophes(string, locale);
 
 
 	string = correct_multiple_sign(string);
 
-	string = remove_multiple_spaces(string);
-	string = remove_space_before_punctuation(string);
-	string = remove_space_after_punctuation(string);
-	string = remove_trailing_spaces(string);
-	string = add_space_before_punctuation(string);
-	string = add_space_after_punctuation(string);
-	string = remove_spaces_at_paragraph_beginning(string);
 
-	if(configuration.removeLines) {
-		string = removeEmptyLines(string);
-	}
+
+
 
 	string = consolidate_nbsp(string);
 
@@ -508,7 +517,10 @@ export function correct_typos(string, locale, configuration) {
 
 	string = correct_accidental_uppercase(string);
 
+	string = identify_common_abbreviations(string); // needs to go before punctuation fixes
 	string = place_common_abbreviations(string); // needs to go after punctuation fixes
+	string = remove_trailing_spaces(string);
+
 	string = place_exceptions(string);
 
 	// string = replace_periods_with_ellipsis(string);

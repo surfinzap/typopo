@@ -335,7 +335,7 @@ describe('One off tests', () => {
         "cs": 'Czech',
         "rue": 'Rusyn',
       }[language])} correctly`, () => {
-  			assert.equal(correct_typos(key, language), (batch[key]),"Typo error uncorrected in " + language + ":\nOriginal:\t" + key + "\nResult:\t\t" + correct_typos(key, language) + "\nExpected:\t" + batch[key]);
+  			assert.equal(correct_typos(key, language), (batch[key]),"Typo error uncorrected in " + language + ":\nOriginal:\t\"" + key + "\"\nResult:\t\t\"" + correct_typos(key, language) + "\"\nExpected:\t\"" + batch[key] + "\"");
   		});
     });
 	}
