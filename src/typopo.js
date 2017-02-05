@@ -24,15 +24,13 @@ import {fixCase} from "./lib/words/case";
 import {excludeExceptions,
 				placeExceptions} from "./lib/words/exceptions";
 
-
 /*
-	Correct typos in the predefined order
-
+	Correct typos
 
 	@param {string} string — input text for correction
-	@param {language} string — language option to correct specific typos; supported languages: en, sk, cs, rue. if not specified, English typos are corrected
-	@param {remove_lines} boolean — optional parameter allowing you to choose whether to remove empty lines or not
-	@returns {string} — corrected output
+	@param {locale} string — (optional, default: en) supported languages: en, sk, cs, rue.
+	@param {configuration} object — (optional) configuration
+	@returns {string} corrected output
 */
 export function correct_typos(string, locale, configuration) {
 	locale = (typeof locale === "undefined") ? "en" : locale;
