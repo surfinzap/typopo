@@ -1,5 +1,9 @@
 # Backlog for typopo
 
+* correct_typos → fix typos
+* groom changelog
+* fix a.m. " error 
+
 * add non-breaking space after ordinal/cardinal numbers
 * non-breaking space between dates 2. díl, 4. januar, 4th Janary, 20. novembra, 15. 2. 2016
 * non-breaking space for names F. X. Šalda, K. Čapek
@@ -10,7 +14,6 @@
 	* {findWhat:"(©|℗|sv\\.|tj\\.|tzv\\.|čl\\.) (\\w+)"}
 	* {findWhat:"(hl\\.)\\s?(m\\.)"}
 
-* tech debt — adjust tests for different attributes (e.g. keep lines)
 
 * fix that: He said:“Here’s a 12″ record.”
 * fix that: „nova-produkt-4“ na napr. "cervenyj-bereh“
@@ -25,26 +28,6 @@
 * fix this:  30.000,-. > 30.000,—
 * fix this e- shopu
 
-
-* split script in isolated options, set up architecture
-	* Modules
-		* Global variables (characters)
-		* Exceptions
-		* Essential replacements
-		* Quotes, apostrophes and primes
-		* Spaces, tabs, newlines
-		* Non-breaking spaces, hair spaces
-		* Dashes and hyphens
-		* Math and numerals
-		* Letter Case
-	* Other reqs
-		* loading different Modules
-		* auto-bundling, minifying
-		* unit test and integration tests. tests for attributes
-		* options, e.g. language, keep-lines, dash-preference, etc.
-	* Questions
-		* fix nbsp around numerals in numerals or in nbsp?
-		*
 
 
 * exceptions/replacements for emoticons?

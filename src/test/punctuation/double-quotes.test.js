@@ -68,7 +68,16 @@ describe('Double quotes in default language (en)\n', () => {
 		"We’ll remove a quote, \" when it is hanging spaced around in the middle":
 		"We’ll remove a quote,  when it is hanging spaced around in the middle",
 
+		/* Remove extra sentence punctuation
+
+		 [1] extra comma after terminal punctuation, it it happens often in direct speech
+		 [2] extra dot at the end of a direct speech ending with abbreviation */
+		"“Hey!,” she said": "“Hey!” she said", /*[1]*/
+		/*[2] TBD*/
+		"“We will continue this tomorrow at 8:00 a.m.”.": "“We will continue this tomorrow at 8:00 a.m.”",
+
 	};
+
 
 
 	Object.keys(testCase).forEach((key) => {
