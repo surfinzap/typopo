@@ -1,8 +1,28 @@
 # Backlog for typopo
 
-* correct_typos → fix typos
+## 2.0.0
+* replaceSymbols → fixSymbols
+* correct_typos → fixTypos
+* fix a.m. " error
+* fix failing tests for quotes
+* include license in dist
+* change "en" → "en-us"
+* make cardinal numbers a locale setting
 * groom changelog
-* fix a.m. " error 
+* update readme
+* make a dist
+
+* jslint?
+
+
+* figure out how to remove constants.variable from the code
+* make removal of spaces a separate module
+
+
+* fix that: He said:“Here’s a 12″ record.”
+* fix that: „nova-produkt-4“ na napr. "cervenyj-bereh“
+* fix that: - dashes at the beginning of the sentence
+
 
 * add non-breaking space after ordinal/cardinal numbers
 * non-breaking space between dates 2. díl, 4. januar, 4th Janary, 20. novembra, 15. 2. 2016
@@ -14,22 +34,17 @@
 	* {findWhat:"(©|℗|sv\\.|tj\\.|tzv\\.|čl\\.) (\\w+)"}
 	* {findWhat:"(hl\\.)\\s?(m\\.)"}
 
-
-* fix that: He said:“Here’s a 12″ record.”
-* fix that: „nova-produkt-4“ na napr. "cervenyj-bereh“
-* fix that: - dashes at the beginning of the sentence
-
 * non-breaking space between currency and number
 
 * consider resolving single-word widows
 
-* add support for math equations spacing
 * fix numeral format
 * fix this:  30.000,-. > 30.000,—
 * fix this e- shopu
 
 
 
+* add support for math equations spacing
 * exceptions/replacements for emoticons?
 
 * Reintroduce more sophisticated support for starting a sentence with a Capital letter
