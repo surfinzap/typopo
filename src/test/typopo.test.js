@@ -51,15 +51,6 @@ describe('One off tests', () => {
 
 
 
-    // replace x with a multiplier ×
-    // set up correct typography for multiplication sign
-    // "5 mm x 5 mm": "5 mm × 5 mm",
-    // "5cm x 5cm": "5cm × 5cm",
-    // "5 x 4": "5 × 4",
-    // "12x3": "12 × 3",
-    // "12×3": "12 × 3",
-
-
     // replace hyphen or en dash with em dash
     "and - she said": "and — she said",
     "Brno--Praha": "Brno–Praha",

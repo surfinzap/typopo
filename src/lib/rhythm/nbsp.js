@@ -14,8 +14,8 @@ import constants from "../constants";
 export function fixNbsp(string) {
 
 	// removes non-breaking spaces between multi-character words
-	var pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars +"]{2,})(["+ constants.nbsp + constants.narrowNbsp +"])(["+ constants.lowercaseChars + constants.uppercaseChars +"]{2,})";
-	var re = new RegExp(pattern, "g");
+	let pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars +"]{2,})(["+ constants.nbsp + constants.narrowNbsp +"])(["+ constants.lowercaseChars + constants.uppercaseChars +"]{2,})";
+	let re = new RegExp(pattern, "g");
 	string =  string.replace(re, "$1 $3");
 	string =  string.replace(re, "$1 $3"); //calling it twice to catch odd/even occurences
 
@@ -23,7 +23,7 @@ export function fixNbsp(string) {
 	// adds non-breaking spaces after cardinal numbers
 	pattern = "([0-9]+)( )(["+ constants.lowercaseChars + constants.uppercaseChars +"]+)";
 	re = new RegExp(pattern, "g");
-	var replacement = "$1" + constants.nbsp + "$3";
+	let replacement = "$1" + constants.nbsp + "$3";
 	string =  string.replace(re, replacement);
 
 

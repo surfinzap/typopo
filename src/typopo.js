@@ -11,23 +11,18 @@ import constants from "./lib/constants";
 import {removeEmptyLines} from "./lib/rhythm/lines";
 import {fixNbsp} from "./lib/rhythm/nbsp";
 import {fixSpaces} from "./lib/rhythm/spaces";
-import {replaceSymbols} from "./lib/symbols/replacements";
 import {fixPeriod} from "./lib/punctuation/period";
 import {fixEllipsis} from "./lib/punctuation/ellipsis";
 import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
 import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
+import {replaceSymbols} from "./lib/symbols/replacements";
+import {fixMultiplicationSign} from "./lib/symbols/multiplication-sign";
 import {fixAbbreviations} from "./lib/words/abbreviations";
 import {fixCase} from "./lib/words/case";
 import {excludeExceptions,
 				placeExceptions} from "./lib/words/exceptions";
 
 
-
-
-
-function correct_multiple_sign(string) {
-	return remove_multiple_spaces(string.replace(/([1-9]+[ ]{0,1}[a-wz]*)([ ]{0,1}[x|×][ ]{0,1})([1-9]+[ ]{0,1}[a-wz]*)/g, "$1 × $3"));
-}
 
 
 
@@ -102,18 +97,6 @@ function replace_dash_with_hyphen(string){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 	Correct typos in the predefined order
 
@@ -143,7 +126,7 @@ export function correct_typos(string, locale, configuration) {
 	string = fixSingleQuotesPrimesAndApostrophes(string, locale);
 
 	string = replaceSymbols(string);
-	// string = correct_multiple_sign(string);
+	string = fixMultiplicationSign(string);
 
 	string = fixCase(string);
 	string = fixAbbreviations(string);

@@ -32,6 +32,7 @@ const openingBrackets = "\\(\\[\\{";
 const closingBrackets = "\\)\\]\\}";
 const ellipsis = "…";
 const degree = "°";
+const multiplicationSign = "×";
 
 /*
  Source for webUrlPattern, emailAddressPattern
@@ -108,6 +109,7 @@ export default {
   closingBrackets,
   ellipsis,
   degree,
+	multiplicationSign,
   webUrlPattern,
   emailAddressPattern,
 }
