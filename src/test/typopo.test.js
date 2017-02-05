@@ -325,8 +325,6 @@ describe('One off tests', () => {
 
   let typos__rue = {
 
-
-
     // Correct apostrophes and ‚Slovak, Rusyn, Czech quotation marks‘
     "Hej: \"Vin mu povil, 'ta de jes' take vidil,' neviril\"": "Hej: «Vin mu povil, ‹ta de jes› take vidil,’ neviril»",
     "INCHEBA '89": "INCHEBA ’89",
@@ -357,10 +355,10 @@ describe('One off tests', () => {
 	function test__batch(batch, language) {
     Object.keys(batch).forEach((key) => {
       it(`Corrects '${key}' in ${({
-        en: 'English',
-        sk: 'Slovak',
-        cz: 'Czech',
-        rue: 'Rusyn',
+        "en-us": 'English',
+        "sk": 'Slovak',
+        "cs": 'Czech',
+        "rue": 'Rusyn',
       }[language])} correctly`, () => {
   			assert.equal(correct_typos(key, language), (batch[key]),"Typo error uncorrected in " + language + ":\nOriginal:\t" + key + "\nResult:\t\t" + correct_typos(key, language) + "\nExpected:\t" + batch[key]);
   		});

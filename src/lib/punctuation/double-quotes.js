@@ -1,4 +1,6 @@
 import constants from '../constants';
+import loc from "../../locale/locale";
+
 
 
 /*
@@ -26,7 +28,7 @@ import constants from '../constants';
 	@param {string} language — language option
 	@returns {string} output with properly replaces double qoutes and double primes
 */
-export function correctDoubleQuotesAndPrimes(string, language) {
+export function correctDoubleQuotesAndPrimes(string, locale) {
 
 	/* [0] Remove extra terminal punctuation around double quotes
 					 e.g. “We will continue tomorrow.”. */
@@ -106,21 +108,11 @@ export function correctDoubleQuotesAndPrimes(string, language) {
 	/* [8] Punctuation replacement */
 	string = string.replace(/({{typopo__double-prime}})/g, "″");
 
-	switch (language) {
-		case "rue":
-			string = string.replace(/({{typopo__left-double-quote}})/g, "«");
-			string = string.replace(/({{typopo__right-double-quote}})/g, "»");
-			break;
-		case "sk":
-		case "cs":
-			string = string.replace(/({{typopo__left-double-quote}})/g, "„");
-			string = string.replace(/({{typopo__right-double-quote}})/g, "“");
-			break;
-		case "en-us":
-			string = string.replace(/({{typopo__left-double-quote}})/g, "“");
-			string = string.replace(/({{typopo__right-double-quote}})/g, "”");
-			break;
-	}
+	let leftDoubleQuote = loc.locale[locale].quotes.leftDoubleQuote;
+	let rightDoubleQuote = loc.locale[locale].quotes.rightDoubleQuote;
+
+	string = string.replace(/({{typopo__left-double-quote}})/g, leftDoubleQuote );
+	string = string.replace(/({{typopo__right-double-quote}})/g, rightDoubleQuote);
 
 	return string;
 }

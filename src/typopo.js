@@ -7,7 +7,7 @@
  * Date: 2017-01-15
  */
 
-import constants from './lib/constants';
+import constants from "./lib/constants";
 import {removeEmptyLines} from "./lib/empty-lines";
 import {replaceSymbols} from "./lib/symbol-replacements";
 import {fixEllipsis} from "./lib/punctuation/ellipsis";
@@ -589,8 +589,8 @@ function place_exceptions(string) {
 	@param {remove_lines} boolean — optional parameter allowing you to choose whether to remove empty lines or not
 	@returns {string} — corrected output
 */
-export function correct_typos(string, language, configuration) {
-	language = (typeof language === "undefined") ? "en-us" : language;
+export function correct_typos(string, locale, configuration) {
+	locale = (typeof locale === "undefined") ? "en-us" : locale;
 
 	configuration = (typeof configuration === "undefined") ? {
 		removeLines : true,
@@ -602,9 +602,9 @@ export function correct_typos(string, language, configuration) {
 	string = replaceSymbols(string);
 	string = fixEllipsis(string);
 
-	string = correctDoubleQuotesAndPrimes(string, language);
+	string = correctDoubleQuotesAndPrimes(string, locale);
 
-	string = correct_single_quotes_primes_and_apostrophes(string, language);
+	string = correct_single_quotes_primes_and_apostrophes(string, locale);
 
 	string = correct_multiple_sign(string);
 
@@ -623,7 +623,7 @@ export function correct_typos(string, language, configuration) {
 	string = consolidate_nbsp(string);
 
 
-	string = replace_hyphen_with_dash(string, language);
+	string = replace_hyphen_with_dash(string, locale);
 	string = replace_dash_with_hyphen(string);
 
 	string = correct_accidental_uppercase(string);
