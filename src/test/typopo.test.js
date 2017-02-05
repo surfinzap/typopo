@@ -199,22 +199,6 @@ describe('One off tests', () => {
   let typos__en = {
 
 
-    // Correct apostrophes and ‘US English single quotation marks’
-    "Let's test this: \"however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said\"": "Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
-    "Within double quotes “there are single 'quotes with mix’d punctuation', you see.”": "Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
-		//one case left for single quotes
-		"He said: \"Here's 12\" record.\"": "He said: “Here’s 12″ record.”",
-
-    // Mixing quotes and primes, left for single quotes
-    "12' 45\"": "12′ 45″",
-    "3° 5' 30\"": "3° 5′ 30″",
-
-    // Improperly spaced primes, left for single quotes
-    "12 ′ 45 ″": "12′ 45″",
-    "3 ° 5 ′ 30 ″": "3° 5′ 30″",
-
-
-
 
 
 
@@ -297,14 +281,7 @@ describe('One off tests', () => {
   let typos__sk_cz = {
 
 
-    // Correct apostrophes and ‚Slovak, Rusyn, Czech quotation marks‘
-    "Hej: \"Vin mu povil, 'ta de jes' take vidil,' neviril\"": "Hej: „Vin mu povil, ‚ta de jes‘ take vidil,’ neviril“",
-    "INCHEBA '89": "INCHEBA ’89",
 
-    // swap quotes for punctuation .,?!
-    "Within double quotes „there are single ‚quotes with mixed punctuation‘, you see“": "Within double quotes „there are single ‚quotes with mixed punctuation‘, you see“",
-    "Within double quotes „there are single 'quotes with mix’d punctuation', you see.“": "Within double quotes „there are single ‚quotes with mix’d punctuation‘, you see“.",
-    "„Och, što teper’?!“ obertaly s’a skoro kolečka Myž’ovy v holovi.": "„Och, što teper’?!“ obertaly s’a skoro kolečka Myž’ovy v holovi.", //false positive
 
     // start sentence with a Capital letter — false positives
     "25. február": "25. február",
@@ -325,9 +302,7 @@ describe('One off tests', () => {
 
   let typos__rue = {
 
-    // Correct apostrophes and ‚Slovak, Rusyn, Czech quotation marks‘
-    "Hej: \"Vin mu povil, 'ta de jes' take vidil,' neviril\"": "Hej: «Vin mu povil, ‹ta de jes› take vidil,’ neviril»",
-    "INCHEBA '89": "INCHEBA ’89",
+
 
     // start sentence with a Capital letter — false positives
     "20. новембра": "20. новембра",
