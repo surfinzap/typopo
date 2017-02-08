@@ -1,7 +1,6 @@
 # Backlog for typopo
 
 ## 2.0.0
-* replaceSymbols → fixSymbols
 * correct_typos → fixTypos
 * fix a.m. " error
 * fix failing tests for quotes
@@ -10,6 +9,7 @@
 * make cardinal numbers a locale setting
 * groom changelog
 * update readme
+* update breaking changes
 * make a dist
 
 * jslint?

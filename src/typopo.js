@@ -17,7 +17,7 @@ import {fixHyphen} from "./lib/punctuation/hyphen";
 import {fixDash} from "./lib/punctuation/dash";
 import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
 import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
-import {replaceSymbols} from "./lib/symbols/replacements";
+import {fixSymbols} from "./lib/symbols/replacements";
 import {fixMultiplicationSign} from "./lib/symbols/multiplication-sign";
 import {fixAbbreviations} from "./lib/words/abbreviations";
 import {fixCase} from "./lib/words/case";
@@ -53,7 +53,7 @@ export function correct_typos(string, locale, configuration) {
 	string = fixDoubleQuotesAndPrimes(string, locale);
 	string = fixSingleQuotesPrimesAndApostrophes(string, locale);
 
-	string = replaceSymbols(string);
+	string = fixSymbols(string);
 	string = fixMultiplicationSign(string);
 
 	string = fixCase(string);
