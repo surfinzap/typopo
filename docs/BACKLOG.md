@@ -1,7 +1,6 @@
 # Backlog for typopo
 
 ## 2.0.0
-* correct_typos → fixTypos
 * fix a.m. " error
 * fix failing tests for quotes
 * include license in dist
