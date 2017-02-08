@@ -24,6 +24,8 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"ieš": "ieš", // false positive for non-latin boundaries
 
 		"5 am": "5 a.m.",
+		"5 a. m. " : "5 a.m.",
+		"5a. m. " : "5 a.m.",
 		"5 am in the morning": "5 a.m. in the morning",
 		"5 AM": "5 a.m.",
 		"5 a.m.": "5 a.m.",
@@ -38,7 +40,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"She is the PM of the UK.": "She is the PM of the UK.", // false positive
 
 		// Throwing extra space
-		"“We will continue this tomorrow at 8:00 a.m.”": "“We will continue this tomorrow at 8:00 a.m.”",
+		"“We will continue tomorrow at 8:00 a.m.”": "“We will continue tomorrow at 8:00 a.m.”",
 		"8 a.m. is the right time" : "8 a.m. is the right time",
 
 	};
