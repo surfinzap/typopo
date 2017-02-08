@@ -1,3 +1,3 @@
-import { correct_typos } from './typopo';
+import { fixTypos } from './typopo';
 
-window.correct_typos = correct_typos;
+window.fixTypos = fixTypos;

@@ -1,4 +1,4 @@
-import {correct_typos} from '../typopo.js';
+import {fixTypos} from '../typopo.js';
 import assert from 'assert';
 
 describe('Test consistency of internal variables', () => {
@@ -16,7 +16,7 @@ describe('Test consistency of internal variables', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(correct_typos(key, "en"), testCase[key]);
+			assert.equal(fixTypos(key, "en"), testCase[key]);
 		});
 	});
 });
@@ -55,7 +55,7 @@ describe('Test that exceptions remain intact', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(correct_typos(key, "en"), testCase[key]);
+			assert.equal(fixTypos(key, "en"), testCase[key]);
 		});
 	});
 });

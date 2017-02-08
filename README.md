@@ -57,7 +57,7 @@ Alternatively, download typopo.min.js and load it directly to your project.
 
 call a function:
 ```javascript
-correct_typos(string, language)
+fixTypos(string, language)
 ```
 
 supported languages:
@@ -70,7 +70,7 @@ optional parameters:
 
 remove_empty_lines (true/false) (default is true)
 ```javascript
-correct_typos(string, language, remove_empty_lines)
+fixTypos(string, language, remove_empty_lines)
 ```
 
 

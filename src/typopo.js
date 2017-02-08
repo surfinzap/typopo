@@ -32,7 +32,7 @@ import {excludeExceptions,
 	@param {configuration} object — (optional) configuration
 	@returns {string} corrected output
 */
-export function correct_typos(string, locale, configuration) {
+export function fixTypos(string, locale, configuration) {
 	locale = (typeof locale === "undefined") ? "en" : locale;
 
 	configuration = (typeof configuration === "undefined") ? {

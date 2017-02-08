@@ -30,16 +30,16 @@
   crossorigin="anonymous"></script>
 
 <div class="translit__action-area">
-  <button id="correct_typos_en">
+  <button id="fix-typos--en">
     English
   </button>
-  <button id="correct_typos_rue">
+  <button id="fix-typos--rue">
     Rusyn
   </button>
-  <button id="correct_typos_sk">
+  <button id="fix-typos--sk">
     Slovak
   </button>
-  <button id="correct_typos_cz">
+  <button id="fix-typos--cs">
     Czech
   </button>
 </div>
@@ -65,20 +65,20 @@
 
 
 <script>
-  $("#correct_typos_en").click(function() {
-    $('#textarea').val(correct_typos($('#textarea').val(), 'en'));
+  $("#fix-typos--en").click(function() {
+    $('#textarea').val(fixTypos($('#textarea').val(), 'en'));
   });
 
-  $("#correct_typos_rue").click(function() {
-    $('#textarea').val(correct_typos($('#textarea').val(), 'rue'));
+  $("#fix-typos--rue").click(function() {
+    $('#textarea').val(fixTypos($('#textarea').val(), 'rue'));
   });
 
-  $("#correct_typos_sk").click(function() {
-    $('#textarea').val(correct_typos($('#textarea').val(), 'sk'));
+  $("#fix-typos--sk").click(function() {
+    $('#textarea').val(fixTypos($('#textarea').val(), 'sk'));
   });
 
-  $("#correct_typos_cz").click(function() {
-    $('#textarea').val(correct_typos($('#textarea').val(), 'cs'));
+  $("#fix-typos--cs").click(function() {
+    $('#textarea').val(fixTypos($('#textarea').val(), 'cs'));
   });
 </script>
 

@@ -89,7 +89,7 @@
 				* Single quotes are used in pairs
 				* Single quotes are used as secondary (ie. within double quotes, which is a convention for currently supported languages — en, sk, cs, rue — [check wiki](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages))
 				* Single quotes are used with proper spacing (ie. a space before Left single quotation mark and a space after Right single quotation mark)
- * [Breaking change] refactor clean_typos() to correct_typos()
+ * [Breaking change] refactor clean_typos() to fixTypos()
 
 ## 2016-03-20
  * 0.0.11
