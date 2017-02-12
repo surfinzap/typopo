@@ -5,7 +5,6 @@
 * make a dist
 
 
-
 * fix that: He said:“Here’s a 12″ record.”
 * fix that: „nova-produkt-4“ na napr. "cervenyj-bereh“
 * fix that: - dashes at the beginning of the sentence
@@ -24,14 +23,19 @@
 
 * consider resolving single-word widows
 
-* fix numeral format
 * fix this:  30.000,-. > 30.000,—
 * fix this e- shopu
-
-
+* fix numeral format
+* add support for currencies
 
 * add support for math equations spacing
 
+
+
+
+
+
+==================================
 * Reintroduce more sophisticated support for starting a sentence with a Capital letter
 	* main issue concerned many false positives
 	* tests:
