@@ -59,3 +59,23 @@ describe('Test that exceptions remain intact', () => {
 		});
 	});
 });
+
+describe('Integration tests', () => {
+	let testCase = {
+
+		/*
+		 Selected combination of rules that may clash.
+		 */
+		// Will it remove extra punctuation or will it keep the abbreviation as expected?
+		"We will continue tomorrow at 8:00 a.m.!": "We will continue tomorrow at 8:00 a.m.!",
+		// Will it remove extra dot?
+		"We will continue tomorrow at 8:00 a.m..": "We will continue tomorrow at 8:00 a.m.",
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("", () => {
+			assert.equal(fixTypos(key, "en"), testCase[key]);
+		});
+	});
+});

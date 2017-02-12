@@ -1,7 +1,6 @@
 # Backlog for typopo
 
 ## 2.0.0
-* fix a.m. " error
 * fix failing tests for quotes
 * include license in dist
 * change "en" → "en-us"

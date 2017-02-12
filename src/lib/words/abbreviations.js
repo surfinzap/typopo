@@ -1,5 +1,5 @@
-import constants from "../constants";
-import {removeTrailingSpaces} from "../rhythm/spaces";
+import {removeTrailingSpaces,
+				removeMultipleSpaces} from "../rhythm/spaces";
 
 /*
 	Identifies differently-spelled abbreviations and replaces it with
@@ -33,10 +33,10 @@ function identify_common_abbreviations(string, constants) {
 
 	/* [2] Identify a.m., p.m. */
 	abbreviations = ["am", "pm"];
-	for (var i = 0; i < abbreviations.length; i++) {
-		var pattern = "(\\d)([" + constants.spaces + "]?)(\\b[" + abbreviations[i][0] + "]\\.?["+ constants.spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ constants.spaces +"]?)(\\b|\\B)";
-		var re = new RegExp(pattern, "gi");
-		replacement = "$1 {{typopo__" + abbreviations[i] + "}} ";
+	for (let i = 0; i < abbreviations.length; i++) {
+		let pattern = "(\\d)([" + constants.spaces + "]?)([" + abbreviations[i][0] + "]\\.?["+ constants.spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ constants.spaces +"]?)(\\b|\\B)";
+		let re = new RegExp(pattern, "gi");
+		let replacement = "$1 {{typopo__" + abbreviations[i] + "}}$4";
 		string = string.replace(re, replacement);
 	}
 
@@ -54,9 +54,9 @@ function identify_common_abbreviations(string, constants) {
 		string = string.replace(re, replacement);
 
 		// non-latin character at the end
-		pattern = "({{typopo__" + abbreviations[i] + "}} )([" + constants.nonLatinChars + "])";
+		pattern = "({{typopo__" + abbreviations[i] + "}})(["+ constants.spaces +"]?)([" + constants.nonLatinChars + "])";
 		re = new RegExp(pattern, "g");
-		replacement = abbreviations[i] + "$2";
+		replacement = abbreviations[i] + "$3";
 		string = string.replace(re, replacement);
 	}
 
@@ -87,6 +87,6 @@ export function fixAbbreviations(string, constants) {
 	string = identify_common_abbreviations(string, constants);
 	string = place_common_abbreviations(string, constants);
 	string = removeTrailingSpaces(string, constants);
-	string = removeMultipleSpaces(string, constants);
+	// string = removeMultipleSpaces(string, constants);
 	return string;
 }

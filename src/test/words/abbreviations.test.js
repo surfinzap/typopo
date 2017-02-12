@@ -23,6 +23,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"brie cheese": "brie cheese", // false positive
 		"Pam Grier": "Pam Grier", // false positive
 		"najkrajšie": "najkrajšie", // false positive for non-latin boundaries
+		"nevieš": "nevieš", // false positive for non-latin boundaries
 		"ieš": "ieš", // false positive for non-latin boundaries
 
 		"5 am": "5 a.m.",
@@ -43,6 +44,8 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 
 		// Throwing extra space
 		"“We will continue tomorrow at 8:00 a.m.”": "“We will continue tomorrow at 8:00 a.m.”",
+		"We will continue tomorrow at 8:00 a.m.!": "We will continue tomorrow at 8:00 a.m.!",
+		"We will continue tomorrow at 8:00 a.m. — unless — someting else happens": "We will continue tomorrow at 8:00 a.m. — unless — someting else happens",
 		"8 a.m. is the right time" : "8 a.m. is the right time",
 
 	};
