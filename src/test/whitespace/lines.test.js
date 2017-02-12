@@ -1,4 +1,4 @@
-import {removeEmptyLines} from "../../lib/rhythm/lines";
+import {removeEmptyLines} from "../../lib/whitespace/lines";
 import assert from 'assert';
 
 describe('Remove empty lines\n', () => {

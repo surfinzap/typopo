@@ -1,5 +1,5 @@
 import {removeTrailingSpaces,
-				removeMultipleSpaces} from "../rhythm/spaces";
+				removeMultipleSpaces} from "../whitespace/spaces";
 
 /*
 	Identifies differently-spelled abbreviations and replaces it with

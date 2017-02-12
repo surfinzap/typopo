@@ -4,7 +4,7 @@ import {removeMultipleSpaces,
 				removeSpaceAfterPunctuation,
 				addSpaceBeforePunctuation,
 				addSpaceAfterPunctuation,
-				removeTrailingSpaces} from "../../lib/rhythm/spaces";
+				removeTrailingSpaces} from "../../lib/whitespace/spaces";
 import assert from 'assert';
 import Constants from "../../lib/constants";
 

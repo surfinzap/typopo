@@ -8,9 +8,9 @@
  */
 
 import Constants from "./lib/constants";
-import {removeEmptyLines} from "./lib/rhythm/lines";
-import {fixNbsp} from "./lib/rhythm/nbsp";
-import {fixSpaces} from "./lib/rhythm/spaces";
+import {removeEmptyLines} from "./lib/whitespace/lines";
+import {fixNbsp} from "./lib/whitespace/nbsp";
+import {fixSpaces} from "./lib/whitespace/spaces";
 import {fixPeriod} from "./lib/punctuation/period";
 import {fixEllipsis} from "./lib/punctuation/ellipsis";
 import {fixHyphen} from "./lib/punctuation/hyphen";

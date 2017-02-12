@@ -1,4 +1,4 @@
-import {fixNbsp} from "../../lib/rhythm/nbsp";
+import {fixNbsp} from "../../lib/whitespace/nbsp";
 import assert from 'assert';
 import Constants from "../../lib/constants";
 
