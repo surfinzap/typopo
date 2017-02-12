@@ -1,11 +1,20 @@
 # Changelog for Typopo
 
 ## 2.0.0 // 2017-02-
-* Complete refactoring
-* Support for (P)
-* fix to remove multiple spaces, even they are different
-* fix a.m. " error
-* improve identification of single quotes 
+### Feature updates
+* Replaces (p), (P) → ℗
+* Fix: Remove multiple spaces, even they are non-breaking spaces, hair spaces or narrow non-breaking space
+* Fix: Abbreviations were (a.m., p.m.) were generating extra space at the end of the sentence or string
+* Improvement to how single quotes are identified
+
+### Code updates
+Complete codebase refactoring
+* Typopo is now broken down into separate modules to increase maintainability and testability
+* Tests are running automatically via Mocha
+* Locale-specific attributes are now in separate locale files
+* Breaking change: call fixTypos() instead of correct_typos(); see README for more details
+* variables have been transformed into camelCase
+
 
 ## 1.4.0 // 2017-01-15
 * “Removing empty lines” is now an optional parameter (in case you want to correct your plain-text based content or an email). By default, empty lines are removed

@@ -2,11 +2,7 @@
 
 ## 2.0.0
 * change "en" → "en-us"
-* groom changelog
-* update readme
-* update breaking changes
 * make a dist
-
 
 
 
@@ -15,12 +11,12 @@
 * fix that: - dashes at the beginning of the sentence
 
 
-* add non-breaking space after ordinal/cardinal numbers
+* add non-breaking space after ordinal numbers
 * non-breaking space between dates 2. díl, 4. januar, 4th Janary, 20. novembra, 15. 2. 2016
 * non-breaking space for names F. X. Šalda, K. Čapek
 * non-breaking space between Roman numerals {findWhat:"(\\u\\w+)\\s(I\\.|II\\.|III\\.|IV\\.|V\\.|VI\\.|VII\\.|VIII\\.|IX\\.|X\\.)"}
 
-* special cases for non-braking spaces between abbreviations and numbers
+* special cases for non-breaking spaces between abbreviations and numbers
 	* {findWhat:"(č\\.|s\\.|fol\\.|str\\.|r\\.|odst\\.|§) (\\d)"}
 	* {findWhat:"(©|℗|sv\\.|tj\\.|tzv\\.|čl\\.) (\\w+)"}
 	* {findWhat:"(hl\\.)\\s?(m\\.)"}
