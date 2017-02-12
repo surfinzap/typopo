@@ -34,6 +34,7 @@
 	* {findWhat:"(hl\\.)\\s?(m\\.)"}
 
 * non-breaking space between currency and number
+* check if inch is using right character
 
 * consider resolving single-word widows
 
