@@ -26,14 +26,14 @@
 export function fixSingleQuotesPrimesAndApostrophes(string, constants) {
 
 	/* [1.1] Identify ’n’ contractions */
-	var pattern = "(" + constants.singleQuoteAdepts + ")(n)(" + constants.singleQuoteAdepts + ")";
-	var re = new RegExp(pattern, "gi");
+	let pattern = "(" + constants.singleQuoteAdepts + ")(n)(" + constants.singleQuoteAdepts + ")";
+	let re = new RegExp(pattern, "gi");
 	string = string.replace(re, "{{typopo__apostrophe}}$2{{typopo__apostrophe}}");
 
 
 	/* [1.2] Identify common contractions at the beginning or at the end
-					 of the word, e.g. Fish ’n’ Chips, ’em, ’cause,… */
-	var contraction_examples = "em|cause|twas|tis|til|round"
+					 of the word, e.g. ’em, ’cause,… */
+	let contraction_examples = "em|cause|twas|tis|til|round"
 	pattern = "(" + constants.singleQuoteAdepts + ")(" + contraction_examples + ")";
 	re = new RegExp(pattern, "gi");
 	string = string.replace(re, "{{typopo__apostrophe}}$2");
@@ -41,7 +41,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, constants) {
 
 	/* [1.3] Identify in-word contractions,
 					 e.g. Don’t, I’m, O’Doole, 69’ers */
-	var character_adepts = "0-9" + constants.lowercaseChars + constants.uppercaseChars;
+	let character_adepts = "0-9" + constants.lowercaseChars + constants.uppercaseChars;
 	pattern = "(["+ character_adepts +"])(" + constants.singleQuoteAdepts + ")(["+ character_adepts +"])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1{{typopo__apostrophe}}$3");
@@ -59,18 +59,24 @@ export function fixSingleQuotesPrimesAndApostrophes(string, constants) {
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, function($0, $1, $2, $3){
 
-		//identify {{typopo__left-single-quote--adept}}
-		var pattern = "( )(" + constants.singleQuoteAdepts + ")(["+ constants.lowercaseChars + constants.uppercaseChars +"])";
-		var re = new RegExp(pattern, "g");
+		// identify {{typopo__left-single-quote--adept}}
+		let pattern = "( )(" + constants.singleQuoteAdepts + ")(["+ constants.allChars +"])";
+		let re = new RegExp(pattern, "g");
 		$2 = $2.replace(re, "$1{{typopo__left-single-quote--adept}}$3");
 
-		//identify {{typopo__right-single-quote--adept}}
-		pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars +"])([\.,!?])?(" + constants.singleQuoteAdepts + ")([ ]|[\.,!?])";
+		// identify {{typopo__right-single-quote--adept}}
+		pattern = "(["+ constants.allChars +"])([\.,!?])?(" + constants.singleQuoteAdepts + ")([ ]|[\.,!?])";
 		re = new RegExp(pattern, "g");
 		$2 = $2.replace(re, "$1$2{{typopo__right-single-quote--adept}}$4");
 
-		//identify single quote pairs
-		pattern = "({{typopo__left-single-quote--adept}})(.*?)({{typopo__right-single-quote--adept}})";
+		// identify single quote pairs around single words
+		pattern = "({{typopo__left-single-quote--adept}})([" + constants.allChars + "]+)({{typopo__right-single-quote--adept}})";
+		re = new RegExp(pattern, "g");
+		$2 = $2.replace(re, "{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}");
+
+		// identify single quote pairs around multiple word phrases
+		// (assuming such phrase will occur only once)
+		pattern = "({{typopo__left-single-quote--adept}})(.*)({{typopo__right-single-quote--adept}})";
 		re = new RegExp(pattern, "g");
 		$2 = $2.replace(re, "{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}");
 

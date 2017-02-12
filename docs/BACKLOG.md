@@ -1,7 +1,6 @@
 # Backlog for typopo
 
 ## 2.0.0
-* fix failing tests for quotes
 * include license in dist
 * change "en" → "en-us"
 * groom changelog

@@ -10,6 +10,8 @@ describe('Single quotes in default language (en)\n', () => {
 		"Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
 		"Within double quotes “there are single 'quotes with mix’d punctuation', you see”.":
 		"Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
+		"He said: “What about 'name' and 'other name'?”":
+		"He said: “What about ‘name’ and ‘other name’?”",
 
 		/* Mixing quotes and primes, left for single quotes */
 		"12' 45″": "12′ 45″",
@@ -36,7 +38,7 @@ describe('Single quotes in default language (en)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should fix single quotes, primes and apostrophes in English", () => {
-			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Constants("rue")), testCase[key]);
+			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Constants("en")), testCase[key]);
 		});
 	});
 });
@@ -67,7 +69,10 @@ describe('Single quotes in Rusyn language (rue)\n', () => {
 		"«double quotes ‹and single quotes› within»",
 
 		"Hej: «Vin mu povil, 'ta de jes' take vidil' i neviril»":
-		"Hej: «Vin mu povil, ‹ta de jes’ take vidil› i neviril»",
+		"Hej: «Vin mu povil, ‹ta de jes’ take vidil› i neviril»",
+
+		"He said: «What about 'name' and 'other name'?»":
+		"He said: «What about ‹name› and ‹other name›?»",
 
 		"INCHEBA '89": "INCHEBA ’89",
 
