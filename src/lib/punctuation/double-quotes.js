@@ -16,7 +16,8 @@
 	[5] Fix spacing around quotes and primes
 	[6] Swap back some of the double quotes with a punctuation
 	[7] Remove extra punctuation around quotes
-	[8] Replace all identified punctuation with appropriate punctuation in
+	[8] Add spaces around quotes where missing
+	[9] Replace all identified punctuation with appropriate punctuation in
 	    given language
 
 	@param {string} string — input text for identification
@@ -66,7 +67,7 @@ export function fixDoubleQuotesAndPrimes(string, constants) {
 	string = string.replace(re, "$1$3");
 
 
-	/* [5] Fix spacing around quotes and prime */
+	/* [5] Remove extra spaces around quotes and prime */
 	string = string.replace(/({{typopo__left-double-quote}})( )/g, "$1");
 	string = string.replace(/( )({{typopo__right-double-quote}})/g, "$2");
 	string = string.replace(/( )({{typopo__double-prime}})/g, "$2");
@@ -100,7 +101,18 @@ export function fixDoubleQuotesAndPrimes(string, constants) {
 	string = string.replace(re, "$1");
 
 
-	/* [8] Punctuation replacement */
+	/* [8.1] Add extra space before left quote, if it’s following word or sentence punctuation */
+	pattern = "([" + constants.sentencePunctuation + constants.allChars + "])({{typopo__left-double-quote}})";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1 $2");
+
+	/* [8.2] Add extra space after right quote if it’s preceding a word */
+	pattern = "({{typopo__right-double-quote}})([" + constants.allChars + "])";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1 $2");
+
+
+	/* [9] Punctuation replacement */
 	string = string.replace(/({{typopo__double-prime}})/g, constants.doublePrime);
 
 	string = string.replace(/({{typopo__left-double-quote}})/g, constants.leftDoubleQuote);

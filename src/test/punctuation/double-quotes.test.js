@@ -77,6 +77,13 @@ describe('Double quotes in default language (en)\n', () => {
 		/*[2] TBD*/
 		"“We will continue this tomorrow at 8:00 a.m.”.": "“We will continue this tomorrow at 8:00 a.m.”",
 
+		/* Wrong spacing */
+		"He said:“Here’s 12″ record.”" : "He said: “Here’s 12″ record.”",
+		"It’s a“nice”saying." : "It’s a “nice” saying.",
+		"An unquoted sentence.“And a unquoted one.”":"An unquoted sentence. “And a unquoted one.”",
+		"“A quoted sentence.”And an unquoted one.":"“A quoted sentence.” And an unquoted one.",
+		"“A quoted sentence!”And an unquoted one.":"“A quoted sentence!” And an unquoted one.",
+
 	};
 
 
@@ -92,11 +99,18 @@ describe('Double quotes in Slovak and Czech language (sk, cs)\n', () => {
 	let testCase = {
 		/* Basic tests */
 		"Slovak „Slovak„ „Slovak„ Slovak": "Slovak „Slovak“ „Slovak“ Slovak",
-    "“Slovak, Rusyn, Czech double quotation marks“": "„Slovak, Rusyn, Czech double quotation marks“",
-    "”Slovak, Rusyn, Czech double quotation marks”": "„Slovak, Rusyn, Czech double quotation marks“",
-    "\"Slovak, Rusyn, Czech double quotation marks\"": "„Slovak, Rusyn, Czech double quotation marks“",
-    "Chto mu povisť slova ,,Myžku, sŷnku mij‘‘": "Chto mu povisť slova „Myžku, sŷnku mij“",
-    "\"abc''": "„abc“",
+		"“Slovak, Rusyn, Czech double quotation marks“": "„Slovak, Rusyn, Czech double quotation marks“",
+		"”Slovak, Rusyn, Czech double quotation marks”": "„Slovak, Rusyn, Czech double quotation marks“",
+		"\"Slovak, Rusyn, Czech double quotation marks\"": "„Slovak, Rusyn, Czech double quotation marks“",
+		"Chto mu povisť slova ,,Myžku, sŷnku mij‘‘": "Chto mu povisť slova „Myžku, sŷnku mij“",
+		"\"abc''": "„abc“",
+
+		/* Wrong spacing */
+		"He said:„Here’s 12″ record.“" : "He said: „Here’s 12″ record.“",
+		"It’s a„nice“saying." : "It’s a „nice“ saying.",
+		"An unquoted sentence.„And a unquoted one.“":"An unquoted sentence. „And a unquoted one.“",
+		"„A quoted sentence.“And an unquoted one.":"„A quoted sentence.“ And an unquoted one.",
+		"„A quoted sentence!“And an unquoted one.":"„A quoted sentence!“ And an unquoted one.",
 	};
 
 

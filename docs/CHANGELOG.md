@@ -3,7 +3,8 @@
 ## 2.0.0 // 2017-02-
 ### Feature updates
 * Replaces (p), (P) → ℗
-* Improvement to how single quotes are identified
+* Improvements to how single quotes are identified
+* Improvements to spacing around double quotes
 * Adds non-breaking spaces after ordinal numbers
 * Adds non-breaking spaces after ordinal Roman numerals
 * Adds non-breaking spaces after name initials (i.e. Philip K. Dick)

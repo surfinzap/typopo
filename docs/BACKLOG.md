@@ -5,7 +5,6 @@
 * make a dist
 
 
-* fix that: He said:“Here’s a 12″ record.”
 * fix that: „nova-produkt-4“ na napr. "cervenyj-bereh“
 * fix that: - dashes at the beginning of the sentence
 
