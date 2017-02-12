@@ -19,7 +19,7 @@ export function fixNbsp(string, constants) {
 
 
 	// adds non-breaking spaces after cardinal numbers
-	pattern = "([0-9]+)( )(["+ constants.lowercaseChars + constants.uppercaseChars +"]+)";
+	pattern = "(" + constants.cardinalNumber + ")( )(["+ constants.lowercaseChars + constants.uppercaseChars +"]+)";
 	re = new RegExp(pattern, "g");
 	let replacement = "$1" + constants.nbsp + "$3";
 	string =  string.replace(re, replacement);
@@ -33,7 +33,7 @@ export function fixNbsp(string, constants) {
 
 
 	// adds non-breaking spaces after single-character prepositions
-	pattern = "([  ])([" + constants.lowercaseChars + constants.uppercaseChars + "]|&)( )";
+	pattern = "([" + constants.spaces + "])([" + constants.lowercaseChars + constants.uppercaseChars + "]|&)( )";
 	re = new RegExp(pattern, "g");
 	replacement = "$1$2" + constants.nbsp;
 	string = string.replace(re, replacement);
