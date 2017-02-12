@@ -1,6 +1,3 @@
-import constants from '../constants';
-import loc from "../../locale/locale";
-
 /*
 	Corrects improper use of single quotes, single primes and apostrophes
 
@@ -26,7 +23,7 @@ import loc from "../../locale/locale";
 	@param {string} language — language options
 	@returns {string} — corrected output
 */
-export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
+export function fixSingleQuotesPrimesAndApostrophes(string, constants) {
 
 	/* [1.1] Identify ’n’ contractions */
 	var pattern = "(" + constants.singleQuoteAdepts + ")(n)(" + constants.singleQuoteAdepts + ")";
@@ -95,14 +92,12 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 
 	/* [5] Punctuation replacement */
-	string = string.replace(/({{typopo__single-prime}})/g, "′");
-	string = string.replace(/{{typopo__apostrophe}}|{{typopo__left-single-quote--adept}}|{{typopo__right-single-quote--adept}}/g, "’");
+	string = string.replace(/({{typopo__single-prime}})/g, constants.singlePrime);
+	string = string.replace(/{{typopo__apostrophe}}|{{typopo__left-single-quote--adept}}|{{typopo__right-single-quote--adept}}/g, constants.apostrophe);
 
-	let leftSingleQuote = loc.locale[locale].quotes.leftSingleQuote;
-	let rightSingleQuote = loc.locale[locale].quotes.rightSingleQuote;
 
-	string = string.replace(/{{typopo__left-single-quote}}/g, leftSingleQuote);
-	string = string.replace(/{{typopo__right-single-quote}}/g, rightSingleQuote);
+	string = string.replace(/{{typopo__left-single-quote}}/g, constants.leftSingleQuote);
+	string = string.replace(/{{typopo__right-single-quote}}/g, constants.rightSingleQuote);
 
 	return string;
 }

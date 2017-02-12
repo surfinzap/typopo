@@ -1,4 +1,6 @@
 import {fixSingleQuotesPrimesAndApostrophes} from "../../lib/punctuation/single-quotes";
+import Constants from "../../lib/constants";
+
 import assert from 'assert';
 
 describe('Single quotes in default language (en)\n', () => {
@@ -34,7 +36,7 @@ describe('Single quotes in default language (en)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should fix single quotes, primes and apostrophes in English", () => {
-			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, "en"), testCase[key]);
+			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Constants("rue")), testCase[key]);
 		});
 	});
 });
@@ -53,8 +55,8 @@ describe('Single quotes in Slovak and Czech language (sk, cs)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should fix single quotes, primes and apostrophes in Slovak/Czech", () => {
-			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, "sk"), testCase[key]);
-			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, "cs"), testCase[key]);
+			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Constants("sk")), testCase[key]);
+			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Constants("cs")), testCase[key]);
 		});
 	});
 });
@@ -74,7 +76,7 @@ describe('Single quotes in Rusyn language (rue)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should fix single quotes, primes and apostrophes in Rusyn", () => {
-			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, "rue"), testCase[key]);
+			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Constants("rue")), testCase[key]);
 		});
 	});
 });

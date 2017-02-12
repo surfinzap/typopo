@@ -1,7 +1,8 @@
 import {fixEllipsis} from "../../lib/punctuation/ellipsis";
 import assert from 'assert';
+import Constants from "../../lib/constants";
 
-describe('Ellisis\n', () => {
+describe('Ellipsis\n', () => {
 	let testCase = {
 		/*
 		 Ellipsis & Aposiopesis
@@ -60,7 +61,7 @@ describe('Ellisis\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should replace multiple dots with an ellipsis", () => {
-			assert.equal(fixEllipsis(key), testCase[key]);
+			assert.equal(fixEllipsis(key, new Constants("en")), testCase[key]);
 		});
 	});
 });

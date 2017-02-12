@@ -1,5 +1,6 @@
 import {fixNbsp} from "../../lib/rhythm/nbsp";
 import assert from 'assert';
+import Constants from "../../lib/constants";
 
 describe('Fix various occurences of non-breaking space\n', () => {
 	let testCase = {
@@ -40,7 +41,7 @@ describe('Fix various occurences of non-breaking space\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixNbsp(key, "en"), testCase[key]);
+			assert.equal(fixNbsp(key, new Constants("en")), testCase[key]);
 		});
 	});
 });

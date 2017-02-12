@@ -1,5 +1,3 @@
-import constants from "../constants";
-
 /*
 	Consolidates the use of non-breaking spaces
 
@@ -11,7 +9,7 @@ import constants from "../constants";
 	@param {string} string — input text for identification
 	@returns {string} — output with correctly placed non-breaking space
 */
-export function fixNbsp(string) {
+export function fixNbsp(string, constants) {
 
 	// removes non-breaking spaces between multi-character words
 	let pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars +"]{2,})(["+ constants.nbsp + constants.narrowNbsp +"])(["+ constants.lowercaseChars + constants.uppercaseChars +"]{2,})";
@@ -28,7 +26,7 @@ export function fixNbsp(string) {
 
 
 	// adds non-breaking spaces around ×
-	pattern = "([" + constants.spaces + "])([×])([" + constants.spaces + "])";
+	pattern = "([" + constants.spaces + "])([" + constants.multiplicationSign + "])([" + constants.spaces + "])";
 	re = new RegExp(pattern, "g");
 	replacement = constants.nbsp + "$2" + constants.nbsp;
 	string = string.replace(re, replacement);

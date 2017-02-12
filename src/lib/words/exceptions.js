@@ -1,4 +1,3 @@
-import constants from "../constants";
 let exceptions = [];
 
 /*
@@ -12,7 +11,7 @@ let exceptions = [];
 	@param {string} input text for identification of exceptions
 	@returns {string} — output with identified exceptions in format {{typopo__exception-[i]}}
 */
-export function excludeExceptions(string) {
+export function excludeExceptions(string, constants) {
 
 	/* [1] Identify email adresses */
 	identifyExceptionSet(string, constants.emailAddressPattern);

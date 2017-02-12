@@ -5,6 +5,11 @@ const quotes = {
 	rightSingleQuote : 				"‘",
 };
 
+const numbers = {
+	ordinalIndicator :				"\\.",
+}
+
 export default {
 	quotes,
+	numbers
 }

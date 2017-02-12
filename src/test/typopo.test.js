@@ -22,7 +22,7 @@ describe('Test consistency of internal variables', () => {
 });
 
 describe('Test that exceptions remain intact', () => {
-  let testCase = {
+	let testCase = {
 
 		/*
 		 Exceptions

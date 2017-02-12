@@ -1,5 +1,6 @@
 import {fixDoubleQuotesAndPrimes} from "../../lib/punctuation/double-quotes";
 import assert from 'assert';
+import Constants from "../../lib/constants";
 
 describe('Double quotes in default language (en)\n', () => {
 	let testCase = {
@@ -82,7 +83,7 @@ describe('Double quotes in default language (en)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should replace multiple dots with an ellipsis", () => {
-			assert.equal(fixDoubleQuotesAndPrimes(key, "en"), testCase[key]);
+			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("en")), testCase[key]);
 		});
 	});
 });
@@ -101,8 +102,8 @@ describe('Double quotes in Slovak and Czech language (sk, cs)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should replace multiple dots with an ellipsis", () => {
-			assert.equal(fixDoubleQuotesAndPrimes(key, "sk"), testCase[key]);
-			assert.equal(fixDoubleQuotesAndPrimes(key, "cs"), testCase[key]);
+			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("en")), testCase[key]);
+			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("en")), testCase[key]);
 		});
 	});
 });
@@ -121,7 +122,7 @@ describe('Double quotes in Rusyn language (rue)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should replace multiple dots with an ellipsis", () => {
-			assert.equal(fixDoubleQuotesAndPrimes(key, "rue"), testCase[key]);
+			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("en")), testCase[key]);
 		});
 	});
 });

@@ -17,15 +17,14 @@ import {removeTrailingSpaces} from "../rhythm/spaces";
 	@param {string} input text for identification
 	@returns {string} corrected output
 */
-function identify_common_abbreviations(string) {
+function identify_common_abbreviations(string, constants) {
 
 	/* [1] Identify e.g., i.e. */
-	var abbreviations = ["eg", "ie"];
-	for (var i = 0; i < abbreviations.length; i++) {
-		var pattern = "(\\b[" + abbreviations[i][0] + "]\\.?["+ constants.spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ constants.spaces +"]?)(\\b)";
-		// console.log(pattern);
-		var re = new RegExp(pattern, "gi");
-		var replacement = "{{typopo__" + abbreviations[i] + "}} ";
+	let abbreviations = ["eg", "ie"];
+	for (let i = 0; i < abbreviations.length; i++) {
+		let pattern = "(\\b[" + abbreviations[i][0] + "]\\.?["+ constants.spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ constants.spaces +"]?)(\\b)";
+		let re = new RegExp(pattern, "gi");
+		let replacement = "{{typopo__" + abbreviations[i] + "}} ";
 		string = string.replace(re, replacement);
 	}
 
@@ -47,11 +46,11 @@ function identify_common_abbreviations(string) {
 		 identifications
 	*/
 	abbreviations = ["eg", "ie", "am", "pm"];
-	for (var i = 0; i < abbreviations.length; i++) {
+	for (let i = 0; i < abbreviations.length; i++) {
 		// non-latin character at the beginning
-		var pattern = "([" + constants.nonLatinChars + "])({{typopo__" + abbreviations[i] + "}})";
-		var re = new RegExp(pattern, "g");
-		replacement = "$1" + abbreviations[i];
+		let pattern = "([" + constants.nonLatinChars + "])({{typopo__" + abbreviations[i] + "}})";
+		let re = new RegExp(pattern, "g");
+		let replacement = "$1" + abbreviations[i];
 		string = string.replace(re, replacement);
 
 		// non-latin character at the end
@@ -72,21 +71,22 @@ function identify_common_abbreviations(string) {
 	@param {string} input text for identification
 	@returns {string} corrected output
 */
-function place_common_abbreviations(string) {
-	var abbreviations = ["eg", "ie", "am", "pm"];
-	for (var i = 0; i < abbreviations.length; i++) {
-		var pattern = "{{typopo__" + abbreviations[i] + "}}";
-		var re = new RegExp(pattern, "g");
-		var replacement = abbreviations[i][0] + "." + abbreviations[i][1] + ".";
+function place_common_abbreviations(string, constants) {
+	let abbreviations = ["eg", "ie", "am", "pm"];
+	for (let i = 0; i < abbreviations.length; i++) {
+		let pattern = "{{typopo__" + abbreviations[i] + "}}";
+		let re = new RegExp(pattern, "g");
+		let replacement = abbreviations[i][0] + "." + abbreviations[i][1] + ".";
 		string = string.replace(re, replacement);
 	}
 
 	return string;
 }
 
-export function fixAbbreviations(string) {
-	string = identify_common_abbreviations(string);
-	string = place_common_abbreviations(string);
-	string = removeTrailingSpaces(string);
+export function fixAbbreviations(string, constants) {
+	string = identify_common_abbreviations(string, constants);
+	string = place_common_abbreviations(string, constants);
+	string = removeTrailingSpaces(string, constants);
+	string = removeMultipleSpaces(string, constants);
 	return string;
 }

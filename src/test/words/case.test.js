@@ -1,5 +1,6 @@
-import {fixCase} from "../../lib/words/case";
 import assert from 'assert';
+import {fixCase} from "../../lib/words/case";
+import Constants from "../../lib/constants";
 
 describe('Corrects accidental uPPERCASE\n', () => {
 	let testCase = {
@@ -14,7 +15,7 @@ describe('Corrects accidental uPPERCASE\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixCase(key, "en"), testCase[key]);
+			assert.equal(fixCase(key, new Constants("en")), testCase[key]);
 		});
 	});
 });

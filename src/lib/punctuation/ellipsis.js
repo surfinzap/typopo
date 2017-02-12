@@ -1,12 +1,10 @@
-import constants from '../constants';
-
 /*
 	Replaces 3 and more consequtive periods with ellipsis
 
 	@param {string} string — input text for identification
 	@returns {string} — output with corrected periods
 */
-function replacePeriodsWithEllipsis(string) {
+function replacePeriodsWithEllipsis(string, constants) {
 	/* [1] replace 3 and more dots with an ellipsis */
 	string = string.replace(/\.{3,}/g, "…");
 
@@ -46,7 +44,7 @@ function replacePeriodsWithEllipsis(string) {
 	@param {string} string — input text for identification
 	@returns {string} — output with corrected spacing around aposiopesis
 */
-function correctSpacesAroundEllipsis(string) {
+function correctSpacesAroundEllipsis(string, constants) {
 
 	/* [1] correct spacing, when ellipsis used used around commas */
 	let pattern = ",[" + constants.spaces + "]?" + constants.ellipsis + "[" + constants.spaces + "]?,";
@@ -84,8 +82,8 @@ function correctSpacesAroundEllipsis(string) {
 	return string;
 }
 
-export function fixEllipsis(string) {
-	string = replacePeriodsWithEllipsis(string);
-	string = correctSpacesAroundEllipsis(string)
+export function fixEllipsis(string, constants) {
+	string = replacePeriodsWithEllipsis(string, constants);
+	string = correctSpacesAroundEllipsis(string, constants)
 	return string;
 }

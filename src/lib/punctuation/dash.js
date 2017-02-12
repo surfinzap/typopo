@@ -1,5 +1,3 @@
-import constants from "../constants";
-
 /*
 	Replaces hyphen with em or en dash
 
@@ -13,8 +11,8 @@ import constants from "../constants";
 	@param {string} string — input text for identification
 	@returns {string} — output with dashes instead of hyphens
 */
-export function fixDash(string, language) {
-	var dashes = "-–—"; // including a hyphen
+export function fixDash(string, constants) {
+	let dashes = "-–—"; // including a hyphen
 
 	/* [1] Replace 3 consecutive hyphens (---) with an em dash (—) */
 	string = string.replace(/(---)/g, "—");
@@ -25,16 +23,15 @@ export function fixDash(string, language) {
 
 
 	/* [3] Replace any hyphen or dash surrounded with spaces with an em dash */
-	var pattern = "[" + constants.spaces + "][" + dashes + "][" + constants.spaces + "]";
-	var re = new RegExp(pattern, "g");
-	var replacement = constants.narrowNbsp + "—" + constants.hairSpace;
+	let pattern = "[" + constants.spaces + "][" + dashes + "][" + constants.spaces + "]";
+	let re = new RegExp(pattern, "g");
+	let replacement = constants.narrowNbsp + "—" + constants.hairSpace;
 	string = string.replace(re, replacement);
 
 	/* [4.1] Replace hyphen or dash, placed between 2 cardinal numbers,
 					 with an en dash; including cases when there is an extra space
 					 from either one side or both sides of the dash */
-	var cardinal_number = "\\d+";
-	pattern = "(" + cardinal_number + ")([" + constants.spaces + "]?[" + dashes + "][" + constants.spaces + "]?)(" + cardinal_number + ")";
+	pattern = "(" + constants.cardinalNumber + ")([" + constants.spaces + "]?[" + dashes + "][" + constants.spaces + "]?)(" + constants.cardinalNumber + ")";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1–$3");
 
@@ -42,18 +39,8 @@ export function fixDash(string, language) {
 	/* [4.2] Replace hyphen or dash, placed between 2 ordinal numbers,
 					 with an en dash; including cases when there is an extra space
 					 from either one side or both sides of the dash */
-	var ordinal_indicator = "";
-	switch (language) {
-		case "rue":
-		case "sk":
-		case "cs":
-			ordinal_indicator = "\\.";
-			break;
-		case "en":
-			ordinal_indicator = "st|nd|rd|th";
-			break;
-	}
-	pattern = "(" + cardinal_number + ")(" + ordinal_indicator + ")([" + constants.spaces + "]?[" + dashes + "][" + constants.spaces + "]?)(" + cardinal_number + ")(" + ordinal_indicator + ")";
+
+	pattern = "(" + constants.cardinalNumber + ")(" + constants.ordinalIndicator + ")([" + constants.spaces + "]?[" + dashes + "][" + constants.spaces + "]?)(" + constants.cardinalNumber + ")(" + constants.ordinalIndicator + ")";
 	re = new RegExp(pattern, "gi");
 	string = string.replace(re, "$1$2–$4$5");
 

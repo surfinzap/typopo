@@ -1,8 +1,3 @@
-import constants from '../constants';
-import loc from "../../locale/locale";
-
-
-
 /*
 	Corrects improper use of double quotes and double primes
 
@@ -28,7 +23,7 @@ import loc from "../../locale/locale";
 	@param {string} language — language option
 	@returns {string} output with properly replaces double qoutes and double primes
 */
-export function fixDoubleQuotesAndPrimes(string, locale) {
+export function fixDoubleQuotesAndPrimes(string, constants) {
 
 	/* [0] Remove extra terminal punctuation around double quotes
 					 e.g. “We will continue tomorrow.”. */
@@ -106,13 +101,10 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 
 
 	/* [8] Punctuation replacement */
-	string = string.replace(/({{typopo__double-prime}})/g, "″");
+	string = string.replace(/({{typopo__double-prime}})/g, constants.doublePrime);
 
-	let leftDoubleQuote = loc.locale[locale].quotes.leftDoubleQuote;
-	let rightDoubleQuote = loc.locale[locale].quotes.rightDoubleQuote;
-
-	string = string.replace(/({{typopo__left-double-quote}})/g, leftDoubleQuote);
-	string = string.replace(/({{typopo__right-double-quote}})/g, rightDoubleQuote);
+	string = string.replace(/({{typopo__left-double-quote}})/g, constants.leftDoubleQuote);
+	string = string.replace(/({{typopo__right-double-quote}})/g, constants.rightDoubleQuote);
 
 	return string;
 }

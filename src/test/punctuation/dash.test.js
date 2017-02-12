@@ -1,5 +1,6 @@
 import {fixDash} from "../../lib/punctuation/dash";
 import assert from 'assert';
+import Constants from "../../lib/constants";
 
 describe('Replace hyphen with dashes, where applicable in English\n', () => {
 	let testCase = {
@@ -29,7 +30,7 @@ describe('Replace hyphen with dashes, where applicable in English\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixDash(key, "en"), testCase[key]);
+			assert.equal(fixDash(key, new Constants("en")), testCase[key]);
 		});
 	});
 });
@@ -44,9 +45,9 @@ describe('Replace hyphen with dashes, where applicable in Rusyn, Slovak, Czech\n
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixDash(key, "rue"), testCase[key]);
-			assert.equal(fixDash(key, "sk"), testCase[key]);
-			assert.equal(fixDash(key, "cs"), testCase[key]);
+			assert.equal(fixDash(key, new Constants("rue")), testCase[key]);
+			assert.equal(fixDash(key, new Constants("sk")), testCase[key]);
+			assert.equal(fixDash(key, new Constants("cs")), testCase[key]);
 		});
 	});
 });

@@ -1,5 +1,3 @@
-import constants from "../constants";
-
 /*
 	Corrects accidental uppercase
 
@@ -14,7 +12,7 @@ import constants from "../constants";
 	@param {string} string — input text for identification
 	@returns {string} — output with corrected accidental uppercase
 */
-export function fixCase(string) {
+export function fixCase(string, constants) {
 
 	/* [1] two first uppercase letters (i.e. UPpercase) */
 	var pattern = "["+ constants.uppercaseChars +"]{2,2}["+ constants.lowercaseChars +"]+";

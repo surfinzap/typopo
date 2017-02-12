@@ -7,7 +7,7 @@
  * Date: 2017-01-15
  */
 
-import constants from "./lib/constants";
+import Constants from "./lib/constants";
 import {removeEmptyLines} from "./lib/rhythm/lines";
 import {fixNbsp} from "./lib/rhythm/nbsp";
 import {fixSpaces} from "./lib/rhythm/spaces";
@@ -24,6 +24,12 @@ import {fixCase} from "./lib/words/case";
 import {excludeExceptions,
 				placeExceptions} from "./lib/words/exceptions";
 
+
+// const c = new Constants();
+//
+// console.log(c);
+
+
 /*
 	Correct typos
 
@@ -35,31 +41,33 @@ import {excludeExceptions,
 export function fixTypos(string, locale, configuration) {
 	locale = (typeof locale === "undefined") ? "en" : locale;
 
+	const constants = new Constants(locale);
+
 	configuration = (typeof configuration === "undefined") ? {
 		removeLines : true,
 	} : configuration;
 
-	string = excludeExceptions(string);
+	string = excludeExceptions(string, constants);
 
 	if(configuration.removeLines) {
 		string = removeEmptyLines(string);
 	}
-	string = fixSpaces(string);
+	string = fixSpaces(string, constants);
 
 	string = fixPeriod(string);
-	string = fixEllipsis(string);
-	string = fixDash(string, locale);
-	string = fixHyphen(string);
-	string = fixDoubleQuotesAndPrimes(string, locale);
-	string = fixSingleQuotesPrimesAndApostrophes(string, locale);
+	string = fixEllipsis(string, constants);
+	string = fixDash(string, constants);
+	string = fixHyphen(string, constants);
+	string = fixDoubleQuotesAndPrimes(string, constants);
+	string = fixSingleQuotesPrimesAndApostrophes(string, constants);
 
 	string = fixSymbols(string);
-	string = fixMultiplicationSign(string);
+	string = fixMultiplicationSign(string, constants);
 
-	string = fixCase(string);
-	string = fixAbbreviations(string);
+	string = fixCase(string, constants);
+	string = fixAbbreviations(string, constants);
 
-	string = fixNbsp(string);
+	string = fixNbsp(string, constants);
 
 	string = placeExceptions(string);
 

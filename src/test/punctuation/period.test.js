@@ -1,5 +1,8 @@
 import {fixPeriod} from "../../lib/punctuation/period";
 import assert from 'assert';
+import Constants from "../../lib/constants";
+
+
 
 describe('Replace 2 periods at the end of the sentecne with a single period\n', () => {
 	let testCase = {
@@ -10,7 +13,7 @@ describe('Replace 2 periods at the end of the sentecne with a single period\n', 
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixPeriod(key, "en"), testCase[key]);
+			assert.equal(fixPeriod(key, new Constants("rue")), testCase[key]);
 		});
 	});
 });
