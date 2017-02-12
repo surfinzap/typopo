@@ -82,7 +82,7 @@ describe('Double quotes in default language (en)\n', () => {
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("should replace multiple dots with an ellipsis", () => {
+		it("", () => {
 			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("en")), testCase[key]);
 		});
 	});
@@ -101,9 +101,9 @@ describe('Double quotes in Slovak and Czech language (sk, cs)\n', () => {
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("should replace multiple dots with an ellipsis", () => {
-			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("en")), testCase[key]);
-			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("en")), testCase[key]);
+		it("", () => {
+			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("cs")), testCase[key]);
+			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("sk")), testCase[key]);
 		});
 	});
 });
@@ -121,8 +121,8 @@ describe('Double quotes in Rusyn language (rue)\n', () => {
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("should replace multiple dots with an ellipsis", () => {
-			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("en")), testCase[key]);
+		it("", () => {
+			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("rue")), testCase[key]);
 		});
 	});
 });
