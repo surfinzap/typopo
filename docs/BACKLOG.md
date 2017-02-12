@@ -4,7 +4,6 @@
 * fix failing tests for quotes
 * include license in dist
 * change "en" → "en-us"
-* make cardinal numbers a locale setting
 * groom changelog
 * update readme
 * update breaking changes
@@ -12,9 +11,6 @@
 
 * jslint?
 
-
-* figure out how to remove constants.variable from the code
-* make removal of spaces a separate module
 
 
 * fix that: He said:“Here’s a 12″ record.”
