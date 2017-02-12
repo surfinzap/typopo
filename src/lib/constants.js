@@ -109,5 +109,7 @@ export default class Constants {
 		/* Numbers */
 		this.cardinalNumber = "\\d+";
 		this.ordinalIndicator = loc.locale[locale].numbers.ordinalIndicator;
+		this.romanNumerals = "IVXLCDM";
+		this.romanOrdinalIndicator = loc.locale[locale].numbers.romanOrdinalIndicator;
 	}
 }

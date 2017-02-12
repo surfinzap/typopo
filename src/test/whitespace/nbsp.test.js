@@ -3,6 +3,9 @@ import {removeNbspBetweenMultiCharWords,
 				addNbspAfterAmpersand,
 				addNbspAroundMultiplicationSign,
 				addNbspAfterCardinalNumber,
+				addNbspAfterOrdinalNumber,
+				addNbspAfterRomanNumeral,
+				addNbspAfterInitial,
 				fixNbsp} from "../../lib/whitespace/nbsp";
 import assert from 'assert';
 import Constants from "../../lib/constants";
@@ -87,6 +90,89 @@ describe('Add non-breaking space after cardinal number\n', () => {
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.equal(addNbspAfterCardinalNumber(key, new Constants("en")), testCase[key]);
+		});
+		it("moduel test", () => {
+			assert.equal(fixNbsp(key, new Constants("en")), testCase[key]);
+		});
+	});
+});
+
+
+describe('Add non-breaking space after ordinal number (en)\n', () => {
+	let testCase = {
+		"1st amendment": "1st amendment",
+		"2nd amendment": "2nd amendment",
+		"3rd amendment": "3rd amendment",
+		"4th amendment": "4th amendment",
+		"18th amendment": "18th amendment",
+		"15th March": "15th March",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(addNbspAfterOrdinalNumber(key, new Constants("en")), testCase[key]);
+		});
+		it("moduel test", () => {
+			assert.equal(fixNbsp(key, new Constants("en")), testCase[key]);
+		});
+	});
+});
+
+describe('Add non-breaking space after ordinal number (sk, cs, rue)\n', () => {
+	let testCase = {
+		"1. dodatok": "1. dodatok",
+		"12. dodatok": "12. dodatok",
+		"12. január": "12. január",
+		"12. 1. 2017": "12. 1. 2017",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(addNbspAfterOrdinalNumber(key, new Constants("sk")), testCase[key]);
+			assert.equal(addNbspAfterOrdinalNumber(key, new Constants("cs")), testCase[key]);
+			assert.equal(addNbspAfterOrdinalNumber(key, new Constants("rue")), testCase[key]);
+		});
+		it("moduel test", () => {
+			assert.equal(fixNbsp(key, new Constants("sk")), testCase[key]);
+			assert.equal(fixNbsp(key, new Constants("cs")), testCase[key]);
+			assert.equal(fixNbsp(key, new Constants("rue")), testCase[key]);
+		});
+	});
+});
+
+describe('Add non-breaking space after roman numeral (sk, cs, rue)\n', () => {
+	let testCase = {
+		"III. kapitola": "III. kapitola",
+		"X. ročník": "X. ročník",
+		"V. ročník": "V. ročník",
+		"L. ročník": "L. ročník",
+		"D. ročník": "D. ročník",
+		"8. V. 1945": "8. V. 1945",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(addNbspAfterRomanNumeral(key, new Constants("sk")), testCase[key]);
+			assert.equal(addNbspAfterRomanNumeral(key, new Constants("cs")), testCase[key]);
+			assert.equal(addNbspAfterRomanNumeral(key, new Constants("rue")), testCase[key]);
+		});
+		it("moduel test", () => {
+			assert.equal(fixNbsp(key, new Constants("sk")), testCase[key]);
+			assert.equal(fixNbsp(key, new Constants("cs")), testCase[key]);
+			assert.equal(fixNbsp(key, new Constants("rue")), testCase[key]);
+		});
+	});
+});
+
+describe('Add non-breaking space after initial\n', () => {
+	let testCase = {
+		"Philip K. Dick": "Philip K. Dick",
+		"F. X. Šalda": "F. X. Šalda",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(addNbspAfterInitial(key, new Constants("en")), testCase[key]);
 		});
 		it("moduel test", () => {
 			assert.equal(fixNbsp(key, new Constants("en")), testCase[key]);

@@ -23,9 +23,12 @@ Fixes whitespace characters:
 	* removes nbsp between multi-letter words
 	* adds nbsp
 		* after one-word prepositions
-		* after cardinal numbers
 		* around “×”
 		* after “&”
+		* after cardinal numbers
+		* after ordinal numbers
+		* ordinal Roman numerals
+		* after name initials (i.e. Philip K. Dick)
 
 Fixes words:
 * accidental uPPERCASE

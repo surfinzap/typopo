@@ -7,6 +7,7 @@ const quotes = {
 
 const numbers = {
 	ordinalIndicator :				"\\.",
+	romanOrdinalIndicator :		"\\.",
 }
 
 export default {

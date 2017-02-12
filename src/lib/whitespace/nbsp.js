@@ -45,8 +45,40 @@ export function addNbspAfterCardinalNumber(string, constants) {
 	let pattern = "(" + constants.cardinalNumber + ")( )(["+ constants.lowercaseChars + constants.uppercaseChars +"]+)";
 	let re = new RegExp(pattern, "g");
 	let replacement = "$1" + constants.nbsp + "$3";
+
 	return string.replace(re, replacement);
 }
+
+
+
+export function addNbspAfterOrdinalNumber(string, constants) {
+	let pattern = "("+ constants.cardinalNumber +")("+ constants.ordinalIndicator +")(["+ constants.spaces +"])";
+	let re = new RegExp(pattern, "g");
+	let replacement = "$1$2" + constants.nbsp;
+
+	return string.replace(re, replacement);
+}
+
+
+
+export function addNbspAfterRomanNumeral(string, constants) {
+	let pattern = "(\\b["+ constants.romanNumerals + "]+)("+ constants.romanOrdinalIndicator +")(["+ constants.spaces +"])";
+	let re = new RegExp(pattern, "g");
+	let replacement = "$1$2" + constants.nbsp;
+
+	return string.replace(re, replacement);
+}
+
+
+
+export function addNbspAfterInitial(string, constants) {
+	let pattern = "(["+ constants.uppercaseChars + "]\\.)(["+ constants.spaces +"])";
+	let re = new RegExp(pattern, "g");
+	let replacement = "$1" + constants.nbsp;
+
+	return string.replace(re, replacement);
+}
+
 
 
 /*
@@ -61,6 +93,9 @@ export function fixNbsp(string, constants) {
 	string = addNbspAfterAmpersand(string, constants);
 	string = addNbspAroundMultiplicationSign(string, constants);
 	string = addNbspAfterCardinalNumber(string, constants);
+	string = addNbspAfterOrdinalNumber(string, constants);
+	string = addNbspAfterRomanNumeral(string, constants);
+	string = addNbspAfterInitial(string, constants);
 
 	return string;
 }

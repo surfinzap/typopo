@@ -11,12 +11,6 @@
 * fix that: - dashes at the beginning of the sentence
 
 
-
-* add non-breaking space after ordinal numbers
-* non-breaking space between dates 2. díl, 4. januar, 4th Janary, 20. novembra, 15. 2. 2016
-* non-breaking space for names F. X. Šalda, K. Čapek
-* non-breaking space between Roman numerals {findWhat:"(\\u\\w+)\\s(I\\.|II\\.|III\\.|IV\\.|V\\.|VI\\.|VII\\.|VIII\\.|IX\\.|X\\.)"}
-
 * special cases for non-breaking spaces between abbreviations and numbers
 	* {findWhat:"(č\\.|s\\.|fol\\.|str\\.|r\\.|odst\\.|§) (\\d)"}
 	* {findWhat:"(©|℗|sv\\.|tj\\.|tzv\\.|čl\\.) (\\w+)"}
@@ -24,7 +18,6 @@
 
 * non-breaking space between currency and number
 * check if inch is using right character
-
 
 * include license in dist
 * jslint?
@@ -38,7 +31,6 @@
 
 
 * add support for math equations spacing
-* exceptions/replacements for emoticons?
 
 * Reintroduce more sophisticated support for starting a sentence with a Capital letter
 	* main issue concerned many false positives

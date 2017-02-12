@@ -3,9 +3,12 @@
 ## 2.0.0 // 2017-02-
 ### Feature updates
 * Replaces (p), (P) → ℗
+* Improvement to how single quotes are identified
+* Adds non-breaking spaces after ordinal numbers
+* Adds non-breaking spaces after ordinal Roman numerals
+* Adds non-breaking spaces after name initials (i.e. Philip K. Dick)
 * Fix: Remove multiple spaces, even they are non-breaking spaces, hair spaces or narrow non-breaking space
 * Fix: Abbreviations were (a.m., p.m.) were generating extra space at the end of the sentence or string
-* Improvement to how single quotes are identified
 
 ### Code updates
 Complete codebase refactoring
