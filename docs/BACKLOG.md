@@ -11,6 +11,7 @@
 * fix that: - dashes at the beginning of the sentence
 
 
+
 * add non-breaking space after ordinal numbers
 * non-breaking space between dates 2. díl, 4. januar, 4th Janary, 20. novembra, 15. 2. 2016
 * non-breaking space for names F. X. Šalda, K. Čapek

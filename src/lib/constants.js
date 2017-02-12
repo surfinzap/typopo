@@ -48,6 +48,7 @@ export default class Constants {
 		/* Symbols*/
 		this.degree = "°";
 		this.multiplicationSign = "×";
+		this.ampersand = "&";
 
 		/*
 			Source for webUrlPattern, emailAddressPattern
