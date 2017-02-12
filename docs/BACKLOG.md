@@ -1,14 +1,12 @@
 # Backlog for typopo
 
 ## 2.0.0
-* include license in dist
 * change "en" → "en-us"
 * groom changelog
 * update readme
 * update breaking changes
 * make a dist
 
-* jslint?
 
 
 
@@ -29,6 +27,10 @@
 
 * non-breaking space between currency and number
 * check if inch is using right character
+
+
+* include license in dist
+* jslint?
 
 * consider resolving single-word widows
 
