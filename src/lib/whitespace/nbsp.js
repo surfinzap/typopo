@@ -42,7 +42,7 @@ export function addNbspAroundMultiplicationSign(string, constants) {
 
 
 export function addNbspAfterCardinalNumber(string, constants) {
-	let pattern = "(" + constants.cardinalNumber + ")( )(["+ constants.lowercaseChars + constants.uppercaseChars +"]+)";
+	let pattern = "(" + constants.cardinalNumber + ")( )(["+ constants.allChars +"]+)";
 	let re = new RegExp(pattern, "g");
 	let replacement = "$1" + constants.nbsp + "$3";
 

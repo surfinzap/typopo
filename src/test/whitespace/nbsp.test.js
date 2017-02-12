@@ -85,6 +85,7 @@ describe('Add non-breaking space around ×\n', () => {
 describe('Add non-breaking space after cardinal number\n', () => {
 	let testCase = {
 		"5 mm": "5 mm",
+		"5 Kč": "5 Kč",
 	};
 
 	Object.keys(testCase).forEach((key) => {
