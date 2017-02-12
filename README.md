@@ -3,7 +3,7 @@
 Typopo is a JavaScript library that saves your time by auto-correcting frequent typographic errors in English, Slovak, Czech and Rusyn language. Make a proofreading quicker by auto-correcting the common typos first.
 
 ## Features
-Fixes incorrectly used punctuation:
+Fixes punctuation:
 * double quotes (and accidentally-typed punctuation related to the use of double quotes)
 * double primes
 * single quotes (with assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages) and in pairs)
@@ -83,7 +83,7 @@ configuration = {
 	removeLines : true,
 }
 ```
-(removeLines is the online available configuration option for now, the situation will get better based on the feedback)
+(removeLines is the online available configuration option for now, the situation will get better based on your feedback)
 
 ## Feedback
 Iʼd love to hear:
