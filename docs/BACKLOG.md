@@ -1,9 +1,5 @@
 # Backlog for typopo
 
-## 2.0.0
-* make a dist
-
-
 * fix that: „nova-produkt-4“ na napr. "cervenyj-bereh“
 * fix that: - dashes at the beginning of the sentence
 
