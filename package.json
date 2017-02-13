@@ -1,6 +1,6 @@
 {
   "name": "typopo",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "Typopo is a JavaScript library that saves your time by auto-correcting frequent typographic errors in English, Slovak, Czech and Rusyn language. Make a proofreading quicker by auto-correcting the common typos first.",
   "license": "MIT",
   "author": {
@@ -8,27 +8,41 @@
     "email": "surfin.zap@gmail.com"
   },
   "scripts": {
-      "test": "echo \"Tests are run manually via calling test/test_typopo.js functions in the browser.\" && exit 1"
+    "test": "mocha --compilers js:babel-core/register ./src/test/**/*.test.js -R min -w"
   },
-  "main": "build/typopo.min.js",
+  "main": "dist/typopo_dist.min.js",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/surfinzap/typopo"
+    "type": "git",
+    "url": "https://github.com/surfinzap/typopo"
   },
   "bugs": {
     "url": "https://github.com/surfinzap/typopo/issues"
   },
-  "license": "MIT",
   "keywords": [
-      "autocorrect",
-      "typos",
-      "typo",
-      "English",
-      "Slovak",
-      "Czech",
-      "Rusyn"
-],
+    "autocorrect",
+    "typos",
+    "typo",
+    "English",
+    "Slovak",
+    "Czech",
+    "Rusyn"
+  ],
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=6.9.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-preset-es2015": "^6.22.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.3.0",
+    "gulp": "3.9.1",
+    "gulp-cli": "^1.2.2",
+    "gulp-livereload": "^3.8.1",
+    "gulp-sourcemaps": "^2.4.0",
+    "gulp-uglify": "^2.0.0",
+    "mocha": "^3.2.0",
+    "st": "^1.2.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }
