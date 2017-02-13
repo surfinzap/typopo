@@ -1,6 +1,6 @@
 import {fixDash} from "../../lib/punctuation/dash";
 import assert from 'assert';
-import Constants from "../../lib/constants";
+import Constants from "../../locale/locale";
 
 describe('Replace hyphen with dashes, where applicable in English\n', () => {
 	let testCase = {

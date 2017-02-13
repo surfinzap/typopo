@@ -1,6 +1,6 @@
 import {fixHyphen} from "../../lib/punctuation/hyphen";
 import assert from 'assert';
-import Constants from "../../lib/constants";
+import Constants from "../../locale/locale";
 
 
 describe('Replace dashes with hyphen, where applicable\n', () => {

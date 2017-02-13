@@ -1,6 +1,6 @@
 import assert from 'assert';
 import {fixCase} from "../../lib/words/case";
-import Constants from "../../lib/constants";
+import Constants from "../../locale/locale";
 
 describe('Corrects accidental uPPERCASE\n', () => {
 	let testCase = {

@@ -1,5 +1,5 @@
 import {fixSingleQuotesPrimesAndApostrophes} from "../../lib/punctuation/single-quotes";
-import Constants from "../../lib/constants";
+import Constants from "../../locale/locale";
 
 import assert from 'assert';
 

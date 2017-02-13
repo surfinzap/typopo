@@ -1,6 +1,6 @@
 import {fixMultiplicationSign} from "../../lib/symbols/multiplication-sign";
 import assert from 'assert';
-import Constants from "../../lib/constants";
+import Constants from "../../locale/locale";
 
 describe('Fix multiplication sign\n', () => {
 	let testCase = {

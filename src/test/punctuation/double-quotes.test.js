@@ -1,6 +1,6 @@
 import {fixDoubleQuotesAndPrimes} from "../../lib/punctuation/double-quotes";
 import assert from 'assert';
-import Constants from "../../lib/constants";
+import Constants from "../../locale/locale";
 
 describe('Double quotes in default language (en)\n', () => {
 	let testCase = {

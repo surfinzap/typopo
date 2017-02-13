@@ -1,6 +1,6 @@
 import {fixEllipsis} from "../../lib/punctuation/ellipsis";
 import assert from 'assert';
-import Constants from "../../lib/constants";
+import Constants from "../../locale/locale";
 
 describe('Ellipsis\n', () => {
 	let testCase = {

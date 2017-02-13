@@ -8,7 +8,7 @@ import {removeNbspBetweenMultiCharWords,
 				addNbspAfterInitial,
 				fixNbsp} from "../../lib/whitespace/nbsp";
 import assert from 'assert';
-import Constants from "../../lib/constants";
+import Constants from "../../locale/locale";
 
 describe('Remove non-breaking space between multi-letter words\n', () => {
 	let testCase = {

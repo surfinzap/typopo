@@ -1,6 +1,6 @@
 import {fixAbbreviations} from "../../lib/words/abbreviations";
 import assert from 'assert';
-import Constants from "../../lib/constants";
+import Constants from "../../locale/locale";
 
 
 describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {

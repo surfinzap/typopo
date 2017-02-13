@@ -1,6 +1,6 @@
 import {fixPeriod} from "../../lib/punctuation/period";
 import assert from 'assert';
-import Constants from "../../lib/constants";
+import Constants from "../../locale/locale";
 
 
 

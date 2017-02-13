@@ -7,7 +7,7 @@
  * Date: 2017-01-15
  */
 
-import Constants from "./lib/constants";
+import Constants from "./locale/locale";
 import {removeEmptyLines} from "./lib/whitespace/lines";
 import {fixNbsp} from "./lib/whitespace/nbsp";
 import {fixSpaces} from "./lib/whitespace/spaces";
@@ -36,7 +36,7 @@ import {excludeExceptions,
 export function fixTypos(string, locale, configuration) {
 	locale = (typeof locale === "undefined") ? "en-us" : locale;
 
-	const constants = new Constants(locale);
+	let constants = new Constants(locale);
 
 	configuration = (typeof configuration === "undefined") ? {
 		removeLines : true,

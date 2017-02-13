@@ -6,7 +6,7 @@ import {removeMultipleSpaces,
 				addSpaceAfterPunctuation,
 				removeTrailingSpaces} from "../../lib/whitespace/spaces";
 import assert from 'assert';
-import Constants from "../../lib/constants";
+import Constants from "../../locale/locale";
 
 describe('Replace multiple spaces with a single one\n', () => {
 	let testCase = {
