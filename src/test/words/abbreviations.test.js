@@ -53,7 +53,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixAbbreviations(key, new Constants("en")), testCase[key]);
+			assert.equal(fixAbbreviations(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });

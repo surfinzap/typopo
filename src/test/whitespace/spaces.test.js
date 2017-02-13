@@ -24,7 +24,7 @@ describe('Replace multiple spaces with a single one\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(removeMultipleSpaces(key, new Constants("en")), testCase[key]);
+			assert.equal(removeMultipleSpaces(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });
@@ -65,7 +65,7 @@ describe('Remove spaces and tabs at paragraph start\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(removeSpacesAtParagraphStart(key, new Constants("en")), testCase[key]);
+			assert.equal(removeSpacesAtParagraphStart(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });
@@ -88,7 +88,7 @@ describe('Remove space before sentence punctuation, closing brackets and degree 
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(removeSpaceBeforePunctuation(key, new Constants("en")), testCase[key]);
+			assert.equal(removeSpaceBeforePunctuation(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });
@@ -103,7 +103,7 @@ describe('Remove space after opening brackets\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(removeSpaceAfterPunctuation(key, new Constants("en")), testCase[key]);
+			assert.equal(removeSpaceAfterPunctuation(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });
@@ -118,7 +118,7 @@ describe('Add space before opening brackets\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(addSpaceBeforePunctuation(key, new Constants("en")), testCase[key]);
+			assert.equal(addSpaceBeforePunctuation(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });
@@ -139,7 +139,7 @@ describe('Add space after sentence punctuation and closing brackets\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(addSpaceAfterPunctuation(key, new Constants("en")), testCase[key]);
+			assert.equal(addSpaceAfterPunctuation(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });
@@ -157,7 +157,7 @@ describe('Remove trailing spaces\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(removeTrailingSpaces(key, new Constants("en")), testCase[key]);
+			assert.equal(removeTrailingSpaces(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });

@@ -1,6 +1,6 @@
 # Changelog for Typopo
 
-## 2.0.0 // 2017-02-
+## 2.0.0 // 2017-02-13
 ### Feature updates
 * Replaces (p), (P) → ℗
 * Improvements to how single quotes are identified

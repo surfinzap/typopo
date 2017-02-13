@@ -12,7 +12,7 @@ describe('Replace dashes with hyphen, where applicable\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixHyphen(key, new Constants("en")), testCase[key]);
+			assert.equal(fixHyphen(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });

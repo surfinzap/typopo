@@ -70,7 +70,7 @@ fixTypos(string, locale)
 ```
 
 supported languages:
-* "en" (English, default)
+* "en-us" (English, default)
 * "rue" (Rusyn)
 * "sk" (Slovak)
 * "cs" (Czech)

@@ -90,7 +90,7 @@ describe('Double quotes in default language (en)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("en")), testCase[key]);
+			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });

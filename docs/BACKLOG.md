@@ -1,7 +1,6 @@
 # Backlog for typopo
 
 ## 2.0.0
-* change "en" → "en-us"
 * make a dist
 
 

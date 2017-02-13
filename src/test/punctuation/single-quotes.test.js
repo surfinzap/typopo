@@ -38,7 +38,7 @@ describe('Single quotes in default language (en)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should fix single quotes, primes and apostrophes in English", () => {
-			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Constants("en")), testCase[key]);
+			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });

@@ -30,7 +30,7 @@ describe('Replace hyphen with dashes, where applicable in English\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixDash(key, new Constants("en")), testCase[key]);
+			assert.equal(fixDash(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });

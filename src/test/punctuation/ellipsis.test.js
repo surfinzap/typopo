@@ -61,7 +61,7 @@ describe('Ellipsis\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should replace multiple dots with an ellipsis", () => {
-			assert.equal(fixEllipsis(key, new Constants("en")), testCase[key]);
+			assert.equal(fixEllipsis(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });

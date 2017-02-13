@@ -14,7 +14,7 @@ describe('Fix multiplication sign\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixMultiplicationSign(key, new Constants("en")), testCase[key]);
+			assert.equal(fixMultiplicationSign(key, new Constants("en-us")), testCase[key]);
 		});
 	});
 });

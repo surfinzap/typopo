@@ -34,7 +34,7 @@ import {excludeExceptions,
 	@returns {string} corrected output
 */
 export function fixTypos(string, locale, configuration) {
-	locale = (typeof locale === "undefined") ? "en" : locale;
+	locale = (typeof locale === "undefined") ? "en-us" : locale;
 
 	const constants = new Constants(locale);
 

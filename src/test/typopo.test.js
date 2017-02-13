@@ -16,7 +16,7 @@ describe('Test consistency of internal variables', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixTypos(key, "en"), testCase[key]);
+			assert.equal(fixTypos(key, "en-us"), testCase[key]);
 		});
 	});
 });
@@ -55,7 +55,7 @@ describe('Test that exceptions remain intact', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixTypos(key, "en"), testCase[key]);
+			assert.equal(fixTypos(key, "en-us"), testCase[key]);
 		});
 	});
 });
@@ -75,7 +75,7 @@ describe('Integration tests', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixTypos(key, "en"), testCase[key]);
+			assert.equal(fixTypos(key, "en-us"), testCase[key]);
 		});
 	});
 });
