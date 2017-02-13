@@ -4,13 +4,13 @@
 	@param {string} string — input text for identification
 	@returns {string} — output with corrected periods
 */
-function replacePeriodsWithEllipsis(string, constants) {
+function replacePeriodsWithEllipsis(string, locale) {
 	/* [1] replace 3 and more dots with an ellipsis */
 	string = string.replace(/\.{3,}/g, "…");
 
 	/* [2] replace 2 dots in the middle of the sentence with an aposiopesis
 				 (best-effort scenario) */
-	let pattern = "[" + constants.spaces + "]\\.{2}[" + constants.spaces + "]";
+	let pattern = "[" + locale.spaces + "]\\.{2}[" + locale.spaces + "]";
 	let re = new RegExp(pattern, "g");
 	string = string.replace(re, " … ");
 
@@ -44,46 +44,46 @@ function replacePeriodsWithEllipsis(string, constants) {
 	@param {string} string — input text for identification
 	@returns {string} — output with corrected spacing around aposiopesis
 */
-function correctSpacesAroundEllipsis(string, constants) {
+function correctSpacesAroundEllipsis(string, locale) {
 
 	/* [1] correct spacing, when ellipsis used used around commas */
-	let pattern = ",[" + constants.spaces + "]?" + constants.ellipsis + "[" + constants.spaces + "]?,";
+	let pattern = ",[" + locale.spaces + "]?" + locale.ellipsis + "[" + locale.spaces + "]?,";
 	let re = new RegExp(pattern, "g");
 	string = string.replace(re, ", …,");
 
 
 	/* [2] correct spacing for aposiopesis at the end of the sentence
 				 in the middle of the paragraph */
-	pattern = "([" + constants.lowercaseChars + "])([" + constants.spaces + "])(" + constants.ellipsis + "[" + constants.spaces + "][" + constants.uppercaseChars + "])";
+	pattern = "([" + locale.lowercaseChars + "])([" + locale.spaces + "])(" + locale.ellipsis + "[" + locale.spaces + "][" + locale.uppercaseChars + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3");
 
 
 	/* [3] correct spacing for aposiopesis at the beginning of the sentence
 				 in the middle of the paragraph */
-	pattern = "([" + constants.sentencePunctuation + "][" + constants.spaces + "]" + constants.ellipsis +")([" + constants.spaces + "])([" + constants.lowercaseChars +"])";
+	pattern = "([" + locale.sentencePunctuation + "][" + locale.spaces + "]" + locale.ellipsis +")([" + locale.spaces + "])([" + locale.lowercaseChars +"])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3");
 
 
 	/* [4] correct spacing for aposiopesis at the beginning of the sentence
 				 at the beginning of the paragraph */
-	pattern = "(^…)([" + constants.spaces + "])([" + constants.lowercaseChars + constants.uppercaseChars + "])";
+	pattern = "(^…)([" + locale.spaces + "])([" + locale.lowercaseChars + locale.uppercaseChars + "])";
 	re = new RegExp(pattern, "gm");
 	string = string.replace(re, "$1$3");
 
 
 	/* [5] correct spacing for aposiopesis at the end of the sentence
 				 at the end of the paragraph */
-	pattern = "([" + constants.lowercaseChars + constants.sentencePunctuation + "])([" + constants.spaces + "])(" + constants.ellipsis + ")(?![ " + constants.sentencePunctuation + constants.lowercaseChars + constants.uppercaseChars + "])";
+	pattern = "([" + locale.lowercaseChars + locale.sentencePunctuation + "])([" + locale.spaces + "])(" + locale.ellipsis + ")(?![ " + locale.sentencePunctuation + locale.lowercaseChars + locale.uppercaseChars + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3");
 
 	return string;
 }
 
-export function fixEllipsis(string, constants) {
-	string = replacePeriodsWithEllipsis(string, constants);
-	string = correctSpacesAroundEllipsis(string, constants)
+export function fixEllipsis(string, locale) {
+	string = replacePeriodsWithEllipsis(string, locale);
+	string = correctSpacesAroundEllipsis(string, locale)
 	return string;
 }

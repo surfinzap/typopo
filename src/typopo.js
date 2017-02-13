@@ -7,7 +7,7 @@
  * Date: 2017-01-15
  */
 
-import Constants from "./locale/locale";
+import Locale from "./locale/locale";
 import {removeEmptyLines} from "./lib/whitespace/lines";
 import {fixNbsp} from "./lib/whitespace/nbsp";
 import {fixSpaces} from "./lib/whitespace/spaces";
@@ -34,35 +34,35 @@ import {excludeExceptions,
 	@returns {string} corrected output
 */
 export function fixTypos(string, locale, configuration) {
-	locale = (typeof locale === "undefined") ? "en-us" : locale;
+	currentLocale = (typeof locale === "undefined") ? "en-us" : locale;
 
-	let constants = new Constants(locale);
+	let currentLocale = new Locale(locale);
 
 	configuration = (typeof configuration === "undefined") ? {
 		removeLines : true,
 	} : configuration;
 
-	string = excludeExceptions(string, constants);
+	string = excludeExceptions(string, currentLocale);
 
 	if(configuration.removeLines) {
 		string = removeEmptyLines(string);
 	}
-	string = fixSpaces(string, constants);
+	string = fixSpaces(string, currentLocale);
 
 	string = fixPeriod(string);
-	string = fixEllipsis(string, constants);
-	string = fixDash(string, constants);
-	string = fixHyphen(string, constants);
-	string = fixDoubleQuotesAndPrimes(string, constants);
-	string = fixSingleQuotesPrimesAndApostrophes(string, constants);
+	string = fixEllipsis(string, currentLocale);
+	string = fixDash(string, currentLocale);
+	string = fixHyphen(string, currentLocale);
+	string = fixDoubleQuotesAndPrimes(string, currentLocale);
+	string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale);
 
 	string = fixSymbols(string);
-	string = fixMultiplicationSign(string, constants);
+	string = fixMultiplicationSign(string, currentLocale);
 
-	string = fixCase(string, constants);
-	string = fixAbbreviations(string, constants);
+	string = fixCase(string, currentLocale);
+	string = fixAbbreviations(string, currentLocale);
 
-	string = fixNbsp(string, constants);
+	string = fixNbsp(string, currentLocale);
 
 	string = placeExceptions(string);
 

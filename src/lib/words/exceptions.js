@@ -11,14 +11,14 @@ let exceptions = [];
 	@param {string} input text for identification of exceptions
 	@returns {string} — output with identified exceptions in format {{typopo__exception-[i]}}
 */
-export function excludeExceptions(string, constants) {
+export function excludeExceptions(string, locale) {
 
 	/* [1] Identify email adresses */
-	identifyExceptionSet(string, constants.emailAddressPattern);
+	identifyExceptionSet(string, locale.emailAddressPattern);
 
 
 	/* [2] Identify web URLs and IPs */
-	identifyExceptionSet(string, constants.webUrlPattern);
+	identifyExceptionSet(string, locale.webUrlPattern);
 
 
 	/* [3] Mark them as temporary exceptions in format {{typopo__exception-[i]}} */

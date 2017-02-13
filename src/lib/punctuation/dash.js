@@ -11,7 +11,7 @@
 	@param {string} string — input text for identification
 	@returns {string} — output with dashes instead of hyphens
 */
-export function fixDash(string, constants) {
+export function fixDash(string, locale) {
 	let dashes = "-–—"; // including a hyphen
 
 	/* [1] Replace 3 consecutive hyphens (---) with an em dash (—) */
@@ -23,15 +23,15 @@ export function fixDash(string, constants) {
 
 
 	/* [3] Replace any hyphen or dash surrounded with spaces with an em dash */
-	let pattern = "[" + constants.spaces + "][" + dashes + "][" + constants.spaces + "]";
+	let pattern = "[" + locale.spaces + "][" + dashes + "][" + locale.spaces + "]";
 	let re = new RegExp(pattern, "g");
-	let replacement = constants.narrowNbsp + "—" + constants.hairSpace;
+	let replacement = locale.narrowNbsp + "—" + locale.hairSpace;
 	string = string.replace(re, replacement);
 
 	/* [4.1] Replace hyphen or dash, placed between 2 cardinal numbers,
 					 with an en dash; including cases when there is an extra space
 					 from either one side or both sides of the dash */
-	pattern = "(" + constants.cardinalNumber + ")([" + constants.spaces + "]?[" + dashes + "][" + constants.spaces + "]?)(" + constants.cardinalNumber + ")";
+	pattern = "(" + locale.cardinalNumber + ")([" + locale.spaces + "]?[" + dashes + "][" + locale.spaces + "]?)(" + locale.cardinalNumber + ")";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1–$3");
 
@@ -40,7 +40,7 @@ export function fixDash(string, constants) {
 					 with an en dash; including cases when there is an extra space
 					 from either one side or both sides of the dash */
 
-	pattern = "(" + constants.cardinalNumber + ")(" + constants.ordinalIndicator + ")([" + constants.spaces + "]?[" + dashes + "][" + constants.spaces + "]?)(" + constants.cardinalNumber + ")(" + constants.ordinalIndicator + ")";
+	pattern = "(" + locale.cardinalNumber + ")(" + locale.ordinalIndicator + ")([" + locale.spaces + "]?[" + dashes + "][" + locale.spaces + "]?)(" + locale.cardinalNumber + ")(" + locale.ordinalIndicator + ")";
 	re = new RegExp(pattern, "gi");
 	string = string.replace(re, "$1$2–$4$5");
 

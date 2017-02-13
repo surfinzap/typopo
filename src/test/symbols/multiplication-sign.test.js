@@ -1,6 +1,6 @@
 import {fixMultiplicationSign} from "../../lib/symbols/multiplication-sign";
 import assert from 'assert';
-import Constants from "../../locale/locale";
+import Locale from "../../locale/locale";
 
 describe('Fix multiplication sign\n', () => {
 	let testCase = {
@@ -14,7 +14,7 @@ describe('Fix multiplication sign\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixMultiplicationSign(key, new Constants("en-us")), testCase[key]);
+			assert.equal(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

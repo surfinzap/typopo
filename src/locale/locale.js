@@ -12,7 +12,7 @@ const typopoLocale = {
 	"sk" : localeSk,
 }
 
-export default class Constants {
+export default class Locale {
 	constructor(locale) {
 		this.locale = locale;
 

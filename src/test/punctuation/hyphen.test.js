@@ -1,6 +1,6 @@
 import {fixHyphen} from "../../lib/punctuation/hyphen";
 import assert from 'assert';
-import Constants from "../../locale/locale";
+import Locale from "../../locale/locale";
 
 
 describe('Replace dashes with hyphen, where applicable\n', () => {
@@ -12,7 +12,7 @@ describe('Replace dashes with hyphen, where applicable\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixHyphen(key, new Constants("en-us")), testCase[key]);
+			assert.equal(fixHyphen(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

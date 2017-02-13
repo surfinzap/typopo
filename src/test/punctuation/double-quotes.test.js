@@ -1,6 +1,6 @@
 import {fixDoubleQuotesAndPrimes} from "../../lib/punctuation/double-quotes";
 import assert from 'assert';
-import Constants from "../../locale/locale";
+import Locale from "../../locale/locale";
 
 describe('Double quotes in default language (en)\n', () => {
 	let testCase = {
@@ -90,7 +90,7 @@ describe('Double quotes in default language (en)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("en-us")), testCase[key]);
+			assert.equal(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -116,8 +116,8 @@ describe('Double quotes in Slovak and Czech language (sk, cs)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("cs")), testCase[key]);
-			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("sk")), testCase[key]);
+			assert.equal(fixDoubleQuotesAndPrimes(key, new Locale("cs")), testCase[key]);
+			assert.equal(fixDoubleQuotesAndPrimes(key, new Locale("sk")), testCase[key]);
 		});
 	});
 });
@@ -136,7 +136,7 @@ describe('Double quotes in Rusyn language (rue)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixDoubleQuotesAndPrimes(key, new Constants("rue")), testCase[key]);
+			assert.equal(fixDoubleQuotesAndPrimes(key, new Locale("rue")), testCase[key]);
 		});
 	});
 });

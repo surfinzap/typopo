@@ -12,10 +12,10 @@
 	@param {string} string — input text for identification
 	@returns {string} — output with corrected accidental uppercase
 */
-export function fixCase(string, constants) {
+export function fixCase(string, locale) {
 
 	/* [1] two first uppercase letters (i.e. UPpercase) */
-	var pattern = "["+ constants.uppercaseChars +"]{2,2}["+ constants.lowercaseChars +"]+";
+	var pattern = "["+ locale.uppercaseChars +"]{2,2}["+ locale.lowercaseChars +"]+";
 	var re = new RegExp(pattern, "g");
 	string = string.replace(re, function(string){
 		return (string.substring(0,1) + string.substring(1).toLowerCase());
@@ -25,14 +25,14 @@ export function fixCase(string, constants) {
 			Note that this is divided into 2 separate cases as \b in JavaScript regex
 			does not take non-latin characters into a cosnideration
 	*/
-	pattern = "["+ constants.lowercaseChars +"]["+ constants.uppercaseChars +"]\\b";
+	pattern = "["+ locale.lowercaseChars +"]["+ locale.uppercaseChars +"]\\b";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, function(string){
 		return (string.substring(0,1) + string.substring(1).toLowerCase());
 	});
 
 	/* [2.2] Swapped cases (n-letter cases, i.e. uPPERCASE) */
-	pattern = "["+ constants.lowercaseChars +"]+["+ constants.uppercaseChars +"]{2,}";
+	pattern = "["+ locale.lowercaseChars +"]+["+ locale.uppercaseChars +"]{2,}";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, function(string){
 		return (string.substring(0,1) + string.substring(1).toLowerCase());

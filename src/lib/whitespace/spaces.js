@@ -1,5 +1,5 @@
-export function removeMultipleSpaces(string, constants) {
-	let pattern = "[" + constants.spaces + "]{2,}";
+export function removeMultipleSpaces(string, locale) {
+	let pattern = "[" + locale.spaces + "]{2,}";
 	let re = new RegExp(pattern, "g");
 	return string.replace(re, " ");
 }
@@ -21,7 +21,7 @@ export function removeMultipleSpaces(string, constants) {
 	@param {string} string — input text for identification
 	@returns {string} — output with removed spaces at the beginning of paragraphs
 */
-export function removeSpacesAtParagraphStart(string, constants) {
+export function removeSpacesAtParagraphStart(string, locale) {
 	/* [1] split the lines manually */
 	let lines = string.split(/\r?\n/);
 
@@ -36,51 +36,51 @@ export function removeSpacesAtParagraphStart(string, constants) {
 
 
 
-export function removeSpaceBeforePunctuation(string, constants) {
-	let pattern = "([" + constants.spaces + "])([" + constants.sentencePunctuation + constants.closingBrackets + constants.degree + "])";
+export function removeSpaceBeforePunctuation(string, locale) {
+	let pattern = "([" + locale.spaces + "])([" + locale.sentencePunctuation + locale.closingBrackets + locale.degree + "])";
 	let re = new RegExp(pattern, "g");
 	return string.replace(re, "$2");
 }
 
 
 
-export function removeSpaceAfterPunctuation(string, constants) {
-	let pattern = "([" + constants.openingBrackets + "])([" + constants.spaces + "])";
+export function removeSpaceAfterPunctuation(string, locale) {
+	let pattern = "([" + locale.openingBrackets + "])([" + locale.spaces + "])";
 	let re = new RegExp(pattern, "g");
 	return string.replace(re, "$1");
 }
 
 
 
-export function addSpaceBeforePunctuation(string, constants) {
-	var pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars + "])([" + constants.openingBrackets + "])(["+ constants.lowercaseChars + constants.uppercaseChars + "])";
+export function addSpaceBeforePunctuation(string, locale) {
+	var pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars + "])([" + locale.openingBrackets + "])(["+ locale.lowercaseChars + locale.uppercaseChars + "])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$1 $2$3");
 }
 
 
 
-export function addSpaceAfterPunctuation(string, constants) {
-	var pattern = "(["+ constants.lowercaseChars + constants.uppercaseChars + "])([" + constants.sentencePunctuation + constants.closingBrackets + "])(["+ constants.lowercaseChars + constants.uppercaseChars + "])";
+export function addSpaceAfterPunctuation(string, locale) {
+	var pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars + "])([" + locale.sentencePunctuation + locale.closingBrackets + "])(["+ locale.lowercaseChars + locale.uppercaseChars + "])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$1$2 $3");
 }
 
 
 
-export function removeTrailingSpaces(string, constants) {
+export function removeTrailingSpaces(string, locale) {
 	return string.trim();
 }
 
 
 
-export function fixSpaces(string, constants) {
-	string = removeMultipleSpaces(string, constants);
-	string = removeSpacesAtParagraphStart(string, constants);
-	string = removeSpaceBeforePunctuation(string, constants);
-	string = removeSpaceAfterPunctuation(string, constants);
-	string = addSpaceBeforePunctuation(string, constants);
-	string = addSpaceAfterPunctuation(string, constants);
-	string = removeTrailingSpaces(string, constants);
+export function fixSpaces(string, locale) {
+	string = removeMultipleSpaces(string, locale);
+	string = removeSpacesAtParagraphStart(string, locale);
+	string = removeSpaceBeforePunctuation(string, locale);
+	string = removeSpaceAfterPunctuation(string, locale);
+	string = addSpaceBeforePunctuation(string, locale);
+	string = addSpaceAfterPunctuation(string, locale);
+	string = removeTrailingSpaces(string, locale);
 	return string;
 }
