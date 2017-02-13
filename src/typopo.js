@@ -25,11 +25,6 @@ import {excludeExceptions,
 				placeExceptions} from "./lib/words/exceptions";
 
 
-// const c = new Constants();
-//
-// console.log(c);
-
-
 /*
 	Correct typos
 

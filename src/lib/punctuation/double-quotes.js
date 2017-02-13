@@ -89,7 +89,6 @@ export function fixDoubleQuotesAndPrimes(string, constants) {
 		 a terminal punctuation.
 		 */
 	pattern = "([^" + constants.sentencePunctuation + "][" + constants.spaces + "]{{typopo__left-double-quote}}.+?)([" + constants.terminalPunctuation + "])({{typopo__right-double-quote}})";
-	// console.log(pattern);
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3$2");
 
