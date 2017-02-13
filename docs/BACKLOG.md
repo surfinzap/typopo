@@ -1,54 +1,39 @@
 # Backlog for typopo
 
-* add non-breaking space after ordinal/cardinal numbers
-* non-breaking space between dates 2. díl, 4. januar, 4th Janary, 20. novembra, 15. 2. 2016
-* non-breaking space for names F. X. Šalda, K. Čapek
-* non-breaking space between Roman numerals {findWhat:"(\\u\\w+)\\s(I\\.|II\\.|III\\.|IV\\.|V\\.|VI\\.|VII\\.|VIII\\.|IX\\.|X\\.)"}
+## 2.0.0
+* make a dist
 
-* special cases for non-braking spaces between abbreviations and numbers
+
+* fix that: „nova-produkt-4“ na napr. "cervenyj-bereh“
+* fix that: - dashes at the beginning of the sentence
+
+
+* special cases for non-breaking spaces between abbreviations and numbers
 	* {findWhat:"(č\\.|s\\.|fol\\.|str\\.|r\\.|odst\\.|§) (\\d)"}
 	* {findWhat:"(©|℗|sv\\.|tj\\.|tzv\\.|čl\\.) (\\w+)"}
 	* {findWhat:"(hl\\.)\\s?(m\\.)"}
 
-* tech debt — adjust tests for different attributes (e.g. keep lines)
-
-* fix that: He said:“Here’s a 12″ record.”
-* fix that: „nova-produkt-4“ na napr. "cervenyj-bereh“
-* fix that: - dashes at the beginning of the sentence
-
 * non-breaking space between currency and number
+* check if inch is using right character
+
+* include license in dist
+* jslint?
 
 * consider resolving single-word widows
 
-* add support for math equations spacing
-* fix numeral format
 * fix this:  30.000,-. > 30.000,—
 * fix this e- shopu
+* fix numeral format
+* add support for currencies
+
+* add support for math equations spacing
 
 
-* split script in isolated options, set up architecture
-	* Modules
-		* Global variables (characters)
-		* Exceptions
-		* Essential replacements
-		* Quotes, apostrophes and primes
-		* Spaces, tabs, newlines
-		* Non-breaking spaces, hair spaces
-		* Dashes and hyphens
-		* Math and numerals
-		* Letter Case
-	* Other reqs
-		* loading different Modules
-		* auto-bundling, minifying
-		* unit test and integration tests. tests for attributes
-		* options, e.g. language, keep-lines, dash-preference, etc.
-	* Questions
-		* fix nbsp around numerals in numerals or in nbsp?
-		*
 
 
-* exceptions/replacements for emoticons?
 
+
+==================================
 * Reintroduce more sophisticated support for starting a sentence with a Capital letter
 	* main issue concerned many false positives
 	* tests:

@@ -1,5 +1,25 @@
 # Changelog for Typopo
 
+## 2.0.0 // 2017-02-13
+### Feature updates
+* Replaces (p), (P) → ℗
+* Improvements to how single quotes are identified
+* Improvements to spacing around double quotes
+* Adds non-breaking spaces after ordinal numbers
+* Adds non-breaking spaces after ordinal Roman numerals
+* Adds non-breaking spaces after name initials (i.e. Philip K. Dick)
+* Fix: Remove multiple spaces, even they are non-breaking spaces, hair spaces or narrow non-breaking space
+* Fix: Abbreviations were (a.m., p.m.) were generating extra space at the end of the sentence or string
+
+### Code updates
+Complete codebase refactoring
+* Typopo is now broken down into separate modules to increase maintainability and testability
+* Tests are running automatically via Mocha
+* Locale-specific attributes are now in separate locale files
+* Breaking change: call fixTypos() instead of correct_typos(); see README for more details
+* variables have been transformed into camelCase
+
+
 ## 1.4.0 // 2017-01-15
 * “Removing empty lines” is now an optional parameter (in case you want to correct your plain-text based content or an email). By default, empty lines are removed
 * Dropped support for correcting capital letter at the beginning of the sentence. It yielded too much false positives. Feature may be re-introduced later in the future
@@ -81,9 +101,9 @@
 		* single quotes and apostrophes can be mixed and matched in various ways and it’s a bigger task to identify all of incorrectly used single quotes/apostrophes. However, we have thought about different means of how we could identify and correct the most common cases. We're now able to correct them with following assumptions:
 				* Double quotes are used in pairs
 				* Single quotes are used in pairs
-				* Single quotes are used as secondary (ie. within double quotes, which is a convention for currently supported languages — en-US, sk, cs, rue — [check wiki](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages))
+				* Single quotes are used as secondary (ie. within double quotes, which is a convention for currently supported languages — en, sk, cs, rue — [check wiki](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages))
 				* Single quotes are used with proper spacing (ie. a space before Left single quotation mark and a space after Right single quotation mark)
- * [Breaking change] refactor clean_typos() to correct_typos()
+ * [Breaking change] refactor clean_typos() to fixTypos()
 
 ## 2016-03-20
  * 0.0.11
