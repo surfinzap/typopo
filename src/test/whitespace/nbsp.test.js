@@ -157,7 +157,7 @@ describe('Add non-breaking space after roman numeral (sk, cs, rue)\n', () => {
 			assert.equal(addNbspAfterRomanNumeral(key, new Constants("cs")), testCase[key]);
 			assert.equal(addNbspAfterRomanNumeral(key, new Constants("rue")), testCase[key]);
 		});
-		it("moduel test", () => {
+		it("module test", () => {
 			assert.equal(fixNbsp(key, new Constants("sk")), testCase[key]);
 			assert.equal(fixNbsp(key, new Constants("cs")), testCase[key]);
 			assert.equal(fixNbsp(key, new Constants("rue")), testCase[key]);
