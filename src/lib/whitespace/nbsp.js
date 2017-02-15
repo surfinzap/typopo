@@ -31,16 +31,6 @@ export function addNbspAfterAmpersand(string, locale) {
 
 
 
-export function addNbspAroundMultiplicationSign(string, locale) {
-	let pattern = "([" + locale.spaces + "])([" + locale.multiplicationSign + "])([" + locale.spaces + "])";
-	let re = new RegExp(pattern, "g");
-	let replacement = locale.nbsp + "$2" + locale.nbsp;
-
-	return string.replace(re, replacement);
-}
-
-
-
 export function addNbspAfterCardinalNumber(string, locale) {
 	let pattern = "(" + locale.cardinalNumber + ")( )(["+ locale.allChars +"]+)";
 	let re = new RegExp(pattern, "g");
@@ -91,7 +81,6 @@ export function fixNbsp(string, locale) {
 	string = removeNbspBetweenMultiCharWords(string, locale);
 	string = addNbspAfterPreposition(string, locale);
 	string = addNbspAfterAmpersand(string, locale);
-	string = addNbspAroundMultiplicationSign(string, locale);
 	string = addNbspAfterCardinalNumber(string, locale);
 	string = addNbspAfterOrdinalNumber(string, locale);
 	string = addNbspAfterRomanNumeral(string, locale);

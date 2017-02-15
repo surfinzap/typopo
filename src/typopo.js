@@ -47,8 +47,11 @@ export function fixTypos(string, locale, configuration) {
 	if(configuration.removeLines) {
 		string = removeEmptyLines(string);
 	}
+
+	// spaces cleanup
 	string = fixSpaces(string, currentLocale);
 
+	// punctuation
 	string = fixPeriod(string);
 	string = fixEllipsis(string, currentLocale);
 	string = fixDash(string, currentLocale);
@@ -56,12 +59,15 @@ export function fixTypos(string, locale, configuration) {
 	string = fixDoubleQuotesAndPrimes(string, currentLocale);
 	string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale);
 
+	// symbols
 	string = fixSymbols(string);
 	string = fixMultiplicationSign(string, currentLocale);
 
+	// words
 	string = fixCase(string, currentLocale);
 	string = fixAbbreviations(string, currentLocale);
 
+	// spaces
 	string = fixNbsp(string, currentLocale);
 
 	string = placeExceptions(string);

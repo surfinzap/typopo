@@ -10,6 +10,8 @@ import {removeNbspBetweenMultiCharWords,
 import assert from 'assert';
 import Locale from "../../locale/locale";
 
+
+
 describe('Remove non-breaking space between multi-letter words\n', () => {
 	let testCase = {
 		"vo dvore": "vo dvore",
@@ -52,6 +54,8 @@ describe('Add non-breaking spaces after single-character prepositions\n', () => 
 	});
 });
 
+
+
 describe('Add non-breaking space after ampersand\n', () => {
 	let testCase = {
 		"Bed & Breakfast": "Bed & Breakfast",
@@ -67,20 +71,7 @@ describe('Add non-breaking space after ampersand\n', () => {
 	});
 });
 
-describe('Add non-breaking space around ×\n', () => {
-	let testCase = {
-		"5 × 5": "5 × 5",
-	};
 
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.equal(addNbspAroundMultiplicationSign(key, new Locale("en-us")), testCase[key]);
-		});
-		it("module test", () => {
-			assert.equal(fixNbsp(key, new Locale("en-us")), testCase[key]);
-		});
-	});
-});
 
 describe('Add non-breaking space after cardinal number\n', () => {
 	let testCase = {
@@ -97,6 +88,7 @@ describe('Add non-breaking space after cardinal number\n', () => {
 		});
 	});
 });
+
 
 
 describe('Add non-breaking space after ordinal number (en)\n', () => {
