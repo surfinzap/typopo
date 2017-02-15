@@ -63,6 +63,7 @@ export default class Locale {
 		this.degree = "°";
 		this.multiplicationSign = "×";
 		this.ampersand = "&";
+		this.sectionSign = "§";
 
 		/*
 			Source for webUrlPattern, emailAddressPattern

@@ -19,6 +19,7 @@ import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
 import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
 import {fixSymbols} from "./lib/symbols/replacements";
 import {fixMultiplicationSign} from "./lib/symbols/multiplication-sign";
+import {fixSectionSign} from "./lib/symbols/section-sign";
 import {fixAbbreviations} from "./lib/words/abbreviations";
 import {fixCase} from "./lib/words/case";
 import {excludeExceptions,
@@ -62,6 +63,7 @@ export function fixTypos(string, locale, configuration) {
 	// symbols
 	string = fixSymbols(string);
 	string = fixMultiplicationSign(string, currentLocale);
+	string = fixSectionSign(string, currentLocale);
 
 	// words
 	string = fixCase(string, currentLocale);

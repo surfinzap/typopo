@@ -4,7 +4,7 @@
 * fix that: - dashes at the beginning of the sentence
 
 * special cases for non-breaking spaces between abbreviations and numbers
-	* {findWhat:"(č\\.|s\\.|fol\\.|str\\.|r\\.|odst\\.|§) (\\d)"}
+	* {findWhat:"(č\\.|s\\.|fol\\.|str\\.|r\\.|par.|odst\\.) (\\d)"}
 	* {findWhat:"(©|℗|sv\\.|tj\\.|tzv\\.|čl\\.) (\\w+)"}
 	* {findWhat:"(hl\\.)\\s?(m\\.)"}
 

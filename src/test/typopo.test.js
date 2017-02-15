@@ -60,6 +60,21 @@ describe('Test that exceptions remain intact', () => {
 	});
 });
 
+describe('Tests that all modules are plugged in', () => {
+	let testCase = {
+
+		// section sign
+		"under Law §1782": "under Law § 1782",
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("", () => {
+			assert.equal(fixTypos(key, "en-us"), testCase[key]);
+		});
+	});
+});
+
 describe('Integration tests', () => {
 	let testCase = {
 
