@@ -65,7 +65,9 @@ describe('Tests that all modules are plugged in', () => {
 
 		// section sign
 		"under Law §1782": "under Law § 1782",
-
+		// copyright
+		"Company (c)2017": "Company © 2017",
+		
 	};
 
 	Object.keys(testCase).forEach((key) => {

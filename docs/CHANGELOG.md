@@ -2,7 +2,7 @@
 
 ## 2.0.1 // 2017-02
 ### New features
-* Fixes spacing around section sign (§)
+* Fixes spacing around section sign (§), copyright (©)
 
 ## 2.0.0 // 2017-02-13
 ### Feature updates

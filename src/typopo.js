@@ -20,6 +20,7 @@ import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quot
 import {fixSymbols} from "./lib/symbols/replacements";
 import {fixMultiplicationSign} from "./lib/symbols/multiplication-sign";
 import {fixSectionSign} from "./lib/symbols/section-sign";
+import {fixCopyright} from "./lib/symbols/copyright";
 import {fixAbbreviations} from "./lib/words/abbreviations";
 import {fixCase} from "./lib/words/case";
 import {excludeExceptions,
@@ -64,6 +65,7 @@ export function fixTypos(string, locale, configuration) {
 	string = fixSymbols(string);
 	string = fixMultiplicationSign(string, currentLocale);
 	string = fixSectionSign(string, currentLocale);
+	string = fixCopyright(string, currentLocale);
 
 	// words
 	string = fixCase(string, currentLocale);
