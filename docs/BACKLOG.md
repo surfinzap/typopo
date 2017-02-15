@@ -3,7 +3,6 @@
 * fix that: „nova-produkt-4“ na napr. "cervenyj-bereh“
 * fix that: - dashes at the beginning of the sentence
 
-
 * special cases for non-breaking spaces between abbreviations and numbers
 	* {findWhat:"(č\\.|s\\.|fol\\.|str\\.|r\\.|odst\\.|§) (\\d)"}
 	* {findWhat:"(©|℗|sv\\.|tj\\.|tzv\\.|čl\\.) (\\w+)"}
@@ -25,6 +24,7 @@
 * add support for math equations spacing
 
 
+* remove function implementation (removeNumerals) from js
 
 
 
