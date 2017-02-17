@@ -1,3 +1,5 @@
+import {removeTrailingSpaces} from "../whitespace/spaces";
+
 export function removeNbspBetweenMultiCharWords(string, locale) {
 	let pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})(["+ locale.nbsp + locale.narrowNbsp +"])(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})";
 	let re = new RegExp(pattern, "g");
@@ -103,7 +105,7 @@ export function addNbspAfterAbbreviation(string, locale) {
 		string = string.replace(re, replacement);
 	}
 
-	return string;
+	return removeTrailingSpaces(string, locale);
 }
 
 

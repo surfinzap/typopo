@@ -1,5 +1,4 @@
-import {removeTrailingSpaces,
-				removeMultipleSpaces} from "../whitespace/spaces";
+import {removeTrailingSpaces} from "../whitespace/spaces";
 
 /*
 	Fixes differently-spelled abbreviations:

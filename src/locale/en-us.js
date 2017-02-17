@@ -12,7 +12,9 @@ const numbers = {
 
 const abbreviationsForNbsp = [
 	"e.g.",
-	"i.e."
+	"i.e.",
+	"p.",
+	"pp."
 ]
 
 export default {

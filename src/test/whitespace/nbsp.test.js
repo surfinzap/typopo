@@ -226,6 +226,8 @@ describe('Add non-breaking space after abbreviations', () => {
 		"hl.m. Praha" : "hl. m. Praha",
 		"10 a.m." : "10 a.m.", //false positive for abbreviation within abbreviation, i.e. m. within a.m.
 		"e.g. something" : "e.g. something",
+		"10 p." : "10 p.",
+		"pp. 10–25" : "pp. 10–25",
 	};
 
 	Object.keys(testCase).forEach((key) => {
