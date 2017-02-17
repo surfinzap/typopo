@@ -67,8 +67,11 @@ describe('Tests that all modules are plugged in', () => {
 		"under Law §1782": "under Law § 1782",
 		// copyright
 		"Company (c)2017": "Company © 2017",
-		// spund recording copyright
+		// sound recording copyright
 		"Company (p)2017": "Company ℗ 2017",
+
+		// abbreviations
+		"E. g.something": "e.g. something",
 
 	};
 
