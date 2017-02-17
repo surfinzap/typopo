@@ -91,6 +91,23 @@ export function replaceSpacesWithNbspAfterSymbol(string, locale, symbol) {
 
 
 
+export function addNbspAfterAbbreviation(string, locale) {
+
+	let abbreviations = locale.abbreviationsForNbsp;
+
+	for (var abbr in abbreviations) {
+		let pattern = "(^|[^" + locale.allChars + locale.sentencePunctuation + "])(" + abbreviations[abbr] +"[" + locale.spaces + "]?)";
+		let re = new RegExp(pattern, "gi");
+		let replacement = "$1" + abbr + locale.nbsp;
+
+		string = string.replace(re, replacement);
+	}
+
+	return string;
+}
+
+
+
 
 /*
 	Consolidates the use of non-breaking spaces
@@ -106,6 +123,7 @@ export function fixNbsp(string, locale) {
 	string = addNbspAfterOrdinalNumber(string, locale);
 	string = addNbspAfterRomanNumeral(string, locale);
 	string = addNbspAfterInitial(string, locale);
+	string = addNbspAfterAbbreviation(string, locale)
 
 	return string;
 }

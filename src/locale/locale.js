@@ -128,5 +128,24 @@ export default class Locale {
 		this.ordinalIndicator = typopoLocale[locale].numbers.ordinalIndicator;
 		this.romanNumerals = "IVXLCDM";
 		this.romanOrdinalIndicator = typopoLocale[locale].numbers.romanOrdinalIndicator;
+
+
+
+
+		/* Abbreviations */
+		this.abbreviationsForNbsp = {}
+
+		// Create one key-value map of all abbreviations in all languages that need nbsp
+		for (locale in typopoLocale) {
+			let localeAbbrForNbsp = typopoLocale[locale].abbreviationsForNbsp;
+
+			for (let i = 0; i < localeAbbrForNbsp.length; i++) {
+				let pattern = "\\.";
+				let re = new RegExp(pattern, "g");
+				let replacement = "\\.";
+				let localeAbbrForNbspPattern = localeAbbrForNbsp[i].replace(re, replacement);
+				this.abbreviationsForNbsp[localeAbbrForNbsp[i]] = localeAbbrForNbspPattern
+			}
+		}
 	}
 }

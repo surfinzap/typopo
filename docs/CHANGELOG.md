@@ -3,6 +3,8 @@
 ## 2.0.1 // 2017-02
 ### New features
 * Fixes spacing around section sign (§), copyright (©), sound recording copyright (℗)
+* Fixes non-breaking spaces after abbreviations (these are supported now: č., s., fol., str., r., par., odst., např., napr., sv., tj., tzv., čl., hl., m., e.g., i.e. )
+
 
 ## 2.0.0 // 2017-02-13
 ### Feature updates
