@@ -71,6 +71,27 @@ export function addNbspAfterInitial(string, locale) {
 
 
 
+export function addNbspAfterSymbol(string, locale, symbol) {
+	let pattern = "("+ symbol +")([^" + locale.spaces + "])";
+	let re = new RegExp(pattern, "g");
+	let replacement = "$1" + locale.nbsp + "$2";
+
+	return string.replace(re, replacement);
+}
+
+
+
+export function replaceSpacesWithNbspAfterSymbol(string, locale, symbol) {
+	let pattern = "("+ symbol +")([" + locale.spaces + "])";
+	let re = new RegExp(pattern, "g");
+	let replacement = "$1" + locale.nbsp;
+
+	return string.replace(re, replacement);
+}
+
+
+
+
 /*
 	Consolidates the use of non-breaking spaces
 

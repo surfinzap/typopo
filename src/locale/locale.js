@@ -65,6 +65,7 @@ export default class Locale {
 		this.ampersand = "&";
 		this.sectionSign = "§";
 		this.copyright = "©";
+		this.soundRecordingCopyright = "℗";
 
 		/*
 			Source for webUrlPattern, emailAddressPattern

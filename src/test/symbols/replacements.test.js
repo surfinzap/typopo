@@ -3,8 +3,6 @@ import assert from 'assert';
 
 describe('Replace following symbols\n', () => {
 	let testCase = {
-		"(P) (P)": "℗ ℗",
-		"(p) (p)": "℗ ℗",
 		"(R) (R)": "® ®",
 		"(r) (r)": "® ®",
 		"(tm) (tm)": "™ ™",

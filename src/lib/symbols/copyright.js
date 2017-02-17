@@ -1,3 +1,8 @@
+import {addSpaceBeforeSymbol} from "../whitespace/spaces";
+import {addNbspAfterSymbol,
+				replaceSpacesWithNbspAfterSymbol} from "../whitespace/nbsp";
+
+
 function replaceCwithCopyright(string, locale) {
 	let pattern = "(\\(c\\))([" + locale.spaces + "]?)(" + locale.cardinalNumber + ")";
 	let re = new RegExp(pattern, "gi");
@@ -8,40 +13,11 @@ function replaceCwithCopyright(string, locale) {
 
 
 
-function addSpaceBeforeCopyright(string, locale) {
-	let pattern = "([^" + locale.spaces + locale.openingBrackets + "])("+ locale.copyright +")";
-	let re = new RegExp(pattern, "g");
-	let replacement = "$1" + locale.space + "$2";
-
-	return string.replace(re, replacement);
-}
-
-
-function addNbspAfterCopyright(string, locale) {
-	let pattern = "("+ locale.copyright +")([^" + locale.spaces + "])";
-	let re = new RegExp(pattern, "g");
-	let replacement = "$1" + locale.nbsp + "$2";
-
-	return string.replace(re, replacement);
-}
-
-
-
-function replaceSpacesAfterSectionSign(string, locale) {
-	let pattern = "("+ locale.copyright +")([" + locale.spaces + "])";
-	let re = new RegExp(pattern, "g");
-	let replacement = "$1" + locale.nbsp;
-
-	return string.replace(re, replacement);
-}
-
-
-
 export function fixCopyright(string, locale) {
 	string = replaceCwithCopyright(string, locale);
-	string = addSpaceBeforeCopyright(string, locale);
-	string = addNbspAfterCopyright(string, locale);
-	string = replaceSpacesAfterSectionSign(string, locale)
+	string = addSpaceBeforeSymbol(string, locale, locale.copyright);
+	string = addNbspAfterSymbol(string, locale, locale.copyright);
+	string = replaceSpacesWithNbspAfterSymbol(string, locale, locale.copyright);
 
 	return string
 }

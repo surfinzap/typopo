@@ -6,6 +6,8 @@ import {removeNbspBetweenMultiCharWords,
 				addNbspAfterOrdinalNumber,
 				addNbspAfterRomanNumeral,
 				addNbspAfterInitial,
+				addNbspAfterSymbol,
+				replaceSpacesWithNbspAfterSymbol,
 				fixNbsp} from "../../lib/whitespace/nbsp";
 import assert from 'assert';
 import Locale from "../../locale/locale";
@@ -157,6 +159,8 @@ describe('Add non-breaking space after roman numeral (sk, cs, rue)\n', () => {
 	});
 });
 
+
+
 describe('Add non-breaking space after initial\n', () => {
 	let testCase = {
 		"Philip K. Dick": "Philip K. Dick",
@@ -167,8 +171,39 @@ describe('Add non-breaking space after initial\n', () => {
 		it("unit test", () => {
 			assert.equal(addNbspAfterInitial(key, new Locale("en-us")), testCase[key]);
 		});
-		it("moduel test", () => {
+		it("module test", () => {
 			assert.equal(fixNbsp(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Add space after symbol, e.g. ©\n', () => {
+	let testCase = {
+		"©2017": "© 2017",
+		"Company ©2017": "Company © 2017",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("just unit tests", () => {
+			assert.equal(addNbspAfterSymbol(key, new Locale("en-us"), "©"), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Replaces various spaces with non-breaking space after symbol, e.g. ©\n', () => {
+	let testCase = {
+		"Company © 2017": "Company © 2017",
+		"Company © 2017": "Company © 2017", // hairSpace
+		"Company © 2017": "Company © 2017", // narrowNbsp
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("just unit tests", () => {
+			assert.equal(replaceSpacesWithNbspAfterSymbol(key, new Locale("en-us"), "©"), testCase[key]);
 		});
 	});
 });
