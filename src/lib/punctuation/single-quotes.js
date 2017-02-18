@@ -11,11 +11,8 @@
 	[1] Identify common apostrohe contractions
 	[2] Identify single quotes
 	[3] Identify feet, arcminutes, minutes
-	[4] Identify residual apostrophes that have left
-	[?] Swap right single quote adepts with a puntuation
-			(We were swapping single quotes as part of algorithm a while a back,
-			but since it is more probable that single quotes are in the middle of the
-			sentence, we havae dropped swapping as a part of the algorithm)
+	[4] Reconsider wrongly identified left quote and prime
+	[5] Identify residual apostrophes that have left
 	[6] Replace all identified punctuation with appropriate punctuation in
 	    given language
 
@@ -90,17 +87,29 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 	string = string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1{{typopo__single-prime}}");
 
 
-	/* [4] Identify residual apostrophes that have left */
+	/* [4] Reconsider wrongly identified left quote and prime
+
+		 Take following example:
+		 He said: “What about 'Localhost 3000', is that good?”
+
+		 So far, our algorithm falsely identifies prime folowing the number
+		 and unclosed left single quote.
+		 We'll find that identifications and swap it back to single quote pair.
+	*/
+	pattern = "({{typopo__left-single-quote--adept}})(.*?)({{typopo__single-prime}})";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}");
+
+
+	/* [5] Identify residual apostrophes that have left */
 	pattern = "(" + locale.singleQuoteAdepts + ")";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "{{typopo__apostrophe}}");
 
 
-
-	/* [5] Punctuation replacement */
+	/* [6] Punctuation replacement */
 	string = string.replace(/({{typopo__single-prime}})/g, locale.singlePrime);
 	string = string.replace(/{{typopo__apostrophe}}|{{typopo__left-single-quote--adept}}|{{typopo__right-single-quote--adept}}/g, locale.apostrophe);
-
 
 	string = string.replace(/{{typopo__left-single-quote}}/g, locale.leftSingleQuote);
 	string = string.replace(/{{typopo__right-single-quote}}/g, locale.rightSingleQuote);

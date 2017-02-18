@@ -75,7 +75,7 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 		 It’s called “Localhost 3000” and it’s pretty fast.
 
 		 So far, our algorithm falsely identifies prime folowing the number
-		 and unclosed left single quote.
+		 and unclosed left double quote.
 		 We'll find that identifications and swap it back to double quote pair.
 	*/
 	pattern = "({{typopo__left-double-quote--unclosed}})(.*?)({{typopo__double-prime}})";
@@ -128,10 +128,8 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 
 	/* [10] Punctuation replacement */
 	string = string.replace(/({{typopo__double-prime}})/g, locale.doublePrime);
-	string = string.replace(/({{typopo__left-double-quote}})/g, locale.leftDoubleQuote);
-	string = string.replace(/({{typopo__left-double-quote--unclosed}})/g, locale.leftDoubleQuote);
-	string = string.replace(/({{typopo__right-double-quote}})/g, locale.rightDoubleQuote);
-	string = string.replace(/({{typopo__right-double-quote--unclosed}})/g, locale.rightDoubleQuote);
+	string = string.replace(/({{typopo__left-double-quote}}|{{typopo__left-double-quote--unclosed}})/g, locale.leftDoubleQuote);
+	string = string.replace(/({{typopo__right-double-quote}}|{{typopo__right-double-quote--unclosed}})/g, locale.rightDoubleQuote);
 
 	return string;
 }
