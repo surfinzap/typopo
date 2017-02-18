@@ -69,6 +69,8 @@ describe('Tests that all modules are plugged in', () => {
 		"Company (c)2017": "Company © 2017",
 		// sound recording copyright
 		"Company (p)2017": "Company ℗ 2017",
+		// exponents
+		"100 km3" : "100 km³",
 
 		// abbreviations
 		"E. g.something": "e.g. something",

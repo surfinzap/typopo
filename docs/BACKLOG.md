@@ -9,6 +9,9 @@
 
 * consider resolving single-word widows
 
+* refactor SM, TM, (r), ampersand
+
+
 * fix this:  30.000,-. > 30.000,—
 * fix numeral format
 * remove function implementation (removeNumerals) from js
