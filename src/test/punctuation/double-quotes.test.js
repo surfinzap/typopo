@@ -11,10 +11,12 @@ describe('Double quotes in default language (en)\n', () => {
 		"\"English double quotation marks\"": "“English double quotation marks”",
 		"Chto mu povisť slova ,,Myžku, sŷnku mij‘‘": "Chto mu povisť slova “Myžku, sŷnku mij”",
 		"\"abc''": "“abc”",
+		"It’s called \"Localhost 3000\" and it’s pretty fast.":
+		"It’s called “Localhost 3000” and it’s pretty fast.",
 
 
 		/* Use-cases for mixing double quotes and primes */
-		"He said: \"Here’s 12\" record.\"": "He said: “Here’s 12″ record.”",
+		"He said: \"Here’s a 12\" record.\"": "He said: “Here’s a 12″ record.”",
 		"He said: \"He was 12.\"": "He said: “He was 12.”", //false positive
 		/* error of wrongly identified primes due to swapped punctuation */
 		"He said: \"He was 12\". And then he added: \"Maybe he was 13\".":

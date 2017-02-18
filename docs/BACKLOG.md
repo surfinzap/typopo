@@ -1,22 +1,19 @@
 # Backlog for typopo
 
-* metres squared and cubic
 
-* fix that: „nova-produkt-4“ na napr. "cervenyj-bereh“
-* fix that: - dashes at the beginning of the sentence
+* metres squared and cubic
+* fix this e- shopu
+* consider fix that: - dashes at the beginning of the sentence
 
 * non-breaking space between currency and number
-* check if inch is using right character
-
-* jslint?
 
 * consider resolving single-word widows
 
 * fix this:  30.000,-. > 30.000,—
-* fix this e- shopu
 * fix numeral format
 * remove function implementation (removeNumerals) from js
 
+* jslint
 
 * add support for math equations spacing
 * add support for currencies
