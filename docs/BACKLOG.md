@@ -1,14 +1,10 @@
 # Backlog for typopo
 
-
-* metres squared and cubic
 * fix this e- shopu
 * consider fix that: - dashes at the beginning of the sentence
 
 * non-breaking space between currency and number
-
 * consider resolving single-word widows
-
 * refactor SM, TM, (r), ampersand
 
 
