@@ -1,7 +1,7 @@
 # Backlog for typopo
 
-* fix this e- shopu
-* consider fix that: - dashes at the beginning of the sentence
+
+* consider fixing that: - dashes at the beginning of the sentence
 
 * non-breaking space between currency and number
 * consider resolving single-word widows

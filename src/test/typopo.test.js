@@ -63,6 +63,9 @@ describe('Test that exceptions remain intact', () => {
 describe('Tests that all modules are plugged in', () => {
 	let testCase = {
 
+		// hyphen
+		"two—year—old child": "two-year-old child",
+
 		// section sign
 		"under Law §1782": "under Law § 1782",
 		// copyright

@@ -6,6 +6,7 @@
 * Fixes non-breaking spaces after abbreviations (these are supported now: č., s., fol., str., r., par., odst., např., napr., sv., tj., tzv., čl., hl., m., e.g., i.e., p., pp.)
 * Fixes square and cube exponents (e.g. 100 µm² → 100 µm², 50 km³ → 50 km³)
 * Improvements to how double quotes and single quotes are identified
+* Fixes extra space around dash (i.e. e -shop → e-shop, e- shop → e-shop)
 
 
 ## 2.0.0 // 2017-02-13
