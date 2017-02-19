@@ -6,9 +6,14 @@ import {removeNbspBetweenMultiCharWords,
 				addNbspAfterOrdinalNumber,
 				addNbspAfterRomanNumeral,
 				addNbspAfterInitial,
+				addNbspAfterSymbol,
+				replaceSpacesWithNbspAfterSymbol,
+				addNbspAfterAbbreviation,
 				fixNbsp} from "../../lib/whitespace/nbsp";
 import assert from 'assert';
 import Locale from "../../locale/locale";
+
+
 
 describe('Remove non-breaking space between multi-letter words\n', () => {
 	let testCase = {
@@ -52,6 +57,8 @@ describe('Add non-breaking spaces after single-character prepositions\n', () => 
 	});
 });
 
+
+
 describe('Add non-breaking space after ampersand\n', () => {
 	let testCase = {
 		"Bed & Breakfast": "Bed & Breakfast",
@@ -67,20 +74,7 @@ describe('Add non-breaking space after ampersand\n', () => {
 	});
 });
 
-describe('Add non-breaking space around ×\n', () => {
-	let testCase = {
-		"5 × 5": "5 × 5",
-	};
 
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.equal(addNbspAroundMultiplicationSign(key, new Locale("en-us")), testCase[key]);
-		});
-		it("module test", () => {
-			assert.equal(fixNbsp(key, new Locale("en-us")), testCase[key]);
-		});
-	});
-});
 
 describe('Add non-breaking space after cardinal number\n', () => {
 	let testCase = {
@@ -97,6 +91,7 @@ describe('Add non-breaking space after cardinal number\n', () => {
 		});
 	});
 });
+
 
 
 describe('Add non-breaking space after ordinal number (en)\n', () => {
@@ -165,6 +160,8 @@ describe('Add non-breaking space after roman numeral (sk, cs, rue)\n', () => {
 	});
 });
 
+
+
 describe('Add non-breaking space after initial\n', () => {
 	let testCase = {
 		"Philip K. Dick": "Philip K. Dick",
@@ -175,8 +172,67 @@ describe('Add non-breaking space after initial\n', () => {
 		it("unit test", () => {
 			assert.equal(addNbspAfterInitial(key, new Locale("en-us")), testCase[key]);
 		});
-		it("moduel test", () => {
+		it("module test", () => {
 			assert.equal(fixNbsp(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Add space after symbol, e.g. ©\n', () => {
+	let testCase = {
+		"©2017": "© 2017",
+		"Company ©2017": "Company © 2017",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("just unit tests", () => {
+			assert.equal(addNbspAfterSymbol(key, new Locale("en-us"), "©"), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Replaces various spaces with non-breaking space after symbol, e.g. ©\n', () => {
+	let testCase = {
+		"Company © 2017": "Company © 2017",
+		"Company © 2017": "Company © 2017", // hairSpace
+		"Company © 2017": "Company © 2017", // narrowNbsp
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("just unit tests", () => {
+			assert.equal(replaceSpacesWithNbspAfterSymbol(key, new Locale("en-us"), "©"), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Add non-breaking space after abbreviations', () => {
+	let testCase = {
+		"č.5 žije" : "č. 5 žije",
+		"Č.5 žije" : "č. 5 žije",
+		"č. 5 žije" : "č. 5 žije",
+		"áno, č. 5 žije" : "áno, č. 5 žije",
+		"preč č. 5 žije" : "preč č. 5 žije",
+		"str. 8" : "str. 8",
+		"tzv. rýč" : "tzv. rýč",
+		"Prines kvetináč. 5 je super číslo." : "Prines kvetináč. 5 je super číslo.", //false positive
+		"hl.m.Praha" : "hl. m. Praha",
+		"hl. m.Praha" : "hl. m. Praha",
+		"hl.m. Praha" : "hl. m. Praha",
+		"10 a.m." : "10 a.m.", //false positive for abbreviation within abbreviation, i.e. m. within a.m.
+		"e.g. something" : "e.g. something",
+		"10 p." : "10 p.",
+		"pp. 10–25" : "pp. 10–25",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit tests", () => {
+			assert.equal(addNbspAfterAbbreviation(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

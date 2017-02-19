@@ -10,7 +10,26 @@ const numbers = {
 	romanOrdinalIndicator :		"\\.",
 }
 
+const abbreviationsForNbsp = [
+	"č.",
+	"s.",
+	"fol.",
+	"str.",
+	"r.",
+	"par.",
+	"odst.",
+	"např.",
+	"sv.",
+	"tj.",
+	"tzv.",
+	"čl.",
+	"hl.",
+	"m."
+]
+
+
 export default {
 	quotes,
-	numbers
+	numbers,
+	abbreviationsForNbsp
 }

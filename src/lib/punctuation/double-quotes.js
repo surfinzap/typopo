@@ -13,11 +13,12 @@
 	[2] Identify inches, arcseconds, seconds
 	[3] Identify closed double quotes
 	[4] Identify the rest as unclosed double quotes (best-effort replacement)
-	[5] Fix spacing around quotes and primes
-	[6] Swap back some of the double quotes with a punctuation
-	[7] Remove extra punctuation around quotes
-	[8] Add spaces around quotes where missing
-	[9] Replace all identified punctuation with appropriate punctuation in
+	[5] Reconsider wrongly identified left quote and prime
+	[6] Fix spacing around quotes and primes
+	[7] Swap back some of the double quotes with a punctuation
+	[9] Remove extra punctuation around quotes
+	[9] Add spaces around quotes where missing
+	[10] Replace all identified punctuation with appropriate punctuation in
 	    given language
 
 	@param {string} string — input text for identification
@@ -40,8 +41,9 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	/* [2] Identify inches, arcseconds, seconds
 				 Note: we’re not using locale.doubleQuoteAdepts variable
 				 as commas and low-positioned quotes are ommited*/
-	string = string.replace(/(\d ?)(“|”|\"|″|‘{2,}|’{2,}|'{2,}|′{2,})/g, "$1{{typopo__double-prime}}");
-
+	pattern = "(\\d[" + locale.spaces +"]?)(“|”|\"|″|‘{2,}|’{2,}|'{2,}|′{2,})",
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1{{typopo__double-prime}}");
 
 	/* [3] Identify closed double quotes */
 	pattern = "(" + locale.doubleQuoteAdepts + ")(.*?)(" + locale.doubleQuoteAdepts + ")";
@@ -52,13 +54,13 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	/* [4.1] Identify unclosed left double quote */
 	pattern = "(" + locale.doubleQuoteAdepts + ")([" + locale.lowercaseChars + locale.uppercaseChars + "])";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "{{typopo__left-double-quote}}$2");
+	string = string.replace(re, "{{typopo__left-double-quote--unclosed}}$2");
 
 
 	/* [4.2] Identify unclosed right double quote */
 	pattern = "([" + locale.lowercaseChars + locale.uppercaseChars + locale.sentencePunctuation + locale.ellipsis + "])(" + locale.doubleQuoteAdepts + ")";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1{{typopo__right-double-quote}}");
+	string = string.replace(re, "$1{{typopo__right-double-quote--unclosed}}");
 
 
 	/* [4.3] Remove remaining unidentified double quote */
@@ -67,13 +69,26 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	string = string.replace(re, "$1$3");
 
 
-	/* [5] Remove extra spaces around quotes and prime */
+	/* [5] Reconsider wrongly identified left quote and prime
+
+		 Take following example:
+		 It’s called “Localhost 3000” and it’s pretty fast.
+
+		 So far, our algorithm falsely identifies prime folowing the number
+		 and unclosed left double quote.
+		 We'll find that identifications and swap it back to double quote pair.
+	*/
+	pattern = "({{typopo__left-double-quote--unclosed}})(.*?)({{typopo__double-prime}})";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "{{typopo__left-double-quote}}$2{{typopo__right-double-quote}}");
+
+	/* [6] Remove extra spaces around quotes and prime */
 	string = string.replace(/({{typopo__left-double-quote}})( )/g, "$1");
 	string = string.replace(/( )({{typopo__right-double-quote}})/g, "$2");
 	string = string.replace(/( )({{typopo__double-prime}})/g, "$2");
 
 
-	/* [6] Swap back some of the double quotes with a punctuation
+	/* [7] Swap back some of the double quotes with a punctuation
 
 		 Idea
 		 In [1] we have swapped all double right quotes by default with a terminal
@@ -93,29 +108,28 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	string = string.replace(re, "$1$3$2");
 
 
-	/* [7] Remove extra comma after punctuation in direct speech,
+	/* [8] Remove extra comma after punctuation in direct speech,
 					 e.g. "“Hey!,” she said" */
 	pattern = "([" + locale.sentencePunctuation + "])([\,])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1");
 
 
-	/* [8.1] Add extra space before left quote, if it’s following word or sentence punctuation */
+	/* [9.1] Add extra space before left quote, if it’s following word or sentence punctuation */
 	pattern = "([" + locale.sentencePunctuation + locale.allChars + "])({{typopo__left-double-quote}})";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1 $2");
 
-	/* [8.2] Add extra space after right quote if it’s preceding a word */
+	/* [9.2] Add extra space after right quote if it’s preceding a word */
 	pattern = "({{typopo__right-double-quote}})([" + locale.allChars + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1 $2");
 
 
-	/* [9] Punctuation replacement */
+	/* [10] Punctuation replacement */
 	string = string.replace(/({{typopo__double-prime}})/g, locale.doublePrime);
-
-	string = string.replace(/({{typopo__left-double-quote}})/g, locale.leftDoubleQuote);
-	string = string.replace(/({{typopo__right-double-quote}})/g, locale.rightDoubleQuote);
+	string = string.replace(/({{typopo__left-double-quote}}|{{typopo__left-double-quote--unclosed}})/g, locale.leftDoubleQuote);
+	string = string.replace(/({{typopo__right-double-quote}}|{{typopo__right-double-quote--unclosed}})/g, locale.rightDoubleQuote);
 
 	return string;
 }

@@ -1,4 +1,5 @@
-import {fixAbbreviations} from "../../lib/words/abbreviations";
+import {fixAbbreviations,
+				fixEgIeAmPm} from "../../lib/words/abbreviations";
 import assert from 'assert';
 import Locale from "../../locale/locale";
 
@@ -52,8 +53,8 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("", () => {
-			assert.equal(fixAbbreviations(key, new Locale("en-us")), testCase[key]);
+		it("unit test", () => {
+			assert.equal(fixEgIeAmPm(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

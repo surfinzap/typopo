@@ -60,6 +60,33 @@ describe('Test that exceptions remain intact', () => {
 	});
 });
 
+describe('Tests that all modules are plugged in', () => {
+	let testCase = {
+
+		// hyphen
+		"two—year—old child": "two-year-old child",
+
+		// section sign
+		"under Law §1782": "under Law § 1782",
+		// copyright
+		"Company (c)2017": "Company © 2017",
+		// sound recording copyright
+		"Company (p)2017": "Company ℗ 2017",
+		// exponents
+		"100 km3" : "100 km³",
+
+		// abbreviations
+		"E. g.something": "e.g. something",
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("", () => {
+			assert.equal(fixTypos(key, "en-us"), testCase[key]);
+		});
+	});
+});
+
 describe('Integration tests', () => {
 	let testCase = {
 

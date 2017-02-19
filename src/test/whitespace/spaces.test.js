@@ -4,7 +4,8 @@ import {removeMultipleSpaces,
 				removeSpaceAfterPunctuation,
 				addSpaceBeforePunctuation,
 				addSpaceAfterPunctuation,
-				removeTrailingSpaces} from "../../lib/whitespace/spaces";
+				removeTrailingSpaces,
+				addSpaceBeforeSymbol} from "../../lib/whitespace/spaces";
 import assert from 'assert';
 import Locale from "../../locale/locale";
 
@@ -144,6 +145,8 @@ describe('Add space after sentence punctuation and closing brackets\n', () => {
 	});
 });
 
+
+
 describe('Remove trailing spaces\n', () => {
 	let testCase = {
 		"trailing spaces    ": "trailing spaces",
@@ -158,6 +161,22 @@ describe('Remove trailing spaces\n', () => {
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
 			assert.equal(removeTrailingSpaces(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Add space before symbol, e.g. ©\n', () => {
+	let testCase = {
+		"© 2017": "© 2017",
+		"(© 2017)": "(© 2017)",
+		"Company© 2017": "Company © 2017",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("", () => {
+			assert.equal(addSpaceBeforeSymbol(key, new Locale("en-us"), "©"), testCase[key]);
 		});
 	});
 });
