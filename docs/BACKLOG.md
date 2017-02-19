@@ -1,6 +1,8 @@
 # Backlog for typopo
 
 
+* fix correcting that: It has ended. ... and we were there. (+add back to demo)
+
 * consider fixing that: - dashes at the beginning of the sentence
 
 * non-breaking space between currency and number
