@@ -19,6 +19,10 @@ import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
 import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
 import {fixSymbols} from "./lib/symbols/replacements";
 import {fixMultiplicationSign} from "./lib/symbols/multiplication-sign";
+import {fixSectionSign} from "./lib/symbols/section-sign";
+import {fixCopyright} from "./lib/symbols/copyright";
+import {fixSoundRecordingCopyright} from "./lib/symbols/sound-recording-copyright";
+import {fixExponents} from "./lib/symbols/exponents";
 import {fixAbbreviations} from "./lib/words/abbreviations";
 import {fixCase} from "./lib/words/case";
 import {excludeExceptions,
@@ -47,8 +51,11 @@ export function fixTypos(string, locale, configuration) {
 	if(configuration.removeLines) {
 		string = removeEmptyLines(string);
 	}
+
+	// spaces cleanup
 	string = fixSpaces(string, currentLocale);
 
+	// punctuation
 	string = fixPeriod(string);
 	string = fixEllipsis(string, currentLocale);
 	string = fixDash(string, currentLocale);
@@ -56,12 +63,19 @@ export function fixTypos(string, locale, configuration) {
 	string = fixDoubleQuotesAndPrimes(string, currentLocale);
 	string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale);
 
+	// symbols
 	string = fixSymbols(string);
 	string = fixMultiplicationSign(string, currentLocale);
+	string = fixSectionSign(string, currentLocale);
+	string = fixCopyright(string, currentLocale);
+	string = fixSoundRecordingCopyright(string, currentLocale);
+	string = fixExponents(string, currentLocale);
 
+	// words
 	string = fixCase(string, currentLocale);
 	string = fixAbbreviations(string, currentLocale);
 
+	// spaces
 	string = fixNbsp(string, currentLocale);
 
 	string = placeExceptions(string);

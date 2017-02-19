@@ -34,7 +34,7 @@ export function excludeExceptions(string, locale) {
 
 /*
 	Identifies set of exceptions for given pattern
-	Used as helper function for identify_exceptions(string)
+	Used as helper function for excludeExceptions(string, locale)
 
 	@param {string} input text for identification of exceptions
 	@param {pattern} regular expression pattern to match exception

@@ -12,6 +12,8 @@ describe('Single quotes in default language (en)\n', () => {
 		"Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
 		"He said: “What about 'name' and 'other name'?”":
 		"He said: “What about ‘name’ and ‘other name’?”",
+		"He said: “What about 'Localhost 3000', is that good?”":
+		"He said: “What about ‘Localhost 3000’, is that good?”",
 
 		/* Mixing quotes and primes, left for single quotes */
 		"12' 45″": "12′ 45″",

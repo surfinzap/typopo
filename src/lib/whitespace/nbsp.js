@@ -1,3 +1,5 @@
+import {removeTrailingSpaces} from "../whitespace/spaces";
+
 export function removeNbspBetweenMultiCharWords(string, locale) {
 	let pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})(["+ locale.nbsp + locale.narrowNbsp +"])(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})";
 	let re = new RegExp(pattern, "g");
@@ -25,16 +27,6 @@ export function addNbspAfterAmpersand(string, locale) {
 	let pattern = "([" + locale.spaces + "])(" + locale.ampersand + ")([" + locale.spaces + "])";
 	let re = new RegExp(pattern, "g");
 	let replacement = " $2" + locale.nbsp;
-
-	return string.replace(re, replacement);
-}
-
-
-
-export function addNbspAroundMultiplicationSign(string, locale) {
-	let pattern = "([" + locale.spaces + "])([" + locale.multiplicationSign + "])([" + locale.spaces + "])";
-	let re = new RegExp(pattern, "g");
-	let replacement = locale.nbsp + "$2" + locale.nbsp;
 
 	return string.replace(re, replacement);
 }
@@ -81,6 +73,44 @@ export function addNbspAfterInitial(string, locale) {
 
 
 
+export function addNbspAfterSymbol(string, locale, symbol) {
+	let pattern = "("+ symbol +")([^" + locale.spaces + "])";
+	let re = new RegExp(pattern, "g");
+	let replacement = "$1" + locale.nbsp + "$2";
+
+	return string.replace(re, replacement);
+}
+
+
+
+export function replaceSpacesWithNbspAfterSymbol(string, locale, symbol) {
+	let pattern = "("+ symbol +")([" + locale.spaces + "])";
+	let re = new RegExp(pattern, "g");
+	let replacement = "$1" + locale.nbsp;
+
+	return string.replace(re, replacement);
+}
+
+
+
+export function addNbspAfterAbbreviation(string, locale) {
+
+	let abbreviations = locale.abbreviationsForNbsp;
+
+	for (var abbr in abbreviations) {
+		let pattern = "(^|[^" + locale.allChars + locale.sentencePunctuation + "])(" + abbreviations[abbr] +"[" + locale.spaces + "]?)";
+		let re = new RegExp(pattern, "gi");
+		let replacement = "$1" + abbr + locale.nbsp;
+
+		string = string.replace(re, replacement);
+	}
+
+	return removeTrailingSpaces(string, locale);
+}
+
+
+
+
 /*
 	Consolidates the use of non-breaking spaces
 
@@ -91,11 +121,11 @@ export function fixNbsp(string, locale) {
 	string = removeNbspBetweenMultiCharWords(string, locale);
 	string = addNbspAfterPreposition(string, locale);
 	string = addNbspAfterAmpersand(string, locale);
-	string = addNbspAroundMultiplicationSign(string, locale);
 	string = addNbspAfterCardinalNumber(string, locale);
 	string = addNbspAfterOrdinalNumber(string, locale);
 	string = addNbspAfterRomanNumeral(string, locale);
 	string = addNbspAfterInitial(string, locale);
+	string = addNbspAfterAbbreviation(string, locale)
 
 	return string;
 }

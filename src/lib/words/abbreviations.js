@@ -1,11 +1,7 @@
-import {removeTrailingSpaces,
-				removeMultipleSpaces} from "../whitespace/spaces";
+import {removeTrailingSpaces} from "../whitespace/spaces";
 
 /*
-	Identifies differently-spelled abbreviations and replaces it with
-	a temp variable, {{typopo__[abbr]}}
-
-	Identifies given abbreviations:
+	Fixes differently-spelled abbreviations:
 	a.m., p.m., e.g., i.e.
 
 	Algorithm
@@ -13,11 +9,11 @@ import {removeTrailingSpaces,
 	[2] Identify a.m., p.m. (different match to avoid false positives such as:
 			I am, He is the PM.)
 	[3] Exclude false identifications
-
+
 	@param {string} input text for identification
 	@returns {string} corrected output
 */
-function identify_common_abbreviations(string, locale) {
+export function fixEgIeAmPm(string, locale) {
 
 	/* [1] Identify e.g., i.e. */
 	let abbreviations = ["eg", "ie"];
@@ -27,8 +23,6 @@ function identify_common_abbreviations(string, locale) {
 		let replacement = "{{typopo__" + abbreviations[i] + "}} ";
 		string = string.replace(re, replacement);
 	}
-
-
 
 
 	/* [2] Identify a.m., p.m. */
@@ -60,19 +54,10 @@ function identify_common_abbreviations(string, locale) {
 		string = string.replace(re, replacement);
 	}
 
-	return string;
-}
-
-
-/*
+	/*
 	Replaces identified temp abbreviation variable like {{typopo__eg}},
 	with their actual representation
-
-	@param {string} input text for identification
-	@returns {string} corrected output
-*/
-function place_common_abbreviations(string, locale) {
-	let abbreviations = ["eg", "ie", "am", "pm"];
+	*/
 	for (let i = 0; i < abbreviations.length; i++) {
 		let pattern = "{{typopo__" + abbreviations[i] + "}}";
 		let re = new RegExp(pattern, "g");
@@ -80,13 +65,15 @@ function place_common_abbreviations(string, locale) {
 		string = string.replace(re, replacement);
 	}
 
-	return string;
+	return removeTrailingSpaces(string, locale);
 }
 
+
+
+
+
+
 export function fixAbbreviations(string, locale) {
-	string = identify_common_abbreviations(string, locale);
-	string = place_common_abbreviations(string, locale);
-	string = removeTrailingSpaces(string, locale);
-	// string = removeMultipleSpaces(string, locale);
+	string = fixEgIeAmPm(string, locale);
 	return string;
 }

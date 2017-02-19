@@ -74,6 +74,17 @@ export function removeTrailingSpaces(string, locale) {
 
 
 
+export function addSpaceBeforeSymbol(string, locale, symbol) {
+	let pattern = "([^" + locale.spaces + locale.openingBrackets + "])("+ symbol +")";
+	let re = new RegExp(pattern, "g");
+	let replacement = "$1" + locale.space + "$2";
+
+	return string.replace(re, replacement);
+}
+
+
+
+
 export function fixSpaces(string, locale) {
 	string = removeMultipleSpaces(string, locale);
 	string = removeSpacesAtParagraphStart(string, locale);

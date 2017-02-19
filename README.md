@@ -29,18 +29,21 @@ Fixes whitespace characters:
 		* after ordinal numbers
 		* ordinal Roman numerals
 		* after name initials (i.e. Philip K. Dick)
+		* after commmon abbreviations
 
 Fixes words:
 * accidental uPPERCASE
 * spelling of e.g., i.e., a.m. and p.m.
 
 Fixes symbols:
-* x → × (when multiplication sign is desired)
-* (r), (R) → ®
-* (c), (C) → ©
-* (p), (P) → ℗
-* (tm), (TM) → ™
-* +-, -+ → ±
+* multiplication sign (×)
+* section sign (§)
+* copyright (©)
+* sound recording copyright (℗)
+* registered trademark (®)
+* trademark (™)
+* plus-minus sign (+-, -+ → ±)
+* square and cube exponents (e.g. 100 µm² → 100 µm², 50 km³ → 50 km³)
 
 ## Use
 

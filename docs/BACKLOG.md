@@ -1,29 +1,21 @@
 # Backlog for typopo
 
-* fix that: „nova-produkt-4“ na napr. "cervenyj-bereh“
-* fix that: - dashes at the beginning of the sentence
 
-
-* special cases for non-breaking spaces between abbreviations and numbers
-	* {findWhat:"(č\\.|s\\.|fol\\.|str\\.|r\\.|odst\\.|§) (\\d)"}
-	* {findWhat:"(©|℗|sv\\.|tj\\.|tzv\\.|čl\\.) (\\w+)"}
-	* {findWhat:"(hl\\.)\\s?(m\\.)"}
+* consider fixing that: - dashes at the beginning of the sentence
 
 * non-breaking space between currency and number
-* check if inch is using right character
-
-* include license in dist
-* jslint?
-
 * consider resolving single-word widows
+* refactor SM, TM, (r), ampersand
+
 
 * fix this:  30.000,-. > 30.000,—
-* fix this e- shopu
 * fix numeral format
-* add support for currencies
+* remove function implementation (removeNumerals) from js
+
+* jslint
 
 * add support for math equations spacing
-
+* add support for currencies
 
 
 
