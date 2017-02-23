@@ -3,9 +3,15 @@
 
 * fix correcting that: It has ended. ... and we were there. (+add back to demo)
 
+* Add support for: 13 x $5 = $58.
+* add support for: 4 x followed by a word
+* add support for: Holmen 80 g/m2
+* add support for currencies
+* non-breaking space between currency and number
+
+
 * consider fixing that: - dashes at the beginning of the sentence
 
-* non-breaking space between currency and number
 * consider resolving single-word widows
 * refactor SM, TM, (r), ampersand
 
@@ -17,7 +23,6 @@
 * jslint
 
 * add support for math equations spacing
-* add support for currencies
 
 
 
