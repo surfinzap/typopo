@@ -6,7 +6,7 @@ export function fixMultiplicationSign(string, locale) {
 	let replacement = "$1 " + locale.multiplicationSign + " $3"
 	string =  string.replace(re, replacement);
 
-	// catch measure multiplication
+	// catch multiplication followed by word
 	pattern = "([" + locale.cardinalNumber + "])([" + locale.spaces + "]{0,1})([x|×])([ ])([a-wz]+)";
 	re = new RegExp(pattern, "gi");
 	replacement = "$1$2" + locale.multiplicationSign + locale.nbsp + "$5";
