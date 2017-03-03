@@ -3,6 +3,7 @@
 ## 2.1.1 // 2017-
 ### Fixes
 * fix how ellipsis was corrected
+* fix falsely added non-breaking space after abbreviated word (e.g. client’s customer)
 
 ## 2.1.0 // 2017-02-19
 ### New features

@@ -1,6 +1,5 @@
 # Backlog for typopo
 
-* do not add nbsp after that — client’s customer
 * do not correct em-dash over here: work in any discipline—and it’s particularly
 
 * Add support for: 13 x $5 = $58.
