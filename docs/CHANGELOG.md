@@ -3,6 +3,9 @@
 ## 2.1.1 // 2017-
 ### New features
 * em dash is now corrected with no spaces around it in English language, and with narrow non-breaking space and hair space around it in Rusyn, Czech and Slovak language
+* 4 x followed by a word → 4 × followed by a word
+* 4x followed by a word → 4× followed by a word
+
 
 ### Fixes
 * fix how ellipsis was corrected

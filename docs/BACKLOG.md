@@ -1,11 +1,8 @@
 # Backlog for typopo
 
-* add support for: 4 x followed by a word
-* Add support for: 13 x $5 = $58.
 * add support for currencies
+* Add support for: 13 x $5 = $58.
 * non-breaking space between currency and number
-
-
 
 * consider fixing that: - dashes at the beginning of the sentence
 
