@@ -1,6 +1,9 @@
 # Changelog for Typopo
 
 ## 2.1.1 // 2017-
+### New features
+* em dash is now corrected with no spaces around it in English language, and with narrow non-breaking space and hair space around it in Rusyn, Czech and Slovak language
+
 ### Fixes
 * fix how ellipsis was corrected
 * fix falsely added non-breaking space after abbreviated word (e.g. client’s customer)

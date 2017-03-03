@@ -1,7 +1,5 @@
 # Backlog for typopo
 
-* do not correct em-dash over here: work in any discipline—and it’s particularly
-
 * Add support for: 13 x $5 = $58.
 * add support for: 4 x followed by a word
 * add support for: Holmen 80 g/m2

@@ -29,9 +29,21 @@ export function replaceSpacedEnDashWithEmDash(string, locale) {
 
 
 export function fixSpacesAroundEmDash(string, locale) {
-	let pattern = "[" + locale.spaces + "][" + locale.emDash + locale.hyphen + "][" + locale.spaces + "]";
+	let pattern = "[" + locale.spaces + "]?[" + locale.emDash + "][" + locale.spaces + "]?";
 	let re = new RegExp(pattern, "g");
-	let replacement = locale.narrowNbsp + locale.emDash + locale.hairSpace;
+	let replacement = "";
+
+	switch (locale.locale) {
+		case "en-us":
+			replacement = locale.emDash;
+			break;
+		case "rue":
+		case "sk":
+		case "cs":
+			replacement = locale.narrowNbsp + locale.emDash + locale.hairSpace;
+			break;
+	}
+
 	return string = string.replace(re, replacement);
 }
 

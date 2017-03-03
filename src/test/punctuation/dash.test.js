@@ -60,9 +60,11 @@ describe('Replace spaced en dash with an em dash\n', () => {
 	});
 });
 
-describe('Fix spaces around em dash\n', () => {
+describe('Fix spaces around em dash in English\n', () => {
 	let testCase = {
-		"and — she said": "and — she said",
+		"and — she said": "and—she said",
+		"and — she said": "and—she said", //mixed spaces
+		"and—she said": "and—she said",
 		};
 
 	Object.keys(testCase).forEach((key) => {
@@ -72,17 +74,17 @@ describe('Fix spaces around em dash\n', () => {
 	});
 });
 
-describe('Fix spaces around em dash (module test)\n', () => {
+describe('Fix spaces around em dash in Rusyn, Slovak, Czech\n', () => {
 	let testCase = {
-		"and - she said": "and — she said",
-		"and --- she said": "and — she said",
-		"and – she said": "and — she said",
-		"vopros - što": "vopros — što",
+		"and — she said": "and — she said",
+		"and—she said": "and — she said",
 		};
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixDash(key, new Locale("en-us")), testCase[key]);
+			assert.equal(fixSpacesAroundEmDash(key, new Locale("rue")), testCase[key]);
+			assert.equal(fixSpacesAroundEmDash(key, new Locale("sk")), testCase[key]);
+			assert.equal(fixSpacesAroundEmDash(key, new Locale("cs")), testCase[key]);
 		});
 	});
 });
