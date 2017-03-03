@@ -61,6 +61,7 @@ export default class Locale {
 		this.hyphen = "-";
 		this.enDash = "–";
 		this.emDash = "—";
+		this.slash = "/";
 
 		/* Symbols*/
 		this.degree = "°";

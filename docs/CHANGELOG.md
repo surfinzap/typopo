@@ -7,6 +7,7 @@
 ### Fixes
 * fix how ellipsis was corrected
 * fix falsely added non-breaking space after abbreviated word (e.g. client’s customer)
+* fix exponent use-case like Holmen 80 g/m²
 
 ## 2.1.0 // 2017-02-19
 ### New features

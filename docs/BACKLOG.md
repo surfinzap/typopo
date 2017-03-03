@@ -1,8 +1,7 @@
 # Backlog for typopo
 
-* Add support for: 13 x $5 = $58.
 * add support for: 4 x followed by a word
-* add support for: Holmen 80 g/m2
+* Add support for: 13 x $5 = $58.
 * add support for currencies
 * non-breaking space between currency and number
 
