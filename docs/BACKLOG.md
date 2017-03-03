@@ -1,7 +1,5 @@
 # Backlog for typopo
 
-* fix ellipsis
-* fix correcting that: It has ended. ... and we were there. (+add back to demo)
 * do not add nbsp after that — client’s customer
 * do not correct em-dash over here: work in any discipline—and it’s particularly
 

@@ -1,5 +1,9 @@
 # Changelog for Typopo
 
+## 2.1.1 // 2017-
+### Fixes
+* fix how ellipsis was corrected
+
 ## 2.1.0 // 2017-02-19
 ### New features
 * Fixes spacing around section sign (§), copyright (©), sound recording copyright (℗)

@@ -52,12 +52,14 @@ export function fixTypos(string, locale, configuration) {
 		string = removeEmptyLines(string);
 	}
 
+	// ellipsis (since it can have different spacing around, it has to go before spaces cleanup)
+	string = fixEllipsis(string, currentLocale);
+
 	// spaces cleanup
 	string = fixSpaces(string, currentLocale);
 
 	// punctuation
 	string = fixPeriod(string);
-	string = fixEllipsis(string, currentLocale);
 	string = fixDash(string, currentLocale);
 	string = fixHyphen(string, currentLocale);
 	string = fixDoubleQuotesAndPrimes(string, currentLocale);
