@@ -66,7 +66,7 @@ describe('Tests that all modules are plugged in', () => {
 		"Sentence .... another sentence": "Sentence … another sentence",
 
 		// hyphen
-		"two—year—old child": "two-year-old child",
+		"e- shop": "e-shop",
 
 		// section sign
 		"under Law §1782": "under Law § 1782",
