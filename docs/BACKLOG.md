@@ -1,13 +1,16 @@
 # Backlog for typopo
 
-
+* fix ellipsis
 * fix correcting that: It has ended. ... and we were there. (+add back to demo)
+* do not add nbsp after that — client’s customer
+* do not correct em-dash over here: work in any discipline—and it’s particularly
 
 * Add support for: 13 x $5 = $58.
 * add support for: 4 x followed by a word
 * add support for: Holmen 80 g/m2
 * add support for currencies
 * non-breaking space between currency and number
+
 
 
 * consider fixing that: - dashes at the beginning of the sentence
