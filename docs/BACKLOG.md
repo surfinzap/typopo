@@ -4,6 +4,11 @@
 * Add support for: 13 x $5 = $58.
 * non-breaking space between currency and number
 
+* how to handle difference between:
+	* He said: "He was 12."
+	* It's 12" x 12".
+
+
 * consider fixing that: - dashes at the beginning of the sentence
 
 * consider resolving single-word widows
