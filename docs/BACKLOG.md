@@ -1,11 +1,16 @@
 # Backlog for typopo
 
+* add support for currencies
+* Add support for: 13 x $5 = $58.
+* non-breaking space between currency and number
 
-* fix correcting that: It has ended. ... and we were there. (+add back to demo)
+* how to handle difference between:
+	* He said: "He was 12."
+	* It's 12" x 12".
+
 
 * consider fixing that: - dashes at the beginning of the sentence
 
-* non-breaking space between currency and number
 * consider resolving single-word widows
 * refactor SM, TM, (r), ampersand
 
@@ -17,7 +22,6 @@
 * jslint
 
 * add support for math equations spacing
-* add support for currencies
 
 
 

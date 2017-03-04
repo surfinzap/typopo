@@ -27,6 +27,9 @@ describe('Double quotes in default language (en)\n', () => {
 		"12′ 45\"": "12′ 45″",
 		"3° 5′ 30\"": "3° 5′ 30″",
 
+		// Primes at the end of the sentence
+		"So it’s 12\" × 12\", right?" : "So it’s 12″ × 12″, right?",
+
 
 		// Improperly spaced double primes
 		"12′ 45 ″": "12′ 45″",

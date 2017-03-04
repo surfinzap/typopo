@@ -12,16 +12,7 @@ export function fixSpaceAroundHyphen(string, locale){
 
 
 
-export function replaceDashWithHyphen(string, locale){
-	let pattern = "(["+ locale.allChars +"])([–—])(["+ locale.allChars +"])";
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, "$1-$3");
-}
-
-
-
 export function fixHyphen(string, locale){
 	string = fixSpaceAroundHyphen(string, locale)
-	string = replaceDashWithHyphen(string, locale)
 	return string;
 }

@@ -58,6 +58,10 @@ export default class Locale {
 		this.openingBrackets = "\\(\\[\\{";
 		this.closingBrackets = "\\)\\]\\}";
 		this.ellipsis = "…";
+		this.hyphen = "-";
+		this.enDash = "–";
+		this.emDash = "—";
+		this.slash = "/";
 
 		/* Symbols*/
 		this.degree = "°";

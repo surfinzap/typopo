@@ -17,8 +17,7 @@ describe('Ellipsis\n', () => {
 		 https://en.wikipedia.org/wiki/Aposiopesis
 		 http://www.liteera.cz/slovnik/vypustka
 		 */
-		/* replace 3 and more periods with an ellipsis …*/
-		"Sentence .. another sentence": "Sentence … another sentence",
+		 /* replace 3 and more periods with an ellipsis … */
 		"Sentence ... another sentence": "Sentence … another sentence",
 		"Sentence .... another sentence": "Sentence … another sentence",
 		"Sentence ..... another sentence": "Sentence … another sentence",
@@ -27,6 +26,9 @@ describe('Ellipsis\n', () => {
 		"Sentence ending...": "Sentence ending…",
 		"Sentence ending....": "Sentence ending…",
 		"Sentence ending.....": "Sentence ending…",
+
+		/* best-effort: replace 2 periods in the middle with an ellipsis … */
+		"Sentence .. another sentence": "Sentence … another sentence",
 
 		/* space ellipsis correctly, when used around commas */
 		"We sell apples, oranges,…, pens.": "We sell apples, oranges, …, pens.",

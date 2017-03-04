@@ -45,6 +45,7 @@ describe('Add non-breaking spaces after single-character prepositions\n', () => 
 		"a в хырбетї": "a в хырбетї",
 		"што є му вытыкане": "што є му вытыкане",
 		"ся ї не": "ся ї не",
+		"client’s customer" : "client’s customer", // false positive
 	};
 
 	Object.keys(testCase).forEach((key) => {

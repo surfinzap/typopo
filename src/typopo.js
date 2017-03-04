@@ -1,10 +1,10 @@
 /*!
- * Typopo 2.1.0
+ * Typopo 2.1.1
  *
  * Copyright 2015-17 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2017-02-19
+ * Date: 2017-03-04
  */
 
 import Locale from "./locale/locale";
@@ -52,12 +52,14 @@ export function fixTypos(string, locale, configuration) {
 		string = removeEmptyLines(string);
 	}
 
+	// ellipsis (since it can have different spacing around, it has to go before spaces cleanup)
+	string = fixEllipsis(string, currentLocale);
+
 	// spaces cleanup
 	string = fixSpaces(string, currentLocale);
 
 	// punctuation
 	string = fixPeriod(string);
-	string = fixEllipsis(string, currentLocale);
 	string = fixDash(string, currentLocale);
 	string = fixHyphen(string, currentLocale);
 	string = fixDoubleQuotesAndPrimes(string, currentLocale);

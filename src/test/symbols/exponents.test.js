@@ -28,6 +28,7 @@ describe('Fix squares\n', () => {
 		"100 am2" : "100 am²",
 		"100 zm2" : "100 zm²",
 		"100 ym2" : "100 ym²",
+		"Holmen 80 g/m2" : "Holmen 80 g/m²",
 		"Madam2" : "Madam2", //false positive
 
 	// m2
@@ -92,6 +93,8 @@ describe('Fix cubes\n', () => {
 		"100 am3" : "100 am³",
 		"100 zm3" : "100 zm³",
 		"100 ym3" : "100 ym³",
+		"Holmen 80 g/m3" : "Holmen 80 g/m³",
+		"Madam3" : "Madam3", //false positive
 	};
 
 	Object.keys(testCase).forEach((key) => {

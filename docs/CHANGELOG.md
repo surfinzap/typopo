@@ -1,5 +1,20 @@
 # Changelog for Typopo
 
+## 2.1.1 // 2017-03-04
+### New features
+* Em dash is now corrected with no spaces around it in English language, and with narrow non-breaking space and hair space around it in Rusyn, Czech and Slovak language
+* Multiplication sign improvements
+	* 4 x followed by a word → 4 × followed by a word
+	* 4x followed by a word → 4× followed by a word
+	* inches and feet multiplication (e.g. 12" x 12" → 12″ × 12″ )
+
+### Fixes
+* Fix how ellipsis was corrected
+* Fix falsely added non-breaking space after abbreviated word (e.g. client’s customer)
+* Fix exponent use-case like Holmen 80 g/m²
+
+
+
 ## 2.1.0 // 2017-02-19
 ### New features
 * Fixes spacing around section sign (§), copyright (©), sound recording copyright (℗)
@@ -7,6 +22,7 @@
 * Fixes square and cube exponents (e.g. 100 µm² → 100 µm², 50 km³ → 50 km³)
 * Improvements to how double quotes and single quotes are identified
 * Fixes extra space around dash (i.e. e -shop → e-shop, e- shop → e-shop)
+
 
 
 ## 2.0.0 // 2017-02-13

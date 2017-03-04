@@ -63,8 +63,14 @@ describe('Test that exceptions remain intact', () => {
 describe('Tests that all modules are plugged in', () => {
 	let testCase = {
 
+		// double quoutes
+		"He said: \"Here’s a 12\" record.\"": "He said: “Here’s a 12″ record.”",
+
+		// ellipsis
+		"Sentence .... another sentence": "Sentence … another sentence",
+
 		// hyphen
-		"two—year—old child": "two-year-old child",
+		"e- shop": "e-shop",
 
 		// section sign
 		"under Law §1782": "under Law § 1782",
