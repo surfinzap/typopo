@@ -2,15 +2,17 @@
 
 ## 2.1.1 // 2017-
 ### New features
-* em dash is now corrected with no spaces around it in English language, and with narrow non-breaking space and hair space around it in Rusyn, Czech and Slovak language
-* 4 x followed by a word → 4 × followed by a word
-* 4x followed by a word → 4× followed by a word
+* Em dash is now corrected with no spaces around it in English language, and with narrow non-breaking space and hair space around it in Rusyn, Czech and Slovak language
+* Multiplication sign improvements
+	* 4 x followed by a word → 4 × followed by a word
+	* 4x followed by a word → 4× followed by a word
+	* inches and feet multiplication (e.g. 12" x 12" → 12″ × 12″ )
 
 
 ### Fixes
-* fix how ellipsis was corrected
-* fix falsely added non-breaking space after abbreviated word (e.g. client’s customer)
-* fix exponent use-case like Holmen 80 g/m²
+* Fix how ellipsis was corrected
+* Fix falsely added non-breaking space after abbreviated word (e.g. client’s customer)
+* Fix exponent use-case like Holmen 80 g/m²
 
 ## 2.1.0 // 2017-02-19
 ### New features

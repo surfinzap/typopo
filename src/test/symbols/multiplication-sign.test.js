@@ -8,6 +8,8 @@ describe('Fix multiplication sign\n', () => {
 		"5 mm X 5 mm": "5 mm × 5 mm",
 		"5cm x 5cm": "5cm × 5cm",
 		"5 x 4": "5 × 4",
+		"5″ x 4″": "5″ × 4″",
+		"5′ x 4′": "5′ × 4′",
 		"12x3": "12 × 3",
 		"12×3": "12 × 3",
 		"4 x object" : "4 × object",

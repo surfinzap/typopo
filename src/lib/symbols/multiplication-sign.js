@@ -1,7 +1,7 @@
 export function fixMultiplicationSign(string, locale) {
 
 	// catch measure multiplication
-	let pattern = "([1-9]+[ ]{0,1}[a-wz]*)([" + locale.spaces + "]{0,1}[x|×][" + locale.spaces + "]{0,1})([1-9]+[ ]{0,1}[a-wz]*)";
+	let pattern = "([1-9]+[ ]{0,1}[a-wz" + locale.singlePrime + locale.doublePrime + "]*)([" + locale.spaces + "]{0,1}[x|×][" + locale.spaces + "]{0,1})([1-9]+[ ]{0,1}[a-wz]*)";
 	let re = new RegExp(pattern, "gi");
 	let replacement = "$1 " + locale.multiplicationSign + " $3"
 	string =  string.replace(re, replacement);
