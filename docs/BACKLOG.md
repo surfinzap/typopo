@@ -1,5 +1,9 @@
 # Backlog for typopo
 
+* do not correct spaces around smileys — smajle vítané;)
+* fix: či e-mail marketing \= čie -mail marketing
+* fix CMSko \= CMsko
+
 * add support for currencies
 * Add support for: 13 x $5 = $58.
 * non-breaking space between currency and number
