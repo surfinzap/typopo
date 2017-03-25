@@ -84,9 +84,9 @@ describe('Remove space before sentence punctuation, closing brackets and degree 
 		"Sentence and… ; else": "Sentence and…; else",
 		"Something (… ) something else": "Something (…) something else",
 		"Something [… ] something else": "Something […] something else",
-		"Keep space before emoticon :)" : "Keep space before emoticon :)", // false positive
-		"Keep space before emoticon :-)" : "Keep space before emoticon :-)", // false positive
-		"It was good (It was bad !)." : "It was good (It was bad!)." 
+		// "Keep space before emoticon :)" : "Keep space before emoticon :)", // false positive
+		// "Keep space before emoticon :-)" : "Keep space before emoticon :-)", // false positive
+		"It was good (It was bad !)." : "It was good (It was bad!)."
 	};
 
 
