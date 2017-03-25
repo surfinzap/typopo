@@ -26,6 +26,11 @@ describe('Ellipsis\n', () => {
 		"Sentence ending...": "Sentence ending…",
 		"Sentence ending....": "Sentence ending…",
 		"Sentence ending.....": "Sentence ending…",
+		"Sentence ending….....": "Sentence ending…",
+		"Sentence ending….…": "Sentence ending…",
+		"Sentence ending……": "Sentence ending…",
+		"Sentence ending.….....": "Sentence ending…",
+		"Sentence ending.…": "Sentence ending…",
 
 		/* best-effort: replace 2 periods in the middle with an ellipsis … */
 		"Sentence .. another sentence": "Sentence … another sentence",

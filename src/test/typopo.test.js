@@ -67,7 +67,7 @@ describe('Tests that all modules are plugged in', () => {
 		"He said: \"Here’s a 12\" record.\"": "He said: “Here’s a 12″ record.”",
 
 		// ellipsis
-		"Sentence .... another sentence": "Sentence … another sentence",
+		"Sentence ..….. another sentence": "Sentence … another sentence",
 
 		// hyphen
 		"e- shop": "e-shop",

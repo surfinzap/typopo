@@ -1,5 +1,9 @@
 # Changelog for Typopo
 
+## 2.1.2 // 2017-03-...
+### Improvements
+* Combination of ellipses and dots its correct to a single ellipsis (e.g. Sentence ending.…..... → Sentence ending…)
+
 ## 2.1.1 // 2017-03-04
 ### New features
 * Em dash is now corrected with no spaces around it in English language, and with narrow non-breaking space and hair space around it in Rusyn, Czech and Slovak language
