@@ -3,6 +3,7 @@
 ## 2.1.2 // 2017-03-...
 ### Improvements
 * Combination of ellipses and dots is corrected to a single ellipsis (e.g. Sentence ending.…..... → Sentence ending…)
+* Module for removing extra spaces before pause punctuation (ie. ,:;) now does not remove spaces before that punctuation if it's part of smiley :).
 
 ### Fixes
 * Fix abbreviations module (removing false identification: či e-mail marketing → čie -mail marketing)

@@ -81,6 +81,9 @@ describe('Tests that all modules are plugged in', () => {
 		// exponents
 		"100 km3" : "100 km³",
 
+		// spaces
+		"Sentence and… ?": "Sentence and…?",
+
 		// abbreviations
 		"E. g.something": "e.g. something",
 

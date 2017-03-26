@@ -36,8 +36,17 @@ export function removeSpacesAtParagraphStart(string, locale) {
 
 
 
-export function removeSpaceBeforePunctuation(string, locale) {
-	let pattern = "([" + locale.spaces + "])([" + locale.sentencePunctuation + locale.closingBrackets + locale.degree + "])";
+export function removeSpaceBeforeSentencePausePunctuation(string, locale) {
+	let pattern = "([" + locale.spaces + "])([" + locale.sentencePausePunctuation + "])([^\\-\\)]|$)";
+	let re = new RegExp(pattern, "g");
+	return string.replace(re, "$2$3");
+}
+
+
+
+
+export function removeSpaceBeforeTerminalPunctuation(string, locale) {
+	let pattern = "([" + locale.spaces + "])([" + locale.terminalPunctuation + locale.closingBrackets + locale.degree + "])";
 	let re = new RegExp(pattern, "g");
 	return string.replace(re, "$2");
 }
@@ -88,7 +97,8 @@ export function addSpaceBeforeSymbol(string, locale, symbol) {
 export function fixSpaces(string, locale) {
 	string = removeMultipleSpaces(string, locale);
 	string = removeSpacesAtParagraphStart(string, locale);
-	string = removeSpaceBeforePunctuation(string, locale);
+	string = removeSpaceBeforeSentencePausePunctuation(string, locale);
+	string = removeSpaceBeforeTerminalPunctuation(string, locale);
 	string = removeSpaceAfterPunctuation(string, locale);
 	string = addSpaceBeforePunctuation(string, locale);
 	string = addSpaceAfterPunctuation(string, locale);

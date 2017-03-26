@@ -1,6 +1,5 @@
 # Backlog for typopo
 
-* do not correct spaces around smileys — smajle vítané;)
 * fix CMSko \= CMsko
 
 * add support for currencies

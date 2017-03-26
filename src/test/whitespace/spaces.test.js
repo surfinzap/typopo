@@ -1,6 +1,7 @@
 import {removeMultipleSpaces,
 				removeSpacesAtParagraphStart,
-				removeSpaceBeforePunctuation,
+				removeSpaceBeforeSentencePausePunctuation,
+				removeSpaceBeforeTerminalPunctuation,
 				removeSpaceAfterPunctuation,
 				addSpaceBeforePunctuation,
 				addSpaceAfterPunctuation,
@@ -63,7 +64,6 @@ describe('Remove spaces and tabs at paragraph start\n', () => {
 		"If there is one line \nand another": "If there is one line \nand another",
 	};
 
-
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
 			assert.equal(removeSpacesAtParagraphStart(key, new Locale("en-us")), testCase[key]);
@@ -71,7 +71,31 @@ describe('Remove spaces and tabs at paragraph start\n', () => {
 	});
 });
 
-describe('Remove space before sentence punctuation, closing brackets and degree symbol\n', () => {
+
+
+describe('Remove space before sentence pause-punctuation\n', () => {
+	let testCase = {
+		"Hey , man.": "Hey, man.",
+		"Hey , man.": "Hey, man.", // nbsp
+		"Hey , man.": "Hey, man.", // hair_space
+		"Hey , man.": "Hey, man.", // narrow_nbsp
+		"Sentence and… :": "Sentence and…:",
+		"Sentence and… , else": "Sentence and…, else",
+		"Sentence and… ; else": "Sentence and…; else",
+		"Keep space before emoticon :)" : "Keep space before emoticon :)", // false positive
+		"Keep space before emoticon :-)" : "Keep space before emoticon :-)", // false positive
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit tests", () => {
+			assert.equal(removeSpaceBeforeSentencePausePunctuation(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Remove space before terminal punctuation, closing brackets and degree symbol\n', () => {
 	let testCase = {
 		"Hey .": "Hey.",
 		"Hey .": "Hey.", // nbsp
@@ -79,23 +103,20 @@ describe('Remove space before sentence punctuation, closing brackets and degree 
 		"Hey .": "Hey.", // narrow_nbsp
 		"Sentence and… !": "Sentence and…!",
 		"Sentence and… ?": "Sentence and…?",
-		"Sentence and… :": "Sentence and…:",
-		"Sentence and… , else": "Sentence and…, else",
-		"Sentence and… ; else": "Sentence and…; else",
 		"Something (… ) something else": "Something (…) something else",
 		"Something [… ] something else": "Something […] something else",
-		// "Keep space before emoticon :)" : "Keep space before emoticon :)", // false positive
-		// "Keep space before emoticon :-)" : "Keep space before emoticon :-)", // false positive
-		"It was good (It was bad !)." : "It was good (It was bad!)."
+		"It was good (It was bad !)." : "It was good (It was bad!).",
+		"5 °" : "5°",
 	};
 
-
 	Object.keys(testCase).forEach((key) => {
-		it("", () => {
-			assert.equal(removeSpaceBeforePunctuation(key, new Locale("en-us")), testCase[key]);
+		it("unit tests", () => {
+			assert.equal(removeSpaceBeforeTerminalPunctuation(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
+
+
 
 describe('Remove space after opening brackets\n', () => {
 	let testCase = {
