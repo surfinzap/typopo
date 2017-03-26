@@ -67,7 +67,7 @@ describe('Tests that all modules are plugged in', () => {
 		"He said: \"Here’s a 12\" record.\"": "He said: “Here’s a 12″ record.”",
 
 		// ellipsis
-		"Sentence .... another sentence": "Sentence … another sentence",
+		"Sentence ..….. another sentence": "Sentence … another sentence",
 
 		// hyphen
 		"e- shop": "e-shop",
@@ -81,8 +81,14 @@ describe('Tests that all modules are plugged in', () => {
 		// exponents
 		"100 km3" : "100 km³",
 
+		// spaces
+		"Sentence and… ?": "Sentence and…?",
+
 		// abbreviations
 		"E. g.something": "e.g. something",
+		//case
+		"CMSko" : "CMSko",
+		"cAPSLOCK": "capslock",
 
 	};
 

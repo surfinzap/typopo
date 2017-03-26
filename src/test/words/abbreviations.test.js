@@ -26,6 +26,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"najkrajšie": "najkrajšie", // false positive for non-latin boundaries
 		"nevieš": "nevieš", // false positive for non-latin boundaries
 		"ieš": "ieš", // false positive for non-latin boundaries
+		"či e-mail marketing" : "či e-mail marketing", // false positive for non-latin boundaries
 
 		"5 am": "5 a.m.",
 		"5 a. m. " : "5 a.m.",

@@ -15,10 +15,11 @@
 export function fixCase(string, locale) {
 
 	/* [1] two first uppercase letters (i.e. UPpercase) */
-	var pattern = "["+ locale.uppercaseChars +"]{2,2}["+ locale.lowercaseChars +"]+";
-	var re = new RegExp(pattern, "g");
-	string = string.replace(re, function(string){
-		return (string.substring(0,1) + string.substring(1).toLowerCase());
+	let pattern = "([^" + locale.allChars + "]|^)(["+ locale.uppercaseChars +"]{2})(["+ locale.lowercaseChars +"]+)";
+	let re = new RegExp(pattern, "g");
+
+	string = string.replace(re, function($0, $1, $2, $3){
+		return $1 + $2.substring(0,1) + $2.substring(1).toLowerCase() + $3;
 	});
 
 	/* [2.1] Swapped cases (2-letter cases, i.e. iT)

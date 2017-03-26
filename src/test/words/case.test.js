@@ -5,6 +5,8 @@ import Locale from "../../locale/locale";
 describe('Corrects accidental uPPERCASE\n', () => {
 	let testCase = {
 		"HEy, JEnnifer!": "Hey, Jennifer!",
+		"CMSko" : "CMSko",
+		"ČSNka" : "ČSNka",
 		"How about ABC?": "How about ABC?",
 		"cAPSLOCK": "capslock",
 		"iPhone": "iPhone",

@@ -1,5 +1,15 @@
 # Changelog for Typopo
 
+## 2.1.2 // 2017-03-26
+### Improvements
+* Combination of ellipses and dots is corrected to a single ellipsis (e.g. Sentence ending.…..... → Sentence ending…)
+* Module for removing extra spaces before pause punctuation (ie. ,:;) now does not remove spaces before that punctuation if it's part of smiley :).
+
+### Fixes
+* Fix Abbreviations module (removing false identification: či e-mail marketing → čie -mail marketing)
+* Fix Case module (CMSko → CMSko, instead of CMsko)
+
+
 ## 2.1.1 // 2017-03-04
 ### New features
 * Em dash is now corrected with no spaces around it in English language, and with narrow non-breaking space and hair space around it in Rusyn, Czech and Slovak language
