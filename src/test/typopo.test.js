@@ -87,7 +87,9 @@ describe('Tests that all modules are plugged in', () => {
 		"Company (p)2017": "Company ℗ 2017",
 		// exponents
 		"100 km3" : "100 km³",
-
+		// trademark
+		"Company (tm)": "Company™",
+		
 		// spaces
 		"Sentence and… ?": "Sentence and…?",
 

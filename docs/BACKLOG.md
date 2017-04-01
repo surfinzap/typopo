@@ -11,8 +11,10 @@
 
 * consider fixing that: - dashes at the beginning of the sentence
 
-* consider resolving single-word widows
-* refactor SM, TM, (r), ampersand
+* refactor (r),
+* refactor ampersand,
+* refactor +-,
+* refactor SM,
 
 
 * fix this:  30.000,-. > 30.000,—

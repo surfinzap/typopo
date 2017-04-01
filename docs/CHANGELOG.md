@@ -3,11 +3,13 @@
 ## 2.1.3 // 2017-04-
 ### Improvements
 * Fix abbreviations (e.g., i.e., a.m., p.m.), even when there are multiple spaces between them (e.    g. → e.g.)
-* Change double quotes to apostrophes in contracted words (don"t → don’t) 
-
+* Change double quotes to apostrophes in contracted words (don"t → don’t)
 
 ### Fixes
 * fix Abbreviation module (it was falsely removing spaces at the beginning of the abbreviation)
+
+### Refactoring
+* Module for correcting Trademark (™) symbol 
 
 
 ## 2.1.2 // 2017-03-26

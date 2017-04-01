@@ -5,8 +5,6 @@ describe('Replace following symbols\n', () => {
 	let testCase = {
 		"(R) (R)": "® ®",
 		"(r) (r)": "® ®",
-		"(tm) (tm)": "™ ™",
-		"(TM) (TM)": "™ ™",
 		"+- +-": "± ±",
 		"-+ -+": "± ±",
 	};

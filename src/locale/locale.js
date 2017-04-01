@@ -71,6 +71,7 @@ export default class Locale {
 		this.sectionSign = "§";
 		this.copyright = "©";
 		this.soundRecordingCopyright = "℗";
+		this.trademark = "™";
 
 		/*
 			Source for webUrlPattern, emailAddressPattern
