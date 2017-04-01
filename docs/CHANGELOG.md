@@ -9,7 +9,8 @@
 * fix Abbreviation module (it was falsely removing spaces at the beginning of the abbreviation)
 
 ### Refactoring
-* Module for correcting Trademark (™) symbol 
+* Module for correcting Trademark (™) symbol
+* Module for correcting Registered Trademark (®) symbol
 
 
 ## 2.1.2 // 2017-03-26

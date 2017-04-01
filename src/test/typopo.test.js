@@ -83,13 +83,15 @@ describe('Tests that all modules are plugged in', () => {
 		"under Law §1782": "under Law § 1782",
 		// copyright
 		"Company (c)2017": "Company © 2017",
-		// sound recording copyright
-		"Company (p)2017": "Company ℗ 2017",
 		// exponents
 		"100 km3" : "100 km³",
+		// sound recording copyright
+		"Company (p)2017": "Company ℗ 2017",
+		//registered trademark
+		"Company (r)": "Company®",
 		// trademark
 		"Company (tm)": "Company™",
-		
+
 		// spaces
 		"Sentence and… ?": "Sentence and…?",
 

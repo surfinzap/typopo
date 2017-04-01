@@ -11,9 +11,8 @@
 
 * consider fixing that: - dashes at the beginning of the sentence
 
-* refactor (r),
-* refactor ampersand,
 * refactor +-,
+* refactor ampersand,
 * refactor SM,
 
 
