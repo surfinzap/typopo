@@ -1,5 +1,11 @@
 # Changelog for Typopo
 
+## 2.1.3 // 2017-04-
+
+### Fixes
+* fix Abbreviation module (it was falsely removing spaces at the beginning of the abbreviation)
+
+
 ## 2.1.2 // 2017-03-26
 ### Improvements
 * Combination of ellipses and dots is corrected to a single ellipsis (e.g. Sentence ending.…..... → Sentence ending…)
