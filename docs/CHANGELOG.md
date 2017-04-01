@@ -3,6 +3,7 @@
 ## 2.1.3 // 2017-04-
 ### Improvements
 * Fix abbreviations (e.g., i.e., a.m., p.m.), even when there are multiple spaces between them (e.    g. → e.g.)
+* Change double quotes to apostrophes in contracted words (don"t → don’t) 
 
 
 ### Fixes

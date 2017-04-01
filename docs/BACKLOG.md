@@ -25,8 +25,6 @@
 
 
 
-
-
 ==================================
 * Reintroduce more sophisticated support for starting a sentence with a Capital letter
 	* main issue concerned many false positives

@@ -62,8 +62,8 @@ export function fixTypos(string, locale, configuration) {
 	string = fixPeriod(string);
 	string = fixDash(string, currentLocale);
 	string = fixHyphen(string, currentLocale);
-	string = fixDoubleQuotesAndPrimes(string, currentLocale);
 	string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale);
+	string = fixDoubleQuotesAndPrimes(string, currentLocale);
 
 	// symbols
 	string = fixSymbols(string);
