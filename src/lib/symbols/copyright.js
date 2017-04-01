@@ -1,7 +1,8 @@
 import {addSpaceBeforeSymbol} from "../whitespace/spaces";
 import {addNbspAfterSymbol,
 				replaceSpacesWithNbspAfterSymbol} from "../whitespace/nbsp";
-
+import {removeSpaceBeforeTerminalPunctuation,
+				removeSpaceAfterPunctuation} from "../whitespace/spaces";
 
 function replaceCwithCopyright(string, locale) {
 	let pattern = "(\\(c\\))([" + locale.spaces + "]?)(" + locale.cardinalNumber + ")";
@@ -14,6 +15,8 @@ function replaceCwithCopyright(string, locale) {
 
 
 export function fixCopyright(string, locale) {
+	string = removeSpaceAfterPunctuation(string, locale);
+	string = removeSpaceBeforeTerminalPunctuation(string, locale);
 	string = replaceCwithCopyright(string, locale);
 	string = addSpaceBeforeSymbol(string, locale, locale.copyright);
 	string = addNbspAfterSymbol(string, locale, locale.copyright);
