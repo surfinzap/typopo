@@ -17,11 +17,11 @@ import {fixHyphen} from "./lib/punctuation/hyphen";
 import {fixDash} from "./lib/punctuation/dash";
 import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
 import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
-import {fixSymbols} from "./lib/symbols/replacements";
 import {fixMultiplicationSign} from "./lib/symbols/multiplication-sign";
 import {fixSectionSign} from "./lib/symbols/section-sign";
 import {fixCopyright} from "./lib/symbols/copyright";
 import {fixSoundRecordingCopyright} from "./lib/symbols/sound-recording-copyright";
+import {fixPlusMinus} from "./lib/symbols/plus-minus";
 import {fixRegisteredTrademark} from "./lib/symbols/registered-trademark";
 import {fixTrademark} from "./lib/symbols/trademark";
 import {fixExponents} from "./lib/symbols/exponents";
@@ -68,11 +68,11 @@ export function fixTypos(string, locale, configuration) {
 	string = fixDoubleQuotesAndPrimes(string, currentLocale);
 
 	// symbols
-	string = fixSymbols(string);
 	string = fixMultiplicationSign(string, currentLocale);
 	string = fixSectionSign(string, currentLocale);
 	string = fixCopyright(string, currentLocale);
 	string = fixSoundRecordingCopyright(string, currentLocale);
+	string = fixPlusMinus(string, currentLocale);
 	string = fixRegisteredTrademark(string, currentLocale);
 	string = fixTrademark(string, currentLocale);
 	string = fixExponents(string, currentLocale);

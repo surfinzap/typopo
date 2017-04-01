@@ -8,10 +8,8 @@
 	* He said: "He was 12."
 	* It's 12" x 12".
 
-
 * consider fixing that: - dashes at the beginning of the sentence
 
-* refactor +-,
 * refactor ampersand,
 * refactor SM,
 

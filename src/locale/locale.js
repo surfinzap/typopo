@@ -73,6 +73,7 @@ export default class Locale {
 		this.registeredTrademark = "®";
 		this.soundRecordingCopyright = "℗";
 		this.trademark = "™";
+		this.plusMinus = "±";
 
 		/*
 			Source for webUrlPattern, emailAddressPattern
