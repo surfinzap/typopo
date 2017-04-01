@@ -9,6 +9,7 @@ describe('Fix trademark ™\n', () => {
 		"(TM)": "™",
 		"( tm )": "™",
 		"Company (tm)": "Company™",
+		"Company ™": "Company™",
 	};
 
 	Object.keys(testCase).forEach((key) => {

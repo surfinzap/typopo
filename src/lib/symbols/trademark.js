@@ -1,11 +1,8 @@
-import {addSpaceBeforeSymbol} from "../whitespace/spaces";
-import {addNbspAfterSymbol,
-				replaceSpacesWithNbspAfterSymbol} from "../whitespace/nbsp";
 import {removeSpaceBeforeTerminalPunctuation,
 				removeSpaceAfterPunctuation} from "../whitespace/spaces";
 
 function replaceTMwithTrademark(string, locale) {
-	let pattern = "([" + locale.spaces + "]*)(\\(tm\\))";
+	let pattern = "([" + locale.spaces + "]*)(\\(tm\\)|" + locale.trademark +")";
 	let re = new RegExp(pattern, "gi");
 	let replacement = locale.trademark;
 
@@ -15,7 +12,7 @@ function replaceTMwithTrademark(string, locale) {
 
 
 export function fixTrademark(string, locale) {
-	string = removeSpaceAfterPunctuation(string, locale); // this is duplicate code, could be refactored into inegration tests
+	string = removeSpaceAfterPunctuation(string, locale); 
 	string = removeSpaceBeforeTerminalPunctuation(string, locale);
 	string = replaceTMwithTrademark(string, locale);
 
