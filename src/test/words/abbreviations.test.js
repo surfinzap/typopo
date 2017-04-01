@@ -12,6 +12,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"E.G. something": "e.g. something",
 		"eg. something": "e.g. something",
 		"eg something": "e.g. something",
+		"e.     g. something": "e.g. something",
 		", e.g. something": ", e.g. something",
 		"a e.g. something": "a e.g. something",
 		"abc\ne.g. something": "abc\ne.g. something",
@@ -24,6 +25,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"I.E. something": "i.e. something",
 		"ie. something": "i.e. something",
 		"ie something": "i.e. something",
+		"i.     e. something": "i.e. something",
 		"a i.e. something": "a i.e. something",
 		"brie cheese": "brie cheese", // false positive
 		"Pam Grier": "Pam Grier", // false positive
@@ -34,6 +36,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 
 		"5 am": "5 a.m.",
 		"5 a. m. " : "5 a.m.",
+		"5 a.     m. " : "5 a.m.",
 		"5a. m. " : "5 a.m.",
 		"5 am in the morning": "5 a.m. in the morning",
 		"5 AM": "5 a.m.",
@@ -45,6 +48,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"4.20 pm": "4.20 p.m.",
 		"4.20 PM": "4.20 p.m.",
 		"4.20 p.m.": "4.20 p.m.",
+		"4.20 p.     m.": "4.20 p.m.",
 		"4.20 p.m. in the afternoon": "4.20 p.m. in the afternoon",
 		"She is the PM of the UK.": "She is the PM of the UK.", // false positive
 

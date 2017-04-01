@@ -19,7 +19,7 @@ export function fixEgIeAmPm(string, locale) {
 	let abbreviations = ["eg", "ie"];
 	for (let i = 0; i < abbreviations.length; i++) {
 		// boundaries are set for non-latin characters
-		let pattern = "(^|\\s)([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]?)([^" + locale.allChars + "])";
+		let pattern = "(^|\\s)([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]?)([^" + locale.allChars + "])";
 		let re = new RegExp(pattern, "gi");
 		let replacement = "$1{{typopo__" + abbreviations[i] + "}} ";
 		string = string.replace(re, replacement);
@@ -29,7 +29,7 @@ export function fixEgIeAmPm(string, locale) {
 	/* [2] Identify a.m., p.m. */
 	abbreviations = ["am", "pm"];
 	for (let i = 0; i < abbreviations.length; i++) {
-		let pattern = "(\\d)([" + locale.spaces + "]?)([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]?[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]?)(\\b|\\B)";
+		let pattern = "(\\d)([" + locale.spaces + "]?)([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]?)(\\b|\\B)";
 		let re = new RegExp(pattern, "gi");
 		let replacement = "$1 {{typopo__" + abbreviations[i] + "}}$4";
 		string = string.replace(re, replacement);
