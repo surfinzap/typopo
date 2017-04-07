@@ -142,11 +142,13 @@ describe('Add non-breaking space after ordinal number (sk, cs, rue)\n', () => {
 describe('Add non-breaking space after roman numeral (sk, cs, rue)\n', () => {
 	let testCase = {
 		"III. kapitola": "III. kapitola",
+		"III.kapitola": "III. kapitola",
 		"X. ročník": "X. ročník",
 		"V. ročník": "V. ročník",
 		"L. ročník": "L. ročník",
 		"D. ročník": "D. ročník",
 		"8. V. 1945": "8. V. 1945",
+		"8. V.1945": "8. V. 1945",
 	};
 
 	Object.keys(testCase).forEach((key) => {

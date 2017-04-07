@@ -54,11 +54,16 @@ export function addNbspAfterOrdinalNumber(string, locale) {
 
 
 export function addNbspAfterRomanNumeral(string, locale) {
-	let pattern = "(\\b["+ locale.romanNumerals + "]+)("+ locale.romanOrdinalIndicator +")(["+ locale.spaces +"])";
-	let re = new RegExp(pattern, "g");
-	let replacement = "$1$2" + locale.nbsp;
+	// we can identify roman numeral effectively only if it has an ordinal indicator
+	if(locale.romanOrdinalIndicator != "") {
+		let pattern = "(\\b["+ locale.romanNumerals + "]+)("+ locale.romanOrdinalIndicator +")(["+ locale.spaces +"]?)";
+		let re = new RegExp(pattern, "g");
+		let replacement = "$1$2" + locale.nbsp;
 
-	return string.replace(re, replacement);
+		return string.replace(re, replacement);
+	}
+
+	return string;
 }
 
 
