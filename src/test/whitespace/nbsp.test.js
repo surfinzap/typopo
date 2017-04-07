@@ -118,9 +118,11 @@ describe('Add non-breaking space after ordinal number (en)\n', () => {
 describe('Add non-breaking space after ordinal number (sk, cs, rue)\n', () => {
 	let testCase = {
 		"1. dodatok": "1. dodatok",
+		"1.dodatok": "1. dodatok",
 		"12. dodatok": "12. dodatok",
 		"12. január": "12. január",
 		"12. 1. 2017": "12. 1. 2017",
+		"12.1.2017": "12. 1. 2017",
 	};
 
 	Object.keys(testCase).forEach((key) => {
@@ -129,7 +131,7 @@ describe('Add non-breaking space after ordinal number (sk, cs, rue)\n', () => {
 			assert.equal(addNbspAfterOrdinalNumber(key, new Locale("cs")), testCase[key]);
 			assert.equal(addNbspAfterOrdinalNumber(key, new Locale("rue")), testCase[key]);
 		});
-		it("moduel test", () => {
+		it("module test", () => {
 			assert.equal(fixNbsp(key, new Locale("sk")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("cs")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("rue")), testCase[key]);

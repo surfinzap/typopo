@@ -96,6 +96,9 @@ describe('Tests that all modules are plugged in', () => {
 
 		// spaces
 		"Sentence and… ?": "Sentence and…?",
+		// nbsp
+		"v a v a v": "v a v a v",
+
 
 		// abbreviations
 		"E. g.something": "e.g. something",

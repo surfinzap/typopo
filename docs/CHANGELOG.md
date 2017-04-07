@@ -4,6 +4,8 @@
 ### Improvements
 * Fix abbreviations (e.g., i.e., a.m., p.m.), even when there are multiple spaces between them (e.    g. → e.g.)
 * Change double quotes to apostrophes in contracted words (don"t → don’t)
+* Add non-breaking space after ordinal number in sk, cs, rue (1.dodatok → 1. dodatok)
+
 
 ### Fixes
 * fix Abbreviation module (it was falsely removing spaces at the beginning of the abbreviation)

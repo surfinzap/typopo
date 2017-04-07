@@ -1,5 +1,4 @@
 # Backlog for typopo
-
 * add support for currencies
 * Add support for: 13 x $5 = $58.
 * non-breaking space between currency and number

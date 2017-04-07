@@ -44,7 +44,7 @@ export function addNbspAfterCardinalNumber(string, locale) {
 
 
 export function addNbspAfterOrdinalNumber(string, locale) {
-	let pattern = "("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"])";
+	let pattern = "("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"]?)";
 	let re = new RegExp(pattern, "g");
 	let replacement = "$1$2" + locale.nbsp;
 
