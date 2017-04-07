@@ -1,5 +1,4 @@
 # Backlog for typopo
-
 * add support for currencies
 * Add support for: 13 x $5 = $58.
 * non-breaking space between currency and number
@@ -8,11 +7,10 @@
 	* He said: "He was 12."
 	* It's 12" x 12".
 
-
 * consider fixing that: - dashes at the beginning of the sentence
 
-* consider resolving single-word widows
-* refactor SM, TM, (r), ampersand
+* refactor ampersand,
+* refactor SM,
 
 
 * fix this:  30.000,-. > 30.000,—
@@ -22,8 +20,6 @@
 * jslint
 
 * add support for math equations spacing
-
-
 
 
 

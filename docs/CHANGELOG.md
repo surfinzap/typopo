@@ -1,5 +1,22 @@
 # Changelog for Typopo
 
+## 2.1.3 // 2017-04-07
+### Improvements
+* Fix abbreviations (e.g., i.e., a.m., p.m.), even when there are multiple spaces between them (e.    g. → e.g.)
+* Change double quotes to apostrophes in contracted words (don"t → don’t)
+* Add non-breaking space after ordinal number in sk, cs, rue (1.dodatok → 1. dodatok)
+* Add non-breaking space after roman numeral in sk, cs, rue (I.dodatok → I. dodatok)
+
+### Fixes
+* fix Abbreviation module (it was falsely removing spaces at the beginning of the abbreviation)
+
+### Refactoring
+* Module for correcting Trademark symbol (™)
+* Module for correcting Registered Trademark symbol (®)
+* Module for correcting Plus-minus symbol (±)
+
+
+
 ## 2.1.2 // 2017-03-26
 ### Improvements
 * Combination of ellipses and dots is corrected to a single ellipsis (e.g. Sentence ending.…..... → Sentence ending…)
@@ -8,6 +25,7 @@
 ### Fixes
 * Fix Abbreviations module (removing false identification: či e-mail marketing → čie -mail marketing)
 * Fix Case module (CMSko → CMSko, instead of CMsko)
+
 
 
 ## 2.1.1 // 2017-03-04

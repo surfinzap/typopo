@@ -35,6 +35,11 @@ describe('Single quotes in default language (en)\n', () => {
 		"69'ers": "69’ers",
 		"iPhone6's": "iPhone6’s",
 		"1990's": "1990’s",
+		"don't" : "don’t",
+		"don''t" : "don’t",
+		"don''’t" : "don’t",
+		"don\"'''t" : "don’t",
+		"don\"t" : "don’t",
 	};
 
 
