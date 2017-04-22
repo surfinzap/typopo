@@ -5,6 +5,7 @@ import Locale from "../../locale/locale";
 describe('Fix copyright ©\n', () => {
 	let testCase = {
 		"(c)2017": "© 2017",
+		"( c )2017": "© 2017",
 		"Company (c)2017": "Company © 2017",
 		"Company (C)2017": "Company © 2017",
 		"Company ©2017": "Company © 2017",

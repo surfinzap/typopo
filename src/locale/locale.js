@@ -70,7 +70,10 @@ export default class Locale {
 		this.ampersand = "&";
 		this.sectionSign = "§";
 		this.copyright = "©";
+		this.registeredTrademark = "®";
 		this.soundRecordingCopyright = "℗";
+		this.trademark = "™";
+		this.plusMinus = "±";
 
 		/*
 			Source for webUrlPattern, emailAddressPattern

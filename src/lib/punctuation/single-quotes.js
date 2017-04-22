@@ -38,8 +38,8 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 	/* [1.3] Identify in-word contractions,
 					 e.g. Don’t, I’m, O’Doole, 69’ers */
-	let character_adepts = "0-9" + locale.lowercaseChars + locale.uppercaseChars;
-	pattern = "(["+ character_adepts +"])(" + locale.singleQuoteAdepts + ")(["+ character_adepts +"])";
+	let character_adepts = locale.cardinalNumber + locale.allChars;
+	pattern = "(["+ character_adepts +"])(" + locale.singleQuoteAdepts + locale.doubleQuoteAdepts +")+(["+ character_adepts +"])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1{{typopo__apostrophe}}$3");
 

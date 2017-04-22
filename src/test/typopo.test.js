@@ -64,25 +64,41 @@ describe('Tests that all modules are plugged in', () => {
 	let testCase = {
 
 		// double quoutes
+		"English „English„ „English„ English": "English “English” “English” English",
 		"He said: \"Here’s a 12\" record.\"": "He said: “Here’s a 12″ record.”",
-
 		// ellipsis
 		"Sentence ..….. another sentence": "Sentence … another sentence",
-
 		// hyphen
 		"e- shop": "e-shop",
+		// single quotes
+		"Let's test this: “however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said”":
+		"Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
+		"I'''m":"I’m",
+		"I''''m":"I’m",
+		"He said: “What about 'name' and 'other name'?”":
+		"He said: “What about ‘name’ and ‘other name’?”",
+
 
 		// section sign
 		"under Law §1782": "under Law § 1782",
 		// copyright
 		"Company (c)2017": "Company © 2017",
-		// sound recording copyright
-		"Company (p)2017": "Company ℗ 2017",
 		// exponents
 		"100 km3" : "100 km³",
+		// plus-minus
+		"+-": "±",
+		// sound recording copyright
+		"Company (p)2017": "Company ℗ 2017",
+		//registered trademark
+		"Company (r)": "Company®",
+		// trademark
+		"Company (tm)": "Company™",
 
 		// spaces
 		"Sentence and… ?": "Sentence and…?",
+		// nbsp
+		"v a v a v": "v a v a v",
+
 
 		// abbreviations
 		"E. g.something": "e.g. something",
