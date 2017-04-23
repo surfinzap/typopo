@@ -44,13 +44,22 @@ export function addNbspAfterCardinalNumber(string, locale) {
 
 
 export function addNbspAfterOrdinalNumber(string, locale) {
-	let pattern = "("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"]?)";
+	let pattern = "("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"]?)(["+ locale.allChars +"]+)";
 	let re = new RegExp(pattern, "g");
-	let replacement = "$1$2" + locale.nbsp;
+	let replacement = "$1$2" + locale.nbsp + "$4";
 
 	return string.replace(re, replacement);
 }
 
+
+
+export function addNbspWithinOrdinalDate(string, locale) {
+	let pattern = "("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"]?)("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"]?)("+ locale.cardinalNumber +")";
+	let re = new RegExp(pattern, "g");
+	let replacement = "$1$2" + locale.nbsp + "$4$5" + locale.nbsp + "$7";
+
+	return string.replace(re, replacement);
+}
 
 
 export function addNbspAfterRomanNumeral(string, locale) {
@@ -128,6 +137,7 @@ export function fixNbsp(string, locale) {
 	string = addNbspAfterAmpersand(string, locale);
 	string = addNbspAfterCardinalNumber(string, locale);
 	string = addNbspAfterOrdinalNumber(string, locale);
+	string = addNbspWithinOrdinalDate(string, locale);
 	string = addNbspAfterRomanNumeral(string, locale);
 	string = addNbspAfterInitial(string, locale);
 	string = addNbspAfterAbbreviation(string, locale)
