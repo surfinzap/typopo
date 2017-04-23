@@ -1,5 +1,9 @@
 # Changelog for Typopo
 
+## 2.1.4 // 2017-04-23
+### Fixes
+* fix Nbsp module (it was falsely changing 10.00 → 10. 00)
+
 ## 2.1.3 // 2017-04-07
 ### Improvements
 * Fix abbreviations (e.g., i.e., a.m., p.m.), even when there are multiple spaces between them (e.    g. → e.g.)

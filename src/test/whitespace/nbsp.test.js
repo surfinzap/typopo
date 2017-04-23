@@ -4,6 +4,7 @@ import {removeNbspBetweenMultiCharWords,
 				addNbspAroundMultiplicationSign,
 				addNbspAfterCardinalNumber,
 				addNbspAfterOrdinalNumber,
+				addNbspWithinOrdinalDate,
 				addNbspAfterRomanNumeral,
 				addNbspAfterInitial,
 				addNbspAfterSymbol,
@@ -115,14 +116,16 @@ describe('Add non-breaking space after ordinal number (en)\n', () => {
 	});
 });
 
+
+
 describe('Add non-breaking space after ordinal number (sk, cs, rue)\n', () => {
 	let testCase = {
-		"1. dodatok": "1. dodatok",
-		"1.dodatok": "1. dodatok",
-		"12. dodatok": "12. dodatok",
-		"12. január": "12. január",
-		"12. 1. 2017": "12. 1. 2017",
-		"12.1.2017": "12. 1. 2017",
+		"1. dodatok" : "1. dodatok",
+		"1.dodatok" : "1. dodatok",
+		"1.štava" : "1. štava",
+		"10.00" : "10.00", // false positive for the example above
+		"12. dodatok" : "12. dodatok",
+		"12. január" : "12. január",
 	};
 
 	Object.keys(testCase).forEach((key) => {
@@ -138,6 +141,31 @@ describe('Add non-breaking space after ordinal number (sk, cs, rue)\n', () => {
 		});
 	});
 });
+
+
+
+describe('Add non-breaking space within ordinal date (sk, cs, rue)\n', () => {
+	let testCase = {
+		"12. 1. 2017" : "12. 1. 2017",
+		"12.1.2017" : "12. 1. 2017",
+		"10.00" : "10.00", // false positive for the example above
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(addNbspWithinOrdinalDate(key, new Locale("sk")), testCase[key]);
+			assert.equal(addNbspWithinOrdinalDate(key, new Locale("cs")), testCase[key]);
+			assert.equal(addNbspWithinOrdinalDate(key, new Locale("rue")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixNbsp(key, new Locale("sk")), testCase[key]);
+			assert.equal(fixNbsp(key, new Locale("cs")), testCase[key]);
+			assert.equal(fixNbsp(key, new Locale("rue")), testCase[key]);
+		});
+	});
+});
+
+
 
 describe('Add non-breaking space after roman numeral (sk, cs, rue)\n', () => {
 	let testCase = {
