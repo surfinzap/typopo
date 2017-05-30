@@ -14,6 +14,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"eg something": "e.g. something",
 		"e.     g. something": "e.g. something",
 		", e.g. something": ", e.g. something",
+		"(e.g. something": "(e.g. something",
 		"a e.g. something": "a e.g. something",
 		"abc\ne.g. something": "abc\ne.g. something",
 		"Greg Snow": "Greg Snow", // false positive
@@ -24,6 +25,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"I. E. something": "i.e. something",
 		"I.E. something": "i.e. something",
 		"ie. something": "i.e. something",
+		"(I. e. something": "(i.e. something",
 		"ie something": "i.e. something",
 		"i.     e. something": "i.e. something",
 		"a i.e. something": "a i.e. something",

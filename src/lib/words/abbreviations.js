@@ -19,7 +19,8 @@ export function fixEgIeAmPm(string, locale) {
 	let abbreviations = ["eg", "ie"];
 	for (let i = 0; i < abbreviations.length; i++) {
 		// boundaries are set for non-latin characters
-		let pattern = "(^|\\s)([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]?)([^" + locale.allChars + "])";
+		let pattern = "(^|\\s|["+ locale.openingBrackets +"])([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]?)([^" + locale.allChars + "])";
+		console.log(pattern);
 		let re = new RegExp(pattern, "gi");
 		let replacement = "$1{{typopo__" + abbreviations[i] + "}} ";
 		string = string.replace(re, replacement);
