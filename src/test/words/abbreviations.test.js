@@ -19,6 +19,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"abc\ne.g. something": "abc\ne.g. something",
 		"Greg Snow": "Greg Snow", // false positive
 		"eggnog": "eggnog", // false positive
+		"e.g.\nsomething": "e.g. \nsomething", //consider removing space at the end of the line
 
 		"I. e. something": "i.e. something",
 		"I. e.something": "i.e. something",
