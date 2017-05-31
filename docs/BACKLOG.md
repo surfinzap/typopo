@@ -1,7 +1,5 @@
 # Backlog for typopo
 
-* Mini Launch May 1- Draft Info → Mini Launch May 1—Draft Infod
-
 * add support for currencies
 	* Ak je hodnota uvedená s desatinným číslom, alebo
 s desatinou čiarkou a pomlčkoub, kladie sa značka meny pred sumu.
