@@ -1,5 +1,9 @@
 # Changelog for Typopo
 
+## 2.1.5 // 2017-06
+* Fix abbreviations (e.g., i.e.), when they're used in the brackets
+
+
 ## 2.1.4 // 2017-04-23
 ### Fixes
 * fix Nbsp module (it was falsely changing 10.00 → 10. 00)
