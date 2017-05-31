@@ -1,11 +1,27 @@
 # Backlog for typopo
+
 * add support for currencies
+	* Ak je hodnota uvedená s desatinným číslom, alebo
+s desatinou čiarkou a pomlčkoub, kladie sa značka meny pred sumu.
+Ak je číslo celé, kladie sa značka meny za sumu. Vo vetnej súvislosti
+sa označenie meny uvádza vždy za sumou, a to buď značkou meny,
+alebo sa názov meny vypíše.
 * Add support for: 13 x $5 = $58.
 * non-breaking space between currency and number
+
+* add support for octothorpe: časopis # 9 → časopis #9
+* nbsp after asterisk, dagger, double-dagger → * † ‡
+* no spaces between tilda range 7~15
+* № bez medzery (Numero)
 
 * how to handle difference between:
 	* He said: "He was 12."
 	* It's 12" x 12".
+
+double check:
+Goldman &
+Salatsch
+
 
 * consider fixing that: - dashes at the beginning of the sentence
 

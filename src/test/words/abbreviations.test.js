@@ -14,16 +14,19 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"eg something": "e.g. something",
 		"e.     g. something": "e.g. something",
 		", e.g. something": ", e.g. something",
+		"(e.g. something": "(e.g. something",
 		"a e.g. something": "a e.g. something",
 		"abc\ne.g. something": "abc\ne.g. something",
 		"Greg Snow": "Greg Snow", // false positive
 		"eggnog": "eggnog", // false positive
+		"e.g.\nsomething": "e.g. \nsomething", //consider removing space at the end of the line
 
 		"I. e. something": "i.e. something",
 		"I. e.something": "i.e. something",
 		"I. E. something": "i.e. something",
 		"I.E. something": "i.e. something",
 		"ie. something": "i.e. something",
+		"(I. e. something": "(i.e. something",
 		"ie something": "i.e. something",
 		"i.     e. something": "i.e. something",
 		"a i.e. something": "a i.e. something",
