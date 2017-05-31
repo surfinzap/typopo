@@ -1,6 +1,6 @@
 # Changelog for Typopo
 
-## 2.1.5 // 2017-06
+## 2.1.5 // 2017-05-31
 * Fix abbreviations (e.g., i.e.), when they're used in the brackets
 
 
