@@ -7,7 +7,7 @@
 
 	Algorithm
 	[0] Remove extra terminal punctuation around double quotes
-	[1] Swap right double quote adepts with a punctuation
+	[1] Swap right double quote adepts with a terminal punctuation
 	    (this comes first as it is a quite common mistake that may eventually
 		  lead to improper identification of double primes)
 	[2] Identify inches, arcseconds, seconds
@@ -16,7 +16,7 @@
 	[5] Reconsider wrongly identified left quote and prime
 	[6] Fix spacing around quotes and primes
 	[7] Swap back some of the double quotes with a punctuation
-	[9] Remove extra punctuation around quotes
+	[8] Remove extra comma after punctuation in direct speech
 	[9] Add spaces around quotes where missing
 	[10] Replace all identified punctuation with appropriate punctuation in
 	    given language
@@ -51,7 +51,7 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	string = string.replace(re, "{{typopo__left-double-quote}}$2{{typopo__right-double-quote}}");
 
 
-	/* [4.1] Identify unclosed left double quote */
+	/* [4.1] Identify unclosed left double quotes */
 	pattern = "(" + locale.doubleQuoteAdepts + ")([" + locale.lowercaseChars + locale.uppercaseChars + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "{{typopo__left-double-quote--unclosed}}$2");
@@ -108,9 +108,14 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	string = string.replace(re, "$1$3$2");
 
 
-	/* [8] Remove extra comma after punctuation in direct speech,
-					 e.g. "“Hey!,” she said" */
-	pattern = "([" + locale.sentencePunctuation + "])([\,])";
+	/* [8]	Remove extra comma after punctuation in direct speech,
+					 e.g. "“Hey!,” she said"
+
+					Sidenote
+					(?![\.]) is negative lookahead to exlude period from
+					sentencePunctuation set, see related test case
+					 */
+	pattern = "(?![\.])([" + locale.sentencePunctuation + "])([\,])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1");
 
@@ -126,7 +131,8 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	string = string.replace(re, "$1 $2");
 
 
-	/* [10] Punctuation replacement */
+	/* [10] Replace all identified punctuation with appropriate punctuation in
+	    given language */
 	string = string.replace(/({{typopo__double-prime}})/g, locale.doublePrime);
 	string = string.replace(/({{typopo__left-double-quote}}|{{typopo__left-double-quote--unclosed}})/g, locale.leftDoubleQuote);
 	string = string.replace(/({{typopo__right-double-quote}}|{{typopo__right-double-quote--unclosed}})/g, locale.rightDoubleQuote);
