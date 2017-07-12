@@ -9,6 +9,10 @@ alebo sa názov meny vypíše.
 * Add support for: 13 x $5 = $58.
 * non-breaking space between currency and number
 
+* double check what line feed I'm using
+* get exceptions for abbreviations that are supposed to be used without spaces
+
+
 * add support for octothorpe: časopis # 9 → časopis #9
 * nbsp after asterisk, dagger, double-dagger → * † ‡
 * no spaces between tilda range 7~15
@@ -17,6 +21,8 @@ alebo sa názov meny vypíše.
 * how to handle difference between:
 	* He said: "He was 12."
 	* It's 12" x 12".
+
+* parse ISSN, ISBN
 
 double check:
 Goldman &

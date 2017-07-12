@@ -112,9 +112,10 @@ export function addNbspAfterAbbreviation(string, locale) {
 	let abbreviations = locale.abbreviationsForNbsp;
 
 	for (var abbr in abbreviations) {
-		let pattern = "(^|[^" + locale.allChars + locale.sentencePunctuation + "])(" + abbreviations[abbr] +"[" + locale.spaces + "]?)";
+		let pattern = "(^|[^" + locale.allChars + locale.sentencePunctuation + "])(" + abbreviations[abbr] +"[" + locale.spaces + "]?)([" + locale.allChars + locale.cardinalNumber + "])";
+
 		let re = new RegExp(pattern, "gi");
-		let replacement = "$1" + abbr + locale.nbsp;
+		let replacement = "$1" + abbr + locale.nbsp + "$3";
 
 		string = string.replace(re, replacement);
 	}

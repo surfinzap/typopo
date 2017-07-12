@@ -5,28 +5,54 @@ import {removeTrailingSpaces} from "../whitespace/spaces";
 	a.m., p.m., e.g., i.e.
 
 	Algorithm
-	[1] Identify e.g., i.e.
-	[2] Identify a.m., p.m. (different match to avoid false positives such as:
+	[1] Identify e.g., i.e. in brackets, within quotes and at the beginning
+	[2] Identify other e.g., i.e. cases
+	[3] Identify a.m., p.m. in brackets, within quotes and at the beginning
+	[4] Identify a.m., p.m. (different match to avoid false positives such as:
 			I am, He is the PM.)
-	[3] Exclude false identifications
+	[5] Exclude false identifications
 
 	@param {string} input text for identification
 	@returns {string} corrected output
 */
 export function fixEgIeAmPm(string, locale) {
 
-	/* [1] Identify e.g., i.e. */
+
+
+	/* [1] Identify e.g., i.e. in brackets, within quotes and at the beginning */
 	let abbreviations = ["eg", "ie"];
 	for (let i = 0; i < abbreviations.length; i++) {
 		// boundaries are set for non-latin characters
-		let pattern = "(^|\\s|["+ locale.openingBrackets +"])([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]?)([^" + locale.allChars + "\\n])";
+		let pattern = "(^|["+ locale.openingBrackets + locale.leftDoubleQuote + locale.leftSingleQuote + "])([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]*)([" + locale.closingBrackets + locale.rightDoubleQuote + locale.rightSingleQuote + "])";
+		let re = new RegExp(pattern, "gi");
+		let replacement = "$1{{typopo__" + abbreviations[i] + "}}$4";
+		string = string.replace(re, replacement);
+	}
+
+
+	/* [2] Identify e.g., i.e. */
+	abbreviations = ["eg", "ie"];
+	for (let i = 0; i < abbreviations.length; i++) {
+		// boundaries are set for non-latin characters
+		let pattern = "(^|\\s|["+ locale.openingBrackets +"])([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]?)([^" + locale.allChars + locale.cardinalNumber + "\\n])";
 		let re = new RegExp(pattern, "gi");
 		let replacement = "$1{{typopo__" + abbreviations[i] + "}} ";
 		string = string.replace(re, replacement);
 	}
 
 
-	/* [2] Identify a.m., p.m. */
+	/* [3] Identify a.m., p.m. in brackets, within quotes and at the beginning */
+	abbreviations = ["am", "pm"];
+	for (let i = 0; i < abbreviations.length; i++) {
+		// let pattern = "(\\d)([" + locale.spaces + "]?)([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]?)(\\b|\\B)";
+		let pattern = "(^|["+ locale.openingBrackets + locale.leftDoubleQuote + locale.leftSingleQuote + "])([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]*)([" + locale.closingBrackets + locale.rightDoubleQuote + locale.rightSingleQuote + "]|$)";
+		let re = new RegExp(pattern, "gi");
+		let replacement = "$1{{typopo__" + abbreviations[i] + "}}$4";
+		string = string.replace(re, replacement);
+	}
+
+
+	/* [4] Identify a.m., p.m. */
 	abbreviations = ["am", "pm"];
 	for (let i = 0; i < abbreviations.length; i++) {
 		let pattern = "(\\d)([" + locale.spaces + "]?)([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]?)(\\b|\\B)";
@@ -36,7 +62,7 @@ export function fixEgIeAmPm(string, locale) {
 	}
 
 
-	/* [3] Exclude false identifications
+	/* [5] Exclude false identifications
 		 Regex \b does not catch non-latin characters so we need to exclude false
 		 identifications
 	*/

@@ -68,6 +68,9 @@ describe('Tests that all modules are plugged in', () => {
 		"He said: \"Here’s a 12\" record.\"": "He said: “Here’s a 12″ record.”",
 		// ellipsis
 		"Sentence ..….. another sentence": "Sentence … another sentence",
+
+		// punctuation trimming
+		"č., s., fol., str.," : "č., s., fol., str.,",
 		// hyphen
 		"e- shop": "e-shop",
 		// single quotes
@@ -102,6 +105,10 @@ describe('Tests that all modules are plugged in', () => {
 
 		// abbreviations
 		"E. g.something": "e.g. something",
+		"(e.g.)" : "(e.g.)",
+		"a.m." : "a.m.",
+		"5 a.m." : "5 a.m.",
+
 		//case
 		"CMSko" : "CMSko",
 		"cAPSLOCK": "capslock",
