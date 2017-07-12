@@ -23,8 +23,9 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"e.g. 100 km" : "e.g. 100 km",
 		"(e.g.)" : "(e.g.)",
 		"(e.g. )" : "(e.g.)",
-		"“e.g.”" : "“e.g.”",
-		"‘e.g.’" : "‘e.g.’",
+		"“e. g.”" : "“e.g.”",
+		"‘e. g.’" : "‘e.g.’",
+		"e. g." : "e.g.",
 
 		"I. e. something": "i.e. something",
 		"I. e.something": "i.e. something",
@@ -44,6 +45,10 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"i.e. 100 km" : "i.e. 100 km",
 		"(i.e.)" : "(i.e.)",
 
+		"a. m." : "a.m.",
+		"(a. m.)" : "(a.m.)",
+		"“a. m.”" : "“a.m.”",
+		"‘a. m.’" : "‘a.m.’",
 		"5 am": "5 a.m.",
 		"5 a. m. " : "5 a.m.",
 		"5 a.     m. " : "5 a.m.",
