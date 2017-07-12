@@ -1,6 +1,6 @@
 # Changelog for Typopo
 
-## 2.1.6 // 2017-07-
+## 2.1.7 // 2017-07-12
 ### Fixes
 * Fix abbreviations (e.g., i.e., a.m., p.m.), when they're followed by a bracket (bracket got accidentally trimmed)
 * Fix abbreviations (e.g., i.e.), when they're followed by a number (number got accidentally trimmed)

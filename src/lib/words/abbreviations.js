@@ -19,11 +19,11 @@ export function fixEgIeAmPm(string, locale) {
 
 
 
-	/* [1] Identify e.g., i.e. in brackets, within quotes and at the beginning */
+	/* [1] Identify e.g., i.e. at the beginning, in brackets, within quotes or in the list of abbreviations */
 	let abbreviations = ["eg", "ie"];
 	for (let i = 0; i < abbreviations.length; i++) {
 		// boundaries are set for non-latin characters
-		let pattern = "(^|["+ locale.openingBrackets + locale.leftDoubleQuote + locale.leftSingleQuote + "])([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]*)([" + locale.closingBrackets + locale.rightDoubleQuote + locale.rightSingleQuote + "])";
+		let pattern = "(^|["+ locale.spaces + locale.openingBrackets + locale.leftDoubleQuote + locale.leftSingleQuote + "])([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]*)([" + locale.closingBrackets + locale.rightDoubleQuote + locale.rightSingleQuote + locale.sentencePausePunctuation + "])";
 		let re = new RegExp(pattern, "gi");
 		let replacement = "$1{{typopo__" + abbreviations[i] + "}}$4";
 		string = string.replace(re, replacement);

@@ -70,7 +70,7 @@ describe('Tests that all modules are plugged in', () => {
 		"Sentence ..….. another sentence": "Sentence … another sentence",
 
 		// punctuation trimming
-		"č., s., fol., str.," : "č., s., fol., str.,",
+		"č., s., fol., e.g., i.e., str.," : "č., s., fol., e.g., i.e., str.,",
 		// hyphen
 		"e- shop": "e-shop",
 		// single quotes
