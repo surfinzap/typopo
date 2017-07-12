@@ -4,6 +4,7 @@
 ### Fixes
 * Fix abbreviations (e.g., i.e., a.m., p.m.), when they're followed by a bracket (bracket got accidentally trimmed)
 * Fix abbreviations (e.g., i.e.), when they're followed by a number (number got accidentally trimmed)
+* Fix cases when periods where removed from the list of abbreviations
 
 ## 2.1.5 // 2017-05-31
 ### Fixes

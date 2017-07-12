@@ -76,11 +76,13 @@ describe('Double quotes in default language (en)\n', () => {
 
 		/* Remove extra sentence punctuation
 
-		 [1] extra comma after terminal punctuation, it it happens often in direct speech
-		 [2] extra dot at the end of a direct speech ending with abbreviation */
-		"“Hey!,” she said": "“Hey!” she said", /*[1]*/
-		/*[2] TBD*/
-		"“We will continue this tomorrow at 8:00 a.m.”.": "“We will continue this tomorrow at 8:00 a.m.”",
+			[1] extra comma after terminal punctuation, it it happens often in direct speech
+			[2] extra dot at the end of a direct speech ending with abbreviation
+			[3] false positive */
+		/*[1]*/"“Hey!,” she said": "“Hey!” she said",
+		/*[2]*/"“We will continue this tomorrow at 8:00 a.m.”.": "“We will continue this tomorrow at 8:00 a.m.”",
+		/*[3]*/"č., s., fol., str.," : "č., s., fol., str.,", 
+
 
 		/* Wrong spacing */
 		"He said:“Here’s 12″ record.”" : "He said: “Here’s 12″ record.”",
