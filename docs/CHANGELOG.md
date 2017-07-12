@@ -2,6 +2,7 @@
 
 ## 2.1.6 // 2017-07-
 ### Fixes
+* Fix abbreviations (e.g., i.e.), when they're followed by a bracket (bracket got accidentally trimmed)
 * Fix abbreviations (e.g., i.e.), when they're followed by a number (number got accidentally trimmed)
 
 ## 2.1.5 // 2017-05-31

@@ -102,6 +102,7 @@ describe('Tests that all modules are plugged in', () => {
 
 		// abbreviations
 		"E. g.something": "e.g. something",
+		"(e.g.)" : "(e.g.)",
 		//case
 		"CMSko" : "CMSko",
 		"cAPSLOCK": "capslock",

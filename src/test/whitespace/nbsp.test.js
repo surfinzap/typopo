@@ -88,7 +88,7 @@ describe('Add non-breaking space after cardinal number\n', () => {
 		it("unit test", () => {
 			assert.equal(addNbspAfterCardinalNumber(key, new Locale("en-us")), testCase[key]);
 		});
-		it("moduel test", () => {
+		it("module test", () => {
 			assert.equal(fixNbsp(key, new Locale("en-us")), testCase[key]);
 		});
 	});
@@ -244,8 +244,9 @@ describe('Replaces various spaces with non-breaking space after symbol, e.g. ©\
 
 
 
-describe('Add non-breaking space after abbreviations', () => {
+describe('Add non-breaking space after abbreviations\n', () => {
 	let testCase = {
+		// as all abbreviations can be used within different languages, such as reference, they're being corrected in each language
 		"č.5 žije" : "č. 5 žije",
 		"Č.5 žije" : "č. 5 žije",
 		"č. 5 žije" : "č. 5 žije",
@@ -261,6 +262,12 @@ describe('Add non-breaking space after abbreviations', () => {
 		"e.g. something" : "e.g. something",
 		"10 p." : "10 p.",
 		"pp. 10–25" : "pp. 10–25",
+		"(e.g.)" : "(e.g.)",
+		"“e.g.”" : "“e.g.”",
+		"‘e.g.’" : "‘e.g.’"
+
+
+
 	};
 
 	Object.keys(testCase).forEach((key) => {

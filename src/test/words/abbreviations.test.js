@@ -21,6 +21,10 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"eggnog": "eggnog", // false positive
 		"e.g.\nsomething": "e.g. \nsomething", //consider removing space at the end of the line
 		"e.g. 100 km" : "e.g. 100 km",
+		"(e.g.)" : "(e.g.)",
+		"(e.g. )" : "(e.g.)",
+		"“e.g.”" : "“e.g.”",
+		"‘e.g.’" : "‘e.g.’",
 
 		"I. e. something": "i.e. something",
 		"I. e.something": "i.e. something",
@@ -38,6 +42,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"ieš": "ieš", // false positive for non-latin boundaries
 		"či e-mail marketing" : "či e-mail marketing", // false positive for non-latin boundaries
 		"i.e. 100 km" : "i.e. 100 km",
+		"(i.e.)" : "(i.e.)",
 
 		"5 am": "5 a.m.",
 		"5 a. m. " : "5 a.m.",
