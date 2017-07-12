@@ -26,6 +26,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"“e. g.”" : "“e.g.”",
 		"‘e. g.’" : "‘e.g.’",
 		"e. g." : "e.g.",
+		"č., s., fol., e. g., i.e., str.," : "č., s., fol., e.g., i.e., str.,",
 
 		"I. e. something": "i.e. something",
 		"I. e.something": "i.e. something",
