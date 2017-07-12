@@ -1,6 +1,11 @@
 # Changelog for Typopo
 
+## 2.1.6 // 2017-07-
+### Fixes
+* Fix abbreviations (e.g., i.e.), when they're followed by a number (number got accidentally trimmed)
+
 ## 2.1.5 // 2017-05-31
+### Fixes
 * Fix abbreviations (e.g., i.e.), when they're used in the brackets
 
 
