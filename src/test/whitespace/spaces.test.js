@@ -159,11 +159,14 @@ describe('Add space after sentence punctuation and closing brackets\n', () => {
 		"Enclosed (in)the brackets.": "Enclosed (in) the brackets.",
 		"Enclosed [in]the brackets.": "Enclosed [in] the brackets.",
 		"Enclosed {in}the brackets.": "Enclosed {in} the brackets.",
+		"R-N.D." : "R-N.D.", // false positive
+		"the U.S.":"the U.S.",
+		"John Thune (S.D.)" : "John Thune (S.D.)",
 	};
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("", () => {
+		it("unit test", () => {
 			assert.equal(addSpaceAfterPunctuation(key, new Locale("en-us")), testCase[key]);
 		});
 	});

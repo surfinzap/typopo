@@ -6,6 +6,7 @@
 
 ### Fixes
 * Fix false identification of a.m., p.m. (e.g. 10 Americans were falsely fixed to 10 a.m.ericans)
+* Do not space abbreviations (e.g. the U.S. were falsely fixed to the U. S.)
 
 
 ## 2.1.7 // 2017-07-12

@@ -1,9 +1,5 @@
 # Backlog for typopo
 
-* fix: U.S. → U. s.
-* consider fixing arbitrary shortcuts: e.g. R-N.D. → R-N. D.
-			John Thune (S.D.) → John Thune (s. D.)
-
 
 * when single quotes are used just by themselves, they are incorrectly interpreted (not supported scenario but worth thinking about)
 	e.g.
@@ -11,6 +7,9 @@
 	’and what is the use of a book,’ thought Alice ’without pictures or conversations?’
 
 * neukazuje opravu nbsp
+
+
+
 
 * add support for currencies
 	* Ak je hodnota uvedená s desatinným číslom, alebo
