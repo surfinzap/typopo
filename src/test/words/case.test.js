@@ -4,11 +4,15 @@ import Locale from "../../locale/locale";
 
 describe('Corrects accidental uPPERCASE\n', () => {
 	let testCase = {
-		"HEy, JEnnifer!": "Hey, Jennifer!",
+		"Hey, JEnnifer!": "Hey, Jennifer!",
 		"CMSko" : "CMSko",
+		"FPs": "FPs",
 		"ČSNka" : "ČSNka",
+		"BigONE" : "BigONE", // specific brand names
+		"two Panzer IVs" : "two Panzer IVs",
 		"How about ABC?": "How about ABC?",
 		"cAPSLOCK": "capslock",
+		"(cAPSLOCK)": "(capslock)",
 		"iPhone": "iPhone",
 		"iT": "it",
 		"Central Europe and Cyrillic tests: aĎIÉUБUГ": "Central Europe and Cyrillic tests: aďiéuбuг",

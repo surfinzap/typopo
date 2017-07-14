@@ -1,6 +1,9 @@
 # Changelog for Typopo
 
 ## 2.1.8 // 2017-07
+### Improvements
+* Narrow down cases when accidental uppercase was identified to avoid false correction of special brand names (e.g. BigONE) or capitalized plurals (e.g. two Panzer IVs, seven MPs)
+
 ### Fixes
 * Fix false identification of a.m., p.m. (e.g. 10 Americans were falsely fixed to 10 a.m.ericans)
 
