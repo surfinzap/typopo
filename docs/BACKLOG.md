@@ -1,12 +1,14 @@
 # Backlog for typopo
 
 
-* when single quotes are used just by themselves, they are incorrectly interpreted (not supported scenario but worth thinking about)
+* show where nbsp was added
+
+
+* Consider supporting single quotes on their own
 	e.g.
 	‘and what is the use of a book,’ thought Alice ‘without pictures or conversations?’
 	’and what is the use of a book,’ thought Alice ’without pictures or conversations?’
 
-* neukazuje opravu nbsp
 
 
 
