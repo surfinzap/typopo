@@ -1,6 +1,5 @@
 # Backlog for typopo
 
-* fix: American → a.m.erican
 * fix: U.S. → U. s.
 * fix: P.M. of the UK
 * consider fixing arbitrary shortcuts: e.g. R-N.D. → R-N. D.
@@ -12,6 +11,8 @@
 	e.g.
 	‘and what is the use of a book,’ thought Alice ‘without pictures or conversations?’
 	’and what is the use of a book,’ thought Alice ’without pictures or conversations?’
+
+* neukazuje opravu nbsp
 
 * add support for currencies
 	* Ak je hodnota uvedená s desatinným číslom, alebo

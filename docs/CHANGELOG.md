@@ -1,5 +1,10 @@
 # Changelog for Typopo
 
+## 2.1.8 // 2017-07
+### Fixes
+* Fix false identification of a.m., p.m. (e.g. 10 Americans were falsely fixed to 10 a.m.ericans)
+
+
 ## 2.1.7 // 2017-07-12
 ### Fixes
 * Fix abbreviations (e.g., i.e., a.m., p.m.), when they're followed by a bracket (bracket got accidentally trimmed)
