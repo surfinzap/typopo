@@ -1,4 +1,5 @@
 import {removeTrailingSpaces} from "../whitespace/spaces";
+import {removeExtraPeriod} from "../punctuation/period";
 
 /*
 	Fixes differently-spelled abbreviations:
@@ -55,7 +56,7 @@ export function fixEgIeAmPm(string, locale) {
 	/* [4] Identify a.m., p.m. */
 	abbreviations = ["am", "pm"];
 	for (let i = 0; i < abbreviations.length; i++) {
-		let pattern = "(\\d)([" + locale.spaces + "]?)([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]?)(\\b|\\B)";
+		let pattern = "(\\d)([" + locale.spaces + "]?)([" + abbreviations[i][0] + "]\\.?["+ locale.spaces +"]*[" + abbreviations[i][1] + "]\\.?)(["+ locale.spaces +"]?)(\\b)";
 		let re = new RegExp(pattern, "gi");
 		let replacement = "$1 {{typopo__" + abbreviations[i] + "}}$4";
 		string = string.replace(re, replacement);
@@ -92,7 +93,11 @@ export function fixEgIeAmPm(string, locale) {
 		string = string.replace(re, replacement);
 	}
 
-	return removeTrailingSpaces(string, locale);
+	// extra cleanup
+	string = removeTrailingSpaces(string, locale);
+	string = removeExtraPeriod(string, locale);
+
+	return string;
 }
 
 

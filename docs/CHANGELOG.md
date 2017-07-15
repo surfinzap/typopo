@@ -1,5 +1,14 @@
 # Changelog for Typopo
 
+## 2.1.8 // 2017-07-15
+### Improvements
+* Narrow down cases when accidental uppercase was identified to avoid false correction of special brand names (e.g. BigONE) or capitalized plurals (e.g. two Panzer IVs, seven MPs)
+
+### Fixes
+* Fix false identification of a.m., p.m. (e.g. 10 Americans were falsely fixed to 10 a.m.ericans)
+* Do not space abbreviations (e.g. the U.S. were falsely fixed to the U. S.)
+
+
 ## 2.1.7 // 2017-07-12
 ### Fixes
 * Fix abbreviations (e.g., i.e., a.m., p.m.), when they're followed by a bracket (bracket got accidentally trimmed)

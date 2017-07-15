@@ -15,7 +15,7 @@
 export function fixCase(string, locale) {
 
 	/* [1] two first uppercase letters (i.e. UPpercase) */
-	let pattern = "([^" + locale.allChars + "]|^)(["+ locale.uppercaseChars +"]{2})(["+ locale.lowercaseChars +"]+)";
+	let pattern = "([^" + locale.allChars + "]|^)(["+ locale.uppercaseChars +"]{2})(["+ locale.lowercaseChars +"]{2,})";
 	let re = new RegExp(pattern, "g");
 
 	string = string.replace(re, function($0, $1, $2, $3){
@@ -33,10 +33,10 @@ export function fixCase(string, locale) {
 	});
 
 	/* [2.2] Swapped cases (n-letter cases, i.e. uPPERCASE) */
-	pattern = "["+ locale.lowercaseChars +"]+["+ locale.uppercaseChars +"]{2,}";
+	pattern = "(\\b)(["+ locale.lowercaseChars +"])(["+ locale.uppercaseChars +"]{2,})";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, function(string){
-		return (string.substring(0,1) + string.substring(1).toLowerCase());
+	string = string.replace(re, function(string, $1, $2, $3){
+		return ($1 + $2 + $3.toLowerCase());
 	});
 
 	return string;
