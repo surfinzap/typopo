@@ -1,16 +1,6 @@
 # Backlog for typopo
 
 
-* show where nbsp was added
-
-
-* Consider supporting single quotes on their own
-	e.g.
-	‘and what is the use of a book,’ thought Alice ‘without pictures or conversations?’
-	’and what is the use of a book,’ thought Alice ’without pictures or conversations?’
-
-
-
 
 
 * add support for currencies
@@ -21,6 +11,14 @@ sa označenie meny uvádza vždy za sumou, a to buď značkou meny,
 alebo sa názov meny vypíše.
 * Add support for: 13 x $5 = $58.
 * non-breaking space between currency and number
+
+
+* Consider supporting single quotes on their own
+	e.g.
+	‘and what is the use of a book,’ thought Alice ‘without pictures or conversations?’
+	’and what is the use of a book,’ thought Alice ’without pictures or conversations?’
+
+
 
 * double check what line feed I'm using
 * get exceptions for abbreviations that are supposed to be used without spaces
