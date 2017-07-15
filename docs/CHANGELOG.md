@@ -1,6 +1,6 @@
 # Changelog for Typopo
 
-## 2.1.8 // 2017-07
+## 2.1.8 // 2017-07-15
 ### Improvements
 * Narrow down cases when accidental uppercase was identified to avoid false correction of special brand names (e.g. BigONE) or capitalized plurals (e.g. two Panzer IVs, seven MPs)
 
