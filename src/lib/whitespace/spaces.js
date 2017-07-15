@@ -70,7 +70,7 @@ export function addSpaceBeforePunctuation(string, locale) {
 
 
 export function addSpaceAfterPunctuation(string, locale) {
-	var pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars + "])([" + locale.sentencePunctuation + locale.closingBrackets + "])(["+ locale.lowercaseChars + locale.uppercaseChars + "])";
+	var pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars + "]{2,})([" + locale.sentencePunctuation + locale.closingBrackets + "])(["+ locale.lowercaseChars + locale.uppercaseChars + "])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$1$2 $3");
 }

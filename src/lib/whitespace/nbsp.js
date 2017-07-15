@@ -111,9 +111,21 @@ export function addNbspAfterAbbreviation(string, locale) {
 
 	let abbreviations = locale.abbreviationsForNbsp;
 
-	for (var abbr in abbreviations) {
-		let pattern = "(^|[^" + locale.allChars + locale.sentencePunctuation + "])(" + abbreviations[abbr] +"[" + locale.spaces + "]?)([" + locale.allChars + locale.cardinalNumber + "])";
+	// replace existing spaces following abbreviations with nbsp
 
+	for (var abbr in abbreviations) {
+		let pattern = "(^|[^" + locale.allChars + locale.sentencePunctuation + "\\n])(" + abbreviations[abbr] +")([" + locale.spaces + "])([" + locale.allChars + "]|" + locale.cardinalNumber + ")";
+		let re = new RegExp(pattern, "gi");
+		let replacement = "$1" + abbr + locale.nbsp + "$4";
+
+		string = string.replace(re, replacement);
+	}
+
+
+	// best effort to add nbsp after abbreviations where were ommited
+	
+	for (var abbr in abbreviations) {
+		let pattern = "(^|[^" + locale.allChars + locale.sentencePunctuation + "\\n])(" + abbreviations[abbr] +"[" + locale.spaces + "]?)([" + locale.allChars + "][^\\.]|" + locale.cardinalNumber + ")";
 		let re = new RegExp(pattern, "gi");
 		let replacement = "$1" + abbr + locale.nbsp + "$3";
 

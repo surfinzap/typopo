@@ -60,6 +60,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"I am from nowhere.": "I am from nowhere.", // false positive
 		"5 šam": "5 šam", // false positive for non-latin boundaries
 		"5 amš": "5 amš", // false positive for non-latin boundaries
+		"10 Americans" : "10 Americans",
 
 		"4.20 pm": "4.20 p.m.",
 		"4.20 PM": "4.20 p.m.",
@@ -67,6 +68,7 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		"4.20 p.     m.": "4.20 p.m.",
 		"4.20 p.m. in the afternoon": "4.20 p.m. in the afternoon",
 		"She is the PM of the UK.": "She is the PM of the UK.", // false positive
+		"2 PMs" : "2 PMs",
 
 		// Throwing extra space
 		"“We will continue tomorrow at 8:00 a.m.”": "“We will continue tomorrow at 8:00 a.m.”",

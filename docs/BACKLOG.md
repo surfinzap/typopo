@@ -1,5 +1,8 @@
 # Backlog for typopo
 
+
+
+
 * add support for currencies
 	* Ak je hodnota uvedená s desatinným číslom, alebo
 s desatinou čiarkou a pomlčkoub, kladie sa značka meny pred sumu.
@@ -8,6 +11,14 @@ sa označenie meny uvádza vždy za sumou, a to buď značkou meny,
 alebo sa názov meny vypíše.
 * Add support for: 13 x $5 = $58.
 * non-breaking space between currency and number
+
+
+* Consider supporting single quotes on their own
+	e.g.
+	‘and what is the use of a book,’ thought Alice ‘without pictures or conversations?’
+	’and what is the use of a book,’ thought Alice ’without pictures or conversations?’
+
+
 
 * double check what line feed I'm using
 * get exceptions for abbreviations that are supposed to be used without spaces
