@@ -1,5 +1,11 @@
 # Changelog for Typopo
 
+## 2.1.9 // 2018-11-11
+### Improvements
+* Change Narrow NBSP into Hair space from the left side of the m-dash in sk, cs, rue locale
+* Add space around ellipsis between two words (word...word → word… word)
+
+
 ## 2.1.8 // 2017-07-15
 ### Improvements
 * Narrow down cases when accidental uppercase was identified to avoid false correction of special brand names (e.g. BigONE) or capitalized plurals (e.g. two Panzer IVs, seven MPs)

@@ -102,6 +102,12 @@ function correctSpacesAroundEllipsis(string, locale) {
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3");
 
+	/* [6] add space after aposiopesis between two words */
+
+	pattern = "([" + locale.allChars + "])([" + locale.ellipsis + "])([" + locale.allChars + "])";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1$2 $3");
+
 	return string;
 }
 

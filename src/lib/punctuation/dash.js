@@ -40,7 +40,7 @@ export function fixSpacesAroundEmDash(string, locale) {
 		case "rue":
 		case "sk":
 		case "cs":
-			replacement = locale.narrowNbsp + locale.emDash + locale.hairSpace;
+			replacement = locale.hairSpace + locale.emDash + locale.hairSpace;
 			break;
 	}
 
