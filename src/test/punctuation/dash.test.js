@@ -76,8 +76,8 @@ describe('Fix spaces around em dash in English\n', () => {
 
 describe('Fix spaces around em dash in Rusyn, Slovak, Czech\n', () => {
 	let testCase = {
-		"and — she said": "and — she said",
-		"and—she said": "and — she said",
+		"and — she said": "and — she said",
+		"and—she said": "and — she said",
 		};
 
 	Object.keys(testCase).forEach((key) => {

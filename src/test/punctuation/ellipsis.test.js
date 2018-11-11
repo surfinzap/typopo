@@ -60,7 +60,8 @@ describe('Ellipsis\n', () => {
 		/* keep spaces around aposiopesis, that is used in the middle of a sentence */
 		"Sentence using … aposiopesis in the middle of a sentence.": "Sentence using … aposiopesis in the middle of a sentence.",
 
-
+		/* add space after aposiopesis between two words */
+		"word...word" : "word… word"
 
 	};
 
