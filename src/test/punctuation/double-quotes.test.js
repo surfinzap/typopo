@@ -37,6 +37,8 @@ describe('Double quotes in default language (en)\n', () => {
 
 
 		/* swap double quotes with a terminal punctuation .,?! */
+		// I would not do that, especially in cases where it matters where quotations end (scientific text), 
+		// even if most such cases are already eliminated in the "false positives" below…
 		"Hey”.": "Hey.”",
 		"Hey”?": "Hey?”",
 		"Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”":
@@ -72,7 +74,7 @@ describe('Double quotes in default language (en)\n', () => {
 		"Even when right double quote is missing its left counterpart.”",
 
 		"We’ll remove a quote, \" when it is hanging spaced around in the middle":
-		"We’ll remove a quote,  when it is hanging spaced around in the middle",
+		"We’ll remove a quote, when it is hanging spaced around in the middle",
 
 		/* Remove extra sentence punctuation
 
@@ -87,7 +89,7 @@ describe('Double quotes in default language (en)\n', () => {
 		/* Wrong spacing */
 		"He said:“Here’s 12″ record.”" : "He said: “Here’s 12″ record.”",
 		"It’s a“nice”saying." : "It’s a “nice” saying.",
-		"An unquoted sentence.“And a unquoted one.”":"An unquoted sentence. “And a unquoted one.”",
+		"An unquoted sentence.“And a quoted one.”":"An unquoted sentence. “And a quoted one.”",
 		"“A quoted sentence.”And an unquoted one.":"“A quoted sentence.” And an unquoted one.",
 		"“A quoted sentence!”And an unquoted one.":"“A quoted sentence!” And an unquoted one.",
 
@@ -102,20 +104,20 @@ describe('Double quotes in default language (en)\n', () => {
 	});
 });
 
-describe('Double quotes in Slovak and Czech language (sk, cs)\n', () => {
+describe('Double quotes in Slovak, Czech and German language (sk, cs, de)\n', () => {
 	let testCase = {
 		/* Basic tests */
 		"Slovak „Slovak„ „Slovak„ Slovak": "Slovak „Slovak“ „Slovak“ Slovak",
-		"“Slovak, Rusyn, Czech double quotation marks“": "„Slovak, Rusyn, Czech double quotation marks“",
-		"”Slovak, Rusyn, Czech double quotation marks”": "„Slovak, Rusyn, Czech double quotation marks“",
-		"\"Slovak, Rusyn, Czech double quotation marks\"": "„Slovak, Rusyn, Czech double quotation marks“",
+		"“Slovak, Rusyn, Czech, German double quotation marks“": "„Slovak, Rusyn, Czech, German double quotation marks“",
+		"”Slovak, Rusyn, Czech double quotation marks”": "„Slovak, Rusyn, Czech, German double quotation marks“",
+		"\"Slovak, Rusyn, Czech double quotation marks\"": "„Slovak, Rusyn, Czech, German double quotation marks“",
 		"Chto mu povisť slova ,,Myžku, sŷnku mij‘‘": "Chto mu povisť slova „Myžku, sŷnku mij“",
 		"\"abc''": "„abc“",
 
 		/* Wrong spacing */
 		"He said:„Here’s 12″ record.“" : "He said: „Here’s 12″ record.“",
 		"It’s a„nice“saying." : "It’s a „nice“ saying.",
-		"An unquoted sentence.„And a unquoted one.“":"An unquoted sentence. „And a unquoted one.“",
+		"An unquoted sentence.„And a quoted one.“":"An unquoted sentence. „And a quoted one.“",
 		"„A quoted sentence.“And an unquoted one.":"„A quoted sentence.“ And an unquoted one.",
 		"„A quoted sentence!“And an unquoted one.":"„A quoted sentence!“ And an unquoted one.",
 	};
