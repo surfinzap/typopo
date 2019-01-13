@@ -50,10 +50,14 @@ describe('Single quotes in default language (en)\n', () => {
 	});
 });
 
-describe('Single quotes in Slovak and Czech language (sk, cs)\n', () => {
+describe('Single quotes in Slovak, Czech and German language (sk, cs, de)\n', () => {
 	let testCase = {
 		"„double quotes 'and single quotes' within“":
 		"„double quotes ‚and single quotes‘ within“",
+		"„double quotes 'and single quotes‘ within“": "„double quotes ‚and single quotes‘ within“",
+		"„double quotes ‚and single quotes' within“": "„double quotes ‚and single quotes‘ within“",
+		"„double quotes ‚and single quotes` within“": "„double quotes ‚and single quotes‘ within“",
+		"„double quotes ,and single quotes‘ within“": "„double quotes ‚and single quotes‘ within“", // abused comma , for ‚
 
 		"Hej: „Vin mu povil, 'ta de jes' take vidil' i neviril“":
 		"Hej: „Vin mu povil, ‚ta de jes’ take vidil‘ i neviril“",
@@ -63,9 +67,10 @@ describe('Single quotes in Slovak and Czech language (sk, cs)\n', () => {
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("should fix single quotes, primes and apostrophes in Slovak/Czech", () => {
+		it("should fix single quotes, primes and apostrophes in Slovak/Czech/German", () => {
 			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Locale("sk")), testCase[key]);
 			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Locale("cs")), testCase[key]);
+			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Locale("de")), testCase[key]);
 		});
 	});
 });
