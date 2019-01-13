@@ -47,11 +47,23 @@ describe('Ellipsis\n', () => {
 		"Sentence ending … And another starting": "Sentence ending… And another starting",
 		"Sentence ending …": "Sentence ending…",
 		"Give me some example, e.g. apples, oranges, …": "Give me some example, e.g. apples, oranges,…",
+		// I'd argue against the last example, as the … is a placeholder for other concrete words that would
+		// mandate the same spacing as in a sentence ending that continues like "apples, …, peaches, …"
 
 		/* remove space when aposiopesis is used at the beginning of the sentence*/
 		"Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
 		"Sentence ended! … and we were there.": "Sentence ended! …and we were there.",
 		"Sentence ended? … and we were there.": "Sentence ended? …and we were there.",
+		// What happens if the … stands for a complete sentence? As in: 
+		// "‘What are you saying?’ … She did not answer."
+		
+		// In scientific discourse, I'd use […] to signify that I deliberately omitted parts (e.g. of a quotation)
+		// (don’t know in which order text gets processed, so I’m including brackets spacing cases as well)
+		"quote […]with parts left out": "quote […] with parts left out",
+		"quote[…] with parts left out": "quote […] with parts left out",
+		"quote [ …] with parts left out": "quote […] with parts left out",
+		"quote [… ] with parts left out": "quote […] with parts left out",
+		"quote [ … ] with parts left out": "quote […] with parts left out",
 
 		/* remove space after aposiopesis at the beginning of the paragraph*/
 		"… да святить ся": "…да святить ся",
@@ -61,6 +73,7 @@ describe('Ellipsis\n', () => {
 		"Sentence using … aposiopesis in the middle of a sentence.": "Sentence using … aposiopesis in the middle of a sentence.",
 
 		/* add space after aposiopesis between two words */
+		// depending on context, this might also need spacing "before … after"?
 		"word...word" : "word… word"
 
 	};
