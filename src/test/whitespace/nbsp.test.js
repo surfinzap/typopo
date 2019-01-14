@@ -110,7 +110,7 @@ describe('Add non-breaking space after ordinal number (en)\n', () => {
 		it("unit test", () => {
 			assert.equal(addNbspAfterOrdinalNumber(key, new Locale("en-us")), testCase[key]);
 		});
-		it("moduel test", () => {
+		it("module test", () => {
 			assert.equal(fixNbsp(key, new Locale("en-us")), testCase[key]);
 		});
 	});
@@ -118,7 +118,7 @@ describe('Add non-breaking space after ordinal number (en)\n', () => {
 
 
 
-describe('Add non-breaking space after ordinal number (sk, cs, rue)\n', () => {
+describe('Add non-breaking space after ordinal number (sk, cs, rue, de)\n', () => {
 	let testCase = {
 		"1. dodatok" : "1. dodatok",
 		"1.dodatok" : "1. dodatok",
@@ -132,11 +132,13 @@ describe('Add non-breaking space after ordinal number (sk, cs, rue)\n', () => {
 		it("unit test", () => {
 			assert.equal(addNbspAfterOrdinalNumber(key, new Locale("sk")), testCase[key]);
 			assert.equal(addNbspAfterOrdinalNumber(key, new Locale("cs")), testCase[key]);
+			assert.equal(addNbspAfterOrdinalNumber(key, new Locale("de")), testCase[key]);
 			assert.equal(addNbspAfterOrdinalNumber(key, new Locale("rue")), testCase[key]);
 		});
 		it("module test", () => {
 			assert.equal(fixNbsp(key, new Locale("sk")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("cs")), testCase[key]);
+			assert.equal(fixNbsp(key, new Locale("de")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("rue")), testCase[key]);
 		});
 	});
@@ -148,6 +150,8 @@ describe('Add non-breaking space within ordinal date (sk, cs, rue)\n', () => {
 	let testCase = {
 		"12. 1. 2017" : "12. 1. 2017",
 		"12.1.2017" : "12. 1. 2017",
+		"12. 1. 2019": "12. 1. 2019", // German standard orthography (Duden) recommends only one nbsp 
+																	// (or narrowNbsp) after the day and a regular interword space following the month 
 		"10.00" : "10.00", // false positive for the example above
 	};
 
@@ -167,7 +171,7 @@ describe('Add non-breaking space within ordinal date (sk, cs, rue)\n', () => {
 
 
 
-describe('Add non-breaking space after roman numeral (sk, cs, rue)\n', () => {
+describe('Add non-breaking space after roman numeral (sk, cs, de, rue)\n', () => {
 	let testCase = {
 		"III. kapitola": "III. kapitola",
 		"III.kapitola": "III. kapitola",
@@ -183,11 +187,13 @@ describe('Add non-breaking space after roman numeral (sk, cs, rue)\n', () => {
 		it("unit test", () => {
 			assert.equal(addNbspAfterRomanNumeral(key, new Locale("sk")), testCase[key]);
 			assert.equal(addNbspAfterRomanNumeral(key, new Locale("cs")), testCase[key]);
+			assert.equal(addNbspAfterRomanNumeral(key, new Locale("de")), testCase[key]);
 			assert.equal(addNbspAfterRomanNumeral(key, new Locale("rue")), testCase[key]);
 		});
 		it("module test", () => {
 			assert.equal(fixNbsp(key, new Locale("sk")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("cs")), testCase[key]);
+			assert.equal(fixNbsp(key, new Locale("de")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("rue")), testCase[key]);
 		});
 	});
@@ -266,6 +272,9 @@ describe('Add non-breaking space after abbreviations\n', () => {
 		"(e.g.)" : "(e.g.)",
 		"“e.g.”" : "“e.g.”",
 		"‘e.g.’" : "‘e.g.’",
+		"z.B." : "z. B.",
+		"S. 123" : "S. 123",
+		"S.J.": "S. J.",
 		"John Thune (S.D.)" : "John Thune (S.D.)", // false positive
 
 
