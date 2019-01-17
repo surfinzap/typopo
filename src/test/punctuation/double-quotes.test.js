@@ -37,8 +37,6 @@ describe('Double quotes in default language (en)\n', () => {
 
 
 		/* swap double quotes with a terminal punctuation .,?! */
-		// I would not do that, especially in cases where it matters where quotations end (scientific text), 
-		// even if most such cases are already eliminated in the "false positives" below…
 		"Hey”.": "Hey.”",
 		"Hey”?": "Hey?”",
 		"Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”":
@@ -74,7 +72,7 @@ describe('Double quotes in default language (en)\n', () => {
 		"Even when right double quote is missing its left counterpart.”",
 
 		"We’ll remove a quote, \" when it is hanging spaced around in the middle":
-		"We’ll remove a quote, when it is hanging spaced around in the middle",
+		"We’ll remove a quote,  when it is hanging spaced around in the middle",
 
 		/* Remove extra sentence punctuation
 
@@ -83,7 +81,7 @@ describe('Double quotes in default language (en)\n', () => {
 			[3] false positive */
 		/*[1]*/"“Hey!,” she said": "“Hey!” she said",
 		/*[2]*/"“We will continue this tomorrow at 8:00 a.m.”.": "“We will continue this tomorrow at 8:00 a.m.”",
-		/*[3]*/"č., s., fol., str.," : "č., s., fol., str.,", 
+		/*[3]*/"č., s., fol., str.," : "č., s., fol., str.,",
 
 
 		/* Wrong spacing */
@@ -109,8 +107,8 @@ describe('Double quotes in Slovak, Czech and German language (sk, cs, de)\n', ()
 		/* Basic tests */
 		"Slovak „Slovak„ „Slovak„ Slovak": "Slovak „Slovak“ „Slovak“ Slovak",
 		"“Slovak, Rusyn, Czech, German double quotation marks“": "„Slovak, Rusyn, Czech, German double quotation marks“",
-		"”Slovak, Rusyn, Czech double quotation marks”": "„Slovak, Rusyn, Czech, German double quotation marks“",
-		"\"Slovak, Rusyn, Czech double quotation marks\"": "„Slovak, Rusyn, Czech, German double quotation marks“",
+		"”Slovak, Rusyn, Czech, German double quotation marks”": "„Slovak, Rusyn, Czech, German double quotation marks“",
+		"\"Slovak, Rusyn, Czech, German double quotation marks\"": "„Slovak, Rusyn, Czech, German double quotation marks“",
 		"Chto mu povisť slova ,,Myžku, sŷnku mij‘‘": "Chto mu povisť slova „Myžku, sŷnku mij“",
 		"\"abc''": "„abc“",
 
