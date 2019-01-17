@@ -1,8 +1,7 @@
 import {replaceThreeHyphensWithEmDash,
-				replaceTwoHyphensWithEnDash,
-				replaceSpacedHyphenWithEmDash,
-				replaceSpacedEnDashWithEmDash,
-				fixSpacesAroundEmDash,
+				replaceSpacedHyphenWithDash,
+				consolidateSpacedDashes,
+				fixDashSpacesBetweenWords,
 				fixDashBetweenCardinalNumbers,
 				fixDashBetweenOrdinalNumbers,
 				fixDash} from "../../lib/punctuation/dash";
@@ -21,63 +20,88 @@ describe('Replace 3 hyphens with an em dash\n', () => {
 	});
 });
 
-describe('Replace 2 hyphens with an en dash\n (should be an em dash in German in this particular case of a distance between places)\n', () => {
+describe('Replace spaced hyphen with an em dash (en-us, sk, cs, rue)\n', () => {
 	let testCase = {
-		"Brno--Praha": "Brno–Praha",
-		"Brünn--Wien": "Brünn—Wien", 
+		"and - she said": "and — she said",
 		};
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(replaceTwoHyphensWithEnDash(key, new Locale("en-us")), testCase[key]);
-		});
-		it("module test", () => {
-			assert.equal(fixDash(key, new Locale("en-us")), testCase[key]);
+			assert.equal(replaceSpacedHyphenWithDash(key, new Locale("en-us")), testCase[key]);
+			assert.equal(replaceSpacedHyphenWithDash(key, new Locale("cs")), testCase[key]);
 		});
 	});
 });
 
-describe('Replace spaced hyphen with an em dash\n (should be an en dash in German)\n', () => {
+describe('Replace spaced hyphen with an en dash (de-de)\n', () => {
 	let testCase = {
-		"and - she said": "and — she said",
 		"und - er sagte": "und – er sagte",
 		};
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(replaceSpacedHyphenWithEmDash(key, new Locale("en-us")), testCase[key]);
+			assert.equal(replaceSpacedHyphenWithDash(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });
 
-describe('Replace spaced en dash with an em dash\n(should be the other way round in German)\n', () => {
+describe('Replace spaced en dash with an em dash (en-us, sk, cs, rue)\n', () => {
 	let testCase = {
 		"and – she said": "and — she said",
+		};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(consolidateSpacedDashes(key, new Locale("en-us")), testCase[key]);
+			assert.equal(consolidateSpacedDashes(key, new Locale("sk")), testCase[key]);
+		});
+	});
+});
+
+describe('Replace spaced em dash with an en dash (de-de)\n', () => {
+	let testCase = {
 		"und — sie sagte": "und – sie sagte",
 		};
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(replaceSpacedEnDashWithEmDash(key, new Locale("en-us")), testCase[key]);
+			assert.equal(consolidateSpacedDashes(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });
 
-describe('Fix spaces around em dash in English\n', () => {
+describe('Fix dash spaces between words (en-us)\n', () => {
 	let testCase = {
 		"and — she said": "and—she said",
 		"and — she said": "and—she said", //mixed spaces
+		"and— she said": "and—she said",
+		"and —she said": "and—she said",
 		"and—she said": "and—she said",
 		};
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixSpacesAroundEmDash(key, new Locale("en-us")), testCase[key]);
+			assert.equal(fixDashSpacesBetweenWords(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
 
-describe('Fix spaces around en dash in German\n', () => {
+describe('Fix dash spaces between words (rue, sk, cs)\n', () => {
+	let testCase = {
+		"and — she said": "and — she said",
+		"and—she said": "and — she said",
+		};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixDashSpacesBetweenWords(key, new Locale("rue")), testCase[key]);
+			assert.equal(fixDashSpacesBetweenWords(key, new Locale("sk")), testCase[key]);
+			assert.equal(fixDashSpacesBetweenWords(key, new Locale("cs")), testCase[key]);
+		});
+	});
+});
+
+describe('Fix dash spaces between words (de-de) \n', () => {
 	let testCase = {
 		"und –sie sagte": "und – sie sagte",
 		"und– sie sagte": "und – sie sagte",
@@ -87,22 +111,10 @@ describe('Fix spaces around en dash in German\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixSpacesAroundEnDash(key, new Locale("de")), testCase[key]);
+			assert.equal(fixDashSpacesBetweenWords(key, new Locale("de-de")), testCase[key]);
 		});
-	});
-});
-
-describe('Fix spaces around em dash in Rusyn, Slovak, Czech\n', () => {
-	let testCase = {
-		"and — she said": "and — she said",
-		"and—she said": "and — she said",
-		};
-
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.equal(fixSpacesAroundEmDash(key, new Locale("rue")), testCase[key]);
-			assert.equal(fixSpacesAroundEmDash(key, new Locale("sk")), testCase[key]);
-			assert.equal(fixSpacesAroundEmDash(key, new Locale("cs")), testCase[key]);
+		it("module test", () => {
+			assert.equal(fixDash(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });
@@ -137,7 +149,7 @@ describe('Fix dash between cardinal numbers\n', () => {
 	});
 });
 
-describe('Fix dash between ordinal numbers in English\n', () => {
+describe('Fix dash between ordinal numbers (en-us)\n', () => {
 	let testCase = {
 		"1st-5th August": "1st–5th August",
 		"1st -5th August": "1st–5th August",
@@ -155,7 +167,7 @@ describe('Fix dash between ordinal numbers in English\n', () => {
 	});
 });
 
-describe('Fix dash between ordinal numbers in Rusyn, Slovak, Czech, German\n', () => {
+describe('Fix dash between ordinal numbers (rue, sk, cs, de)\n', () => {
 	let testCase = {
 		"1.-5. augusta": "1.–5. augusta",
     "1. -5. augusta": "1.–5. augusta",
@@ -168,13 +180,13 @@ describe('Fix dash between ordinal numbers in Rusyn, Slovak, Czech, German\n', (
 			assert.equal(fixDashBetweenOrdinalNumbers(key, new Locale("rue")), testCase[key]);
 			assert.equal(fixDashBetweenOrdinalNumbers(key, new Locale("sk")), testCase[key]);
 			assert.equal(fixDashBetweenOrdinalNumbers(key, new Locale("cs")), testCase[key]);
-			assert.equal(fixDashBetweenOrdinalNumbers(key, new Locale("de")), testCase[key]);
+			assert.equal(fixDashBetweenOrdinalNumbers(key, new Locale("de-de")), testCase[key]);
 		});
 		it("module test", () => {
 			assert.equal(fixDash(key, new Locale("rue")), testCase[key]);
 			assert.equal(fixDash(key, new Locale("sk")), testCase[key]);
 			assert.equal(fixDash(key, new Locale("cs")), testCase[key]);
-			assert.equal(fixDash(key, new Locale("de")), testCase[key]);
+			assert.equal(fixDash(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });
