@@ -4,12 +4,14 @@ import localeCs from "./cs";
 import localeEnUs from "./en-us";
 import localeRue from "./rue";
 import localeSk from "./sk";
+import localeDeDe from "./de-de";
 
 const typopoLocale = {
 	"cs" : localeCs,
 	"en-us" : localeEnUs,
 	"rue" : localeRue,
 	"sk" : localeSk,
+	"de-de" : localeDeDe,
 }
 
 export default class Locale {
