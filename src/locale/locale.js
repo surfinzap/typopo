@@ -56,6 +56,7 @@ export default class Locale {
 
 		/* Punctuation*/
 		this.terminalPunctuation = "\.\!\?";
+		this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote;
 		this.sentencePausePunctuation = "\,\:\;",
 		this.sentencePunctuation = this.sentencePausePunctuation + this.terminalPunctuation; // there is no ellipsis in the set as it is being used throughout a sentence in the middle. Rethink this group to split it into end-sentence punctuation and middle sentence punctuation
 		this.openingBrackets = "\\(\\[\\{";
