@@ -56,7 +56,19 @@ export function addNbspAfterOrdinalNumber(string, locale) {
 export function addNbspWithinOrdinalDate(string, locale) {
 	let pattern = "("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"]?)("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"]?)("+ locale.cardinalNumber +")";
 	let re = new RegExp(pattern, "g");
-	let replacement = "$1$2" + locale.nbsp + "$4$5" + locale.nbsp + "$7";
+	let replacement = "";
+
+	switch (locale.locale) {
+		case "en-us":
+		case "rue":
+		case "sk":
+		case "cs":
+			replacement = "$1$2" + locale.nbsp + "$4$5" + locale.nbsp + "$7";
+			break;
+		case "de-de":
+			replacement = "$1$2" + locale.nbsp + "$4$5" + locale.space + "$7";
+			break;
+	}
 
 	return string.replace(re, replacement);
 }
@@ -78,9 +90,9 @@ export function addNbspAfterRomanNumeral(string, locale) {
 
 
 export function addNbspAfterInitial(string, locale) {
-	let pattern = "(["+ locale.uppercaseChars + "]\\.)(["+ locale.spaces +"])";
+	let pattern = "(["+ locale.uppercaseChars + "]\\.)(["+ locale.spaces +"]?)(["+ locale.uppercaseChars + "])";
 	let re = new RegExp(pattern, "g");
-	let replacement = "$1" + locale.nbsp;
+	let replacement = "$1" + locale.nbsp + "$3";
 
 	return string.replace(re, replacement);
 }
@@ -114,20 +126,9 @@ export function addNbspAfterAbbreviation(string, locale) {
 	// replace existing spaces following abbreviations with nbsp
 
 	for (var abbr in abbreviations) {
-		let pattern = "(^|[^" + locale.allChars + locale.sentencePunctuation + "\\n])(" + abbreviations[abbr] +")([" + locale.spaces + "])([" + locale.allChars + "]|" + locale.cardinalNumber + ")";
+		let pattern = "(^|[^" + locale.allChars + locale.sentencePunctuation + "\\n])(" + abbreviations[abbr] +")([" + locale.spaces + "]?)([" + locale.allChars + "]|" + locale.cardinalNumber + ")";
 		let re = new RegExp(pattern, "gi");
 		let replacement = "$1" + abbr + locale.nbsp + "$4";
-
-		string = string.replace(re, replacement);
-	}
-
-
-	// best effort to add nbsp after abbreviations where were ommited
-	
-	for (var abbr in abbreviations) {
-		let pattern = "(^|[^" + locale.allChars + locale.sentencePunctuation + "\\n])(" + abbreviations[abbr] +"[" + locale.spaces + "]?)([" + locale.allChars + "][^\\.]|" + locale.cardinalNumber + ")";
-		let re = new RegExp(pattern, "gi");
-		let replacement = "$1" + abbr + locale.nbsp + "$3";
 
 		string = string.replace(re, replacement);
 	}

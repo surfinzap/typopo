@@ -35,6 +35,8 @@ describe('Remove non-breaking space between multi-letter words\n', () => {
 	});
 });
 
+
+
 describe('Add non-breaking spaces after single-character prepositions\n', () => {
 	let testCase = {
 		"Koniec. V potoku": "Koniec. V potoku",
@@ -118,7 +120,7 @@ describe('Add non-breaking space after ordinal number (en)\n', () => {
 
 
 
-describe('Add non-breaking space after ordinal number (sk, cs, rue, de)\n', () => {
+describe('Add non-breaking space after ordinal number (sk, cs, rue, de-de)\n', () => {
 	let testCase = {
 		"1. dodatok" : "1. dodatok",
 		"1.dodatok" : "1. dodatok",
@@ -132,13 +134,13 @@ describe('Add non-breaking space after ordinal number (sk, cs, rue, de)\n', () =
 		it("unit test", () => {
 			assert.equal(addNbspAfterOrdinalNumber(key, new Locale("sk")), testCase[key]);
 			assert.equal(addNbspAfterOrdinalNumber(key, new Locale("cs")), testCase[key]);
-			assert.equal(addNbspAfterOrdinalNumber(key, new Locale("de")), testCase[key]);
+			assert.equal(addNbspAfterOrdinalNumber(key, new Locale("de-de")), testCase[key]);
 			assert.equal(addNbspAfterOrdinalNumber(key, new Locale("rue")), testCase[key]);
 		});
 		it("module test", () => {
 			assert.equal(fixNbsp(key, new Locale("sk")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("cs")), testCase[key]);
-			assert.equal(fixNbsp(key, new Locale("de")), testCase[key]);
+			assert.equal(fixNbsp(key, new Locale("de-de")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("rue")), testCase[key]);
 		});
 	});
@@ -150,8 +152,6 @@ describe('Add non-breaking space within ordinal date (sk, cs, rue)\n', () => {
 	let testCase = {
 		"12. 1. 2017" : "12. 1. 2017",
 		"12.1.2017" : "12. 1. 2017",
-		"12. 1. 2019": "12. 1. 2019", // German standard orthography (Duden) recommends only one nbsp 
-																	// (or narrowNbsp) after the day and a regular interword space following the month 
 		"10.00" : "10.00", // false positive for the example above
 	};
 
@@ -171,7 +171,29 @@ describe('Add non-breaking space within ordinal date (sk, cs, rue)\n', () => {
 
 
 
-describe('Add non-breaking space after roman numeral (sk, cs, de, rue)\n', () => {
+describe('Add non-breaking space within ordinal date (de-de)\n', () => {
+	let testCase = {
+		/*  German standard orthography (Duden) recommends
+				only one nbsp (or narrowNbsp) after the day
+				and a regular interword space following the month*/
+		"12.1.2019" : "12. 1. 2019",
+		"12. 1. 2019": "12. 1. 2019",
+		"10.00" : "10.00", // false positive for the example above
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(addNbspWithinOrdinalDate(key, new Locale("de-de")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixNbsp(key, new Locale("de-de")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Add non-breaking space after roman numeral (sk, cs, de-de, rue)\n', () => {
 	let testCase = {
 		"III. kapitola": "III. kapitola",
 		"III.kapitola": "III. kapitola",
@@ -187,13 +209,13 @@ describe('Add non-breaking space after roman numeral (sk, cs, de, rue)\n', () =>
 		it("unit test", () => {
 			assert.equal(addNbspAfterRomanNumeral(key, new Locale("sk")), testCase[key]);
 			assert.equal(addNbspAfterRomanNumeral(key, new Locale("cs")), testCase[key]);
-			assert.equal(addNbspAfterRomanNumeral(key, new Locale("de")), testCase[key]);
+			assert.equal(addNbspAfterRomanNumeral(key, new Locale("de-de")), testCase[key]);
 			assert.equal(addNbspAfterRomanNumeral(key, new Locale("rue")), testCase[key]);
 		});
 		it("module test", () => {
 			assert.equal(fixNbsp(key, new Locale("sk")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("cs")), testCase[key]);
-			assert.equal(fixNbsp(key, new Locale("de")), testCase[key]);
+			assert.equal(fixNbsp(key, new Locale("de-de")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("rue")), testCase[key]);
 		});
 	});
@@ -204,7 +226,10 @@ describe('Add non-breaking space after roman numeral (sk, cs, de, rue)\n', () =>
 describe('Add non-breaking space after initial\n', () => {
 	let testCase = {
 		"Philip K. Dick": "Philip K. Dick",
-		"F. X. Šalda": "F. X. Šalda",
+		"F. X." : "F. X.",
+		"F. X. R." : "F. X. R.",
+		"F. X. Šalda" : "F. X. Šalda",
+		"S.J.": "S. J.",
 	};
 
 	Object.keys(testCase).forEach((key) => {
@@ -262,28 +287,54 @@ describe('Add non-breaking space after abbreviations\n', () => {
 		"tzv. rýč" : "tzv. rýč",
 		"Prines kvetináč. 5 je super číslo." : "Prines kvetináč. 5 je super číslo.", //false positive
 		"hl. m. Praha" : "hl. m. Praha",
-		// "hl.m.Praha" : "hl. m. Praha", // 2 consequetive abbreviations are not supported yet
-		// "hl. m.Praha" : "hl. m. Praha",
-		// "hl.m. Praha" : "hl. m. Praha",
+		"hl.m.Praha" : "hl. m. Praha", // not supported yet
+		"hl. m.Praha" : "hl. m. Praha",
+		"hl.m. Praha" : "hl. m. Praha",
 		"10 a.m." : "10 a.m.", // false positive for abbreviation within abbreviation, i.e. m. within a.m.
 		"e.g. something" : "e.g. something",
 		"10 p." : "10 p.",
 		"pp. 10–25" : "pp. 10–25",
+		"(pp. 10–25)" : "(pp. 10–25)",
 		"(e.g.)" : "(e.g.)",
 		"“e.g.”" : "“e.g.”",
 		"‘e.g.’" : "‘e.g.’",
 		"z.B." : "z. B.",
 		"S. 123" : "S. 123",
-		"S.J.": "S. J.",
-		"John Thune (S.D.)" : "John Thune (S.D.)", // false positive
-
-
-
+		"the U.S. and" : "the U.S. and", //false positive
+		// "John Thune (S.D.)" : "John Thune (S.D.)", // false positive, yet not supported. TBD
 	};
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit tests", () => {
 			assert.equal(addNbspAfterAbbreviation(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+describe('Add non-breaking space after abbreviations (extra set for module test)\n', () => {
+	let testCase = {
+		// as all abbreviations can be used within different languages, such as reference, they're being corrected in each language
+		"str. 8" : "str. 8",
+		"tzv. rýč" : "tzv. rýč",
+		"hl. m. Praha" : "hl. m. Praha",
+		// "hl.m.Praha" : "hl. m. Praha", // not supported yet
+		// "hl. m.Praha" : "hl. m. Praha",
+		// "hl.m. Praha" : "hl. m. Praha",
+		"e.g. something" : "e.g. something",
+		"pp. 10–25" : "pp. 10–25",
+		"(e.g.)" : "(e.g.)",
+		"“e.g.”" : "“e.g.”",
+		"‘e.g.’" : "‘e.g.’",
+		"z.B." : "z. B.", // (e.g. in Germany)
+		"S. 123" : "S. 123",
+		// "the U.S. and" : "the U.S. and", //false positive, yet not supported.
+		// "John Thune (S.D.)" : "John Thune (S.D.)", // false positive, yet not supported. TBD
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("module tests", () => {
+			assert.equal(fixNbsp(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
