@@ -10,7 +10,10 @@ const numbers = {
 	romanOrdinalIndicator :		"\\.",
 }
 
-const abbreviationsForNbsp = []
+const abbreviationsForNbsp = [
+	"S.",
+	"z."
+]
 
 
 export default {

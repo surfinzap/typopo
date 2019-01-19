@@ -81,13 +81,13 @@ describe('Double quotes in default language (en)\n', () => {
 			[3] false positive */
 		/*[1]*/"“Hey!,” she said": "“Hey!” she said",
 		/*[2]*/"“We will continue this tomorrow at 8:00 a.m.”.": "“We will continue this tomorrow at 8:00 a.m.”",
-		/*[3]*/"č., s., fol., str.," : "č., s., fol., str.,", 
+		/*[3]*/"č., s., fol., str.," : "č., s., fol., str.,",
 
 
 		/* Wrong spacing */
 		"He said:“Here’s 12″ record.”" : "He said: “Here’s 12″ record.”",
 		"It’s a“nice”saying." : "It’s a “nice” saying.",
-		"An unquoted sentence.“And a unquoted one.”":"An unquoted sentence. “And a unquoted one.”",
+		"An unquoted sentence.“And a quoted one.”":"An unquoted sentence. “And a quoted one.”",
 		"“A quoted sentence.”And an unquoted one.":"“A quoted sentence.” And an unquoted one.",
 		"“A quoted sentence!”And an unquoted one.":"“A quoted sentence!” And an unquoted one.",
 
@@ -102,20 +102,20 @@ describe('Double quotes in default language (en)\n', () => {
 	});
 });
 
-describe('Double quotes in Slovak and Czech language (sk, cs)\n', () => {
+describe('Double quotes in Slovak, Czech and German language (sk, cs, de)\n', () => {
 	let testCase = {
 		/* Basic tests */
 		"Slovak „Slovak„ „Slovak„ Slovak": "Slovak „Slovak“ „Slovak“ Slovak",
-		"“Slovak, Rusyn, Czech double quotation marks“": "„Slovak, Rusyn, Czech double quotation marks“",
-		"”Slovak, Rusyn, Czech double quotation marks”": "„Slovak, Rusyn, Czech double quotation marks“",
-		"\"Slovak, Rusyn, Czech double quotation marks\"": "„Slovak, Rusyn, Czech double quotation marks“",
+		"“Slovak, Rusyn, Czech, German double quotation marks“": "„Slovak, Rusyn, Czech, German double quotation marks“",
+		"”Slovak, Rusyn, Czech, German double quotation marks”": "„Slovak, Rusyn, Czech, German double quotation marks“",
+		"\"Slovak, Rusyn, Czech, German double quotation marks\"": "„Slovak, Rusyn, Czech, German double quotation marks“",
 		"Chto mu povisť slova ,,Myžku, sŷnku mij‘‘": "Chto mu povisť slova „Myžku, sŷnku mij“",
 		"\"abc''": "„abc“",
 
 		/* Wrong spacing */
 		"He said:„Here’s 12″ record.“" : "He said: „Here’s 12″ record.“",
 		"It’s a„nice“saying." : "It’s a „nice“ saying.",
-		"An unquoted sentence.„And a unquoted one.“":"An unquoted sentence. „And a unquoted one.“",
+		"An unquoted sentence.„And a quoted one.“":"An unquoted sentence. „And a quoted one.“",
 		"„A quoted sentence.“And an unquoted one.":"„A quoted sentence.“ And an unquoted one.",
 		"„A quoted sentence!“And an unquoted one.":"„A quoted sentence!“ And an unquoted one.",
 	};

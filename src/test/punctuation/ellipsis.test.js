@@ -46,12 +46,27 @@ describe('Ellipsis\n', () => {
 		/* remove space before aposiopesis, that is ending a sentence*/
 		"Sentence ending … And another starting": "Sentence ending… And another starting",
 		"Sentence ending …": "Sentence ending…",
-		"Give me some example, e.g. apples, oranges, …": "Give me some example, e.g. apples, oranges,…",
+		/* but keep the space after the sentence punctuation,
+			where … is a placeholder for other concrete words */
+		"Give me some example, e.g. apples, oranges, …": "Give me some example, e.g. apples, oranges, …",
 
-		/* remove space when aposiopesis is used at the beginning of the sentence*/
+		/*	remove space
+				when aposiopesis is used at the beginning of unfinished the sentence */
 		"Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
 		"Sentence ended! … and we were there.": "Sentence ended! …and we were there.",
+		"Sentence ended!… and we were there.": "Sentence ended! …and we were there.",
 		"Sentence ended? … and we were there.": "Sentence ended? …and we were there.",
+		"Sentence ended?’ … and we were there.": "Sentence ended?’ …and we were there.",
+		"Sentence ended?’… and we were there.": "Sentence ended?’ …and we were there.",
+		"Sentence ended?”… and we were there.": "Sentence ended?” …and we were there.",
+
+		/*	keep spaces around ellipsis
+				when it is used at the beginning of the full sentence */
+		"What are you saying. …She did not answer." : "What are you saying. … She did not answer.",
+		"What are you saying!…She did not answer." : "What are you saying! … She did not answer.",
+		"What are you saying?…She did not answer." : "What are you saying? … She did not answer.",
+		"‘What are you saying?’…She did not answer." : "‘What are you saying?’ … She did not answer.",
+		"“What are you saying?”…She did not answer." : "“What are you saying?” … She did not answer.",
 
 		/* remove space after aposiopesis at the beginning of the paragraph*/
 		"… да святить ся": "…да святить ся",
@@ -60,7 +75,8 @@ describe('Ellipsis\n', () => {
 		/* keep spaces around aposiopesis, that is used in the middle of a sentence */
 		"Sentence using … aposiopesis in the middle of a sentence.": "Sentence using … aposiopesis in the middle of a sentence.",
 
-		/* add space after aposiopesis between two words */
+		/* add space after aposiopesis between two words
+		(best effort guess based on ellipsis being placed between two words) */
 		"word...word" : "word… word"
 
 	};
@@ -68,7 +84,7 @@ describe('Ellipsis\n', () => {
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("should replace multiple dots with an ellipsis", () => {
+		it("should fix multiple errors with ellipsis/aposiopesis use", () => {
 			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 	});

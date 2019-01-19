@@ -57,7 +57,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 	string = string.replace(re, function($0, $1, $2, $3){
 
 		// identify {{typopo__left-single-quote--adept}}
-		let pattern = "( )(" + locale.singleQuoteAdepts + ")(["+ locale.allChars +"])";
+		let pattern = "( )(" + locale.singleQuoteAdepts + "|,)(["+ locale.allChars +"])";
 		let re = new RegExp(pattern, "g");
 		$2 = $2.replace(re, "$1{{typopo__left-single-quote--adept}}$3");
 

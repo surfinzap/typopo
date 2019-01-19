@@ -1,5 +1,14 @@
 # Changelog for Typopo
 
+## 2.2 // TBD
+### New features
+* Support for German language (de-de)
+
+### Improvements
+* Improvements in identification of wrong use of ellipsis and aposiopesis
+* Improvements in identification of wrong use of single quotes
+
+
 ## 2.1.9 // 2018-11-11
 ### Improvements
 * Change Narrow NBSP into Hair space from the left side of the m-dash in sk, cs, rue locale
