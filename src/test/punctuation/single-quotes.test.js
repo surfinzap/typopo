@@ -3,7 +3,7 @@ import Locale from "../../locale/locale";
 
 import assert from 'assert';
 
-describe('Single quotes in default language (en)\n', () => {
+describe('Single quotes in default language (en-us)\n', () => {
 	let testCase = {
 		/* Basic tests */
 		"Let's test this: “however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said”":
@@ -50,7 +50,7 @@ describe('Single quotes in default language (en)\n', () => {
 	});
 });
 
-describe('Single quotes in Slovak, Czech and German language (sk, cs, de)\n', () => {
+describe('Single quotes in (sk, cs, de-de)\n', () => {
 	let testCase = {
 		"„double quotes 'and single quotes' within“":
 		"„double quotes ‚and single quotes‘ within“",
@@ -67,15 +67,15 @@ describe('Single quotes in Slovak, Czech and German language (sk, cs, de)\n', ()
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("should fix single quotes, primes and apostrophes in Slovak/Czech/German", () => {
+		it("should fix single quotes, primes and apostrophes in (sk, cs, de-de)", () => {
 			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Locale("sk")), testCase[key]);
 			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Locale("cs")), testCase[key]);
-			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Locale("de")), testCase[key]);
+			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });
 
-describe('Single quotes in Rusyn language (rue)\n', () => {
+describe('Single quotes in (rue)\n', () => {
 	let testCase = {
 		"«double quotes 'and single quotes' within»":
 		"«double quotes ‹and single quotes› within»",

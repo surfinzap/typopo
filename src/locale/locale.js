@@ -37,7 +37,7 @@ export default class Locale {
 			(8249)		single left-pointing angle quotation mark
 			(8250)		single right-pointing angle quotation mark
 		 */
-		this.singleQuoteAdepts = "‚|'|‘|’|ʼ|‛|′|‹|›";
+		this.singleQuoteAdepts = "‚|'|‘|’|ʼ|‛|′|`|‹|›";
 		this.leftSingleQuote = typopoLocale[locale].quotes.leftSingleQuote;
 		this.rightSingleQuote = typopoLocale[locale].quotes.rightSingleQuote;
 		this.apostrophe = "’";
