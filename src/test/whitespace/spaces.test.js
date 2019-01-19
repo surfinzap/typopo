@@ -6,7 +6,8 @@ import {removeMultipleSpaces,
 				addSpaceBeforePunctuation,
 				addSpaceAfterPunctuation,
 				removeTrailingSpaces,
-				addSpaceBeforeSymbol} from "../../lib/whitespace/spaces";
+				addSpaceBeforeSymbol,
+				fixSpaces} from "../../lib/whitespace/spaces";
 import assert from 'assert';
 import Locale from "../../locale/locale";
 
@@ -71,8 +72,6 @@ describe('Remove spaces and tabs at paragraph start\n', () => {
 	});
 });
 
-
-
 describe('Remove space before sentence pause-punctuation\n', () => {
 	let testCase = {
 		"Hey , man.": "Hey, man.",
@@ -92,8 +91,6 @@ describe('Remove space before sentence pause-punctuation\n', () => {
 		});
 	});
 });
-
-
 
 describe('Remove space before terminal punctuation, closing brackets and degree symbol\n', () => {
 	let testCase = {
@@ -116,8 +113,6 @@ describe('Remove space before terminal punctuation, closing brackets and degree 
 	});
 });
 
-
-
 describe('Remove space after opening brackets\n', () => {
 	let testCase = {
 		"Something ( …) something else": "Something (…) something else",
@@ -133,10 +128,11 @@ describe('Remove space after opening brackets\n', () => {
 	});
 });
 
-describe('Add space before opening brackets\n', () => {
+describe.only('Add space before opening brackets\n', () => {
 	let testCase = {
 		"Enclosed(in) the brackets.": "Enclosed (in) the brackets.",
 		"Enclosed[in] the brackets.": "Enclosed [in] the brackets.",
+		"quote[…] with parts left out": "quote […] with parts left out",
 		"Enclosed{in} the brackets.": "Enclosed {in} the brackets.",
 	};
 
@@ -148,7 +144,7 @@ describe('Add space before opening brackets\n', () => {
 	});
 });
 
-describe('Add space after sentence punctuation and closing brackets\n', () => {
+describe.only('Add space after sentence punctuation and closing brackets\n', () => {
 	let testCase = {
 		"One sentence ended.Another started.": "One sentence ended. Another started.",
 		"One sentence ended!Another started.": "One sentence ended! Another started.",
@@ -159,15 +155,21 @@ describe('Add space after sentence punctuation and closing brackets\n', () => {
 		"Enclosed (in)the brackets.": "Enclosed (in) the brackets.",
 		"Enclosed [in]the brackets.": "Enclosed [in] the brackets.",
 		"Enclosed {in}the brackets.": "Enclosed {in} the brackets.",
+		"quote […]with parts left out": "quote […] with parts left out",
 		"R-N.D." : "R-N.D.", // false positive
 		"the U.S.":"the U.S.",
 		"John Thune (S.D.)" : "John Thune (S.D.)",
 	};
 
-
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.equal(addSpaceAfterPunctuation(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+
+	Object.keys(testCase).forEach((key) => {
+		it("module test", () => {
+			assert.equal(fixSpaces(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -186,7 +188,7 @@ describe('Remove trailing spaces\n', () => {
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("", () => {
+		it("unit test", () => {
 			assert.equal(removeTrailingSpaces(key, new Locale("en-us")), testCase[key]);
 		});
 	});
@@ -202,7 +204,7 @@ describe('Add space before symbol, e.g. ©\n', () => {
 	};
 
 	Object.keys(testCase).forEach((key) => {
-		it("", () => {
+		it("unit test", () => {
 			assert.equal(addSpaceBeforeSymbol(key, new Locale("en-us"), "©"), testCase[key]);
 		});
 	});

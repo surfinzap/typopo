@@ -102,7 +102,7 @@ describe('Tests that all modules are plugged in', () => {
 		// nbsp
 		"v a v a v": "v a v a v",
 		"the U.S. and" : "the U.S. and",
-	
+
 
 
 		// abbreviations
@@ -124,16 +124,26 @@ describe('Tests that all modules are plugged in', () => {
 	});
 });
 
-describe('Integration tests', () => {
+describe.only('Integration tests', () => {
 	let testCase = {
 
 		/*
-		 Selected combination of rules that may clash.
+		 Selected combination of rules processed within modules that may clash.
 		 */
+
 		// Will it remove extra punctuation or will it keep the abbreviation as expected?
 		"We will continue tomorrow at 8:00 a.m.!": "We will continue tomorrow at 8:00 a.m.!",
 		// Will it remove extra dot?
 		"We will continue tomorrow at 8:00 a.m..": "We will continue tomorrow at 8:00 a.m.",
+
+		/*	Combination of resolving issues with ellipsis and brackets together. 
+				In scientific discourse, […] is used to signify deliberately omitted
+				parts (e.g. of a quotation) */
+		"quote [...]with parts left out": "quote […] with parts left out",
+		"quote[…] with parts left out": "quote […] with parts left out",
+		"quote [ ...] with parts left out": "quote […] with parts left out",
+		"quote [.... ] with parts left out": "quote […] with parts left out",
+		"quote [ ….. ] with parts left out": "quote […] with parts left out",
 
 	};
 
