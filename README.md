@@ -77,6 +77,7 @@ supported languages:
 * "rue" (Rusyn)
 * "sk" (Slovak)
 * "cs" (Czech)
+* "de-de" (German)
 
 optional configuration:
 ```javascript
