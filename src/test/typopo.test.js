@@ -124,7 +124,7 @@ describe('Tests that all modules are plugged in', () => {
 	});
 });
 
-describe.only('Integration tests', () => {
+describe('Integration tests', () => {
 	let testCase = {
 
 		/*
@@ -136,7 +136,7 @@ describe.only('Integration tests', () => {
 		// Will it remove extra dot?
 		"We will continue tomorrow at 8:00 a.m..": "We will continue tomorrow at 8:00 a.m.",
 
-		/*	Combination of resolving issues with ellipsis and brackets together. 
+		/*	Combination of resolving issues with ellipsis and brackets together.
 				In scientific discourse, […] is used to signify deliberately omitted
 				parts (e.g. of a quotation) */
 		"quote [...]with parts left out": "quote […] with parts left out",

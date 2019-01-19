@@ -128,7 +128,7 @@ describe('Remove space after opening brackets\n', () => {
 	});
 });
 
-describe.only('Add space before opening brackets\n', () => {
+describe('Add space before opening brackets\n', () => {
 	let testCase = {
 		"Enclosed(in) the brackets.": "Enclosed (in) the brackets.",
 		"Enclosed[in] the brackets.": "Enclosed [in] the brackets.",
@@ -144,7 +144,7 @@ describe.only('Add space before opening brackets\n', () => {
 	});
 });
 
-describe.only('Add space after sentence punctuation and closing brackets\n', () => {
+describe('Add space after sentence punctuation and closing brackets\n', () => {
 	let testCase = {
 		"One sentence ended.Another started.": "One sentence ended. Another started.",
 		"One sentence ended!Another started.": "One sentence ended! Another started.",
