@@ -42,6 +42,9 @@
   <button id="fix-typos--cs">
     Czech
   </button>
+	<button id="fix-typos--de-de">
+		German
+	</button>
 </div>
 
 <textarea id="textarea" class="typopo__textarea translit__textarea" placeholder="Enter some text" autofocus>
@@ -79,6 +82,10 @@
   $("#fix-typos--cs").click(function() {
     $('#textarea').val(fixTypos($('#textarea').val(), 'cs'));
   });
+
+	$("#fix-typos--de-de").click(function() {
+		$('#textarea').val(fixTypos($('#textarea').val(), 'de-de'));
+	});
 </script>
 
 </body>
