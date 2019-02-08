@@ -195,6 +195,8 @@ describe('Add non-breaking space within ordinal date (de-de)\n', () => {
 
 describe('Add non-breaking space after roman numeral (sk, cs, de-de, rue)\n', () => {
 	let testCase = {
+		"I. kapitola": "I. kapitola",
+		"bola to I. kapitola": " bola to I. kapitola",
 		"III. kapitola": "III. kapitola",
 		"III.kapitola": "III. kapitola",
 		"X. ročník": "X. ročník",
