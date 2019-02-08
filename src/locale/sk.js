@@ -7,7 +7,7 @@ const quotes = {
 
 const numbers = {
 	ordinalIndicator :				"\\.",
-	romanOrdinalIndicator :				"\\.",
+	romanOrdinalIndicator :		"\\.",
 }
 
 const abbreviationsForNbsp = [
