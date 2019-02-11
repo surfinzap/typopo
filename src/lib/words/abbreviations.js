@@ -102,7 +102,38 @@ export function fixEgIeAmPm(string, locale) {
 
 
 
+/*
+	Fixes spaces around initials for First and Middle names
+
+	@param {string} input text for identification
+	@returns {string} corrected output
+*/
+export function fixInitials(string, locale) {
+	let pattern = "(["+ locale.uppercaseChars + "]\\.)(["+ locale.spaces +"]?)(["+ locale.uppercaseChars + "])";
+	let re = new RegExp(pattern, "g");
+	// let replacement = "$1" + locale.nbsp + "$3";
+	let replacement = "";
+
+	switch (locale.locale) {
+		case "en-us":
+			replacement = "$1" + "$3";
+			break;
+		case "rue":
+		case "sk":
+		case "cs":
+		case "de-de":
+			replacement = "$1" + locale.nbsp + "$3";
+			break;
+	}
+
+	return string.replace(re, replacement);
+}
+
+
 
 export function fixAbbreviations(string, locale) {
-	return fixEgIeAmPm(string, locale);
+	string = fixInitials(string, locale);
+	string = fixEgIeAmPm(string, locale);
+
+	return string;
 }

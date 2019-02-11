@@ -1,4 +1,5 @@
 import {fixAbbreviations,
+				fixInitials,
 				fixEgIeAmPm} from "../../lib/words/abbreviations";
 import assert from 'assert';
 import Locale from "../../locale/locale";
@@ -83,5 +84,55 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 		it("unit test", () => {
 			assert.equal(fixEgIeAmPm(key, new Locale("en-us")), testCase[key]);
 		});
+	});
+});
+
+
+describe('Fix Initials (sk, cs, rue, de-de)\n', () => {
+	let testCase = {
+		"J.Novak": "J. Novak",
+		"J. Novak": "J. Novak",
+		"Philip K.Dick": "Philip K. Dick",
+		"Philip K. Dick": "Philip K. Dick",
+		"F. X." : "F. X.",
+		"F. X. R." : "F. X. R.",
+		"F. X. Šalda" : "F. X. Šalda",
+		"F.X. Šalda" : "F. X. Šalda",
+		"S.J.": "S. J.",
+	};
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixInitials(key, new Locale("sk")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixAbbreviations(key, new Locale("sk")), testCase[key]);
+		});
+	});
+});
+
+describe('Fix Initials (en-us)\n', () => {
+	let testCase = {
+		"J.Novak": "J. Novak",
+		"J. Novak": "J. Novak",
+		"Philip K.Dick": "Philip K. Dick",
+		"Philip K. Dick": "Philip K. Dick",
+		"F. X." : "F.X.",
+		"F. X. R." : "F.X. R.", // TBD for more letters?
+		"F. X. Šalda" : "F.X. Šalda",
+		"F.X. Šalda" : "F.X. Šalda",
+		"S.J." : "S.J.",
+		"the U.S." : "the U.S.",
+	};
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixInitials(key, new Locale("en-us")), testCase[key]);
+		});
+		// it("module test", () => {
+		// 	assert.equal(fixAbbreviations(key, new Locale("en-us")), testCase[key]);
+		// });
 	});
 });
