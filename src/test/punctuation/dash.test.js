@@ -86,7 +86,7 @@ describe('Fix dash spaces between words (en-us)\n', () => {
 	});
 });
 
-describe('Fix dash spaces between words (rue, sk, cs)\n', () => {
+describe('Fix dash spaces between words (rue, sk)\n', () => {
 	let testCase = {
 		"and — she said": "and — she said",
 		"and—she said": "and — she said",
@@ -96,6 +96,18 @@ describe('Fix dash spaces between words (rue, sk, cs)\n', () => {
 		it("unit test", () => {
 			assert.equal(fixDashSpacesBetweenWords(key, new Locale("rue")), testCase[key]);
 			assert.equal(fixDashSpacesBetweenWords(key, new Locale("sk")), testCase[key]);
+		});
+	});
+});
+
+describe('Fix dash spaces between words (cs)\n', () => {
+	let testCase = {
+		"and — she said": "and – she said",
+		"and—she said": "and – she said",
+		};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
 			assert.equal(fixDashSpacesBetweenWords(key, new Locale("cs")), testCase[key]);
 		});
 	});

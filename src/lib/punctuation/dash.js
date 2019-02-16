@@ -67,8 +67,10 @@ export function fixDashSpacesBetweenWords(string, locale) {
 			break;
 		case "rue":
 		case "sk":
-		case "cs":
 			replacement = locale.hairSpace + locale.emDash + locale.hairSpace;
+			break;
+		case "cs":
+			replacement = locale.nbsp + locale.enDash + locale.space;
 			break;
 		case "de-de":
 			replacement = locale.hairSpace + locale.enDash + locale.hairSpace;

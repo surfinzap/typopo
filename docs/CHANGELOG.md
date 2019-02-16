@@ -7,7 +7,8 @@
 ### Improvements
 * Improvements in identification of wrong use of ellipsis and aposiopesis
 * Improvements in identification of wrong use of single quotes
-* * Improvements in identification of name initials, e.g. J. Hus, F.X. Šalda or Ch.G.D. Lambert. Also, previous portion of the script was catching many false positives, which was reduced with this update.
+* Improvements in identification of name initials, e.g. J. Hus, F.X. Šalda or Ch.G.D. Lambert. Also, previous portion of the script was catching many false positives, which was reduced with this update.
+* Make en dash the default dash for Czech language 
 
 
 ## 2.1.9 // 2018-11-11
