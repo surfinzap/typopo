@@ -90,15 +90,31 @@ describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
 
 describe('Fix Initials (sk, cs, rue, de-de)\n', () => {
 	let testCase = {
-		"J.Novak": "J. Novak",
-		"J. Novak": "J. Novak",
-		"Philip K.Dick": "Philip K. Dick",
-		"Philip K. Dick": "Philip K. Dick",
-		"F. X." : "F. X.",
-		"F. X. R." : "F. X. R.",
-		"F. X. Šalda" : "F. X. Šalda",
+		// test cases for first name initials
+		"J. Novak": "J. Novak",	// essential case, nbsp missing
+		"J.Novak": "J. Novak",	// space missing
+		"J. Novak": "J. Novak",	// double-check NBSP in the middle
+		"Ch. Lambert" : "Ch. Lambert", //double-letter as a first name initial
+		"CH. Lambert" : "CH. Lambert", //double-letter initialized as a first name initial
+		"Philip K. Dick": "Philip K. Dick", // one middle initial
+		"Philip K.Dick": "Philip K. Dick", // one middle initials
+
+		// test cases for two-letter initials
+		"F. X. Šalda" : "F. X. Šalda", //nbsp after 1st letter, normal space after 2nd one
 		"F.X. Šalda" : "F. X. Šalda",
-		"S.J.": "S. J.",
+		"Ch.Ch. Šalda" : "Ch. Ch. Šalda",
+		"CH.CH. Šalda" : "CH. CH. Šalda",
+
+		// test cases for three-letter initials
+		"Ch. G. D. Lambert" : "Ch. G. D. Lambert", // nbsp after 2 letter, normal space after third one
+		"Ch. Ch. Ch. Lambert" : "Ch. Ch. Ch. Lambert",
+		"CH. CH. CH. Lambert" : "CH. CH. CH. Lambert",
+
+		// false positives, this function should leave them as they are
+		"F. X." : "F. X.",
+		"F.X." : "F.X.",
+		"F. X. R." : "F. X. R.",
+		"the U.S." : "the U.S.",
 	};
 
 
@@ -114,15 +130,30 @@ describe('Fix Initials (sk, cs, rue, de-de)\n', () => {
 
 describe('Fix Initials (en-us)\n', () => {
 	let testCase = {
-		"J.Novak": "J. Novak",
-		"J. Novak": "J. Novak",
-		"Philip K.Dick": "Philip K. Dick",
-		"Philip K. Dick": "Philip K. Dick",
-		"F. X." : "F.X.",
-		"F. X. R." : "F.X. R.", // TBD for more letters?
-		"F. X. Šalda" : "F.X. Šalda",
+		// test cases for first name initials
+		"J. Novak": "J. Novak",	// essential case, nbsp missing
+		"J.Novak": "J. Novak",	// space missing
+		"J. Novak": "J. Novak",	// double-check NBSP in the middle
+		"Ch. Lambert" : "Ch. Lambert", //double-letter as a first name initial
+		"CH. Lambert" : "CH. Lambert", //double-letter initialized as a first name initial
+		"Philip K. Dick": "Philip K. Dick", // one middle initial
+		"Philip K.Dick": "Philip K. Dick", // one middle initials
+
+		// test cases for two-letter initials
+		"F. X. Šalda" : "F.X. Šalda", //nbsp after 1st letter, normal space after 2nd one
 		"F.X. Šalda" : "F.X. Šalda",
-		"S.J." : "S.J.",
+		"Ch.Ch. Šalda" : "Ch.Ch. Šalda",
+		"CH.CH. Šalda" : "CH.CH. Šalda",
+
+		// test cases for three-letter initials
+		"Ch. G. D. Lambert" : "Ch.G.D. Lambert", // nbsp after 2 letter, normal space after third one
+		"Ch. Ch. Ch. Lambert" : "Ch.Ch.Ch. Lambert",
+		"CH. CH. CH. Lambert" : "CH.CH.CH. Lambert",
+
+		// false positives, this function should leave them as they are
+		"F. X." : "F. X.",
+		"F.X." : "F.X.",
+		"F. X. R." : "F. X. R.",
 		"the U.S." : "the U.S.",
 	};
 
@@ -131,8 +162,8 @@ describe('Fix Initials (en-us)\n', () => {
 		it("unit test", () => {
 			assert.equal(fixInitials(key, new Locale("en-us")), testCase[key]);
 		});
-		// it("module test", () => {
-		// 	assert.equal(fixAbbreviations(key, new Locale("en-us")), testCase[key]);
-		// });
+		it("module test", () => {
+			assert.equal(fixAbbreviations(key, new Locale("en-us")), testCase[key]);
+		});
 	});
 });

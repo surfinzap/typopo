@@ -89,16 +89,6 @@ export function addNbspAfterRomanNumeral(string, locale) {
 
 
 
-export function addNbspAfterInitial(string, locale) {
-	let pattern = "(["+ locale.uppercaseChars + "]\\.)(["+ locale.spaces +"]?)(["+ locale.uppercaseChars + "])";
-	let re = new RegExp(pattern, "g");
-	let replacement = "$1" + locale.nbsp + "$3";
-
-	return string.replace(re, replacement);
-}
-
-
-
 export function addNbspAfterSymbol(string, locale, symbol) {
 	let pattern = "("+ symbol +")([^" + locale.spaces + "])";
 	let re = new RegExp(pattern, "g");
@@ -153,7 +143,6 @@ export function fixNbsp(string, locale) {
 	string = addNbspAfterOrdinalNumber(string, locale);
 	string = addNbspWithinOrdinalDate(string, locale);
 	string = addNbspAfterRomanNumeral(string, locale);
-	string = addNbspAfterInitial(string, locale);
 	string = addNbspAfterAbbreviation(string, locale)
 
 	return string;

@@ -6,7 +6,6 @@ import {removeNbspBetweenMultiCharWords,
 				addNbspAfterOrdinalNumber,
 				addNbspWithinOrdinalDate,
 				addNbspAfterRomanNumeral,
-				addNbspAfterInitial,
 				addNbspAfterSymbol,
 				replaceSpacesWithNbspAfterSymbol,
 				addNbspAfterAbbreviation,
@@ -219,27 +218,6 @@ describe('Add non-breaking space after roman numeral (sk, cs, de-de, rue)\n', ()
 			assert.equal(fixNbsp(key, new Locale("cs")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("de-de")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("rue")), testCase[key]);
-		});
-	});
-});
-
-
-
-describe('Add non-breaking space after initial\n', () => {
-	let testCase = {
-		"Philip K. Dick": "Philip K. Dick",
-		"F. X." : "F. X.",
-		"F. X. R." : "F. X. R.",
-		"F. X. Šalda" : "F. X. Šalda",
-		"S.J.": "S. J.",
-	};
-
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.equal(addNbspAfterInitial(key, new Locale("en-us")), testCase[key]);
-		});
-		it("module test", () => {
-			assert.equal(fixNbsp(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
