@@ -90,7 +90,7 @@ configuration = {
 	removeLines : true,
 }
 ```
-(removeLines is the online available configuration option for now, the situation will get better based on your feedback)
+(“removeLines” is the only available configuration option for now)
 
 ## Feedback
 Iʼd love to hear:
