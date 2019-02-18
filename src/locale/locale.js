@@ -143,7 +143,7 @@ export default class Locale {
 
 
 
-		/* Abbreviations */
+		/* Abbreviations TBD remove */
 		this.abbreviationsForNbsp = {}
 
 		// Create one key-value map of all abbreviations in all languages that need nbsp
@@ -157,6 +157,15 @@ export default class Locale {
 				let localeAbbrForNbspPattern = localeAbbrForNbsp[i].replace(re, replacement);
 				this.abbreviationsForNbsp[localeAbbrForNbsp[i]] = localeAbbrForNbspPattern
 			}
+		}
+
+		/* Multi-word abbreviations from all locales
+
+			 Make a list of Multi-word abbreviations from all locales
+		*/
+		this.multipleWordAbbreviations = []
+		for (locale in typopoLocale) {
+			this.multipleWordAbbreviations = this.multipleWordAbbreviations.concat(typopoLocale[locale].multipleWordAbbreviations);
 		}
 	}
 }

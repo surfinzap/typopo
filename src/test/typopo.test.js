@@ -101,15 +101,17 @@ describe('Tests that all modules are plugged in', () => {
 		"Sentence and… ?": "Sentence and…?",
 		// nbsp
 		"v a v a v": "v a v a v",
-		// "the U.S. and" : "the U.S. and", not yet supported 
+		// "the U.S. and" : "the U.S. and", not yet supported
 
 
 
 		// abbreviations
-		"E. g.something": "e.g. something",
 		"(e.g.)" : "(e.g.)",
 		"a.m." : "a.m.",
 		"5 a.m." : "5 a.m.",
+		"CH. CH. CH. Lambert" : "CH.CH.CH. Lambert",
+		"the U.S." : "the U.S.",
+
 
 		//case
 		"CMSko" : "CMSko",

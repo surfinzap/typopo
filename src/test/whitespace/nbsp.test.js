@@ -285,7 +285,6 @@ describe('Add non-breaking space after abbreviations (extra set for module test)
 		// as all abbreviations can be used within different languages, such as reference, they're being corrected in each language
 		"str. 8" : "str. 8",
 		"tzv. rýč" : "tzv. rýč",
-		"e.g. something" : "e.g. something",
 		"pp. 10–25" : "pp. 10–25",
 		"S. 123" : "S. 123",
 

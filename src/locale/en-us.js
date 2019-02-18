@@ -11,14 +11,26 @@ const numbers = {
 }
 
 const abbreviationsForNbsp = [
-	"e.g.",
-	"i.e.",
 	"p.",
 	"pp."
+]
+
+const singleWordAbbreviations = []
+
+// Disregard correct spelling in your locale
+// and provide abbreviations in format “abbr abbr abbr…”
+const multipleWordAbbreviations = [
+	"U S",
+	"e g",
+	"i e",
+	"a m",
+	"p m",
 ]
 
 export default {
 	quotes,
 	numbers,
-	abbreviationsForNbsp
+	abbreviationsForNbsp,
+	singleWordAbbreviations,
+	multipleWordAbbreviations
 }

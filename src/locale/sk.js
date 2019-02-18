@@ -23,13 +23,27 @@ const abbreviationsForNbsp = [
 	"tj.",
 	"tzv.",
 	"čl.",
-	"hl.",
-	"m."
 ]
 
+const singleWordAbbreviations = []
+
+// Disregard correct spelling in your locale
+// and provide abbreviations in format “abbr abbr abbr…”
+const multipleWordAbbreviations = [
+	"hl m",
+	"n l",
+	"p n l",
+	"pr n l",
+	"s a",
+	"s l",
+	"t j",
+	"zodp red",
+]
 
 export default {
 	quotes,
 	numbers,
-	abbreviationsForNbsp
+	abbreviationsForNbsp,
+	singleWordAbbreviations,
+	multipleWordAbbreviations
 }
