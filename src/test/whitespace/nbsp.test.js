@@ -266,10 +266,10 @@ describe('Add non-breaking space after abbreviations\n', () => {
 		"str. 8" : "str. 8",
 		"tzv. rýč" : "tzv. rýč",
 		"Prines kvetináč. 5 je super číslo." : "Prines kvetináč. 5 je super číslo.", //false positive
-		"hl. m. Praha" : "hl. m. Praha",
-		"hl.m.Praha" : "hl. m. Praha", // not supported yet
-		"hl. m.Praha" : "hl. m. Praha",
-		"hl.m. Praha" : "hl. m. Praha",
+		// "hl. m. Praha" : "hl. m. Praha",
+		// "hl.m.Praha" : "hl. m. Praha", // not supported yet
+		// "hl. m.Praha" : "hl. m. Praha",
+		// "hl.m. Praha" : "hl. m. Praha",
 		"10 a.m." : "10 a.m.", // false positive for abbreviation within abbreviation, i.e. m. within a.m.
 		"e.g. something" : "e.g. something",
 		"10 p." : "10 p.",
@@ -296,7 +296,7 @@ describe('Add non-breaking space after abbreviations (extra set for module test)
 		// as all abbreviations can be used within different languages, such as reference, they're being corrected in each language
 		"str. 8" : "str. 8",
 		"tzv. rýč" : "tzv. rýč",
-		"hl. m. Praha" : "hl. m. Praha",
+		// "hl. m. Praha" : "hl. m. Praha",
 		// "hl.m.Praha" : "hl. m. Praha", // not supported yet
 		// "hl. m.Praha" : "hl. m. Praha",
 		// "hl.m. Praha" : "hl. m. Praha",

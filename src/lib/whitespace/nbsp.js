@@ -128,7 +128,6 @@ export function addNbspAfterAbbreviation(string, locale) {
 
 
 
-
 /*
 	Consolidates the use of non-breaking spaces
 

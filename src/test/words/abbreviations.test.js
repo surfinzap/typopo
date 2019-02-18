@@ -1,91 +1,8 @@
 import {fixAbbreviations,
 				fixInitials,
-				fixEgIeAmPm} from "../../lib/words/abbreviations";
+				fixMultiWordAbbreviations} from "../../lib/words/abbreviations";
 import assert from 'assert';
 import Locale from "../../locale/locale";
-
-
-describe('Fix abbreviations — a.m., p.m., e.g., i.e.\n', () => {
-	let testCase = {
-		"E. g. something": "e.g. something",
-		"E. g.something": "e.g. something",
-		"E. G. something": "e.g. something",
-		"E.G. something": "e.g. something",
-		"eg. something": "e.g. something",
-		"eg something": "e.g. something",
-		"e.     g. something": "e.g. something",
-		", e.g. something": ", e.g. something",
-		"(e.g. something": "(e.g. something",
-		"a e.g. something": "a e.g. something",
-		"abc\ne.g. something": "abc\ne.g. something",
-		"Greg Snow": "Greg Snow", // false positive
-		"eggnog": "eggnog", // false positive
-		"e.g.\nsomething": "e.g. \nsomething", //consider removing space at the end of the line
-		"e.g. 100 km" : "e.g. 100 km",
-		"(e.g.)" : "(e.g.)",
-		"(e.g. )" : "(e.g.)",
-		"“e. g.”" : "“e.g.”",
-		"‘e. g.’" : "‘e.g.’",
-		"e. g." : "e.g.",
-		"č., s., fol., e. g., i.e., str.," : "č., s., fol., e.g., i.e., str.,",
-
-		"I. e. something": "i.e. something",
-		"I. e.something": "i.e. something",
-		"I. E. something": "i.e. something",
-		"I.E. something": "i.e. something",
-		"ie. something": "i.e. something",
-		"(I. e. something": "(i.e. something",
-		"ie something": "i.e. something",
-		"i.     e. something": "i.e. something",
-		"a i.e. something": "a i.e. something",
-		"brie cheese": "brie cheese", // false positive
-		"Pam Grier": "Pam Grier", // false positive
-		"najkrajšie": "najkrajšie", // false positive for non-latin boundaries
-		"nevieš": "nevieš", // false positive for non-latin boundaries
-		"ieš": "ieš", // false positive for non-latin boundaries
-		"či e-mail marketing" : "či e-mail marketing", // false positive for non-latin boundaries
-		"i.e. 100 km" : "i.e. 100 km",
-		"(i.e.)" : "(i.e.)",
-
-		"a. m." : "a.m.",
-		"(a. m.)" : "(a.m.)",
-		"“a. m.”" : "“a.m.”",
-		"‘a. m.’" : "‘a.m.’",
-		"5 am": "5 a.m.",
-		"5 a. m. " : "5 a.m.",
-		"5 a.     m. " : "5 a.m.",
-		"5a. m. " : "5 a.m.",
-		"5 am in the morning": "5 a.m. in the morning",
-		"5 AM": "5 a.m.",
-		"5 a.m.": "5 a.m.",
-		"I am from nowhere.": "I am from nowhere.", // false positive
-		"5 šam": "5 šam", // false positive for non-latin boundaries
-		"5 amš": "5 amš", // false positive for non-latin boundaries
-		"10 Americans" : "10 Americans",
-
-		"4.20 pm": "4.20 p.m.",
-		"4.20 PM": "4.20 p.m.",
-		"4.20 p.m.": "4.20 p.m.",
-		"4.20 p.     m.": "4.20 p.m.",
-		"4.20 p.m. in the afternoon": "4.20 p.m. in the afternoon",
-		"She is the PM of the UK.": "She is the PM of the UK.", // false positive
-		"2 PMs" : "2 PMs",
-
-		// Throwing extra space
-		"“We will continue tomorrow at 8:00 a.m.”": "“We will continue tomorrow at 8:00 a.m.”",
-		"We will continue tomorrow at 8:00 a.m.!": "We will continue tomorrow at 8:00 a.m.!",
-		"We will continue tomorrow at 8:00 a.m. — unless — someting else happens": "We will continue tomorrow at 8:00 a.m. — unless — someting else happens",
-		"8 a.m. is the right time" : "8 a.m. is the right time",
-
-	};
-
-
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.equal(fixEgIeAmPm(key, new Locale("en-us")), testCase[key]);
-		});
-	});
-});
 
 
 describe('Fix Initials (sk, cs, rue, de-de)\n', () => {
@@ -114,7 +31,6 @@ describe('Fix Initials (sk, cs, rue, de-de)\n', () => {
 		"F. X." : "F. X.",
 		"F.X." : "F.X.",
 		"F. X. R." : "F. X. R.",
-		"the U.S." : "the U.S.",
 	};
 
 
@@ -161,6 +77,114 @@ describe('Fix Initials (en-us)\n', () => {
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.equal(fixInitials(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixAbbreviations(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Fix Multi-word abbreviations (sk, cs, rue, de-de)\n', () => {
+	let testCase = {
+		/* General pattern for these locales assumes:
+			 * dots after each abbreviated word
+			 * non-breaking spaces between abbreviated words
+			 * normal space after the last abbreviated word
+		*/
+		// double-word abbreviations
+		"hl. m. Praha" : "hl. m. Praha", // set proper nbsp
+		"hl.m.Praha" : "hl. m. Praha", // include proper spaces
+		"Hl.m.Praha" : "Hl. m. Praha", // catch capitalized exception
+		"Je to hl. m. Praha." : "Je to hl. m. Praha.", // in a sentence
+		"Praha, hl. m." : "Praha, hl. m.", // check for abbr at the end of statement
+		"(hl. m. Praha)" : "(hl. m. Praha)", // bracket & quotes variations
+		"(Praha, hl. m.)" : "(Praha, hl. m.)", // bracket & quotes variations
+		"(hl. m.)" : "(hl. m.)", // bracket & quotes variations
+		"hl. m." : "hl. m.", // plain abbreviation
+		"č., s., hl. m., str.," : "č., s., hl. m., str.,", // in a list of abbreviations
+		"Dave Grohl. m. Praha" : "Dave Grohl. m. Praha", // false positive for not catching abbr. in a word
+		"Sliačhl. m. Praha" : "Sliačhl. m. Praha", // false positive for not catching abbr. in a non-latin word
+
+		// triple word abbreviations
+		"im Jahr 200 v. u. Z. als der Hunger" : "im Jahr 200 v. u. Z. als der Hunger",
+		"im Jahr 200 v.u.Z. als der Hunger" : "im Jahr 200 v. u. Z. als der Hunger",
+		"im Jahr 200 v. u. Z." : "im Jahr 200 v. u. Z.",
+		"im Jahr 200 v.u.Z." : "im Jahr 200 v. u. Z.",
+		"v. u. Z." : "v. u. Z.",
+		"v.u.Z." : "v. u. Z.",
+
+		// random abbreviations to randomly check various localization
+		"1000 pr. n. l." : "1000 pr. n. l.",
+		"im Jahr 200 v. Chr." : "im Jahr 200 v. Chr.",
+		"Das Tier, d. h. der Fisch, lebte noch lange." : "Das Tier, d. h. der Fisch, lebte noch lange.",
+		"Das Tier – d. i. der Fisch – lebte noch lange." : "Das Tier – d. i. der Fisch – lebte noch lange.",
+		"Das Tier (d. h. der Fisch) lebte noch lange." : "Das Tier (d. h. der Fisch) lebte noch lange.",
+	};
+
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixMultiWordAbbreviations(key, new Locale("sk")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixAbbreviations(key, new Locale("sk")), testCase[key]);
+		});
+	});
+});
+
+
+describe('Fix Multi-word abbreviations (en-us)\n', () => {
+	let testCase = {
+		/* General pattern for these locales assumes:
+			 * dots after each abbreviated word
+			 * no spaces between abbreviated words
+			 * normal space after the last abbreviated word
+		*/
+		"the U.S." : "the U.S.",
+		"the U. S." : "the U.S.",
+
+		", e.g. something": ", e.g. something",
+		"(e.g. something": "(e.g. something",
+		"a e.g. something": "a e.g. something",
+		"abc\ne.g. something": "abc\ne.g. something",
+		"e.g. 100 km" : "e.g. 100 km",
+		"(e.g.)" : "(e.g.)",
+		"(e.g. )" : "(e.g.)",
+		"“e. g.”" : "“e.g.”",
+		"‘e. g.’" : "‘e.g.’",
+		"e. g." : "e.g.",
+		"č., s., fol., e. g., i.e., str.," : "č., s., fol., e.g., i.e., str.,",
+
+		"a i.e. something": "a i.e. something",
+		"i.e. 100 km" : "i.e. 100 km",
+		"brie cheese": "brie cheese", // false positive
+		"Pam Grier": "Pam Grier", // false positive
+		"najkrajšie": "najkrajšie", // false positive for non-latin boundaries
+		"nevieš": "nevieš", // false positive for non-latin boundaries
+		"ieš": "ieš", // false positive for non-latin boundaries
+		"či e-mail marketing" : "či e-mail marketing", // false positive for non-latin boundaries
+		"(i.e.)" : "(i.e.)",
+
+		"4.20 p.m.": "4.20 p.m.",
+		"4.20 p.m. in the afternoon": "4.20 p.m. in the afternoon",
+		"She is the PM of the UK.": "She is the PM of the UK.", // false positive
+		"2 PMs" : "2 PMs",
+
+		// Throwing extra space
+		"“We will continue tomorrow at 8:00 a.m.”": "“We will continue tomorrow at 8:00 a.m.”",
+		"We will continue tomorrow at 8:00 a.m.!": "We will continue tomorrow at 8:00 a.m.!",
+		"8 a.m. is the right time" : "8 a.m. is the right time",
+
+	};
+
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixMultiWordAbbreviations(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
 			assert.equal(fixAbbreviations(key, new Locale("en-us")), testCase[key]);
