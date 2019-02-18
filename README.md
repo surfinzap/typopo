@@ -29,7 +29,7 @@ Fixes whitespace characters:
 		* after ordinal numbers
 		* ordinal Roman numerals
 		* after name initials (i.e. Philip K. Dick)
-		* after commmon abbreviations
+		* after common multi-word abbreviations
 
 Fixes words:
 * accidental uPPERCASE
