@@ -11,28 +11,39 @@ const numbers = {
 }
 
 const singleWordAbbreviations = [
-	"č",
-	"s",
-	"fol",
-	"str",
-	"r",
-	"par",
-	"odst",
-	"např",
-	"sv",
-	"tj",
-	"tzv",
+	"S",
+	"z"
 ]
 
 // Disregard correct spelling in your locale
 // and provide abbreviations in format “abbr abbr abbr…”
 const multipleWordAbbreviations = [
-	"hl m",
-	"n l",
-	"p n l",
-	"př n l",
-
+	"b w",
+	"d h",
+	"d i",
+	"e V",
+	"n Chr",
+	"s a",
+	"s o",
+	"s u",
+	"u a",
+	"u ä",
+	"u Ä",
+	"u dgl",
+	"u U",
+	"u z",
+	"u zw",
+	"v a",
+	"v Chr",
+	"z B",
+	"z T",
+	"z Zt",
+	"n u Z",
+	"u a m",
+	"v u Z",
+	"Ges m b H",
 ]
+
 
 export default {
 	quotes,

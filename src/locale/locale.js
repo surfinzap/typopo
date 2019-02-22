@@ -4,12 +4,14 @@ import localeCs from "./cs";
 import localeEnUs from "./en-us";
 import localeRue from "./rue";
 import localeSk from "./sk";
+import localeDeDe from "./de-de";
 
 const typopoLocale = {
 	"cs" : localeCs,
 	"en-us" : localeEnUs,
 	"rue" : localeRue,
 	"sk" : localeSk,
+	"de-de" : localeDeDe,
 }
 
 export default class Locale {
@@ -35,7 +37,7 @@ export default class Locale {
 			(8249)		single left-pointing angle quotation mark
 			(8250)		single right-pointing angle quotation mark
 		 */
-		this.singleQuoteAdepts = "‚|'|‘|’|ʼ|‛|′|‹|›";
+		this.singleQuoteAdepts = "‚|'|‘|’|ʼ|‛|′|`|‹|›";
 		this.leftSingleQuote = typopoLocale[locale].quotes.leftSingleQuote;
 		this.rightSingleQuote = typopoLocale[locale].quotes.rightSingleQuote;
 		this.apostrophe = "’";
@@ -54,6 +56,7 @@ export default class Locale {
 
 		/* Punctuation*/
 		this.terminalPunctuation = "\.\!\?";
+		this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote;
 		this.sentencePausePunctuation = "\,\:\;",
 		this.sentencePunctuation = this.sentencePausePunctuation + this.terminalPunctuation; // there is no ellipsis in the set as it is being used throughout a sentence in the middle. Rethink this group to split it into end-sentence punctuation and middle sentence punctuation
 		this.openingBrackets = "\\(\\[\\{";
@@ -137,23 +140,22 @@ export default class Locale {
 		this.romanNumerals = "IVXLCDM";
 		this.romanOrdinalIndicator = typopoLocale[locale].numbers.romanOrdinalIndicator;
 
+		/* Single-word abbreviations from all locales
 
-
-
-		/* Abbreviations */
-		this.abbreviationsForNbsp = {}
-
-		// Create one key-value map of all abbreviations in all languages that need nbsp
+			 Make a list of Single-word abbreviations from all locales
+		*/
+		this.singleWordAbbreviations = []
 		for (locale in typopoLocale) {
-			let localeAbbrForNbsp = typopoLocale[locale].abbreviationsForNbsp;
+			this.singleWordAbbreviations = this.singleWordAbbreviations.concat(typopoLocale[locale].singleWordAbbreviations);
+		}
 
-			for (let i = 0; i < localeAbbrForNbsp.length; i++) {
-				let pattern = "\\.";
-				let re = new RegExp(pattern, "g");
-				let replacement = "\\.";
-				let localeAbbrForNbspPattern = localeAbbrForNbsp[i].replace(re, replacement);
-				this.abbreviationsForNbsp[localeAbbrForNbsp[i]] = localeAbbrForNbspPattern
-			}
+		/* multiple-word abbreviations from all locales
+
+			 Make a list of multiple-word abbreviations from all locales
+		*/
+		this.multipleWordAbbreviations = []
+		for (locale in typopoLocale) {
+			this.multipleWordAbbreviations = this.multipleWordAbbreviations.concat(typopoLocale[locale].multipleWordAbbreviations);
 		}
 	}
 }

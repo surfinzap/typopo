@@ -1,6 +1,6 @@
 # Typopo
 
-Typopo is a JavaScript library that saves your time by auto-correcting frequent typographic errors in English, Slovak, Czech and Rusyn language. Make a proofreading quicker by auto-correcting the common typos first.
+Typopo is a JavaScript library that saves your time by auto-correcting frequent typographic errors in English, Slovak, Czech, Rusyn and German language. Make a proofreading quicker by auto-correcting the common typos first.
 
 ## Features
 Fixes punctuation:
@@ -29,7 +29,7 @@ Fixes whitespace characters:
 		* after ordinal numbers
 		* ordinal Roman numerals
 		* after name initials (i.e. Philip K. Dick)
-		* after commmon abbreviations
+		* after common single-word and multiple-word abbreviations
 
 Fixes words:
 * accidental uPPERCASE
@@ -77,6 +77,7 @@ supported languages:
 * "rue" (Rusyn)
 * "sk" (Slovak)
 * "cs" (Czech)
+* "de-de" (German)
 
 optional configuration:
 ```javascript
@@ -89,13 +90,13 @@ configuration = {
 	removeLines : true,
 }
 ```
-(removeLines is the online available configuration option for now, the situation will get better based on your feedback)
+(“removeLines” is the only available configuration option for now)
 
 ## Feedback
 Iʼd love to hear:
 * how do you use or plan to use Typopo
-* whatʼs missing
-* when you expect Typopo is not fixing typos as it should; in such cases following example would help e the most:
+* what you are missing
+* when you expect Typopo is not fixing typos as it should; in such cases following example would help the most:
 	* your input: [provide your text example here]
 	* expected output: [show how you want your example to be corrected]
 
@@ -103,3 +104,8 @@ In any case, feel free to drop me a line at <typopo@tota.sk>.
 
 ## License
 Licensed under MIT license. (See [LICENCE.TXT](//github.com/surfinzap/typopo/blob/master/LICENSE.txt).)
+
+## Special thanks
+* [Viclick](https://github.com/vilemj-Viclick) for adjusting the repo for modularisation (2.0.0)
+* [tomashruby](https://github.com/tomashruby) for consultation on architecture (2.0.0)
+* [skurzinz](https://github.com/skurzinz) for consultation & test on German typographic rules (2.2.0)

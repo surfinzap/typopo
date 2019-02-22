@@ -60,9 +60,11 @@ function replacePeriodsWithEllipsis(string, locale) {
 	errors:
 	[1] correct spacing, when ellipsis used used around commas
 	[2] correct spacing for aposiopesis at the end of the sentence in the middle of the paragraph
-	[3] correct spacing for aposiopesis at the beginning of the sentence in the middle of the paragraph
-	[4] correct spacing for aposiopesis at the beginning of the sentence at the beginning of the paragraph
-	[5] correct spacing for aposiopesis at the end of the sentence at the end of the paragraph
+	[3] correct spacing for aposiopesis at the beginning of the unfinished sentence in the middle of the paragraph
+	[4] keep spaces around ellipsis when it is used at the beginning of the full sentence in the middle of the paragraph
+	[5] correct spacing for aposiopesis at the beginning of the sentence at the beginning of the paragraph
+	[6] correct spacing for aposiopesis at the end of the sentence at the end of the paragraph
+	[7] add space after aposiopesis between two words
 
 	@param {string} string — input text for identification
 	@returns {string} — output with corrected spacing around aposiopesis
@@ -82,27 +84,33 @@ function correctSpacesAroundEllipsis(string, locale) {
 	string = string.replace(re, "$1$3");
 
 
-	/* [3] correct spacing for aposiopesis at the beginning of the sentence
-				 in the middle of the paragraph */
-	pattern = "([" + locale.sentencePunctuation + "][" + locale.spaces + "]" + locale.ellipsis +")([" + locale.spaces + "])([" + locale.lowercaseChars +"])";
+	/* [3] correct spacing for aposiopesis at the beginning of the
+				 unfinished sentence in the middle of the paragraph */
+	pattern = "([" + locale.sentencePunctuation + locale.terminalQuotes + "])([" + locale.spaces + "]?)(" + locale.ellipsis +")([" + locale.spaces + "]?)([" + locale.lowercaseChars +"])";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$3");
+	string = string.replace(re, "$1 $3$5");
+
+	/* [4]	keep spaces around ellipsis when it is used at the beginning
+						of the full sentence in the middle of the paragraph */
+	pattern = "([" + locale.sentencePunctuation + locale.terminalQuotes + "])([" + locale.spaces + "]?)(" + locale.ellipsis +")([" + locale.spaces + "]?)([" + locale.uppercaseChars +"])";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "$1 $3 $5");
 
 
-	/* [4] correct spacing for aposiopesis at the beginning of the sentence
+	/* [5] correct spacing for aposiopesis at the beginning of the sentence
 				 at the beginning of the paragraph */
 	pattern = "(^…)([" + locale.spaces + "])([" + locale.lowercaseChars + locale.uppercaseChars + "])";
 	re = new RegExp(pattern, "gm");
 	string = string.replace(re, "$1$3");
 
 
-	/* [5] correct spacing for aposiopesis at the end of the sentence
+	/* [6] correct spacing for aposiopesis at the end of the sentence
 				 at the end of the paragraph */
-	pattern = "([" + locale.lowercaseChars + locale.sentencePunctuation + "])([" + locale.spaces + "])(" + locale.ellipsis + ")(?![ " + locale.sentencePunctuation + locale.lowercaseChars + locale.uppercaseChars + "])";
+	pattern = "([" + locale.lowercaseChars + "])([" + locale.spaces + "])(" + locale.ellipsis + ")(?![ " + locale.sentencePunctuation + locale.lowercaseChars + locale.uppercaseChars + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1$3");
 
-	/* [6] add space after aposiopesis between two words */
+	/* [7] add space after aposiopesis between two words */
 
 	pattern = "([" + locale.allChars + "])([" + locale.ellipsis + "])([" + locale.allChars + "])";
 	re = new RegExp(pattern, "g");

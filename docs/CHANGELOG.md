@@ -1,5 +1,18 @@
 # Changelog for Typopo
 
+## 2.2.0 // 2019-02-22
+### New features
+* Support for German language (de-de)
+* Fix spacing between multiple-word abbreviations (e.g., hl. m., v. u. Z.) with respect to locale-specific spacing
+* Fix spacing before and after single-word abbreviations (10 p. or p. 10) with respect to locale-specific spacing
+
+### Improvements
+* Improvements in identification of wrong use of ellipsis and aposiopesis
+* Improvements in identification of wrong use of single quotes
+* Improvements in identification of name initials, e.g. J. Hus, F.X. Šalda or Ch.G.D. Lambert. Also, previous portion of the script was catching many false positives, which was reduced with this update.
+* Make en dash the default dash for Czech language
+
+
 ## 2.1.9 // 2018-11-11
 ### Improvements
 * Change Narrow NBSP into Hair space from the left side of the m-dash in sk, cs, rue locale
