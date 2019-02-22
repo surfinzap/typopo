@@ -140,28 +140,18 @@ export default class Locale {
 		this.romanNumerals = "IVXLCDM";
 		this.romanOrdinalIndicator = typopoLocale[locale].numbers.romanOrdinalIndicator;
 
+		/* Single-word abbreviations from all locales
 
-
-
-		/* Abbreviations TBD remove */
-		this.abbreviationsForNbsp = {}
-
-		// Create one key-value map of all abbreviations in all languages that need nbsp
+			 Make a list of Single-word abbreviations from all locales
+		*/
+		this.singleWordAbbreviations = []
 		for (locale in typopoLocale) {
-			let localeAbbrForNbsp = typopoLocale[locale].abbreviationsForNbsp;
-
-			for (let i = 0; i < localeAbbrForNbsp.length; i++) {
-				let pattern = "\\.";
-				let re = new RegExp(pattern, "g");
-				let replacement = "\\.";
-				let localeAbbrForNbspPattern = localeAbbrForNbsp[i].replace(re, replacement);
-				this.abbreviationsForNbsp[localeAbbrForNbsp[i]] = localeAbbrForNbspPattern
-			}
+			this.singleWordAbbreviations = this.singleWordAbbreviations.concat(typopoLocale[locale].singleWordAbbreviations);
 		}
 
-		/* Multi-word abbreviations from all locales
+		/* multiple-word abbreviations from all locales
 
-			 Make a list of Multi-word abbreviations from all locales
+			 Make a list of multiple-word abbreviations from all locales
 		*/
 		this.multipleWordAbbreviations = []
 		for (locale in typopoLocale) {

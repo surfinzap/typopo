@@ -29,7 +29,7 @@ Fixes whitespace characters:
 		* after ordinal numbers
 		* ordinal Roman numerals
 		* after name initials (i.e. Philip K. Dick)
-		* after common multi-word abbreviations
+		* after common single-word and multiple-word abbreviations
 
 Fixes words:
 * accidental uPPERCASE
@@ -95,8 +95,8 @@ configuration = {
 ## Feedback
 Iʼd love to hear:
 * how do you use or plan to use Typopo
-* whatʼs missing
-* when you expect Typopo is not fixing typos as it should; in such cases following example would help e the most:
+* what you are missing
+* when you expect Typopo is not fixing typos as it should; in such cases following example would help the most:
 	* your input: [provide your text example here]
 	* expected output: [show how you want your example to be corrected]
 

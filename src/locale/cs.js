@@ -10,22 +10,18 @@ const numbers = {
 	romanOrdinalIndicator :		"\\.",
 }
 
-const abbreviationsForNbsp = [
-	"č.",
-	"s.",
-	"fol.",
-	"str.",
-	"r.",
-	"par.",
-	"odst.",
-	"např.",
-	"sv.",
-	"tj.",
-	"tzv.",
-	"čl."
-]
-
 const singleWordAbbreviations = [
+	"č",
+	"s",
+	"fol",
+	"str",
+	"r",
+	"par",
+	"odst",
+	"např",
+	"sv",
+	"tj",
+	"tzv",
 ]
 
 // Disregard correct spelling in your locale
@@ -41,7 +37,6 @@ const multipleWordAbbreviations = [
 export default {
 	quotes,
 	numbers,
-	abbreviationsForNbsp,
 	singleWordAbbreviations,
 	multipleWordAbbreviations
 }

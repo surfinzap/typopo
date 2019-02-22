@@ -58,20 +58,20 @@ export function fixInitials(string, locale) {
 
 
 /*
-	Fixes spaces between abbreviations.
+	Fixes spaces between multiple-word abbreviations.
 	Each locale has its own pattern for fixing abbreviations,
 	please refer to the test suites.
 
 	Algorithm
 	[1] Set locale-specific space between abbreviations
 	[2] Change multiple-word abbreviations from all locales abbr. patterns
-	[3] Identify and fix double-word abbreviations before the word
-	[4] Identify and fix double-word abbreviations after the word or on their own
+	[3] Identify and fix multiple-word abbreviations before the word
+	[4] Identify and fix multiple-word abbreviations after the word or on their own
 
 	@param {string} input text for identification
 	@returns {string} corrected output
 */
-export function fixMultiWordAbbreviations(string, locale) {
+export function fixMultipleWordAbbreviations(string, locale) {
 	/* Partial patterns for a composition */
 	let patternPrecedingNonLatinBoundary = "([^" + locale.allChars + locale.enDash + locale.emDash + "]|^)";
 	let patternAbbr = "";
@@ -95,19 +95,19 @@ export function fixMultiWordAbbreviations(string, locale) {
 
 
 	/* [2] Change multiple-word abbreviations from all locales abbr. patterns */
-	let abbrevationPatterns = [];
+	let abbreviationPatterns = [];
 	for (let i = 0; i < locale.multipleWordAbbreviations.length; i++) {
 		let splitAbbreviation = locale.multipleWordAbbreviations[i].split(" ");
 		let abbrevationPattern = "";
 		for (let j = 0; j < splitAbbreviation.length; j++) {
 			abbrevationPattern += "\(" + splitAbbreviation[j] + "\)\(\\.\)\(\[" + locale.spaces + "\]\?\)";
 		}
-		abbrevationPatterns[i] = abbrevationPattern;
+		abbreviationPatterns[i] = abbrevationPattern;
 	}
 
 	/* [3] Identify multiple-word abbreviations before the word
 
-		 Algorithm follows:
+		 Algorithm as follows:
 		 * build up pattern by setting preceding and following boundaries
 		 * build replacement of concatenating
 		 	 * preceding boundary
@@ -115,12 +115,12 @@ export function fixMultiWordAbbreviations(string, locale) {
 			 * nth abbreviation the will follow with a normal space
 			 * following boundary
 	*/
-	for (let i = 0; i < abbrevationPatterns.length; i++) {
-			let pattern = patternPrecedingNonLatinBoundary + abbrevationPatterns[i] + patternFollowingWord;
+	for (let i = 0; i < abbreviationPatterns.length; i++) {
+			let pattern = patternPrecedingNonLatinBoundary + abbreviationPatterns[i] + patternFollowingWord;
 			let re = new RegExp(pattern, "gi");
 
 			let replacement = "$1";
-			let abbrCount = ((abbrevationPatterns[i].match(/\(/g) || []).length)/3;
+			let abbrCount = ((abbreviationPatterns[i].match(/\(/g) || []).length)/3;
 			for (let j = 0; j < abbrCount - 1; j++) {
 				replacement += "$" + (j*3+2) + "\." + abbrSpace;
 			}
@@ -129,7 +129,7 @@ export function fixMultiWordAbbreviations(string, locale) {
 			string = string.replace(re, replacement);
 	}
 
-	/* [4] Identify multiple-word abbreviations before the word
+	/* [4] Identify multiple-word abbreviations after the word
 
 		 Algorithm follows:
 		 * build up pattern by setting preceding and following boundaries
@@ -139,12 +139,12 @@ export function fixMultiWordAbbreviations(string, locale) {
 			 * nth abbreviation the will follow with no space
 			 * following boundary
 	*/
-	for (let i = 0; i < abbrevationPatterns.length; i++) {
-			let pattern = patternPrecedingNonLatinBoundary + abbrevationPatterns[i] + patternFollowingNonLatinBoundary;
+	for (let i = 0; i < abbreviationPatterns.length; i++) {
+			let pattern = patternPrecedingNonLatinBoundary + abbreviationPatterns[i] + patternFollowingNonLatinBoundary;
 			let re = new RegExp(pattern, "gi");
 
 			let replacement = "$1";
-			let abbrCount = ((abbrevationPatterns[i].match(/\(/g) || []).length)/3;
+			let abbrCount = ((abbreviationPatterns[i].match(/\(/g) || []).length)/3;
 			for (let j = 0; j < abbrCount - 1; j++) {
 				replacement += "$" + (j*3+2) + "\." + abbrSpace;
 			}
@@ -157,10 +157,63 @@ export function fixMultiWordAbbreviations(string, locale) {
 }
 
 
+/*
+	Fixes spaces between single-word abbreviations.
+	Each locale has its own pattern for fixing abbreviations,
+	please refer to the test suites.
+
+	Algorithm
+	[1] Change single-word abbreviations from all locales abbr. patterns
+	[2] Identify and fix single-word abbreviations before the word
+	[3] Identify and fix single-word abbreviations after the word or on their own
+
+	@param {string} input text for identification
+	@returns {string} corrected output
+*/
+export function fixSingleWordAbbreviations(string, locale) {
+	/* [1] Change single-word abbreviations from all locales abbr. patterns */
+	let abbreviationPatterns = [];
+	for (let i = 0; i < locale.singleWordAbbreviations.length; i++) {
+		abbreviationPatterns[i] = "\(" + locale.singleWordAbbreviations[i] + "\)\(\\.\)\(\[" + locale.spaces + "\]\?\)";
+	}
+
+
+	/* [2] Identify single-word abbreviations before the word
+	*/
+	let patternPrecedingNonLatinBoundary = "([^" + locale.allChars + locale.enDash + locale.emDash + locale.nbsp + "\\.]|^)";
+	let patternFollowingWord = "([" + locale.allChars + "\\d]+)([^\\.]|$)";
+
+	for (let i = 0; i < abbreviationPatterns.length; i++) {
+			let pattern = patternPrecedingNonLatinBoundary + abbreviationPatterns[i] + patternFollowingWord;
+			let re = new RegExp(pattern, "gi");
+			let replacement = "$1$2$3" + locale.nbsp + "$5$6";
+
+			string = string.replace(re, replacement);
+	}
+
+
+
+	/* [3] Identify single-word abbreviations after the word
+	*/
+	let patternPrecedingWord = "([" + locale.allChars + "\\d])([" + locale.spaces + "])";
+	let patternFollowingNonLatinBoundary = "([^" + locale.spaces + locale.allChars + "\\d]|$)";
+	for (let i = 0; i < abbreviationPatterns.length; i++) {
+			let pattern = patternPrecedingWord + abbreviationPatterns[i] + patternFollowingNonLatinBoundary;
+			let re = new RegExp(pattern, "gi");
+			let replacement = "$1" + locale.nbsp + "$3$4$5$6";
+
+			string = string.replace(re, replacement);
+	}
+
+	return string;
+}
+
+
 
 export function fixAbbreviations(string, locale) {
 	string = fixInitials(string, locale);
-	string = fixMultiWordAbbreviations(string, locale)
+	string = fixMultipleWordAbbreviations(string, locale)
+	string = fixSingleWordAbbreviations(string, locale)
 
 	return string;
 }

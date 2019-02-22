@@ -8,7 +8,6 @@ import {removeNbspBetweenMultiCharWords,
 				addNbspAfterRomanNumeral,
 				addNbspAfterSymbol,
 				replaceSpacesWithNbspAfterSymbol,
-				addNbspAfterAbbreviation,
 				fixNbsp} from "../../lib/whitespace/nbsp";
 import assert from 'assert';
 import Locale from "../../locale/locale";
@@ -249,50 +248,6 @@ describe('Replaces various spaces with non-breaking space after symbol, e.g. ©\
 	Object.keys(testCase).forEach((key) => {
 		it("just unit tests", () => {
 			assert.equal(replaceSpacesWithNbspAfterSymbol(key, new Locale("en-us"), "©"), testCase[key]);
-		});
-	});
-});
-
-
-
-describe('Add non-breaking space after abbreviations\n', () => {
-	let testCase = {
-		// as all abbreviations can be used within different languages, such as reference, they're being corrected in each language
-		"č.5 žije" : "č. 5 žije",
-		"Č.5 žije" : "č. 5 žije",
-		"č. 5 žije" : "č. 5 žije",
-		"áno, č. 5 žije" : "áno, č. 5 žije",
-		"preč č. 5 žije" : "preč č. 5 žije",
-		"str. 8" : "str. 8",
-		"tzv. rýč" : "tzv. rýč",
-		"Prines kvetináč. 5 je super číslo." : "Prines kvetináč. 5 je super číslo.", //false positive
-		"10 p." : "10 p.",
-		"pp. 10–25" : "pp. 10–25",
-		"(pp. 10–25)" : "(pp. 10–25)",
-		"S. 123" : "S. 123",
-		"the U.S. and" : "the U.S. and", //false positive
-	};
-
-	Object.keys(testCase).forEach((key) => {
-		it("unit tests", () => {
-			assert.equal(addNbspAfterAbbreviation(key, new Locale("en-us")), testCase[key]);
-		});
-	});
-});
-
-describe('Add non-breaking space after abbreviations (extra set for module test)\n', () => {
-	let testCase = {
-		// as all abbreviations can be used within different languages, such as reference, they're being corrected in each language
-		"str. 8" : "str. 8",
-		"tzv. rýč" : "tzv. rýč",
-		"pp. 10–25" : "pp. 10–25",
-		"S. 123" : "S. 123",
-
-	};
-
-	Object.keys(testCase).forEach((key) => {
-		it("module tests", () => {
-			assert.equal(fixNbsp(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

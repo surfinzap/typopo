@@ -10,8 +10,6 @@ const numbers = {
 	romanOrdinalIndicator :		"\\.",
 }
 
-const abbreviationsForNbsp = []
-
 const singleWordAbbreviations = []
 
 // Disregard correct spelling in your locale
@@ -22,7 +20,6 @@ const multipleWordAbbreviations = [
 export default {
 	quotes,
 	numbers,
-	abbreviationsForNbsp,
 	singleWordAbbreviations,
 	multipleWordAbbreviations
 }

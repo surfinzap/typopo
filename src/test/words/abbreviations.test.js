@@ -1,6 +1,7 @@
 import {fixAbbreviations,
 				fixInitials,
-				fixMultiWordAbbreviations} from "../../lib/words/abbreviations";
+				fixMultipleWordAbbreviations,
+				fixSingleWordAbbreviations} from "../../lib/words/abbreviations";
 import assert from 'assert';
 import Locale from "../../locale/locale";
 
@@ -85,8 +86,7 @@ describe('Fix Initials (en-us)\n', () => {
 });
 
 
-
-describe('Fix Multi-word abbreviations (sk, cs, rue, de-de)\n', () => {
+describe('Fix multiple-word abbreviations (sk, cs, rue, de-de)\n', () => {
 	let testCase = {
 		/* General pattern for these locales assumes:
 			 * dots after each abbreviated word
@@ -127,7 +127,7 @@ describe('Fix Multi-word abbreviations (sk, cs, rue, de-de)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixMultiWordAbbreviations(key, new Locale("sk")), testCase[key]);
+			assert.equal(fixMultipleWordAbbreviations(key, new Locale("sk")), testCase[key]);
 		});
 		it("module test", () => {
 			assert.equal(fixAbbreviations(key, new Locale("sk")), testCase[key]);
@@ -135,8 +135,7 @@ describe('Fix Multi-word abbreviations (sk, cs, rue, de-de)\n', () => {
 	});
 });
 
-
-describe('Fix Multi-word abbreviations (en-us)\n', () => {
+describe('Fix multiple-word abbreviations (en-us)\n', () => {
 	let testCase = {
 		/* General pattern for these locales assumes:
 			 * dots after each abbreviated word
@@ -184,10 +183,47 @@ describe('Fix Multi-word abbreviations (en-us)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixMultiWordAbbreviations(key, new Locale("en-us")), testCase[key]);
+			assert.equal(fixMultipleWordAbbreviations(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
 			assert.equal(fixAbbreviations(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+describe('Fix Single-word abbreviations (sk, cs, rue, de-de, en-us)\n', () => {
+	let testCase = {
+		/* General pattern for these locales assumes nbsp after abbreviation
+		*/
+		"č. 5 žije" : "č. 5 žije", // set nbsp
+		"č.5 žije" : "č. 5 žije", // add nbsp
+		"preč č. 5 žije" : "preč č. 5 žije", // identify abbreviation word ending in non-latin character
+		"áno, č. 5 žije" : "áno, č. 5 žije", // identify abbreviation after sentence punctuation
+		"Prines kvetináč. 5 je super číslo." : "Prines kvetináč. 5 je super číslo.", //false positive where abbreviation is part of the previous sentence
+		"(pp. 10–25)" : "(pp. 10–25)", // abbr. in brackets
+		"t. č. 555-729-458" : "t. č. 555-729-458", // false positive, do not correct single-word abbr. that's part of the multiple-word abbr
+		"t. č. dačo" : "t. č. dačo", // false positive, do not correct single-word abbr. that's part of the multiple-word abbr (word variation)
+		"4.20 p.m." : "4.20 p.m.", // false positive
+
+		"str. 38" : "str. 38", // other abbreviation example
+		"str. 7" : "str. 7", // other abbreviation example
+		"str. p" : "str. p", // other abbreviation example
+		"tzv. rýč" : "tzv. rýč", // other abbreviation example
+
+		"10 č." : "10 č.", // abbreviation at the end of the word
+		"10 p." : "10 p.", // abbreviation at the end of the word
+		"10 str." : "10 str.", // abbreviation at the end of the word
+		"(10 p.)" : "(10 p.)", // abbreviation at the end of the word & in brackets
+
+		"the U.S. and" : "the U.S. and", //false positive
+	};
+
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixSingleWordAbbreviations(key, new Locale("sk")), testCase[key]);
 		});
 	});
 });
