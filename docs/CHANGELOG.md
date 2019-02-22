@@ -1,6 +1,6 @@
 # Changelog for Typopo
 
-## 2.2.0 // 2018-02-22
+## 2.2.0 // 2019-02-22
 ### New features
 * Support for German language (de-de)
 * Fix spacing between multiple-word abbreviations (e.g., hl. m., v. u. Z.) with respect to locale-specific spacing
