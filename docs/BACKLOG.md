@@ -1,7 +1,5 @@
 # Backlog for typopo
 
-
-
 * decide how to handle names like ".NET"
 
 * add support for currencies
