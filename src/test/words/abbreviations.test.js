@@ -121,6 +121,7 @@ describe('Fix multiple-word abbreviations (sk, cs, rue, de-de)\n', () => {
 		"Das Tier, d. h. der Fisch, lebte noch lange." : "Das Tier, d. h. der Fisch, lebte noch lange.",
 		"Das Tier – d. i. der Fisch – lebte noch lange." : "Das Tier – d. i. der Fisch – lebte noch lange.",
 		"Das Tier (d. h. der Fisch) lebte noch lange." : "Das Tier (d. h. der Fisch) lebte noch lange.",
+		"т. зн. незвыкле" : "т. зн. незвыкле"
 	};
 
 

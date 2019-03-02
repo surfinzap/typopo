@@ -76,7 +76,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
 	let patternPrecedingNonLatinBoundary = "([^" + locale.allChars + locale.enDash + locale.emDash + "]|^)";
 	let patternAbbr = "";
 	let patternFollowingWord = "([" + locale.allChars + "]|\\D)";
-	let patternFollowingNonLatinBoundary = "([^" + locale.allChars + "]|\\B)";
+	let patternFollowingNonLatinBoundary = "([^" + locale.allChars + "]|$)";
 
 
 	/* [1] Set locale-specific space between abbreviations */

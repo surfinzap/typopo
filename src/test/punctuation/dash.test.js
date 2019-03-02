@@ -1,4 +1,5 @@
 import {replaceThreeHyphensWithEmDash,
+				replaceTwoHyphensWithEnDash,
 				replaceSpacedHyphenWithDash,
 				consolidateSpacedDashes,
 				fixDashSpacesBetweenWords,
@@ -19,6 +20,21 @@ describe('Replace 3 hyphens with an em dash\n', () => {
 		});
 	});
 });
+
+
+describe('Replace 2 hyphens with an en dash\n', () => {
+	let testCase = {
+		"and -- she said": "and – she said",
+		};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(replaceTwoHyphensWithEnDash(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
 
 describe('Replace spaced hyphen with an em dash (en-us, sk, cs, rue)\n', () => {
 	let testCase = {

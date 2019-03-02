@@ -1,5 +1,15 @@
 # Changelog for Typopo
 
+## 2.2.1 // 2019-03-02
+### New features
+* Replace 2 hyphens with an en dash
+
+### Improvements
+* Added popular abbreviations in Rusyn language for fixing spacing
+* Extended list of German single-word abbreviations
+* Improved identification of double and single primes
+* Fixed identification of some edge cases for double quotes 
+
 ## 2.2.0 // 2019-02-22
 ### New features
 * Support for German language (de-de)

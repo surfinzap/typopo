@@ -12,7 +12,24 @@ const numbers = {
 
 const singleWordAbbreviations = [
 	"S",
-	"z"
+	"z",
+	"St",
+	"Stk",
+	"Mo",
+	"Di",
+	"Mi",
+	"Do",
+	"Fr",
+	"Sa",
+	"So",
+	"Bhf",
+	"Hbf",
+	"Nr",
+	"ca",
+	"usw",
+	"geb",
+	"gest",
+	"u"
 ]
 
 // Disregard correct spelling in your locale
