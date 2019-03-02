@@ -2,7 +2,8 @@
 
 ## 2.2.1 // 2019-
 ### Improvements
-* Adding popular abbreviations in Rusyn language for fixing spacing
+* Added popular abbreviations in Rusyn language for fixing spacing
+* Extended list of German single-word abbreviations
 
 ## 2.2.0 // 2019-02-22
 ### New features
