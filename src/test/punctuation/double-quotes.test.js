@@ -26,6 +26,7 @@ describe('Double quotes in default language (en)\n', () => {
 		// Mixing double quotes and double primes
 		"12′ 45\"": "12′ 45″",
 		"3° 5′ 30\"": "3° 5′ 30″",
+		"12\"3′00°": "12″3′00°",
 
 		// Primes at the end of the sentence
 		"So it’s 12\" × 12\", right?" : "So it’s 12″ × 12″, right?",
@@ -96,7 +97,7 @@ describe('Double quotes in default language (en)\n', () => {
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("", () => {
+		it("module test", () => {
 			assert.equal(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
 		});
 	});

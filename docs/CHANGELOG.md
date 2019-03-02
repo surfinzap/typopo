@@ -4,9 +4,11 @@
 ### New features
 * Replace 2 hyphens with an en dash
 
+
 ### Improvements
 * Added popular abbreviations in Rusyn language for fixing spacing
 * Extended list of German single-word abbreviations
+* Improved identification of double and single primes
 
 ## 2.2.0 // 2019-02-22
 ### New features

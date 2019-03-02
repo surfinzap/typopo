@@ -22,6 +22,7 @@ describe('Single quotes in default language (en-us)\n', () => {
 		/* Improperly spaced primes, left for single quotes */
 		"12 ′ 45″": "12′ 45″",
 		"3° 5 ′ 30″": "3° 5′ 30″",
+		"12″ 3'00°": "12″ 3′00°",
 
 		/* apostrophes */
 		"Fish 'n' Chips": "Fish ’n’ Chips",
@@ -38,8 +39,6 @@ describe('Single quotes in default language (en-us)\n', () => {
 		"don't" : "don’t",
 		"don''t" : "don’t",
 		"don''’t" : "don’t",
-		"don\"'''t" : "don’t",
-		"don\"t" : "don’t",
 	};
 
 

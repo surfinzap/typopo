@@ -66,6 +66,10 @@ describe('Tests that all modules are plugged in', () => {
 		// double quoutes
 		"English „English„ „English„ English": "English “English” “English” English",
 		"He said: \"Here’s a 12\" record.\"": "He said: “Here’s a 12″ record.”",
+		"12′ 45\"": "12′ 45″",
+		"3° 5′ 30\"": "3° 5′ 30″",
+		"12\"3'00°": "12″3′00°",
+
 		// ellipsis
 		"Sentence ..….. another sentence": "Sentence … another sentence",
 

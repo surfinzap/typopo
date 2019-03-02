@@ -38,17 +38,16 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 	/* [1.3] Identify in-word contractions,
 					 e.g. Don’t, I’m, O’Doole, 69’ers */
-	let character_adepts = locale.cardinalNumber + locale.allChars;
-	pattern = "(["+ character_adepts +"])(" + locale.singleQuoteAdepts + locale.doubleQuoteAdepts +")+(["+ character_adepts +"])";
+	pattern = "(["+ locale.cardinalNumber + locale.allChars +"])(" + locale.singleQuoteAdepts +")+(["+ locale.allChars +"])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1{{typopo__apostrophe}}$3");
 
 
 	/* [1.4] Identify year contractions
 		 e.g. ’70s, INCHEBA ’89,… */
-	pattern = "(" + locale.singleQuoteAdepts + ")([0-9]{2})";
+	pattern = "( )(" + locale.singleQuoteAdepts + ")([0-9]{2})";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "{{typopo__apostrophe}}$2");
+	string = string.replace(re, "$1{{typopo__apostrophe}}$3");
 
 
 	/* [2] Identify single quotes within double quotes */
@@ -57,7 +56,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 	string = string.replace(re, function($0, $1, $2, $3){
 
 		// identify {{typopo__left-single-quote--adept}}
-		let pattern = "( )(" + locale.singleQuoteAdepts + "|,)(["+ locale.allChars +"])";
+		let pattern = "([" + locale.spaces + "])(" + locale.singleQuoteAdepts + "|,)(["+ locale.allChars +"])";
 		let re = new RegExp(pattern, "g");
 		$2 = $2.replace(re, "$1{{typopo__left-single-quote--adept}}$3");
 
