@@ -4,6 +4,12 @@ export function replaceThreeHyphensWithEmDash(string, locale) {
 
 
 
+export function replaceTwoHyphensWithEnDash(string, locale) {
+	return string.replace(/(--)/g, "–");
+}
+
+
+
 export function replaceSpacedHyphenWithDash(string, locale) {
 	let pattern = "[" + locale.spaces + "][" + locale.hyphen + "][" + locale.spaces + "]";
 	let re = new RegExp(pattern, "g");
@@ -125,6 +131,7 @@ export function fixDashBetweenOrdinalNumbers(string, locale) {
 */
 export function fixDash(string, locale) {
 	string = replaceThreeHyphensWithEmDash(string, locale)
+	string = replaceTwoHyphensWithEnDash(string, locale)
 	string = replaceSpacedHyphenWithDash(string, locale);
 	string = consolidateSpacedDashes(string, locale);
 	string = fixDashSpacesBetweenWords(string, locale);

@@ -1,6 +1,9 @@
 # Changelog for Typopo
 
 ## 2.2.1 // 2019-
+### New features
+* Replace 2 hyphens with an en dash
+
 ### Improvements
 * Added popular abbreviations in Rusyn language for fixing spacing
 * Extended list of German single-word abbreviations
