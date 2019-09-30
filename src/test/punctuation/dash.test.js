@@ -150,6 +150,7 @@ describe('Fix dash spaces between words (de-de) \n', () => {
 describe('Fix dash between cardinal numbers\n', () => {
 	let testCase = {
 		"5-6 eggs": "5–6 eggs",
+		"15-16 eggs": "15–16 eggs",
 		"5 -6 eggs": "5–6 eggs",
 		"5- 6 eggs": "5–6 eggs",
 		"5 - 6 eggs": "5–6 eggs",
@@ -165,6 +166,17 @@ describe('Fix dash between cardinal numbers\n', () => {
 		"2 - 3 Eier": "2–3 Eier",
 		"2—3 Eier": "2–3 Eier",
 		"im Bereich von 5.000,25-10.000,75": "im Bereich von 5.000,25–10.000,75",
+
+		//date formats
+		"2019-02-03" : "2019–02–03",
+		"2019 - 02 - 03" : "2019–02–03",
+		"2019- 02 -03" : "2019–02–03",
+		"2019-02" : "2019–02",
+		"2019 -02" : "2019–02",
+		"2019 - 02" : "2019–02",
+		"2019- 02" : "2019–02",
+		"19 - 02 - 03" : "19–02–03",
+		"19- 02 -03" : "19–02–03",
 		};
 
 	Object.keys(testCase).forEach((key) => {
