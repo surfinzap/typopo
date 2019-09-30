@@ -88,7 +88,13 @@ export function addNbspAfterRomanNumeral(string, locale) {
 }
 
 
+/*
+	Helper function that adds nbsp after symbols
+	in their respective *.js files
 
+	@param {string} string — input text for identification
+	@returns {string} — output with correctly added non-breaking space
+*/
 export function addNbspAfterSymbol(string, locale, symbol) {
 	let pattern = "("+ symbol +")([^" + locale.spaces + "])";
 	let re = new RegExp(pattern, "g");
@@ -98,7 +104,13 @@ export function addNbspAfterSymbol(string, locale, symbol) {
 }
 
 
+/*
+	Helper function that fixes various spaces for nbsp after symbols
+	in their respective *.js files
 
+	@param {string} string — input text for identification
+	@returns {string} — output with correctly placed non-breaking space
+*/
 export function replaceSpacesWithNbspAfterSymbol(string, locale, symbol) {
 	let pattern = "("+ symbol +")([" + locale.spaces + "])";
 	let re = new RegExp(pattern, "g");
@@ -106,6 +118,7 @@ export function replaceSpacesWithNbspAfterSymbol(string, locale, symbol) {
 
 	return string.replace(re, replacement);
 }
+
 
 
 
