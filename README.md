@@ -10,6 +10,10 @@ Fixes punctuation:
 * single primes
 * apostrophes
 * hyphens & dashes
+	* between words with a proper spacing per locale
+	* between ordinal and cardinal numbers
+	* within date
+	* between percentage range 
 * period & ellipsis
 
 Fixes whitespace characters:

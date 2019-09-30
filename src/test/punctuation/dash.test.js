@@ -4,6 +4,7 @@ import {replaceThreeHyphensWithEmDash,
 				consolidateSpacedDashes,
 				fixDashSpacesBetweenWords,
 				fixDashBetweenCardinalNumbers,
+				fixDashBetweenPercentageRange,
 				fixDashBetweenOrdinalNumbers,
 				fixDash} from "../../lib/punctuation/dash";
 import assert from 'assert';
@@ -188,6 +189,36 @@ describe('Fix dash between cardinal numbers\n', () => {
 		});
 	});
 });
+
+
+
+describe('Fix dash between percentage range\n', () => {
+	let testCase = {
+		"20%-30%" : "20%–30%",
+		"20% -30%" : "20%–30%",
+		"20% - 30%" : "20%–30%",
+		"20% -30%" : "20%–30%",
+
+		"20%–30%" : "20%–30%",
+		"20%—30%" : "20%–30%",
+
+		"20 %-30 %" : "20 %–30 %",
+		"20 % -30 %" : "20 %–30 %",
+		"20 % - 30 %" : "20 %–30 %",
+		"20 %- 30 %" : "20 %–30 %",
+		};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixDashBetweenPercentageRange(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixDash(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
 
 describe('Fix dash between ordinal numbers (en-us)\n', () => {
 	let testCase = {
