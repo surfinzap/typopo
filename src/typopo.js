@@ -41,7 +41,7 @@ import {excludeExceptions,
 	@returns {string} corrected output
 */
 export function fixTypos(string, locale, configuration) {
-	currentLocale = (typeof locale === "undefined") ? "en-us" : locale;
+	locale = (typeof locale === "undefined") ? "en-us" : locale;
 
 	let currentLocale = new Locale(locale);
 
