@@ -206,6 +206,9 @@ describe('Fix dash between percentage range\n', () => {
 		"20 % -30 %" : "20 %–30 %",
 		"20 % - 30 %" : "20 %–30 %",
 		"20 %- 30 %" : "20 %–30 %",
+
+		"20 ‰ - 30 ‰" : "20 ‰–30 ‰",
+		"20 ‱ - 30 ‱" : "20 ‱–30 ‱",
 		};
 
 	Object.keys(testCase).forEach((key) => {

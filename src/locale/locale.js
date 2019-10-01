@@ -77,6 +77,9 @@ export default class Locale {
 		this.soundRecordingCopyright = "℗";
 		this.trademark = "™";
 		this.plusMinus = "±";
+		this.percent = "%";
+		this.permille = "‰";
+		this.permyriad = "‱";
 
 		/*
 			Source for webUrlPattern, emailAddressPattern

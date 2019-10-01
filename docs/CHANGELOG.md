@@ -1,8 +1,15 @@
 # Changelog for Typopo
 
+Replace space with nbsp before percent sign
+
+Replace space with nbsp before % (percent), ‰ (per mille), ‱ (permyriad)
+We won't include extra nbsp, if there was no space in the first place.
+
 ## 2.2.2 // 2019-10-
+### Improvements
 * Fix dashes between dates, e.g. 2019 - 08-02 → 2019–08–02 (places ndash)
 * Fix dashes between percentage range, e.g. 20% - 30% → 20%–30%
+* Replace space with nbsp before % (percent), ‰ (per mille), ‱ (permyriad)
 
 ## 2.2.1 // 2019-03-02
 ### New features

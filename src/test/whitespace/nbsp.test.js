@@ -6,6 +6,7 @@ import {removeNbspBetweenMultiCharWords,
 				addNbspAfterOrdinalNumber,
 				addNbspWithinOrdinalDate,
 				addNbspAfterRomanNumeral,
+				addNbspBeforePercent,
 				addNbspAfterSymbol,
 				replaceSpacesWithNbspAfterSymbol,
 				fixNbsp} from "../../lib/whitespace/nbsp";
@@ -217,6 +218,38 @@ describe('Add non-breaking space after roman numeral (sk, cs, de-de, rue)\n', ()
 			assert.equal(fixNbsp(key, new Locale("cs")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("de-de")), testCase[key]);
 			assert.equal(fixNbsp(key, new Locale("rue")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Add nbsp before percent, permille, permyriad\n', () => {
+	let testCase = {
+		"20 %" : "20 %",
+		"20 %–30 %" : "20 %–30 %",
+		"20 ‰" : "20 ‰",
+		"20 ‰–30 ‰" : "20 ‰–30 ‰",
+		"20 ‱" : "20 ‱",
+		"20 ‱–30 ‱" : "20 ‱–30 ‱",
+
+		/* false positives
+			 we won't include nbsp, if there was no space in the first place.
+			 some languages distinguish when percent is used
+			 * as a noun → 20 %
+			 * as an adjective → 20%
+			 we cannot fix that without additional context
+		*/
+		"20%" : "20%",
+		"20%–30%" : "20%–30%",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(addNbspBeforePercent(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixNbsp(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

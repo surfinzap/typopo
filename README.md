@@ -13,7 +13,7 @@ Fixes punctuation:
 	* between words with a proper spacing per locale
 	* between ordinal and cardinal numbers
 	* within date
-	* between percentage range 
+	* between percentage range
 * period & ellipsis
 
 Fixes whitespace characters:
@@ -34,6 +34,7 @@ Fixes whitespace characters:
 		* ordinal Roman numerals
 		* after name initials (i.e. Philip K. Dick)
 		* after common single-word and multiple-word abbreviations
+	* replaces space with nbsp before % (percent), ‰ (per mille), ‱ (permyriad)
 
 Fixes words:
 * accidental uPPERCASE
