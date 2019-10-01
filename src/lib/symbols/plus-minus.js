@@ -1,6 +1,3 @@
-import Locale from "../../locale/locale";
-
-
 export function fixPlusMinus(string, locale) {
 	let pattern = "(\\+\\-)|(\\-\\+)";
 	let re = new RegExp(pattern, "g");
