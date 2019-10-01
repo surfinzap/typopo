@@ -77,6 +77,9 @@ export default class Locale {
 		this.soundRecordingCopyright = "℗";
 		this.trademark = "™";
 		this.plusMinus = "±";
+		this.percent = "%";
+		this.permille = "‰";
+		this.permyriad = "‱";
 
 		/*
 			Source for webUrlPattern, emailAddressPattern
@@ -135,7 +138,7 @@ export default class Locale {
 
 
 		/* Numbers */
-		this.cardinalNumber = "\\d+";
+		this.cardinalNumber = "\\d";
 		this.ordinalIndicator = typopoLocale[locale].numbers.ordinalIndicator;
 		this.romanNumerals = "IVXLCDM";
 		this.romanOrdinalIndicator = typopoLocale[locale].numbers.romanOrdinalIndicator;

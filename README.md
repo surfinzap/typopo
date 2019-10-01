@@ -1,6 +1,6 @@
 # Typopo
 
-Typopo is a JavaScript library that saves your time by auto-correcting frequent typographic errors in English, Slovak, Czech, Rusyn and German language. Make a proofreading quicker by auto-correcting the common typos first.
+Typopo is a JavaScript library that saves your time by auto-correcting frequent typographic errors in English, German, Slovak, Czech, and Rusyn. Make a proofreading quicker by auto-correcting the common typos first.
 
 ## Features
 Fixes punctuation:
@@ -10,6 +10,10 @@ Fixes punctuation:
 * single primes
 * apostrophes
 * hyphens & dashes
+	* between words with a proper spacing per locale
+	* between ordinal and cardinal numbers
+	* within date
+	* between percentage range
 * period & ellipsis
 
 Fixes whitespace characters:
@@ -30,6 +34,7 @@ Fixes whitespace characters:
 		* ordinal Roman numerals
 		* after name initials (i.e. Philip K. Dick)
 		* after common single-word and multiple-word abbreviations
+	* replaces space with nbsp before % (percent), ‰ (per mille), ‱ (permyriad)
 
 Fixes words:
 * accidental uPPERCASE

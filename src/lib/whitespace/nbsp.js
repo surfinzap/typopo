@@ -89,6 +89,29 @@ export function addNbspAfterRomanNumeral(string, locale) {
 
 
 
+/*
+	Fix nbsp before % (percent), ‰ (permille) and ‱ (permyriad)
+
+	@param {string} string — input text for identification
+	@returns {string} — output with correctly added non-breaking space
+*/
+export function addNbspBeforePercent(string, locale) {
+	let pattern = "([" + locale.spaces + "])([" + locale.percent + locale.permille + locale.permyriad + "])";
+	let re = new RegExp(pattern, "g");
+	let replacement = locale.nbsp + "$2";
+
+	return string.replace(re, replacement);
+}
+
+
+
+/*
+	Helper function that adds nbsp after symbols
+	in their respective *.js files
+
+	@param {string} string — input text for identification
+	@returns {string} — output with correctly added non-breaking space
+*/
 export function addNbspAfterSymbol(string, locale, symbol) {
 	let pattern = "("+ symbol +")([^" + locale.spaces + "])";
 	let re = new RegExp(pattern, "g");
@@ -98,7 +121,13 @@ export function addNbspAfterSymbol(string, locale, symbol) {
 }
 
 
+/*
+	Helper function that fixes various spaces for nbsp after symbols
+	in their respective *.js files
 
+	@param {string} string — input text for identification
+	@returns {string} — output with correctly placed non-breaking space
+*/
 export function replaceSpacesWithNbspAfterSymbol(string, locale, symbol) {
 	let pattern = "("+ symbol +")([" + locale.spaces + "])";
 	let re = new RegExp(pattern, "g");
@@ -106,6 +135,7 @@ export function replaceSpacesWithNbspAfterSymbol(string, locale, symbol) {
 
 	return string.replace(re, replacement);
 }
+
 
 
 
@@ -123,6 +153,7 @@ export function fixNbsp(string, locale) {
 	string = addNbspAfterOrdinalNumber(string, locale);
 	string = addNbspWithinOrdinalDate(string, locale);
 	string = addNbspAfterRomanNumeral(string, locale);
+	string = addNbspBeforePercent(string, locale);
 
 	return string;
 }

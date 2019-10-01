@@ -94,10 +94,27 @@ export function fixDashSpacesBetweenWords(string, locale) {
 	from either one side or both sides of the dash
 
 	@param {string} string — input text for identification
-	@returns {string} — output with dash between cardinal numbers
+	@returns {string} — output with en dash between cardinal numbers
 */
 export function fixDashBetweenCardinalNumbers(string, locale) {
 	let pattern = "(" + locale.cardinalNumber + ")([" + locale.spaces + "]?[" + locale.hyphen + locale.enDash + locale.emDash + "][" + locale.spaces + "]?)(" + locale.cardinalNumber + ")";
+	let re = new RegExp(pattern, "g");
+	let replacement = "$1" + locale.enDash + "$3";
+	return string.replace(re, replacement);
+}
+
+
+
+/*
+	Replace hyphen or dash, placed between percentage range,
+	with an en dash; including cases when there is an extra space
+	from either one side or both sides of the dash
+
+	@param {string} string — input text for identification
+	@returns {string} — output with en dash between percentage range
+*/
+export function fixDashBetweenPercentageRange(string, locale) {
+	let pattern = "([" + locale.percent + locale.permille + locale.permyriad + "])([" + locale.spaces + "]?[" + locale.hyphen + locale.enDash + locale.emDash + "][" + locale.spaces + "]?)(" + locale.cardinalNumber + ")";
 	let re = new RegExp(pattern, "g");
 	let replacement = "$1" + locale.enDash + "$3";
 	return string.replace(re, replacement);
@@ -136,6 +153,7 @@ export function fixDash(string, locale) {
 	string = consolidateSpacedDashes(string, locale);
 	string = fixDashSpacesBetweenWords(string, locale);
 	string = fixDashBetweenCardinalNumbers(string, locale);
+	string = fixDashBetweenPercentageRange(string, locale);
 	string = fixDashBetweenOrdinalNumbers(string, locale);
 	return string;
 }

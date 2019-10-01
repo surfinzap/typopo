@@ -4,6 +4,7 @@ import {replaceThreeHyphensWithEmDash,
 				consolidateSpacedDashes,
 				fixDashSpacesBetweenWords,
 				fixDashBetweenCardinalNumbers,
+				fixDashBetweenPercentageRange,
 				fixDashBetweenOrdinalNumbers,
 				fixDash} from "../../lib/punctuation/dash";
 import assert from 'assert';
@@ -150,6 +151,7 @@ describe('Fix dash spaces between words (de-de) \n', () => {
 describe('Fix dash between cardinal numbers\n', () => {
 	let testCase = {
 		"5-6 eggs": "5–6 eggs",
+		"15-16 eggs": "15–16 eggs",
 		"5 -6 eggs": "5–6 eggs",
 		"5- 6 eggs": "5–6 eggs",
 		"5 - 6 eggs": "5–6 eggs",
@@ -165,6 +167,17 @@ describe('Fix dash between cardinal numbers\n', () => {
 		"2 - 3 Eier": "2–3 Eier",
 		"2—3 Eier": "2–3 Eier",
 		"im Bereich von 5.000,25-10.000,75": "im Bereich von 5.000,25–10.000,75",
+
+		//date formats
+		"2019-02-03" : "2019–02–03",
+		"2019 - 02 - 03" : "2019–02–03",
+		"2019- 02 -03" : "2019–02–03",
+		"2019-02" : "2019–02",
+		"2019 -02" : "2019–02",
+		"2019 - 02" : "2019–02",
+		"2019- 02" : "2019–02",
+		"19 - 02 - 03" : "19–02–03",
+		"19- 02 -03" : "19–02–03",
 		};
 
 	Object.keys(testCase).forEach((key) => {
@@ -176,6 +189,39 @@ describe('Fix dash between cardinal numbers\n', () => {
 		});
 	});
 });
+
+
+
+describe('Fix dash between percentage range\n', () => {
+	let testCase = {
+		"20%-30%" : "20%–30%",
+		"20% -30%" : "20%–30%",
+		"20% - 30%" : "20%–30%",
+		"20% -30%" : "20%–30%",
+
+		"20%–30%" : "20%–30%",
+		"20%—30%" : "20%–30%",
+
+		"20 %-30 %" : "20 %–30 %",
+		"20 % -30 %" : "20 %–30 %",
+		"20 % - 30 %" : "20 %–30 %",
+		"20 %- 30 %" : "20 %–30 %",
+
+		"20 ‰ - 30 ‰" : "20 ‰–30 ‰",
+		"20 ‱ - 30 ‱" : "20 ‱–30 ‱",
+		};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixDashBetweenPercentageRange(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixDash(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
 
 describe('Fix dash between ordinal numbers (en-us)\n', () => {
 	let testCase = {
