@@ -25,6 +25,7 @@ import {fixPlusMinus} from "./lib/symbols/plus-minus";
 import {fixRegisteredTrademark} from "./lib/symbols/registered-trademark";
 import {fixTrademark} from "./lib/symbols/trademark";
 import {fixExponents} from "./lib/symbols/exponents";
+import {fixNumberSign} from "./lib/symbols/number-sign";
 import {fixAbbreviations} from "./lib/words/abbreviations";
 import {fixCase} from "./lib/words/case";
 import {excludeExceptions,
@@ -76,6 +77,7 @@ export function fixTypos(string, locale, configuration) {
 	string = fixRegisteredTrademark(string, currentLocale);
 	string = fixTrademark(string, currentLocale);
 	string = fixExponents(string, currentLocale);
+	string = fixNumberSign(string, currentLocale);
 
 	// words
 	string = fixCase(string, currentLocale);

@@ -1,5 +1,9 @@
 # Changelog for Typopo
 
+## 2.2.3 // 2019-10-
+### New features
+* Remove extra white space between a number sign (#) and a number
+
 ## 2.2.2 // 2019-10-01
 ### Improvements
 * Fix dashes between dates, e.g. 2019 - 08-02 → 2019–08–02 (places ndash)

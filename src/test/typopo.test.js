@@ -100,6 +100,8 @@ describe('Tests that all modules are plugged in', () => {
 		"Company (r)": "Company®",
 		// trademark
 		"Company (tm)": "Company™",
+		// number sign
+		"# 9": "#9",
 
 		// spaces
 		"Sentence and… ?": "Sentence and…?",
