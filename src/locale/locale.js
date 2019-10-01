@@ -80,6 +80,7 @@ export default class Locale {
 		this.percent = "%";
 		this.permille = "‰";
 		this.permyriad = "‱";
+		this.numberSign = "#";
 
 		/*
 			Source for webUrlPattern, emailAddressPattern

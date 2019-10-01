@@ -21,7 +21,9 @@ Fixes whitespace characters:
 	* at the beginning and the end of sentences (leading and trailing spaces)
 	* between words and paragraphs
 	* before or after a punctuation
-	* around ellipsis and aposiopesis (where applicable)
+	* around an ellipsis and an aposiopesis (where applicable)
+	* between a number sign (#) and a number
+	* before ordinal indicators (e.g. 1 st → 1st)
 * removes empty lines
 * fixes non-breaking spaces
 	* removes nbsp between multi-letter words

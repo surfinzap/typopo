@@ -51,7 +51,24 @@ export function removeSpaceBeforeTerminalPunctuation(string, locale) {
 	return string.replace(re, "$2");
 }
 
+/*
+	Removes extra spaces before ordinal indicator
 
+	Examples:
+	1 st → 1st
+	2 nd → 2nd
+	1 . spoj → 1. spoj
+
+	@param {string} string — input text for identification
+	@returns {string} — output with removed spaces before ordinal indicator
+*/
+export function removeSpaceBeforeOrdinalIndicator(string, locale) {
+	let pattern = "("+ locale.cardinalNumber +")(["+ locale.spaces +"]?)("+ locale.ordinalIndicator +")";
+	let re = new RegExp(pattern, "g");
+	let replacement = "$1$3";
+
+	return string.replace(re, replacement);
+}
 
 export function removeSpaceAfterPunctuation(string, locale) {
 	let pattern = "([" + locale.openingBrackets + "])([" + locale.spaces + "])";
@@ -99,6 +116,7 @@ export function fixSpaces(string, locale) {
 	string = removeSpacesAtParagraphStart(string, locale);
 	string = removeSpaceBeforeSentencePausePunctuation(string, locale);
 	string = removeSpaceBeforeTerminalPunctuation(string, locale);
+	string = removeSpaceBeforeOrdinalIndicator(string, locale);
 	string = removeSpaceAfterPunctuation(string, locale);
 	string = addSpaceBeforePunctuation(string, locale);
 	string = addSpaceAfterPunctuation(string, locale);

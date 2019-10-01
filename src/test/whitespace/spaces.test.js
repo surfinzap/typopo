@@ -2,6 +2,7 @@ import {removeMultipleSpaces,
 				removeSpacesAtParagraphStart,
 				removeSpaceBeforeSentencePausePunctuation,
 				removeSpaceBeforeTerminalPunctuation,
+				removeSpaceBeforeOrdinalIndicator,
 				removeSpaceAfterPunctuation,
 				addSpaceBeforePunctuation,
 				addSpaceAfterPunctuation,
@@ -112,6 +113,49 @@ describe('Remove space before terminal punctuation, closing brackets and degree 
 		});
 	});
 });
+
+
+
+describe('Remove space before ordinal indicator (en-us)\n', () => {
+	let testCase = {
+		"1 st" : "1st",
+		"2 nd" : "2nd",
+		"3 rd" : "3rd",
+		"4 th" : "4th",
+		"104 th" : "104th"
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit tests", () => {
+			assert.equal(removeSpaceBeforeOrdinalIndicator(key, new Locale("en-us")), testCase[key]);
+		});
+
+		it("module tests", () => {
+			assert.equal(fixSpaces(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Remove space before ordinal indicator (sk, cs, rue, de-de)\n', () => {
+	let testCase = {
+		"1 . spoj" : "1. spoj",
+		"154 . spoj" : "154. spoj",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit tests", () => {
+			assert.equal(removeSpaceBeforeOrdinalIndicator(key, new Locale("sk")), testCase[key]);
+			assert.equal(removeSpaceBeforeOrdinalIndicator(key, new Locale("cs")), testCase[key]);
+			assert.equal(removeSpaceBeforeOrdinalIndicator(key, new Locale("rue")), testCase[key]);
+			assert.equal(removeSpaceBeforeOrdinalIndicator(key, new Locale("de-de")), testCase[key]);
+		});
+	});
+});
+
+
+
 
 describe('Remove space after opening brackets\n', () => {
 	let testCase = {
