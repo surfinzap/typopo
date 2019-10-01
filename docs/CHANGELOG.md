@@ -2,7 +2,8 @@
 
 ## 2.2.3 // 2019-10-
 ### New features
-* Remove extra white space between a number sign (#) and a number, e.g # 9 → #9
+* Remove extra white spaces between a number sign (#) and a number, e.g # 9 → #9
+* Remove extra white spaces before ordinal indicators (e.g. 1 st → 1st, 1 . spoj → 1. spoj)
 
 ## 2.2.2 // 2019-10-01
 ### Improvements

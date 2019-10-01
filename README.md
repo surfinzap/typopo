@@ -23,6 +23,7 @@ Fixes whitespace characters:
 	* before or after a punctuation
 	* around an ellipsis and an aposiopesis (where applicable)
 	* between a number sign (#) and a number
+	* before ordinal indicators (e.g. 1 st → 1st)
 * removes empty lines
 * fixes non-breaking spaces
 	* removes nbsp between multi-letter words
