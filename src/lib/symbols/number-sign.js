@@ -1,5 +1,3 @@
-import Locale from "../../locale/locale";
-
 /*
 	Remove extra space, nbsp, hairSpace, narrowNbsp
 	after number sign and before number
