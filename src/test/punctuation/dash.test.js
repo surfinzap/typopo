@@ -3,6 +3,7 @@ import {replaceThreeHyphensWithEmDash,
 				replaceSpacedHyphenWithDash,
 				consolidateSpacedDashes,
 				fixDashSpacesBetweenWords,
+				fixHyphenBetweenWordAndPunctuation,
 				fixDashBetweenCardinalNumbers,
 				fixDashBetweenPercentageRange,
 				fixDashBetweenOrdinalNumbers,
@@ -62,6 +63,8 @@ describe('Replace spaced hyphen with an en dash (de-de)\n', () => {
 	});
 });
 
+
+
 describe('Replace spaced en dash with an em dash (en-us, sk, cs, rue)\n', () => {
 	let testCase = {
 		"and – she said": "and — she said",
@@ -86,6 +89,8 @@ describe('Replace spaced em dash with an en dash (de-de)\n', () => {
 		});
 	});
 });
+
+
 
 describe('Fix dash spaces between words (en-us)\n', () => {
 	let testCase = {
@@ -147,6 +152,111 @@ describe('Fix dash spaces between words (de-de) \n', () => {
 		});
 	});
 });
+
+
+
+describe('Fix hyphen between word and punctuation (en-us)\n', () => {
+	let testCase = {
+		"so there is a dash -," : "so there is a dash—,",
+		"so there is a dash-," : "so there is a dash—,",
+		"so there is a dash -:" : "so there is a dash—:",
+		"so there is a dash -;" : "so there is a dash—;",
+		"so there is a dash -." : "so there is a dash—.",
+		"so there is a dash -?" : "so there is a dash—?",
+		"so there is a dash -!" : "so there is a dash—!",
+		"so there is a dash -\n" : "so there is a dash—\n",
+
+		//false positives
+		"e-shop" : "e-shop",
+		"e- shop" : "e- shop", // this individual method shouldn't catch that
+		"+-" : "+-",
+		"{{test-variable}}" : "{{test-variable}}"
+		};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixHyphenBetweenWordAndPunctuation(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixDash(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+describe('Fix hyphen between word and punctuation (sk, rue)\n', () => {
+	let testCase = {
+		"so there is a dash -," : "so there is a dash —,", //hairSpace
+		"so there is a dash -." : "so there is a dash —.",
+		"so there is a dash -\n" : "so there is a dash —\n",
+
+		//false positives
+		"e-shop" : "e-shop",
+		"e- shop" : "e- shop", // this individual method shouldn't catch that
+		"+-" : "+-",
+		"{{test-variable}}" : "{{test-variable}}"
+		};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixHyphenBetweenWordAndPunctuation(key, new Locale("sk")), testCase[key]);
+			assert.equal(fixHyphenBetweenWordAndPunctuation(key, new Locale("rue")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixDash(key, new Locale("sk")), testCase[key]);
+			assert.equal(fixDash(key, new Locale("rue")), testCase[key]);
+		});
+	});
+});
+
+describe('Fix hyphen between word and punctuation (cs)\n', () => {
+	let testCase = {
+		"so there is a dash -," : "so there is a dash –,", //nbsp + enDash
+		"so there is a dash -." : "so there is a dash –.",
+		"so there is a dash -\n" : "so there is a dash –\n",
+
+		//false positives
+		"e-shop" : "e-shop",
+		"e- shop" : "e- shop", // this individual method shouldn't catch that
+		"+-" : "+-",
+		"{{test-variable}}" : "{{test-variable}}"
+		};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixHyphenBetweenWordAndPunctuation(key, new Locale("cs")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixDash(key, new Locale("cs")), testCase[key]);
+		});
+	});
+});
+
+describe('Fix hyphen between word and punctuation (de-de)\n', () => {
+	let testCase = {
+		"so there is a dash -," : "so there is a dash –,", //hairSpace + enDash
+		"so there is a dash -." : "so there is a dash –.",
+		"so there is a dash -\n" : "so there is a dash –\n",
+
+		//false positives
+		"e-shop" : "e-shop",
+		"e- shop" : "e- shop", // this individual method shouldn't catch that
+		"+-" : "+-",
+		"{{test-variable}}" : "{{test-variable}}"
+		};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixHyphenBetweenWordAndPunctuation(key, new Locale("de-de")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixDash(key, new Locale("de-de")), testCase[key]);
+		});
+	});
+});
+
+
+
+
 
 describe('Fix dash between cardinal numbers\n', () => {
 	let testCase = {
