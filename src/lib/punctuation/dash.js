@@ -63,7 +63,7 @@ export function consolidateSpacedDashes(string, locale) {
 
 
 export function fixDashSpacesBetweenWords(string, locale) {
-	let pattern = "[" + locale.spaces + "]?[" + locale.emDash + "|" + locale.enDash + "][" + locale.spaces + "]?";
+	let pattern = "[" + locale.spaces + "]?[" + locale.emDash + locale.enDash + "][" + locale.spaces + "]?";
 	let re = new RegExp(pattern, "g");
 	let replacement = "";
 
@@ -80,6 +80,44 @@ export function fixDashSpacesBetweenWords(string, locale) {
 			break;
 		case "de-de":
 			replacement = locale.hairSpace + locale.enDash + locale.hairSpace;
+			break;
+	}
+
+	return string = string.replace(re, replacement);
+}
+
+
+/*
+	Replace hyphen placed between a word and punctuation,
+	or placed at the end of a paragaph.
+
+	Examples (en-us):
+	so there is a dash -, 	→ so there is a dash—,
+	so there is a dash-, 		→ so there is a dash—,
+	so there is a dash -?		→ so there is a dash—?
+	so there is a dash -		→ so there is a dash—
+
+	@param {string} string — input text for identification
+	@returns {string} — output with locale-specific dash and spacing between a word and a punctuation.
+*/
+export function fixHyphenBetweenWordAndPunctuation(string, locale) {
+	let pattern = "(["+ locale.allChars +"])(["+ locale.spaces +"]?)("+ locale.hyphen +")(["+ locale.spaces +"]?)(["+ locale.sentencePunctuation +"\\n\\r])";
+	let re = new RegExp(pattern, "g");
+	let replacement = "";
+
+	switch (locale.locale) {
+		case "en-us":
+			replacement = "$1" + locale.emDash + "$5";
+			break;
+		case "rue":
+		case "sk":
+			replacement = "$1" + locale.hairSpace + locale.emDash + "$5";
+			break;
+		case "cs":
+			replacement = "$1" + locale.nbsp + locale.enDash + "$5";
+			break;
+		case "de-de":
+			replacement = "$1" + locale.hairSpace + locale.enDash + "$5";
 			break;
 	}
 
@@ -152,6 +190,7 @@ export function fixDash(string, locale) {
 	string = replaceSpacedHyphenWithDash(string, locale);
 	string = consolidateSpacedDashes(string, locale);
 	string = fixDashSpacesBetweenWords(string, locale);
+	string = fixHyphenBetweenWordAndPunctuation(string, locale);
 	string = fixDashBetweenCardinalNumbers(string, locale);
 	string = fixDashBetweenPercentageRange(string, locale);
 	string = fixDashBetweenOrdinalNumbers(string, locale);

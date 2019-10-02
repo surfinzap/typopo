@@ -1,5 +1,16 @@
 # Changelog for Typopo
 
+## 2.2.4 // 2019-10-02
+### New features
+* Change hyphens into locale-specific dashes between a word and a punctuation (or at the end of the paragraph)
+	* (en-us) word -, → word—,
+	* (sk, rue) word -. → word —.
+	* (cs) word -? → word –?
+	* (de) word - → word –
+
+### Fixes
+* Minor code refactoring (thanks [krasi0](https://github.com/krasi0) for a code review)
+
 ## 2.2.3 // 2019-10-01
 ### New features
 * Remove extra white spaces between a number sign (#) and a number, e.g # 9 → #9
