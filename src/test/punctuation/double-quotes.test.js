@@ -54,6 +54,7 @@ describe('Double quotes in default language (en)\n', () => {
 		"He was like “Georgia”.": "He was like “Georgia”.",
 		"He was ok. “He was ok”.": "He was ok. “He was ok.”",
 		"“Zest”, that’s an interesting name.": "“Zest”, that’s an interesting name.",
+		"Byl to “Karel IV.”, ktery neco…" : "Byl to “Karel IV.”, ktery neco…",
 
 
 		/* remove extra spaces along „English double quotation marks“ */

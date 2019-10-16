@@ -1,5 +1,10 @@
 # Changelog for Typopo
 
+## 2.2.5 // 2019-10-16
+### Fixes
+* Fix accidental swapping of quotes and punctuation that was part of the Roman numeral. Before, the following sentence: _Byl to “Karel IV.”, ktery neco…_ was erroneously changed into _Byl to “Karel IV”. ktery neco…_. 
+
+
 ## 2.2.4 // 2019-10-02
 ### New features
 * Change hyphens into locale-specific dashes between a word and a punctuation (or at the end of the paragraph)
@@ -83,7 +88,7 @@
 * Add non-breaking space after roman numeral in sk, cs, rue (I.dodatok → I. dodatok)
 
 ### Fixes
-* fix Abbreviation module (it was falsely removing spaces at the beginning of the abbreviation)
+* Fix Abbreviation module (it was falsely removing spaces at the beginning of the abbreviation)
 
 ### Refactoring
 * Module for correcting Trademark symbol (™)
