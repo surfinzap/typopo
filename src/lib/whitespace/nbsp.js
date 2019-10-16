@@ -34,9 +34,9 @@ export function addNbspAfterAmpersand(string, locale) {
 
 
 export function addNbspAfterCardinalNumber(string, locale) {
-	let pattern = "(" + locale.cardinalNumber + ")( )(["+ locale.allChars +"]+)";
+	let pattern = "([^" + locale.nbsp + "]|^)(" + locale.cardinalNumber + ")( )(["+ locale.allChars +"]+)";
 	let re = new RegExp(pattern, "g");
-	let replacement = "$1" + locale.nbsp + "$3";
+	let replacement = "$1$2" + locale.nbsp + "$4";
 
 	return string.replace(re, replacement);
 }

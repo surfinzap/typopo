@@ -9,7 +9,9 @@
 
 ### Fixes
 * Fix accidental swapping of quotes and punctuation that was part of the Roman numeral. Before, the following sentence: _Byl to “Karel IV.”, ktery neco…_ was erroneously changed into _Byl to “Karel IV”. ktery neco…_.
-
+* Fix when non-breaking space is added around numbers in form of two separate rules:
+	* Number follows common abbreviation: On p 3 here you go → On p⎵3 here you go
+	* Number precedes a word: I bought 3 oranges → I bought 3⎵oranges
 
 ## 2.2.4 // 2019-10-02
 ### New features

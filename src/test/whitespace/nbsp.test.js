@@ -84,6 +84,11 @@ describe('Add non-breaking space after cardinal number\n', () => {
 	let testCase = {
 		"5 mm": "5 mm",
 		"5 Kč": "5 Kč",
+		/* false positives, when number is already bound with abbreviation
+		 * Na str.⎵5 je obsah → Na str.⎵5 je obsah
+		 * 									 !→ Na str. 5⎵je obsah
+		 */
+		"Na str. 5 je obsah" : "Na str. 5 je obsah",
 	};
 
 	Object.keys(testCase).forEach((key) => {
