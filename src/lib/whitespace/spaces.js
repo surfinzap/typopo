@@ -63,12 +63,18 @@ export function removeSpaceBeforeTerminalPunctuation(string, locale) {
 	@returns {string} — output with removed spaces before ordinal indicator
 */
 export function removeSpaceBeforeOrdinalIndicator(string, locale) {
-	let pattern = "("+ locale.cardinalNumber +")(["+ locale.spaces +"]?)("+ locale.ordinalIndicator +")";
+	let pattern =
+				"("+ locale.cardinalNumber + ")"
+			+ "(["+ locale.spaces +"]?)"
+			+ "("+ locale.ordinalIndicator +")"
+			+ "([" + locale.spaces + "]|\\b)"; //to avoid cathing "4 th" in "4 there"
 	let re = new RegExp(pattern, "g");
-	let replacement = "$1$3";
+	let replacement = "$1$3$4";
 
 	return string.replace(re, replacement);
 }
+
+
 
 export function removeSpaceAfterPunctuation(string, locale) {
 	let pattern = "([" + locale.openingBrackets + "])([" + locale.spaces + "])";

@@ -12,6 +12,7 @@
 * Fix when non-breaking space is added around numbers in form of two separate rules:
 	* Number follows common abbreviation: On p 3 here you go → On p⎵3 here you go
 	* Number precedes a word: I bought 3 oranges → I bought 3⎵oranges
+* Fix error when ordinal indicators where incorrectly identified 
 
 ## 2.2.4 // 2019-10-02
 ### New features
