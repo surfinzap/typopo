@@ -121,8 +121,10 @@ describe('Remove space before ordinal indicator (en-us)\n', () => {
 		"1 st" : "1st",
 		"2 nd" : "2nd",
 		"3 rd" : "3rd",
-		"4 th" : "4th",
-		"104 th" : "104th"
+		"4 th attempt" : "4th attempt",
+		"104 th" : "104th",
+		// false positives
+		"Number 4 there you go" : "Number 4 there you go",
 	};
 
 	Object.keys(testCase).forEach((key) => {

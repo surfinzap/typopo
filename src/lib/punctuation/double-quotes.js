@@ -28,10 +28,15 @@
 export function fixDoubleQuotesAndPrimes(string, locale) {
 
 	/* [0] Remove extra terminal punctuation around double quotes
-					 e.g. “We will continue tomorrow.”. */
-	let pattern = "([" + locale.sentencePunctuation + "])("+ locale.doubleQuoteAdepts + ")([" + locale.sentencePunctuation + "])";
+					e.g. “We will continue tomorrow.”.
+
+					Exception
+					Do not remove extra terminal punctuation for the given example:
+					Byl to “Karel IV.”, ktery neco
+					*/
+	let pattern = "([^" + locale.romanNumerals + "])([" + locale.sentencePunctuation + "])("+ locale.doubleQuoteAdepts + ")([" + locale.sentencePunctuation + "])";
 	let re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$2");
+	string = string.replace(re, "$1$2$3");
 
 	/* [1] Swap right double quote adepts with a terminal punctuation */
 	pattern = "("+ locale.doubleQuoteAdepts + ")([" + locale.terminalPunctuation + "])";
@@ -103,9 +108,12 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 		 (and thus must be used within a sentence) and swap right double with
 		 a terminal punctuation.
 		 */
-	pattern = "([^" + locale.sentencePunctuation + "][" + locale.spaces + "]{{typopo__left-double-quote}}.+?)([" + locale.terminalPunctuation + "])({{typopo__right-double-quote}})";
+	pattern = "([^" + locale.sentencePunctuation + "][" + locale.spaces + "]{{typopo__left-double-quote}}.+?)"
+	+ "([^" + locale.romanNumerals + "])"
+	+ "([" + locale.terminalPunctuation + "])"
+	+"({{typopo__right-double-quote}})";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$3$2");
+	string = string.replace(re, "$1$2$4$3");
 
 
 	/* [8]	Remove extra comma after punctuation in direct speech,

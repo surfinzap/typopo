@@ -1,5 +1,19 @@
 # Changelog for Typopo
 
+## 2.2.5 // 2019-10-16
+### Improvements
+* Fix non-breaking space around a name with regnal number:
+	* Karel IV. → Karel⎵IV. (sk, cs, de-de, rue)
+	* Karel IV.⎵byl → Karel⎵IV. byl (sk, cs, de-de, rue)
+	* Charles IV → Charles⎵IV (en-us)
+
+### Fixes
+* Fix accidental swapping of quotes and punctuation that was part of the Roman numeral. Before, the following sentence: _Byl to “Karel IV.”, ktery neco…_ was erroneously changed into _Byl to “Karel IV”. ktery neco…_.
+* Fix when non-breaking space is added around numbers in form of two separate rules:
+	* Number follows common abbreviation: On p 3 here you go → On p⎵3 here you go
+	* Number precedes a word: I bought 3 oranges → I bought 3⎵oranges
+* Fix error when ordinal indicators where incorrectly identified 
+
 ## 2.2.4 // 2019-10-02
 ### New features
 * Change hyphens into locale-specific dashes between a word and a punctuation (or at the end of the paragraph)
@@ -83,7 +97,7 @@
 * Add non-breaking space after roman numeral in sk, cs, rue (I.dodatok → I. dodatok)
 
 ### Fixes
-* fix Abbreviation module (it was falsely removing spaces at the beginning of the abbreviation)
+* Fix Abbreviation module (it was falsely removing spaces at the beginning of the abbreviation)
 
 ### Refactoring
 * Module for correcting Trademark symbol (™)

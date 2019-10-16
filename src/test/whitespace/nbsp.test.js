@@ -6,6 +6,7 @@ import {removeNbspBetweenMultiCharWords,
 				addNbspAfterOrdinalNumber,
 				addNbspWithinOrdinalDate,
 				addNbspAfterRomanNumeral,
+				fixNbspForNameWithRegnalNumber,
 				addNbspBeforePercent,
 				addNbspAfterSymbol,
 				replaceSpacesWithNbspAfterSymbol,
@@ -83,6 +84,11 @@ describe('Add non-breaking space after cardinal number\n', () => {
 	let testCase = {
 		"5 mm": "5 mm",
 		"5 Kč": "5 Kč",
+		/* false positives, when number is already bound with abbreviation
+		 * Na str.⎵5 je obsah → Na str.⎵5 je obsah
+		 * 									 !→ Na str. 5⎵je obsah
+		 */
+		"Na str. 5 je obsah" : "Na str. 5 je obsah",
 	};
 
 	Object.keys(testCase).forEach((key) => {
@@ -199,6 +205,7 @@ describe('Add non-breaking space after roman numeral (sk, cs, de-de, rue)\n', ()
 		"III. kapitola": "III. kapitola",
 		"III.kapitola": "III. kapitola",
 		"X. ročník": "X. ročník",
+		"Bol to X. ročník.": "Bol to X. ročník.",
 		"V. ročník": "V. ročník",
 		"L. ročník": "L. ročník",
 		"D. ročník": "D. ročník",
@@ -222,6 +229,72 @@ describe('Add non-breaking space after roman numeral (sk, cs, de-de, rue)\n', ()
 	});
 });
 
+
+
+describe('Add non-breaking space after roman numeral (sk, cs, de-de, rue)\nExtra false positive', () => {
+	let testCase = {
+		// false positive
+		"Karel IV." : "Karel IV.",
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(addNbspAfterRomanNumeral(key, new Locale("sk")), testCase[key]);
+			assert.equal(addNbspAfterRomanNumeral(key, new Locale("cs")), testCase[key]);
+			assert.equal(addNbspAfterRomanNumeral(key, new Locale("de-de")), testCase[key]);
+			assert.equal(addNbspAfterRomanNumeral(key, new Locale("rue")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Fix non-breaking space around name with regnal number (sk, cs, de-de, rue)\n', () => {
+	let testCase = {
+		// Place non-breaking space between name and roman numeral
+		"Karel IV. byl římsko-německý král." : "Karel IV. byl římsko-německý král.",
+		"Karel IV. byl římsko-německý král." : "Karel IV. byl římsko-německý král.",
+		"Karel IV." : "Karel IV.",
+		//false positive
+		"je to IV. cenová skupina" : "je to IV. cenová skupina",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixNbspForNameWithRegnalNumber(key, new Locale("sk")), testCase[key]);
+			assert.equal(fixNbspForNameWithRegnalNumber(key, new Locale("cs")), testCase[key]);
+			assert.equal(fixNbspForNameWithRegnalNumber(key, new Locale("de-de")), testCase[key]);
+			assert.equal(fixNbspForNameWithRegnalNumber(key, new Locale("rue")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixNbsp(key, new Locale("sk")), testCase[key]);
+			assert.equal(fixNbsp(key, new Locale("cs")), testCase[key]);
+			assert.equal(fixNbsp(key, new Locale("de-de")), testCase[key]);
+			assert.equal(fixNbsp(key, new Locale("rue")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Fix non-breaking space around name with regnal number (en-us)\n', () => {
+	let testCase = {
+		// Place non-breaking space between name and roman numeral
+		"Charles IV was an emperor." : "Charles IV was an emperor.",
+		"Charles IV was an emperor." : "Charles IV was an emperor.",
+		"Charles IV" : "Charles IV",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixNbspForNameWithRegnalNumber(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixNbsp(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
 
 
 describe('Add nbsp before percent, permille, permyriad\n', () => {
