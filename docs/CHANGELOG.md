@@ -1,8 +1,14 @@
 # Changelog for Typopo
 
 ## 2.2.5 // 2019-10-16
+### Improvements
+* Fix non-breaking space around a name with regnal number:
+	* Karel IV. → Karel⎵IV. (sk, cs, de-de, rue)
+	* Karel IV.⎵byl → Karel⎵IV. byl (sk, cs, de-de, rue)
+	* Charles IV → Charles⎵IV (en-us)
+
 ### Fixes
-* Fix accidental swapping of quotes and punctuation that was part of the Roman numeral. Before, the following sentence: _Byl to “Karel IV.”, ktery neco…_ was erroneously changed into _Byl to “Karel IV”. ktery neco…_. 
+* Fix accidental swapping of quotes and punctuation that was part of the Roman numeral. Before, the following sentence: _Byl to “Karel IV.”, ktery neco…_ was erroneously changed into _Byl to “Karel IV”. ktery neco…_.
 
 
 ## 2.2.4 // 2019-10-02

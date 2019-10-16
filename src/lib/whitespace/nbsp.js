@@ -74,17 +74,57 @@ export function addNbspWithinOrdinalDate(string, locale) {
 }
 
 
+
 export function addNbspAfterRomanNumeral(string, locale) {
 	// we can identify roman numeral effectively only if it has an ordinal indicator
 	if(locale.romanOrdinalIndicator != "") {
-		let pattern = "(\\b["+ locale.romanNumerals + "]+)("+ locale.romanOrdinalIndicator +")(["+ locale.spaces +"]?)";
+		let pattern =
+				"(\\b)"
+			+ "(["+ locale.romanNumerals + "]+)"
+			+ "("+ locale.romanOrdinalIndicator +")"
+			+ "(["+ locale.spaces +"]?)"
+			+ "([" + locale.allChars + locale.cardinalNumber + "])";
 		let re = new RegExp(pattern, "g");
-		let replacement = "$1$2" + locale.nbsp;
+		let replacement = "$1$2$3" + locale.nbsp + "$5";
 
 		return string.replace(re, replacement);
 	}
 
 	return string;
+}
+
+
+
+/*
+	Fix non-breaking space around name with regnal number
+	Karel IV. → Karel⎵IV.
+	Karel IV.⎵byl → Karel⎵IV. byl
+	Charles IV → Charles⎵IV
+
+	@param {string} string — input text for identification
+	@returns {string} — output with correctly placed non-breaking space
+*/
+export function fixNbspForNameWithRegnalNumber(string, locale) {
+	// if(locale.romanOrdinalIndicator != "") {
+		let pattern =
+			"(\\b[" + locale.uppercaseChars + "]["+ locale.lowercaseChars +"]+?)"
+			+ "([" + locale.spaces + "])"
+			+ "([" + locale.romanNumerals +"]+)"
+			+ "("  + locale.romanOrdinalIndicator +")"
+			+ "([" + locale.nbsp + "]?)";
+		let re = new RegExp(pattern, "g");
+
+		return string.replace(re, function($0, $1, $2, $3, $4, $5){
+			if ($5 == ""){
+				return $1 + locale.nbsp + $3 + $4;
+			} else {
+				return $1 + locale.nbsp + $3 + $4 + locale.space;
+			}
+		});
+
+	// }
+
+	// return string;
 }
 
 
@@ -153,6 +193,7 @@ export function fixNbsp(string, locale) {
 	string = addNbspAfterOrdinalNumber(string, locale);
 	string = addNbspWithinOrdinalDate(string, locale);
 	string = addNbspAfterRomanNumeral(string, locale);
+	string = fixNbspForNameWithRegnalNumber(string, locale);
 	string = addNbspBeforePercent(string, locale);
 
 	return string;
