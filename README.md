@@ -41,6 +41,7 @@ Fixes whitespace characters:
 Fixes words:
 * accidental uPPERCASE
 * spelling of e.g., i.e., a.m. and p.m.
+* ISSN and ISBN formatting
 
 Fixes symbols:
 * multiplication sign (×)

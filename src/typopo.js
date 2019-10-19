@@ -28,6 +28,7 @@ import {fixExponents} from "./lib/symbols/exponents";
 import {fixNumberSign} from "./lib/symbols/number-sign";
 import {fixAbbreviations} from "./lib/words/abbreviations";
 import {fixCase} from "./lib/words/case";
+import {fixPubId} from "./lib/words/pub-id";
 import {excludeExceptions,
 				placeExceptions} from "./lib/words/exceptions";
 
@@ -82,6 +83,7 @@ export function fixTypos(string, locale, configuration) {
 	// words
 	string = fixCase(string, currentLocale);
 	string = fixAbbreviations(string, currentLocale);
+	string = fixPubId(string, currentLocale);
 
 	// spaces
 	string = fixNbsp(string, currentLocale);

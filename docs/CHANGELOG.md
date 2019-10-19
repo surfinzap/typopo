@@ -1,5 +1,16 @@
 # Changelog for Typopo
 
+## 2.3.0 // 2019-10-19
+### New features
+* Fix ISSN and ISBN formatting with correct spacing and hyphens
+	* ISSN 0000 - 0000 → ISSN⎵0000-0000 (⎵ for non-braking space)
+	* issn 0000 - 0000 → ISSN⎵0000-0000
+	* ISSN 0000—0000 → ISSN⎵0000-0000
+	* ISSN: 0000 - 0000 → ISSN:⎵0000-0000
+	* Isbn 80- 902734—1-6 → ISBN 80-902734-1-6
+	* Isbn: 978-0-9752298-0-X → ISBN: 0-9752298-0-X
+	* 978 - 0 - 9752298 - 0 - 2 → 978-0-9752298-0-2
+
 ## 2.2.5 // 2019-10-16
 ### Improvements
 * Fix non-breaking space around a name with regnal number:
@@ -12,7 +23,7 @@
 * Fix when non-breaking space is added around numbers in form of two separate rules:
 	* Number follows common abbreviation: On p 3 here you go → On p⎵3 here you go
 	* Number precedes a word: I bought 3 oranges → I bought 3⎵oranges
-* Fix error when ordinal indicators where incorrectly identified 
+* Fix error when ordinal indicators where incorrectly identified
 
 ## 2.2.4 // 2019-10-02
 ### New features

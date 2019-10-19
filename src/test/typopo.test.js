@@ -118,10 +118,13 @@ describe('Tests that all modules are plugged in', () => {
 		"CH. CH. CH. Lambert" : "CH.CH.CH. Lambert",
 		"the U.S." : "the U.S.",
 
-
 		//case
 		"CMSko" : "CMSko",
 		"cAPSLOCK": "capslock",
+
+		// publication identifiers
+		"ISSN 0000-0000" : "ISSN 0000-0000",
+		"ISBN: 978-80-86102-81-8" : "ISBN: 978-80-86102-81-8",
 
 	};
 
