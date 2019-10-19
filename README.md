@@ -117,3 +117,4 @@ Licensed under MIT license. (See [LICENCE.TXT](//github.com/surfinzap/typopo/blo
 * [Viclick](https://github.com/vilemj-Viclick) for adjusting the repo for modularisation (2.0.0)
 * [tomashruby](https://github.com/tomashruby) for consultation on architecture (2.0.0)
 * [skurzinz](https://github.com/skurzinz) for consultation & test on German typographic rules (2.2.0)
+* Filip Blažek for consultation on typography rules 
