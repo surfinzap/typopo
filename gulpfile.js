@@ -39,7 +39,7 @@ gulp.task('build-browser-dev', function () {
 });
 
 gulp.task('build', ['build-browser'], function () {
-  return browserify({entries: './src/typopo.js'})
+  return browserify({entries: './src/typopo.js'}, {standalone: 'typopo'})
     .transform("babelify")
     .bundle()
     .pipe(source('typopo_dist.min.js'))
