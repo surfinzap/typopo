@@ -114,7 +114,8 @@ In any case, feel free to drop me a line at <typopo@tota.sk>.
 Licensed under MIT license. (See [LICENCE.TXT](//github.com/surfinzap/typopo/blob/master/LICENSE.txt).)
 
 ## Special thanks
-* [Viclick](https://github.com/vilemj-Viclick) for adjusting the repo for modularisation (2.0.0)
-* [tomashruby](https://github.com/tomashruby) for consultation on architecture (2.0.0)
-* [skurzinz](https://github.com/skurzinz) for consultation & test on German typographic rules (2.2.0)
-* Filip Blažek for consultation on typography rules 
+* [@Viclick](https://github.com/vilemj-Viclick) for adjusting the repo for modularisation (2.0.0)
+* [@tomashruby](https://github.com/tomashruby) for consultation on architecture (2.0.0)
+* [@skurzinz](https://github.com/skurzinz) for consultation & test on German typographic rules (2.2.0)
+* Filip Blažek for consultation on typography rules
+* ([@vit-svoboda](https://github.com/vit-svoboda) for fixing the package to run in Node.js projects (2.3.1)

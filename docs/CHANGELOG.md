@@ -1,5 +1,9 @@
 # Changelog for Typopo
 
+## 2.3.1 // 2019-10-25
+### Fixes
+* Fix the package to run in Node.js projects ([@vit-svoboda](https://github.com/vit-svoboda) in [Issue #19](https://github.com/surfinzap/typopo/issues/19))
+
 ## 2.3.0 // 2019-10-19
 ### New features
 * Fix ISSN and ISBN formatting with correct spacing and hyphens
