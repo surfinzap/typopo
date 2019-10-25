@@ -118,4 +118,4 @@ Licensed under MIT license. (See [LICENCE.TXT](//github.com/surfinzap/typopo/blo
 * [@tomashruby](https://github.com/tomashruby) for consultation on architecture (2.0.0)
 * [@skurzinz](https://github.com/skurzinz) for consultation & test on German typographic rules (2.2.0)
 * Filip Blažek for consultation on typography rules
-* ([@vit-svoboda](https://github.com/vit-svoboda) for fixing the package to run in Node.js projects (2.3.1)
+* [@vit-svoboda](https://github.com/vit-svoboda) for fixing the package to run in Node.js projects (2.3.1)
