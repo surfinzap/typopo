@@ -21,6 +21,7 @@ describe('Remove non-breaking space between multi-letter words\n', () => {
 		"vo dvore": "vo dvore",
 		"Ku komore": "Ku komore",
 		"vo vo vo vo": "vo vo vo vo",
+		"vo vo vo": "vo vo vo",
 		"ňa moja": "ňa moja",
 		"Ťa tvoja": "Ťa tvoja",
 	};
