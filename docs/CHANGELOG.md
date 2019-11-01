@@ -1,5 +1,12 @@
 # Changelog for Typopo
 
+## 2.3.2 // 2019-11-
+### Improvements
+* Fix multiplication sign for three and more multiplies
+ 	* 5 x 4 x 3 → 5⎵×⎵4⎵×⎵3
+	* 5″ x 4″ x 3″→ 5″⎵×⎵4″⎵×⎵3″
+	* 5 mm x 5 mm x 5 mm → 5 mm⎵×⎵5 mm⎵×⎵5 mm
+
 ## 2.3.1 // 2019-10-25
 ### Fixes
 * Fix the package to run in Node.js projects ([@vit-svoboda](https://github.com/vit-svoboda) in [Issue #19](https://github.com/surfinzap/typopo/issues/19))
