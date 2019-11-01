@@ -136,9 +136,9 @@ export function fixHyphenBetweenWordAndPunctuation(string, locale) {
 */
 export function fixDashBetweenCardinalNumbers(string, locale) {
 	let pattern =
-						"(" + locale.cardinalNumber + ")"
-					+ "([" + locale.spaces + "]?[" + locale.hyphen + locale.enDash + locale.emDash + "][" + locale.spaces + "]?)"
-					+ "(" + locale.cardinalNumber + ")";
+				"(" + locale.cardinalNumber + ")"
+			+ "([" + locale.spaces + "]?[" + locale.hyphen + locale.enDash + locale.emDash + "][" + locale.spaces + "]?)"
+			+ "(" + locale.cardinalNumber + ")";
 	let re = new RegExp(pattern, "g");
 	let replacement = "$1" + locale.enDash + "$3";
 	return string.replace(re, replacement);
