@@ -95,7 +95,7 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 
 	/* [7] Swap back some of the double quotes with a punctuation
 
-		 Idea
+		 Context
 		 In [1] we have swapped all double right quotes by default with a terminal
 		 punctuation. However, not all double quotes wrap the whole sentence and
 		 there are cases when few words are quoted within a sentence. Take a look at

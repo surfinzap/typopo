@@ -13,6 +13,8 @@ describe('Double quotes in default language (en)\n', () => {
 		"\"abc''": "“abc”",
 		"It’s called \"Localhost 3000\" and it’s pretty fast.":
 		"It’s called “Localhost 3000” and it’s pretty fast.",
+		"But he did not say what \"it really\" was. \"For the present I am free and am all right. Only I haven’t the least idea what I am to do; I wanted to consult you seriously.\"":
+		"But he did not say what “it really” was. “For the present I am free and am all right. Only I haven’t the least idea what I am to do; I wanted to consult you seriously.”",
 
 
 		/* Use-cases for mixing double quotes and primes */
@@ -48,7 +50,7 @@ describe('Double quotes in default language (en)\n', () => {
 
 
 		/* False positives
-			 We won’t double quotes and punctuation when only portion of a sentence is double-quoted */
+			 We won’t swap double quotes and punctuation when only portion of a sentence is double-quoted */
 		"Because of this, it’s common to have “namespace pollution”, where completely unrelated code shares global variables.": "Because of this, it’s common to have “namespace pollution”, where completely unrelated code shares global variables.",
 		"He was like “namespace pollution”.": "He was like “namespace pollution”.",
 		"He was like “Georgia”.": "He was like “Georgia”.",
