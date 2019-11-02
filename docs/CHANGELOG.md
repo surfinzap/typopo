@@ -1,6 +1,6 @@
 # Changelog for Typopo
 
-## 2.3.2 // 2019-11-
+## 2.3.2 // 2019-11-02
 ### Improvements
 * Fix multiplication sign for three and more multiplies
  	* 5 x 4 x 3 → 5⎵×⎵4⎵×⎵3
