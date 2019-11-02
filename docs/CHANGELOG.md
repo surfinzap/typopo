@@ -13,6 +13,7 @@
 
 ### Fixes
 * Fixes left single quote identification ([Issue #22](https://github.com/surfinzap/typopo/issues/22))
+* Fixes right double quote swapping with a punctuation ([Issue #23](https://github.com/surfinzap/typopo/issues/23))
 
 ## 2.3.1 // 2019-10-25
 ### Fixes
