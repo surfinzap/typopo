@@ -11,6 +11,8 @@
 	* mm x mm  → mm⎵×⎵mm (abbreviations)
 	* Marciano x Clay → Marciano⎵×⎵Clay (words)
 
+### Fixes
+* Fixes left single quote identification ([Issue #22](https://github.com/surfinzap/typopo/issues/22))
 
 ## 2.3.1 // 2019-10-25
 ### Fixes
