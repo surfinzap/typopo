@@ -4,18 +4,24 @@ import Locale from "../../locale/locale";
 
 describe('Corrects accidental uPPERCASE\n', () => {
 	let testCase = {
+		"cAPSLOCK": "capslock",
+		"(cAPSLOCK)": "(capslock)",
+		"Central Europe and Cyrillic tests: aĎIÉUБUГ": "Central Europe and Cyrillic tests: aďiéuбuг",
 		"Hey, JEnnifer!": "Hey, Jennifer!",
+
+		// false positives
 		"CMSko" : "CMSko",
 		"FPs": "FPs",
 		"ČSNka" : "ČSNka",
 		"BigONE" : "BigONE", // specific brand names
 		"two Panzer IVs" : "two Panzer IVs",
 		"How about ABC?": "How about ABC?",
-		"cAPSLOCK": "capslock",
-		"(cAPSLOCK)": "(capslock)",
 		"iPhone": "iPhone",
-		"iT": "it",
-		"Central Europe and Cyrillic tests: aĎIÉUБUГ": "Central Europe and Cyrillic tests: aďiéuбuг",
+
+		"iOS" : "iOS",
+		"macOS" : "macOS",
+		"kW" : "kW",
+		"mA" : "mA",
 	};
 
 

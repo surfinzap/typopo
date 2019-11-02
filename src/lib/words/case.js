@@ -22,18 +22,13 @@ export function fixCase(string, locale) {
 		return $1 + $2.substring(0,1) + $2.substring(1).toLowerCase() + $3;
 	});
 
-	/* [2.1] Swapped cases (2-letter cases, i.e. iT)
-			Note that this is divided into 2 separate cases as \b in JavaScript regex
-			does not take non-latin characters into a cosnideration
-	*/
-	pattern = "["+ locale.lowercaseChars +"]["+ locale.uppercaseChars +"]\\b";
-	re = new RegExp(pattern, "g");
-	string = string.replace(re, function(string){
-		return (string.substring(0,1) + string.substring(1).toLowerCase());
-	});
 
-	/* [2.2] Swapped cases (n-letter cases, i.e. uPPERCASE) */
-	pattern = "(\\b)(["+ locale.lowercaseChars +"])(["+ locale.uppercaseChars +"]{2,})";
+
+	/* [2] Swapped cases (n-letter cases, i.e. uPPERCASE)
+			There is one exception excluded from swapping → iOS
+			If needed, update this part of code to exclude the list of other popular names.
+	*/
+	pattern = "(\\b)(?!iOS)(["+ locale.lowercaseChars +"])(["+ locale.uppercaseChars +"]{2,})";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, function(string, $1, $2, $3){
 		return ($1 + $2 + $3.toLowerCase());

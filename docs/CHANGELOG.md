@@ -1,5 +1,23 @@
 # Changelog for Typopo
 
+## 2.3.2 // 2019-11-02
+### Improvements
+* Fix multiplication sign for three and more multiplies
+ 	* 5 x 4 x 3 → 5⎵×⎵4⎵×⎵3
+	* 5″ x 4″ x 3″→ 5″⎵×⎵4″⎵×⎵3″
+	* 5 mm x 5 mm x 5 mm → 5 mm⎵×⎵5 mm⎵×⎵5 mm
+* Fix multiplication sign between words
+	* š x v x h  → š⎵×⎵v⎵×⎵h (single letters)
+	* mm x mm  → mm⎵×⎵mm (abbreviations)
+	* Marciano x Clay → Marciano⎵×⎵Clay (words)
+
+### Fixes
+* Fixes left single quote identification ([Issue #22](https://github.com/surfinzap/typopo/issues/22))
+* Fixes right double quote swapping with a punctuation ([Issue #23](https://github.com/surfinzap/typopo/issues/23))
+* Adjust cases when accidental uPPERCASE is fixed
+	* two-letter units are no longer falsely corrected (e.g. mA, kW are no longer falsely changed to ma, kw)
+	* iOS stays iOS (not ios); btw if you can point to list of common names starting with a single lowercase letter and following with all capital letter, let me know and I’ll update he list of exceptions
+
 ## 2.3.1 // 2019-10-25
 ### Fixes
 * Fix the package to run in Node.js projects ([@vit-svoboda](https://github.com/vit-svoboda) in [Issue #19](https://github.com/surfinzap/typopo/issues/19))

@@ -14,6 +14,8 @@ describe('Single quotes in default language (en-us)\n', () => {
 		"He said: “What about ‘name’ and ‘other name’?”",
 		"He said: “What about 'Localhost 3000', is that good?”":
 		"He said: “What about ‘Localhost 3000’, is that good?”",
+		"And I ask you: “What’s the idea behind this—how do you call it—'one size fits all' approach?”":
+		"And I ask you: “What’s the idea behind this—how do you call it—‘one size fits all’ approach?”",
 
 		/* Mixing quotes and primes, left for single quotes */
 		"12' 45″": "12′ 45″",

@@ -38,14 +38,17 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 	/* [1.3] Identify in-word contractions,
 					 e.g. Don’t, I’m, O’Doole, 69’ers */
-	pattern = "(["+ locale.cardinalNumber + locale.allChars +"])(" + locale.singleQuoteAdepts +")+(["+ locale.allChars +"])";
+	pattern =
+				"(["+ locale.cardinalNumber + locale.allChars +"])"
+			+ "(" + locale.singleQuoteAdepts +")+"
+			+ "(["+ locale.allChars +"])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1{{typopo__apostrophe}}$3");
 
 
 	/* [1.4] Identify year contractions
 		 e.g. ’70s, INCHEBA ’89,… */
-	pattern = "( )(" + locale.singleQuoteAdepts + ")([0-9]{2})";
+	pattern = "( )(" + locale.singleQuoteAdepts + ")([" + locale.cardinalNumber + "]{2})";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1{{typopo__apostrophe}}$3");
 
@@ -56,12 +59,15 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 	string = string.replace(re, function($0, $1, $2, $3){
 
 		// identify {{typopo__left-single-quote--adept}}
-		let pattern = "([" + locale.spaces + "])(" + locale.singleQuoteAdepts + "|,)(["+ locale.allChars +"])";
+		let pattern =
+				"([" + locale.spaces + locale.emDash + locale.enDash + "])"
+			+ "(" + locale.singleQuoteAdepts + "|,)"
+			+ "(["+ locale.allChars +"])";
 		let re = new RegExp(pattern, "g");
 		$2 = $2.replace(re, "$1{{typopo__left-single-quote--adept}}$3");
 
 		// identify {{typopo__right-single-quote--adept}}
-		pattern = "(["+ locale.allChars +"])([\.,!?])?(" + locale.singleQuoteAdepts + ")([ ]|[\.,!?])";
+		pattern = "(["+ locale.allChars +"])([\.,!?])?(" + locale.singleQuoteAdepts + ")([ \.,!?])";
 		re = new RegExp(pattern, "g");
 		$2 = $2.replace(re, "$1$2{{typopo__right-single-quote--adept}}$4");
 
@@ -82,7 +88,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 	/* [3] Identify feet, arcminutes, minutes
 				 Note: we’re not using locale.singleQuoteAdepts variable
-				 as commas and low-positioned quotes are ommited*/
+				 as commas and low-positioned quotes are ommited */
 	string = string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1{{typopo__single-prime}}");
 
 
@@ -91,7 +97,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 		 Take following example:
 		 He said: “What about 'Localhost 3000', is that good?”
 
-		 So far, our algorithm falsely identifies prime folowing the number
+		 So far, the algorithm falsely identifies prime folowing the number
 		 and unclosed left single quote.
 		 We'll find that identifications and swap it back to single quote pair.
 	*/

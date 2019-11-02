@@ -95,7 +95,7 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 
 	/* [7] Swap back some of the double quotes with a punctuation
 
-		 Idea
+		 Context
 		 In [1] we have swapped all double right quotes by default with a terminal
 		 punctuation. However, not all double quotes wrap the whole sentence and
 		 there are cases when few words are quoted within a sentence. Take a look at
@@ -105,15 +105,32 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 
 		 Algorithm
 		 Match all the double quote pairs that do not precede sentence punctuation
-		 (and thus must be used within a sentence) and swap right double with
-		 a terminal punctuation.
+		 (and thus must be used within a sentence) and swap right double quote with
+		 a terminal punctuation. Make sure the pattern is not greedy and it won't
+		 catch multiple double quote pairs
 		 */
-	pattern = "([^" + locale.sentencePunctuation + "][" + locale.spaces + "]{{typopo__left-double-quote}}.+?)"
-	+ "([^" + locale.romanNumerals + "])"
-	+ "([" + locale.terminalPunctuation + "])"
-	+"({{typopo__right-double-quote}})";
+
+	/* [7.1] swap replacement variable with a quote to be able to build a regex pattern */
+	string = string.replace(/({{typopo__right-double-quote}})/g, locale.rightDoubleQuote);
+
+	/* [7.2] pattern and replacement */
+	pattern =
+				"([^" + locale.sentencePunctuation + "])"
+			+ "([" + locale.spaces + "])"
+			+ "({{typopo__left-double-quote}})"
+			+ "([^" + locale.rightDoubleQuote +"]+?)"
+			+ "([^" + locale.romanNumerals + "])"
+			+ "([" + locale.terminalPunctuation + "])"
+			+ "(" + locale.rightDoubleQuote +")";
+
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$2$4$3");
+	string = string.replace(re, "$1$2$3$4$5$7$6");
+
+	/* [7.3] swap right double quote back with a replacement variable for further processing */
+	pattern = "(" + locale.rightDoubleQuote + ")";
+	re = new RegExp(pattern, "g");
+	string = string.replace(re, "{{typopo__right-double-quote}}");
+
 
 
 	/* [8]	Remove extra comma after punctuation in direct speech,
