@@ -1,4 +1,5 @@
 import {fixMultiplicationSignBetweenNumbers,
+				fixMultiplicationSignBetweenWords,
 				fixMultiplicationSignBetweenNumberAndWord,
 				fixNbspAroundMultiplicationSign,
 				fixMultiplicationSign} from "../../lib/symbols/multiplication-sign";
@@ -29,6 +30,29 @@ describe('Fix multiplication sign between numbers\n', () => {
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.equal(fixMultiplicationSignBetweenNumbers(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Fix multiplication sign between words\n', () => {
+	let testCase = {
+		"š x v x h" : "š × v × h",
+		"mm x mm": "mm × mm",
+		"Marciano x Clay" : "Marciano × Clay",
+		"žena x žena" : "žena × žena",
+
+		"light xenons" : "light xenons", // false positive
+		"František X Šalda" : "František X Šalda" // false positive; noun abbr. in en-us
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixMultiplicationSignBetweenWords(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
 			assert.equal(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);

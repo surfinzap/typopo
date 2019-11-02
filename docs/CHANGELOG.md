@@ -6,6 +6,11 @@
  	* 5 x 4 x 3 → 5⎵×⎵4⎵×⎵3
 	* 5″ x 4″ x 3″→ 5″⎵×⎵4″⎵×⎵3″
 	* 5 mm x 5 mm x 5 mm → 5 mm⎵×⎵5 mm⎵×⎵5 mm
+* Fix multiplication sign between words
+	* š x v x h  → š⎵×⎵v⎵×⎵h (single letters)
+	* mm x mm  → mm⎵×⎵mm (abbreviations)
+	* Marciano x Clay → Marciano⎵×⎵Clay (words)
+
 
 ## 2.3.1 // 2019-10-25
 ### Fixes
