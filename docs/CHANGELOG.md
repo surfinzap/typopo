@@ -14,6 +14,9 @@
 ### Fixes
 * Fixes left single quote identification ([Issue #22](https://github.com/surfinzap/typopo/issues/22))
 * Fixes right double quote swapping with a punctuation ([Issue #23](https://github.com/surfinzap/typopo/issues/23))
+* Adjust cases when accidental uPPERCASE is fixed
+	* two-letter units are no longer falsely corrected (e.g. mA, kW are no longer falsely changed to ma, kw)
+	* iOS stays iOS (not ios); btw if you can point to list of common names starting with a single lowercase letter and following with all capital letter, let me know and I’ll update he list of exceptions
 
 ## 2.3.1 // 2019-10-25
 ### Fixes
