@@ -14,7 +14,6 @@ describe('Corrects accidental uPPERCASE\n', () => {
 		"cAPSLOCK": "capslock",
 		"(cAPSLOCK)": "(capslock)",
 		"iPhone": "iPhone",
-		"iT": "it",
 		"Central Europe and Cyrillic tests: aĎIÉUБUГ": "Central Europe and Cyrillic tests: aďiéuбuг",
 	};
 
