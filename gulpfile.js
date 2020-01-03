@@ -1,79 +1,65 @@
 const gulp = require('gulp');
-
+const babel = require('gulp-babel');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
 const browserify = require('browserify');
 const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
-const uglify = require('gulp-uglify');
-const sourcemaps = require('gulp-sourcemaps');
-const livereload = require('gulp-livereload');
-const http = require('http');
-const st = require('st');
 
-const buildPath = './build/';
+var paths = {
+	browser: {
+		src: 'src/browser_typopo.js',
+		name: 'typopo.min.js',
+		dest: 'dist/'
+	},
+	npm: {
+		src: 'src/typopo.js',
+		name: 'typopo_dist.min.js',
+		dest: 'dist/'
+	}
+};
 
+/*
+ * Define our tasks using plain functions
+ */
 
+function browserBuild() {
+	return browserify({ entries: paths.browser.src, debug: false })
+		.transform(babelify)
+		.bundle()
+		.pipe(source(paths.browser.name))
+		.pipe(buffer())
+		.pipe(uglify())
+		.pipe(gulp.dest(paths.browser.dest));
+}
 
-gulp.task('build-dev', function () {
-  return browserify({entries: './src/typopo.js', debug: true})
-    .transform("babelify", {presets: ["es2015"]})
-    .bundle()
-    .pipe(source('typopo.built.js'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init())
-    .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest(buildPath))
-    .pipe(livereload());
-});
+function npmBuild() {
+	return gulp.src(paths.npm.src, { sourcemaps: false })
+		.pipe(babel())
+		.pipe(uglify())
+		.pipe(concat(paths.npm.name))
+		.pipe(gulp.dest(paths.npm.dest));
+}
 
-gulp.task('build-browser-dev', function () {
-  return browserify({entries: './src/browser_typopo.js', debug: true})
-    .transform("babelify")
-    .bundle()
-    .pipe(source('typopo_browser.built.js'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init())
-    .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest(buildPath))
-    .pipe(livereload());
-});
+function watch() {
+	gulp.watch(paths.npm.src, npmBuild);
+	gulp.watch(paths.browser.src, browserBuild);
+}
 
-gulp.task('build', ['build-browser'], function () {
-  return browserify({entries: './src/typopo.js'}, {standalone: 'typopo'})
-    .transform("babelify")
-    .bundle()
-    .pipe(source('typopo_dist.min.js'))
-    .pipe(buffer())
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist/'))
-});
+/*
+ * Specify if tasks run in series or parallel using `gulp.series` and `gulp.parallel`
+ */
+var build = gulp.parallel(npmBuild, browserBuild);
 
-gulp.task('build-browser', function () {
-  return browserify({entries: './src/browser_typopo.js'})
-    .transform("babelify")
-    .bundle()
-    .pipe(source('typopo.min.js'))
-    .pipe(buffer())
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist/'))
-});
+/*
+ * You can use CommonJS `exports` module notation to declare tasks
+ */
 
-gulp.task('copy typopo-demo to build', function () {
-  return gulp
-    .src('demo/typopo-demo.html')
-    .pipe(gulp.dest(buildPath));
-});
-
-gulp.task('server', ['copy typopo-demo to build'], function (done) {
-  http.createServer(
-    st({path: __dirname + '/build/', index: 'typopo-demo.html', cache: false})
-  ).listen(8080, done);
-});
-
-
-gulp.task('watch', ['build', 'build-dev', 'build-browser-dev', 'server'], function () {
-  livereload.listen();
-  gulp.watch(['./src/**/*.js', './src/*.js', './demo/*.html'], ['build-dev', 'build-browser-dev', 'copy typopo-demo to build']);
-});
-
-gulp.task('default', ['watch']);
+exports.scripts = npmBuild;
+exports.watch = watch;
+exports.build = build;
+/*
+ * Define default task that can be called by just running `gulp` from cli
+ */
+exports.default = build;
