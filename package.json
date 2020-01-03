@@ -8,6 +8,7 @@
     "email": "surfin.zap@gmail.com"
   },
   "scripts": {
+    "build": "gulp build",
     "test": "mocha --require @babel/register ./src/test/**/*.test.js -R min -w"
   },
   "main": "dist/typopo_dist.min.js",
@@ -36,12 +37,14 @@
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "@babel/register": "^7.7.7",
-    "browserify": "^13.3.0",
     "babelify": "^10.0.0",
+    "browser-sync": "^2.26.7",
+    "browserify": "^13.3.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-cli": "^2.2.0",
     "gulp-concat": "^2.6.1",
+    "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^2.0.0",
     "mocha": "^6.2.2",
     "vinyl-buffer": "^1.0.1",
