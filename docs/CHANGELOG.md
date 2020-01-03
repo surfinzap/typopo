@@ -1,5 +1,12 @@
 # Changelog for Typopo
 
+## 2.3.3 // 2020-01-03
+There are no changes in functionality in this release
+
+### Maintenance
+* Update packages to newest version
+* Change how are dist/ built with gulp
+
 ## 2.3.2 // 2019-11-02
 ### Improvements
 * Fix multiplication sign for three and more multiplies
