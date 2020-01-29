@@ -57,11 +57,11 @@ Fixes symbols:
 
 ### Online app — [https://typopo.tota.sk/](https://typopo.tota.sk/)
 Use (especially) when:
-* you’re a typesetter, who wants to proofread raw text before pasting into DTP software (e.g. InDesign)
-* you’re a developer, who don’t want to escape quotes in User Interface messages or bother with whitespace characters
-* you just want your email to be typographically correct
+* you’re a typesetter, who wants to proofread the raw text before pasting into DTP software (e.g. InDesign)
+* you’re a developer, who doesn’t want to escape quotes in User Interface messages or bother with whitespace characters
+* you just want your email or blog post to be typographically correct
 
-[![alt correct typos with typopo](https://typopo.tota.sk/typopo--og--2019.png "fix typos with typopo")](https://typopo.tota.sk/)
+[![alt fix typos with typopo](https://typopo.tota.sk/typopo--og--2019.png "fix typos with typopo")](https://typopo.tota.sk/)
 
 ### JS library
 * Download dist/typopo.min.js and include it in your web application or CMS to fix typos on demand, automatically or after the web page is loaded.
