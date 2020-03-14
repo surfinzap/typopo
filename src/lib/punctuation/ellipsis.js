@@ -1,49 +1,4 @@
 /*
-	Replaces 3 and more consequtive periods with ellipsis
-
-	@param {string} string — input text for identification
-	@returns {string} — output with corrected periods
-*/
-function replacePeriodsWithEllipsis(string, locale) {
-	/* [1] replace 3 and more dots/ellipses with an ellipsis */
-	let pattern = "[" + locale.ellipsis + "\\.]{3,}";
-	let re = new RegExp(pattern, "g");
-	let replacement = locale.ellipsis;
-	string = string.replace(re, replacement);
-
-	/* [2] replace 2 dots in the middle of the sentence with an aposiopesis
-				 (best-effort scenario) */
-	pattern = "[" + locale.spaces + "]\\.{2}[" + locale.spaces + "]";
-	re = new RegExp(pattern, "g");
-	replacement = locale.space + locale.ellipsis + locale.space;
-	string = string.replace(re, replacement);
-
-	/* [3] Replace ellipsis followed by dots with an ellipsis */
-	pattern = locale.ellipsis + "\\.+";
-	re = new RegExp(pattern, "g");
-	replacement = locale.ellipsis;
-	string = string.replace(re, replacement);
-
-	/* [4] Replace dots followed by ellipsis with an ellipsis */
-	pattern = "\\.+" + locale.ellipsis;
-	re = new RegExp(pattern, "g");
-	replacement = locale.ellipsis;
-	string = string.replace(re, replacement);
-
-
-	/* [5] Replace multiple ellipses with an ellipsis */
-	pattern = locale.ellipsis + "{2,}";
-	re = new RegExp(pattern, "g");
-	replacement = locale.ellipsis;
-	string = string.replace(re, replacement);
-
-	return string;
-}
-
-
-/*
-	Corrects improper spacing around ellipsis and aposiopesis
-
 	Ellipsis (as a character) is used for 2 different purposes:
 	1. as an ellipsis to ommit a piece of information deliberately
 	2. as an aposiopesis; a figure of speech wherein a sentence is
@@ -53,6 +8,64 @@ function replacePeriodsWithEllipsis(string, locale) {
 	https://en.wikipedia.org/wiki/Ellipsis
 	https://en.wikipedia.org/wiki/Aposiopesis
 	http://www.liteera.cz/slovnik/vypustka
+*/
+
+
+
+
+/*
+	Replaces 3 and more consecutive periods with ellipsis
+
+	@param {string} string — input text for identification
+	@returns {string} — output with corrected periods
+*/
+export function replacePeriodsWithEllipsis(string, locale) {
+	let pattern = "[" + locale.ellipsis + "\\.]{3,}";
+	let re = new RegExp(pattern, "g");
+	let replacement = locale.ellipsis;
+	string = string.replace(re, replacement);
+
+
+
+	//
+	// /* [1] replace 3 and more dots/ellipses with an ellipsis */
+	// let pattern = "[" + locale.ellipsis + "\\.]{3,}";
+	// let re = new RegExp(pattern, "g");
+	// let replacement = locale.ellipsis;
+	// string = string.replace(re, replacement);
+
+	/* [2] replace 2 dots in the middle of the sentence with an aposiopesis
+				 (best-effort scenario) */
+	pattern = "[" + locale.spaces + "]\\.{2}[" + locale.spaces + "]";
+	re = new RegExp(pattern, "g");
+	replacement = locale.space + locale.ellipsis + locale.space;
+	string = string.replace(re, replacement);
+
+	// /* [3] Replace ellipsis followed by dots with an ellipsis */
+	// pattern = locale.ellipsis + "\\.+";
+	// re = new RegExp(pattern, "g");
+	// replacement = locale.ellipsis;
+	// string = string.replace(re, replacement);
+
+	/* [4] Replace dots followed by ellipsis with an ellipsis */
+	pattern = "(\\.+" + locale.ellipsis + ")";
+	re = new RegExp(pattern, "g");
+	replacement = locale.ellipsis;
+	string = string.replace(re, replacement);
+
+
+	// /* [5] Replace multiple ellipses with an ellipsis */
+	// pattern = locale.ellipsis + "{2,}";
+	// re = new RegExp(pattern, "g");
+	// replacement = locale.ellipsis;
+	// string = string.replace(re, replacement);
+
+	return string;
+}
+
+
+/*
+	Corrects improper spacing around ellipsis and aposiopesis
 
 	Algorithm
 	Ellipsis & Aposiopesis require different use of spacing around them,

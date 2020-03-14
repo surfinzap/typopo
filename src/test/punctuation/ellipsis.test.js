@@ -1,39 +1,44 @@
-import {fixEllipsis} from "../../lib/punctuation/ellipsis";
+import {replacePeriodsWithEllipsis,
+				fixEllipsis} from "../../lib/punctuation/ellipsis";
 import assert from 'assert';
 import Locale from "../../locale/locale";
 
+
+describe('Replace periods / ellipses with a single ellipsis:\n', () => {
+	let testCase = {
+		/* replace 3 and more periods with an ellipsis … */
+	 "Sentence ... another sentence": "Sentence … another sentence",
+	 "Sentence .... another sentence": "Sentence … another sentence",
+	 "Sentence ..... another sentence": "Sentence … another sentence",
+	 "Sentence ending.": "Sentence ending.",
+	 "Sentence ending..": "Sentence ending..",
+	 "Sentence ending...": "Sentence ending…",
+	 "Sentence ending....": "Sentence ending…",
+	 "Sentence ending.....": "Sentence ending…",
+	 "Sentence ending….....": "Sentence ending…",
+	 "Sentence ending….…": "Sentence ending…",
+	 "Sentence ending……": "Sentence ending…",
+	 "Sentence ending.….....": "Sentence ending…",
+	 "Sentence ending.…": "Sentence ending…",
+
+	 /* best-effort: replace 2 periods in the middle with an ellipsis … */
+	 "Sentence .. another sentence": "Sentence … another sentence",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(replacePeriodsWithEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
 describe('Ellipsis\n', () => {
 	let testCase = {
-		/*
-		 Ellipsis & Aposiopesis
-
-		 Ellipsis (as a character) is used for 2 different purposes:
-		 1. as an ellipsis to omit a piece of information deliberately
-		 2. as an aposiopesis; a figure of speech wherein a sentence is
-		 deliberately broken off and left unfinished
-
-		 sources
-		 https://en.wikipedia.org/wiki/Ellipsis
-		 https://en.wikipedia.org/wiki/Aposiopesis
-		 http://www.liteera.cz/slovnik/vypustka
-		 */
-		 /* replace 3 and more periods with an ellipsis … */
-		"Sentence ... another sentence": "Sentence … another sentence",
-		"Sentence .... another sentence": "Sentence … another sentence",
-		"Sentence ..... another sentence": "Sentence … another sentence",
-		"Sentence ending.": "Sentence ending.",
-		"Sentence ending..": "Sentence ending..",
-		"Sentence ending...": "Sentence ending…",
-		"Sentence ending....": "Sentence ending…",
-		"Sentence ending.....": "Sentence ending…",
-		"Sentence ending….....": "Sentence ending…",
-		"Sentence ending….…": "Sentence ending…",
-		"Sentence ending……": "Sentence ending…",
-		"Sentence ending.….....": "Sentence ending…",
-		"Sentence ending.…": "Sentence ending…",
-
-		/* best-effort: replace 2 periods in the middle with an ellipsis … */
-		"Sentence .. another sentence": "Sentence … another sentence",
 
 		/* space ellipsis correctly, when used around commas */
 		"We sell apples, oranges,…, pens.": "We sell apples, oranges, …, pens.",
