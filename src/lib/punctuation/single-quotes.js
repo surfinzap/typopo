@@ -28,9 +28,10 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 	string = string.replace(re, "{{typopo__apostrophe}}$2{{typopo__apostrophe}}");
 
 
-	/* [1.2] Identify common contractions at the beginning or at the end
+	/* [1.2] Identify common contractions at the beginning
 					 of the word, e.g. ’em, ’cause,… */
-	let contraction_examples = "em|cause|twas|tis|til|round"
+
+	let contraction_examples = "cause|em|mid|midst|mongst|prentice|round|sblood|ssdeath|sfoot|sheart|shun|slid|slife|slight|snails|strewth|til|tis|twas|tween|twere|twill|twixt|twould"
 	pattern = "(" + locale.singleQuoteAdepts + ")(" + contraction_examples + ")";
 	re = new RegExp(pattern, "gi");
 	string = string.replace(re, "{{typopo__apostrophe}}$2");
