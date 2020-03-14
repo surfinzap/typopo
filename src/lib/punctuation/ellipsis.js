@@ -13,111 +13,224 @@
 
 
 /*
-	Replaces 3 and more consecutive periods with ellipsis
+	Replace 3 and more dots/ellipses with an ellipsis
 
-	[1] replace 3 and more dots/ellipses with an ellipsis
-	[2] replace .…, …., …… with an ellipsis
-	[3] replace .. between words with an ellipsis (best effort)
+	Example:
+	Sentence ending…..... → Sentence ending…
 
 	@param {string} string — input text for identification
-	@returns {string} — output with corrected periods
+	@returns {string} — output with fixed ellipsis
 */
-export function replacePeriodsWithEllipsis(string, locale) {
-	/* [1] replace 3 and more dots/ellipses with an ellipsis */
+export function replaceThreeCharsWithEllipsis(string, locale) {
 	let pattern = "[" +  locale.ellipsis + "\\.]{3,}";
 	let re = new RegExp(pattern, "g");
 	let replacement = locale.ellipsis;
-	string = string.replace(re, replacement);
-
-	/* [2] replace .…, …., …… with an ellipsis */
-	pattern =
-					"\\." + locale.ellipsis + "|"
-				+ locale.ellipsis + "{2,}|"
-				+ locale.ellipsis + "\\.";
-	re = new RegExp(pattern, "g");
-	replacement = locale.ellipsis;
-	string = string.replace(re, replacement);
-
-	/* [3] replace .. between words with an aposiopesis (best effort) */
-	pattern = "[" + locale.spaces + "]\\.{2}[" + locale.spaces + "]";
-	re = new RegExp(pattern, "g");
-	replacement = locale.space + locale.ellipsis + locale.space;
-	string = string.replace(re, replacement);
-
-	return string;
+	return string.replace(re, replacement);
 }
+
 
 
 /*
-	Corrects improper spacing around ellipsis and aposiopesis
+	Replace combination of period/ellipsis with an ellipsis
 
-	Algorithm
-	Ellipsis & Aposiopesis require different use of spacing around them,
-	that is why we are correcting only following cases:
-	errors:
-	[1] correct spacing, when ellipsis used used around commas
-	[2] correct spacing for aposiopesis at the end of the sentence in the middle of the paragraph
-	[3] correct spacing for aposiopesis at the beginning of the unfinished sentence in the middle of the paragraph
-	[4] keep spaces around ellipsis when it is used at the beginning of the full sentence in the middle of the paragraph
-	[5] correct spacing for aposiopesis at the beginning of the sentence at the beginning of the paragraph
-	[6] correct spacing for aposiopesis at the end of the sentence at the end of the paragraph
-	[7] add space after aposiopesis between two words
+	Example:
+	.…, …., …… → …
 
 	@param {string} string — input text for identification
-	@returns {string} — output with corrected spacing around aposiopesis
+	@returns {string} — output with fixed ellipsis
 */
-function correctSpacesAroundEllipsis(string, locale) {
-
-	/* [1] correct spacing, when ellipsis used used around commas */
-	let pattern = ",[" + locale.spaces + "]?" + locale.ellipsis + "[" + locale.spaces + "]?,";
+export function replaceTwoCharsWithEllipsis(string, locale) {
+	let pattern =
+					"\\." + locale.ellipsis + "|"
+				+ locale.ellipsis + "{2,}|"
+				+ locale.ellipsis + "\\.";
 	let re = new RegExp(pattern, "g");
-	string = string.replace(re, ", …,");
-
-
-	/* [2] correct spacing for aposiopesis at the end of the sentence
-				 in the middle of the paragraph */
-	pattern = "([" + locale.lowercaseChars + "])([" + locale.spaces + "])(" + locale.ellipsis + "[" + locale.spaces + "][" + locale.uppercaseChars + "])";
-	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$3");
-
-
-	/* [3] correct spacing for aposiopesis at the beginning of the
-				 unfinished sentence in the middle of the paragraph */
-	pattern = "([" + locale.sentencePunctuation + locale.terminalQuotes + "])([" + locale.spaces + "]?)(" + locale.ellipsis +")([" + locale.spaces + "]?)([" + locale.lowercaseChars +"])";
-	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1 $3$5");
-
-	/* [4]	keep spaces around ellipsis when it is used at the beginning
-						of the full sentence in the middle of the paragraph */
-	pattern = "([" + locale.sentencePunctuation + locale.terminalQuotes + "])([" + locale.spaces + "]?)(" + locale.ellipsis +")([" + locale.spaces + "]?)([" + locale.uppercaseChars +"])";
-	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1 $3 $5");
-
-
-	/* [5] correct spacing for aposiopesis at the beginning of the sentence
-				 at the beginning of the paragraph */
-	pattern = "(^…)([" + locale.spaces + "])([" + locale.lowercaseChars + locale.uppercaseChars + "])";
-	re = new RegExp(pattern, "gm");
-	string = string.replace(re, "$1$3");
-
-
-	/* [6] correct spacing for aposiopesis at the end of the sentence
-				 at the end of the paragraph */
-	pattern = "([" + locale.lowercaseChars + "])([" + locale.spaces + "])(" + locale.ellipsis + ")(?![ " + locale.sentencePunctuation + locale.lowercaseChars + locale.uppercaseChars + "])";
-	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$3");
-
-	/* [7] add space after aposiopesis between two words */
-
-	pattern = "([" + locale.allChars + "])([" + locale.ellipsis + "])([" + locale.allChars + "])";
-	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$2 $3");
-
-	return string;
+	let replacement = locale.ellipsis;
+	return string.replace(re, replacement);
 }
 
+
+
+/*
+	Replace two periods between words (spaces) with an ellipsis
+
+	Example
+	word .. word → word … word
+
+	@param {string} string — input text for identification
+	@returns {string} — output with fixed ellipsis
+*/
+export function replaceTwoPeriodsWithEllipsis(string, locale) {
+	let pattern = "[" + locale.spaces + "]\\.{2}[" + locale.spaces + "]";
+	let re = new RegExp(pattern, "g");
+	let replacement = locale.space + locale.ellipsis + locale.space;
+	return string.replace(re, replacement);
+}
+
+
+
+/*
+	Fix spacing, when ellipsis is used around commas
+
+	Example:
+	We sell apples, oranges,…, pens. → We sell apples, oranges, …, pens.
+	We sell apples, oranges, … , pens. → We sell apples, oranges, …, pens.
+
+	@param {string} string — input text for identification
+	@returns {string} — output with corrected spacing around ellipsis
+*/
+export function fixEllipsisSpacingAroundCommas(string, locale) {
+	let pattern = ",[" + locale.spaces + "]?" + locale.ellipsis + "[" + locale.spaces + "]?,";
+	let re = new RegExp(pattern, "g");
+	return string.replace(re, ", …,");
+}
+
+
+
+/*
+	Fix spacing, when aposiopesis is starting a paragraph
+
+	Examples:
+	… and we were there. → …and we were there.
+
+	@param {string} string — input text for identification
+	@returns {string} — output with fixed spacing
+*/
+export function fixAposiopesisStartingParagraph(string, locale) {
+	let pattern =
+			"(^…)"
+		+ "([" + locale.spaces + "])"
+		+ "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
+	let re = new RegExp(pattern, "gm");
+	return string.replace(re, "$1$3");
+}
+
+
+
+/*
+	Fix spacing, when aposiopesis is starting a sentence
+
+	Examples:
+	Sentence ended. … and we were there. →
+	Sentence ended. …and we were there.
+
+	@param {string} string — input text for identification
+	@returns {string} — output with fixed spacing
+*/
+export function fixAposiopesisStartingSentence(string, locale) {
+	let pattern =
+			"([" + locale.sentencePunctuation + locale.terminalQuotes + "])"
+		+ "([" + locale.spaces + "]?)"
+		+ "([" + locale.ellipsis +"])"
+		+ "([" + locale.spaces + "]?)"
+		+ "([" + locale.lowercaseChars +"])";
+	let re = new RegExp(pattern, "g");
+	return string.replace(re, "$1 $3$5");
+}
+
+
+
+/*
+	Fix spacing, when aposiopesis is between sentences
+	Aposiopesis × Ellipsis between sentences? Ellipsis follows a finished sentece.
+
+	Examples:
+	Sentence ending … And another starting →
+	Sentence ending… And another starting
+
+	@param {string} string — input text for identification
+	@returns {string} — output with fixed spacing
+*/
+export function fixAposiopesisBetweenSentences(string, locale) {
+	let pattern =
+			"([" + locale.lowercaseChars + "])"
+		+ "([" + locale.spaces + "])"
+		+ "([" + locale.ellipsis + "])"
+		+ "([" + locale.spaces + "]?)"
+		+ "([" + locale.uppercaseChars + "])";
+	let re = new RegExp(pattern, "g");
+	return string.replace(re, "$1$3 $5");
+}
+
+
+
+/*
+	Fix spacing, when aposiopesis is between words
+	This is a best effort guess, that we’re dealing with aposiopesis.
+
+	Examples:
+	word…word → word… word
+
+	@param {string} string — input text for identification
+	@returns {string} — output with fixed spacing
+*/
+export function fixAposiopesisBetweenWords(string, locale) {
+	let pattern =
+			"([" + locale.allChars + "])"
+		+ "([" + locale.ellipsis + "])"
+		+ "([" + locale.allChars + "])";
+	let re = new RegExp(pattern, "g");
+	return string.replace(re, "$1$2 $3");
+}
+
+
+
+/*
+	Fix spacing, when ellipsis is between sentences
+	Aposiopesis × Ellipsis between sentences? Ellipsis follows a finished sentece.
+
+	Examples:
+	What are you saying. …She did not answer. →
+	What are you saying. … She did not answer.
+
+	@param {string} string — input text for identification
+	@returns {string} — output with fixed spacing
+*/
+export function fixEllipsisBetweenSentences(string, locale) {
+	/* [4]	keep spaces around ellipsis when it is used at the beginning
+						of the full sentence in the middle of the paragraph */
+	let pattern =
+			"([" + locale.sentencePunctuation + locale.terminalQuotes + "])"
+		+ "([" + locale.spaces + "]?)"
+		+ "(" + locale.ellipsis +")"
+		+ "([" + locale.spaces + "]?)"
+		+ "([" + locale.uppercaseChars +"])";
+	let re = new RegExp(pattern, "g");
+	return string.replace(re, "$1 $3 $5");
+}
+
+
+
+/*
+	Fix spacing, when aposiopesis is ending a paragraph
+
+	Examples:
+	Sentence ending … → Sentence ending…
+
+	@param {string} string — input text for identification
+	@returns {string} — output with fixed spacing
+*/
+export function fixAposiopesisEndingParagraph(string, locale) {
+	let pattern =
+			"([" + locale.lowercaseChars + "])"
+		+ "([" + locale.spaces + "])"
+		+ "([" + locale.ellipsis + "]$)";
+	let re = new RegExp(pattern, "gm");
+	return string.replace(re, "$1$3");
+}
+
+
+
 export function fixEllipsis(string, locale) {
-	string = replacePeriodsWithEllipsis(string, locale);
-	string = correctSpacesAroundEllipsis(string, locale)
+	string = replaceThreeCharsWithEllipsis(string, locale)
+	string = fixEllipsisSpacingAroundCommas(string, locale);
+	string = fixAposiopesisStartingParagraph(string, locale);
+	string = fixAposiopesisStartingSentence(string, locale);
+	string = fixAposiopesisBetweenSentences(string, locale);
+	string = fixAposiopesisBetweenWords(string, locale);
+	string = fixEllipsisBetweenSentences(string, locale);
+	string = fixAposiopesisEndingParagraph(string, locale)
+	string = replaceTwoCharsWithEllipsis(string, locale)
+	string = replaceTwoPeriodsWithEllipsis(string, locale)
 	return string;
 }

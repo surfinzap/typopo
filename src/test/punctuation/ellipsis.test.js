@@ -1,4 +1,13 @@
-import {replacePeriodsWithEllipsis,
+import {replaceThreeCharsWithEllipsis,
+				replaceTwoCharsWithEllipsis,
+				replaceTwoPeriodsWithEllipsis,
+				fixEllipsisSpacingAroundCommas,
+				fixAposiopesisStartingParagraph,
+				fixAposiopesisStartingSentence,
+				fixAposiopesisBetweenSentences,
+				fixAposiopesisBetweenWords,
+				fixEllipsisBetweenSentences,
+				fixAposiopesisEndingParagraph,
 				fixEllipsis} from "../../lib/punctuation/ellipsis";
 import assert from 'assert';
 import Locale from "../../locale/locale";
@@ -17,14 +26,6 @@ describe('Replace periods/ellipses with a single ellipsis:\n', () => {
 	 "Sentence ending….…": "Sentence ending…",
 	 "Sentence ending.….....": "Sentence ending…",
 
-	 /* [2] replace .…, …., …… with an ellipsis */
-	 "Sentence ending……": "Sentence ending…",
-	 "Sentence ending….": "Sentence ending…",
-	 "Sentence ending.…": "Sentence ending…",
-
-	 /* [3] replace .. between words with an aposiopesis (best effort) */
-	 "Sentence .. another sentence": "Sentence … another sentence",
-
 	 /* false positives */
 	 "Sentence ending.": "Sentence ending.",
 	 "Sentence ending..": "Sentence ending..",
@@ -32,7 +33,7 @@ describe('Replace periods/ellipses with a single ellipsis:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(replacePeriodsWithEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.equal(replaceThreeCharsWithEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
 			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
@@ -42,59 +43,201 @@ describe('Replace periods/ellipses with a single ellipsis:\n', () => {
 
 
 
-describe('Ellipsis\n', () => {
+describe('Replace combination of period/ellipsis with an ellipsis:\n', () => {
 	let testCase = {
+		"Sentence ending…": "Sentence ending…",
+		"Sentence ending……": "Sentence ending…",
+		"Sentence ending….": "Sentence ending…",
+		"Sentence ending.…": "Sentence ending…",
+	};
 
-		/* space ellipsis correctly, when used around commas */
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(replaceTwoCharsWithEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Replace two periods between words (spaces) with an ellipsis:\n', () => {
+	let testCase = {
+		"Sentence .. another sentence": "Sentence … another sentence",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(replaceTwoPeriodsWithEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Fix spacing, when ellipsis is used around commas:\n', () => {
+	let testCase = {
+		"We sell apples, oranges, …, pens.": "We sell apples, oranges, …, pens.", // neutral
 		"We sell apples, oranges,…, pens.": "We sell apples, oranges, …, pens.",
 		"We sell apples, oranges,… , pens.": "We sell apples, oranges, …, pens.",
 		"We sell apples, oranges, … , pens.": "We sell apples, oranges, …, pens.",
 		"We sell apples, oranges, … , pens.": "We sell apples, oranges, …, pens.", // nbsp
 		"We sell apples, oranges, … , pens.": "We sell apples, oranges, …, pens.", // hair_space
-		"We sell apples, oranges, … , pens.": "We sell apples, oranges, …, pens.", //narrow_nbsp
+		"We sell apples, oranges, … , pens.": "We sell apples, oranges, …, pens.", // narrow_nbsp
+	};
 
-		/* remove space before aposiopesis, that is ending a sentence*/
-		"Sentence ending … And another starting": "Sentence ending… And another starting",
-		"Sentence ending …": "Sentence ending…",
-		/* but keep the space after the sentence punctuation,
-			where … is a placeholder for other concrete words */
-		"Give me some example, e.g. apples, oranges, …": "Give me some example, e.g. apples, oranges, …",
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixEllipsisSpacingAroundCommas(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
 
-		/*	remove space
-				when aposiopesis is used at the beginning of unfinished the sentence */
+
+
+describe('Fix spacing, when aposiopesis is starting a paragraph:\n', () => {
+	let testCase = {
+		"…да святить ся": "…да святить ся", // correct
+		"… да святить ся": "…да святить ся",
+		"… да святить ся\n… multiline test": "…да святить ся\n…multiline test",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixAposiopesisStartingParagraph(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Fix spacing, when aposiopesis is starting a sentence:\n', () => {
+	let testCase = {
+		"Sentence ended. …and we were there.": "Sentence ended. …and we were there.", // neutral
 		"Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
+		"Sentence ended.… and we were there.": "Sentence ended. …and we were there.",
+		"Sentence ended! …and we were there.": "Sentence ended! …and we were there.",
 		"Sentence ended! … and we were there.": "Sentence ended! …and we were there.",
 		"Sentence ended!… and we were there.": "Sentence ended! …and we were there.",
 		"Sentence ended? … and we were there.": "Sentence ended? …and we were there.",
 		"Sentence ended?’ … and we were there.": "Sentence ended?’ …and we were there.",
 		"Sentence ended?’… and we were there.": "Sentence ended?’ …and we were there.",
 		"Sentence ended?”… and we were there.": "Sentence ended?” …and we were there.",
+		"We sell apples, oranges, …, pens.": "We sell apples, oranges, …, pens.", // false positive
+	};
 
-		/*	keep spaces around ellipsis
-				when it is used at the beginning of the full sentence */
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixAposiopesisStartingSentence(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Fix spacing, when aposiopesis is between sentences:\n', () => {
+	let testCase = {
+		"Sentence ending… And another starting": "Sentence ending… And another starting",
+		"Sentence ending … And another starting": "Sentence ending… And another starting",
+		"Sentence ending …And another starting": "Sentence ending… And another starting",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixAposiopesisBetweenSentences(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Fix spacing, when aposiopesis is between words:\n', () => {
+	let testCase = {
+		"word… word" : "word… word",
+		"word…word" : "word… word"
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixAposiopesisBetweenWords(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Fix spacing, when ellipsis is between sentences:\n', () => {
+	let testCase = {
+		"What are you saying. … She did not answer." : "What are you saying. … She did not answer.",
 		"What are you saying. …She did not answer." : "What are you saying. … She did not answer.",
+		"What are you saying.…She did not answer." : "What are you saying. … She did not answer.",
+
+		"What are you saying! … She did not answer." : "What are you saying! … She did not answer.",
+		"What are you saying! …She did not answer." : "What are you saying! … She did not answer.",
 		"What are you saying!…She did not answer." : "What are you saying! … She did not answer.",
+
+		"What are you saying? … She did not answer." : "What are you saying? … She did not answer.",
+		"What are you saying? …She did not answer." : "What are you saying? … She did not answer.",
 		"What are you saying?…She did not answer." : "What are you saying? … She did not answer.",
+
+		"‘What are you saying?’ … She did not answer." : "‘What are you saying?’ … She did not answer.",
+		"‘What are you saying?’ …She did not answer." : "‘What are you saying?’ … She did not answer.",
 		"‘What are you saying?’…She did not answer." : "‘What are you saying?’ … She did not answer.",
 		"“What are you saying?”…She did not answer." : "“What are you saying?” … She did not answer.",
 
-		/* remove space after aposiopesis at the beginning of the paragraph*/
-		"… да святить ся": "…да святить ся",
-		"… да святить ся\n… multiline test": "…да святить ся\n…multiline test",
-
-		/* keep spaces around aposiopesis, that is used in the middle of a sentence */
+		/* false positive: keep spaces around aposiopesis, that is used in the middle of a sentence */
 		"Sentence using … aposiopesis in the middle of a sentence.": "Sentence using … aposiopesis in the middle of a sentence.",
-
-		/* add space after aposiopesis between two words
-		(best effort guess based on ellipsis being placed between two words) */
-		"word...word" : "word… word"
-
 	};
 
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(fixEllipsisBetweenSentences(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
 
+
+
+describe('Fix spacing, when aposiopesis is ending a paragraph:\n', () => {
+	let testCase = {
+		"Sentence ending…": "Sentence ending…",
+		"Sentence ending …": "Sentence ending…",
+		"Sentence ending …\nSentence ending …": "Sentence ending…\nSentence ending…",
+
+		/* false positive
+			 keep the space after the sentence punctuation,
+			 where … is an ellipsis for other words */
+		"Give me some example, e.g. apples, oranges, …": "Give me some example, e.g. apples, oranges, …",
+	};
 
 	Object.keys(testCase).forEach((key) => {
-		it("should fix multiple errors with ellipsis/aposiopesis use", () => {
+		it("unit test", () => {
+			assert.equal(fixAposiopesisEndingParagraph(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
 			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 	});
