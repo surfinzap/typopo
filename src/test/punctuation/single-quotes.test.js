@@ -31,6 +31,7 @@ describe('Single quotes in default language (en-us)\n', () => {
 		"Find 'em!": "Find ’em!",
 		"Just 'cause I wanna.": "Just ’cause I wanna.",
 		"'Tis the season": "’Tis the season",
+		"'sblood": "’sblood",
 		"'Twas the Night Before Christmas": "’Twas the Night Before Christmas",
 		"'Til The Season Comes 'Round Again": "’Til The Season Comes ’Round Again",
 		"Hers'": "Hers’",
