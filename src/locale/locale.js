@@ -76,6 +76,8 @@ export default class Locale {
 		this.registeredTrademark = "®";
 		this.soundRecordingCopyright = "℗";
 		this.trademark = "™";
+		this.plus = "+";
+		this.minus = "−";
 		this.plusMinus = "±";
 		this.percent = "%";
 		this.permille = "‰";
