@@ -1,7 +1,13 @@
 # Changelog for Typopo
 
 ## 2.3.4 // 2020-03-
+### Improvements
 * Expand a list of words contracted at the beginning. All these words will now get fixed if the wrong apostrophe is used in front of them: ’cause, ’em, ’mid, ’midst, ’mongst, ’prentice, ’round, ’sblood, ’sdeath, ’sfoot, ’sheart, ’shun, ’slid, ’slife, ’slight, ’snails, ’strewth, ’til, ’tis, ’twas, ’tween, ’twere, ’twill, ’twixt, ’twould
+
+### Fixes
+* Remove incidents when a non-breaking space was falsely added after a single-letter word.
+	* before, the script would add an unnecessary nbsp in “Ctrl+I and…” (i.e.“Ctrl+I⎵and…”) or in “Ctrl-I and…”
+
 
 
 ### Maintenance
@@ -19,7 +25,7 @@ There are no changes in functionality in this release
 ## 2.3.2 // 2019-11-02
 ### Improvements
 * Fix multiplication sign for three and more multiplies
- 	* 5 x 4 x 3 → 5⎵×⎵4⎵×⎵3
+	* 5 x 4 x 3 → 5⎵×⎵4⎵×⎵3
 	* 5″ x 4″ x 3″→ 5″⎵×⎵4″⎵×⎵3″
 	* 5 mm x 5 mm x 5 mm → 5 mm⎵×⎵5 mm⎵×⎵5 mm
 * Fix multiplication sign between words

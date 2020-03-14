@@ -12,7 +12,10 @@ export function removeNbspBetweenMultiCharWords(string, locale) {
 
 
 export function addNbspAfterPreposition(string, locale) {
-	let pattern = "(^|[" + locale.space + "]|[^" + locale.allChars + locale.apostrophe + "])([" + locale.allChars + "])([" + locale.space + "])"
+	let pattern =
+		"(^|[" + locale.space + "]|[^" + locale.allChars + locale.apostrophe + locale.plus + locale.minus + locale.hyphen + "])"
+	+ "([" + locale.allChars + "])"
+	+ "([" + locale.space + "])";
 	let re = new RegExp(pattern, "g");
 	let replacement = "$1$2" + locale.nbsp;
 	string = string.replace(re, replacement);
