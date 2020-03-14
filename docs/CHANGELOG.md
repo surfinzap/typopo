@@ -5,9 +5,11 @@
 * Expand a list of words contracted at the beginning. All these words will now get fixed if the wrong apostrophe is used in front of them: ’cause, ’em, ’mid, ’midst, ’mongst, ’prentice, ’round, ’sblood, ’sdeath, ’sfoot, ’sheart, ’shun, ’slid, ’slife, ’slight, ’snails, ’strewth, ’til, ’tis, ’twas, ’tween, ’twere, ’twill, ’twixt, ’twould
 
 ### Fixes
-* Remove incidents when a non-breaking space was falsely added after a single-letter word.
-	* (before) the script would add an unnecessary nbsp in “Ctrl+I and…” (i.e. “Ctrl+I⎵and…”), or in “Ctrl-I and…”
-	* (before) the script would add unnecessary nbsp in “Try Ctrl+I” (i.e. “Try⎵Ctrl+I”)
+* Remove incidents when a non-breaking space was falsely added after a single-letter word. Before, the script would add an unnecessary nbsp in:
+	* “Ctrl+I and…” (i.e. “Ctrl+I⎵and…”),
+	* “Ctrl-I and…” (i.e. “Ctrl+I⎵and…”),
+	* “Try Ctrl+I” (i.e. “Try⎵Ctrl+I”),
+	* “$25M investment” (i.e. “$25M⎵investment”)
 
 
 ### Maintenance
