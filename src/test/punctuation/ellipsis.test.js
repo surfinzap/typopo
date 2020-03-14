@@ -4,25 +4,30 @@ import assert from 'assert';
 import Locale from "../../locale/locale";
 
 
-describe('Replace periods / ellipses with a single ellipsis:\n', () => {
+describe('Replace periods/ellipses with a single ellipsis:\n', () => {
 	let testCase = {
-		/* replace 3 and more periods with an ellipsis … */
+		/* [1] replace 3 and more dots/ellipses with an ellipsis */
 	 "Sentence ... another sentence": "Sentence … another sentence",
 	 "Sentence .... another sentence": "Sentence … another sentence",
 	 "Sentence ..... another sentence": "Sentence … another sentence",
-	 "Sentence ending.": "Sentence ending.",
-	 "Sentence ending..": "Sentence ending..",
 	 "Sentence ending...": "Sentence ending…",
 	 "Sentence ending....": "Sentence ending…",
 	 "Sentence ending.....": "Sentence ending…",
 	 "Sentence ending….....": "Sentence ending…",
 	 "Sentence ending….…": "Sentence ending…",
-	 "Sentence ending……": "Sentence ending…",
 	 "Sentence ending.….....": "Sentence ending…",
+
+	 /* [2] replace .…, …., …… with an ellipsis */
+	 "Sentence ending……": "Sentence ending…",
+	 "Sentence ending….": "Sentence ending…",
 	 "Sentence ending.…": "Sentence ending…",
 
-	 /* best-effort: replace 2 periods in the middle with an ellipsis … */
+	 /* [3] replace .. between words with an aposiopesis (best effort) */
 	 "Sentence .. another sentence": "Sentence … another sentence",
+
+	 /* false positives */
+	 "Sentence ending.": "Sentence ending.",
+	 "Sentence ending..": "Sentence ending..",
 	};
 
 	Object.keys(testCase).forEach((key) => {
