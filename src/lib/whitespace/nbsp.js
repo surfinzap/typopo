@@ -108,7 +108,6 @@ export function addNbspAfterRomanNumeral(string, locale) {
 	@returns {string} — output with correctly placed non-breaking space
 */
 export function fixNbspForNameWithRegnalNumber(string, locale) {
-	// if(locale.romanOrdinalIndicator != "") {
 		let pattern =
 			"(\\b[" + locale.uppercaseChars + "]["+ locale.lowercaseChars +"]+?)"
 			+ "([" + locale.spaces + "])"
@@ -124,10 +123,6 @@ export function fixNbspForNameWithRegnalNumber(string, locale) {
 				return $1 + locale.nbsp + $3 + $4 + locale.space;
 			}
 		});
-
-	// }
-
-	// return string;
 }
 
 
