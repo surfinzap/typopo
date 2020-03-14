@@ -1,11 +1,19 @@
 # Changelog for Typopo
 
+## 2.3.4 // 2020-03-
+
+
+### Maintenance
+* Update npm packages to their latest version
+
+
 ## 2.3.3 // 2020-01-03
 There are no changes in functionality in this release
 
 ### Maintenance
-* Update packages to newest version
+* Update npm packages to their latest version
 * Change how are dist/ built with gulp
+
 
 ## 2.3.2 // 2019-11-02
 ### Improvements
