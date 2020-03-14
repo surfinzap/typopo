@@ -52,7 +52,7 @@ describe('Add non-breaking spaces after single-character prepositions\n', () => 
 
 		// false positives
 		"client’s customer" : "client’s customer",
-		"Try Ctrl+I" : "Try Ctrl+I",
+		"Ctrl+I and Ctrl+B or pasting an image." : "Ctrl+I and Ctrl+B or pasting an image.",
 		"Ctrl-I and Ctrl-B or pasting an image." : "Ctrl-I and Ctrl-B or pasting an image.",
 	};
 
@@ -289,6 +289,8 @@ describe('Fix non-breaking space around name with regnal number (en-us)\n', () =
 		"Charles IV was an emperor." : "Charles IV was an emperor.",
 		"Charles IV was an emperor." : "Charles IV was an emperor.",
 		"Charles IV" : "Charles IV",
+		"Try Ctrl+I" : "Try Ctrl+I",
+		
 	};
 
 	Object.keys(testCase).forEach((key) => {

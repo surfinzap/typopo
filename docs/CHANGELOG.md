@@ -6,8 +6,8 @@
 
 ### Fixes
 * Remove incidents when a non-breaking space was falsely added after a single-letter word.
-	* before, the script would add an unnecessary nbsp in “Ctrl+I and…” (i.e.“Ctrl+I⎵and…”) or in “Ctrl-I and…”
-
+	* (before) the script would add an unnecessary nbsp in “Ctrl+I and…” (i.e. “Ctrl+I⎵and…”), or in “Ctrl-I and…”
+	* (before) the script would add unnecessary nbsp in “Try Ctrl+I” (i.e. “Try⎵Ctrl+I”)
 
 
 ### Maintenance

@@ -111,7 +111,7 @@ export function fixNbspForNameWithRegnalNumber(string, locale) {
 		let pattern =
 			"(\\b[" + locale.uppercaseChars + "]["+ locale.lowercaseChars +"]+?)"
 			+ "([" + locale.spaces + "])"
-			+ "([" + locale.romanNumerals +"]+)"
+			+ "([" + locale.romanNumerals +"]+\\b)"
 			+ "("  + locale.romanOrdinalIndicator +")"
 			+ "([" + locale.nbsp + "]?)";
 		let re = new RegExp(pattern, "g");
