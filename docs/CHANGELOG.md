@@ -14,6 +14,7 @@
 	* Before, “Sentence ended. ... and we were there.” was falsely transformed into “Sentence ended… and we were there.” (new behavior: Sentence ended. …and we were there.)
 * Remove incidents when commas were accidentally trimmed:
 	* Before, “We sell apples, oranges, …, pens.” was falsely transformed into “We sell apples, oranges,… pens.” (new behavior: keep punctuation as is)
+* Fix edge cases to match hyphens/dashes between dates 
 
 ### Maintenance
 * Update npm packages to their latest version

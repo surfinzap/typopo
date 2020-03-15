@@ -131,16 +131,33 @@ export function fixHyphenBetweenWordAndPunctuation(string, locale) {
 	with an en dash; including cases when there is an extra space
 	from either one side or both sides of the dash
 
+	Because in edge cases we would need to tackle overlapping regex matches
+	(e.g. 1–2–3), we've made the function bit more verbose.
+	[1] Match the pattern twice, replace it with enDash adepts
+	[2] Replace enDash adepts with actual enDashes
+
 	@param {string} string — input text for identification
 	@returns {string} — output with en dash between cardinal numbers
 */
 export function fixDashBetweenCardinalNumbers(string, locale) {
+	/* [1] Match the pattern twice, replace it with enDash adepts */
 	let pattern =
 				"(" + locale.cardinalNumber + ")"
-			+ "([" + locale.spaces + "]?[" + locale.hyphen + locale.enDash + locale.emDash + "][" + locale.spaces + "]?)"
+			+ "([" + locale.spaces + "]?"
+			 + "[" + locale.hyphen + locale.enDash + locale.emDash + "]"
+			 + "[" + locale.spaces + "]?)"
 			+ "(" + locale.cardinalNumber + ")";
+	// console.log(pattern);
 	let re = new RegExp(pattern, "g");
-	let replacement = "$1" + locale.enDash + "$3";
+	let replacement = "$1" + "{{typopo__endash}}" + "$3";
+	string = string.replace(re, replacement); // [1] replace odd matches
+	string = string.replace(re, replacement); // [1] reaplce even matches
+
+	/* [2] Replace enDash adepts with actual enDashes */
+	pattern = "{{typopo__endash}}";
+	re = new RegExp(pattern, "g");
+	replacement = locale.enDash;
+
 	return string.replace(re, replacement);
 }
 
