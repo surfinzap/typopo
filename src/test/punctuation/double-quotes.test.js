@@ -40,7 +40,9 @@ describe('Double quotes in default language (en)\n', () => {
 
 
 		/* swap double quotes with a terminal punctuation .,?! */
+		"Hey.”": "Hey.”",
 		"Hey”.": "Hey.”",
+		"Hey”…": "Hey…”",
 		"Hey”?": "Hey?”",
 		"Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”":
 		"Within double quotes “there are single ‘quotes with mixed punctuation’, you see”.",

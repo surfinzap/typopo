@@ -39,7 +39,9 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	string = string.replace(re, "$1$2$3");
 
 	/* [1] Swap right double quote adepts with a terminal punctuation */
-	pattern = "("+ locale.doubleQuoteAdepts + ")([" + locale.terminalPunctuation + "])";
+	pattern =
+					"("+ locale.doubleQuoteAdepts + ")"
+				+ "([" + locale.terminalPunctuation + locale.ellipsis + "])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, '$2$1');
 
@@ -120,7 +122,7 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 			+ "({{typopo__left-double-quote}})"
 			+ "([^" + locale.rightDoubleQuote +"]+?)"
 			+ "([^" + locale.romanNumerals + "])"
-			+ "([" + locale.terminalPunctuation + "])"
+			+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
 			+ "(" + locale.rightDoubleQuote +")";
 
 	re = new RegExp(pattern, "g");

@@ -71,7 +71,9 @@ describe('Tests that all modules are plugged in', () => {
 		"12\"3'00°": "12″3′00°",
 
 		// ellipsis
-		"Sentence ..….. another sentence": "Sentence… another sentence",
+		"Sentence ..….. another sentence": "Sentence … another sentence",
+		"Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
+
 
 		// punctuation trimming
 		"č., s., fol., e.g., i.e., str.," : "č., s., fol., e.g., i.e., str.,",

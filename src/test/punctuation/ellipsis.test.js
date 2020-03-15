@@ -171,7 +171,7 @@ describe('Fix spacing, when aposiopesis is between sentences:\n', () => {
 describe('Fix spacing, when aposiopesis is between words:\n', () => {
 	let testCase = {
 		"word… word" : "word… word",
-		"word…word" : "word… word"
+		"word…word" : "word… word",
 	};
 
 	Object.keys(testCase).forEach((key) => {

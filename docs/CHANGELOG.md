@@ -10,11 +10,14 @@
 	* “Ctrl-I and…” (i.e. “Ctrl+I⎵and…”),
 	* “Try Ctrl+I” (i.e. “Try⎵Ctrl+I”),
 	* “$25M investment” (i.e. “$25M⎵investment”)
-
+* Remove incidents when an ellipsis was accidentally trimmed
+	* Before, “Sentence ended. ... and we were there.” was falsely transformed into “Sentence ended… and we were there.” (new behavior: Sentence ended. …and we were there.)
+* Remove incidents when commas were accidentally trimmed:
+	* Before, “We sell apples, oranges, …, pens.” was falsely transformed into “We sell apples, oranges,… pens.” (new behavior: keep punctuation as is)
 
 ### Maintenance
 * Update npm packages to their latest version
-
+* Refactor “ellipsis” library to make it more maintainable and extendable.
 
 ## 2.3.3 // 2020-01-03
 There are no changes in functionality in this release

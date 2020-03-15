@@ -44,12 +44,31 @@ export function removeSpaceBeforeSentencePausePunctuation(string, locale) {
 
 
 
+/*
+	Removes extra space before:
+	- terminal punctuation
+	- closing brackets
+	- degree symbol (°)
 
+	Examples:
+	Hey . → Hey.
+	Sentence and… ! → Sentence and…!
+	Something (… ) something else → Something (…) something else
+	5 ° → 5°
+
+	@param {string} string — input text for identification
+	@returns {string} — output with removed spaces before terminal punctuation
+*/
 export function removeSpaceBeforeTerminalPunctuation(string, locale) {
-	let pattern = "([" + locale.spaces + "])([" + locale.terminalPunctuation + locale.closingBrackets + locale.degree + "])";
+	let pattern =
+			"([" + locale.spaces + "])"
+		+ "([" + locale.terminalPunctuation + locale.closingBrackets + locale.degree + "])";
+	// console.log(pattern);
 	let re = new RegExp(pattern, "g");
 	return string.replace(re, "$2");
 }
+
+
 
 /*
 	Removes extra spaces before ordinal indicator

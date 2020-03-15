@@ -93,18 +93,25 @@ describe('Remove space before sentence pause-punctuation\n', () => {
 	});
 });
 
-describe('Remove space before terminal punctuation, closing brackets and degree symbol\n', () => {
+describe('Remove space before a terminal punctuation, closing brackets and a degree symbol\n', () => {
 	let testCase = {
+		"Hey.": "Hey.", // correct
 		"Hey .": "Hey.",
 		"Hey .": "Hey.", // nbsp
 		"Hey .": "Hey.", // hair_space
 		"Hey .": "Hey.", // narrow_nbsp
+		"Sentence and…!": "Sentence and…!", // correct
 		"Sentence and… !": "Sentence and…!",
+		"Sentence and…?": "Sentence and…?", // correct
 		"Sentence and… ?": "Sentence and…?",
+		"Something (…) something else": "Something (…) something else", //correct
 		"Something (… ) something else": "Something (…) something else",
 		"Something [… ] something else": "Something […] something else",
 		"It was good (It was bad !)." : "It was good (It was bad!).",
+		"5°" : "5°", //correct
 		"5 °" : "5°",
+		// false positives
+		"Sentence ended. …and we were there.": "Sentence ended. …and we were there.",
 	};
 
 	Object.keys(testCase).forEach((key) => {
