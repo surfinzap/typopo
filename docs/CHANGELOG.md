@@ -1,6 +1,6 @@
 # Changelog for Typopo
 
-## 2.3.4 // 2020-03-
+## 2.3.4 // 2020-03-15
 ### Improvements
 * Expand a list of words contracted at the beginning. All these words will now get fixed if the wrong apostrophe is used in front of them: ’cause, ’em, ’mid, ’midst, ’mongst, ’prentice, ’round, ’sblood, ’sdeath, ’sfoot, ’sheart, ’shun, ’slid, ’slife, ’slight, ’snails, ’strewth, ’til, ’tis, ’twas, ’tween, ’twere, ’twill, ’twixt, ’twould
 
