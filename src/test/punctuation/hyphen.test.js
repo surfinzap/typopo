@@ -7,6 +7,7 @@ import Locale from "../../locale/locale";
 
 describe('Fix spaces around hyphen\n', () => {
 	let testCase = {
+		"e-shop": "e-shop", // correct
 		"e- shop": "e-shop",
 		"e- shop": "e-shop", // nbsp
 		"e- shop": "e-shop", // hairSpace
