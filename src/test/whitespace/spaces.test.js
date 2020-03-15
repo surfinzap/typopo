@@ -5,7 +5,9 @@ import {removeMultipleSpaces,
 				removeSpaceBeforeOrdinalIndicator,
 				removeSpaceAfterPunctuation,
 				addSpaceBeforePunctuation,
-				addSpaceAfterPunctuation,
+				addSpaceAfterTerminalPunctuation,
+				addSpaceAfterSentencePause,
+				addSpaceAfterClosingBrackets,
 				removeTrailingSpaces,
 				addSpaceBeforeSymbol,
 				fixSpaces} from "../../lib/whitespace/spaces";
@@ -181,6 +183,8 @@ describe('Remove space after opening brackets\n', () => {
 	});
 });
 
+
+
 describe('Add space before opening brackets\n', () => {
 	let testCase = {
 		"Enclosed(in) the brackets.": "Enclosed (in) the brackets.",
@@ -197,26 +201,83 @@ describe('Add space before opening brackets\n', () => {
 	});
 });
 
-describe('Add space after sentence punctuation and closing brackets\n', () => {
+
+
+describe('Add space after terminal punctuation\n', () => {
 	let testCase = {
+		"One sentence ended. Another started.": "One sentence ended. Another started.", // correct
 		"One sentence ended.Another started.": "One sentence ended. Another started.",
 		"One sentence ended!Another started.": "One sentence ended! Another started.",
+		"One sentence ended…!Another started.": "One sentence ended…! Another started.",
 		"One sentence ended?Another started.": "One sentence ended? Another started.",
-		"One sentence ended:another started.": "One sentence ended: another started.",
-		"One sentence ended;another started.": "One sentence ended; another started.",
-		"One sentence ended,another started.": "One sentence ended, another started.",
-		"Enclosed (in)the brackets.": "Enclosed (in) the brackets.",
-		"Enclosed [in]the brackets.": "Enclosed [in] the brackets.",
-		"Enclosed {in}the brackets.": "Enclosed {in} the brackets.",
-		"quote […]with parts left out": "quote […] with parts left out",
-		"R-N.D." : "R-N.D.", // false positive
+
+		// false positives
+		"R-N.D." : "R-N.D.",
 		"the U.S.":"the U.S.",
 		"John Thune (S.D.)" : "John Thune (S.D.)",
+		"filename.js" : "filename.js"
 	};
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(addSpaceAfterPunctuation(key, new Locale("en-us")), testCase[key]);
+			assert.equal(addSpaceAfterTerminalPunctuation(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+
+	Object.keys(testCase).forEach((key) => {
+		it("module test", () => {
+			assert.equal(fixSpaces(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Add a space after sentence pause punctuation\n', () => {
+	let testCase = {
+		"One sentence ended, another started.": "One sentence ended, another started.", //correct
+		"One sentence ended,another started.": "One sentence ended, another started.",
+		"One sentence ended,John started.": "One sentence ended, John started.",
+		"One sentence ended…,John started.": "One sentence ended…, John started.",
+		"One sentence ended:another started.": "One sentence ended: another started.",
+		"One sentence ended;another started.": "One sentence ended; another started.",
+
+		//false positives
+		"R-N.D." : "R-N.D.",
+		"the U.S.":"the U.S.",
+		"John Thune (S.D.)" : "John Thune (S.D.)",
+		"filename.js" : "filename.js"
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(addSpaceAfterSentencePause(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+
+	Object.keys(testCase).forEach((key) => {
+		it("module test", () => {
+			assert.equal(fixSpaces(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Add a space after closing brackets\n', () => {
+	let testCase = {
+		"Enclosed (in) the brackets.": "Enclosed (in) the brackets.", // correct
+		"Enclosed (in)the brackets.": "Enclosed (in) the brackets.",
+		"Enclosed [in] the brackets.": "Enclosed [in] the brackets.", // correct
+		"Enclosed [in]the brackets.": "Enclosed [in] the brackets.",
+		"Enclosed {in} the brackets.": "Enclosed {in} the brackets.", // correct
+		"Enclosed {in}the brackets.": "Enclosed {in} the brackets.",
+		"quote […]with parts left out": "quote […] with parts left out",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.equal(addSpaceAfterClosingBrackets(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 

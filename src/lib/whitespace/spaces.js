@@ -110,11 +110,62 @@ export function addSpaceBeforePunctuation(string, locale) {
 }
 
 
+/*
+	Add a space after terminal punctuation
 
-export function addSpaceAfterPunctuation(string, locale) {
-	var pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars + "]{2,}|["+ locale.ellipsis + "])([" + locale.sentencePunctuation + locale.closingBrackets + "])(["+ locale.lowercaseChars + locale.uppercaseChars + "])";
+	Example:
+	One sentence ended.Another started. →
+	One sentence ended. Another started.
+
+	@param {string} string — input text for identification
+	@returns {string} — output with a space after closing brackets
+*/
+export function addSpaceAfterTerminalPunctuation(string, locale) {
+	var pattern =
+			"([" + locale.lowercaseChars + locale.uppercaseChars + "]{2,}|["+ locale.ellipsis + "])"
+		+ "([" + locale.terminalPunctuation + "])"
+		+ "([" + locale.uppercaseChars + "])";
 	var re = new RegExp(pattern, "g");
 	return string.replace(re, "$1$2 $3");
+}
+
+
+/*
+	Add a space after sentence pause punctuation
+
+	Example:
+	One sentence ended,another started. →
+	One sentence ended, another started.
+
+	@param {string} string — input text for identification
+	@returns {string} — output with a space after closing brackets
+*/
+export function addSpaceAfterSentencePause(string, locale) {
+	var pattern =
+			"([" + locale.lowercaseChars + locale.uppercaseChars + "]{2,}|["+ locale.ellipsis + "])"
+		+ "([" + locale.sentencePausePunctuation + "])"
+		+ "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
+	var re = new RegExp(pattern, "g");
+	return string.replace(re, "$1$2 $3");
+}
+
+
+
+/*
+	Add a space after closing brackets
+
+	Example:
+	Enclosed (in)the brackets. → Enclosed (in) the brackets.
+
+	@param {string} string — input text for identification
+	@returns {string} — output with a space after closing brackets
+*/
+export function addSpaceAfterClosingBrackets(string, locale) {
+	var pattern =
+			"([" + locale.closingBrackets + "])"
+		+ "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
+	var re = new RegExp(pattern, "g");
+	return string.replace(re, "$1 $2");
 }
 
 
@@ -144,7 +195,9 @@ export function fixSpaces(string, locale) {
 	string = removeSpaceBeforeOrdinalIndicator(string, locale);
 	string = removeSpaceAfterPunctuation(string, locale);
 	string = addSpaceBeforePunctuation(string, locale);
-	string = addSpaceAfterPunctuation(string, locale);
+	string = addSpaceAfterTerminalPunctuation(string, locale);
+	string = addSpaceAfterClosingBrackets(string, locale);
+	string = addSpaceAfterSentencePause(string, locale);
 	string = removeTrailingSpaces(string, locale);
 	return string;
 }
