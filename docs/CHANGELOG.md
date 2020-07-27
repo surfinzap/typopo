@@ -1,5 +1,13 @@
 # Changelog for Typopo
 
+## 2.3.5 // 2020-07-27
+There are no changes in functionality in this release
+
+### Maintenance
+* Update packages to newest version
+
+
+
 ## 2.3.4 // 2020-03-15
 ### Improvements
 * Expand a list of words contracted at the beginning. All these words will now get fixed if the wrong apostrophe is used in front of them: ’cause, ’em, ’mid, ’midst, ’mongst, ’prentice, ’round, ’sblood, ’sdeath, ’sfoot, ’sheart, ’shun, ’slid, ’slife, ’slight, ’snails, ’strewth, ’til, ’tis, ’twas, ’tween, ’twere, ’twill, ’twixt, ’twould
@@ -20,6 +28,8 @@
 ### Maintenance
 * Update npm packages to their latest version
 * Refactor “ellipsis” library to make it more maintainable and extendable.
+
+
 
 ## 2.3.3 // 2020-01-03
 There are no changes in functionality in this release

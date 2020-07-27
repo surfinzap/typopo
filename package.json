@@ -1,11 +1,11 @@
 {
   "name": "typopo",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "description": "Typopo is a JavaScript library that saves your time by auto-correcting frequent typographic errors in English, German, Slovak, Czech, and Rusyn language. Make a proofreading quicker by auto-correcting the common typos first.",
   "license": "MIT",
   "author": {
     "name": "Braňo Šandala",
-    "email": "surfin.zap@gmail.com"
+    "email": "hi@brano.me"
   },
   "scripts": {
     "build": "gulp build",
