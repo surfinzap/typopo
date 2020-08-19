@@ -55,13 +55,13 @@ Fixes symbols:
 
 ## Use
 
-### Online app — [https://typopo.tota.sk/](https://typopo.tota.sk/)
+### Online app — [https://typopo.org/](https://typopo.org/)
 Use (especially) when:
 * you’re a typesetter, who wants to proofread the raw text before pasting into DTP software (e.g. InDesign)
 * you’re a developer, who doesn’t want to escape quotes in User Interface messages or bother with whitespace characters
 * you just want your email or blog post to be typographically correct
 
-[![alt fix typos with typopo](https://typopo.tota.sk/typopo--og--2019.png "fix typos with typopo")](https://typopo.tota.sk/)
+[![alt fix typos with typopo](https://typopo.org/typopo--og--2019.png "fix typos with typopo")](https://typopo.org/)
 
 ### JS library
 * Download dist/typopo.min.js and include it in your web application or CMS to fix typos on demand, automatically or after the web page is loaded.
@@ -108,7 +108,7 @@ Iʼd love to hear:
 	* your input: [provide your text example here]
 	* expected output: [show how you want your example to be corrected]
 
-In any case, feel free to drop me a line at <typopo@tota.sk>.
+In any case, feel free to drop me a line at <help@typopo.org>.
 
 ## License
 Licensed under MIT license. (See [LICENCE.TXT](//github.com/surfinzap/typopo/blob/master/LICENSE.txt).)
