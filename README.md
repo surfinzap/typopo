@@ -68,22 +68,22 @@ Fixes symbols:
 
 ## Use
 
-You can use Typopo as an [app](#app), [VS Code extension](#vscode), [NPM package](#npm) or [JS library](#js).
+You can use Typopo as an [online app](#app), [VS Code extension](#vscode), [NPM package](#npm) or [JS library](#js).
 
 
 
-### <a name="app"></a> Online app — [https://typopo.org/](https://typopo.org/)
-Use (especially) when:
-* you’re a typesetter, who wants to proofread the raw text before pasting into DTP software (e.g. InDesign)
-* you’re a developer, who doesn’t want to escape quotes in User Interface messages or bother with whitespace characters
-* you just want your email or blog post to be typographically correct
+### <a name="app"></a> Online app
+URL → [https://typopo.org/](https://typopo.org/)
 
-[![alt fix typos with typopo](https://typopo.org/typopo--og--2019.png "fix typos with typopo")](https://typopo.org/)
+The online app is useful especially when you’re a book designer or a DTP operator. Before you typeset raw texts in a DTP app of your choice, run it through Typopo and fix microtypography with a single click.
+
+![Typopo—online app](assets/typopo--screenshot--20-09.png "Typopo—online app")
+
+
 
 ### <a name="vscode"></a> VS Code extension
+![Typopo—VS Code extension](assets/typopo--vs-code-animation.gif "VS code extension")
 
-### <a name="js"></a>JS library
-* Download dist/typopo.min.js and include it in your web application or CMS to fix typos on demand, automatically or after the web page is loaded.
 
 ### <a name="npm"></a> NPM package
 Include Typopo as an NPM package in your web project:
@@ -92,7 +92,7 @@ Include Typopo as an NPM package in your web project:
 npm install typopo
 ```
 
-### Documentation
+### API
 
 fix typos in given text and locale:
 ```javascript
@@ -118,6 +118,10 @@ configuration = {
 }
 ```
 (“removeLines” is the only available configuration option for now)
+
+### <a name="js"></a>JS library
+Download dist/typopo.min.js and include it in your web application or CMS. API is the same as in the case of [NPM package](#npm).
+
 
 
 ## Release Notes
