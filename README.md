@@ -68,7 +68,11 @@ Fixes symbols:
 
 ## Use
 
-### Online app — [https://typopo.org/](https://typopo.org/)
+You can use Typopo as an [app](#app), [VS Code extension](#vscode), [NPM package](#npm) or [JS library](#js).
+
+
+
+### <a name="app"></a> Online app — [https://typopo.org/](https://typopo.org/)
 Use (especially) when:
 * you’re a typesetter, who wants to proofread the raw text before pasting into DTP software (e.g. InDesign)
 * you’re a developer, who doesn’t want to escape quotes in User Interface messages or bother with whitespace characters
@@ -76,10 +80,12 @@ Use (especially) when:
 
 [![alt fix typos with typopo](https://typopo.org/typopo--og--2019.png "fix typos with typopo")](https://typopo.org/)
 
-### JS library
+### <a name="vscode"></a> VS Code extension
+
+### <a name="js"></a>JS library
 * Download dist/typopo.min.js and include it in your web application or CMS to fix typos on demand, automatically or after the web page is loaded.
 
-### NPM package
+### <a name="npm"></a> NPM package
 Include Typopo as an NPM package in your web project:
 
 ```
