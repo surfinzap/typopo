@@ -7,7 +7,6 @@ assignees: ''
 
 ---
 
-
 **Provide your original text**
 
 /provide your example here/
