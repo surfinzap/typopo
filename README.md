@@ -118,6 +118,11 @@ configuration = {
 Check out the [changelog](CHANGELOG.md).
 
 
+## Support
+If you love Typopo and you find it helpful, [support the project via Patreon](https://www.patreon.com/branosandala).
+
+Your support will let me continue improving Typopo ecosystem—[the app](https://typopo.org), [NPM package](https://www.npmjs.com/package/typopo) and [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=brano.typopo-vscode).
+
 
 ## Feedback
 Have you found a bug? Do you have an idea for a feature request? You’re more then welcome to [submit an issue here on GitHub](https://github.com/surfinzap/typopo/issues/new/choose).
