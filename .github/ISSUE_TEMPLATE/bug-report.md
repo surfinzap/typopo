@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Use this report to let us know about generic bug in an app or on the web
 title: ''
 labels: bug
 assignees: ''
