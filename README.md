@@ -113,13 +113,21 @@ configuration = {
 ```
 (“removeLines” is the only available configuration option for now)
 
+
+## Release Notes
+Check out the [changelog](CHANGELOG.md).
+
+
+
 ## Feedback
-If you find bug, or you have an idea for a feature request, you’re more then welcome to [submit an issue here on GitHub](https://github.com/surfinzap/typopo/issues/new/choose).
+Have you found a bug? Do you have an idea for a feature request? You’re more then welcome to [submit an issue here on GitHub](https://github.com/surfinzap/typopo/issues/new/choose).
 
 If you prefer to reach out me via email, feel free to drop me a line at <help@typopo.org>.
 
+
 ## License
 Licensed under MIT license. (See [LICENCE.TXT](//github.com/surfinzap/typopo/blob/master/LICENSE.txt).)
+
 
 ## Special thanks
 * [@Viclick](https://github.com/vilemj-Viclick) for adjusting the repo for modularisation (2.0.0)
