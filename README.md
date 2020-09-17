@@ -120,7 +120,7 @@ configuration = {
 (“removeLines” is the only available configuration option for now)
 
 ### <a name="js"></a>JS library
-Download dist/typopo.min.js and include it in your web application or CMS. API is the same as in the case of [NPM package](#npm).
+Download dist/typopo.min.js and include it in your web application or CMS. API is the same as for [NPM package](#npm).
 
 
 
