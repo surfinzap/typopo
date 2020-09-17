@@ -6,7 +6,14 @@
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/surfinzap/typopo?color=7b00cb&style=flat-square)
 ![GitHub](https://img.shields.io/github/license/surfinzap/typopo?color=7b00cb&style=flat-square)
 
-
+## Links
+* [Official website](https://typopo.org)
+* [Online app](https://typopo.org)
+* [VS Code extension](https://marketplace.visualstudio.com/items?itemName=brano.typopo-vscode) and corresponding [repository](https://github.com/surfinzap/typopo-vscode)
+* [NPM package](https://www.npmjs.com/package/typopo)
+* [Support the project at Patreon](https://www.patreon.com/branosandala)
+* [Subscribe to newsletter and get updates](https://buttondown.email/Typopo)
+* [Follow on twitter](https://twitter.com/typopo_app)
 
 ## Features
 Fixes punctuation:
