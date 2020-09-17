@@ -1,5 +1,5 @@
 ---
-name: 01 Typography bug
+name: Typography bug
 about: Use this report when you think Typopo is not fixing typos as you would expect.
 title: ''
 labels: bug
