@@ -1,6 +1,12 @@
-# Typopo
+![Typopo logotype](assets/typopo--logotype--2020.svg "Typopo logotype")
 
-Typopo is a JavaScript library that saves your time by fixing frequent typographic errors in English, German, Slovak, Czech, and Rusyn language. Make a proofreading quicker by fixing the common typos first.
+
+> Fix frequent microtypography errors in multiple languages. Write neat texts without bothering about typography rules. Typopo works for English, German, Slovak, Czech and Rusyn language.
+
+![GitHub package.json version](https://img.shields.io/github/package-json/v/surfinzap/typopo?color=7b00cb&style=flat-square)
+![GitHub](https://img.shields.io/github/license/surfinzap/typopo?color=7b00cb&style=flat-square)
+
+
 
 ## Features
 Fixes punctuation:
