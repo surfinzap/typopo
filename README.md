@@ -114,14 +114,9 @@ configuration = {
 (“removeLines” is the only available configuration option for now)
 
 ## Feedback
-Iʼd love to hear:
-* how do you use or plan to use Typopo
-* what you are missing
-* when you expect Typopo is not fixing typos as it should; in such cases following example would help the most:
-	* your input: [provide your text example here]
-	* expected output: [show how you want your example to be corrected]
+If you find bug, or you have an idea for a feature request, you’re more then welcome to [submit an issue here on GitHub](https://github.com/surfinzap/typopo/issues/new/choose).
 
-In any case, feel free to drop me a line at <help@typopo.org>.
+If you prefer to reach out me via email, feel free to drop me a line at <help@typopo.org>.
 
 ## License
 Licensed under MIT license. (See [LICENCE.TXT](//github.com/surfinzap/typopo/blob/master/LICENSE.txt).)
