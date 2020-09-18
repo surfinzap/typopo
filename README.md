@@ -102,45 +102,45 @@ The online app is useful especially when you’re a book designer or a DTP ope
 
 
 ### NPM package
-Include Typopo as an NPM package in your web project:
-
+Install Typopo as an NPM package in your web project:
 ```
 npm install typopo
 ```
 
+Import the package:
+```
+import { fixTypos } from 'typopo';
+```
+
 Check out an [API](#api) on how to use the package.
 
+
 ### JavaScript library
-Download dist/typopo.min.js and include it in your web project or CMS. Check out an [API](#api) on how to use the package.
+Download dist/typopo.min.js and include it in your web project or CMS. Check out an [API](#api) on how to use the library.
 
 
 
 ### API
-
-fix typos in given text and locale:
+Fix typos in given text (string) and locale; with optional configuration:
 ```javascript
-fixTypos(string, locale)
+fixTypos(string, locale, [configuration])
 ```
 
-supported languages:
-* "en-us" (English, default)
-* "rue" (Rusyn)
-* "sk" (Slovak)
-* "cs" (Czech)
-* "de-de" (German)
+Locale options—supported languages:
+- "en-us" (English, default)
+- "rue" (Rusyn)
+- "sk" (Slovak)
+- "cs" (Czech)
+- "de-de" (German)
 
-optional configuration:
-```javascript
-fixTypos(string, locale, configuration)
-```
-
-example of configuration:
+Optional configuration as a JavaScript object:
 ```javascript
 configuration = {
-	removeLines : true,
+	removeLines : true, // Remove empty lines between paragraphs if true
 }
 ```
-(“removeLines” is the only available configuration option for now)
+(Psst, “removeLines” is the only available configuration option for now.)
+
 
 
 
