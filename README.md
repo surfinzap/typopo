@@ -12,7 +12,7 @@
 * [VS Code extension](https://marketplace.visualstudio.com/items?itemName=brano.typopo-vscode) and corresponding [repository](https://github.com/surfinzap/typopo-vscode)
 * [NPM package](https://www.npmjs.com/package/typopo)
 * [Support the project at Patreon](https://www.patreon.com/branosandala)
-* [Subscribe to newsletter and get updates](https://buttondown.email/Typopo)
+* [Subscribe to a newsletter to get updates](https://buttondown.email/Typopo)
 * [Follow on twitter](https://twitter.com/typopo_app)
 
 ## Features
@@ -124,8 +124,11 @@ Download dist/typopo.min.js and include it in your web application or CMS. API i
 
 
 
-## Release Notes
-Check out the [changelog](CHANGELOG.md).
+## News & Releases
+Check out the [changelog](CHANGELOG.md) for what’s has been released.
+
+[Subscribe to Typopo Newsletter](https://buttondown.email/Typopo) to be the first to know about all the new features and improvements.
+
 
 
 ## Support
