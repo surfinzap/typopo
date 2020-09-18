@@ -32,6 +32,13 @@
 - [Special thanks](#special-thanks)
 
 ## Features
+Typopo fixes microtypography hickups in five languages:
+- English
+- German
+- Czech
+- Slovak
+- Rusyn
+
 Typopo fixes punctuation:
 - double quotes (and accidentally-typed punctuation related to the use of double quotes)
 - double primes
