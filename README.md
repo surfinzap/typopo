@@ -32,55 +32,55 @@
 - [Special thanks](#special-thanks)
 
 ## Features
-Fixes punctuation:
-* double quotes (and accidentally-typed punctuation related to the use of double quotes)
-* double primes
-* single quotes (with assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages) and in pairs)
-* single primes
-* apostrophes
-* hyphens & dashes
-	* between words with a proper spacing per locale
-	* between ordinal and cardinal numbers
-	* within date
-	* between percentage range
-* period & ellipsis
+Typopo fixes punctuation:
+- double quotes (and accidentally-typed punctuation related to the use of double quotes)
+- double primes
+- single quotes (with an assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages) and in pairs)
+- single primes
+- apostrophes
+- hyphens & dashes
+	- between words with a proper spacing per locale 
+	- between ordinal and cardinal numbers (e.g. 1–3 eggs)
+	- within date (e.g. 2020–08–04)
+	- between percentage range (e.g. 20–30 %)
+- period & ellipsis
 
-Fixes whitespace characters:
-* removes extra white spaces
-	* at the beginning and the end of sentences (leading and trailing spaces)
-	* between words and paragraphs
-	* before or after a punctuation
-	* around an ellipsis and an aposiopesis (where applicable)
-	* between a number sign (#) and a number
-	* before ordinal indicators (e.g. 1 st → 1st)
-* removes empty lines
-* fixes non-breaking spaces
-	* removes nbsp between multi-letter words
-	* adds nbsp
-		* after one-word prepositions
-		* around “×”
-		* after “&”
-		* after cardinal numbers
-		* after ordinal numbers
-		* ordinal Roman numerals
-		* after name initials (i.e. Philip K. Dick)
-		* after common single-word and multiple-word abbreviations
-	* replaces space with nbsp before % (percent), ‰ (per mille), ‱ (permyriad)
+Typopo fixes whitespace characters:
+- removes extra white spaces
+	- at the beginning and the end of sentences (leading and trailing spaces)
+	- between words and paragraphs
+	- before or after a punctuation (where applicable)
+	- around an ellipsis and an aposiopesis (where applicable)
+	- between a number sign (#) and a number
+	- before ordinal indicators (e.g. 1 st → 1st)
+- removes empty lines
+- fixes non-breaking spaces
+	- removes a nbsp between multi-letter words
+	- replaces a space with a nbsp
+		- after one-word prepositions
+		- around “×”
+		- after “&”
+		- after cardinal numbers
+		- after ordinal numbers
+		- ordinal Roman numerals
+		- after name initials (i.e. Philip K. Dick)
+		- after common single-word and multiple-word abbreviations
+		- before % (percent), ‰ (per mille), ‱ (permyriad)
 
-Fixes words:
-* accidental uPPERCASE
-* spelling of e.g., i.e., a.m. and p.m.
-* ISSN and ISBN formatting
+Typopo fixes words:
+- accidental uPPERCASE
+- spelling of e.g., i.e., a.m. and p.m.
+- ISSN and ISBN formatting
 
-Fixes symbols:
-* multiplication sign (×)
-* section sign (§)
-* copyright (©)
-* sound recording copyright (℗)
-* registered trademark (®)
-* trademark (™)
-* plus-minus sign (+-, -+ → ±)
-* square and cube exponents (e.g. 100 µm² → 100 µm², 50 km³ → 50 km³)
+Typopo fixes symbols:
+- multiplication sign (2 x 3 → 2 × 3)
+- section sign (§)
+- copyright ((c)2020 → © 2020)
+- sound recording copyright ((p)2020 → ℗ 2020)
+- registered trademark (Brand(r) → Brand®)
+- trademark (Brand(tm) → Brand™)
+- plus-minus sign (+-, -+ → ±)
+- square and cube exponents (e.g. 100 µm² → 100 µm², 50 km³ → 50 km³)
 
 ## Use
 
@@ -121,7 +121,7 @@ Download dist/typopo.min.js and include it in your web project or CMS. Check out
 
 
 ### API
-Fix typos in given text (string) and locale; with optional configuration:
+Fix typos in given text (string) and locale; with an optional configuration:
 ```javascript
 fixTypos(string, locale, [configuration])
 ```
