@@ -105,7 +105,7 @@ The online app is useful especially when you’re a book designer or a DTP ope
 
 
 ### VS Code extension
-![Typopo—VS Code extension](assets/typopo--vs-code-animation.gif "VS code extension")
+![Typopo—VS Code extension](assets/typopo--vs-code-animation--html.gif "VS code extension")
 
 
 ### NPM package
