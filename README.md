@@ -7,13 +7,29 @@
 ![GitHub](https://img.shields.io/github/license/surfinzap/typopo?color=7b00cb&style=flat-square)
 
 ## Links
-* [Official website](https://typopo.org)
-* [Online app](https://typopo.org)
-* [VS Code extension](https://marketplace.visualstudio.com/items?itemName=brano.typopo-vscode) and corresponding [repository](https://github.com/surfinzap/typopo-vscode)
-* [NPM package](https://www.npmjs.com/package/typopo)
-* [Support the project at Patreon](https://www.patreon.com/branosandala)
-* [Subscribe to a newsletter to get updates](https://buttondown.email/Typopo)
-* [Follow on twitter](https://twitter.com/typopo_app)
+- [Official website](https://typopo.org)
+- [Online app](https://typopo.org)
+- [VS Code extension](https://marketplace.visualstudio.com/items?itemName=brano.typopo-vscode) and corresponding [repository](https://github.com/surfinzap/typopo-vscode)
+- [NPM package](https://www.npmjs.com/package/typopo)
+- [Support the project at Patreon](https://www.patreon.com/branosandala)
+- [Subscribe to a newsletter to get updates](https://buttondown.email/Typopo)
+- [Follow on twitter](https://twitter.com/typopo_app)
+
+## Contents
+- [Links](#links)
+- [Contents](#contents)
+- [Features](#features)
+- [Use](#use)
+	- [Online app](#online-app)
+	- [VS Code extension](#vs-code-extension)
+	- [NPM package](#npm-package)
+	- [JavaScript library](#javascript-library)
+	- [API](#api)
+- [News & Releases](#news-releases)
+- [Support](#support)
+- [Feedback](#feedback)
+- [License](#license)
+- [Special thanks](#special-thanks)
 
 ## Features
 Fixes punctuation:
@@ -68,11 +84,11 @@ Fixes symbols:
 
 ## Use
 
-You can use Typopo as an [online app](#app), [VS Code extension](#vscode), [NPM package](#npm) or [JS library](#js).
+You can use Typopo as an [online app](#online-app), [VS Code extension](#vs-code-extension), [NPM package](#npm-package) or [JavaScript library](#javascript-library).
 
 
 
-### <a name="app"></a> Online app
+### Online app
 URL → [https://typopo.org/](https://typopo.org/)
 
 The online app is useful especially when you’re a book designer or a DTP operator. Before you typeset raw texts in a DTP app of your choice, run it through Typopo and fix microtypography with a single click.
@@ -81,16 +97,23 @@ The online app is useful especially when you’re a book designer or a DTP ope
 
 
 
-### <a name="vscode"></a> VS Code extension
+### VS Code extension
 ![Typopo—VS Code extension](assets/typopo--vs-code-animation.gif "VS code extension")
 
 
-### <a name="npm"></a> NPM package
+### NPM package
 Include Typopo as an NPM package in your web project:
 
 ```
 npm install typopo
 ```
+
+Check out an [API](#api) on how to use the package.
+
+### JavaScript library
+Download dist/typopo.min.js and include it in your web project or CMS. Check out an [API](#api) on how to use the package.
+
+
 
 ### API
 
@@ -119,8 +142,6 @@ configuration = {
 ```
 (“removeLines” is the only available configuration option for now)
 
-### <a name="js"></a>JS library
-Download dist/typopo.min.js and include it in your web application or CMS. API is the same as for [NPM package](#npm).
 
 
 
@@ -148,8 +169,8 @@ Licensed under MIT license. (See [LICENCE.TXT](//github.com/surfinzap/typopo/blo
 
 
 ## Special thanks
-* [@Viclick](https://github.com/vilemj-Viclick) for adjusting the repo for modularisation (2.0.0)
-* [@tomashruby](https://github.com/tomashruby) for consultation on architecture (2.0.0)
-* [@skurzinz](https://github.com/skurzinz) for consultation & test on German typographic rules (2.2.0)
-* Filip Blažek for consultation on typography rules
-* [@vit-svoboda](https://github.com/vit-svoboda) for fixing the package to run in Node.js projects (2.3.1)
+- [@Viclick](https://github.com/vilemj-Viclick) for adjusting the repo for modularisation (2.0.0)
+- [@tomashruby](https://github.com/tomashruby) for consultation on architecture (2.0.0)
+- [@skurzinz](https://github.com/skurzinz) for consultation & test on German typographic rules (2.2.0)
+- Filip Blažek for consultation on typography rules
+- [@vit-svoboda](https://github.com/vit-svoboda) for fixing the package to run in Node.js projects (2.3.1)
