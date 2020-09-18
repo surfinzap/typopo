@@ -47,7 +47,7 @@ describe('Single quotes in default language (en-us)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should fix single quotes, primes and apostrophes in English", () => {
-			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -70,9 +70,9 @@ describe('Single quotes in (sk, cs, de-de)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should fix single quotes, primes and apostrophes in (sk, cs, de-de)", () => {
-			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Locale("sk")), testCase[key]);
-			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Locale("cs")), testCase[key]);
-			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("sk")), testCase[key]);
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("cs")), testCase[key]);
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });
@@ -95,7 +95,7 @@ describe('Single quotes in (rue)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should fix single quotes, primes and apostrophes in Rusyn", () => {
-			assert.equal(fixSingleQuotesPrimesAndApostrophes(key, new Locale("rue")), testCase[key]);
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("rue")), testCase[key]);
 		});
 	});
 });

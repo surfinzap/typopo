@@ -57,12 +57,12 @@ describe('Fix squares\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit tests", () => {
-			assert.equal(fixSquares(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixSquares(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 	Object.keys(testCase).forEach((key) => {
 		it("module tests", () => {
-			assert.equal(fixExponents(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixExponents(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -99,12 +99,12 @@ describe('Fix cubes\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit tests", () => {
-			assert.equal(fixCubes(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixCubes(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 	Object.keys(testCase).forEach((key) => {
 		it("module tests", () => {
-			assert.equal(fixExponents(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixExponents(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

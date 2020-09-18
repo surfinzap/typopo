@@ -103,7 +103,7 @@ describe('Double quotes in default language (en)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test", () => {
-			assert.equal(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -129,8 +129,8 @@ describe('Double quotes in Slovak, Czech and German language (sk, cs, de)\n', ()
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixDoubleQuotesAndPrimes(key, new Locale("cs")), testCase[key]);
-			assert.equal(fixDoubleQuotesAndPrimes(key, new Locale("sk")), testCase[key]);
+			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("cs")), testCase[key]);
+			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("sk")), testCase[key]);
 		});
 	});
 });
@@ -149,7 +149,7 @@ describe('Double quotes in Rusyn language (rue)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixDoubleQuotesAndPrimes(key, new Locale("rue")), testCase[key]);
+			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("rue")), testCase[key]);
 		});
 	});
 });

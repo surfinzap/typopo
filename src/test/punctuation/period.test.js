@@ -13,7 +13,7 @@ describe('Replace 2 periods at the end of the sentecne with a single period\n', 
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixPeriod(key, new Locale("rue")), testCase[key]);
+			assert.strictEqual(fixPeriod(key, new Locale("rue")), testCase[key]);
 		});
 	});
 });

@@ -18,7 +18,7 @@ describe('Fix section sign (§)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixSectionSign(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixSectionSign(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

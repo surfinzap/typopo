@@ -10,7 +10,7 @@ describe('Remove empty lines\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should remove excessive empty lines", () => {
-			assert.equal(removeEmptyLines(key), testCase[key]);
+			assert.strictEqual(removeEmptyLines(key), testCase[key]);
 		});
 	});
 });

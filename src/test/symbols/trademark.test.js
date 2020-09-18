@@ -14,7 +14,7 @@ describe('Fix trademark ™\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixTrademark(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixTrademark(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

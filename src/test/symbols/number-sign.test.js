@@ -14,10 +14,10 @@ describe('Remove extra space before number sign\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(removeExtraSpacesAfterNumberSign(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(removeExtraSpacesAfterNumberSign(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixNumberSign(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixNumberSign(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

@@ -10,7 +10,7 @@ describe('Fix plus-minus symbol ±\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixPlusMinus(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixPlusMinus(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

@@ -29,10 +29,10 @@ describe('Fix multiplication sign between numbers\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixMultiplicationSignBetweenNumbers(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixMultiplicationSignBetweenNumbers(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -52,10 +52,10 @@ describe('Fix multiplication sign between words\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixMultiplicationSignBetweenWords(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixMultiplicationSignBetweenWords(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -75,10 +75,10 @@ describe('Fix multiplication sign between a number and a word\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixMultiplicationSignBetweenNumberAndWord(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixMultiplicationSignBetweenNumberAndWord(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -98,10 +98,10 @@ describe('Fix nbsp around multiplication sign\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixNbspAroundMultiplicationSign(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixNbspAroundMultiplicationSign(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

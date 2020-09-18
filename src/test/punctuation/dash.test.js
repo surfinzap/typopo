@@ -18,7 +18,7 @@ describe('Replace 3 hyphens with an em dash\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(replaceThreeHyphensWithEmDash(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(replaceThreeHyphensWithEmDash(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -31,7 +31,7 @@ describe('Replace 2 hyphens with an en dash\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(replaceTwoHyphensWithEnDash(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(replaceTwoHyphensWithEnDash(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -45,8 +45,8 @@ describe('Replace spaced hyphen with an em dash (en-us, sk, cs, rue)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(replaceSpacedHyphenWithDash(key, new Locale("en-us")), testCase[key]);
-			assert.equal(replaceSpacedHyphenWithDash(key, new Locale("cs")), testCase[key]);
+			assert.strictEqual(replaceSpacedHyphenWithDash(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(replaceSpacedHyphenWithDash(key, new Locale("cs")), testCase[key]);
 		});
 	});
 });
@@ -58,7 +58,7 @@ describe('Replace spaced hyphen with an en dash (de-de)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(replaceSpacedHyphenWithDash(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(replaceSpacedHyphenWithDash(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });
@@ -72,8 +72,8 @@ describe('Replace spaced en dash with an em dash (en-us, sk, cs, rue)\n', () => 
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(consolidateSpacedDashes(key, new Locale("en-us")), testCase[key]);
-			assert.equal(consolidateSpacedDashes(key, new Locale("sk")), testCase[key]);
+			assert.strictEqual(consolidateSpacedDashes(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(consolidateSpacedDashes(key, new Locale("sk")), testCase[key]);
 		});
 	});
 });
@@ -85,7 +85,7 @@ describe('Replace spaced em dash with an en dash (de-de)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(consolidateSpacedDashes(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(consolidateSpacedDashes(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });
@@ -103,7 +103,7 @@ describe('Fix dash spaces between words (en-us)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixDashSpacesBetweenWords(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixDashSpacesBetweenWords(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -116,8 +116,8 @@ describe('Fix dash spaces between words (rue, sk)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixDashSpacesBetweenWords(key, new Locale("rue")), testCase[key]);
-			assert.equal(fixDashSpacesBetweenWords(key, new Locale("sk")), testCase[key]);
+			assert.strictEqual(fixDashSpacesBetweenWords(key, new Locale("rue")), testCase[key]);
+			assert.strictEqual(fixDashSpacesBetweenWords(key, new Locale("sk")), testCase[key]);
 		});
 	});
 });
@@ -130,7 +130,7 @@ describe('Fix dash spaces between words (cs)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixDashSpacesBetweenWords(key, new Locale("cs")), testCase[key]);
+			assert.strictEqual(fixDashSpacesBetweenWords(key, new Locale("cs")), testCase[key]);
 		});
 	});
 });
@@ -145,10 +145,10 @@ describe('Fix dash spaces between words (de-de) \n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixDashSpacesBetweenWords(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(fixDashSpacesBetweenWords(key, new Locale("de-de")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixDash(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });
@@ -175,10 +175,10 @@ describe('Fix hyphen between word and punctuation (en-us)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixHyphenBetweenWordAndPunctuation(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixHyphenBetweenWordAndPunctuation(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixDash(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -198,12 +198,12 @@ describe('Fix hyphen between word and punctuation (sk, rue)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixHyphenBetweenWordAndPunctuation(key, new Locale("sk")), testCase[key]);
-			assert.equal(fixHyphenBetweenWordAndPunctuation(key, new Locale("rue")), testCase[key]);
+			assert.strictEqual(fixHyphenBetweenWordAndPunctuation(key, new Locale("sk")), testCase[key]);
+			assert.strictEqual(fixHyphenBetweenWordAndPunctuation(key, new Locale("rue")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixDash(key, new Locale("sk")), testCase[key]);
-			assert.equal(fixDash(key, new Locale("rue")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("sk")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("rue")), testCase[key]);
 		});
 	});
 });
@@ -223,10 +223,10 @@ describe('Fix hyphen between word and punctuation (cs)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixHyphenBetweenWordAndPunctuation(key, new Locale("cs")), testCase[key]);
+			assert.strictEqual(fixHyphenBetweenWordAndPunctuation(key, new Locale("cs")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixDash(key, new Locale("cs")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("cs")), testCase[key]);
 		});
 	});
 });
@@ -246,10 +246,10 @@ describe('Fix hyphen between word and punctuation (de-de)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixHyphenBetweenWordAndPunctuation(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(fixHyphenBetweenWordAndPunctuation(key, new Locale("de-de")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixDash(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });
@@ -307,10 +307,10 @@ describe('Fix dash between cardinal numbers\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixDashBetweenCardinalNumbers(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixDashBetweenCardinalNumbers(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixDash(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -338,10 +338,10 @@ describe('Fix dash between percentage range\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixDashBetweenPercentageRange(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixDashBetweenPercentageRange(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixDash(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -358,10 +358,10 @@ describe('Fix dash between ordinal numbers (en-us)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixDashBetweenOrdinalNumbers(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixDashBetweenOrdinalNumbers(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixDash(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -376,16 +376,16 @@ describe('Fix dash between ordinal numbers (rue, sk, cs, de)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixDashBetweenOrdinalNumbers(key, new Locale("rue")), testCase[key]);
-			assert.equal(fixDashBetweenOrdinalNumbers(key, new Locale("sk")), testCase[key]);
-			assert.equal(fixDashBetweenOrdinalNumbers(key, new Locale("cs")), testCase[key]);
-			assert.equal(fixDashBetweenOrdinalNumbers(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(fixDashBetweenOrdinalNumbers(key, new Locale("rue")), testCase[key]);
+			assert.strictEqual(fixDashBetweenOrdinalNumbers(key, new Locale("sk")), testCase[key]);
+			assert.strictEqual(fixDashBetweenOrdinalNumbers(key, new Locale("cs")), testCase[key]);
+			assert.strictEqual(fixDashBetweenOrdinalNumbers(key, new Locale("de-de")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixDash(key, new Locale("rue")), testCase[key]);
-			assert.equal(fixDash(key, new Locale("sk")), testCase[key]);
-			assert.equal(fixDash(key, new Locale("cs")), testCase[key]);
-			assert.equal(fixDash(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("rue")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("sk")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("cs")), testCase[key]);
+			assert.strictEqual(fixDash(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });

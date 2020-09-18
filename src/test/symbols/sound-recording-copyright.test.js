@@ -17,7 +17,7 @@ describe('Fix copyright ©\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixSoundRecordingCopyright(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixSoundRecordingCopyright(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

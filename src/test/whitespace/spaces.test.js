@@ -30,7 +30,7 @@ describe('Replace multiple spaces with a single one\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(removeMultipleSpaces(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(removeMultipleSpaces(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -70,7 +70,7 @@ describe('Remove spaces and tabs at paragraph start\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(removeSpacesAtParagraphStart(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(removeSpacesAtParagraphStart(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -90,7 +90,7 @@ describe('Remove space before sentence pause-punctuation\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit tests", () => {
-			assert.equal(removeSpaceBeforeSentencePausePunctuation(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(removeSpaceBeforeSentencePausePunctuation(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -118,7 +118,7 @@ describe('Remove space before a terminal punctuation, closing brackets and a deg
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit tests", () => {
-			assert.equal(removeSpaceBeforeTerminalPunctuation(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(removeSpaceBeforeTerminalPunctuation(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -138,11 +138,11 @@ describe('Remove space before ordinal indicator (en-us)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit tests", () => {
-			assert.equal(removeSpaceBeforeOrdinalIndicator(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(removeSpaceBeforeOrdinalIndicator(key, new Locale("en-us")), testCase[key]);
 		});
 
 		it("module tests", () => {
-			assert.equal(fixSpaces(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixSpaces(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -157,10 +157,10 @@ describe('Remove space before ordinal indicator (sk, cs, rue, de-de)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit tests", () => {
-			assert.equal(removeSpaceBeforeOrdinalIndicator(key, new Locale("sk")), testCase[key]);
-			assert.equal(removeSpaceBeforeOrdinalIndicator(key, new Locale("cs")), testCase[key]);
-			assert.equal(removeSpaceBeforeOrdinalIndicator(key, new Locale("rue")), testCase[key]);
-			assert.equal(removeSpaceBeforeOrdinalIndicator(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(removeSpaceBeforeOrdinalIndicator(key, new Locale("sk")), testCase[key]);
+			assert.strictEqual(removeSpaceBeforeOrdinalIndicator(key, new Locale("cs")), testCase[key]);
+			assert.strictEqual(removeSpaceBeforeOrdinalIndicator(key, new Locale("rue")), testCase[key]);
+			assert.strictEqual(removeSpaceBeforeOrdinalIndicator(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });
@@ -178,7 +178,7 @@ describe('Remove space after opening brackets\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(removeSpaceAfterPunctuation(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(removeSpaceAfterPunctuation(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -196,7 +196,7 @@ describe('Add space before opening brackets\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(addSpaceBeforePunctuation(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(addSpaceBeforePunctuation(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -220,13 +220,13 @@ describe('Add space after terminal punctuation\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(addSpaceAfterTerminalPunctuation(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(addSpaceAfterTerminalPunctuation(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test", () => {
-			assert.equal(fixSpaces(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixSpaces(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -251,13 +251,13 @@ describe('Add a space after sentence pause punctuation\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(addSpaceAfterSentencePause(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(addSpaceAfterSentencePause(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test", () => {
-			assert.equal(fixSpaces(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixSpaces(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -277,13 +277,13 @@ describe('Add a space after closing brackets\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(addSpaceAfterClosingBrackets(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(addSpaceAfterClosingBrackets(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test", () => {
-			assert.equal(fixSpaces(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixSpaces(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -303,7 +303,7 @@ describe('Remove trailing spaces\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(removeTrailingSpaces(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(removeTrailingSpaces(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -319,7 +319,7 @@ describe('Add space before symbol, e.g. ©\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(addSpaceBeforeSymbol(key, new Locale("en-us"), "©"), testCase[key]);
+			assert.strictEqual(addSpaceBeforeSymbol(key, new Locale("en-us"), "©"), testCase[key]);
 		});
 	});
 });

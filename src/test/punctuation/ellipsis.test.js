@@ -33,10 +33,10 @@ describe('Replace periods/ellipses with a single ellipsis:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(replaceThreeCharsWithEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(replaceThreeCharsWithEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -53,10 +53,10 @@ describe('Replace combination of period/ellipsis with an ellipsis:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(replaceTwoCharsWithEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(replaceTwoCharsWithEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -70,10 +70,10 @@ describe('Replace two periods between words (spaces) with an ellipsis:\n', () =>
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(replaceTwoPeriodsWithEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(replaceTwoPeriodsWithEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -93,10 +93,10 @@ describe('Fix spacing, when ellipsis is used around commas:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixEllipsisSpacingAroundCommas(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixEllipsisSpacingAroundCommas(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -112,10 +112,10 @@ describe('Fix spacing, when aposiopesis is starting a paragraph:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixAposiopesisStartingParagraph(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixAposiopesisStartingParagraph(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -139,10 +139,10 @@ describe('Fix spacing, when aposiopesis is starting a sentence:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixAposiopesisStartingSentence(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixAposiopesisStartingSentence(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -158,10 +158,10 @@ describe('Fix spacing, when aposiopesis is between sentences:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixAposiopesisBetweenSentences(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixAposiopesisBetweenSentences(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -176,10 +176,10 @@ describe('Fix spacing, when aposiopesis is between words:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixAposiopesisBetweenWords(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixAposiopesisBetweenWords(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -211,10 +211,10 @@ describe('Fix spacing, when ellipsis is between sentences:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixEllipsisBetweenSentences(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixEllipsisBetweenSentences(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -235,10 +235,10 @@ describe('Fix spacing, when aposiopesis is ending a paragraph:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixAposiopesisEndingParagraph(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixAposiopesisEndingParagraph(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

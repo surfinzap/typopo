@@ -20,10 +20,10 @@ describe('Fix ISSN format\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixISSN(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixISSN(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixPubId(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixPubId(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -43,10 +43,10 @@ describe('Fix ISBN10 format\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixISBN10(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixISBN10(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixPubId(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixPubId(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -66,10 +66,10 @@ describe('Fix ISBN13 format\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixISBN13(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixISBN13(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixPubId(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixPubId(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -101,10 +101,10 @@ describe('Fix ISBN number\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.equal(fixISBNnumber(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixISBNnumber(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.equal(fixPubId(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixPubId(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

@@ -17,10 +17,10 @@ describe('Fix spaces around hyphen\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit tests", () => {
-			assert.equal(fixSpaceAroundHyphen(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixSpaceAroundHyphen(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module tests", () => {
-			assert.equal(fixHyphen(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixHyphen(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

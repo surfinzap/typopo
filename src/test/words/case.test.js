@@ -27,7 +27,7 @@ describe('Corrects accidental uPPERCASE\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.equal(fixCase(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(fixCase(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
