@@ -14,8 +14,8 @@ import Locale from "../../locale/locale";
 describe('Replace 3 hyphens with an em dash\n', () => {
 	let testCase = {
 		"and --- she said": "and — she said",
-		};
-
+	};
+	
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(replaceThreeHyphensWithEmDash(key, new Locale("en-us")), testCase[key]);
@@ -27,8 +27,8 @@ describe('Replace 3 hyphens with an em dash\n', () => {
 describe('Replace 2 hyphens with an en dash\n', () => {
 	let testCase = {
 		"and -- she said": "and – she said",
-		};
-
+	};
+	
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(replaceTwoHyphensWithEnDash(key, new Locale("en-us")), testCase[key]);
@@ -41,8 +41,8 @@ describe('Replace 2 hyphens with an en dash\n', () => {
 describe('Replace spaced hyphen with an em dash (en-us, sk, cs, rue)\n', () => {
 	let testCase = {
 		"and - she said": "and — she said",
-		};
-
+	};
+	
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(replaceSpacedHyphenWithDash(key, new Locale("en-us")), testCase[key]);
@@ -54,8 +54,8 @@ describe('Replace spaced hyphen with an em dash (en-us, sk, cs, rue)\n', () => {
 describe('Replace spaced hyphen with an en dash (de-de)\n', () => {
 	let testCase = {
 		"und - er sagte": "und – er sagte",
-		};
-
+	};
+	
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(replaceSpacedHyphenWithDash(key, new Locale("de-de")), testCase[key]);
@@ -68,8 +68,8 @@ describe('Replace spaced hyphen with an en dash (de-de)\n', () => {
 describe('Replace spaced en dash with an em dash (en-us, sk, cs, rue)\n', () => {
 	let testCase = {
 		"and – she said": "and — she said",
-		};
-
+	};
+	
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(consolidateSpacedDashes(key, new Locale("en-us")), testCase[key]);
@@ -81,8 +81,8 @@ describe('Replace spaced en dash with an em dash (en-us, sk, cs, rue)\n', () => 
 describe('Replace spaced em dash with an en dash (de-de)\n', () => {
 	let testCase = {
 		"und — sie sagte": "und – sie sagte",
-		};
-
+	};
+	
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(consolidateSpacedDashes(key, new Locale("de-de")), testCase[key]);
@@ -99,8 +99,8 @@ describe('Fix dash spaces between words (en-us)\n', () => {
 		"and— she said": "and—she said",
 		"and —she said": "and—she said",
 		"and—she said": "and—she said",
-		};
-
+	};
+	
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(fixDashSpacesBetweenWords(key, new Locale("en-us")), testCase[key]);
@@ -112,6 +112,10 @@ describe('Fix dash spaces between words (rue, sk)\n', () => {
 	let testCase = {
 		"and — she said": "and — she said",
 		"and—she said": "and — she said",
+		"and —she said": "and — she said",
+		"and —čadič": "and — čadič",
+		"and —Čadič": "and — Čadič",
+		"Радостна комната —": "Радостна комната —", //false positive
 		};
 
 	Object.keys(testCase).forEach((key) => {

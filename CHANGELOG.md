@@ -1,5 +1,12 @@
 # Changelog for Typopo
 
+## 2.3.6 // 2020-?
+### Fixes
+* Typopo adds extra space after en/em dash at the end of a line (#31)
+
+### Maintenance
+* Revamp [README.md](README.md)
+
 ## 2.3.5 // 2020-07-27
 There are no changes in functionality in this release
 

@@ -63,23 +63,24 @@ export function consolidateSpacedDashes(string, locale) {
 
 
 export function fixDashSpacesBetweenWords(string, locale) {
-	let pattern = "[" + locale.spaces + "]?[" + locale.emDash + locale.enDash + "][" + locale.spaces + "]?";
+	let pattern = "([" + locale.spaces + "]?)([" + locale.emDash + locale.enDash + "])([" + locale.spaces + "]?)(["+ locale.allChars +"])";
 	let re = new RegExp(pattern, "g");
+	// console.log(pattern);
 	let replacement = "";
 
 	switch (locale.locale) {
 		case "en-us":
-			replacement = locale.emDash;
+			replacement = locale.emDash + "$4";
 			break;
 		case "rue":
 		case "sk":
-			replacement = locale.hairSpace + locale.emDash + locale.hairSpace;
+			replacement = locale.hairSpace + locale.emDash + locale.hairSpace + "$4";
 			break;
 		case "cs":
-			replacement = locale.nbsp + locale.enDash + locale.space;
+			replacement = locale.nbsp + locale.enDash + locale.space + "$4";
 			break;
 		case "de-de":
-			replacement = locale.hairSpace + locale.enDash + locale.hairSpace;
+			replacement = locale.hairSpace + locale.enDash + locale.hairSpace + "$4";
 			break;
 	}
 

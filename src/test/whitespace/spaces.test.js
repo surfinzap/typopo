@@ -298,6 +298,7 @@ describe('Remove trailing spaces\n', () => {
 		"trailing spaces    ": "trailing spaces", // narrow_nbsp
 		"trailing spaces.    ": "trailing spaces.",
 		"trailing spaces;    ": "trailing spaces;",
+		"Радостна комната —  ": "Радостна комната —",
 	};
 
 
