@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "gulp build",
-    "test": "mocha --require @babel/register ./src/test/**/*.test.js -R min -w"
+    "test": "mocha --require @babel/register ./src/test/**/*.test.js -R min",
+    "test:dev": "mocha --require @babel/register ./src/test/**/*.test.js -R min -w"
   },
   "main": "dist/typopo_dist.min.js",
   "repository": {
