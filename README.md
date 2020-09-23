@@ -3,8 +3,9 @@
 
 > Fix frequent microtypography errors in multiple languages. Write neat texts without bothering about typography rules. Typopo works for English, German, Slovak, Czech and Rusyn language.
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/surfinzap/typopo?color=7b00cb&style=flat-square)
-![GitHub](https://img.shields.io/github/license/surfinzap/typopo?color=7b00cb&style=flat-square)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/surfinzap/typopo?color=7b00cb&style=flat)
+![GitHub](https://img.shields.io/github/license/surfinzap/typopo?color=7b00cb&style=flat)
+![Tests](https://github.com/surfinzap/typopo/workflows/Tests/badge.svg?branch=master)
 
 ## Links
 - [Official website](https://typopo.org)
