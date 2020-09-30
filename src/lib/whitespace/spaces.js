@@ -95,17 +95,22 @@ export function removeSpaceBeforeOrdinalIndicator(string, locale) {
 
 
 
-export function removeSpaceAfterPunctuation(string, locale) {
-	let pattern = "([" + locale.openingBrackets + "])([" + locale.spaces + "])";
+export function removeSpaceAfterOpeningBrackets(string, locale) {
+	let pattern = 
+			"([" + locale.openingBrackets + "])"
+		+	"([" + locale.spaces + "])";
 	let re = new RegExp(pattern, "g");
 	return string.replace(re, "$1");
 }
 
 
 
-export function addSpaceBeforePunctuation(string, locale) {
-	var pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars + "])([" + locale.openingBrackets + "])(["+ locale.lowercaseChars + locale.uppercaseChars + locale.ellipsis + "])";
-	var re = new RegExp(pattern, "g");
+export function addSpaceBeforeOpeningBrackets(string, locale) {
+	let pattern = 
+			"(["+ locale.lowercaseChars + locale.uppercaseChars + "])"
+		+ "([" + locale.openingBrackets + "])"
+		+ "(["+ locale.lowercaseChars + locale.uppercaseChars + locale.ellipsis + "])";
+	let re = new RegExp(pattern, "g");
 	return string.replace(re, "$1 $2$3");
 }
 
@@ -118,7 +123,7 @@ export function addSpaceBeforePunctuation(string, locale) {
 	One sentence ended. Another started.
 
 	@param {string} string — input text for identification
-	@returns {string} — output with a space after closing brackets
+	@returns {string} — output with a space after terminal punctuation
 */
 export function addSpaceAfterTerminalPunctuation(string, locale) {
 	var pattern =
@@ -193,8 +198,8 @@ export function fixSpaces(string, locale) {
 	string = removeSpaceBeforeSentencePausePunctuation(string, locale);
 	string = removeSpaceBeforeTerminalPunctuation(string, locale);
 	string = removeSpaceBeforeOrdinalIndicator(string, locale);
-	string = removeSpaceAfterPunctuation(string, locale);
-	string = addSpaceBeforePunctuation(string, locale);
+	string = removeSpaceAfterOpeningBrackets(string, locale);
+	string = addSpaceBeforeOpeningBrackets(string, locale);
 	string = addSpaceAfterTerminalPunctuation(string, locale);
 	string = addSpaceAfterClosingBrackets(string, locale);
 	string = addSpaceAfterSentencePause(string, locale);

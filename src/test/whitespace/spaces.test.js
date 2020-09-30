@@ -3,8 +3,8 @@ import {removeMultipleSpaces,
 				removeSpaceBeforeSentencePausePunctuation,
 				removeSpaceBeforeTerminalPunctuation,
 				removeSpaceBeforeOrdinalIndicator,
-				removeSpaceAfterPunctuation,
-				addSpaceBeforePunctuation,
+				removeSpaceAfterOpeningBrackets,
+				addSpaceBeforeOpeningBrackets,
 				addSpaceAfterTerminalPunctuation,
 				addSpaceAfterSentencePause,
 				addSpaceAfterClosingBrackets,
@@ -178,7 +178,7 @@ describe('Remove space after opening brackets\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.strictEqual(removeSpaceAfterPunctuation(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(removeSpaceAfterOpeningBrackets(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -196,7 +196,7 @@ describe('Add space before opening brackets\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
-			assert.strictEqual(addSpaceBeforePunctuation(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(addSpaceBeforeOpeningBrackets(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });

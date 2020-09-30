@@ -7,7 +7,6 @@ describe('Fix trademark ™\n', () => {
 	let testCase = {
 		"(tm)": "™",
 		"(TM)": "™",
-		"( tm )": "™",
 		"Company (tm)": "Company™",
 		"Company ™": "Company™",
 	};
@@ -15,6 +14,18 @@ describe('Fix trademark ™\n', () => {
 	Object.keys(testCase).forEach((key) => {
 		it("", () => {
 			assert.strictEqual(fixTrademark(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+describe('Fix trademark ™\n', () => {
+	let testCase = {
+		"( tm )": "™",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("integration test", () => {
+			assert.strictEqual(fixTypos(key, "en-us"), testCase[key]);
 		});
 	});
 });
