@@ -50,6 +50,7 @@ export function fixTypos(string, locale, configuration) {
 		removeLines : true,
 	} : configuration;
 
+	// exclude exceptions from fixing
 	string = excludeExceptions(string, currentLocale);
 
 	if(configuration.removeLines) {
@@ -88,6 +89,7 @@ export function fixTypos(string, locale, configuration) {
 	// spaces
 	string = fixNbsp(string, currentLocale);
 
+	// place excluded exceptions
 	string = placeExceptions(string);
 
 	return string;
