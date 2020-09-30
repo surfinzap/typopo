@@ -160,8 +160,6 @@ describe('Integration tests', () => {
 
 		// combination of dash.js and nbsp.js for percent, permille, permyriad
 		"20 ‱ – 30 ‱" : "20 ‱–30 ‱",
-
-
 	};
 
 	Object.keys(testCase).forEach((key) => {
