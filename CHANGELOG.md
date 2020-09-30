@@ -6,6 +6,7 @@
 
 ### Maintenance
 * Revamp [README.md](README.md)
+* Refactor functions that fix ®, ™ and ©
 
 ## 2.3.5 // 2020-07-27
 There are no changes in functionality in this release
