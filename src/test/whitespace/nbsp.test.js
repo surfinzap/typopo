@@ -1,7 +1,6 @@
 import {removeNbspBetweenMultiCharWords,
 				addNbspAfterPreposition,
 				addNbspAfterAmpersand,
-				addNbspAroundMultiplicationSign,
 				addNbspAfterCardinalNumber,
 				addNbspAfterOrdinalNumber,
 				addNbspWithinOrdinalDate,
