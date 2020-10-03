@@ -3,11 +3,15 @@
 ## 2.3.6 // 2020-?
 ### Fixes
 * Remove incidents when an extra space was added after en/em dash at the end of a line (#31)
-* Remove incidents when an extra space was added before an opening bracket in an optional plural name (e.g. Typopo was falsely fixing name(s) into name (s))
+* Remove incidents when an extra space was added before an opening bracket in an optional plural name (e.g. Typopo was falsely fixing name(s) into name (s)) (#36)
+* Remove incidents when a non-breaking space was falsely placed before a personal pronoun “I” and removed after it (#38)
 
 ### Maintenance
 * Revamp [README.md](README.md)
 * Refactor functions that fix ®, ™ and ©
+
+
+
 
 ## 2.3.5 // 2020-07-27
 There are no changes in functionality in this release
