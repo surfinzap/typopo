@@ -191,6 +191,10 @@ describe('Add space before opening brackets\n', () => {
 		"Enclosed[in] the brackets.": "Enclosed [in] the brackets.",
 		"quote[…] with parts left out": "quote […] with parts left out",
 		"Enclosed{in} the brackets.": "Enclosed {in} the brackets.",
+		"name(s)": "name(s)", // false positive
+		"NAME(S)": "NAME(S)", // false positive
+		"mass(es)": "mass(es)", // false positive
+		"MASS(ES)": "MASS(ES)", // false positive
 	};
 
 
