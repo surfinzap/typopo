@@ -282,18 +282,41 @@ describe('Fix non-breaking space around name with regnal number (sk, cs, de-de, 
 	});
 });
 
+describe('Fix non-breaking space around name with regnal number (sk, cs, de-de, rue)\n', () => {
+	let testCase = {
+		// This example is false positive for English language. 
+		// This is extra module test to double-check that nbsp is placed correctly around “I” in other languages
+		"When I talk to emerging product designers": "When I talk to emerging product designers",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixNbsp(key, new Locale("sk")), testCase[key]);
+			assert.strictEqual(fixNbsp(key, new Locale("cs")), testCase[key]);
+			assert.strictEqual(fixNbsp(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(fixNbsp(key, new Locale("rue")), testCase[key]);
+		});
+	});
+});
+
 
 
 describe('Fix non-breaking space around name with regnal number (en-us)\n', () => {
 	let testCase = {
 		// Place non-breaking space between name and roman numeral
 		"Charles IV was an emperor." : "Charles IV was an emperor.",
-		"Charles IV was an emperor." : "Charles IV was an emperor.",
-		"Charles IV" : "Charles IV",
-
+		"Charles IV was an emperor." : "Charles IV was an emperor.", // swapped nbsp
+		"Charles IV": "Charles IV",
+		"Charles X": "Charles X",
+		
 		// False positives
+		"When I talk to emerging product designers": "When I talk to emerging product designers",
 		"Try Ctrl+I" : "Try Ctrl+I",
 		"Sequoia Capital" : "Sequoia Capital",
+		
+		// Unsupported 
+		// It’s more common to use “I + verb” in text than citing regnal names so this case is unsupported for now
+		"Charles I" : "Charles I",
 	};
 
 	Object.keys(testCase).forEach((key) => {
