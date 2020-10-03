@@ -285,7 +285,7 @@ describe('Fix non-breaking space around name with regnal number (sk, cs, de-de, 
 	let testCase = {
 		// This example is false positive for English language. 
 		// This is extra module test to double-check that nbsp is placed correctly around “I” in other languages
-		"When I talk to emerging product designers": "When I talk to emerging product designers",
+		"When I talk to emerging product designers": "When I talk to emerging product designers",
 	};
 
 	Object.keys(testCase).forEach((key) => {
@@ -309,7 +309,7 @@ describe('Fix non-breaking space around name with regnal number (en-us)\n', () =
 		"Charles X": "Charles X",
 		
 		// False positives
-		"When I talk to emerging product designers": "When I talk to emerging product designers",
+		"When I talk to emerging product designers": "When I talk to emerging product designers",
 		"Try Ctrl+I" : "Try Ctrl+I",
 		"Sequoia Capital" : "Sequoia Capital",
 		
