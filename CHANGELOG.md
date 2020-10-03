@@ -3,6 +3,7 @@
 ## 2.3.6 // 2020-?
 ### Fixes
 * Remove incidents when an extra space was added after en/em dash at the end of a line (#31)
+* Remove incidents when an extra space was added before an opening bracket in an optional plural name (e.g. Typopo was falsely fixing name(s) into name (s))
 
 ### Maintenance
 * Revamp [README.md](README.md)

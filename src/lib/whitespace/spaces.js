@@ -104,14 +104,43 @@ export function removeSpaceAfterOpeningBrackets(string, locale) {
 }
 
 
+/*
+	Add a space before opening brackets
 
+	Examples:
+	Enclosed(in) the brackets. →
+	Enclosed (in) the brackets.
+
+	Enclosed[in] the brackets. →
+	Enclosed [in] the brackets.
+
+	Enclosed{in} the brackets. →
+	Enclosed {in} the brackets.
+
+	Exclusions:
+	name(s) → name(s)
+	NAME(S) → NAME(S)
+	mass(es) → mass(es)
+	MASS(ES) → MASS(ES)
+
+	@param {string} string — input text for identification
+	@returns {string} — output with a space before an opening bracket
+*/
 export function addSpaceBeforeOpeningBrackets(string, locale) {
 	let pattern = 
-			"(["+ locale.lowercaseChars + locale.uppercaseChars + "])"
+			"([" + locale.lowercaseChars + locale.uppercaseChars + "])"
 		+ "([" + locale.openingBrackets + "])"
-		+ "(["+ locale.lowercaseChars + locale.uppercaseChars + locale.ellipsis + "])";
+		+ "([" + locale.lowercaseChars + locale.uppercaseChars + locale.ellipsis + "])"
+		+ "([" + locale.lowercaseChars + locale.uppercaseChars + locale.ellipsis + locale.closingBrackets + "])";
 	let re = new RegExp(pattern, "g");
-	return string.replace(re, "$1 $2$3");
+
+	return string.replace(re, function ($0, $1, $2, $3, $4) {
+		if ($3 == "s" | $3 == "S" | $3 + $4 == "es" | $3 + $4 == "ES" ) {
+			return $1 + $2 + $3 + $4;
+		} else {
+			return $1 + locale.space + $2 + $3 + $4;
+		}
+	});
 }
 
 
