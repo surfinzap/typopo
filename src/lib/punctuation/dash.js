@@ -1,10 +1,10 @@
-export function replaceThreeHyphensWithEmDash(string, locale) {
+export function replaceThreeHyphensWithEmDash(string) {
 	return string.replace(/(---)/g, "—");
 }
 
 
 
-export function replaceTwoHyphensWithEnDash(string, locale) {
+export function replaceTwoHyphensWithEnDash(string) {
 	return string.replace(/(--)/g, "–");
 }
 
@@ -145,8 +145,8 @@ export function fixDashBetweenCardinalNumbers(string, locale) {
 	let pattern =
 				"(" + locale.cardinalNumber + ")"
 			+ "([" + locale.spaces + "]?"
-			 + "[" + locale.hyphen + locale.enDash + locale.emDash + "]"
-			 + "[" + locale.spaces + "]?)"
+			+ "[" + locale.hyphen + locale.enDash + locale.emDash + "]"
+			+ "[" + locale.spaces + "]?)"
 			+ "(" + locale.cardinalNumber + ")";
 	// console.log(pattern);
 	let re = new RegExp(pattern, "g");

@@ -1,7 +1,5 @@
 const gulp = require('gulp');
-const babel = require('gulp-babel');
 const browsersync = require("browser-sync").create();
-const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const browserify = require('browserify');
@@ -33,15 +31,15 @@ var paths = {
  */
 
 function devBrowserBuild() {
-	 return browserify({entries: paths.browser.src, debug: true})
-		 .transform("babelify")
-		 .bundle()
-		 .pipe(source(paths.dev.name))
-		 .pipe(buffer())
-		 .pipe(sourcemaps.init())
-		 .pipe(sourcemaps.write('./maps'))
-		 .pipe(gulp.dest(paths.dev.dest))
- };
+	return browserify({entries: paths.browser.src, debug: true})
+		.transform("babelify")
+		.bundle()
+		.pipe(source(paths.dev.name))
+		.pipe(buffer())
+		.pipe(sourcemaps.init())
+		.pipe(sourcemaps.write('./maps'))
+		.pipe(gulp.dest(paths.dev.dest))
+ }
 
 
 function browserBuild() {
@@ -62,13 +60,13 @@ function npmBuild() {
 		.pipe(buffer())
 		.pipe(uglify())
 		.pipe(gulp.dest(paths.npm.dest))
-};
+}
 
 function copyHtmlToDest() {
 	return gulp
 		.src(paths.dev.html)
 		.pipe(gulp.dest(paths.dev.dest));
-};
+}
 
 function watchFiles() {
 	gulp.watch(

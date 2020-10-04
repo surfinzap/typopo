@@ -16,19 +16,19 @@ import Locale from "../../locale/locale";
 describe('Replace periods/ellipses with a single ellipsis:\n', () => {
 	let testCase = {
 		/* [1] replace 3 and more dots/ellipses with an ellipsis */
-	 "Sentence ... another sentence": "Sentence … another sentence",
-	 "Sentence .... another sentence": "Sentence … another sentence",
-	 "Sentence ..... another sentence": "Sentence … another sentence",
-	 "Sentence ending...": "Sentence ending…",
-	 "Sentence ending....": "Sentence ending…",
-	 "Sentence ending.....": "Sentence ending…",
-	 "Sentence ending….....": "Sentence ending…",
-	 "Sentence ending….…": "Sentence ending…",
-	 "Sentence ending.….....": "Sentence ending…",
+		"Sentence ... another sentence": "Sentence … another sentence",
+		"Sentence .... another sentence": "Sentence … another sentence",
+		"Sentence ..... another sentence": "Sentence … another sentence",
+		"Sentence ending...": "Sentence ending…",
+		"Sentence ending....": "Sentence ending…",
+		"Sentence ending.....": "Sentence ending…",
+		"Sentence ending….....": "Sentence ending…",
+		"Sentence ending….…": "Sentence ending…",
+		"Sentence ending.….....": "Sentence ending…",
 
-	 /* false positives */
-	 "Sentence ending.": "Sentence ending.",
-	 "Sentence ending..": "Sentence ending..",
+		/* false positives */
+		"Sentence ending.": "Sentence ending.",
+		"Sentence ending..": "Sentence ending..",
 	};
 
 	Object.keys(testCase).forEach((key) => {

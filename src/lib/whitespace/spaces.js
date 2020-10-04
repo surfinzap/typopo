@@ -21,7 +21,7 @@ export function removeMultipleSpaces(string, locale) {
 	@param {string} string — input text for identification
 	@returns {string} — output with removed spaces at the beginning of paragraphs
 */
-export function removeSpacesAtParagraphStart(string, locale) {
+export function removeSpacesAtParagraphStart(string) {
 	/* [1] split the lines manually */
 	let lines = string.split(/\r?\n/);
 
@@ -96,7 +96,7 @@ export function removeSpaceBeforeOrdinalIndicator(string, locale) {
 
 
 export function removeSpaceAfterOpeningBrackets(string, locale) {
-	let pattern = 
+	let pattern =
 			"([" + locale.openingBrackets + "])"
 		+	"([" + locale.spaces + "])";
 	let re = new RegExp(pattern, "g");
@@ -127,7 +127,7 @@ export function removeSpaceAfterOpeningBrackets(string, locale) {
 	@returns {string} — output with a space before an opening bracket
 */
 export function addSpaceBeforeOpeningBrackets(string, locale) {
-	let pattern = 
+	let pattern =
 			"([" + locale.lowercaseChars + locale.uppercaseChars + "])"
 		+ "([" + locale.openingBrackets + "])"
 		+ "([" + locale.lowercaseChars + locale.uppercaseChars + locale.ellipsis + "])"
@@ -204,7 +204,7 @@ export function addSpaceAfterClosingBrackets(string, locale) {
 
 
 
-export function removeTrailingSpaces(string, locale) {
+export function removeTrailingSpaces(string) {
 	return string.trim();
 }
 

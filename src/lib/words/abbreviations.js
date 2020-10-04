@@ -74,7 +74,6 @@ export function fixInitials(string, locale) {
 export function fixMultipleWordAbbreviations(string, locale) {
 	/* Partial patterns for a composition */
 	let patternPrecedingNonLatinBoundary = "([^" + locale.allChars + locale.enDash + locale.emDash + "]|^)";
-	let patternAbbr = "";
 	let patternFollowingWord = "([" + locale.allChars + "]|\\D)";
 	let patternFollowingNonLatinBoundary = "([^" + locale.allChars + "]|$)";
 
@@ -100,7 +99,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
 		let splitAbbreviation = locale.multipleWordAbbreviations[i].split(" ");
 		let abbrevationPattern = "";
 		for (let j = 0; j < splitAbbreviation.length; j++) {
-			abbrevationPattern += "\(" + splitAbbreviation[j] + "\)\(\\.\)\(\[" + locale.spaces + "\]\?\)";
+			abbrevationPattern += "(" + splitAbbreviation[j] + ")(\\.)([" + locale.spaces + "]?)";
 		}
 		abbreviationPatterns[i] = abbrevationPattern;
 	}
@@ -122,7 +121,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
 			let replacement = "$1";
 			let abbrCount = ((abbreviationPatterns[i].match(/\(/g) || []).length)/3;
 			for (let j = 0; j < abbrCount - 1; j++) {
-				replacement += "$" + (j*3+2) + "\." + abbrSpace;
+				replacement += "$" + (j*3+2) + "." + abbrSpace;
 			}
 			replacement += "$" + ((abbrCount - 1)*3+2) + ". $" + ((abbrCount)*3+2);
 
@@ -146,7 +145,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
 			let replacement = "$1";
 			let abbrCount = ((abbreviationPatterns[i].match(/\(/g) || []).length)/3;
 			for (let j = 0; j < abbrCount - 1; j++) {
-				replacement += "$" + (j*3+2) + "\." + abbrSpace;
+				replacement += "$" + (j*3+2) + "." + abbrSpace;
 			}
 			replacement += "$" + ((abbrCount - 1)*3+2) + ".$" + ((abbrCount)*3+2);
 
@@ -174,7 +173,7 @@ export function fixSingleWordAbbreviations(string, locale) {
 	/* [1] Change single-word abbreviations from all locales abbr. patterns */
 	let abbreviationPatterns = [];
 	for (let i = 0; i < locale.singleWordAbbreviations.length; i++) {
-		abbreviationPatterns[i] = "\(" + locale.singleWordAbbreviations[i] + "\)\(\\.\)\(\[" + locale.spaces + "\]\?\)";
+		abbreviationPatterns[i] = "(" + locale.singleWordAbbreviations[i] + ")(\\.)([" + locale.spaces + "]?)";
 	}
 
 
