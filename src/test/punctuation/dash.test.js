@@ -15,7 +15,7 @@ describe('Replace 3 hyphens with an em dash\n', () => {
 	let testCase = {
 		"and --- she said": "and — she said",
 	};
-	
+
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(replaceThreeHyphensWithEmDash(key, new Locale("en-us")), testCase[key]);
@@ -28,7 +28,7 @@ describe('Replace 2 hyphens with an en dash\n', () => {
 	let testCase = {
 		"and -- she said": "and – she said",
 	};
-	
+
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(replaceTwoHyphensWithEnDash(key, new Locale("en-us")), testCase[key]);
@@ -42,7 +42,7 @@ describe('Replace spaced hyphen with an em dash (en-us, sk, cs, rue)\n', () => {
 	let testCase = {
 		"and - she said": "and — she said",
 	};
-	
+
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(replaceSpacedHyphenWithDash(key, new Locale("en-us")), testCase[key]);
@@ -55,7 +55,7 @@ describe('Replace spaced hyphen with an en dash (de-de)\n', () => {
 	let testCase = {
 		"und - er sagte": "und – er sagte",
 	};
-	
+
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(replaceSpacedHyphenWithDash(key, new Locale("de-de")), testCase[key]);
@@ -69,7 +69,7 @@ describe('Replace spaced en dash with an em dash (en-us, sk, cs, rue)\n', () => 
 	let testCase = {
 		"and – she said": "and — she said",
 	};
-	
+
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(consolidateSpacedDashes(key, new Locale("en-us")), testCase[key]);
@@ -82,7 +82,7 @@ describe('Replace spaced em dash with an en dash (de-de)\n', () => {
 	let testCase = {
 		"und — sie sagte": "und – sie sagte",
 	};
-	
+
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(consolidateSpacedDashes(key, new Locale("de-de")), testCase[key]);
@@ -100,7 +100,7 @@ describe('Fix dash spaces between words (en-us)\n', () => {
 		"and —she said": "and—she said",
 		"and—she said": "and—she said",
 	};
-	
+
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(fixDashSpacesBetweenWords(key, new Locale("en-us")), testCase[key]);
@@ -304,7 +304,7 @@ describe('Fix dash between cardinal numbers\n', () => {
 
 		"1—2—3" : "1–2–3",
 		"1 — 2 — 3" : "1–2–3",
-		"1— 2 —3" : "1–2–3", 
+		"1— 2 —3" : "1–2–3",
 
 		"154-123-4567" : "154–123–4567"
 		};
@@ -326,7 +326,6 @@ describe('Fix dash between percentage range\n', () => {
 		"20%-30%" : "20%–30%",
 		"20% -30%" : "20%–30%",
 		"20% - 30%" : "20%–30%",
-		"20% -30%" : "20%–30%",
 
 		"20%–30%" : "20%–30%",
 		"20%—30%" : "20%–30%",

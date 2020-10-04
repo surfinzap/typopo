@@ -89,10 +89,12 @@ describe('Add non-breaking space after cardinal number\n', () => {
 	let testCase = {
 		"5 mm": "5 mm",
 		"5 Kč": "5 Kč",
+		/* eslint-disable no-irregular-whitespace */
 		/* false positives, when number is already bound with abbreviation
 		 * Na str.⎵5 je obsah → Na str.⎵5 je obsah
 		 * 									 !→ Na str. 5⎵je obsah
 		 */
+		/* eslint-enable no-irregular-whitespace */
 		"Na str. 5 je obsah" : "Na str. 5 je obsah",
 	};
 
@@ -283,7 +285,7 @@ describe('Fix non-breaking space around name with regnal number (sk, cs, de-de, 
 
 describe('Fix non-breaking space around name with regnal number (sk, cs, de-de, rue)\n', () => {
 	let testCase = {
-		// This example is false positive for English language. 
+		// This example is false positive for English language.
 		// This is extra module test to double-check that nbsp is placed correctly around “I” in other languages
 		"When I talk to emerging product designers": "When I talk to emerging product designers",
 	};
@@ -307,14 +309,16 @@ describe('Fix non-breaking space around name with regnal number (en-us)\n', () =
 		"Charles IV was an emperor." : "Charles IV was an emperor.", // swapped nbsp
 		"Charles IV": "Charles IV",
 		"Charles X": "Charles X",
-		
+
 		// False positives
 		"When I talk to emerging product designers": "When I talk to emerging product designers",
 		"Try Ctrl+I" : "Try Ctrl+I",
 		"Sequoia Capital" : "Sequoia Capital",
-		
-		// Unsupported 
+
+		// Unsupported
+		/* eslint-disable no-irregular-whitespace */
 		// It’s more common to use “I + verb” in text than citing regnal names so this case is unsupported for now
+		/* eslint-enable no-irregular-whitespace */
 		"Charles I" : "Charles I",
 	};
 

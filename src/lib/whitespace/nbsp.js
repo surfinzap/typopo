@@ -1,5 +1,3 @@
-import {removeTrailingSpaces} from "../whitespace/spaces";
-
 export function removeNbspBetweenMultiCharWords(string, locale) {
 	let pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})(["+ locale.nbsp + locale.narrowNbsp +"])(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})";
 	let re = new RegExp(pattern, "g");
@@ -97,7 +95,7 @@ export function addNbspAfterRomanNumeral(string, locale) {
 }
 
 
-
+/* eslint-disable no-irregular-whitespace */
 /*
 	Fix non-breaking space around name with regnal number
 
@@ -107,12 +105,13 @@ export function addNbspAfterRomanNumeral(string, locale) {
 	Charles IV → Charles⎵IV
 
 	Unsupported:
-	Charles I → Charles I 
+	Charles I → Charles I
 	(first emperor, English language; otherwise “When I am” would be incorrectly fixed)
 
 	@param {string} string — input text for identification
 	@returns {string} — output with correctly placed non-breaking space
 */
+/* eslint-enable no-irregular-whitespace */
 export function fixNbspForNameWithRegnalNumber(string, locale) {
 		let pattern =
 			"(\\b[" + locale.uppercaseChars + "]["+ locale.lowercaseChars +"]+?)"
@@ -125,10 +124,10 @@ export function fixNbspForNameWithRegnalNumber(string, locale) {
 		return string.replace(re, function($0, $1, $2, $3, $4, $5){
 			if ($5 == "" && $3 == "I")  {
 				return $1 + locale.space + $3 + $4;
-			} 
+			}
 			else if ($5 == "" && $3 != "I") {
 				return $1 + locale.nbsp + $3 + $4;
-			} 
+			}
 			else if ($5 == locale.nbsp && $3 == "I") {
 				return $1 + locale.space + $3 + $4 + $5;
 			}

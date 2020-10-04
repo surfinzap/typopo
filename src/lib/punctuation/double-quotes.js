@@ -76,6 +76,7 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	string = string.replace(re, "$1$3");
 
 
+	/* eslint-disable no-irregular-whitespace */
 	/* [5] Reconsider wrongly identified left quote and prime
 
 		 Take following example:
@@ -85,6 +86,7 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 		 and unclosed left double quote.
 		 We'll find that identifications and swap it back to double quote pair.
 	*/
+	/* eslint-enable no-irregular-whitespace */
 	pattern = "({{typopo__left-double-quote--unclosed}})(.*?)({{typopo__double-prime}})";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "{{typopo__left-double-quote}}$2{{typopo__right-double-quote}}");
@@ -142,16 +144,18 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 					(?![\.]) is negative lookahead to exlude period from
 					sentencePunctuation set, see related test case
 					 */
-	pattern = "(?![\.])([" + locale.sentencePunctuation + "])([\,])";
+	pattern = "(?![.])([" + locale.sentencePunctuation + "])([,])";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1");
 
 
+	// eslint-disable-next-line no-irregular-whitespace
 	/* [9.1] Add extra space before left quote, if it’s following word or sentence punctuation */
 	pattern = "([" + locale.sentencePunctuation + locale.allChars + "])({{typopo__left-double-quote}})";
 	re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1 $2");
 
+	// eslint-disable-next-line no-irregular-whitespace
 	/* [9.2] Add extra space after right quote if it’s preceding a word */
 	pattern = "({{typopo__right-double-quote}})([" + locale.allChars + "])";
 	re = new RegExp(pattern, "g");
