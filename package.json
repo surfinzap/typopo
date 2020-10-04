@@ -10,7 +10,8 @@
   "scripts": {
     "build": "gulp build",
     "test": "mocha --require @babel/register ./src/test/**/*.test.js -R min",
-    "test:dev": "mocha --require @babel/register ./src/test/**/*.test.js -R min -w"
+    "test:dev": "mocha --require @babel/register ./src/test/**/*.test.js -R min -w",
+    "lint": "eslint --ext .js --ignore-pattern 'dist/*' --ignore-path .gitignore ."
   },
   "main": "dist/typopo_dist.min.js",
   "repository": {
@@ -40,8 +41,10 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/register": "^7.11.5",
     "babelify": "^10.0.0",
+    "babel-eslint": "^10.1.0",
     "browser-sync": "^2.26.12",
     "browserify": "^16.5.2",
+    "eslint": "^7.10.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-cli": "^2.3.0",
