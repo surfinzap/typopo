@@ -5,5 +5,5 @@
 	@returns {string} — output with removed empty lines
 */
 export function removeEmptyLines(string) {
-	return string.replace(/^\s+/gm, "");
+	return string.replace(/^\s+/gm, '')
 }

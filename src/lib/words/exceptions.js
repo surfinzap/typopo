@@ -1,4 +1,4 @@
-let exceptions = [];
+let exceptions = []
 
 /*
 	Identifies exceptions that will be ommited from correction of any sort
@@ -12,25 +12,20 @@ let exceptions = [];
 	@returns {string} — output with identified exceptions in format {{typopo__exception-[i]}}
 */
 export function excludeExceptions(string, locale) {
-
 	/* [1] Identify email adresses */
-	identifyExceptionSet(string, locale.emailAddressPattern);
-
+	identifyExceptionSet(string, locale.emailAddressPattern)
 
 	/* [2] Identify web URLs and IPs */
-	identifyExceptionSet(string, locale.webUrlPattern);
-
+	identifyExceptionSet(string, locale.webUrlPattern)
 
 	/* [3] Mark them as temporary exceptions in format {{typopo__exception-[i]}} */
 	for (var i = 0; i < exceptions.length; i++) {
-		var replacement = "{{typopo__exception-" + i + "}}";
-		string = string.replace(exceptions[i], replacement);
+		var replacement = '{{typopo__exception-' + i + '}}'
+		string = string.replace(exceptions[i], replacement)
 	}
 
-	return string;
+	return string
 }
-
-
 
 /*
 	Identifies set of exceptions for given pattern
@@ -40,10 +35,10 @@ export function excludeExceptions(string, locale) {
 	@param {pattern} regular expression pattern to match exception
 */
 function identifyExceptionSet(string, pattern) {
-	var re = new RegExp(pattern, "g");
-	var matched_exceptions = string.match(re);
+	var re = new RegExp(pattern, 'g')
+	var matched_exceptions = string.match(re)
 	if (matched_exceptions != null) {
-		exceptions = exceptions.concat(matched_exceptions);
+		exceptions = exceptions.concat(matched_exceptions)
 	}
 }
 
@@ -57,11 +52,11 @@ function identifyExceptionSet(string, pattern) {
 */
 export function placeExceptions(string) {
 	for (var i = 0; i < exceptions.length; i++) {
-		var pattern = "{{typopo__exception-" + i + "}}"
-		var re = new RegExp(pattern, "g");
-		var replacement = exceptions[i];
-		string = string.replace(re, replacement);
+		var pattern = '{{typopo__exception-' + i + '}}'
+		var re = new RegExp(pattern, 'g')
+		var replacement = exceptions[i]
+		string = string.replace(re, replacement)
 	}
 
-	return string;
+	return string
 }

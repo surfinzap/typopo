@@ -12,22 +12,41 @@
 */
 export function fixMultiplicationSignBetweenNumbers(string, locale) {
 	let pattern =
-				"([" + locale.cardinalNumber + "]+)"
-			+ "([" + locale.spaces + "]?[" + locale.lowercaseChars + locale.singlePrime + locale.doublePrime + "]*)"
-			+ "([" + locale.spaces + "][x][" + locale.spaces + "])"
-			+ "([" + locale.cardinalNumber + "]+)"
-			+ "([" + locale.spaces + "]?[" + locale.lowercaseChars + locale.singlePrime + locale.doublePrime + "]*)";
+		'([' +
+		locale.cardinalNumber +
+		']+)' +
+		'([' +
+		locale.spaces +
+		']?[' +
+		locale.lowercaseChars +
+		locale.singlePrime +
+		locale.doublePrime +
+		']*)' +
+		'([' +
+		locale.spaces +
+		'][x][' +
+		locale.spaces +
+		'])' +
+		'([' +
+		locale.cardinalNumber +
+		']+)' +
+		'([' +
+		locale.spaces +
+		']?[' +
+		locale.lowercaseChars +
+		locale.singlePrime +
+		locale.doublePrime +
+		']*)'
 
-	let re = new RegExp(pattern, "gi");
-	let replacement = "$1$2" + locale.nbsp +  locale.multiplicationSign + locale.nbsp + "$4$5";
+	let re = new RegExp(pattern, 'gi')
+	let replacement =
+		'$1$2' + locale.nbsp + locale.multiplicationSign + locale.nbsp + '$4$5'
 
-	string = string.replace(re, replacement);
-	string = string.replace(re, replacement); // run it twice to catch odd/even occurences
+	string = string.replace(re, replacement)
+	string = string.replace(re, replacement) // run it twice to catch odd/even occurences
 
-	return string;
+	return string
 }
-
-
 
 /*
 	Replace “x/X” with “×” in the following contexts:
@@ -42,20 +61,27 @@ export function fixMultiplicationSignBetweenNumbers(string, locale) {
 */
 export function fixMultiplicationSignBetweenWords(string, locale) {
 	let pattern =
-				"([" + locale.allChars + "]+)"
-			+ "([" + locale.spaces + "][x][" + locale.spaces + "])"
-			+ "([" + locale.allChars + "]+)";
+		'([' +
+		locale.allChars +
+		']+)' +
+		'([' +
+		locale.spaces +
+		'][x][' +
+		locale.spaces +
+		'])' +
+		'([' +
+		locale.allChars +
+		']+)'
 
-	let re = new RegExp(pattern, "g");
-	let replacement = "$1" + locale.nbsp +  locale.multiplicationSign + locale.nbsp + "$3";
+	let re = new RegExp(pattern, 'g')
+	let replacement =
+		'$1' + locale.nbsp + locale.multiplicationSign + locale.nbsp + '$3'
 
-	string = string.replace(re, replacement);
-	string = string.replace(re, replacement); // run it twice to catch odd/even occurences
+	string = string.replace(re, replacement)
+	string = string.replace(re, replacement) // run it twice to catch odd/even occurences
 
-	return string;
+	return string
 }
-
-
 
 /*
 	Replace “x/X” with “×” in the following contexts:
@@ -69,24 +95,30 @@ export function fixMultiplicationSignBetweenWords(string, locale) {
 */
 export function fixMultiplicationSignBetweenNumberAndWord(string, locale) {
 	let pattern =
-				"([" + locale.cardinalNumber + "])"
-			+ "([" + locale.spaces + "]?)"
-			+ "([x|×])"
-			+ "([" + locale.spaces + "])"
-			+ "([" + locale.lowercaseChars + "]+)";
-	let re = new RegExp(pattern, "gi");
+		'([' +
+		locale.cardinalNumber +
+		'])' +
+		'([' +
+		locale.spaces +
+		']?)' +
+		'([x|×])' +
+		'([' +
+		locale.spaces +
+		'])' +
+		'([' +
+		locale.lowercaseChars +
+		']+)'
+	let re = new RegExp(pattern, 'gi')
 
-	string = string.replace(re, function($0, $1, $2, $3, $4, $5){
-		if ($2 == "") {
-			return $1 + $2 + locale.multiplicationSign + locale.nbsp + $5;
+	string = string.replace(re, function ($0, $1, $2, $3, $4, $5) {
+		if ($2 == '') {
+			return $1 + $2 + locale.multiplicationSign + locale.nbsp + $5
 		}
-		return $1 + locale.nbsp + locale.multiplicationSign + locale.nbsp + $5;
-	});
+		return $1 + locale.nbsp + locale.multiplicationSign + locale.nbsp + $5
+	})
 
-	return string;
+	return string
 }
-
-
 
 /*
 	Fix spacing around intended multiplication sign in the following contexts:
@@ -99,24 +131,33 @@ export function fixMultiplicationSignBetweenNumberAndWord(string, locale) {
 */
 export function fixNbspAroundMultiplicationSign(string, locale) {
 	let pattern =
-				"([" + locale.cardinalNumber + "]+)"
-			+ "([" + locale.singlePrime + locale.doublePrime + "])?"
-			+ "([x|×])"
-			+ "([" + locale.cardinalNumber + "]+)"
-			+ "([" + locale.singlePrime + locale.doublePrime + "])?";
-	let re = new RegExp(pattern, "gi");
-	let replacement = "$1$2" + locale.nbsp + locale.multiplicationSign + locale.nbsp + "$4$5";
+		'([' +
+		locale.cardinalNumber +
+		']+)' +
+		'([' +
+		locale.singlePrime +
+		locale.doublePrime +
+		'])?' +
+		'([x|×])' +
+		'([' +
+		locale.cardinalNumber +
+		']+)' +
+		'([' +
+		locale.singlePrime +
+		locale.doublePrime +
+		'])?'
+	let re = new RegExp(pattern, 'gi')
+	let replacement =
+		'$1$2' + locale.nbsp + locale.multiplicationSign + locale.nbsp + '$4$5'
 
-	return string.replace(re, replacement);
+	return string.replace(re, replacement)
 }
 
-
-
 export function fixMultiplicationSign(string, locale) {
-	string = fixMultiplicationSignBetweenNumbers(string, locale);
-	string = fixMultiplicationSignBetweenWords(string, locale);
-	string = fixMultiplicationSignBetweenNumberAndWord(string, locale);
-	string = fixNbspAroundMultiplicationSign(string, locale);
+	string = fixMultiplicationSignBetweenNumbers(string, locale)
+	string = fixMultiplicationSignBetweenWords(string, locale)
+	string = fixMultiplicationSignBetweenNumberAndWord(string, locale)
+	string = fixNbspAroundMultiplicationSign(string, locale)
 
 	return string
 }

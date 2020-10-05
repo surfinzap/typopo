@@ -1,10 +1,8 @@
 export function removeMultipleSpaces(string, locale) {
-	let pattern = "[" + locale.spaces + "]{2,}";
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, " ");
+	let pattern = '[' + locale.spaces + ']{2,}'
+	let re = new RegExp(pattern, 'g')
+	return string.replace(re, ' ')
 }
-
-
 
 /*
 	Removes extra spaces at the beginning of each paragraph
@@ -23,26 +21,27 @@ export function removeMultipleSpaces(string, locale) {
 */
 export function removeSpacesAtParagraphStart(string) {
 	/* [1] split the lines manually */
-	let lines = string.split(/\r?\n/);
+	let lines = string.split(/\r?\n/)
 
 	/* [2] and remove extra spaces at the begining of each line */
 	for (let i = 0; i < lines.length; i++) {
-		lines[i] = lines[i].replace(/^\s+/, "");
+		lines[i] = lines[i].replace(/^\s+/, '')
 	}
 
 	/* [3] join lines together to a single string */
-	return lines.join("\n");
+	return lines.join('\n')
 }
-
-
 
 export function removeSpaceBeforeSentencePausePunctuation(string, locale) {
-	let pattern = "([" + locale.spaces + "])([" + locale.sentencePausePunctuation + "])([^\\-\\)]|$)";
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, "$2$3");
+	let pattern =
+		'([' +
+		locale.spaces +
+		'])([' +
+		locale.sentencePausePunctuation +
+		'])([^\\-\\)]|$)'
+	let re = new RegExp(pattern, 'g')
+	return string.replace(re, '$2$3')
 }
-
-
 
 /*
 	Removes extra space before:
@@ -61,14 +60,18 @@ export function removeSpaceBeforeSentencePausePunctuation(string, locale) {
 */
 export function removeSpaceBeforeTerminalPunctuation(string, locale) {
 	let pattern =
-			"([" + locale.spaces + "])"
-		+ "([" + locale.terminalPunctuation + locale.closingBrackets + locale.degree + "])";
+		'([' +
+		locale.spaces +
+		'])' +
+		'([' +
+		locale.terminalPunctuation +
+		locale.closingBrackets +
+		locale.degree +
+		'])'
 	// console.log(pattern);
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, "$2");
+	let re = new RegExp(pattern, 'g')
+	return string.replace(re, '$2')
 }
-
-
 
 /*
 	Removes extra spaces before ordinal indicator
@@ -83,26 +86,30 @@ export function removeSpaceBeforeTerminalPunctuation(string, locale) {
 */
 export function removeSpaceBeforeOrdinalIndicator(string, locale) {
 	let pattern =
-				"("+ locale.cardinalNumber + ")"
-			+ "(["+ locale.spaces +"]?)"
-			+ "("+ locale.ordinalIndicator +")"
-			+ "([" + locale.spaces + "]|\\b)"; //to avoid cathing "4 th" in "4 there"
-	let re = new RegExp(pattern, "g");
-	let replacement = "$1$3$4";
+		'(' +
+		locale.cardinalNumber +
+		')' +
+		'([' +
+		locale.spaces +
+		']?)' +
+		'(' +
+		locale.ordinalIndicator +
+		')' +
+		'([' +
+		locale.spaces +
+		']|\\b)' //to avoid cathing "4 th" in "4 there"
+	let re = new RegExp(pattern, 'g')
+	let replacement = '$1$3$4'
 
-	return string.replace(re, replacement);
+	return string.replace(re, replacement)
 }
-
-
 
 export function removeSpaceAfterOpeningBrackets(string, locale) {
 	let pattern =
-			"([" + locale.openingBrackets + "])"
-		+	"([" + locale.spaces + "])";
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, "$1");
+		'([' + locale.openingBrackets + '])' + '([' + locale.spaces + '])'
+	let re = new RegExp(pattern, 'g')
+	return string.replace(re, '$1')
 }
-
 
 /*
 	Add a space before opening brackets
@@ -128,21 +135,34 @@ export function removeSpaceAfterOpeningBrackets(string, locale) {
 */
 export function addSpaceBeforeOpeningBrackets(string, locale) {
 	let pattern =
-			"([" + locale.lowercaseChars + locale.uppercaseChars + "])"
-		+ "([" + locale.openingBrackets + "])"
-		+ "([" + locale.lowercaseChars + locale.uppercaseChars + locale.ellipsis + "])"
-		+ "([" + locale.lowercaseChars + locale.uppercaseChars + locale.ellipsis + locale.closingBrackets + "])";
-	let re = new RegExp(pattern, "g");
+		'([' +
+		locale.lowercaseChars +
+		locale.uppercaseChars +
+		'])' +
+		'([' +
+		locale.openingBrackets +
+		'])' +
+		'([' +
+		locale.lowercaseChars +
+		locale.uppercaseChars +
+		locale.ellipsis +
+		'])' +
+		'([' +
+		locale.lowercaseChars +
+		locale.uppercaseChars +
+		locale.ellipsis +
+		locale.closingBrackets +
+		'])'
+	let re = new RegExp(pattern, 'g')
 
 	return string.replace(re, function ($0, $1, $2, $3, $4) {
-		if ($3 == "s" | $3 == "S" | $3 + $4 == "es" | $3 + $4 == "ES" ) {
-			return $1 + $2 + $3 + $4;
+		if (($3 == 's') | ($3 == 'S') | ($3 + $4 == 'es') | ($3 + $4 == 'ES')) {
+			return $1 + $2 + $3 + $4
 		} else {
-			return $1 + locale.space + $2 + $3 + $4;
+			return $1 + locale.space + $2 + $3 + $4
 		}
-	});
+	})
 }
-
 
 /*
 	Add a space after terminal punctuation
@@ -156,13 +176,21 @@ export function addSpaceBeforeOpeningBrackets(string, locale) {
 */
 export function addSpaceAfterTerminalPunctuation(string, locale) {
 	var pattern =
-			"([" + locale.lowercaseChars + locale.uppercaseChars + "]{2,}|["+ locale.ellipsis + "])"
-		+ "([" + locale.terminalPunctuation + "])"
-		+ "([" + locale.uppercaseChars + "])";
-	var re = new RegExp(pattern, "g");
-	return string.replace(re, "$1$2 $3");
+		'([' +
+		locale.lowercaseChars +
+		locale.uppercaseChars +
+		']{2,}|[' +
+		locale.ellipsis +
+		'])' +
+		'([' +
+		locale.terminalPunctuation +
+		'])' +
+		'([' +
+		locale.uppercaseChars +
+		'])'
+	var re = new RegExp(pattern, 'g')
+	return string.replace(re, '$1$2 $3')
 }
-
 
 /*
 	Add a space after sentence pause punctuation
@@ -176,14 +204,22 @@ export function addSpaceAfterTerminalPunctuation(string, locale) {
 */
 export function addSpaceAfterSentencePause(string, locale) {
 	var pattern =
-			"([" + locale.lowercaseChars + locale.uppercaseChars + "]{2,}|["+ locale.ellipsis + "])"
-		+ "([" + locale.sentencePausePunctuation + "])"
-		+ "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
-	var re = new RegExp(pattern, "g");
-	return string.replace(re, "$1$2 $3");
+		'([' +
+		locale.lowercaseChars +
+		locale.uppercaseChars +
+		']{2,}|[' +
+		locale.ellipsis +
+		'])' +
+		'([' +
+		locale.sentencePausePunctuation +
+		'])' +
+		'([' +
+		locale.lowercaseChars +
+		locale.uppercaseChars +
+		'])'
+	var re = new RegExp(pattern, 'g')
+	return string.replace(re, '$1$2 $3')
 }
-
-
 
 /*
 	Add a space after closing brackets
@@ -196,42 +232,41 @@ export function addSpaceAfterSentencePause(string, locale) {
 */
 export function addSpaceAfterClosingBrackets(string, locale) {
 	var pattern =
-			"([" + locale.closingBrackets + "])"
-		+ "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
-	var re = new RegExp(pattern, "g");
-	return string.replace(re, "$1 $2");
+		'([' +
+		locale.closingBrackets +
+		'])' +
+		'([' +
+		locale.lowercaseChars +
+		locale.uppercaseChars +
+		'])'
+	var re = new RegExp(pattern, 'g')
+	return string.replace(re, '$1 $2')
 }
-
-
 
 export function removeTrailingSpaces(string) {
-	return string.trim();
+	return string.trim()
 }
-
-
 
 export function addSpaceBeforeSymbol(string, locale, symbol) {
-	let pattern = "([^" + locale.spaces + locale.openingBrackets + "])("+ symbol +")";
-	let re = new RegExp(pattern, "g");
-	let replacement = "$1" + locale.space + "$2";
+	let pattern =
+		'([^' + locale.spaces + locale.openingBrackets + '])(' + symbol + ')'
+	let re = new RegExp(pattern, 'g')
+	let replacement = '$1' + locale.space + '$2'
 
-	return string.replace(re, replacement);
+	return string.replace(re, replacement)
 }
 
-
-
-
 export function fixSpaces(string, locale) {
-	string = removeMultipleSpaces(string, locale);
-	string = removeSpacesAtParagraphStart(string, locale);
-	string = removeSpaceBeforeSentencePausePunctuation(string, locale);
-	string = removeSpaceBeforeTerminalPunctuation(string, locale);
-	string = removeSpaceBeforeOrdinalIndicator(string, locale);
-	string = removeSpaceAfterOpeningBrackets(string, locale);
-	string = addSpaceBeforeOpeningBrackets(string, locale);
-	string = addSpaceAfterTerminalPunctuation(string, locale);
-	string = addSpaceAfterClosingBrackets(string, locale);
-	string = addSpaceAfterSentencePause(string, locale);
-	string = removeTrailingSpaces(string, locale);
-	return string;
+	string = removeMultipleSpaces(string, locale)
+	string = removeSpacesAtParagraphStart(string, locale)
+	string = removeSpaceBeforeSentencePausePunctuation(string, locale)
+	string = removeSpaceBeforeTerminalPunctuation(string, locale)
+	string = removeSpaceBeforeOrdinalIndicator(string, locale)
+	string = removeSpaceAfterOpeningBrackets(string, locale)
+	string = addSpaceBeforeOpeningBrackets(string, locale)
+	string = addSpaceAfterTerminalPunctuation(string, locale)
+	string = addSpaceAfterClosingBrackets(string, locale)
+	string = addSpaceAfterSentencePause(string, locale)
+	string = removeTrailingSpaces(string, locale)
+	return string
 }

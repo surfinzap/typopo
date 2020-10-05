@@ -10,8 +10,6 @@
 	http://www.liteera.cz/slovnik/vypustka
 */
 
-
-
 /*
 	Replace 3 and more dots/ellipses with an ellipsis
 
@@ -22,13 +20,11 @@
 	@returns {string} — output with fixed ellipsis
 */
 export function replaceThreeCharsWithEllipsis(string, locale) {
-	let pattern = "[" +  locale.ellipsis + "\\.]{3,}";
-	let re = new RegExp(pattern, "g");
-	let replacement = locale.ellipsis;
-	return string.replace(re, replacement);
+	let pattern = '[' + locale.ellipsis + '\\.]{3,}'
+	let re = new RegExp(pattern, 'g')
+	let replacement = locale.ellipsis
+	return string.replace(re, replacement)
 }
-
-
 
 /*
 	Replace combination of period/ellipsis with an ellipsis
@@ -41,15 +37,17 @@ export function replaceThreeCharsWithEllipsis(string, locale) {
 */
 export function replaceTwoCharsWithEllipsis(string, locale) {
 	let pattern =
-					"\\." + locale.ellipsis + "|"
-				+ locale.ellipsis + "{2,}|"
-				+ locale.ellipsis + "\\.";
-	let re = new RegExp(pattern, "g");
-	let replacement = locale.ellipsis;
-	return string.replace(re, replacement);
+		'\\.' +
+		locale.ellipsis +
+		'|' +
+		locale.ellipsis +
+		'{2,}|' +
+		locale.ellipsis +
+		'\\.'
+	let re = new RegExp(pattern, 'g')
+	let replacement = locale.ellipsis
+	return string.replace(re, replacement)
 }
-
-
 
 /*
 	Replace two periods between words (spaces) with an ellipsis
@@ -61,13 +59,11 @@ export function replaceTwoCharsWithEllipsis(string, locale) {
 	@returns {string} — output with fixed ellipsis
 */
 export function replaceTwoPeriodsWithEllipsis(string, locale) {
-	let pattern = "[" + locale.spaces + "]\\.{2}[" + locale.spaces + "]";
-	let re = new RegExp(pattern, "g");
-	let replacement = locale.space + locale.ellipsis + locale.space;
-	return string.replace(re, replacement);
+	let pattern = '[' + locale.spaces + ']\\.{2}[' + locale.spaces + ']'
+	let re = new RegExp(pattern, 'g')
+	let replacement = locale.space + locale.ellipsis + locale.space
+	return string.replace(re, replacement)
 }
-
-
 
 /*
 	Fix spacing, when ellipsis is used around commas
@@ -80,12 +76,11 @@ export function replaceTwoPeriodsWithEllipsis(string, locale) {
 	@returns {string} — output with corrected spacing around ellipsis
 */
 export function fixEllipsisSpacingAroundCommas(string, locale) {
-	let pattern = ",[" + locale.spaces + "]?" + locale.ellipsis + "[" + locale.spaces + "]?,";
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, ", …,");
+	let pattern =
+		',[' + locale.spaces + ']?' + locale.ellipsis + '[' + locale.spaces + ']?,'
+	let re = new RegExp(pattern, 'g')
+	return string.replace(re, ', …,')
 }
-
-
 
 /*
 	Fix spacing, when aposiopesis is starting a paragraph
@@ -98,14 +93,17 @@ export function fixEllipsisSpacingAroundCommas(string, locale) {
 */
 export function fixAposiopesisStartingParagraph(string, locale) {
 	let pattern =
-			"(^…)"
-		+ "([" + locale.spaces + "])"
-		+ "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
-	let re = new RegExp(pattern, "gm");
-	return string.replace(re, "$1$3");
+		'(^…)' +
+		'([' +
+		locale.spaces +
+		'])' +
+		'([' +
+		locale.lowercaseChars +
+		locale.uppercaseChars +
+		'])'
+	let re = new RegExp(pattern, 'gm')
+	return string.replace(re, '$1$3')
 }
-
-
 
 /*
 	Fix spacing, when aposiopesis is starting a sentence
@@ -119,16 +117,25 @@ export function fixAposiopesisStartingParagraph(string, locale) {
 */
 export function fixAposiopesisStartingSentence(string, locale) {
 	let pattern =
-			"([" + locale.sentencePunctuation + locale.terminalQuotes + "])"
-		+ "([" + locale.spaces + "]?)"
-		+ "([" + locale.ellipsis +"])"
-		+ "([" + locale.spaces + "]?)"
-		+ "([" + locale.lowercaseChars +"])";
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, "$1 $3$5");
+		'([' +
+		locale.sentencePunctuation +
+		locale.terminalQuotes +
+		'])' +
+		'([' +
+		locale.spaces +
+		']?)' +
+		'([' +
+		locale.ellipsis +
+		'])' +
+		'([' +
+		locale.spaces +
+		']?)' +
+		'([' +
+		locale.lowercaseChars +
+		'])'
+	let re = new RegExp(pattern, 'g')
+	return string.replace(re, '$1 $3$5')
 }
-
-
 
 /*
 	Fix spacing, when aposiopesis is between sentences
@@ -143,16 +150,24 @@ export function fixAposiopesisStartingSentence(string, locale) {
 */
 export function fixAposiopesisBetweenSentences(string, locale) {
 	let pattern =
-			"([" + locale.lowercaseChars + "])"
-		+ "([" + locale.spaces + "])"
-		+ "([" + locale.ellipsis + "])"
-		+ "([" + locale.spaces + "]?)"
-		+ "([" + locale.uppercaseChars + "])";
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, "$1$3 $5");
+		'([' +
+		locale.lowercaseChars +
+		'])' +
+		'([' +
+		locale.spaces +
+		'])' +
+		'([' +
+		locale.ellipsis +
+		'])' +
+		'([' +
+		locale.spaces +
+		']?)' +
+		'([' +
+		locale.uppercaseChars +
+		'])'
+	let re = new RegExp(pattern, 'g')
+	return string.replace(re, '$1$3 $5')
 }
-
-
 
 /* eslint-disable no-irregular-whitespace */
 /*
@@ -168,14 +183,18 @@ export function fixAposiopesisBetweenSentences(string, locale) {
 /* eslint-enable no-irregular-whitespace */
 export function fixAposiopesisBetweenWords(string, locale) {
 	let pattern =
-			"([" + locale.allChars + "])"
-		+ "([" + locale.ellipsis + "])"
-		+ "([" + locale.allChars + "])";
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, "$1$2 $3");
+		'([' +
+		locale.allChars +
+		'])' +
+		'([' +
+		locale.ellipsis +
+		'])' +
+		'([' +
+		locale.allChars +
+		'])'
+	let re = new RegExp(pattern, 'g')
+	return string.replace(re, '$1$2 $3')
 }
-
-
 
 /*
 	Fix spacing, when ellipsis is between sentences
@@ -192,16 +211,25 @@ export function fixEllipsisBetweenSentences(string, locale) {
 	/* [4]	keep spaces around ellipsis when it is used at the beginning
 						of the full sentence in the middle of the paragraph */
 	let pattern =
-			"([" + locale.sentencePunctuation + locale.terminalQuotes + "])"
-		+ "([" + locale.spaces + "]?)"
-		+ "(" + locale.ellipsis +")"
-		+ "([" + locale.spaces + "]?)"
-		+ "([" + locale.uppercaseChars +"])";
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, "$1 $3 $5");
+		'([' +
+		locale.sentencePunctuation +
+		locale.terminalQuotes +
+		'])' +
+		'([' +
+		locale.spaces +
+		']?)' +
+		'(' +
+		locale.ellipsis +
+		')' +
+		'([' +
+		locale.spaces +
+		']?)' +
+		'([' +
+		locale.uppercaseChars +
+		'])'
+	let re = new RegExp(pattern, 'g')
+	return string.replace(re, '$1 $3 $5')
 }
-
-
 
 /*
 	Fix spacing, when aposiopesis is ending a paragraph
@@ -214,25 +242,29 @@ export function fixEllipsisBetweenSentences(string, locale) {
 */
 export function fixAposiopesisEndingParagraph(string, locale) {
 	let pattern =
-			"([" + locale.lowercaseChars + "])"
-		+ "([" + locale.spaces + "])"
-		+ "([" + locale.ellipsis + "]$)";
-	let re = new RegExp(pattern, "gm");
-	return string.replace(re, "$1$3");
+		'([' +
+		locale.lowercaseChars +
+		'])' +
+		'([' +
+		locale.spaces +
+		'])' +
+		'([' +
+		locale.ellipsis +
+		']$)'
+	let re = new RegExp(pattern, 'gm')
+	return string.replace(re, '$1$3')
 }
-
-
 
 export function fixEllipsis(string, locale) {
 	string = replaceThreeCharsWithEllipsis(string, locale)
-	string = fixEllipsisSpacingAroundCommas(string, locale);
-	string = fixAposiopesisStartingParagraph(string, locale);
-	string = fixAposiopesisStartingSentence(string, locale);
-	string = fixAposiopesisBetweenSentences(string, locale);
-	string = fixAposiopesisBetweenWords(string, locale);
-	string = fixEllipsisBetweenSentences(string, locale);
+	string = fixEllipsisSpacingAroundCommas(string, locale)
+	string = fixAposiopesisStartingParagraph(string, locale)
+	string = fixAposiopesisStartingSentence(string, locale)
+	string = fixAposiopesisBetweenSentences(string, locale)
+	string = fixAposiopesisBetweenWords(string, locale)
+	string = fixEllipsisBetweenSentences(string, locale)
 	string = fixAposiopesisEndingParagraph(string, locale)
 	string = replaceTwoCharsWithEllipsis(string, locale)
 	string = replaceTwoPeriodsWithEllipsis(string, locale)
-	return string;
+	return string
 }
