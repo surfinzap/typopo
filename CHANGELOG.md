@@ -9,6 +9,7 @@
 
 ### Maintenance
 * Added [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+* Update packages to the newest version
 
 
 
@@ -28,7 +29,7 @@
 There are no changes in functionality in this release
 
 ### Maintenance
-* Update packages to newest version
+* Update packages to the newest version
 
 
 
