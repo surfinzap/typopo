@@ -4,6 +4,10 @@
 ### Improvements
 * Fix accents used as apostrophe (Paul´s → Paul’s) (#43)
 
+### Maintenance
+* Added [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+
+
 
 ## 2.3.6 // 2020-10-03
 ### Fixes
@@ -14,7 +18,6 @@
 ### Maintenance
 * Revamp [README.md](README.md)
 * Refactor functions that fix ®, ™ and ©
-
 
 
 
