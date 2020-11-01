@@ -41,7 +41,14 @@ describe('Single quotes in default language (en-us)\n', () => {
 		"1990's": "1990’s",
 		"don't" : "don’t",
 		"don''t" : "don’t",
-		"don''’t" : "don’t",
+    "don''’t" : "don’t",
+    "Paul‘s Diner": "Paul’s Diner",
+    "Paul’s Diner": "Paul’s Diner",
+    "Paulʼs Diner": "Paul’s Diner",
+    "Paul‛s Diner": "Paul’s Diner",
+    "Paul`s Diner": "Paul’s Diner",
+    "Paul‚s Diner": "Paul’s Diner",
+    "Paul´s Diner": "Paul’s Diner",
 	};
 
 

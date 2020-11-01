@@ -1,5 +1,10 @@
 # Changelog for Typopo
 
+## 2.3.7 // 2020-11-
+### Improvements
+* Fix accents used as apostrophe (Paul´s → Paul’s) (#43)
+
+
 ## 2.3.6 // 2020-10-03
 ### Fixes
 * Remove incidents when an extra space was added after en/em dash at the end of a line (#31)
