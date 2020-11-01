@@ -1,6 +1,6 @@
 # Changelog for Typopo
 
-## 2.3.7 // 2020-11-
+## 2.3.7 // 2020-11-01
 ### Improvements
 * Fix acute or grave accents used as apostrophe (Paul´s → Paul’s) (#43)
 

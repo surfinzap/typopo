@@ -1,10 +1,10 @@
 /*!
- * Typopo 2.3.5
+ * Typopo 2.3.7
  *
  * Copyright 2015-20 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2020-07-27
+ * Date: 2020-11-01
  */
 
 import Locale from "./locale/locale";
