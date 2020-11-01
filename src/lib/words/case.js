@@ -30,8 +30,8 @@ export function fixCase(string, locale) {
 	*/
 	pattern = "(\\b)(?!iOS)(["+ locale.lowercaseChars +"])(["+ locale.uppercaseChars +"]{2,})";
 	re = new RegExp(pattern, "g");
-	string = string.replace(re, function(string, $1, $2, $3){
-		return ($1 + $2 + $3.toLowerCase());
+	string = string.replace(re, function($0, $1, $2, $3){
+    return ($1 + $2.toUpperCase() + $3.toLowerCase());
 	});
 
 	return string;

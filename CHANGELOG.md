@@ -2,7 +2,10 @@
 
 ## 2.3.7 // 2020-11-
 ### Improvements
-* Fix accents used as apostrophe (Paul´s → Paul’s) (#43)
+* Fix acute or grave accents used as apostrophe (Paul´s → Paul’s) (#43)
+
+### Fixes
+* Update how aCCIDENTAL case was fixed. When someone types aCCIDENTAL, it’s more likely they held Shift key while the Capslock was on. Therefore the intention was to type “Accidental” (but Typopo was fixing it to “accidental”). (#44)
 
 ### Maintenance
 * Added [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)

@@ -123,7 +123,7 @@ describe('Tests that all modules are plugged in', () => {
 
 		//case
 		"CMSko" : "CMSko",
-		"cAPSLOCK": "capslock",
+		"cAPSLOCK": "Capslock",
 
 		// publication identifiers
 		"ISSN 0000-0000" : "ISSN 0000-0000",
