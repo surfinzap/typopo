@@ -1,7 +1,17 @@
+/*
+  Removes mutliple spaces between words 
+
+  @param {string} string — input text for identification
+  @returns {string} — output with removed spaces between words
+*/
 export function removeMultipleSpaces(string, locale) {
-	let pattern = "[" + locale.spaces + "]{2,}";
+  let pattern = 
+      "(\\S)"
+    + "([" + locale.spaces + "]{2,})"
+    + "(\\S)";
+  // console.log(pattern);
 	let re = new RegExp(pattern, "g");
-	return string.replace(re, " ");
+  return string.replace(re, "$1 $3");
 }
 
 

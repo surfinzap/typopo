@@ -21,10 +21,11 @@ describe('Replace multiple spaces with a single one\n', () => {
 		"How  many spaces": "How many spaces",
 		"How   many": "How many",
 		"How    many": "How many",
-		"How     many": "How many",
+    "How     many": "How many",
 		"How      many": "How many", // test includes nbsp
 		"How      many": "How many", // test includes hairSpace
 		"How      many": "How many", // test includes narrowNbsp
+    "Howč     čmany": "Howč čmany", // non-latin character
 	};
 
 
