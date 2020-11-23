@@ -8,7 +8,7 @@ import {removeMultipleSpaces,
 				addSpaceAfterTerminalPunctuation,
 				addSpaceAfterSentencePause,
 				addSpaceAfterClosingBrackets,
-				removeTrailingSpaces,
+				removeSpacesAtParagraphEnd,
 				addSpaceBeforeSymbol,
 				fixSpaces} from "../../lib/whitespace/spaces";
 import assert from 'assert';
@@ -299,17 +299,20 @@ describe('Remove trailing spaces\n', () => {
 		"trailing spaces    ": "trailing spaces",
 		"trailing spaces    ": "trailing spaces", // nbsp
 		"trailing spaces    ": "trailing spaces", // hair_space
-		"trailing spaces    ": "trailing spaces", // narrow_nbsp
+    "trailing spaces    ": "trailing spaces", // narrow_nbsp
+    "trailing spaces\t\t": "trailing spaces", // narrow_nbsp
 		"trailing spaces.    ": "trailing spaces.",
-		"trailing spaces;    ": "trailing spaces;",
+    "trailing spaces;    ": "trailing spaces;",
+    "first line    \nsecond line  ": "first line\nsecond line",
+    "first line    \nsecond line  \nthird line   ": "first line\nsecond line\nthird line",
 		"Радостна комната —  ": "Радостна комната —",
 	};
 
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.strictEqual(removeTrailingSpaces(key, new Locale("en-us")), testCase[key]);
-		});
+			assert.strictEqual(removeSpacesAtParagraphEnd(key, new Locale("en-us")), testCase[key]);
+    });
 	});
 });
 

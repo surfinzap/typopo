@@ -36,6 +36,34 @@ export function removeSpacesAtParagraphStart(string) {
 
 
 
+/*
+  Removes extra spaces and tabs at the end of each paragraph.
+
+  [1] split the lines manually
+  [2] remove empty spaces or tabs at the end of the paragraph
+  [3] join lines together to a single string
+  
+  @param {string} string — input text for identification
+  @returns {string} — output with removed spaces at the beginning of paragraphs
+  */
+ export function removeSpacesAtParagraphEnd(string) {
+   /* [1] split the lines manually */
+   let lines = string.split(/\r?\n/);
+   let pattern = "(\\s+$)"; 
+   let re = new RegExp(pattern, "g");
+   
+   /* [2] remove empty spaces or tabs at the end of the paragraph*/
+   for (let i = 0; i < lines.length; i++) {
+     lines[i] = lines[i].replace(re, "");
+   }  
+
+   /* [3] join lines together to a single string */
+   return lines.join("\n");
+}
+
+
+
+
 export function removeSpaceBeforeSentencePausePunctuation(string, locale) {
 	let pattern = "([" + locale.spaces + "])([" + locale.sentencePausePunctuation + "])([^\\-\\)]|$)";
 	let re = new RegExp(pattern, "g");
@@ -204,11 +232,6 @@ export function addSpaceAfterClosingBrackets(string, locale) {
 
 
 
-export function removeTrailingSpaces(string) {
-	return string.trim();
-}
-
-
 
 export function addSpaceBeforeSymbol(string, locale, symbol) {
 	let pattern = "([^" + locale.spaces + locale.openingBrackets + "])("+ symbol +")";
@@ -224,6 +247,7 @@ export function addSpaceBeforeSymbol(string, locale, symbol) {
 export function fixSpaces(string, locale) {
 	string = removeMultipleSpaces(string, locale);
 	string = removeSpacesAtParagraphStart(string, locale);
+	string = removeSpacesAtParagraphEnd(string, locale);
 	string = removeSpaceBeforeSentencePausePunctuation(string, locale);
 	string = removeSpaceBeforeTerminalPunctuation(string, locale);
 	string = removeSpaceBeforeOrdinalIndicator(string, locale);
@@ -232,6 +256,5 @@ export function fixSpaces(string, locale) {
 	string = addSpaceAfterTerminalPunctuation(string, locale);
 	string = addSpaceAfterClosingBrackets(string, locale);
 	string = addSpaceAfterSentencePause(string, locale);
-	string = removeTrailingSpaces(string, locale);
 	return string;
 }
