@@ -6,7 +6,7 @@ New configuration option to remove/keep whitespaces before nested markdown lists
 
 **Typopo removes nested lists**
 
-`(config) removeWhitespacesBeforeMarkdownList : true`
+`removeWhitespacesBeforeMarkdownList : true`
 
 ![Typopo removes nested lists](assets/typopo-removes-nested-lists.gif "Typopo removes nested lists")
 
@@ -16,7 +16,7 @@ New configuration option to remove/keep whitespaces before nested markdown lists
 
 ![Typopo keeps nested lists](assets/typopo-keeps-nested-lists.gif "Typopo keeps nested lists")
 
-## Fixes
+### Fixes
 * Remove trailing spaces at the end of each line (#45)
 
 
