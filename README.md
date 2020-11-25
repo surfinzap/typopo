@@ -134,7 +134,7 @@ Fix typos in given text (string) and locale; with an optional configuration:
 fixTypos(string, locale, [configuration])
 ```
 
-Locale options—supported languages:
+Locale options (supported languages):
 - "en-us" (English, default)
 - "rue" (Rusyn)
 - "sk" (Slovak)
