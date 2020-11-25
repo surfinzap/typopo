@@ -40,7 +40,9 @@ describe('Replace 2 hyphens with an en dash\n', () => {
 
 describe('Replace spaced hyphen with an em dash (en-us, sk, cs, rue)\n', () => {
 	let testCase = {
-		"and - she said": "and — she said",
+    "and - she said": "and — she said",
+    " - she said": " - she said", // false positive; no change at the beginning of paragraph
+    
 	};
 
 	Object.keys(testCase).forEach((key) => {

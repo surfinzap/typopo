@@ -4,12 +4,16 @@ import assert from 'assert';
 describe('Remove empty lines\n', () => {
 	let testCase = {
 		// Remove excessive empty lines between paragraphs
-		"something here\nand over there\n\nand over there\n\n\nand over there":
-		"something here\nand over there\nand over there\nand over there",
+    "line\nline\n\nline\n\n\nline": "line\nline\nline\nline",
+    "line\nline\r\nline\r\n\nline": "line\nline\nline\nline",
+    
+    // False positives
+    " - she said": " - she said", // do not remove space at the beginning of paragraph
+
 	};
 
 	Object.keys(testCase).forEach((key) => {
-		it("should remove excessive empty lines", () => {
+		it("module test", () => {
 			assert.strictEqual(removeEmptyLines(key), testCase[key]);
 		});
 	});

@@ -47,7 +47,8 @@ export function fixTypos(string, locale, configuration) {
 	let currentLocale = new Locale(locale);
 
 	configuration = (typeof configuration === "undefined") ? {
-		removeLines : true,
+    removeLines : true,
+    removeWhitespacesBeforeMarkdownList : true,
 	} : configuration;
 
 	// exclude exceptions from fixing
@@ -61,7 +62,7 @@ export function fixTypos(string, locale, configuration) {
 	string = fixEllipsis(string, currentLocale);
 
 	// spaces cleanup
-	string = fixSpaces(string, currentLocale);
+	string = fixSpaces(string, currentLocale, configuration);
 
 	// punctuation
 	string = fixPeriod(string);

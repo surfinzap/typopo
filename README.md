@@ -21,11 +21,11 @@
 - [Contents](#contents)
 - [Features](#features)
 - [Use](#use)
-	- [Online app](#online-app)
-	- [VS Code extension](#vs-code-extension)
-	- [NPM package](#npm-package)
-	- [JavaScript library](#javascript-library)
-	- [API](#api)
+  - [Online app](#online-app)
+  - [VS Code extension](#vs-code-extension)
+  - [NPM package](#npm-package)
+  - [JavaScript library](#javascript-library)
+  - [API](#api)
 - [News & Releases](#news-releases)
 - [Support](#support)
 - [Feedback](#feedback)
@@ -144,10 +144,14 @@ Locale options—supported languages:
 Optional configuration as a JavaScript object:
 ```javascript
 configuration = {
-	removeLines : true, // Remove empty lines between paragraphs if true
+  // If true, removes empty lines between paragraphs
+  removeLines : true, 
+  
+  // if true, removes empty lines before a nested Markdown list; set as false if you use Typopo to fix typography of your Markdown files
+  removeWhitespacesBeforeMarkdownList : true, 
 }
 ```
-(Psst, “removeLines” is the only available configuration option for now.)
+
 
 
 

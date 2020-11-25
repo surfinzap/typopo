@@ -11,7 +11,7 @@ export function replaceTwoHyphensWithEnDash(string) {
 
 
 export function replaceSpacedHyphenWithDash(string, locale) {
-	let pattern = "[" + locale.spaces + "][" + locale.hyphen + "][" + locale.spaces + "]";
+	let pattern = "\\b[" + locale.spaces + "][" + locale.hyphen + "][" + locale.spaces + "]";
 	let re = new RegExp(pattern, "g");
 	let replacement = "";
 
@@ -65,7 +65,6 @@ export function consolidateSpacedDashes(string, locale) {
 export function fixDashSpacesBetweenWords(string, locale) {
 	let pattern = "([" + locale.spaces + "]?)([" + locale.emDash + locale.enDash + "])([" + locale.spaces + "]?)(["+ locale.allChars +"])";
 	let re = new RegExp(pattern, "g");
-	// console.log(pattern);
 	let replacement = "";
 
 	switch (locale.locale) {
@@ -148,7 +147,6 @@ export function fixDashBetweenCardinalNumbers(string, locale) {
 			+ "[" + locale.hyphen + locale.enDash + locale.emDash + "]"
 			+ "[" + locale.spaces + "]?)"
 			+ "(" + locale.cardinalNumber + ")";
-	// console.log(pattern);
 	let re = new RegExp(pattern, "g");
 	let replacement = "$1" + "{{typopo__endash}}" + "$3";
 	string = string.replace(re, replacement); // [1] replace odd matches

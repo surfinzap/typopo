@@ -1,6 +1,20 @@
 # Changelog for Typopo
 
-## 2.3.8 // 2020-11-
+## 2.4.0 // 2020-11-25
+### New features
+New configuration option to remove/keep whitespaces before nested markdown lists.
+
+**Typopo removes nested lists**
+
+`(config) removeWhitespacesBeforeMarkdownList : true`
+
+![Typopo removes nested lists](assets/typopo-removes-nested-lists.gif "Typopo removes nested lists")
+
+**Typopo keeps nested lists**
+
+`removeWhitespacesBeforeMarkdownList : false`
+
+![Typopo keeps nested lists](assets/typopo-keeps-nested-lists.gif "Typopo keeps nested lists")
 
 ## Fixes
 * Remove trailing spaces at the end of each line (#45)

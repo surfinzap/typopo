@@ -1,5 +1,5 @@
 import {removeMultipleSpaces,
-				removeSpacesAtParagraphStart,
+				removeSpacesAtParagraphBeginning,
 				removeSpaceBeforeSentencePausePunctuation,
 				removeSpaceBeforeTerminalPunctuation,
 				removeSpaceBeforeOrdinalIndicator,
@@ -13,6 +13,14 @@ import {removeMultipleSpaces,
 				fixSpaces} from "../../lib/whitespace/spaces";
 import assert from 'assert';
 import Locale from "../../locale/locale";
+
+let configRemoveWhitespacesBeforeParagraphs = {
+  removeWhitespacesBeforeMarkdownList: true,
+}
+
+let configKeepWhitespacesBeforeMarkdownList = {
+  removeWhitespacesBeforeMarkdownList: false,
+}
 
 describe('Replace multiple spaces with a single one\n', () => {
 	let testCase = {
@@ -30,51 +38,103 @@ describe('Replace multiple spaces with a single one\n', () => {
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("", () => {
+		it("unit test", () => {
 			assert.strictEqual(removeMultipleSpaces(key, new Locale("en-us")), testCase[key]);
 		});
 	});
 });
 
-describe('Remove spaces and tabs at paragraph start\n', () => {
+let testRemoveSpacesBeforeText = {
+
+  " What if paragraph starts with extra space at the beginning?":
+    "What if paragraph starts with extra space at the beginning?",
+
+  "  What if paragraph starts with extra space at the beginning?":
+    "What if paragraph starts with extra space at the beginning?",
+
+  "   What if paragraph starts with extra space at the beginning?":
+    "What if paragraph starts with extra space at the beginning?",
+
+  "    What if paragraph starts with extra space at the beginning?":
+    "What if paragraph starts with extra space at the beginning?", // including nbsp
+
+  "    What if paragraph starts with extra space at the beginning?":
+    "What if paragraph starts with extra space at the beginning?", // including hairSpace
+
+  "    What if paragraph starts with extra space at the beginning?":
+    "What if paragraph starts with extra space at the beginning?", // including narrowNbsp
+
+  "One sentence ends. And next one continues as it should":
+    "One sentence ends. And next one continues as it should",
+
+  /* removing tabs as well*/
+  "\t\t\tWhat if sentence starts with tabs?": "What if sentence starts with tabs?",
+  "\t\tWhat if sentence starts with tabs?": "What if sentence starts with tabs?",
+  "	What if sentence starts with tabs?": "What if sentence starts with tabs?",
+
+  // double-check, that single new lines are not removed
+  "If there is one line\nand another": "If there is one line\nand another",
+};
+
+let testRemoveSpacesBeforeMarkdownList = {
+  " - list": "- list",
+  "  - list": "- list",
+  "\t- list": "- list",
+  "\t\t- list": "- list",
+  " * list": "* list",
+  "  * list": "* list",
+  "\t\t* list": "* list",
+  "\t* list": "* list",
+  " * list": "* list", //nbsp
+  " * list": "* list", //narrowNbsp
+}
+
+let testKeepSpacesBeforeMarkdownList = {
+  " - list": " - list",
+  "   - list": "   - list",
+  "\t- list": "\t- list",
+  "\t\t- list": "\t\t- list",
+  " * list": " * list",
+  "   * list": "   * list",
+  "\t\t* list": "\t\t* list",
+  "\t* list": "\t* list",
+  " * list": " * list", //nbsp
+  " * list": " * list", //narrowNbsp 
+}
+
+describe('Remove spaces and tabs at beginning of the paragraph\n', () => {
 	let testCase = {
-
-		" What if paragraph starts with extra space at the beginning?":
-		"What if paragraph starts with extra space at the beginning?",
-
-		"  What if paragraph starts with extra space at the beginning?":
-		"What if paragraph starts with extra space at the beginning?",
-
-		"   What if paragraph starts with extra space at the beginning?":
-		"What if paragraph starts with extra space at the beginning?",
-
-		"    What if paragraph starts with extra space at the beginning?":
-		"What if paragraph starts with extra space at the beginning?", // including nbsp
-
-		"    What if paragraph starts with extra space at the beginning?":
-		"What if paragraph starts with extra space at the beginning?", // including hairSpace
-
-		"    What if paragraph starts with extra space at the beginning?":
-		"What if paragraph starts with extra space at the beginning?", // including narrowNbsp
-
-		"One sentence ends. And next one continues as it should":
-		"One sentence ends. And next one continues as it should",
-
-		/* removing tabs as well*/
-		"			What if sentence starts with tabs?": "What if sentence starts with tabs?",
-		"		What if sentence starts with tabs?": "What if sentence starts with tabs?",
-		"	What if sentence starts with tabs?": "What if sentence starts with tabs?",
-
-		// double-check, that single new lines are not removed
-		"If there is one line \nand another": "If there is one line \nand another",
+    ...testRemoveSpacesBeforeText,
+    ...testRemoveSpacesBeforeMarkdownList,
 	};
 
 	Object.keys(testCase).forEach((key) => {
-		it("", () => {
-			assert.strictEqual(removeSpacesAtParagraphStart(key, new Locale("en-us")), testCase[key]);
-		});
+		it("unit test", () => {
+      assert.strictEqual(removeSpacesAtParagraphBeginning(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs), testCase[key]);
+    });
+    it("module test", () => {
+      assert.strictEqual(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs), testCase[key]);
+    });
 	});
 });
+
+
+describe('Remove spaces and tabs at beginning of the paragraph, but keep spaces and tabs at the beginning of markdown lists (indicated as -/*)\n', () => {
+  let testCase = {
+    ...testRemoveSpacesBeforeText,
+    ...testKeepSpacesBeforeMarkdownList,
+  };
+
+  Object.keys(testCase).forEach((key) => {
+    it("unit test", () => {
+      assert.strictEqual(removeSpacesAtParagraphBeginning(key, new Locale("en-us"), configKeepWhitespacesBeforeMarkdownList), testCase[key]);
+    });
+    it("module test", () => {
+      assert.strictEqual(fixSpaces(key, new Locale("en-us"), configKeepWhitespacesBeforeMarkdownList), testCase[key]);
+    });
+  });
+});
+
 
 describe('Remove space before sentence pause-punctuation\n', () => {
 	let testCase = {
@@ -143,7 +203,7 @@ describe('Remove space before ordinal indicator (en-us)\n', () => {
 		});
 
 		it("module tests", () => {
-			assert.strictEqual(fixSpaces(key, new Locale("en-us")), testCase[key]);
+      assert.strictEqual(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs), testCase[key]);
 		});
 	});
 });
@@ -178,7 +238,7 @@ describe('Remove space after opening brackets\n', () => {
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("", () => {
+		it("unit test", () => {
 			assert.strictEqual(removeSpaceAfterOpeningBrackets(key, new Locale("en-us")), testCase[key]);
 		});
 	});
@@ -200,7 +260,7 @@ describe('Add space before opening brackets\n', () => {
 
 
 	Object.keys(testCase).forEach((key) => {
-		it("", () => {
+		it("unit test", () => {
 			assert.strictEqual(addSpaceBeforeOpeningBrackets(key, new Locale("en-us")), testCase[key]);
 		});
 	});
@@ -231,7 +291,7 @@ describe('Add space after terminal punctuation\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test", () => {
-			assert.strictEqual(fixSpaces(key, new Locale("en-us")), testCase[key]);
+      assert.strictEqual(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs), testCase[key]);
 		});
 	});
 });
@@ -262,7 +322,7 @@ describe('Add a space after sentence pause punctuation\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test", () => {
-			assert.strictEqual(fixSpaces(key, new Locale("en-us")), testCase[key]);
+      assert.strictEqual(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs), testCase[key]);
 		});
 	});
 });
@@ -288,7 +348,7 @@ describe('Add a space after closing brackets\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test", () => {
-			assert.strictEqual(fixSpaces(key, new Locale("en-us")), testCase[key]);
+      assert.strictEqual(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs), testCase[key]);
 		});
 	});
 });
@@ -314,6 +374,9 @@ describe('Remove trailing spaces\n', () => {
 		it("unit test", () => {
 			assert.strictEqual(removeSpacesAtParagraphEnd(key, new Locale("en-us")), testCase[key]);
     });
+    it("module test", () => {
+      assert.strictEqual(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs), testCase[key]);
+    });    
 	});
 });
 

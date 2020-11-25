@@ -9,7 +9,6 @@ export function removeMultipleSpaces(string, locale) {
       "(\\S)"
     + "([" + locale.spaces + "]{2,})"
     + "(\\S)";
-  // console.log(pattern);
 	let re = new RegExp(pattern, "g");
   return string.replace(re, "$1 $3");
 }
@@ -17,30 +16,39 @@ export function removeMultipleSpaces(string, locale) {
 
 
 /*
-	Removes extra spaces at the beginning of each paragraph
-
-	This could be done with a one-liner:
-	return string.replace(/^\s+/gm, "");
-
-	However, it also removes empty lines. Since, we want to handle this change
-	separately, we need to
+  Removes extra spaces and tabs at the beginning of each paragraph, 
+  unless user conifgures to keep spaces before beginning of the nested markdown lists
+  
 	[1] split the lines manually
-	[2] and remove extra spaces at the begining of each line
-	[3] join lines together to a single string
+  [2] if removeWhitespacesBeforeMarkdownList = false; keep the spaces before the markdown lists
+  [3] otherwise remove other empty spaces or tabs at the beginning of the paragraph
+	[4] join lines together to a single string
 
 	@param {string} string — input text for identification
 	@returns {string} — output with removed spaces at the beginning of paragraphs
 */
-export function removeSpacesAtParagraphStart(string) {
+export function removeSpacesAtParagraphBeginning(string, locale, configuration) {
 	/* [1] split the lines manually */
 	let lines = string.split(/\r?\n/);
 
-	/* [2] and remove extra spaces at the begining of each line */
-	for (let i = 0; i < lines.length; i++) {
-		lines[i] = lines[i].replace(/^\s+/, "");
-	}
+  let pattern = "(^\\s+)([-\\*]*)"; // identify whitespaces and markdown list indicators -/*
+  let re = new RegExp(pattern, "g");
 
-	/* [3] join lines together to a single string */
+
+  for (let i = 0; i < lines.length; i++) {
+    lines[i] = lines[i].replace(re, function ($0, $1, $2) {
+        /* [2] */
+      if (configuration.removeWhitespacesBeforeMarkdownList == false && $2 !="") {
+          return $1 + $2;
+        /* [3] */  
+        } else {
+          return $2
+        }
+      }
+    );
+  }
+
+	/* [4] join lines together to a single string */
 	return lines.join("\n");
 }
 
@@ -54,7 +62,7 @@ export function removeSpacesAtParagraphStart(string) {
   [3] join lines together to a single string
   
   @param {string} string — input text for identification
-  @returns {string} — output with removed spaces at the beginning of paragraphs
+  @returns {string} — output with removed spaces at the end of paragraphs
   */
  export function removeSpacesAtParagraphEnd(string) {
    /* [1] split the lines manually */
@@ -101,7 +109,6 @@ export function removeSpaceBeforeTerminalPunctuation(string, locale) {
 	let pattern =
 			"([" + locale.spaces + "])"
 		+ "([" + locale.terminalPunctuation + locale.closingBrackets + locale.degree + "])";
-	// console.log(pattern);
 	let re = new RegExp(pattern, "g");
 	return string.replace(re, "$2");
 }
@@ -254,9 +261,9 @@ export function addSpaceBeforeSymbol(string, locale, symbol) {
 
 
 
-export function fixSpaces(string, locale) {
+export function fixSpaces(string, locale, configuration) {
 	string = removeMultipleSpaces(string, locale);
-	string = removeSpacesAtParagraphStart(string, locale);
+	string = removeSpacesAtParagraphBeginning(string, locale, configuration);
 	string = removeSpacesAtParagraphEnd(string, locale);
 	string = removeSpaceBeforeSentencePausePunctuation(string, locale);
 	string = removeSpaceBeforeTerminalPunctuation(string, locale);
