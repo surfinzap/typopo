@@ -147,7 +147,9 @@ configuration = {
   // If true, removes empty lines between paragraphs
   removeLines : true, 
   
-  // if true, removes empty lines before a nested Markdown list; set as false if you use Typopo to fix typography of your Markdown files
+  // if true, removes empty lines before a nested Markdown list; 
+  // set as false if you use Typopo to fix typography of your Markdown files
+  // see examples: https://github.com/surfinzap/typopo/releases/tag/2%2F4%2F0
   removeWhitespacesBeforeMarkdownList : true, 
 }
 ```
