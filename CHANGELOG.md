@@ -1,5 +1,12 @@
 # Changelog for Typopo
 
+## 2.4.1 // 2021-03-12
+No functional changes in this release.
+
+### Maintenance
+* Update packages to their latest versions
+
+
 ## 2.4.0 // 2020-11-25
 ### New features
 New configuration option to remove/keep whitespaces before nested markdown lists.
