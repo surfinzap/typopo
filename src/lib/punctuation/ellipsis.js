@@ -19,6 +19,7 @@
 	Sentence ending…..... → Sentence ending…
 
 	@param {string} string — input text for identification
+	@param {string} locale — locale option
 	@returns {string} — output with fixed ellipsis
 */
 export function replaceThreeCharsWithEllipsis(string, locale) {
