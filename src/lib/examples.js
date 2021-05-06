@@ -24,9 +24,9 @@ export function name(string, locale) {
  	let pattern =
 				"(\\b)"
 			+ "(["+ locale.romanNumerals + "]+)"
-			+ "("+ locale.romanOrdinalIndicator +")"
+			+ "(" + locale.romanOrdinalIndicator +")"
 			+ "(["+ locale.spaces +"]?)"
-			+ "([" + locale.allChars + locale.cardinalNumber + "])";
+			+ "(["+ locale.allChars + locale.cardinalNumber + "])";
 	let re = new RegExp(pattern, "g");
 	let replacement = locale.ellipsis;
 	return string.replace(re, replacement); 
