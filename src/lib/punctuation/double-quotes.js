@@ -1,5 +1,55 @@
 /*
-	Corrects improper use of double quotes and double primes
+	Remove extra punctuation before double quotes
+
+	Example
+	“Hey!,” she said" 						→ “Hey!” she said
+
+	Exceptions
+	(cs/sk) Byl to “Karel IV.”, ktery neco…
+	č., s., fol., str.,
+
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with removed extra terminal punctuation
+*/
+export function removeExtraPunctuationBeforeQuotes(string, locale) {
+	let pattern =
+				"([^"+ locale.romanNumerals + "])"
+			+ "([" + locale.sentencePunctuation + "])"
+			+ "([" + locale.sentencePunctuation + "])"
+			+ "("  + locale.doubleQuoteAdepts + ")"
+	let re = new RegExp(pattern, "g");
+
+	return string.replace(re, "$1$2$4"); 
+}
+/*
+	Swap double quotes and terminal punctuation
+
+	Example
+	“We will continue tomorrow.”. → “We will continue tomorrow.”
+
+	Exceptions
+	(cs/sk) Byl to “Karel IV.”, ktery neco…
+
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with removed extra terminal punctuation
+*/
+export function swapQuotesAndTerminalPunctuation(string, locale) {
+	let pattern =
+				"("+ locale.doubleQuoteAdepts + ")"
+			+ "([" + locale.terminalPunctuation + locale.ellipsis + "])";
+	let re = new RegExp(pattern, "g");
+	return string.replace(re, '$2$1');
+}
+
+
+
+
+/*
+	Correct improper use of double quotes and double primes
 
 	Assumptions and Limitations
 	This function assumes that double quotes are always used in pair,
@@ -21,22 +71,17 @@
 	[10] Replace all identified punctuation with appropriate punctuation in
 	    given language
 
-	@param {string} string — input text for identification
-	@param {string} language — language option
+  @param {string} string: input text for identification
+  @param {string} locale: locale option
 	@returns {string} output with properly replaces double qoutes and double primes
 */
 export function fixDoubleQuotesAndPrimes(string, locale) {
 
-	/* [0] Remove extra terminal punctuation around double quotes
-					e.g. “We will continue tomorrow.”.
+	/* [0] Remove extra terminal punctuation around double quotes */
+	string = removeExtraPunctuationBeforeQuotes(string, locale);
+	string = removeExtraPunctuationAfterQuotes(string, locale);
 
-					Exception
-					Do not remove extra terminal punctuation for the given example:
-					Byl to “Karel IV.”, ktery neco
-					*/
-	let pattern = "([^" + locale.romanNumerals + "])([" + locale.sentencePunctuation + "])("+ locale.doubleQuoteAdepts + ")([" + locale.sentencePunctuation + "])";
-	let re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1$2$3");
+
 
 	/* [1] Swap right double quote adepts with a terminal punctuation */
 	pattern =

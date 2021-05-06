@@ -1,9 +1,69 @@
-import {fixDoubleQuotesAndPrimes} from "../../lib/punctuation/double-quotes";
+import {removeExtraPunctuationBeforeQuotes,
+				removeExtraPunctuationAfterQuotes, 
+				fixDoubleQuotesAndPrimes} 
+				from "../../lib/punctuation/double-quotes";
 import assert from 'assert';
 import Locale from "../../locale/locale";
 
+let testFalsePositives = {
+	"č., s., fol., str.," : 
+	"č., s., fol., str.,",
+	"Byl to “Karel IV.”, ktery":
+	"Byl to “Karel IV.”, ktery"
+}
+
+
+describe('Remove punctuation before double quotes (en):\n', () => {
+	let testCase = {
+		/* extra comma after terminal punctuation, 
+		 as it it happens in direct speech */
+		"“Hey!,” she said": 
+		"“Hey!” she said",
+		...testFalsePositives,
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(removeExtraPunctuationBeforeQuotes(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+
+
+describe('Remove punctuation after double quotes (en):\n', () => {
+	let testCase = {
+		/* dot at the end of a direct speech ending with abbreviation */
+		"“We will continue this tomorrow at 8:00 a.m.”.": 
+		"“We will continue this tomorrow at 8:00 a.m.”",
+		...testFalsePositives,
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(removeExtraPunctuationAfterQuotes(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+
+
+
 describe('Double quotes in default language (en)\n', () => {
 	let testCase = {
+
+		
+
 		/* Basic tests */
 		"English „English„ „English„ English": "English “English” “English” English",
 		"“English double quotation marks“": "“English double quotation marks”",
@@ -80,14 +140,7 @@ describe('Double quotes in default language (en)\n', () => {
 		"We’ll remove a quote, \" when it is hanging spaced around in the middle":
 		"We’ll remove a quote,  when it is hanging spaced around in the middle",
 
-		/* Remove extra sentence punctuation
 
-			[1] extra comma after terminal punctuation, it it happens often in direct speech
-			[2] extra dot at the end of a direct speech ending with abbreviation
-			[3] false positive */
-		/*[1]*/"“Hey!,” she said": "“Hey!” she said",
-		/*[2]*/"“We will continue this tomorrow at 8:00 a.m.”.": "“We will continue this tomorrow at 8:00 a.m.”",
-		/*[3]*/"č., s., fol., str.," : "č., s., fol., str.,",
 
 
 		/* Wrong spacing */
