@@ -28,8 +28,6 @@ let testFalsePositives = {
 	"Hey.”": 
 	"Hey.”",
 
-
-	/* We won’t swap double quotes and punctuation when only portion of a sentence is double-quoted */
 	"Because of this, it’s common to have “namespace pollution”, where completely unrelated code shares global variables.": 
 	"Because of this, it’s common to have “namespace pollution”, where completely unrelated code shares global variables.",
 }
@@ -71,6 +69,9 @@ let testModule = {
 
 	"\"Conference 2020\" and \"something in quotes\"." : 
 	"“Conference 2020” and “something in quotes”.", 
+
+	"Here are 30 \"bucks\"":
+	"Here are 30 “bucks”",
 
 	"Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”":
 	"Within double quotes “there are single ‘quotes with mixed punctuation’, you see”.",	
@@ -173,37 +174,47 @@ describe('Swap double quotes and terminal punctuation (en-us):\n', () => {
 
 
 
-describe.skip('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us):\n', () => {
+describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us):\n', () => {
 	let testCase = {
-		"He said: “Here’s a 12\" record.”":
-		"He said: “Here’s a 12″ record.”",
-
-		//tbd provide combinations of other wrong identifications like '', etc. 
 		"12′ 45\"": "12′ 45″",
+		"12′ 45“": "12′ 45″",
+		"12′ 45”": "12′ 45″",
+		"12′ 45″": "12′ 45″",
+		"12′ 45‘‘": "12′ 45″",
+		"12′ 45’’": "12′ 45″",
+		"12′ 45\'\'": "12′ 45″",
+		"12′ 45′′": "12′ 45″",
+		
 		"3° 5′ 30\"": "3° 5′ 30″",
 		"12\"3′00°": "12″3′00°",
-
-		//tbd fix spaces?
-		// Improperly spaced double primes
-		"12′ 45 ″": "12′ 45″",
-		"3° 5′ 30 ″": "3° 5′ 30″",
-		"3° 5′ 30 ″ and": "3° 5′ 30″ and",
 
 		"So it’s 12\" × 12\", right?" : 
 		"So it’s 12″ × 12″, right?",
 
-		// tbd some false positives
-		"Here is 30 “bucks”":
-		"Here is 30 “bucks”",
+		"She said: “It’s a 12\" inch!”":
+		"She said: “It’s a 12″ inch!”",
 
-		//tbd
-		// "She said: \"It’s a 12\" inch!\""
-
-		
 		...testFalsePositives,
 	};
+	
+	let unitTestCase = {
+		"12′ 45 \"": "12′ 45 ″",
+		"12′ 45 “": "12′ 45 ″",
+		"12′ 45 ”": "12′ 45 ″",
+		"12′ 45 ″": "12′ 45 ″",
+		"12′ 45 ‘‘": "12′ 45 ″",
+		"12′ 45 ’’": "12′ 45 ″",
+		"12′ 45 \'\'": "12′ 45 ″",
+		"12′ 45 ′′": "12′ 45 ″",	
+		
+		// false positive to exclude long numbers (temporary)
+		"“Conference 2020\" and “something in quotes”." : 
+		"“Conference 2020\" and “something in quotes”.",
+		
+		...testCase,
+	};
 
-	Object.keys(testCase).forEach((key) => {
+	Object.keys(unitTestCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(
 				placeLocaleDoubleQuotes(
@@ -213,8 +224,12 @@ describe.skip('Identify inches, arcseconds, seconds following a 1–3 numbers (e
 					), 
 					new Locale("en-us")
 				),
-				testCase[key]);
+				unitTestCase[key]);
 		});
+	});
+
+
+	Object.keys(testCase).forEach((key) => {
 		it("module test", () => {
 			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
 		});
@@ -251,7 +266,27 @@ describe('Identify double quote pairs (en-us):\n', () => {
 		
 		"\"quoted material\" and \"quoted material\"":
 		"“quoted material” and “quoted material”",	
+
+		// primes × double quotes
+		"\"Conference 2020\" and \"something in quotes\"." : 
+		"“Conference 2020” and “something in quotes”.",
+
+		"\"Gone in 60{{typopo__double-prime}}\"":
+		"“Gone in 60″”",
+
+		"\"2020\"":
+		"“2020”",
+
+		"\"202\"":
+		"“202”",
+
+
+		// false positive
+		"\"starting quotes, primes 90{{typopo__double-prime}}, ending quotes\"":
+		"“starting quotes, primes 90″, ending quotes”",
 		
+
+		//jibberish inside quotes
 		",,idjsa ;frilj ;'f0d, if9,,":
 		"“idjsa ;frilj ;'f0d, if9”",
 		
@@ -460,6 +495,11 @@ describe('Replace a double qoute & a double prime with a double quote pair (en-u
 	let unitTestCase = {
 		"{{typopo__left-double-quote--standalone}}word{{typopo__double-prime}}":
 		"{{typopo__left-double-quote}}word{{typopo__right-double-quote}}",
+
+		"{{typopo__double-prime}}word{{typopo__right-double-quote--standalone}}":
+		"{{typopo__left-double-quote}}word{{typopo__right-double-quote}}",		
+
+
 				
 		...testFalsePositives,
 	};
@@ -467,6 +507,9 @@ describe('Replace a double qoute & a double prime with a double quote pair (en-u
 	let moduleTestCase = {
 		"It’s called \"Localhost 3000\" and it’s pretty fast.":
 		"It’s called “Localhost 3000” and it’s pretty fast.",
+
+		"Here are 30 \"bucks\"":
+		"Here are 30 “bucks”",
 				
 		...testFalsePositives,
 	};	
@@ -586,7 +629,14 @@ describe('Remove extra spaces around quotes and primes (en-us):\n', () => {
 
 		"“Sentence and… ”": "“Sentence and…”",
 
-		"12′ 45 ″": "12′ 45″",
+		"12′ 45 ″": 
+		"12′ 45″", 
+
+		"3° 5′ 30 ″": 
+		"3° 5′ 30″",
+
+		"3° 5′ 30 ″ and": 
+		"3° 5′ 30″ and",
 
 		...testFalsePositives,
 	};
@@ -703,7 +753,7 @@ describe('Double quotes in default language (en-us)\n', () => {
 });
 
 
-describe.skip('Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n', () => {
+describe('Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n', () => {
 	let testCase = {
 		...testModuleSk,
 	};
@@ -724,7 +774,7 @@ describe.skip('Double quotes in Slovak, Czech and German language (sk, cs, de-de
 });
 
 
-describe.skip('Double quotes in Rusyn language (rue)\n', () => {
+describe('Double quotes in Rusyn language (rue)\n', () => {
 	let testCase = {
 		...testModuleRue,
 	};
