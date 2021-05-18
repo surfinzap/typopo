@@ -112,10 +112,12 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 */
 export function identifyDoublePrimes(string, locale) {
 	let pattern = 
-			"(\\d{1,3}[" + locale.spaces +"]?)"
+			"(\\b\\d{1,3})"
+		+ "([" + locale.spaces +"]?)"
 		+ "(“|”|\"|″|‘{2,}|’{2,}|'{2,}|′{2,})";
+
 	let re = new RegExp(pattern, "g");
-	return string.replace(re, "$1{{typopo__double-prime}}");
+	return string.replace(re, "$1$2{{typopo__double-prime}}");
 }
 
 
@@ -134,13 +136,33 @@ export function identifyDoublePrimes(string, locale) {
 	@returns {string} output with identified double quote pairs
 */
 export function identifyDoubleQuotePairs(string, locale) {
-	let pattern = 
+	// double quotes around a number
+	string = string.replace(
+		new RegExp(
+			"(" + locale.doubleQuoteAdepts + ")"
+		+ "(\\d+)"
+		+ "({{typopo__double-prime}})",
+			"g"
+		),
+			"{{typopo__left-double-quote}}"
+		+ "$2"
+		+ "{{typopo__right-double-quote}}"
+	);
+
+	// generic rule
+	string = string.replace(
+		new RegExp(
 			"(" + locale.doubleQuoteAdepts + ")"
 		+ "(.*?)"
-		+ "(" + locale.doubleQuoteAdepts + ")";
+		+ "(" + locale.doubleQuoteAdepts + ")",
+			"g"
+		),
+			"{{typopo__left-double-quote}}"
+		+ "$2"
+		+ "{{typopo__right-double-quote}}"
+	);
 
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, "{{typopo__left-double-quote}}$2{{typopo__right-double-quote}}");
+	return string;
 }
 
 
@@ -240,12 +262,33 @@ export function removeUnidentifiedDoubleQuote(string, locale) {
 	@returns {string} output with a double quote pair
 */
 export function replaceDoublePrimeWDoubleQuote(string, locale) {
-	let pattern = 
+
+	string = string.replace(
+		new RegExp(
 			"({{typopo__left-double-quote--standalone}})"
 		+ "(.*?)"
-		+ "({{typopo__double-prime}})";
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, "{{typopo__left-double-quote}}$2{{typopo__right-double-quote}}");
+		+ "({{typopo__double-prime}})",
+			"g"
+		),
+			"{{typopo__left-double-quote}}"
+		+ "$2"
+		+ "{{typopo__right-double-quote}}"
+	);
+
+	string = string.replace(
+		new RegExp(
+			"({{typopo__double-prime}})"
+		+ "(.*?)"
+		+ "({{typopo__right-double-quote--standalone}})",
+			"g"
+		),
+			"{{typopo__left-double-quote}}"
+		+ "$2"
+		+ "{{typopo__right-double-quote}}"
+	);	
+
+	return string;
+
 }
 
 
