@@ -391,7 +391,13 @@ export function swapQuotesAndTerminalPunctuationForQuotedPart(string, locale) {
 		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
 		+ "(" + locale.rightDoubleQuote + ")";
 
-	
+	// console.log(pattern)
+
+	// prva varianta bude \B na konci
+
+	// stredova varianta bude, ze potom followuje medzera a male alebo velke pismseno. obe su ok, lebo na zaciatku je podmientka ze tam nie je interpunkcia predtym. 
+
+	// jeden alebo dva regexy?
 
 	let re = new RegExp(pattern, "g");
 	return string.replace(re, "$1$2$3$4$5$7$6");
