@@ -559,36 +559,45 @@ describe('Replace a double qoute & a double prime with a double quote pair (en-u
 
 describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', () => {
 	let testCase = {
+
+		// quoted part at the 
+		// end of a sentence
+		// end of a paragraph
 		"Sometimes it can be only a “quoted part.”":
 		"Sometimes it can be only a “quoted part”.",
 
 		"Sometimes it can be only a “quoted” “part.”":
 		"Sometimes it can be only a “quoted” “part”.",
+		
+		"Is it “Amores Perros”?":
+		"Is it “Amores Perros”?",
 
-		"a “quoted part.” a “quoted part.”":
-		"a “quoted part”. a “quoted part”.",
+		"Look for “Anguanga”.":
+		"Look for “Anguanga”.",
 
 		"“A whole sentence.” Only a “quoted part.”":
 		"“A whole sentence.” Only a “quoted part”.",
 
+		// quoted part at the 
+		// end of a sentence
+		// middle of a paragraph
+		"a “quoted part.” A “quoted part.”":
+		"a “quoted part”. A “quoted part”.",
+
 		"Only a “quoted part.” “A whole sentence.”":
 		"Only a “quoted part”. “A whole sentence.”",
 
+		// quoted part in the middle of a sentence
+			// toto tu je asi zbytocny test
 		"Only a “quoted part” in a sentence. “A whole sentence.”":
 		"Only a “quoted part” in a sentence. “A whole sentence.”",
 
-		"Ask “What’s going on in here?” so you can dig deeper.":
+		"Ask “What’s going on in here”? so you can dig deeper.":
 		"Ask “What’s going on in here?” so you can dig deeper.",
 
-		"Is it “Amores Perros”?":
-		"Is it “Amores Perros”?",
 
-		// false positives
-		"Look for “Anguanga”.":
-		"Look for “Anguanga”.",
 
-		"Look for “Amores Perros”.":
-		"Look for “Amores Perros”.",		
+	
 
 		...testFalsePositives,
 	};
