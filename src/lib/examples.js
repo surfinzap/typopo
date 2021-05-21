@@ -20,15 +20,28 @@
 	@param {string} locale: locale option
 	@returns {string} output with ...
 */
-export function name(string, locale) {
- 	let pattern =
-				"(\\b)"
-			+ "(["+ locale.romanNumerals + "]+)"
-			+ "(" + locale.romanOrdinalIndicator +")"
-			+ "(["+ locale.spaces +"]?)"
-			+ "(["+ locale.allChars + locale.cardinalNumber + "])";
+export function name(string, locale) {	
+	let pattern =
+			"(\\b)"
+		+ "(["+ locale.romanNumerals + "]+)"
+		+ "(" + locale.romanOrdinalIndicator +")"
+		+ "(["+ locale.spaces +"]?)"
+		+ "(["+ locale.allChars + locale.cardinalNumber + "])";
 	let re = new RegExp(pattern, "g");
 	let replacement = locale.ellipsis;
+
+
+	// shorter version
+	string = string.replace(
+		new RegExp(
+			"("+ locale.leftDoubleQuote +")"
+		+ "(["+ locale.spaces +"])", 
+			"g"
+		),
+		"$1"
+	)
+
+
 	return string.replace(re, replacement); 
 }
 
@@ -45,14 +58,16 @@ describe('Test case (en):\n', () => {
 				unitFunction(
 					key, 
 					new Locale("en-us")), 
-					testCase[key]);
+				testCase[key]
+			);
 		});
 		it("module test", () => {
 			assert.strictEqual(
 				moduleFunction(
 					key, 
 					new Locale("en-us")), 
-					testCase[key]);
+				testCase[key]
+			);
 		});
 	});
 });
