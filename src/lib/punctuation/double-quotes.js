@@ -1,3 +1,25 @@
+/* 
+Refactoring notes
+
+
+
+
+- fix double quote errors
+
+
+
+- refactor spaces around double primes to be fixed in isolation. wait for a global module tests on this.
+
+- remove: swapQuotesAndTerminalPunctuation from code & tests
+
+
+- {{typopo__...}} as const
+
+*/ 
+
+
+
+
 /*
 	Remove extra punctuation before double quotes
 
@@ -55,7 +77,10 @@ export function removeExtraPunctuationAfterQuotes(string, locale) {
 /*
 	Swap double quotes and terminal punctuation
 
-	This is a dumb algorithm to swaps double qoutes and terminal punctuation (.!?) regardless of the context. This algorithm runs early in the overal sequence as we want to avoide false identification of double primes that will follow.
+	This is a dumb algorithm to swaps double qoutes and terminal punctuation (.!?) regardless of the context. 
+
+	The algorithm is early in the sequence to swap 12." → 12". to further identify double primes.
+
 
 	Two different rules:
 	1. Quotes contain only quoted material:
@@ -95,12 +120,20 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 	It's a dumb algorithm that picks all the options after a number, regardless of whether they may be quotes
 
 	Example
-	12′ 45" → 12′ 45″
+	[1]
+	{quote adept} sentence 12{quote adept}. 
+	{quote adept} sentence 12.{quote adept}
+	
+	[2]
+	12′ 45" → 
+	12′ 45″
 
-	How this alg impacts module
-	It falsely identifies inches, where we are expecting quotes, e.g.
-	"Konference 2020" in quotes → “Konference 2020” in quotes 
-	→ this is corrected in [TBD]
+
+	How this algorithm impacts ’double-quotes’ module
+	It falsely identifies inches, where we are expecting quotes, e.g.	
+	"Konference 2020" in quotes → 
+	“Konference 2020” in quotes 
+	→ this is corrected in replaceDoublePrimeWDoubleQuote
 
 	Implementation note
 	We’re not using locale.doubleQuoteAdepts variable
@@ -111,13 +144,39 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 	@returns {string} output with identified double primes as a temporary variable string, e.g. {{typopo__double-prime}}
 */
 export function identifyDoublePrimes(string, locale) {
-	let pattern = 
+
+	// [1]
+	string = string.replace(
+		new RegExp(
+			"(" + locale.doubleQuoteAdepts + ")"
+		+ "(.+?)"
+		+ "(\\d+)"
+		+ "(" + locale.doubleQuoteAdepts + ")"
+		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])", 
+			"g"
+		),
+			"$1"
+		+ "$2"
+		+ "$3"
+		+ "$5"
+		+ "$4"
+	)
+
+	// [2]
+	string = string.replace(
+		new RegExp(
 			"(\\b\\d{1,3})"
 		+ "([" + locale.spaces +"]?)"
-		+ "(“|”|\"|″|‘{2,}|’{2,}|'{2,}|′{2,})";
+		+ "(“|”|\"|″|‘{2,}|’{2,}|'{2,}|′{2,})", 
+			"g"
+		),
+			"$1"
+		+ "$2"
+		+ "{{typopo__double-prime}}"
+	)
 
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, "$1$2{{typopo__double-prime}}");
+
+	return string;
 }
 
 
@@ -332,6 +391,7 @@ export function swapQuotesAndTerminalPunctuationForQuotedPart(string, locale) {
 		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
 		+ "(" + locale.rightDoubleQuote + ")";
 
+	
 
 	let re = new RegExp(pattern, "g");
 	return string.replace(re, "$1$2$3$4$5$7$6");
@@ -528,7 +588,7 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	string = removeExtraPunctuationAfterQuotes(string, locale);
 
 	/* [1] Swap right double quote adepts with a terminal punctuation */
-	string = swapQuotesAndTerminalPunctuation(string, locale)
+	// string = swapQuotesAndTerminalPunctuation(string, locale)
 
 	/* [2] Identify inches, arcseconds, seconds */
 	string = identifyDoublePrimes(string, locale);

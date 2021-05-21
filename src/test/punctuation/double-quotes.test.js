@@ -149,7 +149,7 @@ describe('Remove punctuation after double quotes (en-us):\n', () => {
 
 
 
-describe('Swap double quotes and terminal punctuation (en-us):\n', () => {
+describe.skip('Swap double quotes and terminal punctuation (en-us):\n', () => {
 	let testCase = {
 		"Hey”.": 
 		"Hey.”",
@@ -159,6 +159,7 @@ describe('Swap double quotes and terminal punctuation (en-us):\n', () => {
 
 		"Hey”?": 
 		"Hey?”",
+
 		...testFalsePositives,
 	};
 
@@ -194,6 +195,14 @@ describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 		"She said: “It’s a 12\" inch!”":
 		"She said: “It’s a 12″ inch!”",
 
+
+		// identify swapped inches with terminal punctuation
+		"\"He was 12\"." :
+		"“He was 12.”",
+
+		"He was 12\"." :
+		"He was 12″.",
+
 		...testFalsePositives,
 	};
 	
@@ -210,8 +219,18 @@ describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 		// false positive to exclude long numbers (temporary)
 		"“Conference 2020\" and “something in quotes”." : 
 		"“Conference 2020\" and “something in quotes”.",
-		
-		...testCase,
+
+		// identify swapped inches with terminal punctuation
+		"\"He was 12\"." :
+		"\"He was 12.\"",
+
+		// false positive
+		"He was 12\"." :
+		"He was 12″.",
+
+		"\"He was 12.\"": 
+		"\"He was 12.\"", 
+
 	};
 
 	Object.keys(unitTestCase).forEach((key) => {
@@ -558,6 +577,19 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 		"Only a “quoted part” in a sentence. “A whole sentence.”":
 		"Only a “quoted part” in a sentence. “A whole sentence.”",
 
+		"Ask “What’s going on in here?” so you can dig deeper.":
+		"Ask “What’s going on in here?” so you can dig deeper.",
+
+		"Is it “Amores Perros”?":
+		"Is it “Amores Perros”?",
+
+		// false positives
+		"Look for “Anguanga”.":
+		"Look for “Anguanga”.",
+
+		"Look for “Amores Perros”.":
+		"Look for “Amores Perros”.",		
+
 		...testFalsePositives,
 	};
 
@@ -739,7 +771,7 @@ describe('Add a missing space after a left double quote (en-us):\n', () => {
 
 
 
-describe('Double quotes in default language (en-us)\n', () => {
+describe.skip('Double quotes in default language (en-us)\n', () => {
 	let testCase = {
 		...testModule,
 		...testFalsePositives,
@@ -753,7 +785,7 @@ describe('Double quotes in default language (en-us)\n', () => {
 });
 
 
-describe('Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n', () => {
+describe.skip('Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n', () => {
 	let testCase = {
 		...testModuleSk,
 	};
