@@ -3,7 +3,7 @@
 ## 2.4.2 // 2021-05-
 
 ### Improvements
-I’ve collected a couple of edge cases where Typopo fixed double quotes and double primes incorrectly. Resolving those edge cases required more significant code refactoring, so I delayed the fix. But over the past few weeks, I finally had time to sit on it. Here are few examples of improvements:
+I’ve collected a couple of edge cases where Typopo was fixing double quotes and double primes incorrectly. Here are few examples of improvements:
 - Here are 30 "bucks" → Here are 30 “bucks” (before, a left quote was falsely identified as a double prime)
 - "Conference 2020" and "something in quotes". → “Conference 2020” and “something in quotes”. (before, a right quote after “2020” was falsely identified as a double prime)
 - "2020" → “2020” (before, dumb quotes around numbers were not identified as a double quote pair)

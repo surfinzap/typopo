@@ -10,7 +10,6 @@ Refactoring notes
 
 - refactor spaces around double primes to be fixed in isolation. wait for a global module tests on this.
 
-- remove: swapQuotesAndTerminalPunctuation from code & tests
 
 
 - {{typopo__...}} as const
@@ -71,45 +70,6 @@ export function removeExtraPunctuationAfterQuotes(string, locale) {
 	let re = new RegExp(pattern, "g");
 
 	return string.replace(re, "$1$2$3"); 
-}
-
-
-/*
-	Swap double quotes and terminal punctuation
-
-	This is a dumb algorithm to swaps double qoutes and terminal punctuation (.!?) regardless of the context. 
-
-	The algorithm is early in the sequence to swap 12." → 12". to further identify double primes.
-
-
-	Two different rules:
-	1. Quotes contain only quoted material:
-	“Sometimes it can be a whole sentence.”
-	Sometimes it can be only a “quoted part”.
-	The difference is where the terminal and sentence pause punctuation is.
-
-	2. American editorial style
-	Similar as the first rule, but commas (,) and periods (.) go before closing quotation marks, regardless whether they are part of the quoted material.
-
-	The aim here is to support the first rule.
-
-	Example
-	TBD
-
-	Exceptions
-	TBD
-
-
-	@param {string} string: input text for identification
-	@param {string} locale: locale option
-	@returns {string} output with swapped double quotes and terminal punctuation
-*/
-export function swapQuotesAndTerminalPunctuation(string, locale) {
-	let pattern =
-				"("+ locale.doubleQuoteAdepts + ")"
-			+ "([" + locale.terminalPunctuation + locale.ellipsis + "])";
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, '$2$1');
 }
 
 
@@ -355,11 +315,19 @@ export function replaceDoublePrimeWDoubleQuote(string, locale) {
 /*
  Swap quotes and terminal punctuation for a quoted part
 
-	Assumptions
-	Double quotes are identified with temporary identifier.
 
-	Context
-	In 'swapQuotesAndTerminalPunctuation' we have swapped all double right quotes by default with a terminal 		punctuation. However, quotes should contain only quoted material and 'swapQuotesAndTerminalPunctuation' falsely swaps terminal punctuation also for only “quoted part”.
+ 	There are two different rules to follow quotes:
+	1. Quotes contain only quoted material:
+	“Sometimes it can be a whole sentence.”
+	Sometimes it can be only a “quoted part”.
+	The difference is where the terminal and sentence pause punctuation is.
+
+	2. American editorial style
+	Similar as the first rule, but commas (,) and periods (.) go before closing quotation marks, regardless whether they are part of the quoted material.
+
+	The aim here is to support the first rule.
+
+
 	
 	Examples
 	“Sometimes it can be a whole sentence.”
@@ -374,33 +342,89 @@ export function replaceDoublePrimeWDoubleQuote(string, locale) {
 
 
 	Algorithm
-	1. Match all the double quote pairs that do not precede sentence punctuation (and thus must be used within a sentence) 
-	2. Swap right double quote with a terminal punctuation. Make sure the pattern is not greedy and it won’t catch multiple double quote pairs. This is important otherwise the algorithm would also falsely catch a whole quoted sentence.
+	Three different cases
 
 	@param {string} string: input text for identification
 	@param {string} locale: locale option
 	@returns {string} output with swapped double quotes and terminal punctuation within a quoted part
 */
 export function swapQuotesAndTerminalPunctuationForQuotedPart(string, locale) {	
-	let pattern =
+
+	// place punctuation outside of quoted part
+	string = string.replace(
+		new RegExp(
 			"([^" + locale.sentencePunctuation + "])"
 		+ "([" + locale.spaces + "])"
 		+ "(" + locale.leftDoubleQuote + ")"
 		+ "([^" + locale.rightDoubleQuote +"]+?)"
 		+ "([^" + locale.romanNumerals + "])"
 		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
-		+ "(" + locale.rightDoubleQuote + ")";
+		+ "(" + locale.rightDoubleQuote + ")", 
+			"g"
+		),
+			"$1"
+		+ "$2"
+		+ "$3"
+		+ "$4"
+		+ "$5"
+		+ "$7"
+		+ "$6"
+	);
 
-	// console.log(pattern)
+	// place punctuation within a quoted sentence in the middle of the sentence sentence
+	string = string.replace(
+		new RegExp(
+			"([^" + locale.sentencePunctuation + "])"
+		+ "([" + locale.spaces + "])"
+		+ "(" + locale.leftDoubleQuote + ")"
+		+ "([^" + locale.rightDoubleQuote +"]+?)"
+		+ "([^" + locale.romanNumerals + "])"
+		+ "(" + locale.rightDoubleQuote + ")"
+		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
+		+ "([" + locale.spaces + "])"
+		+ "([" + locale.lowercaseChars + "])",
 
-	// prva varianta bude \B na konci
+			"g"
+		),
+			"$1"
+		+ "$2"
+		+ "$3"
+		+ "$4"
+		+ "$5"
+		+ "$7"
+		+ "$6"
+		+ "$8"
+		+ "$9"
+	);
+	
 
-	// stredova varianta bude, ze potom followuje medzera a male alebo velke pismseno. obe su ok, lebo na zaciatku je podmientka ze tam nie je interpunkcia predtym. 
+	// place punctuation within a quoted sentence 
+	string = string.replace(
+		new RegExp(
+			"([" + locale.sentencePunctuation + "])"
+		+ "([" + locale.spaces + "])"
+		+ "(" + locale.leftDoubleQuote + ")"
+		+ "([^" + locale.rightDoubleQuote +"]+?)"
+		+ "([^" + locale.romanNumerals + "])"
+		+ "(" + locale.rightDoubleQuote + ")"
+		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
+		+ "(\\B)",
 
-	// jeden alebo dva regexy?
+			"g"
+		),
+			"$1"
+		+ "$2"
+		+ "$3"
+		+ "$4"
+		+ "$5"
+		+ "$7"
+		+ "$6"
+		+ "$8"
+	);
 
-	let re = new RegExp(pattern, "g");
-	return string.replace(re, "$1$2$3$4$5$7$6");
+
+	return string;
+
 }
 
 
@@ -592,9 +616,6 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	/* [0] Remove extra terminal punctuation around double quotes */
 	string = removeExtraPunctuationBeforeQuotes(string, locale);
 	string = removeExtraPunctuationAfterQuotes(string, locale);
-
-	/* [1] Swap right double quote adepts with a terminal punctuation */
-	// string = swapQuotesAndTerminalPunctuation(string, locale)
 
 	/* [2] Identify inches, arcseconds, seconds */
 	string = identifyDoublePrimes(string, locale);
