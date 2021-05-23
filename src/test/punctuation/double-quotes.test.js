@@ -84,6 +84,9 @@ let testModule = {
 
 	"\"…\"":
 	"“…”",
+
+	"\"Ctrl+I and…\"":
+	"“Ctrl+I and…”",
 }
 
 
