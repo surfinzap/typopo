@@ -1,6 +1,5 @@
 import {removeExtraPunctuationBeforeQuotes,
 				removeExtraPunctuationAfterQuotes, 
-				swapQuotesAndTerminalPunctuation,
 				swapQuotesAndTerminalPunctuationForQuotedPart,
 				identifyDoublePrimes,
 				identifyDoubleQuotePairs,
@@ -148,30 +147,6 @@ describe('Remove punctuation after double quotes (en-us):\n', () => {
 });
 
 
-
-describe.skip('Swap double quotes and terminal punctuation (en-us):\n', () => {
-	let testCase = {
-		"Hey”.": 
-		"Hey.”",
-
-		"Hey”…": 
-		"Hey…”",
-
-		"Hey”?": 
-		"Hey?”",
-
-		...testFalsePositives,
-	};
-
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.strictEqual(swapQuotesAndTerminalPunctuation(key, new Locale("en-us")), testCase[key]);
-		});
-		it("module test", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
-		});
-	});
-});
 
 
 
@@ -592,12 +567,20 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 		"Only a “quoted part” in a sentence. “A whole sentence.”":
 		"Only a “quoted part” in a sentence. “A whole sentence.”",
 
+
+		// place punctuation within a quoted sentence in the middle of the sentence sentence
 		"Ask “What’s going on in here”? so you can dig deeper.":
 		"Ask “What’s going on in here?” so you can dig deeper.",
 
 
 
-	
+		// place punctuation within a quoted sentence
+		"He was ok. “He was ok”.": 
+		"He was ok. “He was ok.”",
+
+		"He was ok? “He was ok”.": 
+		"He was ok? “He was ok.”",
+
 
 		...testFalsePositives,
 	};
@@ -780,7 +763,7 @@ describe('Add a missing space after a left double quote (en-us):\n', () => {
 
 
 
-describe.skip('Double quotes in default language (en-us)\n', () => {
+describe('Double quotes in default language (en-us)\n', () => {
 	let testCase = {
 		...testModule,
 		...testFalsePositives,
@@ -794,7 +777,7 @@ describe.skip('Double quotes in default language (en-us)\n', () => {
 });
 
 
-describe.skip('Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n', () => {
+describe('Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n', () => {
 	let testCase = {
 		...testModuleSk,
 	};
