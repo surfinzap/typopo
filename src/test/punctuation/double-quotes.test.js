@@ -29,6 +29,7 @@ let testFalsePositives = {
 
 	"Because of this, it’s common to have “namespace pollution”, where completely unrelated code shares global variables.": 
 	"Because of this, it’s common to have “namespace pollution”, where completely unrelated code shares global variables.",
+
 }
 
 
@@ -80,6 +81,9 @@ let testModule = {
 
 	"He was ok. “He was ok”.": 
 	"He was ok. “He was ok.”",
+
+	"\"…\"":
+	"“…”",
 }
 
 
@@ -571,6 +575,8 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 		// place punctuation within a quoted sentence in the middle of the sentence sentence
 		"Ask “What’s going on in here”? so you can dig deeper.":
 		"Ask “What’s going on in here?” so you can dig deeper.",
+
+
 
 
 
