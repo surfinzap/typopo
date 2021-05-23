@@ -2,14 +2,10 @@
 Refactoring notes
 
 
-
-
 - fix double quote errors
 
 
-
 - refactor spaces around double primes to be fixed in isolation. wait for a global module tests on this.
-
 
 
 - {{typopo__...}} as const
@@ -596,8 +592,7 @@ export function addSpaceAfterRightDoubleQuote(string, locale) {
 	i.e. authors did not forget to close double quotes in their text.
 
 	Algorithm
-	[0] Remove extra terminal punctuation around double quotes
-	[1] Swap right double quote adepts with a terminal punctuation
+	[1] Remove extra terminal punctuation around double quotes
 	[2] Identify inches, arcseconds, seconds
 	[3] Identify double quote pairs
 	[4] Identify standalone double quotes
@@ -613,7 +608,7 @@ export function addSpaceAfterRightDoubleQuote(string, locale) {
 */
 export function fixDoubleQuotesAndPrimes(string, locale) {
 
-	/* [0] Remove extra terminal punctuation around double quotes */
+	/* [1] Remove extra terminal punctuation around double quotes */
 	string = removeExtraPunctuationBeforeQuotes(string, locale);
 	string = removeExtraPunctuationAfterQuotes(string, locale);
 
