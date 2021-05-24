@@ -1,16 +1,16 @@
 # Changelog for Typopo
 
 ## 2.4.2 // 2021-05-
+This version is released as minor, as there are not many updates to common use-cases. However, in this version, I have completely rewrote module that fixes double quotes and double primes to improve identification and correction of few edge cases.
 
 ### Improvements
-I’ve collected a couple of edge cases where Typopo was fixing double quotes and double primes incorrectly. Here are few examples of improvements:
-- Here are 30 "bucks" → Here are 30 “bucks” (before, a left quote was falsely identified as a double prime)
-- "Conference 2020" and "something in quotes". → “Conference 2020” and “something in quotes”. (before, a right quote after “2020” was falsely identified as a double prime)
-- "2020" → “2020” (before, dumb quotes around numbers were not identified as a double quote pair)
+These edge cases around double quotes and double primes are now fixed correctly:
+- Here are 30 "bucks" → Here are 30 “bucks” *(before, a left quote was falsely identified as a double prime)*
+- "Conference 2020" and "something in quotes". → “Conference 2020” and “something in quotes”. *(before, a right quote after “2020” was falsely identified as a double prime)*
+- "2020" → “2020” *(before, dumb quotes around numbers were not identified as a double quote pair)*
+- "He was ok. “He was ok ”." → "He was ok. “He was ok.”", *(before, when a right double quote was swapped with a terminal punctuation, the extra space wasn't removed)*
 
 
-### Maintenance
-- **tbd**
 
 
 
