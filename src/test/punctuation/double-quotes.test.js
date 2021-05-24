@@ -174,6 +174,7 @@ describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 		"12′ 45’’": "12′ 45″",
 		"12′ 45\'\'": "12′ 45″",
 		"12′ 45′′": "12′ 45″",
+		"12''" : "12″",
 		
 		"3° 5′ 30\"": "3° 5′ 30″",
 		"12\"3′00°": "12″3′00°",
@@ -210,6 +211,7 @@ describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 		"12′ 45 ’’": "12′ 45 ″",
 		"12′ 45 \'\'": "12′ 45 ″",
 		"12′ 45 ′′": "12′ 45 ″",	
+		"12 ''" : "12 ″",
 		
 		// false positive to exclude long numbers (temporary)
 		"“Conference 2020\" and “something in quotes”." : 
