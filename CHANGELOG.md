@@ -10,6 +10,8 @@ These edge cases around double quotes and double primes are now fixed correctly:
 - "2020" → “2020” *(before, dumb quotes around numbers were not identified as a double quote pair)*
 - He was ok. “He was ok ”. → He was ok. “He was ok.”, *(before, when a right double quote was swapped with a terminal punctuation, the extra space wasn't removed)*
 -  It’s 12" x 12". → It’s 12″ × 12″. *(before, the second prime was falsely identified as a right double quote)*
+- 12'' → 12″ (two dumb single quotes are fixed to a double prime around numbers)
+- 
 
 # TBD
 - 1865 tests
