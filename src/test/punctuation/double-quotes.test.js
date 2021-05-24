@@ -184,6 +184,12 @@ describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 		"She said: “It’s a 12\" inch!”":
 		"She said: “It’s a 12″ inch!”",
 
+		"It’s 12\" x 12\".":
+		"It’s 12″ x 12″.",
+
+		"It’s 12\" × 12\".":
+		"It’s 12″ × 12″.",		
+
 
 		// identify swapped inches with terminal punctuation
 		"\"He was 12\"." :
@@ -219,6 +225,12 @@ describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 
 		"\"He was 12.\"": 
 		"\"He was 12.\"", 
+
+		"It’s 12\" x 12\".":
+		"It’s 12″ x 12″.",
+
+		"It’s 12\" × 12\".":
+		"It’s 12″ × 12″.",
 
 	};
 

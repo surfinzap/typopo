@@ -104,7 +104,8 @@ export function identifyDoublePrimes(string, locale) {
 	// [1]
 	string = string.replace(
 		new RegExp(
-			"(" + locale.doubleQuoteAdepts + ")"
+			"([^0-9]|^)"
+		+ "(" + locale.doubleQuoteAdepts + ")"
 		+ "(.+?)"
 		+ "(\\d+)"
 		+ "(" + locale.doubleQuoteAdepts + ")"
@@ -114,8 +115,9 @@ export function identifyDoublePrimes(string, locale) {
 			"$1"
 		+ "$2"
 		+ "$3"
-		+ "$5"
 		+ "$4"
+		+ "$6"
+		+ "$5"
 	)
 
 	// [2]
