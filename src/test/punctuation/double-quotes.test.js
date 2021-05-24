@@ -94,6 +94,15 @@ let testModule = {
 	"He was ok. “He was ok ”.": 
 	"He was ok. “He was ok.”",
 
+	"Before you ask the “How often…” question":
+	"Before you ask the “How often…” question",
+
+	"“…example”":
+	"“…example”",
+
+	"abc “…example”":
+	"abc “…example”",
+
 }
 
 
@@ -599,6 +608,15 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 		// place punctuation within a quoted sentence that’s in the middle of the sentence.
 		"Ask “What’s going on in here”? so you can dig deeper.":
 		"Ask “What’s going on in here?” so you can dig deeper.",
+
+		"Before you ask the “How often…” question":
+		"Before you ask the “How often…” question",
+
+		"“…example”":
+		"“…example”",
+
+		"abc “…example”":
+		"abc “…example”",		
 
 
 
