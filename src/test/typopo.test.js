@@ -123,6 +123,11 @@ let testModules = {
   // publication identifiers
   "ISSN 0000-0000": "ISSN 0000-0000",
   "ISBN: 978-80-86102-81-8": "ISBN: 978-80-86102-81-8",
+
+  // double primes
+  "It’s 12\" x 12\".":
+	"It’s 12″ × 12″.",
+
 }
 
 let testRemoveLines = {
@@ -150,7 +155,7 @@ let testKeepWhitespacesBeforeMarkdownList = {
 
 
 let testModuleDoubleQuotesEnUs = {
-  // double quoutes
+  // double quotes
   "English „English„ „English„ English": "English “English” “English” English",
   "He said: \"Here’s a 12\" record.\"": "He said: “Here’s a 12″ record.”",
   "12′ 45\"": "12′ 45″",
@@ -162,7 +167,7 @@ let testModuleDoubleQuotesEnUs = {
 }
 
 let testModuleDoubleQuotesDeDe = {
-  // double quoutes
+  // double quotes
   "English „English„ „English„ English": "English „English“ „English“ English",
   "He said: \"Here’s a 12\" record.\"": "He said: „Here’s a 12″ record.“",
   "12′ 45\"": "12′ 45″",
@@ -179,7 +184,7 @@ let testModuleDoubleQuotesCs = {
 }
 
 let testModuleDoubleQuotesRue = {
-  // double quoutes
+  // double quotes
   "English „English„ „English„ English": "English «English» «English» English",
   "He said: \"Here’s a 12\" record.\"": "He said: «Here’s a 12″ record.»",
   "12′ 45\"": "12′ 45″",
