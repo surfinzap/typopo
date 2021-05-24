@@ -1,6 +1,6 @@
 import {removeExtraPunctuationBeforeQuotes,
 				removeExtraPunctuationAfterQuotes, 
-				swapQuotesAndTerminalPunctuationForQuotedPart,
+				swapQuotesAndTerminalPunctuation,
 				identifyDoublePrimes,
 				identifyDoubleQuotePairs,
 				identifyStandaloneLeftDoubleQuote,
@@ -575,7 +575,7 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 		"Only a “quoted part” in a sentence. “A whole sentence.”",
 
 
-		// place punctuation within a quoted sentence in the middle of the sentence sentence
+		// place punctuation within a quoted sentence that’s in the middle of the sentence.
 		"Ask “What’s going on in here”? so you can dig deeper.":
 		"Ask “What’s going on in here?” so you can dig deeper.",
 
@@ -597,7 +597,7 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(
-				swapQuotesAndTerminalPunctuationForQuotedPart(
+				swapQuotesAndTerminalPunctuation(
 					key, 
 					new Locale("en-us")
 				),

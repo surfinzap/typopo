@@ -338,13 +338,13 @@ export function replaceDoublePrimeWDoubleQuote(string, locale) {
 
 
 	Algorithm
-	Three different cases
+	Three different cases, see comments in code
 
 	@param {string} string: input text for identification
 	@param {string} locale: locale option
 	@returns {string} output with swapped double quotes and terminal punctuation within a quoted part
 */
-export function swapQuotesAndTerminalPunctuationForQuotedPart(string, locale) {	
+export function swapQuotesAndTerminalPunctuation(string, locale) {	
 
 	// place punctuation outside of quoted part
 	string = string.replace(
@@ -367,7 +367,7 @@ export function swapQuotesAndTerminalPunctuationForQuotedPart(string, locale) {
 		+ "$6"
 	);
 
-	// place punctuation within a quoted sentence in the middle of the sentence sentence
+	// place punctuation within a quoted sentence that’s in the middle of the sentence.
 	string = string.replace(
 		new RegExp(
 			"([^" + locale.sentencePunctuation + "])"
@@ -635,7 +635,7 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	string = addSpaceAfterRightDoubleQuote(string, locale);
 
 	/* [8] Swap quotes and terminal punctuation for a quoted part */
-	string = swapQuotesAndTerminalPunctuationForQuotedPart(string, locale);
+	string = swapQuotesAndTerminalPunctuation(string, locale);
 
 	/* [9] Remove an extra comma after sentence punctuation in direct speech */
 	string = removeExtraCommaAfterSentencePunctuation(string, locale);
