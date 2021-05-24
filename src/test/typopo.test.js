@@ -156,6 +156,9 @@ let testModuleDoubleQuotesEnUs = {
   "12′ 45\"": "12′ 45″",
   "3° 5′ 30\"": "3° 5′ 30″",
   "12\"3'00°": "12″3′00°",
+
+  "He was ok. \"He was ok \".": 
+  "He was ok. “He was ok.”",
 }
 
 let testModuleDoubleQuotesDeDe = {

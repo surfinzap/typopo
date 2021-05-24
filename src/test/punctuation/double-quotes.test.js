@@ -87,6 +87,13 @@ let testModule = {
 
 	"\"Ctrl+I and…\"":
 	"“Ctrl+I and…”",
+
+	"Hela skríkla: \"Tu je 12\" platňa \"!":
+	"Hela skríkla: “Tu je 12″ platňa!”",
+
+	"He was ok. “He was ok ”.": 
+	"He was ok. “He was ok.”",
+
 }
 
 
@@ -582,13 +589,29 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 
 
 
-
 		// place punctuation within a quoted sentence
 		"He was ok. “He was ok”.": 
 		"He was ok. “He was ok.”",
 
+
+		"He was ok. “He was ok”. He was ok.": 
+		"He was ok. “He was ok.” He was ok.",
+
+
 		"He was ok? “He was ok”.": 
 		"He was ok? “He was ok.”",
+
+
+		// swap a right quote and terminal punctuation for the whole sentence 
+		"“He was ok”.":
+		"“He was ok.”",
+
+		"“He was ok”?":
+		"“He was ok?”",
+
+
+		"“He was ok”. He was ok.":
+		"“He was ok.” He was ok.",
 
 
 		...testFalsePositives,

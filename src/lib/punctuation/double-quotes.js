@@ -395,10 +395,10 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 	
 
 	// place punctuation within a quoted sentence 
+	// following a previous sentence or starting from a beginning
 	string = string.replace(
 		new RegExp(
-			"([" + locale.sentencePunctuation + "])"
-		+ "([" + locale.spaces + "])"
+			"([" + locale.sentencePunctuation + "][" + locale.spaces + "]|^)"
 		+ "(" + locale.leftDoubleQuote + ")"
 		+ "([^" + locale.rightDoubleQuote +"]+?)"
 		+ "([^" + locale.romanNumerals + "])"
@@ -412,12 +412,19 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 		+ "$2"
 		+ "$3"
 		+ "$4"
+		+ "$6"
 		+ "$5"
 		+ "$7"
-		+ "$6"
-		+ "$8"
 	);
 
+	// console.log(			"([" + locale.sentencePunctuation + "])"
+	// 	+ "([" + locale.spaces + "])"
+	// 	+ "(" + locale.leftDoubleQuote + ")"
+	// 	+ "([^" + locale.rightDoubleQuote +"]+?)"
+	// 	+ "([^" + locale.romanNumerals + "])"
+	// 	+ "(" + locale.rightDoubleQuote + ")"
+	// 	+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
+	// 	+ "(\\B)")
 
 	return string;
 
@@ -634,7 +641,7 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	string = addSpaceBeforeLeftDoubleQuote(string, locale);
 	string = addSpaceAfterRightDoubleQuote(string, locale);
 
-	/* [8] Swap quotes and terminal punctuation for a quoted part */
+	/* [8] Swap quotes and terminal punctuation */
 	string = swapQuotesAndTerminalPunctuation(string, locale);
 
 	/* [9] Remove an extra comma after sentence punctuation in direct speech */
