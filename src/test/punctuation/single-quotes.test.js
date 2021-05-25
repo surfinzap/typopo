@@ -1,13 +1,59 @@
-import {fixSingleQuotesPrimesAndApostrophes} from "../../lib/punctuation/single-quotes";
+import {identifyAndContractions,
+				placeLocaleSingleQuotes,
+				fixSingleQuotesPrimesAndApostrophes} 
+				from "../../lib/punctuation/single-quotes";
 import Locale from "../../locale/locale";
 
 import assert from 'assert';
 
+let testModule = {
+	"Let's test this: “however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said”":
+	"Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
+}
+
+describe('Identify and (’n’) contractions (en-us):\n', () => {
+	let testCase = {
+		"rock 'n' roll":
+		"rock ’n’ roll",
+
+	};
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				placeLocaleSingleQuotes(
+					identifyAndContractions(
+						key, 
+						new Locale("en-us")
+					), 
+					new Locale("en-us")
+				),
+				testCase[key]);
+		});
+	});
+
+	Object.keys(testCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us")), 
+				testCase[key]);
+		});
+	});
+});
+
+
+
+
+
+
 describe('Single quotes in default language (en-us)\n', () => {
 	let testCase = {
 		/* Basic tests */
-		"Let's test this: “however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said”":
-		"Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
+
+		...testModule,
+
 		"Within double quotes “there are single 'quotes with mix’d punctuation', you see”.":
 		"Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
 		"He said: “What about 'name' and 'other name'?”":

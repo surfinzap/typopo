@@ -1,4 +1,14 @@
 /*
+TODO
+- make identification of and contractions more robust + implement an exception
+
+
+
+
+*/
+
+
+/*
 	Replace all identified punctuation with appropriate punctuation in given language
 
 	Context
@@ -23,6 +33,40 @@ export function placeLocaleSingleQuotes(string, locale) {
 }
 
 
+/*
+	Identify ’n’ contractions as apostrophes
+
+	Example
+	rock 'n' roll → rock ’n’ roll
+	fish 'n' chips → fish ’n’ chips
+
+
+	Exceptions
+	Press 'N' to continue (should be identified as single quotes)
+
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified contractions as apostrophes
+*/
+export function identifyAndContractions(string, locale) {	
+
+
+	// shorter version
+	return string.replace(
+		new RegExp(
+			"(" + locale.singleQuoteAdepts + ")"
+		+ "(n)"
+		+ "(" + locale.singleQuoteAdepts + ")", 
+			"g"
+		),
+			"{{typopo__apostrophe}}"
+		+ "$2"
+		+ "{{typopo__apostrophe}}"
+	)
+}
+
+
 
 
 
@@ -37,7 +81,7 @@ export function placeLocaleSingleQuotes(string, locale) {
 	e.g. ␣'word or sentence portion'␣ (and not like ␣'␣word␣'␣)
 
 	Algorithm
-	[1] Identify common apostrohe contractions
+	[1] Identify common apostrophe contractions
 	[2] Identify single quotes
 	[3] Identify feet, arcminutes, minutes
 	[4] Reconsider wrongly identified left quote and prime
@@ -50,18 +94,17 @@ export function placeLocaleSingleQuotes(string, locale) {
 */
 export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
+	/* [1] Identify common apostrophe contractions */
 	/* [1.1] Identify ’n’ contractions */
-	let pattern = "(" + locale.singleQuoteAdepts + ")(n)(" + locale.singleQuoteAdepts + ")";
-	let re = new RegExp(pattern, "gi");
-	string = string.replace(re, "{{typopo__apostrophe}}$2{{typopo__apostrophe}}");
+	string = identifyAndContractions(string, locale);
 
 
 	/* [1.2] Identify common contractions at the beginning
 					 of the word, e.g. ’em, ’cause,… */
 
 	let contraction_examples = "cause|em|mid|midst|mongst|prentice|round|sblood|ssdeath|sfoot|sheart|shun|slid|slife|slight|snails|strewth|til|tis|twas|tween|twere|twill|twixt|twould"
-	pattern = "(" + locale.singleQuoteAdepts + ")(" + contraction_examples + ")";
-	re = new RegExp(pattern, "gi");
+	let pattern = "(" + locale.singleQuoteAdepts + ")(" + contraction_examples + ")";
+	let re = new RegExp(pattern, "gi");
 	string = string.replace(re, "{{typopo__apostrophe}}$2");
 
 
