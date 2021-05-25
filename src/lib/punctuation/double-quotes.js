@@ -1,20 +1,3 @@
-/* 
-Refactoring notes
-
-
-- fix double quote errors
-
-
-- refactor spaces around double primes to be fixed in isolation. wait for a global module tests on this.
-
-
-- {{typopo__...}} as const
-
-*/ 
-
-
-
-
 /*
 	Remove extra punctuation before double quotes
 
