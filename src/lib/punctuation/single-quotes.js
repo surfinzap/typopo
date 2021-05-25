@@ -1,4 +1,33 @@
 /*
+	Replace all identified punctuation with appropriate punctuation in given language
+
+	Context
+	In single-quotes module, we first identify single quote and single prime adepts, and then we  replace them temporarily with labels as “{{typopo__single-prime}}”. 
+	This is the function in the sequence to swap temporary labels to desired quotes.
+	
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} an output with locale-specific single quotes and single primes
+*/
+export function placeLocaleSingleQuotes(string, locale) {
+
+	string = string.replace(/({{typopo__single-prime}})/g, locale.singlePrime);
+
+	string = string.replace(/{{typopo__apostrophe}}|{{typopo__left-single-quote--adept}}|{{typopo__right-single-quote--adept}}/g, locale.apostrophe);
+
+	string = string.replace(/{{typopo__left-single-quote}}/g, locale.leftSingleQuote);
+	string = string.replace(/{{typopo__right-single-quote}}/g, locale.rightSingleQuote);
+
+	return string;
+}
+
+
+
+
+
+
+/*
 	Corrects improper use of single quotes, single primes and apostrophes
 
 	Assumptions and Limitations
@@ -13,8 +42,7 @@
 	[3] Identify feet, arcminutes, minutes
 	[4] Reconsider wrongly identified left quote and prime
 	[5] Identify residual apostrophes that have left
-	[6] Replace all identified punctuation with appropriate punctuation in
-	    given language
+	[6] Replace all identified punctuation with appropriate punctuation in given language
 
 	@param {string} string — input text for identification
 	@param {string} language — language options
@@ -113,12 +141,9 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 	string = string.replace(re, "{{typopo__apostrophe}}");
 
 
-	/* [6] Punctuation replacement */
-	string = string.replace(/({{typopo__single-prime}})/g, locale.singlePrime);
-	string = string.replace(/{{typopo__apostrophe}}|{{typopo__left-single-quote--adept}}|{{typopo__right-single-quote--adept}}/g, locale.apostrophe);
+	/* [6] Replace all identified punctuation with appropriate punctuation in given language */
+	string = placeLocaleSingleQuotes(string,locale);
 
-	string = string.replace(/{{typopo__left-single-quote}}/g, locale.leftSingleQuote);
-	string = string.replace(/{{typopo__right-single-quote}}/g, locale.rightSingleQuote);
 
 	return string;
 }
