@@ -356,7 +356,6 @@ describe('Identify double quote pairs (en-us):\n', () => {
 				testCase[key]);
 		});
 	});
-
 });
 
 
