@@ -420,9 +420,9 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 /*
 	Replace all identified punctuation with appropriate punctuation in given language
 
-	Algorithm 
-	In double-quotes module, we first identify double quote and double prime adepts, and then temporarily replace them with labels as “{{typopo__double-prime}}”. 
-	This is the last function in the sequence to swap temporary labels to desired quotes.
+	Context
+	In double-quotes module, we first identify double quote and double prime adepts, and replace them temporaririly with labels as “{{typopo__double-prime}}”. 
+	This is the function in the sequence to swap temporary labels to desired quotes.
 
 
 	@param {string} string: input text for identification
