@@ -35,7 +35,7 @@ let testFalsePositives = {
 
 let testModule = {
 	"He said: \"Here’s a 12\" record.\"" : 
-	"He said: “Here’s a 12″ record.”",
+	"He said: “Here’s a 12″ record.”",
 
 	"He said: \"He was 12.\"": 
 	"He said: “He was 12.”", 
@@ -191,11 +191,8 @@ describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 		"So it’s 12\" × 12\", right?" : 
 		"So it’s 12″ × 12″, right?",
 
-		"She said: “It’s a 12\" inch!”":
-		"She said: “It’s a 12″ inch!”",
-
-		"It’s 12\" x 12\".":
-		"It’s 12″ x 12″.",
+		"She said: “It’s a 12\" inch!”":
+		"She said: “It’s a 12″ inch!”",
 
 		"It’s 12\" × 12\".":
 		"It’s 12″ × 12″.",		
@@ -366,26 +363,26 @@ describe('Identify double quote pairs (en-us):\n', () => {
 
 describe('Identify standalone left double quote (en-us):\n', () => {
 	let testCase = {
-		"\"There is a standalone left quote.":
-		"“There is a standalone left quote.",
+		"\"There is a standalone left quote.":
+		"“There is a standalone left quote.",
 
-		"There is a \"standalone left quote.":
-		"There is a “standalone left quote.",
+		"There is a \"standalone left quote.":
+		"There is a “standalone left quote.",
 
-		"There is a «standalone left quote.":
-		"There is a “standalone left quote.",
+		"There is a «standalone left quote.":
+		"There is a “standalone left quote.",
 		
-		"There is a „standalone left quote.":
-		"There is a “standalone left quote.",
+		"There is a „standalone left quote.":
+		"There is a “standalone left quote.",
 
-		"There is a ,,standalone left quote.":
-		"There is a “standalone left quote.",
+		"There is a ,,standalone left quote.":
+		"There is a “standalone left quote.",
 
-		"There is a ‹‹standalone left quote.":
-		"There is a “standalone left quote.",
+		"There is a ‹‹standalone left quote.":
+		"There is a “standalone left quote.",
 
-		"There is a ‘‘standalone left quote.":
-		"There is a “standalone left quote.",	
+		"There is a ‘‘standalone left quote.":
+		"There is a “standalone left quote.",	
 		
 		"There is ‘‘1 standalone left quote.":
 		"There is “1 standalone left quote.",	
@@ -421,32 +418,32 @@ describe('Identify standalone left double quote (en-us):\n', () => {
 
 describe('Identify standalone right double quote (en-us):\n', () => {
 	let testCase = {
-		"There is a standalone\" right quote.":
-		"There is a standalone” right quote.",
+		"There is a standalone\" right quote.":
+		"There is a standalone” right quote.",
 
-		"There is a standalone« right quote.":
-		"There is a standalone” right quote.",
+		"There is a standalone« right quote.":
+		"There is a standalone” right quote.",
 		
-		"There is a standalone„ right quote.":
-		"There is a standalone” right quote.",
+		"There is a standalone„ right quote.":
+		"There is a standalone” right quote.",
 
-		"There is a standalone,, right quote.":
-		"There is a standalone” right quote.",
+		"There is a standalone,, right quote.":
+		"There is a standalone” right quote.",
 
-		"There is a standalone›› right quote.":
-		"There is a standalone” right quote.",
+		"There is a standalone›› right quote.":
+		"There is a standalone” right quote.",
 
-		"There is a standalone‘‘ right quote.":
-		"There is a standalone” right quote.",	
+		"There is a standalone‘‘ right quote.":
+		"There is a standalone” right quote.",	
 		
-		"There is a STANDALONE\" right quote.":
-		"There is a STANDALONE” right quote.",
+		"There is a STANDALONE\" right quote.":
+		"There is a STANDALONE” right quote.",
 		
-		"There is a standalone right quote.\"":
-		"There is a standalone right quote.”",	
+		"There is a standalone right quote.\"":
+		"There is a standalone right quote.”",	
 
-		"There is a standalone right quote…\"":
-		"There is a standalone right quote…”",			
+		"There is a standalone right quote…\"":
+		"There is a standalone right quote…”",			
 		
 		...testFalsePositives,
 	};
@@ -578,11 +575,11 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 		// quoted part at the 
 		// end of a sentence
 		// end of a paragraph
-		"Sometimes it can be only a “quoted part.”":
-		"Sometimes it can be only a “quoted part”.",
+		"Sometimes it can be only a “quoted part.”":
+		"Sometimes it can be only a “quoted part”.",
 
-		"Sometimes it can be only a “quoted” “part.”":
-		"Sometimes it can be only a “quoted” “part”.",
+		"Sometimes it can be only a “quoted” “part.”":
+		"Sometimes it can be only a “quoted” “part”.",
 		
 		"Is it “Amores Perros”?":
 		"Is it “Amores Perros”?",
@@ -590,22 +587,22 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 		"Look for “Anguanga”.":
 		"Look for “Anguanga”.",
 
-		"“A whole sentence.” Only a “quoted part.”":
-		"“A whole sentence.” Only a “quoted part”.",
+		"“A whole sentence.” Only a “quoted part.”":
+		"“A whole sentence.” Only a “quoted part”.",
 
 		// quoted part at the 
 		// end of a sentence
 		// middle of a paragraph
-		"a “quoted part.” A “quoted part.”":
-		"a “quoted part”. A “quoted part”.",
+		"a “quoted part.” A “quoted part.”":
+		"a “quoted part”. A “quoted part”.",
 
-		"Only a “quoted part.” “A whole sentence.”":
-		"Only a “quoted part”. “A whole sentence.”",
+		"Only a “quoted part.” “A whole sentence.”":
+		"Only a “quoted part”. “A whole sentence.”",
 
 		// quoted part in the middle of a sentence
 			// toto tu je asi zbytocny test
-		"Only a “quoted part” in a sentence. “A whole sentence.”":
-		"Only a “quoted part” in a sentence. “A whole sentence.”",
+		"Only a “quoted part” in a sentence. “A whole sentence.”":
+		"Only a “quoted part” in a sentence. “A whole sentence.”",
 
 
 		// place punctuation within a quoted sentence that’s in the middle of the sentence.
@@ -757,8 +754,11 @@ describe('Remove extra spaces around quotes and primes (en-us):\n', () => {
 
 describe('Add a missing space before a left double quote (en-us):\n', () => {
 	let testCase = {
+		"It’s a very “nice” saying.":
+		"It’s a very “nice” saying.",
+
 		"It’s a“nice” saying.":
-		"It’s a “nice” saying.",
+		"It’s a “nice” saying.", //add nbsp;
 
 		"An unquoted sentence.“And a quoted one.”":
 		"An unquoted sentence. “And a quoted one.”",
@@ -790,8 +790,8 @@ describe('Add a missing space before a left double quote (en-us):\n', () => {
 
 describe('Add a missing space after a left double quote (en-us):\n', () => {
 	let testCase = {
-		"It’s a “nice”saying.":
-		"It’s a “nice” saying.",
+		"It’s a “nice”saying.":
+		"It’s a “nice” saying.",
 
 		"“A quoted sentence.”And an unquoted one.":
 		"“A quoted sentence.” And an unquoted one.",

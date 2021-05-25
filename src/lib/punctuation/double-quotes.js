@@ -1,3 +1,7 @@
+import { addNbspAfterPreposition } from "../whitespace/nbsp";
+
+// import {fixSpaces} from "./lib/whitespace/spaces";
+
 /*
 	Remove extra punctuation before double quotes
 
@@ -526,7 +530,7 @@ export function removeExtraSpacesAroundQuotes(string, locale) {
 
 	Example
 	It’s a“nice” saying. →
-	It’s a “nice” saying.
+	It’s a “nice” saying. // also fix nbsp after “a”
 
 	@param {string} string: input text for identification
 	@param {string} locale: locale option
@@ -534,7 +538,7 @@ export function removeExtraSpacesAroundQuotes(string, locale) {
 */
 export function addSpaceBeforeLeftDoubleQuote(string, locale) {	
 
-	return string.replace(
+	string = string.replace(
 		new RegExp(
 			"([" + locale.sentencePunctuation + locale.allChars + "])"
 		+ "(["+ locale.leftDoubleQuote +"])", 
@@ -542,6 +546,10 @@ export function addSpaceBeforeLeftDoubleQuote(string, locale) {
 		),
 		"$1 $2"
 	)
+
+	string = addNbspAfterPreposition(string, locale)
+
+	return string;
 }
 
 

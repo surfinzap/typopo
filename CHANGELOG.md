@@ -5,13 +5,14 @@ This version is released as minor, as there are not many updates to common use-c
 
 ### Improvements
 These edge cases around double quotes and double primes are now fixed correctly:
-- Here are 30 "bucks" → Here are 30 “bucks” *(before, a left quote was falsely identified as a double prime)*
-- "Conference 2020" and "something in quotes". → “Conference 2020” and “something in quotes”. *(before, a right quote after “2020” was falsely identified as a double prime)*
+- Here are 30 "bucks" → Here are 30 “bucks” *(before, a left quote was falsely identified as a double prime)*
+- "Conference 2020" and "something in quotes". → “Conference 2020” and “something in quotes”. *(before, a right quote after “2020” was falsely identified as a double prime)*
 - "2020" → “2020” *(before, dumb quotes around numbers were not identified as a double quote pair)*
-- He was ok. “He was ok ”. → He was ok. “He was ok.”, *(before, when a right double quote was swapped with a terminal punctuation, the extra space wasn't removed)*
+- He was ok. “He was ok ”. → He was ok. “He was ok.”, *(before, when a right double quote was swapped with a terminal punctuation, the extra space wasn’t removed)*
 -  It’s 12" x 12". → It’s 12″ × 12″. *(before, the second prime was falsely identified as a right double quote)*
 - 12'' → 12″ (two dumb single quotes are fixed to a double prime around numbers)
 - When you ask the “How often…” question *(before, the ellipsis was falsely swapped with a right double quote in this type of sentence)*
+- It’s a“nice” saying. → It’s a “nice” saying. *(now, the added space is a nbsp, when added before a single-word prepositions)*
 
 # TBD
 - 1865 tests
