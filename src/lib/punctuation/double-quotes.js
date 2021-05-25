@@ -194,10 +194,6 @@ export function identifyDoubleQuotePairs(string, locale) {
 	Assumptions and Limitations
 	Double quote pairs have been identified in the analysed text already
 
-	TODO
-	- why is the standalone quote identified only before letters? 
-
-
 	@param {string} string: input text for identification
 	@param {string} locale: locale option
 	@returns {string} output with identified standalone left double quotes
@@ -206,7 +202,7 @@ export function identifyStandaloneLeftDoubleQuote(string, locale) {
 
 	let pattern = 
 			"(" + locale.doubleQuoteAdepts + ")"
-		+ "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
+		+ "([0-9" + locale.lowercaseChars + locale.uppercaseChars + "])";
 
 	let re = new RegExp(pattern, "g");
 	return string.replace(re, "{{typopo__left-double-quote--standalone}}$2");
