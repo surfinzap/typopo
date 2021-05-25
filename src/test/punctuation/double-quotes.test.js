@@ -385,7 +385,10 @@ describe('Identify standalone left double quote (en-us):\n', () => {
 		"There is a “standalone left quote.",
 
 		"There is a ‘‘standalone left quote.":
-		"There is a “standalone left quote.",		
+		"There is a “standalone left quote.",	
+		
+		"There is ‘‘1 standalone left quote.":
+		"There is “1 standalone left quote.",	
 
 		...testFalsePositives,
 	};
