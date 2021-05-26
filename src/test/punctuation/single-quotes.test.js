@@ -1,4 +1,6 @@
-import {identifyAndContractions,
+import {identifyContractedAnd,
+				identifyContractedBeginnings,
+				identifyContractedYears,	
 				placeLocaleSingleQuotes,
 				fixSingleQuotesPrimesAndApostrophes} 
 				from "../../lib/punctuation/single-quotes";
@@ -11,7 +13,9 @@ let testModule = {
 	"Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
 }
 
-describe('Identify and (’n’) contractions (en-us):\n', () => {
+
+
+describe('Identify and (’n’) contractions as apostrophes (en-us):\n', () => {
 	let testCase = {
 		"rock 'n' roll":
 		"rock ’n’ roll",
@@ -23,7 +27,7 @@ describe('Identify and (’n’) contractions (en-us):\n', () => {
 		it("unit test", () => {
 			assert.strictEqual(
 				placeLocaleSingleQuotes(
-					identifyAndContractions(
+					identifyContractedAnd(
 						key, 
 						new Locale("en-us")
 					), 
@@ -45,14 +49,109 @@ describe('Identify and (’n’) contractions (en-us):\n', () => {
 
 
 
+describe('Identify common contractions at the beginning of the word as apostrophes (en-us):\n', () => {
+	let testCase = {
+		"Just 'cause I wanna.": 
+		"Just ’cause I wanna.",
 
+		"'Tis the season":
+		"’Tis the season",
+
+		"'sblood": 
+		"’sblood",
+
+		"'mongst": 
+		"’mongst",
+
+		"'prentice": 
+		"’prentice",
+
+		"'slight": 
+		"’slight",
+
+		"'Strewth": 
+		"’Strewth",
+
+		"'Twixt": 
+		"’Twixt",
+
+		"'shun": 
+		"’shun",
+
+		"'slid": 
+		"’slid",
+
+		"'Twas the Night Before Christmas":
+		"’Twas the Night Before Christmas",
+
+		"'Til The Season Comes 'Round Again":
+		"’Til The Season Comes ’Round Again",
+
+	};
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				placeLocaleSingleQuotes(
+					identifyContractedBeginnings(
+						key, 
+						new Locale("en-us")
+					), 
+					new Locale("en-us")
+				),
+				testCase[key]);
+		});
+	});
+
+	Object.keys(testCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us")), 
+				testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Identify contracted years as apostrophes (en-us):\n', () => {
+	let testCase = {
+		"INCHEBA '89": "INCHEBA ’89",
+		"in '70s": "in ’70s",
+	};
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				placeLocaleSingleQuotes(
+					identifyContractedYears(
+						key, 
+						new Locale("en-us")
+					), 
+					new Locale("en-us")
+				),
+				testCase[key]);
+		});
+	});
+
+	Object.keys(testCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us")), 
+				testCase[key]);
+		});
+	});
+});
 
 
 describe('Single quotes in default language (en-us)\n', () => {
 	let testCase = {
 		/* Basic tests */
 
-		...testModule,
 
 		"Within double quotes “there are single 'quotes with mix’d punctuation', you see”.":
 		"Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
@@ -75,11 +174,7 @@ describe('Single quotes in default language (en-us)\n', () => {
 		/* apostrophes */
 		"Fish 'n' Chips": "Fish ’n’ Chips",
 		"Find 'em!": "Find ’em!",
-		"Just 'cause I wanna.": "Just ’cause I wanna.",
-		"'Tis the season": "’Tis the season",
-		"'sblood": "’sblood",
-		"'Twas the Night Before Christmas": "’Twas the Night Before Christmas",
-		"'Til The Season Comes 'Round Again": "’Til The Season Comes ’Round Again",
+
 		"Hers'": "Hers’",
 		"INCHEBA '89": "INCHEBA ’89",
 		"69'ers": "69’ers",
@@ -95,6 +190,9 @@ describe('Single quotes in default language (en-us)\n', () => {
     "Paul`s Diner": "Paul’s Diner",
     "Paul‚s Diner": "Paul’s Diner",
     "Paul´s Diner": "Paul’s Diner",
+
+		...testModule,
+
 	};
 
 

@@ -1,6 +1,7 @@
 /*
 TODO
-- make identification of and contractions more robust + implement an exception
+- make identification of and contractions more robust + implement an exception for press 'N'
+
 
 
 
@@ -33,6 +34,7 @@ export function placeLocaleSingleQuotes(string, locale) {
 }
 
 
+
 /*
 	Identify ’n’ contractions as apostrophes
 
@@ -49,10 +51,8 @@ export function placeLocaleSingleQuotes(string, locale) {
 	@param {string} locale: locale option
 	@returns {string} output with identified contractions as apostrophes
 */
-export function identifyAndContractions(string, locale) {	
+export function identifyContractedAnd(string, locale) {	
 
-
-	// shorter version
 	return string.replace(
 		new RegExp(
 			"(" + locale.singleQuoteAdepts + ")"
@@ -67,6 +67,57 @@ export function identifyAndContractions(string, locale) {
 }
 
 
+
+/*
+	Identify common contractions at the beginning of the word as apostrophes
+
+
+	Example
+	’em, ’cause,… see list of words in the function
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified contractions as apostrophes
+*/
+export function identifyContractedBeginnings(string, locale) {	
+	let contractedWords = "cause|em|mid|midst|mongst|prentice|round|sblood|ssdeath|sfoot|sheart|shun|slid|slife|slight|snails|strewth|til|tis|twas|tween|twere|twill|twixt|twould";
+
+	return string.replace(
+		new RegExp(
+			"(" + locale.singleQuoteAdepts + ")"
+		+ "(" + contractedWords + ")", 
+			"gi"
+		),
+			"{{typopo__apostrophe}}"
+		+ "$2"
+	);
+}
+
+
+
+/*
+	Identify contracted years
+
+	Example
+	in ’70s, INCHEBA ’89,…
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified contractions as apostrophes
+*/
+export function identifyContractedYears(string, locale) {	
+	return string.replace(
+		new RegExp(
+			"([" + locale.spaces + "])"
+		+ "(" + locale.singleQuoteAdepts + ")"
+		+ "([" + locale.cardinalNumber + "]{2})", 
+			"g"
+		),
+			"$1"
+		+ "{{typopo__apostrophe}}"
+		+ "$3"
+	);
+}
 
 
 
@@ -95,34 +146,28 @@ export function identifyAndContractions(string, locale) {
 export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 	/* [1] Identify common apostrophe contractions */
-	/* [1.1] Identify ’n’ contractions */
-	string = identifyAndContractions(string, locale);
+	string = identifyContractedAnd(string, locale);
 
 
 	/* [1.2] Identify common contractions at the beginning
 					 of the word, e.g. ’em, ’cause,… */
 
-	let contraction_examples = "cause|em|mid|midst|mongst|prentice|round|sblood|ssdeath|sfoot|sheart|shun|slid|slife|slight|snails|strewth|til|tis|twas|tween|twere|twill|twixt|twould"
-	let pattern = "(" + locale.singleQuoteAdepts + ")(" + contraction_examples + ")";
-	let re = new RegExp(pattern, "gi");
-	string = string.replace(re, "{{typopo__apostrophe}}$2");
+	// TBD add function when I figure out what's fixing it by default
 
 
 	/* [1.3] Identify in-word contractions,
 					 e.g. Don’t, I’m, O’Doole, 69’ers */
-	pattern =
+	let pattern =
 				"(["+ locale.cardinalNumber + locale.allChars +"])"
 			+ "(" + locale.singleQuoteAdepts +")+"
 			+ "(["+ locale.allChars +"])";
-	re = new RegExp(pattern, "g");
+	let re = new RegExp(pattern, "g");
 	string = string.replace(re, "$1{{typopo__apostrophe}}$3");
 
 
 	/* [1.4] Identify year contractions
 		 e.g. ’70s, INCHEBA ’89,… */
-	pattern = "( )(" + locale.singleQuoteAdepts + ")([" + locale.cardinalNumber + "]{2})";
-	re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1{{typopo__apostrophe}}$3");
+	// TBD add function when resolve module tests
 
 
 	/* [2] Identify single quotes within double quotes */
