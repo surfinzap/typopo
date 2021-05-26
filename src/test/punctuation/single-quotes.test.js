@@ -1,5 +1,6 @@
 import {identifyContractedAnd,
 				identifyContractedBeginnings,
+				identifyInWordContractions,
 				identifyContractedYears,	
 				placeLocaleSingleQuotes,
 				fixSingleQuotesPrimesAndApostrophes} 
@@ -15,10 +16,13 @@ let testModule = {
 
 
 
-describe('Identify and (’n’) contractions as apostrophes (en-us):\n', () => {
+describe('Identify contracted and (’n’) as apostrophes (en-us):\n', () => {
 	let testCase = {
 		"rock 'n' roll":
 		"rock ’n’ roll",
+
+		"Fish 'n' Chips": 
+		"Fish ’n’ Chips",
 
 	};
 
@@ -81,6 +85,10 @@ describe('Identify common contractions at the beginning of the word as apostroph
 		"'slid": 
 		"’slid",
 
+		"Find 'em!": 
+		"Find ’em!",
+
+
 		"'Twas the Night Before Christmas":
 		"’Twas the Night Before Christmas",
 
@@ -95,6 +103,50 @@ describe('Identify common contractions at the beginning of the word as apostroph
 			assert.strictEqual(
 				placeLocaleSingleQuotes(
 					identifyContractedBeginnings(
+						key, 
+						new Locale("en-us")
+					), 
+					new Locale("en-us")
+				),
+				testCase[key]);
+		});
+	});
+
+	Object.keys(testCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us")), 
+				testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Identify in-word contractions as apostrophes (en-us):\n', () => {
+	let testCase = {
+		"69'ers": "69’ers",
+		"iPhone6's": "iPhone6’s",
+		"1990's": "1990’s",
+		"don't" : "don’t",
+		"don''t" : "don’t",
+    "don''’t" : "don’t",
+    "Paul‘s Diner": "Paul’s Diner",
+    "Paul’s Diner": "Paul’s Diner",
+    "Paulʼs Diner": "Paul’s Diner",
+    "Paul‛s Diner": "Paul’s Diner",
+    "Paul`s Diner": "Paul’s Diner",
+    "Paul‚s Diner": "Paul’s Diner",
+    "Paul´s Diner": "Paul’s Diner",		
+	};
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				placeLocaleSingleQuotes(
+					identifyInWordContractions(
 						key, 
 						new Locale("en-us")
 					), 
@@ -171,27 +223,12 @@ describe('Single quotes in default language (en-us)\n', () => {
 		"3° 5 ′ 30″": "3° 5′ 30″",
 		"12″ 3'00°": "12″ 3′00°",
 
-		/* apostrophes */
-		"Fish 'n' Chips": "Fish ’n’ Chips",
-		"Find 'em!": "Find ’em!",
 
-		"Hers'": "Hers’",
-		"INCHEBA '89": "INCHEBA ’89",
-		"69'ers": "69’ers",
-		"iPhone6's": "iPhone6’s",
-		"1990's": "1990’s",
-		"don't" : "don’t",
-		"don''t" : "don’t",
-    "don''’t" : "don’t",
-    "Paul‘s Diner": "Paul’s Diner",
-    "Paul’s Diner": "Paul’s Diner",
-    "Paulʼs Diner": "Paul’s Diner",
-    "Paul‛s Diner": "Paul’s Diner",
-    "Paul`s Diner": "Paul’s Diner",
-    "Paul‚s Diner": "Paul’s Diner",
-    "Paul´s Diner": "Paul’s Diner",
-
+		
 		...testModule,
+
+		// tbd figure out later
+		// "Hers'": "Hers’",
 
 	};
 

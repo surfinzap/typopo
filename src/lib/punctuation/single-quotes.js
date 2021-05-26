@@ -96,6 +96,33 @@ export function identifyContractedBeginnings(string, locale) {
 
 
 /*
+	Identify in-word contractions as apostrophes
+
+	Examples
+	Don’t, I’m, O’Doole, 69’ers,…
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified contractions as apostrophes
+*/
+export function identifyInWordContractions(string, locale) {	
+	return string.replace(
+		new RegExp(
+			"(["+ locale.cardinalNumber + locale.allChars +"])"
+			+ "(" + locale.singleQuoteAdepts +")+"
+			+ "(["+ locale.allChars +"])", 
+			"g"
+		),
+			"$1"
+		+ "{{typopo__apostrophe}}"
+		+ "$3"
+	);
+}
+
+
+
+
+/*
 	Identify contracted years
 
 	Example
@@ -147,32 +174,14 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 	/* [1] Identify common apostrophe contractions */
 	string = identifyContractedAnd(string, locale);
-
-
-	/* [1.2] Identify common contractions at the beginning
-					 of the word, e.g. ’em, ’cause,… */
-
-	// TBD add function when I figure out what's fixing it by default
-
-
-	/* [1.3] Identify in-word contractions,
-					 e.g. Don’t, I’m, O’Doole, 69’ers */
-	let pattern =
-				"(["+ locale.cardinalNumber + locale.allChars +"])"
-			+ "(" + locale.singleQuoteAdepts +")+"
-			+ "(["+ locale.allChars +"])";
-	let re = new RegExp(pattern, "g");
-	string = string.replace(re, "$1{{typopo__apostrophe}}$3");
-
-
-	/* [1.4] Identify year contractions
-		 e.g. ’70s, INCHEBA ’89,… */
-	// TBD add function when resolve module tests
+	string = identifyContractedBeginnings(string, locale);
+	string = identifyInWordContractions(string, locale);
+	string = identifyContractedYears(string, locale);
 
 
 	/* [2] Identify single quotes within double quotes */
-	pattern = "(" + locale.doubleQuoteAdepts + ")(.*?)(" + locale.doubleQuoteAdepts + ")";
-	re = new RegExp(pattern, "g");
+	let pattern = "(" + locale.doubleQuoteAdepts + ")(.*?)(" + locale.doubleQuoteAdepts + ")";
+	let re = new RegExp(pattern, "g");
 	string = string.replace(re, function($0, $1, $2, $3){
 
 		// identify {{typopo__left-single-quote--adept}}
@@ -224,9 +233,10 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 
 	/* [5] Identify residual apostrophes that have left */
-	pattern = "(" + locale.singleQuoteAdepts + ")";
-	re = new RegExp(pattern, "g");
-	string = string.replace(re, "{{typopo__apostrophe}}");
+	// tbd decide how to address this
+	// pattern = "(" + locale.singleQuoteAdepts + ")";
+	// re = new RegExp(pattern, "g");
+	// string = string.replace(re, "{{typopo__apostrophe}}");
 
 
 	/* [6] Replace all identified punctuation with appropriate punctuation in given language */
