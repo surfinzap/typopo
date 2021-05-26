@@ -39,7 +39,7 @@ export function name(string, locale) {
 			"g"
 		),
 		"$1"
-	)
+	);
 
 
 	return string.replace(re, replacement); 
