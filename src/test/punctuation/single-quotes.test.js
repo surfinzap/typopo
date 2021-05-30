@@ -206,7 +206,6 @@ describe('Identify contracted years as apostrophes (en-us):\n', () => {
 
 
 
-describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us):\n', () => {
 describe('Identify feet and arcminutes following a 1–3 numbers (en-us):\n', () => {
 	let moduleTestCase = {
 		"12 ' 45″": 
@@ -363,6 +362,43 @@ describe('Single quotes in default language (en-us)\n', () => {
 		});
 	});
 });
+
+
+
+describe('Remove extra space around a single prime:\n', () => {
+	let testCase = {
+		"12 ′ 45″":
+		"12′ 45″",
+
+		"12 ′45″":
+		"12′45″",
+	};
+
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(				removeExtraSpaceAroundSinglePrime(
+					key, 
+					new Locale("en-us")
+				), 
+			testCase[key]);
+		});
+	});
+
+	Object.keys(testCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us")), 
+				testCase[key]);
+		});
+	});
+});
+
+
+
+
 
 describe('Single quotes in (sk, cs, de-de)\n', () => {
 	let testCase = {
