@@ -5,14 +5,14 @@ import {identifyContractedAnd,
 				identifyContractedYears,	
 
 				identifySinglePrimes,
-				identifyDoubleQuotePairs,
+				identifySingleQuotePairs,
 				replaceSinglePrimeWSingleQuote,
 
 				placeLocaleSingleQuotes,
 
 				removeExtraSpaceAroundSinglePrime,
 				fixSingleQuotesPrimesAndApostrophes,
-				identifySingleQuotePairs} 
+				identifyStandaloneRightSingleQuote} 
 				from "../../lib/punctuation/single-quotes";
 import Locale from "../../locale/locale";
 
@@ -351,6 +351,126 @@ describe('Identify feet and arcminutes following a 1–3 numbers (en-us):\n', ()
 		});
 	});
 });
+
+
+
+describe('Identify standalone right single quote (en-us):\n', () => {
+	let unitTestCase = {
+		"\"word\'\"":
+		"\"word{{typopo__right-single-quote--standalone}}\"",
+
+		"\"word‚\"":
+		"\"word{{typopo__right-single-quote--standalone}}\"",	
+
+		"word‘":
+		"word{{typopo__right-single-quote--standalone}}",	
+
+		"wordʼ":
+		"word{{typopo__right-single-quote--standalone}}",	
+
+		"word‛":
+		"word{{typopo__right-single-quote--standalone}}",	
+
+		"word´":
+		"word{{typopo__right-single-quote--standalone}}",	
+
+		"word`":
+		"word{{typopo__right-single-quote--standalone}}",	
+
+		"word′":
+		"word{{typopo__right-single-quote--standalone}}",	
+
+		"word‹":
+		"word{{typopo__right-single-quote--standalone}}",	
+
+		"word›":
+		"word{{typopo__right-single-quote--standalone}}",	
+
+		"word.'":
+		"word.{{typopo__right-single-quote--standalone}}",
+
+		"word!'":
+		"word!{{typopo__right-single-quote--standalone}}",
+
+		"word':":
+		"word{{typopo__right-single-quote--standalone}}:",
+
+		"word',":
+		"word{{typopo__right-single-quote--standalone}},",
+
+		"word' ":
+		"word{{typopo__right-single-quote--standalone}} ",
+
+
+	};
+
+	let moduleTestCase = {
+		"“word'”":
+		"“word’”",
+
+		"“word‚”":
+		"“word’”",	
+
+		"“word‘”":
+		"“word’”",	
+
+		"“wordʼ”":
+		"“word’”",	
+
+		"“word‛”":
+		"“word’”",	
+
+		"“word´”":
+		"“word’”",	
+
+		"“word`”":
+		"“word’”",	
+
+		"“word′”":
+		"“word’”",	
+
+		"“word‹”":
+		"“word’”",	
+
+		"“word›”":
+		"“word’”",	
+
+		"“word.'”":
+		"“word.’”",
+
+		"“word!'”":
+		"“word!’”",
+
+		"“word':”":
+		"“word’:”",
+
+		"“word',”":
+		"“word’,”",
+
+	};	
+
+	Object.keys(unitTestCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				identifyStandaloneRightSingleQuote(
+					key, 
+					new Locale("en-us")
+					),
+					unitTestCase[key]);
+		});
+	});
+			
+	Object.keys(moduleTestCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us")), 
+				moduleTestCase[key]);
+		});
+	});
+});
+
+
 
 
 
