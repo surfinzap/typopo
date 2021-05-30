@@ -5,11 +5,14 @@ import {identifyContractedAnd,
 				identifyContractedYears,	
 
 				identifySinglePrimes,
+				identifyDoubleQuotePairs,
 				replaceSinglePrimeWSingleQuote,
+
 				placeLocaleSingleQuotes,
 
 				removeExtraSpaceAroundSinglePrime,
-				fixSingleQuotesPrimesAndApostrophes} 
+				fixSingleQuotesPrimesAndApostrophes,
+				identifySingleQuotePairs} 
 				from "../../lib/punctuation/single-quotes";
 import Locale from "../../locale/locale";
 
@@ -348,6 +351,59 @@ describe('Identify feet and arcminutes following a 1–3 numbers (en-us):\n', ()
 		});
 	});
 });
+
+
+
+describe('Identify single quote pairs (en-us):\n', () => {
+	let unitTestCase = {
+		"{{typopo__left-single-quote--standalone}}word{{typopo__right-single-quote--standalone}}":
+		"{{typopo__left-single-quote}}word{{typopo__right-single-quote}}",
+
+		"{{typopo__left-single-quote--standalone}}word word{{typopo__right-single-quote--standalone}}":
+		"{{typopo__left-single-quote}}word word{{typopo__right-single-quote}}",	
+
+	};
+
+	let moduleTestCase = {
+		"He said: “What about 'word', is that good?”":
+		"He said: “What about ‘word’, is that good?”",
+
+		"He said: “What about 'word' 'word', is that good?”":
+		"He said: “What about ‘word’ ‘word’, is that good?”",
+
+		"He said: “What about 'word word', is that good?”":
+		"He said: “What about ‘word word’, is that good?”",
+
+		// this case is not covered, the value is false
+		// the first right single quote is falsely an apostrophe
+		// the second left single quote is falsely an apostrophe
+		"He said: “What about 'word word' 'word word', is that good?”":
+		"He said: “What about ‘word word’ ’word word’, is that good?”",
+
+	};	
+
+	Object.keys(unitTestCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				identifySingleQuotePairs(
+					key, 
+					new Locale("en-us")
+					),
+					unitTestCase[key]);
+		});
+	});
+			
+	Object.keys(moduleTestCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us")), 
+				moduleTestCase[key]);
+		});
+	});
+});
+
+
 
 
 

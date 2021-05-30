@@ -187,41 +187,47 @@ export function identifySinglePrimes(string, locale) {
 	Identify double quote pairs 
 
 	Example
-	"quoted material" → “quoted material”
-
+	"a 'quoted material' here" → “a ‘quoted material’ here”
 
 	Assumptions and Limitations
-	We assume that single primes, feet and arcminutees were identified in the previous run.
+
+
+	This function assumes apostrophes and standalone single quotes were identified. The function itself is part of the {TBD}.
+
+	Since it is difficult to identify all contractions at the end of the word, double quotes pairs are identified only in few cases:
+	- around a single word
+	- one double quote pair around longer text when enclosed in double quotes
 
 	@param {string} string: input text for identification
 	@param {string} locale: locale option
-	@returns {string} output with identified double quote pairs
+	@returns {string} output with identified single quote pairs
 */
-export function identifyDoubleQuotePairs(string, locale) {
-	// double quotes around a number
+export function identifySingleQuotePairs(string, locale) {
+
+	// identify a single quote pair around a single word	
 	string = string.replace(
 		new RegExp(
-			"(" + locale.doubleQuoteAdepts + ")"
-		+ "(\\d+)"
-		+ "({{typopo__double-prime}})",
+			"({{typopo__left-single-quote--standalone}})"
+		+ "([" + locale.allChars + "]+)"
+		+ "({{typopo__right-single-quote--standalone}})",
 			"g"
 		),
-			"{{typopo__left-double-quote}}"
+			"{{typopo__left-single-quote}}"
 		+ "$2"
-		+ "{{typopo__right-double-quote}}"
+		+ "{{typopo__right-single-quote}}"
 	);
 
-	// generic rule
+	// identify one phrase wrapped in single quotes
 	string = string.replace(
 		new RegExp(
-			"(" + locale.doubleQuoteAdepts + ")"
-		+ "(.*?)"
-		+ "(" + locale.doubleQuoteAdepts + ")",
+			"({{typopo__left-single-quote--standalone}})"
+		+ "(.*)"
+		+ "({{typopo__right-single-quote--standalone}})",
 			"g"
 		),
-			"{{typopo__left-double-quote}}"
+			"{{typopo__left-single-quote}}"
 		+ "$2"
-		+ "{{typopo__right-double-quote}}"
+		+ "{{typopo__right-single-quote}}"
 	);
 
 	return string;
@@ -276,6 +282,58 @@ export function replaceSinglePrimeWSingleQuote(string, locale) {
 
 	return string;
 }
+
+
+
+
+/*
+	Identify single quote pairs 
+
+	Example
+	"quoted material" → “quoted material”
+
+
+	Assumptions and Limitations
+	We assume that double primes, inches and arcseconds were identified in the previous run.
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified double quote pairs
+*/
+export function identifyDoubleQuotePairs(string, locale) {
+	// double quotes around a number
+	string = string.replace(
+		new RegExp(
+			"(" + locale.doubleQuoteAdepts + ")"
+		+ "(\\d+)"
+		+ "({{typopo__double-prime}})",
+			"g"
+		),
+			"{{typopo__left-double-quote}}"
+		+ "$2"
+		+ "{{typopo__right-double-quote}}"
+	);
+
+	// generic rule
+	string = string.replace(
+		new RegExp(
+			"(" + locale.doubleQuoteAdepts + ")"
+		+ "(.*?)"
+		+ "(" + locale.doubleQuoteAdepts + ")",
+			"g"
+		),
+			"{{typopo__left-double-quote}}"
+		+ "$2"
+		+ "{{typopo__right-double-quote}}"
+	);
+
+	return string;
+}
+
+
+
+
+
 
 
 
@@ -340,6 +398,8 @@ export function placeLocaleSingleQuotes(string, locale) {
 
 
 
+
+
 /*
 	Corrects improper use of single quotes, single primes and apostrophes
 
@@ -396,16 +456,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 		re = new RegExp(pattern, "g");
 		$2 = $2.replace(re, "$1$2{{typopo__right-single-quote--standalone}}$4");
 
-		// identify single quote pairs around single words
-		pattern = "({{typopo__left-single-quote--standalone}})([" + locale.allChars + "]+)({{typopo__right-single-quote--standalone}})";
-		re = new RegExp(pattern, "g");
-		$2 = $2.replace(re, "{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}");
-
-		// identify single quote pairs around multiple word phrases
-		// (assuming such phrase will occur only once)
-		pattern = "({{typopo__left-single-quote--standalone}})(.*)({{typopo__right-single-quote--standalone}})";
-		re = new RegExp(pattern, "g");
-		$2 = $2.replace(re, "{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}");
+		$2 = identifySingleQuotePairs($2, locale);
 
 		return $1 + $2 + $3;
 	});
