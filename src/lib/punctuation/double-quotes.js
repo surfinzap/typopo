@@ -59,21 +59,18 @@ export function removeExtraPunctuationAfterQuotes(string, locale) {
 
 /*
 	Identify inches, arcseconds, seconds following a 1–3 numbers
-	
-	It's a dumb algorithm that picks all the options after a number, regardless of whether they may be quotes
 
-	Example
-	[1]
+	Algorithm
+	[1] // swap quote adepts so they're not identified as a doble prime
 	{quote adept} sentence 12{quote adept}. 
 	{quote adept} sentence 12.{quote adept}
 	
-	[2]
+	[2] // identify inches following a number
 	12′ 45" → 
 	12′ 45″
 
-
-	How this algorithm impacts ’double-quotes’ module
-	It falsely identifies inches, where we are expecting quotes, e.g.	
+	Double-quotes module impact
+	Function falsely identifies inches, where we are expecting quotes, e.g.	
 	"Konference 2020" in quotes → 
 	“Konference 2020” in quotes 
 	→ this is corrected in replaceDoublePrimeWDoubleQuote
