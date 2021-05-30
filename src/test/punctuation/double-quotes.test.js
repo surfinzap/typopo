@@ -529,8 +529,6 @@ describe('Replace a double qoute & a double prime with a double quote pair (en-u
 		"{{typopo__double-prime}}word{{typopo__right-double-quote--standalone}}":
 		"{{typopo__left-double-quote}}word{{typopo__right-double-quote}}",		
 
-
-				
 		...testFalsePositives,
 	};
 
@@ -563,7 +561,6 @@ describe('Replace a double qoute & a double prime with a double quote pair (en-u
 				moduleTestCase[key]);
 		});
 	});
-
 });
 
 
