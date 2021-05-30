@@ -1,5 +1,6 @@
 import {identifyContractedAnd,
 				identifyContractedBeginnings,
+				identifyContractedEnds,
 				identifyInWordContractions,
 				identifyContractedYears,	
 
@@ -129,6 +130,59 @@ describe('Identify common contractions at the beginning of the word as apostroph
 
 
 
+describe('Identify common contractions at the end of the word as apostrophes (en-us):\n', () => {
+	let testCase = {
+		"nottin'":
+		"nottin’",
+
+		"gettin'":
+		"gettin’",
+
+		"NOTTIN'":
+		"NOTTIN’",
+
+		"GETTIN'":
+		"GETTIN’",
+
+		
+	};
+	
+	let unitTestCase = {
+		...testCase,
+		
+		// false positive, when it’s not a contracted word
+		"'something in'":
+		"'something in'",
+	}
+
+
+	Object.keys(unitTestCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				placeLocaleSingleQuotes(
+					identifyContractedEnds(
+						key, 
+						new Locale("en-us")
+					), 
+					new Locale("en-us")
+				),
+				unitTestCase[key]);
+		});
+	});
+
+	Object.keys(testCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us")), 
+				testCase[key]);
+		});
+	});
+});
+
+
+
+
 describe('Identify in-word contractions as apostrophes (en-us):\n', () => {
 	let testCase = {
 		"69'ers": "69’ers",
@@ -177,10 +231,19 @@ describe('Identify contracted years as apostrophes (en-us):\n', () => {
 	let testCase = {
 		"INCHEBA '89": "INCHEBA ’89",
 		"in '70s": "in ’70s",
+
 	};
+	
+	let unitTestCase = {
+		...testCase,
+		
+		// false positive, when there is a wrongly spaced feet
+		"12 '45″":  
+		"12 '45″",  
+	}
 
 
-	Object.keys(testCase).forEach((key) => {
+	Object.keys(unitTestCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(
 				placeLocaleSingleQuotes(
@@ -190,7 +253,7 @@ describe('Identify contracted years as apostrophes (en-us):\n', () => {
 					), 
 					new Locale("en-us")
 				),
-				testCase[key]);
+				unitTestCase[key]);
 		});
 	});
 
