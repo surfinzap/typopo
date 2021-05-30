@@ -75,6 +75,30 @@ export function identifyContractedBeginnings(string, locale) {
 
 
 /*
+	Identify common contractions at the ends of the word as apostrophes
+
+	Example
+	contraction of an -ing form, e.g. nottin’
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified contractions as apostrophes
+*/
+export function identifyContractedEnds(string, locale) {	
+	return string.replace(
+		new RegExp(
+			"(\\Bin)"
+		+ "(" + locale.singleQuoteAdepts + ")",
+			"gi"
+		),
+			"$1"
+		+ "{{typopo__apostrophe}}"
+	);
+}
+
+
+
+/*
 	Identify in-word contractions as apostrophes
 
 	Examples
@@ -347,6 +371,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 	string = identifyContractedBeginnings(string, locale);
 	string = identifyInWordContractions(string, locale);
 	string = identifyContractedYears(string, locale);
+	string = identifyContractedEnds(string, locale);
 
 
 	/* [1.5] Identify feet, arcminutes, minutes */
@@ -384,6 +409,10 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 		return $1 + $2 + $3;
 	});
+
+
+
+
 
 
 
