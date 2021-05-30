@@ -5,7 +5,7 @@ TODO
 - reconsider: make single quote identifiable as not enclosed in double quote pair?
 	- challenge: we don't know contractions in other languages, such as rusyn transliteration.
 - consolidate numbering
-
+- tbd swap quotes and terinal punctuation
 
 */
 
@@ -180,6 +180,40 @@ export function identifyContractedYears(string, locale) {
 export function identifySinglePrimes(string, locale) {
 	return string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1$2{{typopo__single-prime}}");
 }
+
+
+
+/*
+	Identify standalone right single quote
+
+	Algorithm
+	Find right single quotes:
+	- following a word
+	- optionally, following a sentence punctuation
+	- optionally, preceding a space or a sentence punctuation
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified standalone right single quote
+*/
+export function identifyStandaloneRightSingleQuote(string, locale) {
+
+	return string.replace(
+		new RegExp(
+			"(["+ locale.allChars +"])"
+		+ "(["+ locale.sentencePunctuation +"])?"
+		+ "(" + locale.singleQuoteAdepts + ")"
+		+ "([ "+ locale.sentencePunctuation +"])?",
+			"g"
+		),
+			"$1"
+		+ "$2"
+		+ "{{typopo__right-single-quote--standalone}}"
+		+ "$4"
+	);
+
+}
+
 
 
 
@@ -451,11 +485,9 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 		let re = new RegExp(pattern, "g");
 		$2 = $2.replace(re, "$1{{typopo__left-single-quote--standalone}}$3");
 
-		// identify {{typopo__right-single-quote--standalone}}
-		pattern = "(["+ locale.allChars +"])([.,!?])?(" + locale.singleQuoteAdepts + ")([ .,!?])";
-		re = new RegExp(pattern, "g");
-		$2 = $2.replace(re, "$1$2{{typopo__right-single-quote--standalone}}$4");
 
+
+		$2 = identifyStandaloneRightSingleQuote($2, locale);
 		$2 = identifySingleQuotePairs($2, locale);
 
 		return $1 + $2 + $3;
