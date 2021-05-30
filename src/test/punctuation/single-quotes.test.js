@@ -2,7 +2,12 @@ import {identifyContractedAnd,
 				identifyContractedBeginnings,
 				identifyInWordContractions,
 				identifyContractedYears,	
+
+				identifySinglePrimes,
+				replaceSinglePrimeWSingleQuote,
 				placeLocaleSingleQuotes,
+
+				removeExtraSpaceAroundSinglePrime,
 				fixSingleQuotesPrimesAndApostrophes} 
 				from "../../lib/punctuation/single-quotes";
 import Locale from "../../locale/locale";
@@ -200,6 +205,123 @@ describe('Identify contracted years as apostrophes (en-us):\n', () => {
 });
 
 
+
+describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us):\n', () => {
+	let moduleTestCase = {
+		"12 ' 45″": 
+		"12′ 45″",
+
+		"12 ‘ 45″": 
+		"12′ 45″",
+		
+		"12 ’ 45″": 
+		"12′ 45″",
+
+		"12 ‛ 45″": 
+		"12′ 45″",
+
+		"12 ′ 45″": 
+		"12′ 45″",
+
+		"12 '45″": 
+		"12′45″",		
+
+	};
+	
+	let unitTestCase = {
+		"12' 45″": 
+		"12′ 45″",
+
+		"12‘ 45″": 
+		"12′ 45″",
+		
+		"12’ 45″": 
+		"12′ 45″",
+
+		"12‛ 45″": 
+		"12′ 45″",
+
+		"12′ 45″": 
+		"12′ 45″",
+
+		"12'45″": 
+		"12′45″",
+	};
+
+	Object.keys(unitTestCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				placeLocaleSingleQuotes(
+					identifySinglePrimes(
+						key, 
+						new Locale("en-us")
+					), 
+					new Locale("en-us")
+				),
+				unitTestCase[key]
+			);
+		});
+	});
+
+
+	Object.keys(moduleTestCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(
+				fixSingleQuotesPrimesAndApostrophes(
+					key,
+					new Locale("en-us")
+				), 
+				moduleTestCase[key]
+			);
+		});
+	});
+});
+
+
+
+describe('Replace a single qoute & a single prime with a single quote pair (en-us):\n', () => {
+	let unitTestCase = {
+		"{{typopo__left-single-quote--standalone}}word{{typopo__single-prime}}":
+		"{{typopo__left-single-quote}}word{{typopo__right-single-quote}}",
+
+		"{{typopo__single-prime}}word{{typopo__right-single-quote--standalone}}":
+		"{{typopo__left-single-quote}}word{{typopo__right-single-quote}}",		
+
+		// ...testFalsePositives,
+	};
+
+	let moduleTestCase = {
+		"He said: “What about 'Localhost 3000', is that good?”":
+		"He said: “What about ‘Localhost 3000’, is that good?”",
+
+		"He said: “Here are 30 \'bucks\'”":
+		"He said: “Here are 30 ‘bucks’”",
+				
+		// ...testFalsePositives,
+	};	
+
+	Object.keys(unitTestCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				replaceSinglePrimeWSingleQuote(
+					key, 
+					new Locale("en-us")
+					),
+					unitTestCase[key]);
+		});
+	});
+			
+	Object.keys(moduleTestCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us")), 
+				moduleTestCase[key]);
+		});
+	});
+});
+
+
 describe('Single quotes in default language (en-us)\n', () => {
 	let testCase = {
 		/* Basic tests */
@@ -209,19 +331,11 @@ describe('Single quotes in default language (en-us)\n', () => {
 		"Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
 		"He said: “What about 'name' and 'other name'?”":
 		"He said: “What about ‘name’ and ‘other name’?”",
-		"He said: “What about 'Localhost 3000', is that good?”":
-		"He said: “What about ‘Localhost 3000’, is that good?”",
+
 		"And I ask you: “What’s the idea behind this—how do you call it—'one size fits all' approach?”":
 		"And I ask you: “What’s the idea behind this—how do you call it—‘one size fits all’ approach?”",
 
-		/* Mixing quotes and primes, left for single quotes */
-		"12' 45″": "12′ 45″",
-		"3° 5' 30″": "3° 5′ 30″",
 
-		/* Improperly spaced primes, left for single quotes */
-		"12 ′ 45″": "12′ 45″",
-		"3° 5 ′ 30″": "3° 5′ 30″",
-		"12″ 3'00°": "12″ 3′00°",
 
 
 		
