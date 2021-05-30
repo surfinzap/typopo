@@ -207,6 +207,7 @@ describe('Identify contracted years as apostrophes (en-us):\n', () => {
 
 
 describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us):\n', () => {
+describe('Identify feet and arcminutes following a 1–3 numbers (en-us):\n', () => {
 	let moduleTestCase = {
 		"12 ' 45″": 
 		"12′ 45″",
@@ -223,7 +224,10 @@ describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 		"12 ′ 45″": 
 		"12′ 45″",
 
-		"12 '45″": 
+		"12 ‛45″": 
+		"12′45″",
+
+		"12 '45″":  //this is identified wrongly as 8217, right quotation mark in module tests
 		"12′45″",		
 
 	};
@@ -244,8 +248,14 @@ describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 		"12′ 45″": 
 		"12′ 45″",
 
+		"12 ′ 45″": 
+		"12 ′ 45″",
+
 		"12'45″": 
 		"12′45″",
+
+		"12 '45″":
+		"12 ′45″",		
 	};
 
 	Object.keys(unitTestCase).forEach((key) => {

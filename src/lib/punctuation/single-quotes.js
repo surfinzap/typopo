@@ -10,29 +10,7 @@ TODO
 */
 
 
-/*
-	Replace all identified punctuation with appropriate punctuation in given language
 
-	Context
-	In single-quotes module, we first identify single quote and single prime adepts, and then we  replace them temporarily with labels as “{{typopo__single-prime}}”. 
-	This is the function in the sequence to swap temporary labels to desired quotes.
-	
-
-	@param {string} string: input text for identification
-	@param {string} locale: locale option
-	@returns {string} an output with locale-specific single quotes and single primes
-*/
-export function placeLocaleSingleQuotes(string, locale) {
-
-	string = string.replace(/({{typopo__single-prime}})/g, locale.singlePrime);
-
-	string = string.replace(/{{typopo__apostrophe}}|{{typopo__left-single-quote--standalone}}|{{typopo__right-single-quote--standalone}}/g, locale.apostrophe);
-
-	string = string.replace(/{{typopo__left-single-quote}}/g, locale.leftSingleQuote);
-	string = string.replace(/{{typopo__right-single-quote}}/g, locale.rightSingleQuote);
-
-	return string;
-}
 
 
 
@@ -129,6 +107,10 @@ export function identifyInWordContractions(string, locale) {
 	Example
 	in ’70s, INCHEBA ’89,…
 
+	Exceptions
+	12 '45″ // when there is a wrongly spaced feet
+
+
 	@param {string} string: input text for identification
 	@param {string} locale: locale option
 	@returns {string} output with identified contractions as apostrophes
@@ -136,28 +118,30 @@ export function identifyInWordContractions(string, locale) {
 export function identifyContractedYears(string, locale) {	
 	return string.replace(
 		new RegExp(
-			"([" + locale.spaces + "])"
+			"([^0-9])"
+		+ "([" + locale.spaces + "])"
 		+ "(" + locale.singleQuoteAdepts + ")"
 		+ "([" + locale.cardinalNumber + "]{2})", 
 			"g"
 		),
 			"$1"
+		+ "$2"
 		+ "{{typopo__apostrophe}}"
-		+ "$3"
+		+ "$4"
 	);
 }
 
 
 
 /*
-	Identify inches, arcseconds, seconds following a 1–3 numbers
+	Identify feet and arcminutes following a 1–3 numbers
 
 	Example
 	12' 45″ → 
 	12′ 45″
 
 	Single-quotes module impact
-	Function falsely identifies inches, where we are expecting quotes, e.g.	
+	Function falsely identifies feet, where we are expecting quotes, e.g.	
 	'Konference 2020' in quotes → 
 	‘Konference 2020’ in quotes 
 	→ this is corrected in replaceSinglePrimeWSingleQuote
@@ -172,6 +156,55 @@ export function identifyContractedYears(string, locale) {
 export function identifySinglePrimes(string, locale) {
 	return string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1$2{{typopo__single-prime}}");
 }
+
+
+
+/*
+	Identify double quote pairs 
+
+	Example
+	"quoted material" → “quoted material”
+
+
+	Assumptions and Limitations
+	We assume that single primes, feet and arcminutees were identified in the previous run.
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified double quote pairs
+*/
+export function identifyDoubleQuotePairs(string, locale) {
+	// double quotes around a number
+	string = string.replace(
+		new RegExp(
+			"(" + locale.doubleQuoteAdepts + ")"
+		+ "(\\d+)"
+		+ "({{typopo__double-prime}})",
+			"g"
+		),
+			"{{typopo__left-double-quote}}"
+		+ "$2"
+		+ "{{typopo__right-double-quote}}"
+	);
+
+	// generic rule
+	string = string.replace(
+		new RegExp(
+			"(" + locale.doubleQuoteAdepts + ")"
+		+ "(.*?)"
+		+ "(" + locale.doubleQuoteAdepts + ")",
+			"g"
+		),
+			"{{typopo__left-double-quote}}"
+		+ "$2"
+		+ "{{typopo__right-double-quote}}"
+	);
+
+	return string;
+}
+
+
+
 
 
 
@@ -240,6 +273,7 @@ export function replaceSinglePrimeWSingleQuote(string, locale) {
 */
 export function removeExtraSpaceAroundSinglePrime(string, locale) {	
 
+
 	return string.replace(
 		new RegExp(
 			"(["+ locale.spaces +"])"
@@ -249,6 +283,37 @@ export function removeExtraSpaceAroundSinglePrime(string, locale) {
 		"$2"
 	)
 }
+
+
+
+
+/*
+	Replace all identified punctuation with appropriate punctuation in given language
+
+	Context
+	In single-quotes module, we first identify single quote and single prime adepts, and then we  replace them temporarily with labels as “{{typopo__single-prime}}”. 
+	This is the function in the sequence to swap temporary labels to desired quotes.
+	
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} an output with locale-specific single quotes and single primes
+*/
+export function placeLocaleSingleQuotes(string, locale) {
+
+	string = string.replace(/({{typopo__single-prime}})/g, locale.singlePrime);
+
+	string = string.replace(/{{typopo__apostrophe}}|{{typopo__left-single-quote--standalone}}|{{typopo__right-single-quote--standalone}}/g, locale.apostrophe);
+
+	string = string.replace(/{{typopo__left-single-quote}}/g, locale.leftSingleQuote);
+	string = string.replace(/{{typopo__right-single-quote}}/g, locale.rightSingleQuote);
+
+	return string;
+}
+
+
+
+
 
 
 /*
@@ -262,8 +327,9 @@ export function removeExtraSpaceAroundSinglePrime(string, locale) {
 
 	Algorithm
 	[1] Identify common apostrophe contractions
+	[1.5] Identify feet, arcminutes, minutes
 	[2] Identify single quotes
-	[3] Identify feet, arcminutes, minutes
+	[3] empty, previously 1.5
 	[4] Replace a single qoute & a single prime with a single quote pair
 	[4.5] Consolidate spaces around single quotes and primes
 	[5] Identify residual apostrophes that have left
@@ -281,6 +347,10 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 	string = identifyContractedBeginnings(string, locale);
 	string = identifyInWordContractions(string, locale);
 	string = identifyContractedYears(string, locale);
+
+
+	/* [1.5] Identify feet, arcminutes, minutes */
+	string = identifySinglePrimes(string, locale);
 
 
 	/* [2] Identify single quotes within double quotes */
@@ -316,8 +386,6 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 	});
 
 
-	/* [3] Identify feet, arcminutes, minutes */
-	string = identifySinglePrimes(string, locale);
 
 
 	/* [4] Replace a single qoute & a single prime with a single quote pair */
