@@ -1,9 +1,14 @@
 /*
 TODO
 - make identification of and contractions more robust + implement an exception for press 'N'
+
+- fix bugs
+- consolidate module test
+
 - remove [5] if unnecessary
-- reconsider: make single quote identifiable as not enclosed in double quote pair?
-	- challenge: we don't know contractions in other languages, such as rusyn transliteration.
+
+
+
 - consolidate numbering
 - tbd swap quotes and terinal punctuation
 
@@ -184,6 +189,77 @@ export function identifySinglePrimes(string, locale) {
 
 
 /*
+	Identify standalone left single quote
+
+	Algorithm
+	Find left single quotes:
+	- following a space, en dash or em dash
+	- preceding a word
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified standalone left single quote
+*/
+export function identifyStandaloneLeftSingleQuote(string, locale) {
+
+	return string.replace(
+		new RegExp(
+				"([" + locale.spaces + locale.emDash + locale.enDash + "])"
+			+ "(" + locale.singleQuoteAdepts + "|,)"
+			+ "(["+ locale.allChars +"])",
+			"g"
+		),
+			"$1"
+		+ "{{typopo__left-single-quote--standalone}}"
+		+ "$3"
+	);
+
+}
+
+
+
+/*
+	Identify single quotes within double quotes
+
+	Limitations
+	Since it’s difficult to identify apostrophe contracting end of the word (e.g. “jes’”), it’s difficult to identify single quotes universally. Therefore we’re identifying only single quotes and single quote pairs that are enclosed in double quote pairs.
+
+	Algorithm
+	- find text in double quotes
+	- in quoted text find
+		- standalone left single quote
+		- standalone right single quote
+		- single quote pairs
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified standalone left single quote
+*/
+export function identifySingleQuotesWithinDoubleQuotes(string, locale) {
+
+	return string.replace(
+		new RegExp(
+				"(" + locale.doubleQuoteAdepts + ")"
+			+ "(.*?)"
+			+ "(" + locale.doubleQuoteAdepts + ")",
+			"g"
+		),
+			function($0, $1, $2, $3){
+
+				$2 = identifyStandaloneLeftSingleQuote($2, locale);
+				$2 = identifyStandaloneRightSingleQuote($2, locale);
+				$2 = identifySingleQuotePairs($2, locale);
+
+				return $1 + $2 + $3;
+			}
+	);
+
+}
+
+
+
+
+/*
 	Identify standalone right single quote
 
 	Algorithm
@@ -319,58 +395,6 @@ export function replaceSinglePrimeWSingleQuote(string, locale) {
 
 
 
-
-/*
-	Identify single quote pairs 
-
-	Example
-	"quoted material" → “quoted material”
-
-
-	Assumptions and Limitations
-	We assume that double primes, inches and arcseconds were identified in the previous run.
-
-	@param {string} string: input text for identification
-	@param {string} locale: locale option
-	@returns {string} output with identified double quote pairs
-*/
-export function identifyDoubleQuotePairs(string, locale) {
-	// double quotes around a number
-	string = string.replace(
-		new RegExp(
-			"(" + locale.doubleQuoteAdepts + ")"
-		+ "(\\d+)"
-		+ "({{typopo__double-prime}})",
-			"g"
-		),
-			"{{typopo__left-double-quote}}"
-		+ "$2"
-		+ "{{typopo__right-double-quote}}"
-	);
-
-	// generic rule
-	string = string.replace(
-		new RegExp(
-			"(" + locale.doubleQuoteAdepts + ")"
-		+ "(.*?)"
-		+ "(" + locale.doubleQuoteAdepts + ")",
-			"g"
-		),
-			"{{typopo__left-double-quote}}"
-		+ "$2"
-		+ "{{typopo__right-double-quote}}"
-	);
-
-	return string;
-}
-
-
-
-
-
-
-
-
 /*
 	Remove extra space around a single prime
 
@@ -473,31 +497,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 
 	/* [2] Identify single quotes within double quotes */
-	let pattern = "(" + locale.doubleQuoteAdepts + ")(.*?)(" + locale.doubleQuoteAdepts + ")";
-	let re = new RegExp(pattern, "g");
-	string = string.replace(re, function($0, $1, $2, $3){
-
-		// identify {{typopo__left-single-quote--standalone}}
-		let pattern =
-				"([" + locale.spaces + locale.emDash + locale.enDash + "])"
-			+ "(" + locale.singleQuoteAdepts + "|,)"
-			+ "(["+ locale.allChars +"])";
-		let re = new RegExp(pattern, "g");
-		$2 = $2.replace(re, "$1{{typopo__left-single-quote--standalone}}$3");
-
-
-
-		$2 = identifyStandaloneRightSingleQuote($2, locale);
-		$2 = identifySingleQuotePairs($2, locale);
-
-		return $1 + $2 + $3;
-	});
-
-
-
-
-
-
+	string = identifySingleQuotesWithinDoubleQuotes(string, locale);
 
 
 	/* [4] Replace a single qoute & a single prime with a single quote pair */
@@ -505,7 +505,6 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 
 	/* [4.5] Consolidate spaces around single quotes and primes */
-
 
 
 	/* [5] Identify residual apostrophes that have left */
