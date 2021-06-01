@@ -5,14 +5,15 @@ import {identifyContractedAnd,
 				identifyContractedYears,	
 
 				identifySinglePrimes,
+				identifyStandaloneLeftSingleQuote,
+				identifyStandaloneRightSingleQuote,
 				identifySingleQuotePairs,
 				replaceSinglePrimeWSingleQuote,
 
 				placeLocaleSingleQuotes,
 
 				removeExtraSpaceAroundSinglePrime,
-				fixSingleQuotesPrimesAndApostrophes,
-				identifyStandaloneRightSingleQuote} 
+				fixSingleQuotesPrimesAndApostrophes} 
 				from "../../lib/punctuation/single-quotes";
 import Locale from "../../locale/locale";
 
@@ -354,6 +355,107 @@ describe('Identify feet and arcminutes following a 1–3 numbers (en-us):\n', ()
 
 
 
+describe('Identify standalone left single quote (en-us):\n', () => {
+	let unitTestCase = {
+		"\" \'word\"":
+		"\" {{typopo__left-single-quote--standalone}}word\"",
+
+		"\" ‚word\"":
+		"\" {{typopo__left-single-quote--standalone}}word\"",	
+
+		" ‘word":
+		" {{typopo__left-single-quote--standalone}}word",	
+
+		"–‘word":
+		"–{{typopo__left-single-quote--standalone}}word",	
+
+		"—‘word":
+		"—{{typopo__left-single-quote--standalone}}word",	
+
+		" ʼword":
+		" {{typopo__left-single-quote--standalone}}word",	
+
+		" ‛word":
+		" {{typopo__left-single-quote--standalone}}word",	
+
+		" ´word":
+		" {{typopo__left-single-quote--standalone}}word",	
+
+		" `word":
+		" {{typopo__left-single-quote--standalone}}word",	
+
+		" ′word":
+		" {{typopo__left-single-quote--standalone}}word",	
+
+		" ‹word":
+		" {{typopo__left-single-quote--standalone}}word",	
+
+		" ›word":
+		" {{typopo__left-single-quote--standalone}}word",	
+
+
+
+	};
+
+	let moduleTestCase = {
+		// heads up! since it’s a standalone quote it’s fixed as apostrophe within a module
+
+		"“ ‘word”":
+		"“ ’word”",	
+
+		"“–‘word”":
+		"“–’word”",	
+
+		"“—‘word”":
+		"“—’word”",	
+
+		"“ ʼword”":
+		"“ ’word”",	
+
+		"“ ‛word”":
+		"“ ’word”",	
+
+		"“ ´word”":
+		"“ ’word”",	
+
+		"“ `word”":
+		"“ ’word”",	
+
+		"“ ′word”":
+		"“ ’word”",	
+
+		"“ ‹word”":
+		"“ ’word”",	
+
+		"“ ›word”":
+		"“ ’word”",	
+
+	};	
+
+	Object.keys(unitTestCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				identifyStandaloneLeftSingleQuote(
+					key, 
+					new Locale("en-us")
+					),
+					unitTestCase[key]);
+		});
+	});
+			
+	Object.keys(moduleTestCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us")), 
+				moduleTestCase[key]);
+		});
+	});
+});
+
+
+
+
 describe('Identify standalone right single quote (en-us):\n', () => {
 	let unitTestCase = {
 		"\"word\'\"":
@@ -405,6 +507,8 @@ describe('Identify standalone right single quote (en-us):\n', () => {
 	};
 
 	let moduleTestCase = {
+		// heads up! since it’s a standalone quote it’s fixed as apostrophe within a module
+
 		"“word'”":
 		"“word’”",
 
@@ -570,38 +674,6 @@ describe('Replace a single qoute & a single prime with a single quote pair (en-u
 });
 
 
-describe('Single quotes in default language (en-us)\n', () => {
-	let testCase = {
-		/* Basic tests */
-
-
-		"Within double quotes “there are single 'quotes with mix’d punctuation', you see”.":
-		"Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
-		"He said: “What about 'name' and 'other name'?”":
-		"He said: “What about ‘name’ and ‘other name’?”",
-
-		"And I ask you: “What’s the idea behind this—how do you call it—'one size fits all' approach?”":
-		"And I ask you: “What’s the idea behind this—how do you call it—‘one size fits all’ approach?”",
-
-
-
-
-		
-		...testModule,
-
-		// tbd figure out later
-		// "Hers'": "Hers’",
-
-	};
-
-
-	Object.keys(testCase).forEach((key) => {
-		it("should fix single quotes, primes and apostrophes in English", () => {
-			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("en-us")), testCase[key]);
-		});
-	});
-});
-
 
 
 describe('Remove extra space around a single prime:\n', () => {
@@ -638,15 +710,57 @@ describe('Remove extra space around a single prime:\n', () => {
 
 
 
+describe('Single quotes in default language (en-us)\n', () => {
+	let testCase = {
+		/* Basic tests */
+
+
+		"Within double quotes “there are single 'quotes with mix’d punctuation', you see”.":
+		"Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
+		"He said: “What about 'name' and 'other name'?”":
+		"He said: “What about ‘name’ and ‘other name’?”",
+
+		"And I ask you: “What’s the idea behind this—how do you call it—'one size fits all' approach?”":
+		"And I ask you: “What’s the idea behind this—how do you call it—‘one size fits all’ approach?”",
+
+
+
+
+		
+		...testModule,
+
+		// tbd figure out later
+		// "Hers'": "Hers’",
+
+	};
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("should fix single quotes, primes and apostrophes in English", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
 
 describe('Single quotes in (sk, cs, de-de)\n', () => {
 	let testCase = {
 		"„double quotes 'and single quotes' within“":
 		"„double quotes ‚and single quotes‘ within“",
-		"„double quotes 'and single quotes‘ within“": "„double quotes ‚and single quotes‘ within“",
-		"„double quotes ‚and single quotes' within“": "„double quotes ‚and single quotes‘ within“",
-		"„double quotes ‚and single quotes` within“": "„double quotes ‚and single quotes‘ within“",
-		"„double quotes ,and single quotes‘ within“": "„double quotes ‚and single quotes‘ within“", // abused comma , for ‚
+		
+		"„double quotes 'and single quotes‘ within“": 
+		"„double quotes ‚and single quotes‘ within“",
+		
+		"„double quotes ‚and single quotes' within“": 
+		"„double quotes ‚and single quotes‘ within“",
+		
+		"„double quotes ‚and single quotes` within“": 
+		"„double quotes ‚and single quotes‘ within“",
+		
+		// comma used as a single quote
+		"„double quotes ,and single quotes‘ within“":
+		"„double quotes ‚and single quotes‘ within“", 
 
 		"Hej: „Vin mu povil, 'ta de jes' take vidil' i neviril“":
 		"Hej: „Vin mu povil, ‚ta de jes’ take vidil‘ i neviril“",
