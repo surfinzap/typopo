@@ -3,13 +3,7 @@ TODO
 - make identification of and contractions more robust + implement an exception for press 'N'
 
 - fix bugs
-- consolidate module test
 
-- remove [5] if unnecessary
-
-
-
-- consolidate numbering
 - tbd swap quotes and terinal punctuation
 
 */
@@ -345,6 +339,31 @@ export function identifySingleQuotePairs(string, locale) {
 
 
 
+/*
+	Identify residual apostrophes 
+
+	Finds remaining single quote adepts and changes them to apostrophes.
+
+
+	Limitation
+	This function runs as last in the row identification function as it catches what’s left.
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified single quote pairs
+*/
+export function identifyResidualApostrophes(string, locale) {
+
+	return string.replace(
+		new RegExp(
+			"(" + locale.singleQuoteAdepts + ")",
+			"g"
+		),
+			"{{typopo__apostrophe}}"
+	);
+}
+
+
 
 
 
@@ -469,12 +488,10 @@ export function placeLocaleSingleQuotes(string, locale) {
 
 	Algorithm
 	[1] Identify common apostrophe contractions
-	[1.5] Identify feet, arcminutes, minutes
-	[2] Identify single quotes
-	[3] empty, previously 1.5
+	[2] Identify feet, arcminutes, minutes
+	[3] Identify single quotes
 	[4] Replace a single qoute & a single prime with a single quote pair
-	[4.5] Consolidate spaces around single quotes and primes
-	[5] Identify residual apostrophes that have left
+	[5] Identify residual apostrophes
 	[6] Replace all identified punctuation with appropriate punctuation in given language
 	[7] Consolidate spaces around single primes
 
@@ -492,11 +509,11 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 	string = identifyContractedEnds(string, locale);
 
 
-	/* [1.5] Identify feet, arcminutes, minutes */
+	/* [2] Identify feet, arcminutes, minutes */
 	string = identifySinglePrimes(string, locale);
 
 
-	/* [2] Identify single quotes within double quotes */
+	/* [3] Identify single quotes within double quotes */
 	string = identifySingleQuotesWithinDoubleQuotes(string, locale);
 
 
@@ -504,14 +521,8 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 	string = replaceSinglePrimeWSingleQuote(string, locale);
 
 
-	/* [4.5] Consolidate spaces around single quotes and primes */
-
-
-	/* [5] Identify residual apostrophes that have left */
-	// tbd decide how to address this
-	// pattern = "(" + locale.singleQuoteAdepts + ")";
-	// re = new RegExp(pattern, "g");
-	// string = string.replace(re, "{{typopo__apostrophe}}");
+	/* [5] Identify residual apostrophes*/
+	string = identifyResidualApostrophes(string, locale);
 
 
 	/* [6] Replace all identified punctuation with appropriate punctuation in given language */
