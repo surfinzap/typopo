@@ -32,7 +32,7 @@ export default class Locale {
       (39)			dumb single quote
       (8216)		left single quotation mark
       (8217)		right single quotation mark
-      (700)	  	modifier letter apostrophe; https://en.wikipedia.org/wiki/Modifier_letter_apostrophe
+      (700)	  	modifier letter apostrophe; https://en.wikipedia.org/wiki/Modifier_letter_apostrophe [1]
       (8219)		single high-reversed-9 quotation mark
       (180)     acute accent ´
       (96)      grave accent `
@@ -44,7 +44,7 @@ export default class Locale {
     this.singleQuoteAdepts = "‚|'|‘|’|ʼ|‛|´|`|′|‹|›";
     this.leftSingleQuote = typopoLocale[locale].quotes.leftSingleQuote;
     this.rightSingleQuote = typopoLocale[locale].quotes.rightSingleQuote;
-    this.apostrophe = "’";
+    this.apostrophe = "’"; // (8217) [1]
     this.singlePrime = "′";
     this.doubleQuoteAdepts = "„|“|”|\"|«|»|″|,{2,}|‘{2,}|’{2,}|'{2,}|‹{2,}|›{2,}|′{2,}";
     this.leftDoubleQuote = typopoLocale[locale].quotes.leftDoubleQuote;
