@@ -4,10 +4,38 @@ TODO
 
 - fix bugs
 
-- tbd swap quotes and terinal punctuation
+- tbd swap quotes and terminal punctuation
 
 */
 
+
+
+
+/*
+	Identify markdown syntax highlighting, so they’re not fixed as apostrophes
+
+	Example
+	```
+	code block
+	```
+
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified contractions as apostrophes
+*/
+export function identifyMarkdownSyntaxHighlighting(string, locale) {	
+
+	return string.replace(
+		new RegExp(
+			"(\\s*)"
+		+ "(```)", 
+			"g"
+		),
+			"$1"
+		+ "{{typopo__markdown_syntax_highlight}}"
+	)
+}
 
 
 
@@ -467,6 +495,10 @@ export function placeLocaleSingleQuotes(string, locale) {
 	string = string.replace(/{{typopo__left-single-quote}}/g, locale.leftSingleQuote);
 	string = string.replace(/{{typopo__right-single-quote}}/g, locale.rightSingleQuote);
 
+		string = string.replace(/{{typopo__markdown_syntax_highlight}}/g, "```");
+
+	
+
 	return string;
 }
 
@@ -487,6 +519,7 @@ export function placeLocaleSingleQuotes(string, locale) {
 	e.g. ␣'word or sentence portion'␣ (and not like ␣'␣word␣'␣)
 
 	Algorithm
+	[0] Identify markdown syntax highlighting
 	[1] Identify common apostrophe contractions
 	[2] Identify feet, arcminutes, minutes
 	[3] Identify single quotes
@@ -500,6 +533,9 @@ export function placeLocaleSingleQuotes(string, locale) {
 	@returns {string} — corrected output
 */
 export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
+
+	/* [0] Identify markdown syntax highlighting */
+	string = identifyMarkdownSyntaxHighlighting(string, locale);
 
 	/* [1] Identify common apostrophe contractions */
 	string = identifyContractedAnd(string, locale);
