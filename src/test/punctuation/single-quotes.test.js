@@ -9,6 +9,7 @@ import {identifyContractedAnd,
 				identifyStandaloneRightSingleQuote,
 				identifySingleQuotePairs,
 				replaceSinglePrimeWSingleQuote,
+				identifyResidualApostrophes,
 
 				placeLocaleSingleQuotes,
 
@@ -664,6 +665,40 @@ describe('Replace a single qoute & a single prime with a single quote pair (en-u
 				key, 
 				new Locale("en-us")), 
 				moduleTestCase[key]);
+		});
+	});
+});
+
+
+
+describe('Identify residual apostrophes  (en-us):\n', () => {
+	let testCase = {
+		"Hers'":
+		"Hers’",
+		
+	};
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				placeLocaleSingleQuotes(
+					identifyResidualApostrophes(
+						key, 
+						new Locale("en-us")
+					), 
+					new Locale("en-us")
+				),
+				testCase[key]);
+		});
+	});
+
+	Object.keys(testCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us")), 
+				testCase[key]);
 		});
 	});
 });
