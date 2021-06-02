@@ -1,4 +1,5 @@
-import {identifyContractedAnd,
+import {identifyMarkdownSyntaxHighlighting,
+				identifyContractedAnd,
 				identifyContractedBeginnings,
 				identifyContractedEnds,
 				identifyInWordContractions,
@@ -19,6 +20,52 @@ import {identifyContractedAnd,
 import Locale from "../../locale/locale";
 
 import assert from 'assert';
+
+
+
+describe('Identify markdown syntax highlighting (en-us):\n', () => {
+	let testCase = {
+		"```\ncode\n```":
+		"```\ncode\n```",
+
+		"\t```\ncode\n```":
+		"\t```\ncode\n```",
+
+		"\t\t```\ncode\n```":
+		"\t\t```\ncode\n```",
+
+		" ```\ncode\n```":
+		" ```\ncode\n```",
+
+		"  ```\ncode\n```":
+		"  ```\ncode\n```",
+
+	};
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				placeLocaleSingleQuotes(
+					identifyMarkdownSyntaxHighlighting(
+						key, 
+						new Locale("en-us")
+					), 
+					new Locale("en-us")
+				),
+				testCase[key]);
+		});
+	});
+			
+	Object.keys(testCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us")), 
+				testCase[key]);
+		});
+	});
+});
 
 
 
