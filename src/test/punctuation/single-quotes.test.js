@@ -19,10 +19,6 @@ import Locale from "../../locale/locale";
 
 import assert from 'assert';
 
-let testModule = {
-	"Let's test this: “however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said”":
-	"Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
-}
 
 
 
@@ -147,7 +143,6 @@ describe('Identify common contractions at the end of the word as apostrophes (en
 
 		"GETTIN'":
 		"GETTIN’",
-
 		
 	};
 	
@@ -712,31 +707,37 @@ describe('Remove extra space around a single prime:\n', () => {
 
 describe('Single quotes in default language (en-us)\n', () => {
 	let testCase = {
-		/* Basic tests */
-
+		"Let's test this: “however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said”":
+		"Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
 
 		"Within double quotes “there are single 'quotes with mix’d punctuation', you see”.":
 		"Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
-		"He said: “What about 'name' and 'other name'?”":
-		"He said: “What about ‘name’ and ‘other name’?”",
 
+		
 		"And I ask you: “What’s the idea behind this—how do you call it—'one size fits all' approach?”":
 		"And I ask you: “What’s the idea behind this—how do you call it—‘one size fits all’ approach?”",
 
-
+			
+		"Hej: “Vin mu povil, 'ta de jes' take vidil' i neviril”":
+		"Hej: “Vin mu povil, ‘ta de jes’ take vidil’ i neviril”",
 
 
 		
-		...testModule,
+		"“double quotes 'and single quotes' within”":
+		"“double quotes ‘and single quotes’ within”",
+		
+		"“double quotes 'and single quotes’ within”": 
+		"“double quotes ‘and single quotes’ within”",
+		
+		"“double quotes ‚and single quotes' within”": 
+		"“double quotes ‘and single quotes’ within”",
 
-		// tbd figure out later
-		// "Hers'": "Hers’",
-
+		"He said: “What about 'name' and 'other name'?”":
+		"He said: “What about ‘name’ and ‘other name’?”",
 	};
 
-
 	Object.keys(testCase).forEach((key) => {
-		it("should fix single quotes, primes and apostrophes in English", () => {
+		it("module test (en)", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("en-us")), testCase[key]);
 		});
 	});
@@ -744,28 +745,30 @@ describe('Single quotes in default language (en-us)\n', () => {
 
 
 
+
+
+
 describe('Single quotes in (sk, cs, de-de)\n', () => {
 	let testCase = {
-		"„double quotes 'and single quotes' within“":
-		"„double quotes ‚and single quotes‘ within“",
+		"Let's test this: „however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said“":
+		"Let’s test this: „however, ‚quote this or nottin’ ’n’ this will be corrected for 69’ers,‘ he said“",
+
+		"Within double quotes „there are single 'quotes with mix’d punctuation', you see“.":
+		"Within double quotes „there are single ‚quotes with mix’d punctuation‘, you see“.",
+
 		
-		"„double quotes 'and single quotes‘ within“": 
-		"„double quotes ‚and single quotes‘ within“",
-		
-		"„double quotes ‚and single quotes' within“": 
-		"„double quotes ‚and single quotes‘ within“",
-		
-		"„double quotes ‚and single quotes` within“": 
-		"„double quotes ‚and single quotes‘ within“",
-		
-		// comma used as a single quote
-		"„double quotes ,and single quotes‘ within“":
-		"„double quotes ‚and single quotes‘ within“", 
+		"And I ask you: „What’s the idea behind this—how do you call it—'one size fits all' approach?“":
+		"And I ask you: „What’s the idea behind this—how do you call it—‚one size fits all‘ approach?“",
 
 		"Hej: „Vin mu povil, 'ta de jes' take vidil' i neviril“":
 		"Hej: „Vin mu povil, ‚ta de jes’ take vidil‘ i neviril“",
+		
+		"„double quotes 'and single quotes' within“":
+		"„double quotes ‚and single quotes‘ within“",
+		
 
-		"INCHEBA '89": "INCHEBA ’89",
+		"He said: „What about 'name' and 'other name'?“":
+		"He said: „What about ‚name‘ and ‚other name‘?“",
 	};
 
 
@@ -780,16 +783,20 @@ describe('Single quotes in (sk, cs, de-de)\n', () => {
 
 describe('Single quotes in (rue)\n', () => {
 	let testCase = {
-		"«double quotes 'and single quotes' within»":
-		"«double quotes ‹and single quotes› within»",
 
-		"Hej: «Vin mu povil, 'ta de jes' take vidil' i neviril»":
-		"Hej: «Vin mu povil, ‹ta de jes’ take vidil› i neviril»",
+	"Let's test this: «however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said»":
+	"Let’s test this: «however, ‹quote this or nottin’ ’n’ this will be corrected for 69’ers,› he said»",
 
-		"He said: «What about 'name' and 'other name'?»":
-		"He said: «What about ‹name› and ‹other name›?»",
+	"Within double quotes «there are single 'quotes with mix’d punctuation', you see».":
+	"Within double quotes «there are single ‹quotes with mix’d punctuation›, you see».",
 
-		"INCHEBA '89": "INCHEBA ’89",
+	
+	"And I ask you: «What’s the idea behind this—how do you call it—'one size fits all' approach?»":
+	"And I ask you: «What’s the idea behind this—how do you call it—‹one size fits all› approach?»",
+
+		
+	"Hej: «Vin mu povil, 'ta de jes' take vidil' i neviril»":
+	"Hej: «Vin mu povil, ‹ta de jes’ take vidil› i neviril»",		
 
 	};
 
