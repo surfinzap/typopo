@@ -106,7 +106,7 @@ let testModule = {
 }
 
 
-function localizeTest(string, leftDoubleQuote, rightDoubleQuote) {
+function localizeDoubleQuotes(string, leftDoubleQuote, rightDoubleQuote) {
 	string = string.replace(/“/g, leftDoubleQuote);
 	string = string.replace(/”/g, rightDoubleQuote);
 	return string;
@@ -114,12 +114,12 @@ function localizeTest(string, leftDoubleQuote, rightDoubleQuote) {
 
 let testModuleSk = {}
 Object.keys(testModule).forEach(function(key){
-  testModuleSk[key] = localizeTest(testModule[key],"„","“");
+  testModuleSk[key] = localizeDoubleQuotes(testModule[key],"„","“");
 });
 
 let testModuleRue = {}
 Object.keys(testModule).forEach(function(key){
-  testModuleRue[key] = localizeTest(testModule[key],"«","»");
+  testModuleRue[key] = localizeDoubleQuotes(testModule[key],"«","»");
 });
 
 
