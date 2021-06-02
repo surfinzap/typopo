@@ -87,6 +87,10 @@ let testRemoveSpacesBeforeMarkdownList = {
   "\t* list": "* list",
   " * list": "* list", //nbsp
   " * list": "* list", //narrowNbsp
+	" + list": "+ list",
+  "  + list": "+ list",
+  "\t+ list": "+ list",
+  "\t\t+ list": "+ list",
 }
 
 let testKeepSpacesBeforeMarkdownList = {
