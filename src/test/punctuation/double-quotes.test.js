@@ -17,6 +17,17 @@ import {removeExtraPunctuationBeforeQuotes,
 import assert from 'assert';
 import Locale from "../../locale/locale";
 
+
+let configIgnoreMarkdownCodeBlocks = {
+  keepMarkdownCodeBlocks: false,
+}
+
+
+let configKeepMarkdownCodeBlocks = {
+  keepMarkdownCodeBlocks: true,
+}
+
+
 let testFalsePositives = {
 	"č., s., fol., str.," : 
 	"č., s., fol., str.,",
@@ -144,7 +155,12 @@ describe('Remove punctuation before double quotes (en-us):\n', () => {
 			assert.strictEqual(removeExtraPunctuationBeforeQuotes(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 });
@@ -164,7 +180,12 @@ describe('Remove punctuation after double quotes (en-us):\n', () => {
 			assert.strictEqual(removeExtraPunctuationAfterQuotes(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 });
@@ -259,7 +280,12 @@ describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 });
@@ -288,7 +314,17 @@ describe('Identify double quote pairs (en-us):\n', () => {
 		
 		"‘‘quoted material‘‘":
 		"“quoted material”",
+
+		"‘‘‘quoted material‘‘‘":
+		"“quoted material”",
+
+		"´´quoted material´´":
+		"“quoted material”",
 		
+		"``quoted material``":
+		"“quoted material”",
+		
+
 		"unquoted \"quoted material\" material":
 		"unquoted “quoted material” material",	
 		
@@ -350,10 +386,12 @@ describe('Identify double quote pairs (en-us):\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(
-				key, 
-				new Locale("en-us")), 
-				testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 });
@@ -403,10 +441,12 @@ describe('Identify standalone left double quote (en-us):\n', () => {
 		});
 
 		it("module test", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(
-				key, 
-				new Locale("en-us")), 
-				testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 
@@ -461,10 +501,12 @@ describe('Identify standalone right double quote (en-us):\n', () => {
 		});
 
 		it("module test", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(
-				key, 
-				new Locale("en-us")), 
-				testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 
@@ -509,10 +551,12 @@ describe('Remove unidentified double quotes (en-us):\n', () => {
 		});
 
 		it("module test", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(
-				key, 
-				new Locale("en-us")), 
-				testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 
@@ -555,10 +599,12 @@ describe('Replace a double qoute & a double prime with a double quote pair (en-u
 			
 	Object.keys(moduleTestCase).forEach((key) => {
 		it("module test", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(
-				key, 
-				new Locale("en-us")), 
-				moduleTestCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), moduleTestCase[key]);
 		});
 	});
 });
@@ -659,9 +705,9 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 			assert.strictEqual(
 				fixDoubleQuotesAndPrimes(
 					key, 
-					new Locale("en-us")), 
-				testCase[key]
-			);
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 });
@@ -696,7 +742,12 @@ describe('Remove extra comma after sentence punctuation in direct speech (en-us)
 			assert.strictEqual(removeExtraCommaAfterSentencePunctuation(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 });
@@ -739,9 +790,9 @@ describe('Remove extra spaces around quotes and primes (en-us):\n', () => {
 			assert.strictEqual(
 				fixDoubleQuotesAndPrimes(
 					key, 
-					new Locale("en-us")), 
-				testCase[key]
-			);
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 });
@@ -776,9 +827,9 @@ describe('Add a missing space before a left double quote (en-us):\n', () => {
 			assert.strictEqual(
 				fixDoubleQuotesAndPrimes(
 					key, 
-					new Locale("en-us")), 
-				testCase[key]
-			);
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 });
@@ -812,9 +863,9 @@ describe('Add a missing space after a left double quote (en-us):\n', () => {
 			assert.strictEqual(
 				fixDoubleQuotesAndPrimes(
 					key, 
-					new Locale("en-us")), 
-				testCase[key]
-			);
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 });
@@ -834,7 +885,12 @@ describe('Double quotes in default language (en-us)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 });
@@ -847,15 +903,30 @@ describe('Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n',
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test (sk)", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("sk")), testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("sk"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 
 		it("module test (cs)", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("cs")), testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("cs"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 
 		it("module test (de-de)", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("de-de"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});		
 	});
 });
@@ -868,7 +939,63 @@ describe('Double quotes in Rusyn language (rue)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test (rue)", () => {
-			assert.strictEqual(fixDoubleQuotesAndPrimes(key, new Locale("rue")), testCase[key]);
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("rue"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});	
+	});
+});
+
+
+
+describe('Test if markdown ticks are kept (double quotes) (en-us):\n', () => {
+	let testCase = {
+		"```\ncode\n```":
+		"```\ncode\n```",
+
+		"\t```\ncode\n```":
+		"\t```\ncode\n```",
+
+		"\t\t```\ncode\n```":
+		"\t\t```\ncode\n```",
+
+		" ```\ncode\n```":
+		" ```\ncode\n```",
+
+		"  ```\ncode\n```":
+		"  ```\ncode\n```",
+
+		"``code``":
+		"``code``",
+
+		"``code code``":
+		"``code code``",
+
+		"``code`` ``code``":
+		"``code`` ``code``",
+
+		"`code`":
+		"`code`",
+
+		"`code code`":
+		"`code code`",
+
+		"`code` `code`":
+		"`code` `code`",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+
+		it("keepMarkdownCodeBlocks: true” configuration", () => {
+			assert.strictEqual(
+				fixDoubleQuotesAndPrimes(
+					key, 
+					new Locale("en-us"),
+					configKeepMarkdownCodeBlocks
+				), testCase[key]);
+		});
 	});
 });

@@ -1,41 +1,13 @@
+import { identifyMarkdownCodeTicks,
+				 placeMarkdownCodeTicks } from "../punctuation/markdown";
+
 /*
 TODO
 - make identification of and contractions more robust + implement an exception for press 'N'
 
-- fix bugs
-
 - tbd swap quotes and terminal punctuation
 
 */
-
-
-
-
-/*
-	Identify markdown syntax highlighting, so they’re not fixed as apostrophes
-
-	Example
-	```
-	code block
-	```
-
-
-	@param {string} string: input text for identification
-	@param {string} locale: locale option
-	@returns {string} output with identified contractions as apostrophes
-*/
-export function identifyMarkdownSyntaxHighlighting(string, locale) {	
-
-	return string.replace(
-		new RegExp(
-			"(\\s*)"
-		+ "(```)", 
-			"g"
-		),
-			"$1"
-		+ "{{typopo__markdown_syntax_highlight}}"
-	)
-}
 
 
 
@@ -506,9 +478,6 @@ export function placeLocaleSingleQuotes(string, locale) {
 
 
 
-
-
-
 /*
 	Corrects improper use of single quotes, single primes and apostrophes
 
@@ -519,7 +488,7 @@ export function placeLocaleSingleQuotes(string, locale) {
 	e.g. ␣'word or sentence portion'␣ (and not like ␣'␣word␣'␣)
 
 	Algorithm
-	[0] Identify markdown syntax highlighting
+	[0] Identify markdown code ticks
 	[1] Identify common apostrophe contractions
 	[2] Identify feet, arcminutes, minutes
 	[3] Identify single quotes
@@ -532,10 +501,10 @@ export function placeLocaleSingleQuotes(string, locale) {
 	@param {string} language — language options
 	@returns {string} — corrected output
 */
-export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
+export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuration) {
 
-	/* [0] Identify markdown syntax highlighting */
-	string = identifyMarkdownSyntaxHighlighting(string, locale);
+	/* [0] Identify markdown code ticks */
+	string = identifyMarkdownCodeTicks(string, configuration);
 
 	/* [1] Identify common apostrophe contractions */
 	string = identifyContractedAnd(string, locale);
@@ -563,6 +532,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
 
 	/* [6] Replace all identified punctuation with appropriate punctuation in given language */
 	string = placeLocaleSingleQuotes(string,locale);
+	string = placeMarkdownCodeTicks(string, configuration);
 
 	/* [7] Consolidate spaces around single primes */
 	string = removeExtraSpaceAroundSinglePrime(string, locale);

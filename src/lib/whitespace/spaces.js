@@ -16,8 +16,7 @@ export function removeMultipleSpaces(string, locale) {
 
 
 /*
-  Removes extra spaces and tabs at the beginning of each paragraph, 
-  unless user conifgures to keep spaces before beginning of the nested markdown lists
+  Removes extra spaces and tabs at the beginning of each paragraph, unless user configures to keep spaces before beginning of the nested markdown lists
   
 	[1] split the lines manually
   [2] if removeWhitespacesBeforeMarkdownList = false; keep the spaces before the markdown lists

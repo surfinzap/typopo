@@ -77,7 +77,10 @@ let configKeepWhitespacesBeforeMarkdownList = {
   removeWhitespacesBeforeMarkdownList: false,
 }
 
-
+let configKeepMarkdownCodeBlocks = {
+  keepMarkdownCodeBlocks: true,
+  removeLines: false,
+}
 
 /* test cases */ 
 let testModules = {
@@ -514,4 +517,42 @@ describe('Tests that all modules are plugged for rue', () => {
       assert.strictEqual(fixTypos(key, "rue", configKeepWhitespacesBeforeMarkdownList), testCaseKeepWhitespacesBeforeMarkdownList[key]);
     });
   });
+});
+
+
+describe('Test if markdown ticks are kept (integration test) (en-us):\n', () => {
+	let testCase = {
+		"```\ncode\n```":
+		"```\ncode\n```",
+
+		"``code``":
+		"``code``",
+
+		"``code code``":
+		"``code code``",
+
+		"``code`` ``code``":
+		"``code`` ``code``",
+
+		"`code`":
+		"`code`",
+
+		"`code code`":
+		"`code code`",
+
+		"`code` `code`":
+		"`code` `code`",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+
+		it("keepMarkdownCodeBlocks: true” configuration", () => {
+			assert.strictEqual(
+				fixTypos(
+					key, 
+					"en-us",
+					configKeepMarkdownCodeBlocks
+				), testCase[key]);
+		});
+	});
 });

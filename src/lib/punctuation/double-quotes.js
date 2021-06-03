@@ -1,4 +1,7 @@
 import { addNbspAfterPreposition } from "../whitespace/nbsp";
+import { identifyMarkdownCodeTicks,
+				 placeMarkdownCodeTicks } from "../punctuation/markdown";
+
 
 // import {fixSpaces} from "./lib/whitespace/spaces";
 
@@ -585,6 +588,7 @@ export function addSpaceAfterRightDoubleQuote(string, locale) {
 	i.e. authors did not forget to close double quotes in their text.
 
 	Algorithm
+	[0] Identify markdown code ticks
 	[1] Remove extra terminal punctuation around double quotes
 	[2] Identify inches, arcseconds, seconds
 	[3] Identify double quote pairs
@@ -599,7 +603,10 @@ export function addSpaceAfterRightDoubleQuote(string, locale) {
   @param {string} locale: locale option
 	@returns {string} output with properly replaces double qoutes and double primes
 */
-export function fixDoubleQuotesAndPrimes(string, locale) {
+export function fixDoubleQuotesAndPrimes(string, locale, configuration) {
+
+	/* [0] Identify markdown code ticks */
+	string = identifyMarkdownCodeTicks(string, configuration);
 
 	/* [1] Remove extra terminal punctuation around double quotes */
 	string = removeExtraPunctuationBeforeQuotes(string, locale);
@@ -621,6 +628,7 @@ export function fixDoubleQuotesAndPrimes(string, locale) {
 	
 	/* [6] Replace all identified punctuation with appropriate punctuation in given language */
 	string = placeLocaleDoubleQuotes(string, locale);
+	string = placeMarkdownCodeTicks(string, configuration);
 	
 	/* [7] Consolidate spaces around double quotes and primes */
 	string = removeExtraSpacesAroundQuotes(string, locale);
