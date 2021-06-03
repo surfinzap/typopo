@@ -1,4 +1,4 @@
-import {identifyMarkdownSyntaxHighlighting,
+import {identifyMarkdownCodeTicks,
 				identifyContractedAnd,
 				identifyContractedBeginnings,
 				identifyContractedEnds,
@@ -23,51 +23,14 @@ import assert from 'assert';
 
 
 
-describe('Identify markdown syntax highlighting (en-us):\n', () => {
-	let testCase = {
-		"```\ncode\n```":
-		"```\ncode\n```",
-
-		"\t```\ncode\n```":
-		"\t```\ncode\n```",
-
-		"\t\t```\ncode\n```":
-		"\t\t```\ncode\n```",
-
-		" ```\ncode\n```":
-		" ```\ncode\n```",
-
-		"  ```\ncode\n```":
-		"  ```\ncode\n```",
-
-	};
+let configIgnoreMarkdownCodeBlocks = {
+  keepMarkdownCodeBlocks: false,
+}
 
 
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.strictEqual(
-				placeLocaleSingleQuotes(
-					identifyMarkdownSyntaxHighlighting(
-						key, 
-						new Locale("en-us")
-					), 
-					new Locale("en-us")
-				),
-				testCase[key]);
-		});
-	});
-			
-	Object.keys(testCase).forEach((key) => {
-		it("module test", () => {
-			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
-				key, 
-				new Locale("en-us")), 
-				testCase[key]);
-		});
-	});
-});
-
-
+let configKeepMarkdownCodeBlocks = {
+  keepMarkdownCodeBlocks: true,
+}
 
 
 describe('Identify contracted and (’n’) as apostrophes (en-us):\n', () => {
@@ -99,7 +62,8 @@ describe('Identify contracted and (’n’) as apostrophes (en-us):\n', () => {
 		it("module test", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
 				key, 
-				new Locale("en-us")), 
+				new Locale("en-us"),
+				configIgnoreMarkdownCodeBlocks), 
 				testCase[key]);
 		});
 	});
@@ -170,7 +134,8 @@ describe('Identify common contractions at the beginning of the word as apostroph
 		it("module test", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
 				key, 
-				new Locale("en-us")), 
+				new Locale("en-us"),
+				configIgnoreMarkdownCodeBlocks), 
 				testCase[key]);
 		});
 	});
@@ -221,7 +186,8 @@ describe('Identify common contractions at the end of the word as apostrophes (en
 		it("module test", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
 				key, 
-				new Locale("en-us")), 
+				new Locale("en-us"),
+				configIgnoreMarkdownCodeBlocks), 
 				testCase[key]);
 		});
 	});
@@ -266,7 +232,8 @@ describe('Identify in-word contractions as apostrophes (en-us):\n', () => {
 		it("module test", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
 				key, 
-				new Locale("en-us")), 
+				new Locale("en-us"),
+				configIgnoreMarkdownCodeBlocks), 
 				testCase[key]);
 		});
 	});
@@ -308,7 +275,8 @@ describe('Identify contracted years as apostrophes (en-us):\n', () => {
 		it("module test", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
 				key, 
-				new Locale("en-us")), 
+				new Locale("en-us"),
+				configIgnoreMarkdownCodeBlocks), 
 				testCase[key]);
 		});
 	});
@@ -388,7 +356,8 @@ describe('Identify feet and arcminutes following a 1–3 numbers (en-us):\n', ()
 			assert.strictEqual(
 				fixSingleQuotesPrimesAndApostrophes(
 					key,
-					new Locale("en-us")
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
 				), 
 				moduleTestCase[key]
 			);
@@ -490,7 +459,8 @@ describe('Identify standalone left single quote (en-us):\n', () => {
 		it("module test", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
 				key, 
-				new Locale("en-us")), 
+				new Locale("en-us"),
+				configIgnoreMarkdownCodeBlocks), 
 				moduleTestCase[key]);
 		});
 	});
@@ -611,7 +581,9 @@ describe('Identify standalone right single quote (en-us):\n', () => {
 		it("module test", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
 				key, 
-				new Locale("en-us")), 
+				new Locale("en-us"),
+				configIgnoreMarkdownCodeBlocks
+				), 
 				moduleTestCase[key]);
 		});
 	});
@@ -664,7 +636,8 @@ describe('Identify single quote pairs (en-us):\n', () => {
 		it("module test", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
 				key, 
-				new Locale("en-us")), 
+				new Locale("en-us"),
+				configIgnoreMarkdownCodeBlocks), 
 				moduleTestCase[key]);
 		});
 	});
@@ -710,7 +683,8 @@ describe('Replace a single qoute & a single prime with a single quote pair (en-u
 		it("module test", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
 				key, 
-				new Locale("en-us")), 
+				new Locale("en-us"),
+				configIgnoreMarkdownCodeBlocks), 
 				moduleTestCase[key]);
 		});
 	});
@@ -744,7 +718,8 @@ describe('Identify residual apostrophes  (en-us):\n', () => {
 		it("module test", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
 				key, 
-				new Locale("en-us")), 
+				new Locale("en-us"),
+				configIgnoreMarkdownCodeBlocks), 
 				testCase[key]);
 		});
 	});
@@ -766,7 +741,8 @@ describe('Remove extra space around a single prime:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.strictEqual(				removeExtraSpaceAroundSinglePrime(
+			assert.strictEqual(				
+				removeExtraSpaceAroundSinglePrime(
 					key, 
 					new Locale("en-us")
 				), 
@@ -778,7 +754,8 @@ describe('Remove extra space around a single prime:\n', () => {
 		it("module test", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
 				key, 
-				new Locale("en-us")), 
+				new Locale("en-us"),
+				configIgnoreMarkdownCodeBlocks), 
 				testCase[key]);
 		});
 	});
@@ -820,7 +797,12 @@ describe('Single quotes in default language (en-us)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("module test (en)", () => {
-			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("en-us")), testCase[key]);
+			assert.strictEqual(
+				fixSingleQuotesPrimesAndApostrophes(
+					key, 
+					new Locale("en-us"),
+					configIgnoreMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 });
@@ -856,9 +838,9 @@ describe('Single quotes in (sk, cs, de-de)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should fix single quotes, primes and apostrophes in (sk, cs, de-de)", () => {
-			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("sk")), testCase[key]);
-			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("cs")), testCase[key]);
-			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("sk"), configIgnoreMarkdownCodeBlocks), testCase[key]);
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("cs"), configIgnoreMarkdownCodeBlocks), testCase[key]);
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("de-de"), configIgnoreMarkdownCodeBlocks), testCase[key]);
 		});
 	});
 });
@@ -885,7 +867,56 @@ describe('Single quotes in (rue)\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("should fix single quotes, primes and apostrophes in Rusyn", () => {
-			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("rue")), testCase[key]);
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(key, new Locale("rue"), configIgnoreMarkdownCodeBlocks), testCase[key]);
+		});
+	});
+});
+
+describe('Test if markdown ticks are kept (single quotes) (en-us):\n', () => {
+	let testCase = {
+		"```\ncode\n```":
+		"```\ncode\n```",
+
+		"\t```\ncode\n```":
+		"\t```\ncode\n```",
+
+		"\t\t```\ncode\n```":
+		"\t\t```\ncode\n```",
+
+		" ```\ncode\n```":
+		" ```\ncode\n```",
+
+		"  ```\ncode\n```":
+		"  ```\ncode\n```",
+
+		"``code``":
+		"``code``",
+
+		"``code code``":
+		"``code code``",
+
+		"``code`` ``code``":
+		"``code`` ``code``",
+
+		"`code`":
+		"`code`",
+
+		"`code code`":
+		"`code code`",
+
+		"`code` `code`":
+		"`code` `code`",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+
+		it("keepMarkdownCodeBlocks: true” configuration", () => {
+			assert.strictEqual(
+				fixSingleQuotesPrimesAndApostrophes(
+					key, 
+					new Locale("en-us"),
+					configKeepMarkdownCodeBlocks
+				), testCase[key]);
 		});
 	});
 });

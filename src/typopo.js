@@ -49,6 +49,7 @@ export function fixTypos(string, locale, configuration) {
 	configuration = (typeof configuration === "undefined") ? {
     removeLines : true,
     removeWhitespacesBeforeMarkdownList : true,
+    keepMarkdownCodeBlocks : false,
 	} : configuration;
 
 	// exclude exceptions from fixing
@@ -68,8 +69,8 @@ export function fixTypos(string, locale, configuration) {
 	string = fixPeriod(string);
 	string = fixDash(string, currentLocale);
 	string = fixHyphen(string, currentLocale);
-	string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale);
-	string = fixDoubleQuotesAndPrimes(string, currentLocale);
+	string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale, configuration);
+	string = fixDoubleQuotesAndPrimes(string, currentLocale, configuration);
 
 	// symbols
 	string = fixMultiplicationSign(string, currentLocale);

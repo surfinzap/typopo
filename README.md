@@ -21,11 +21,11 @@
 - [Contents](#contents)
 - [Features](#features)
 - [Use](#use)
-  - [Online app](#online-app)
-  - [VS Code extension](#vs-code-extension)
-  - [NPM package](#npm-package)
-  - [JavaScript library](#javascript-library)
-  - [API](#api)
+	- [Online app](#online-app)
+	- [VS Code extension](#vs-code-extension)
+	- [NPM package](#npm-package)
+	- [JavaScript library](#javascript-library)
+	- [API](#api)
 - [News & Releases](#news-releases)
 - [Support](#support)
 - [Feedback](#feedback)
@@ -148,9 +148,14 @@ configuration = {
   removeLines : true, 
   
   // if true, removes empty lines before a nested Markdown list; 
-  // set as false if you use Typopo to fix typography of your Markdown files
+  // set as false when you use Typopo to fix typography of your Markdown files
   // see examples: https://github.com/surfinzap/typopo/releases/tag/2%2F4%2F0
   removeWhitespacesBeforeMarkdownList : true, 
+
+	// if true, markdown code blocks (i.e. `code`, ``code``, ```code```) will be ignored from being identified as incorrectly used single quote or double quote pairs
+	// set as false when you fix typos in generic texts (non-Markdown files)
+	// set as true when you want to keep Markdown code blocks in your Markdown files
+	keepMarkdownCodeBlocks: false,
 }
 ```
 
