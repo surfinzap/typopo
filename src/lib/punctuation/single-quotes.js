@@ -3,8 +3,8 @@ import { identifyMarkdownCodeTicks,
 
 /*
 TODO
-- make identification of and contractions more robust + implement an exception for press 'N'
 
+- isolate identification of single words
 - tbd swap quotes and terminal punctuation
 
 */
@@ -30,18 +30,45 @@ TODO
 	@returns {string} output with identified contractions as apostrophes
 */
 export function identifyContractedAnd(string, locale) {	
+	let commonContractions = [
+    ["dead", "buried"],
+    ["drill", "bass"],
+    ["drum", "bass"],
+    ["rock", "roll"],
+    ["pick", "mix"],
+    ["fish", "chips"],
+    ["salt", "shake"],
+    ["mac", "cheese"],
+    ["pork", "beans"],
+    ["drag", "drop"],
+    ["rake", "scrape"],
+    ["hook", "kill"],
+	];
 
-	return string.replace(
-		new RegExp(
-			"(" + locale.singleQuoteAdepts + ")"
-		+ "(n)"
-		+ "(" + locale.singleQuoteAdepts + ")", 
-			"g"
-		),
-			"{{typopo__apostrophe}}"
-		+ "$2"
-		+ "{{typopo__apostrophe}}"
-	)
+	commonContractions.forEach(item =>{
+
+		string = string.replace(
+			new RegExp(
+				"(" + item[0] + ")"
+				+	"([" + locale.spaces + "])?"
+				+	"(" + locale.singleQuoteAdepts + ")"
+				+ "(n)"
+				+ "(" + locale.singleQuoteAdepts + ")" 
+				+	"([" + locale.spaces + "])?"
+				+ "(" + item[1] + ")",
+				"gi"
+			),
+				"$1"
+				+	locale.nbsp
+				+	"{{typopo__apostrophe}}"
+				+ "$4"
+				+ "{{typopo__apostrophe}}"
+				+	locale.nbsp
+				+ "$7"
+		)
+	});
+
+	return string;
 }
 
 

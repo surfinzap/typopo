@@ -1,5 +1,4 @@
-import {identifyMarkdownCodeTicks,
-				identifyContractedAnd,
+import {identifyContractedAnd,
 				identifyContractedBeginnings,
 				identifyContractedEnds,
 				identifyInWordContractions,
@@ -34,17 +33,86 @@ let configKeepMarkdownCodeBlocks = {
 
 
 describe('Identify contracted and (’n’) as apostrophes (en-us):\n', () => {
-	let testCase = {
+	let moduleTestCase = {
 		"rock 'n' roll":
-		"rock ’n’ roll",
+		"rock ’n’ roll",
 
-		"Fish 'n' Chips": 
-		"Fish ’n’ Chips",
+		"rock'n'roll":
+		"rock ’n’ roll",
+
+		"rock 'n'roll":
+		"rock ’n’ roll",
+
+		"rock'n' roll":
+		"rock ’n’ roll",
+
+		"rock ‚n‘ roll":
+		"rock ’n’ roll",	
+		
+		"rock ’nʼ roll":
+		"rock ’n’ roll",
+		
+		"rock ‛n′ roll":
+		"rock ’n’ roll",
+		
+		"rock ‹n› roll":
+		"rock ’n’ roll",
+		
+		"rock ´n` roll":
+		"rock ’n’ roll",
+
+		"ROCK 'N' ROLL":
+		"ROCK ’N’ ROLL",
+
+    "dead 'n' buried":
+    "dead ’n’ buried",
+
+    "drill 'n' bass":
+    "drill ’n’ bass",
+    
+		"drum 'n' bass":
+		"drum ’n’ bass",
+    
+		"pick 'n' mix":
+		"pick ’n’ mix",
+    
+		"fish 'n' chips":
+		"fish ’n’ chips",
+    
+		"salt 'n' shake":
+		"salt ’n’ shake",
+    
+		"mac 'n' cheese":
+		"mac ’n’ cheese",
+		
+    "pork 'n' beans":
+    "pork ’n’ beans",
+    
+		"drag 'n' drop":
+		"drag ’n’ drop",
+    
+		"rake 'n' scrape":
+		"rake ’n’ scrape",
+
+    "hook 'n' kill":
+    "hook ’n’ kill",
 
 	};
 
 
-	Object.keys(testCase).forEach((key) => {
+let unitTestCase = {
+		...moduleTestCase,
+
+		//false positives
+		"Press ‘n’ button":
+		"Press ‘n’ button",
+
+	};
+
+
+
+
+	Object.keys(unitTestCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(
 				placeLocaleSingleQuotes(
@@ -54,17 +122,17 @@ describe('Identify contracted and (’n’) as apostrophes (en-us):\n', () => {
 					), 
 					new Locale("en-us")
 				),
-				testCase[key]);
+				unitTestCase[key]);
 		});
 	});
 
-	Object.keys(testCase).forEach((key) => {
+	Object.keys(moduleTestCase).forEach((key) => {
 		it("module test", () => {
 			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
 				key, 
 				new Locale("en-us"),
 				configIgnoreMarkdownCodeBlocks), 
-				testCase[key]);
+				moduleTestCase[key]);
 		});
 	});
 });
@@ -766,8 +834,8 @@ describe('Remove extra space around a single prime:\n', () => {
 
 describe('Single quotes in default language (en-us)\n', () => {
 	let testCase = {
-		"Let's test this: “however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said”":
-		"Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
+		"Let's test this: “however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said”":
+		"Let’s test this: “however, ‘quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,’ he said”",
 
 		"Within double quotes “there are single 'quotes with mix’d punctuation', you see”.":
 		"Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
@@ -814,8 +882,8 @@ describe('Single quotes in default language (en-us)\n', () => {
 
 describe('Single quotes in (sk, cs, de-de)\n', () => {
 	let testCase = {
-		"Let's test this: „however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said“":
-		"Let’s test this: „however, ‚quote this or nottin’ ’n’ this will be corrected for 69’ers,‘ he said“",
+		"Let's test this: „however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said“":
+		"Let’s test this: „however, ‚quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,‘ he said“",
 
 		"Within double quotes „there are single 'quotes with mix’d punctuation', you see“.":
 		"Within double quotes „there are single ‚quotes with mix’d punctuation‘, you see“.",
@@ -848,8 +916,8 @@ describe('Single quotes in (sk, cs, de-de)\n', () => {
 describe('Single quotes in (rue)\n', () => {
 	let testCase = {
 
-	"Let's test this: «however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said»":
-	"Let’s test this: «however, ‹quote this or nottin’ ’n’ this will be corrected for 69’ers,› he said»",
+	"Let's test this: «however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said»":
+	"Let’s test this: «however, ‹quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,› he said»",
 
 	"Within double quotes «there are single 'quotes with mix’d punctuation', you see».":
 	"Within double quotes «there are single ‹quotes with mix’d punctuation›, you see».",
