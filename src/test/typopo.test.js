@@ -199,8 +199,8 @@ let testModuleDoubleQuotesRue = {
 
 let testModuleSingleQuotesEnUs = {
   // single quotes
-  "Let's test this: “however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said”":
-    "Let’s test this: “however, ‘quote this or nottin’ ’n’ this will be corrected for 69’ers,’ he said”",
+  "Let's test this: “however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said”":
+    "Let’s test this: “however, ‘quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,’ he said”",
   "I'''m": "I’m",
   "I''''m": "I’m",
   "He said: “What about 'name' and 'other name'?”":
@@ -209,8 +209,8 @@ let testModuleSingleQuotesEnUs = {
 
 let testModuleSingleQuotesDeDe = {
   // single quotes
-  "Let's test this: “however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said”":
-    "Let’s test this: „however, ‚quote this or nottin’ ’n’ this will be corrected for 69’ers,‘ he said“",
+  "Let's test this: “however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said”":
+    "Let’s test this: „however, ‚quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,‘ he said“",
   "I'''m": "I’m",
   "I''''m": "I’m",
   "He said: “What about 'name' and 'other name'?”":
@@ -227,8 +227,8 @@ let testModuleSingleQuotesCs = {
 
 let testModuleSingleQuotesRue = {
   // single quotes
-  "Let's test this: “however, 'quote this or nottin' 'n' this will be corrected for 69'ers,' he said”":
-    "Let’s test this: «however, ‹quote this or nottin’ ’n’ this will be corrected for 69’ers,› he said»",
+  "Let's test this: “however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said”":
+    "Let’s test this: «however, ‹quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,› he said»",
   "I'''m": "I’m",
   "I''''m": "I’m",
   "He said: “What about 'name' and 'other name'?”":
