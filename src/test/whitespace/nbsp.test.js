@@ -88,7 +88,18 @@ describe('Add non-breaking space after ampersand\n', () => {
 describe('Add non-breaking space after cardinal number\n', () => {
 	let testCase = {
 		"5 mm": "5 mm",
+		"5 mm": "5 mm", // nbsp
+		"5 mm": "5 mm", // hairSpace
+		"5 mm": "5 mm", // narrowNbsp
 		"5 Kč": "5 Kč",
+		"15 mm": "15 mm",
+		"152 mm": "152 mm",
+
+		// false positive
+		// no nbsp after 4+ digits
+		"2020 rokov": 
+		"2020 rokov",
+
 		/* eslint-disable no-irregular-whitespace */
 		/* false positives, when number is already bound with abbreviation
 		 * Na str.⎵5 je obsah → Na str.⎵5 je obsah

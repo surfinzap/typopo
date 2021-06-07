@@ -1,3 +1,5 @@
+import Locale from "../../locale/locale";
+
 export function removeNbspBetweenMultiCharWords(string, locale) {
 	let pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})(["+ locale.nbsp + locale.narrowNbsp +"])(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})";
 	let re = new RegExp(pattern, "g");
@@ -34,12 +36,32 @@ export function addNbspAfterAmpersand(string, locale) {
 
 
 
-export function addNbspAfterCardinalNumber(string, locale) {
-	let pattern = "([^" + locale.nbsp + "]|^)(" + locale.cardinalNumber + ")( )(["+ locale.allChars +"]+)";
-	let re = new RegExp(pattern, "g");
-	let replacement = "$1$2" + locale.nbsp + "$4";
+/*
+	Add a non-breaking space after 1–3 cardinal numbers that precede a number.
 
-	return string.replace(re, replacement);
+	Assumptions and Limitations
+	We'll place no nbsp after 4+ digits.
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with nbsp after cardinal numbers
+*/
+export function addNbspAfterCardinalNumber(string, locale) {
+
+	return string.replace(
+		new RegExp(
+				"([^" + locale.nbsp + locale.cardinalNumber + "]|^)"
+			+ "(" + locale.cardinalNumber + "{1,3})"
+			+ "([" + locale.spaces + "])"
+			+ "(["+ locale.allChars +"])", 
+			"g"
+		),
+			"$1"
+		+ "$2"
+		+ locale.nbsp
+		+ "$4"
+	);
+
 }
 
 
