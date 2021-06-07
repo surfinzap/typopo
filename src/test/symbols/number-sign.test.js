@@ -5,11 +5,25 @@ import Locale from "../../locale/locale";
 
 describe('Remove extra space before number sign\n', () => {
 	let testCase = {
-		"# 9": "#9",
-		"#    9": "#9",
-		"# 9": "#9", //nbsp
-		"# 9": "#9", //hairSpace
-		"# 9": "#9", //narrowNbsp
+		"word # 9": 
+		"word #9",
+
+		"word #    9": 
+		"word #9",
+		
+		"word # 9": 
+		"word #9", //nbsp
+		
+		"word # 9": 
+		"word #9", //hairSpace
+		
+		"word # 9": 
+		"word #9", //narrowNbsp
+
+		// false positive
+		// do not fix position at the beginning of the paragraph as it may be markdown title
+		"# 1 markdown title":
+		"# 1 markdown title",
 	};
 
 	Object.keys(testCase).forEach((key) => {
