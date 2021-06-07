@@ -109,7 +109,7 @@ let testModules = {
   // trademark
   "Company (tm)": "Company™",
   // number sign
-  "# 9": "#9",
+  "word # 9": "word #9",
 
   // spaces
   "Sentence and… ?": "Sentence and…?",
