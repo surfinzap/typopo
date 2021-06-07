@@ -6,11 +6,17 @@
 	@returns {string} — output without extra spaces
 */
 export function removeExtraSpacesAfterNumberSign(string, locale) {
-	let pattern = "(" + locale.numberSign + ")([" + locale.spaces + "]+)(" + locale.cardinalNumber + ")";
-	let re = new RegExp(pattern, "g");
-	let replacement =  "$1$3";
 
-	return string.replace(re, replacement);
+	return string.replace(
+		new RegExp(
+				"(" + locale.numberSign + ")"
+			+ "([" + locale.spaces + "]+)"
+			+ "(" + locale.cardinalNumber + ")", 
+			"g"
+		),
+		"$1$3"
+	);
+
 }
 
 
