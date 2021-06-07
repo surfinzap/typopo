@@ -14,6 +14,7 @@ import {identifyContractedAnd,
 
 				placeLocaleSingleQuotes,
 
+				swapSingleQuotesAndTerminalPunctuation,
 				removeExtraSpaceAroundSinglePrime,
 				fixSingleQuotesPrimesAndApostrophes} 
 				from "../../lib/punctuation/single-quotes";
@@ -897,6 +898,108 @@ describe('Remove extra space around a single prime:\n', () => {
 
 
 
+describe('Swap single quotes and terminal punctuation for a quoted part (en-us):\n', () => {
+	let testCase = {
+
+		// quoted part at the 
+		// end of a sentence
+		// end of a paragraph
+		"Sometimes it can be only a ‘quoted part.’":
+		"Sometimes it can be only a ‘quoted part’.",
+
+		"Sometimes it can be only a ‘quoted’ ‘part.’":
+		"Sometimes it can be only a ‘quoted’ ‘part’.",
+		
+		"Is it ‘Amores Perros’?":
+		"Is it ‘Amores Perros’?",
+
+		"Look for ‘Anguanga’.":
+		"Look for ‘Anguanga’.",
+
+		"‘A whole sentence.’ Only a ‘quoted part.’":
+		"‘A whole sentence.’ Only a ‘quoted part’.",
+
+		// quoted part at the 
+		// end of a sentence
+		// middle of a paragraph
+		"a ‘quoted part.’ A ‘quoted part.’":
+		"a ‘quoted part’. A ‘quoted part’.",
+
+		"Only a ‘quoted part.’ ‘A whole sentence.’":
+		"Only a ‘quoted part’. ‘A whole sentence.’",
+
+		// quoted part in the middle of a sentence
+			// toto tu je asi zbytocny test
+		"Only a ‘quoted part’ in a sentence. ‘A whole sentence.’":
+		"Only a ‘quoted part’ in a sentence. ‘A whole sentence.’",
+
+
+		// place punctuation within a quoted sentence that’s in the middle of the sentence.
+		"Ask ‘What’s going on in here’? so you can dig deeper.":
+		"Ask ‘What’s going on in here?’ so you can dig deeper.",
+
+		"Before you ask the ‘How often…’ question":
+		"Before you ask the ‘How often…’ question",
+
+		"‘…example’":
+		"‘…example’",
+
+		"abc ‘…example’":
+		"abc ‘…example’",		
+
+
+
+
+		// place punctuation within a quoted sentence
+		"He was ok. ‘He was ok’.": 
+		"He was ok. ‘He was ok.’",
+
+
+		"He was ok. ‘He was ok’. He was ok.": 
+		"He was ok. ‘He was ok.’ He was ok.",
+
+
+		"He was ok? ‘He was ok’.": 
+		"He was ok? ‘He was ok.’",
+
+
+		// swap a right quote and terminal punctuation for the whole sentence 
+		"‘He was ok’.":
+		"‘He was ok.’",
+
+		"‘He was ok’?":
+		"‘He was ok?’",
+
+
+		"‘He was ok’. He was ok.":
+		"‘He was ok.’ He was ok.",
+
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				swapSingleQuotesAndTerminalPunctuation(
+					key, 
+					new Locale("en-us")
+				),
+				testCase[key]
+			);
+		});
+		// it("module test", () => {
+		// 	assert.strictEqual(
+		// 		fixSingleQuotesPrimesAndApostrophes(
+		// 			key, 
+		// 			new Locale("en-us"),
+		// 			configIgnoreMarkdownCodeBlocks
+		// 		), testCase[key]);
+		// });
+	});
+});
+
+
+
 
 describe('Single quotes in default language (en-us)\n', () => {
 	let testCase = {
@@ -940,9 +1043,6 @@ describe('Single quotes in default language (en-us)\n', () => {
 		});
 	});
 });
-
-
-
 
 
 

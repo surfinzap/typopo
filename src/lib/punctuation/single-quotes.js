@@ -1,15 +1,6 @@
 import { identifyMarkdownCodeTicks,
 				 placeMarkdownCodeTicks } from "../punctuation/markdown";
 
-/*
-TODO
-
-- tbd swap quotes and terminal punctuation
-
-*/
-
-
-
 
 
 /*
@@ -30,18 +21,18 @@ TODO
 */
 export function identifyContractedAnd(string, locale) {	
 	let commonContractions = [
-    ["dead", "buried"],
-    ["drill", "bass"],
-    ["drum", "bass"],
-    ["rock", "roll"],
-    ["pick", "mix"],
-    ["fish", "chips"],
-    ["salt", "shake"],
-    ["mac", "cheese"],
-    ["pork", "beans"],
-    ["drag", "drop"],
-    ["rake", "scrape"],
-    ["hook", "kill"],
+		["dead", "buried"],
+		["drill", "bass"],
+		["drum", "bass"],
+		["rock", "roll"],
+		["pick", "mix"],
+		["fish", "chips"],
+		["salt", "shake"],
+		["mac", "cheese"],
+		["pork", "beans"],
+		["drag", "drop"],
+		["rake", "scrape"],
+		["hook", "kill"],
 	];
 
 	commonContractions.forEach(item =>{
@@ -453,6 +444,122 @@ export function replaceSinglePrimeWSingleQuote(string, locale) {
 
 
 /*
+ Swap single quotes and terminal punctuation for a quoted part
+
+
+ 	There are two different rules to follow quotes:
+	1. Quotes contain only quoted material:
+	‘Sometimes it can be a whole sentence.’
+	Sometimes it can be only a ‘quoted part’.
+	The difference is where the terminal and sentence pause punctuation is.
+
+	2. American editorial style
+	Similar as the first rule, but commas (,) and periods (.) go before closing quotation marks, regardless whether they are part of the quoted material.
+
+	The aim here is to support the first rule.
+
+	
+	Examples
+	‘Sometimes it can be a whole sentence.’
+	Sometimes it can be only a ‘quoted part’.
+
+	So we’re looking to swap here:
+	Sometimes it can be only a ‘quoted part.’ →
+	Sometimes it can be only a ‘quoted part’.
+
+	Exceptions
+	Byl to ‘Karel IV.’, ktery 
+
+
+	Algorithm
+	Three different cases, see comments in code
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with swapped single quotes and terminal punctuation within a quoted part
+*/
+export function swapSingleQuotesAndTerminalPunctuation(string, locale) {	
+
+	// place punctuation outside of quoted part
+	string = string.replace(
+		new RegExp(
+			"([^" + locale.sentencePunctuation + "])"
+		+ "([" + locale.spaces + "])"
+		+ "(" + locale.leftSingleQuote + ")"
+		+ "([^" + locale.rightSingleQuote +"]+?)"
+		+ "([^" + locale.romanNumerals + "])"
+		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
+		+ "(" + locale.rightSingleQuote + ")", 
+			"g"
+		),
+			"$1"
+		+ "$2"
+		+ "$3"
+		+ "$4"
+		+ "$5"
+		+ "$7"
+		+ "$6"
+	);
+
+	// place punctuation within a quoted sentence that’s in the middle of the sentence.
+	string = string.replace(
+		new RegExp(
+			"([^" + locale.sentencePunctuation + "])"
+		+ "([" + locale.spaces + "])"
+		+ "(" + locale.leftSingleQuote + ")"
+		+ "(.+?)"
+		+ "([^" + locale.romanNumerals + "])"
+		+ "(" + locale.rightSingleQuote + ")"
+		// + "([" + locale.lowercaseChars + "])"
+		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
+		+ "([" + locale.spaces + "])"
+		+ "([" + locale.lowercaseChars + "])",
+
+			"g"
+		),
+			"$1"
+		+ "$2"
+		+ "$3"
+		+ "$4"
+		+ "$5"
+		+ "$7"
+		+ "$6"
+		+ "$8"
+		+ "$9"
+	);
+	
+
+	// place punctuation within a quoted sentence 
+	// following a previous sentence or starting from a beginning
+	string = string.replace(
+		new RegExp(
+			"([" + locale.sentencePunctuation + "][" + locale.spaces + "]|^)"
+		+ "(" + locale.leftSingleQuote + ")"
+		+ "([^" + locale.rightSingleQuote +"]+?)"
+		+ "([^" + locale.romanNumerals + "])"
+		+ "(" + locale.rightSingleQuote + ")"
+		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
+		+ "(\\B)",
+
+			"g"
+		),
+			"$1"
+		+ "$2"
+		+ "$3"
+		+ "$4"
+		+ "$6"
+		+ "$5"
+		+ "$7"
+	);
+
+	return string;
+
+}
+
+
+
+
+/*
 	Remove extra space around a single prime
 
 	Example
@@ -529,11 +636,13 @@ export function placeLocaleSingleQuotes(string, locale) {
 	[0] Identify markdown code ticks
 	[1] Identify common apostrophe contractions
 	[2] Identify feet, arcminutes, minutes
-	[3] Identify single quotes
-	[4] Replace a single qoute & a single prime with a single quote pair
-	[5] Identify residual apostrophes
-	[6] Replace all identified punctuation with appropriate punctuation in given language
-	[7] Consolidate spaces around single primes
+	[3] Identify single quote pair around a single word
+	[4] Identify single quotes
+	[5] Replace a single qoute & a single prime with a single quote pair
+	[6] Identify residual apostrophes
+	[7] Replace all identified punctuation with appropriate punctuation in given language
+	[8] Swap quotes and terminal punctuation
+	[9] Consolidate spaces around single primes
 
 	@param {string} string — input text for identification
 	@param {string} language — language options
@@ -555,25 +664,29 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuratio
 	/* [2] Identify feet, arcminutes, minutes */
 	string = identifySinglePrimes(string, locale);
 
- 	/* [2.5] Identify single quote pair around a single word */
+ 	/* [3] Identify single quote pair around a single word */
 	string = identifySingleQuotePairAroundSingleWord(string, locale);
-	/* [3] Identify single quotes within double quotes */
+
+	/* [4] Identify single quotes within double quotes */
 	string = identifySingleQuotesWithinDoubleQuotes(string, locale);
 
 
-	/* [4] Replace a single qoute & a single prime with a single quote pair */
+	/* [5] Replace a single qoute & a single prime with a single quote pair */
 	string = replaceSinglePrimeWSingleQuote(string, locale);
 
 
-	/* [5] Identify residual apostrophes*/
+	/* [6] Identify residual apostrophes*/
 	string = identifyResidualApostrophes(string, locale);
 
 
-	/* [6] Replace all identified punctuation with appropriate punctuation in given language */
+	/* [7] Replace all identified punctuation with appropriate punctuation in given language */
 	string = placeLocaleSingleQuotes(string,locale);
 	string = placeMarkdownCodeTicks(string, configuration);
 
-	/* [7] Consolidate spaces around single primes */
+	/* [8] Swap quotes and terminal punctuation */
+	string = swapSingleQuotesAndTerminalPunctuation(string, locale);
+
+	/* [9] Consolidate spaces around single primes */
 	string = removeExtraSpaceAroundSinglePrime(string, locale);
 
 	return string;
