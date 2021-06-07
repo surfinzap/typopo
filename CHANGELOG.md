@@ -1,7 +1,7 @@
 # Changelog for Typopo
 
-## 2.4.2 // 2021-05-
-This version is released as minor, as there are not many updates to common use-cases. However, in this version, I have completely rewrote module that fixes double quotes and double primes to improve identification and correction of few edge cases.
+## 2.5.0 // 2021-06-
+This version is released as minor, as there are not many updates to common use-cases. However, in this version, I have completely rewrote a module that fixes double quotes and double primes to improve identification and correction of few edge cases.
 
 ### Improvements
 These edge cases around double quotes and double primes are now fixed correctly:
@@ -14,9 +14,31 @@ These edge cases around double quotes and double primes are now fixed correctly:
 - When you ask the “How often…” question *(before, the ellipsis was falsely swapped with a right double quote in this type of sentence)*
 - It’s a“nice” saying. → It’s a “nice” saying. *(now, the added space is a nbsp, when added before a single-word prepositions)*
 
+- avoid removing spaces before “+” in markdown
+bug
+- avoid changing syntax highlighting into apostrophes
+
+limit identification of 'and' contractions to common phrases + add nbsp around them
+
+dead ’n’ buried
+drill ’n’ bass
+drum ’n’ bass
+rock ’n’ roll
+pick ’n’ mix
+fish ’n’ chips
+salt ’n’ shake
+mac ’n’ cheese
+pork ’n’ beans
+drag ’n’ drop
+rake ’n’ scrape
+hook ’n’ kill
+
+- identify single quoted words outside double quotes
+- swap single quotes and terminal punctuation
+
 # TBD
 - 1865 tests
-- 2229
+- 2514
 
 
 
