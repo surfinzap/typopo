@@ -37,7 +37,7 @@ export function addNbspAfterAmpersand(string, locale) {
 
 
 /*
-	Add a non-breaking space after 1–3 cardinal numbers that precede a number.
+	Add a non-breaking space after 1–3 cardinal numbers that precede a word.
 
 	Assumptions and Limitations
 	We'll place no nbsp after 4+ digits.
