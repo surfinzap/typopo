@@ -30,6 +30,7 @@ export function name(string, locale) {
 	let re = new RegExp(pattern, "g");
 	let replacement = locale.ellipsis;
 
+	return string.replace(re, replacement); 
 
 	// shorter version
 	string = string.replace(
@@ -42,7 +43,6 @@ export function name(string, locale) {
 	);
 
 
-	return string.replace(re, replacement); 
 }
 
 
