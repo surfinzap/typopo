@@ -36,6 +36,9 @@ hook ’n’ kill
 - identify single quoted words outside double quotes
 - swap single quotes and terminal punctuation
 
+- Keep space for a number sign at the beginning of the paragraph (md)
+- limit adding nbsp after a cardinal number in hundreds, tops. (Add a non-breaking space after 1–3 cardinal numbers that precede a word.)
+
 # TBD
 - 1865 tests
 - 2514
