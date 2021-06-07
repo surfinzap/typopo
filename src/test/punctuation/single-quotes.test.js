@@ -7,6 +7,7 @@ import {identifyContractedAnd,
 				identifySinglePrimes,
 				identifyStandaloneLeftSingleQuote,
 				identifyStandaloneRightSingleQuote,
+				identifySingleQuotePairAroundSingleWord,
 				identifySingleQuotePairs,
 				replaceSinglePrimeWSingleQuote,
 				identifyResidualApostrophes,
@@ -713,6 +714,71 @@ describe('Identify single quote pairs (en-us):\n', () => {
 
 
 
+describe('Identify single quote pairs around single word (en-us):\n', () => {
+
+	let moduleTestCase = {
+		"'word'":
+		"‘word’",
+		
+		"'word' 'word'":
+		"‘word’ ‘word’",
+
+		"He said: “What about 'word', is that good?”":
+		"He said: “What about ‘word’, is that good?”",
+
+		"Press 'N' to get started":
+		"Press ‘N’ to get started",
+	};	
+
+
+	let unitTestCase = {
+
+		...moduleTestCase,
+
+		// false positives
+		"... don't'":
+		"... don't'",
+
+		"'don't ...":
+		"'don't ...",
+
+		// false positive
+		// this function does fix multiple words within single quotes
+		// limitation: contractions at the end of the word, e.g. jes'
+		"'word word'":
+		"'word word'",	
+
+	};
+
+
+	Object.keys(unitTestCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(
+				placeLocaleSingleQuotes(
+					identifySingleQuotePairAroundSingleWord(
+						key, 
+						new Locale("en-us")
+					), 
+					new Locale("en-us")
+				),
+				unitTestCase[key])
+		});
+	});
+			
+	Object.keys(moduleTestCase).forEach((key) => {
+		it("module test", () => {
+			assert.strictEqual(fixSingleQuotesPrimesAndApostrophes(
+				key, 
+				new Locale("en-us"),
+				configIgnoreMarkdownCodeBlocks), 
+				moduleTestCase[key]);
+		});
+	});
+});
+
+
+
+
 
 
 describe('Replace a single qoute & a single prime with a single quote pair (en-us):\n', () => {
@@ -778,7 +844,7 @@ describe('Identify residual apostrophes  (en-us):\n', () => {
 					), 
 					new Locale("en-us")
 				),
-				testCase[key]);
+				testCase[key])
 		});
 	});
 

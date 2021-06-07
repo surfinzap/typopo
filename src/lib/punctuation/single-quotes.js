@@ -4,7 +4,6 @@ import { identifyMarkdownCodeTicks,
 /*
 TODO
 
-- isolate identification of single words
 - tbd swap quotes and terminal punctuation
 
 */
@@ -315,41 +314,23 @@ export function identifyStandaloneRightSingleQuote(string, locale) {
 
 
 /*
-	Identify double quote pairs 
+	Identify single quote pairs 
 
 	Example
 	"a 'quoted material' here" → “a ‘quoted material’ here”
 
 	Assumptions and Limitations
-
-
-	This function assumes apostrophes and standalone single quotes were identified. The function itself is part of the {TBD}.
-
-	Since it is difficult to identify all contractions at the end of the word, double quotes pairs are identified only in few cases:
-	- around a single word
-	- one double quote pair around longer text when enclosed in double quotes
+	- This function assumes apostrophes and standalone single quotes were identified. The function itself is part of the identifySingleQuotesWithinDoubleQuotes.
+	- It is difficult to identify all contractions at the end of the word, and thus it is difficult to identify single quote pairs. This function therefore only identifies one single quote pair with a double quote pair
 
 	@param {string} string: input text for identification
 	@param {string} locale: locale option
-	@returns {string} output with identified single quote pairs
+	@returns {string} output with identified single quote pair
 */
 export function identifySingleQuotePairs(string, locale) {
 
-	// identify a single quote pair around a single word	
-	string = string.replace(
-		new RegExp(
-			"({{typopo__left-single-quote--standalone}})"
-		+ "([" + locale.allChars + "]+)"
-		+ "({{typopo__right-single-quote--standalone}})",
-			"g"
-		),
-			"{{typopo__left-single-quote}}"
-		+ "$2"
-		+ "{{typopo__right-single-quote}}"
-	);
-
 	// identify one phrase wrapped in single quotes
-	string = string.replace(
+	return string.replace(
 		new RegExp(
 			"({{typopo__left-single-quote--standalone}})"
 		+ "(.*)"
@@ -361,7 +342,37 @@ export function identifySingleQuotePairs(string, locale) {
 		+ "{{typopo__right-single-quote}}"
 	);
 
-	return string;
+}
+
+
+/*
+	Identify single quote pair around   a single word
+
+	Example
+ 'word' → ‘word’
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified single quote pairs around single word
+*/
+export function identifySingleQuotePairAroundSingleWord(string, locale){
+
+	return string.replace(
+		new RegExp(
+				"(\\B)"
+			+ "(" + locale.singleQuoteAdepts + ")"
+			+ "([" + locale.allChars + "]+)"
+			+ "(" + locale.singleQuoteAdepts + ")"
+			+ "(\\B)",
+			"g"
+		),
+			"$1"
+		+ "{{typopo__left-single-quote}}"
+		+ "$3"
+		+ "{{typopo__right-single-quote}}"
+		+ "$5"
+	);
+
 }
 
 
@@ -544,7 +555,8 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuratio
 	/* [2] Identify feet, arcminutes, minutes */
 	string = identifySinglePrimes(string, locale);
 
-
+ 	/* [2.5] Identify single quote pair around a single word */
+	string = identifySingleQuotePairAroundSingleWord(string, locale);
 	/* [3] Identify single quotes within double quotes */
 	string = identifySingleQuotesWithinDoubleQuotes(string, locale);
 
