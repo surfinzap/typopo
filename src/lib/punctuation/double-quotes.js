@@ -358,7 +358,7 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 			"([^" + locale.sentencePunctuation + "])"
 		+ "([" + locale.spaces + "])"
 		+ "(" + locale.leftDoubleQuote + ")"
-		+ "([^" + locale.rightDoubleQuote +"]+?)"
+		+ "(.+?)"
 		+ "([^" + locale.romanNumerals + "])"
 		+ "(" + locale.rightDoubleQuote + ")"
 		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
@@ -401,15 +401,6 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 		+ "$5"
 		+ "$7"
 	);
-
-	// console.log(			"([" + locale.sentencePunctuation + "])"
-	// 	+ "([" + locale.spaces + "])"
-	// 	+ "(" + locale.leftDoubleQuote + ")"
-	// 	+ "([^" + locale.rightDoubleQuote +"]+?)"
-	// 	+ "([^" + locale.romanNumerals + "])"
-	// 	+ "(" + locale.rightDoubleQuote + ")"
-	// 	+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
-	// 	+ "(\\B)")
 
 	return string;
 
