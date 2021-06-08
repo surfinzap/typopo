@@ -1,4 +1,3 @@
-import Locale from "../../locale/locale";
 
 export function removeNbspBetweenMultiCharWords(string, locale) {
 	let pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})(["+ locale.nbsp + locale.narrowNbsp +"])(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})";
@@ -37,10 +36,10 @@ export function addNbspAfterAmpersand(string, locale) {
 
 
 /*
-	Add a non-breaking space after 1–3 cardinal numbers that precede a word.
+	Add a non-breaking space after a cardinal number (up to 99) that precedes a word.
 
 	Assumptions and Limitations
-	We'll place no nbsp after 4+ digits.
+	We’ll identify and place nbsp for 1- or 2-digit cardinal numbers.
 
 	@param {string} string: input text for identification
 	@param {string} locale: locale option
@@ -51,7 +50,7 @@ export function addNbspAfterCardinalNumber(string, locale) {
 	return string.replace(
 		new RegExp(
 				"([^" + locale.nbsp + locale.cardinalNumber + "]|^)"
-			+ "(" + locale.cardinalNumber + "{1,3})"
+			+ "(" + locale.cardinalNumber + "{1,2})"
 			+ "([" + locale.spaces + "])"
 			+ "(["+ locale.allChars +"])", 
 			"g"
@@ -61,17 +60,37 @@ export function addNbspAfterCardinalNumber(string, locale) {
 		+ locale.nbsp
 		+ "$4"
 	);
-
 }
 
 
+/*
+	Add a non-breaking space after on ordinal number (up to 99) that precedes a word.
 
+	Assumptions and Limitations
+	We’ll identify and place nbsp for 1- or 2-digit ordinal numbers.
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with nbsp after ordinal numbers
+*/
 export function addNbspAfterOrdinalNumber(string, locale) {
-	let pattern = "("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"]?)(["+ locale.allChars +"]+)";
-	let re = new RegExp(pattern, "g");
-	let replacement = "$1$2" + locale.nbsp + "$4";
 
-	return string.replace(re, replacement);
+	return string.replace(
+		new RegExp(
+				"([^" + locale.nbsp + locale.cardinalNumber + "]|^)"
+			+ "("+ locale.cardinalNumber +"{1,2})"
+			+ "("+ locale.ordinalIndicator +")"
+			+ "(["+ locale.spaces +"]?)"
+			+ "(["+ locale.allChars +"])", 
+			"g"
+		),
+			"$1"
+		+ "$2"
+		+ "$3"
+		+ locale.nbsp
+		+ "$5"
+	);
+
 }
 
 
