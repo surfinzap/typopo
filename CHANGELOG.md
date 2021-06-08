@@ -1,6 +1,8 @@
 # Changelog for Typopo
 
-## 2.5.0 // 2021-06-
+## 2.5.0 // 2021-06-08
+A lot of happened below the surface in this version.
+
 This version is released as minor, as there are not many updates to common use-cases. However, in this version, I have completely rewrote a module that fixes double quotes and double primes to improve identification and correction of few edge cases.
 
 ### Improvements
@@ -13,6 +15,7 @@ These edge cases around double quotes and double primes are now fixed correctly:
 - 12'' → 12″ (two dumb single quotes are fixed to a double prime around numbers)
 - When you ask the “How often…” question *(before, the ellipsis was falsely swapped with a right double quote in this type of sentence)*
 - It’s a“nice” saying. → It’s a “nice” saying. *(now, the added space is a nbsp, when added before a single-word prepositions)*
+
 
 - avoid removing spaces before “+” in markdown
 bug
@@ -37,19 +40,23 @@ hook ’n’ kill
 - swap single quotes and terminal punctuation
 
 - Keep space for a number sign at the beginning of the paragraph (md)
-- limit adding nbsp after a cardinal number in hundreds, tops. (Add a non-breaking space after 1–3 cardinal numbers that precede a word.)
+- limit adding nbsp after a cardinal number in hundreds, tops. (Add a non-breaking space after 1–2 cardinal or ordinal numbers that precede a word.)
 
 # TBD
 - 1865 tests
-- 2514
+- 2540
 
 
+### Maintenance
+- Refactor a module to fix double quotes
+- Refactor a module to fix single quotes
+- Update NPM packages to their latest versions
 
 ## 2.4.1 // 2021-03-12
 No functional changes in this release.
 
 ### Maintenance
-* Update packages to their latest versions
+* Update NPM packages to their latest versions
 
 
 ## 2.4.0 // 2020-11-25
@@ -81,7 +88,7 @@ New configuration option to remove/keep whitespaces before nested markdown lists
 
 ### Maintenance
 * Added [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
-* Update packages to the newest version
+* Update NPM packages to their latest versions
 
 
 
@@ -101,7 +108,7 @@ New configuration option to remove/keep whitespaces before nested markdown lists
 There are no changes in functionality in this release
 
 ### Maintenance
-* Update packages to the newest version
+* Update NPM packages to their latest versions
 
 
 
@@ -123,7 +130,7 @@ There are no changes in functionality in this release
 * Fix cases when a space was falsely added into a filename. (e.g. filename.js was falsely transformed into filename .js)
 
 ### Maintenance
-* Update npm packages to their latest version
+* Update NPM packages to their latest versions
 * Refactor “ellipsis” library to make it more maintainable and extendable.
 
 
@@ -132,7 +139,7 @@ There are no changes in functionality in this release
 There are no changes in functionality in this release
 
 ### Maintenance
-* Update npm packages to their latest version
+* Update NPM packages to their latest versions
 * Change how are dist/ built with gulp
 
 
