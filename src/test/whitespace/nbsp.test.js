@@ -12,6 +12,7 @@ import {removeNbspBetweenMultiCharWords,
 				fixNbsp} from "../../lib/whitespace/nbsp";
 import assert from 'assert';
 import Locale from "../../locale/locale";
+import { cachedDataVersionTag } from "v8";
 
 
 
@@ -93,15 +94,18 @@ describe('Add non-breaking space after cardinal number\n', () => {
 		"5 mm": "5 mm", // narrowNbsp
 		"5 Kč": "5 Kč",
 		"15 mm": "15 mm",
-		"152 mm": "152 mm",
-
+		
 		// false positive
-		// no nbsp after 4+ digits
+		// no nbsp after 3+ digits
+		"152 mm": 
+		"152 mm",
+
 		"2020 rokov": 
 		"2020 rokov",
 
 		/* eslint-disable no-irregular-whitespace */
-		/* false positives, when number is already bound with abbreviation
+		/* false positive,
+		 * a number is already bound with abbreviation
 		 * Na str.⎵5 je obsah → Na str.⎵5 je obsah
 		 * 									 !→ Na str. 5⎵je obsah
 		 */
@@ -129,6 +133,13 @@ describe('Add non-breaking space after ordinal number (en)\n', () => {
 		"4th amendment": "4th amendment",
 		"18th amendment": "18th amendment",
 		"15th March": "15th March",
+		
+		// false positive, 3+ digits
+		"158th amendment": "158th amendment",
+		"1158th amendment": "1158th amendment",
+
+
+
 	};
 
 	Object.keys(testCase).forEach((key) => {
@@ -148,9 +159,29 @@ describe('Add non-breaking space after ordinal number (sk, cs, rue, de-de)\n', (
 		"1. dodatok" : "1. dodatok",
 		"1.dodatok" : "1. dodatok",
 		"1.štava" : "1. štava",
-		"10.00" : "10.00", // false positive for the example above
 		"12. dodatok" : "12. dodatok",
 		"12. január" : "12. január",
+
+		"21. Festival otrlého diváka":
+		"21. Festival otrlého diváka",
+		
+		"10.00" : "10.00", // false positive for the example above
+
+		// false positive, nbsp bound with previous
+		"Je to str. 5. Dalsia veta.":
+		"Je to str. 5. Dalsia veta.",
+
+		
+
+		// false positive, 3+ digits
+		"158. festival":
+		"158. festival",
+		
+		"…dokonce i v roce 2021. Důsledky…":
+		"…dokonce i v roce 2021. Důsledky…",
+
+		// unsolved for now
+		// Přišlo jich 12. Dalsi veta.
 	};
 
 	Object.keys(testCase).forEach((key) => {

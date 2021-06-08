@@ -99,7 +99,7 @@ let testModules = {
   // copyright
   "Company (c)2017": "Company © 2017",
   // exponents
-  "100 km3": "100 km³",
+  "100 km3": "100 km³",
   // plus-minus
   "+-": "±",
   // sound recording copyright
