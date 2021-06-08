@@ -153,7 +153,7 @@ configuration = {
   removeWhitespacesBeforeMarkdownList : true, 
 
 	// if true, markdown code blocks (i.e. `code`, ``code``, ```code```) will be ignored from being identified as incorrectly used single quote or double quote pairs
-	// set as false when you fix typos in generic texts (non-Markdown files)
+	// set as false when you want to fix typos in generic texts (non-Markdown files)
 	// set as true when you want to keep Markdown code blocks in your Markdown files
 	keepMarkdownCodeBlocks: false,
 }

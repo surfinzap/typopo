@@ -1,56 +1,59 @@
 # Changelog for Typopo
 
 ## 2.5.0 // 2021-06-08
-A lot of happened below the surface in this version.
+I’ve done something in this version what I wanted to do for a while. I wanted to refactor modules that fix double quotes and single quotes. These modules were old and difficult to improve. And as I went along refactoring, I’ve also fixed few other issues, so in the end, quite a few things made it into this version.
 
-This version is released as minor, as there are not many updates to common use-cases. However, in this version, I have completely rewrote a module that fixes double quotes and double primes to improve identification and correction of few edge cases.
+Since this version (2.5.0), Typopo is tested against 2540 assertion tests (+675 tests since version 2.4.1). The number of tests is not a guarantee there won’t be any bugs, but it indicates a growing desire to cover more and more edge cases.
 
-### Improvements
-These edge cases around double quotes and double primes are now fixed correctly:
-- Here are 30 "bucks" → Here are 30 “bucks” *(before, a left quote was falsely identified as a double prime)*
-- "Conference 2020" and "something in quotes". → “Conference 2020” and “something in quotes”. *(before, a right quote after “2020” was falsely identified as a double prime)*
-- "2020" → “2020” *(before, dumb quotes around numbers were not identified as a double quote pair)*
-- He was ok. “He was ok ”. → He was ok. “He was ok.”, *(before, when a right double quote was swapped with a terminal punctuation, the extra space wasn’t removed)*
--  It’s 12" x 12". → It’s 12″ × 12″. *(before, the second prime was falsely identified as a right double quote)*
-- 12'' → 12″ (two dumb single quotes are fixed to a double prime around numbers)
-- When you ask the “How often…” question *(before, the ellipsis was falsely swapped with a right double quote in this type of sentence)*
-- It’s a“nice” saying. → It’s a “nice” saying. *(now, the added space is a nbsp, when added before a single-word prepositions)*
+Here’s a rundown of what’s been new and improved in this version.
 
 
-- avoid removing spaces before “+” in markdown
-bug
-- avoid changing syntax highlighting into apostrophes
-
-limit identification of 'and' contractions to common phrases + add nbsp around them
-
-dead ’n’ buried
-drill ’n’ bass
-drum ’n’ bass
-rock ’n’ roll
-pick ’n’ mix
-fish ’n’ chips
-salt ’n’ shake
-mac ’n’ cheese
-pork ’n’ beans
-drag ’n’ drop
-rake ’n’ scrape
-hook ’n’ kill
-
-- identify single quoted words outside double quotes
-- swap single quotes and terminal punctuation
-
-- Keep space for a number sign at the beginning of the paragraph (md)
-- limit adding nbsp after a cardinal number in hundreds, tops. (Add a non-breaking space after 1–2 cardinal or ordinal numbers that precede a word.)
-
-# TBD
-- 1865 tests
-- 2540
+### ✨ New features
+New configuration option to keep Markdown code blocks in your Markdown files:
+- `keepMarkdownCodeBlocks: true` when you want to keep Markdown code blocks in your Markdown files
+- `keepMarkdownCodeBlocks: false` want to fix grave accents (`) in generic texts to single quotes 
 
 
-### Maintenance
+### ⚡️ Improvements
+- Limit identification of “and” contractions to common phrases, and add a non-breaking space around them. Common phrases:
+	- dead ’n’ buried
+	- drill ’n’ bass
+	- drum ’n’ bass
+	- rock ’n’ roll
+	- pick ’n’ mix
+	- fish ’n’ chips
+	- salt ’n’ shake
+	- mac ’n’ cheese
+	- pork ’n’ beans
+	- drag ’n’ drop
+	- rake ’n’ scrape
+	- hook ’n’ kill
+- Identify and fix single-quoted ‘words’ outside double quotes
+- Swap single quotes and terminal punctuation when single quotes are used only for a portion of a sentence, e.g.:
+  - …only a ‘quoted part.’  → …only a ‘quoted part’.
+- Keep a space between a number and a number sign (#) at the beginning of the paragraph (e.g. when you’re starting a Markdown headline with a number)
+- Limit adding a non-breaking space after cardinal and ordinal numbers with three and more digits.
+
+
+### 🐛 Fixes
+- Fix edge cases around double quotes and double primes:
+  - Here are 30 "bucks" → Here are 30 “bucks” *(before, a left quote was falsely identified as a double prime)*
+  - "Conference 2020" and "something in quotes". → “Conference 2020” and “something in quotes”. *(before, a right quote after “2020” was falsely identified as a double prime)*
+  - "2020" → “2020” *(before, dumb quotes around numbers were not identified as a double quote pair)*
+  - He was ok. “He was ok ”. → He was ok. “He was ok.”, *(before, when a right double quote was swapped with a terminal punctuation, the extra space wasn’t removed)*
+  -  It’s 12" x 12". → It’s 12″ × 12″. *(before, the second prime was falsely identified as a right double quote)*
+  - 12'' → 12″ (two dumb single quotes are fixed to a double prime around numbers)
+  - When you ask the “How often…” question *(before, the ellipsis was falsely swapped with a right double quote in this type of sentence)*
+  - It’s a“nice” saying. → It’s a “nice” saying. *(now, the added space is a nbsp, when added before a single-word prepositions)*
+- When Typopo is configured as  `removeWhitespacesBeforeMarkdownList : false`, Markdown lists are now kept nested, even when they start with `+`
+
+
+### 🔨 Maintenance
 - Refactor a module to fix double quotes
 - Refactor a module to fix single quotes
 - Update NPM packages to their latest versions
+
+
 
 ## 2.4.1 // 2021-03-12
 No functional changes in this release.
