@@ -8,6 +8,7 @@
     "email": "hi@brano.me"
   },
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "dev": "gulp watch",
     "build": "gulp build",
     "test": "mocha --require @babel/register ./src/test/**/*.test.js -R min",
@@ -55,5 +56,8 @@
     "mocha": "^9.1.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
+  },
+  "resolutions": {
+    "glob-parent": "^5.1.2"
   }
 }
