@@ -1,5 +1,10 @@
 # Changelog for Typopo
 
+## 2.5.1 // 2021-09-04
+No changes in functionality in this release, just updating package dependencies to their latest versions.
+
+
+
 ## 2.5.0 // 2021-06-08
 I’ve done something in this version what I wanted to do for a while. I wanted to refactor modules that fix double quotes and single quotes. These modules were old and difficult to improve. And as I went along refactoring, I’ve also fixed few other issues, so in the end, quite a few things made it into this version.
 
