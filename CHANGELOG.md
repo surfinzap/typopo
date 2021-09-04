@@ -1,5 +1,9 @@
 # Changelog for Typopo
 
+## 2.5.2 // 2021-09-04
+No changes in functionality in this release, just repackaging the bundle.
+
+
 ## 2.5.1 // 2021-09-04
 No changes in functionality in this release, just updating package dependencies to their latest versions.
 
