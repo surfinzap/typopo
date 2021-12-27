@@ -12,7 +12,7 @@
     "build": "gulp build",
     "test": "mocha --require @babel/register ./src/test/**/*.test.js -R min",
     "test:dev": "mocha --require @babel/register ./src/test/**/*.test.js -R min -w",
-    "lint": "eslint --ext .js --ignore-pattern 'dist/*' --ignore-path .gitignore ."
+    "lint": "eslint --ext .js ."
   },
   "main": "dist/typopo_dist.min.js",
   "repository": {
