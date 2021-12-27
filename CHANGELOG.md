@@ -7,7 +7,9 @@
 ### 💪 Improvements
 - Add or keep space between a multi-word abbreviation (e.g., i.e.) and a quoted word:
   - e.g.“something” → e.g. “something”
-
+- Consolidate spaces around ellipsis that replaces the last item in the list
+  - We sell apples, oranges, … → We sell apples, oranges,…
+  - (apples, oranges, … ) → (apples, oranges,…)
 
 ### 🔨 Maintenance
 - Update NPM packages to their latest versions

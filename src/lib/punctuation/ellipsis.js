@@ -78,12 +78,42 @@ export function replaceTwoPeriodsWithEllipsis(string, locale) {
 	We sell apples, oranges, … , pens. → We sell apples, oranges, …, pens.
 
 	@param {string} string — input text for identification
-	@returns {string} — output with corrected spacing around ellipsis
+	@returns {string} — output with fixed spacing around ellipsis
 */
 export function fixEllipsisSpacingAroundCommas(string, locale) {
-	let pattern = ",[" + locale.spaces + "]?" + locale.ellipsis + "[" + locale.spaces + "]?,";
+	let pattern = 
+			","
+		+ "[" + locale.spaces + "]?" 
+		+ locale.ellipsis 
+		+ "[" + locale.spaces + "]?"
+		+ ",";
 	let re = new RegExp(pattern, "g");
 	return string.replace(re, ", …,");
+}
+
+
+/*
+	Fix spacing, when ellipsis is used as the last item in the list
+
+	Example:
+	We sell apples, oranges, … → We sell apples, oranges,…
+	(apples, oranges, … ) → (apples, oranges,…)
+
+	@param {string} string — input text for identification
+	@returns {string} — output with fixed spacing around ellipsis
+*/
+export function fixEllipsisAsLastItem(string, locale) {
+	let pattern = 
+			"(,)"
+		+ "([" + locale.spaces + "])?"
+		+ "(" + locale.ellipsis + ")"
+		+ "([" + locale.spaces + "])?"
+		+ "(\\B|[" + locale.closingBrackets + "])"
+		+ "([^,]|$)"
+
+	let re = new RegExp(pattern, "g");
+
+	return string.replace(re, "$1$3$5$6");
 }
 
 
@@ -225,15 +255,16 @@ export function fixAposiopesisEndingParagraph(string, locale) {
 
 
 export function fixEllipsis(string, locale) {
-	string = replaceThreeCharsWithEllipsis(string, locale)
+	string = replaceThreeCharsWithEllipsis(string, locale);
 	string = fixEllipsisSpacingAroundCommas(string, locale);
+	string = fixEllipsisAsLastItem(string, locale);
 	string = fixAposiopesisStartingParagraph(string, locale);
 	string = fixAposiopesisStartingSentence(string, locale);
 	string = fixAposiopesisBetweenSentences(string, locale);
 	string = fixAposiopesisBetweenWords(string, locale);
 	string = fixEllipsisBetweenSentences(string, locale);
-	string = fixAposiopesisEndingParagraph(string, locale)
-	string = replaceTwoCharsWithEllipsis(string, locale)
-	string = replaceTwoPeriodsWithEllipsis(string, locale)
+	string = fixAposiopesisEndingParagraph(string, locale);
+	string = replaceTwoCharsWithEllipsis(string, locale);
+	string = replaceTwoPeriodsWithEllipsis(string, locale);
 	return string;
 }
