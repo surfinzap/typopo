@@ -174,6 +174,8 @@ describe('Remove space before a terminal punctuation, closing brackets and a deg
 		"Something (…) something else": "Something (…) something else", //correct
 		"Something (… ) something else": "Something (…) something else",
 		"Something [… ] something else": "Something […] something else",
+		"(? )":"(?)",
+		"(! )":"(!)",
 		"It was good (It was bad !)." : "It was good (It was bad!).",
 		"5°" : "5°", //correct
 		"5 °" : "5°",
@@ -237,6 +239,8 @@ describe('Remove space after opening brackets\n', () => {
 	let testCase = {
 		"Something ( …) something else": "Something (…) something else",
 		"Something [ …] something else": "Something […] something else",
+		"( ?)": "(?)",
+		"( !)": "(!)",
 
 	};
 
