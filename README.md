@@ -144,13 +144,13 @@ Locale options (supported languages):
 Optional configuration as a JavaScript object:
 ```javascript
 configuration = {
-  // If true, removes empty lines between paragraphs
-  removeLines : true, 
+	// If true, removes empty lines between paragraphs
+	removeLines : true, 
   
-  // if true, removes empty lines before a nested Markdown list; 
-  // set as false when you use Typopo to fix typography of your Markdown files
-  // see examples: https://github.com/surfinzap/typopo/releases/tag/2%2F4%2F0
-  removeWhitespacesBeforeMarkdownList : true, 
+	// if true, removes empty lines before a nested Markdown list; 
+	// set as false when you use Typopo to fix typography of your Markdown files
+	// see examples: https://github.com/surfinzap/typopo/releases/tag/2%2F4%2F0
+	removeWhitespacesBeforeMarkdownList : true, 
 
 	// if true, markdown code blocks (i.e. `code`, ``code``, ```code```) will be ignored from being identified as incorrectly used single quote or double quote pairs
 	// set as false when you want to fix typos in generic texts (non-Markdown files)
