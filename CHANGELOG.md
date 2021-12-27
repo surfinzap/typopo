@@ -3,12 +3,20 @@
 
 ## 2.5.3 // 2021-?
 
+
+### 💪 Improvements
+- Add or keep space between a multi-word abbreviation (e.g., i.e.) and a quoted word:
+  - e.g.“something” → e.g. “something”
+
+
 ### 🔨 Maintenance
 - Update NPM packages to their latest versions
 
 
+
 ## 2.5.2 // 2021-09-04
 No changes in functionality in this release, just repackaging the bundle.
+
 
 
 ## 2.5.1 // 2021-09-04
