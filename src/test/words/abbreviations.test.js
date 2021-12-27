@@ -157,6 +157,9 @@ describe('Fix multiple-word abbreviations (en-us)\n', () => {
 		"‘e. g.’" : "‘e.g.’",
 		"e. g." : "e.g.",
 		"č., s., fol., e. g., i.e., str.," : "č., s., fol., e.g., i.e., str.,",
+		
+		"e.g. “something”": "e.g. “something”",
+		"e.g. ‘something’": "e.g. ‘something’",
 
 		"a i.e. something": "a i.e. something",
 		"i.e. 100 km" : "i.e. 100 km",
