@@ -8,7 +8,8 @@ import {replaceThreeCharsWithEllipsis,
 				fixAposiopesisBetweenWords,
 				fixEllipsisBetweenSentences,
 				fixAposiopesisEndingParagraph,
-				fixEllipsis} from "../../lib/punctuation/ellipsis";
+				fixEllipsis,
+				fixEllipsisAsLastItem} from "../../lib/punctuation/ellipsis";
 import assert from 'assert';
 import Locale from "../../locale/locale";
 
@@ -94,6 +95,61 @@ describe('Fix spacing, when ellipsis is used around commas:\n', () => {
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
 			assert.strictEqual(fixEllipsisSpacingAroundCommas(key, new Locale("en-us")), testCase[key]);
+		});
+		it("module test", () => {
+			assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Fix spacing, when ellipsis is used as a list item int the list:\n', () => {
+	let testCase = {
+		"We sell apples, oranges,…": 
+		"We sell apples, oranges,…", 
+
+		"We sell apples, oranges, …": 
+		"We sell apples, oranges,…",
+		
+		"We sell apples, oranges,… ": 
+		"We sell apples, oranges,…",
+		
+		"We sell apples, oranges, … ": 
+		"We sell apples, oranges,…",
+		
+		"We sell apples, oranges, … ": // nbsp 
+		"We sell apples, oranges,…", 
+
+		"We sell apples, oranges, … ": // hair_space 
+		"We sell apples, oranges,…", 
+		
+		"We sell apples, oranges, … ": // narrow_nbsp 
+		"We sell apples, oranges,…", 
+
+		"(apples, oranges,…)":
+		"(apples, oranges,…)",
+
+		"(apples, oranges, …)":
+		"(apples, oranges,…)",
+
+		"(apples, oranges, … )":
+		"(apples, oranges,…)",
+
+		"(apples, oranges,… )":
+		"(apples, oranges,…)",
+
+		// false positive
+		"We sell apples, oranges, …, pens.": 
+		"We sell apples, oranges, …, pens.", 
+
+	};
+
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test", () => {
+			assert.strictEqual(fixEllipsisAsLastItem(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
 			assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
@@ -225,12 +281,9 @@ describe('Fix spacing, when aposiopesis is ending a paragraph:\n', () => {
 	let testCase = {
 		"Sentence ending…": "Sentence ending…",
 		"Sentence ending …": "Sentence ending…",
-		"Sentence ending …\nSentence ending …": "Sentence ending…\nSentence ending…",
 
-		/* false positive
-			 keep the space after the sentence punctuation,
-			 where … is an ellipsis for other words */
-		"Give me some example, e.g. apples, oranges, …": "Give me some example, e.g. apples, oranges, …",
+		"Sentence ending …\nSentence ending …": 
+		"Sentence ending…\nSentence ending…",
 	};
 
 	Object.keys(testCase).forEach((key) => {
