@@ -1,7 +1,6 @@
 import {identifyMarkdownCodeTicks,
 				placeMarkdownCodeTicks} 
 				from "../../lib/punctuation/markdown";
-import Locale from "../../locale/locale";
 
 import assert from 'assert';
 

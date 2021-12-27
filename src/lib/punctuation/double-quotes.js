@@ -1,9 +1,8 @@
 import { addNbspAfterPreposition } from "../whitespace/nbsp";
 import { identifyMarkdownCodeTicks,
-				 placeMarkdownCodeTicks } from "../punctuation/markdown";
+         placeMarkdownCodeTicks } from "../punctuation/markdown";
 
 
-// import {fixSpaces} from "./lib/whitespace/spaces";
 
 /*
 	Remove extra punctuation before double quotes
@@ -261,7 +260,7 @@ export function removeUnidentifiedDoubleQuote(string, locale) {
 	@param {string} locale: locale option
 	@returns {string} output with a double quote pair
 */
-export function replaceDoublePrimeWDoubleQuote(string, locale) {
+export function replaceDoublePrimeWDoubleQuote(string) {
 
 	string = string.replace(
 		new RegExp(
@@ -352,7 +351,7 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 		+ "$6"
 	);
 
-	// place punctuation within a quoted sentence that’s in the middle of the sentence.
+	// place punctuation within a quoted sentence that’s in the middle of the sentence.
 	string = string.replace(
 		new RegExp(
 			"([^" + locale.sentencePunctuation + "])"
