@@ -651,6 +651,13 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 		"Ask “What’s going on in here”? so you can dig deeper.":
 		"Ask “What’s going on in here?” so you can dig deeper.",
 
+		"Ask “Question”? and “Question”? and done.":
+		"Ask “Question?” and “Question?” and done.",
+
+		"Ask “Question”? and done.\nAsk “Question”? and done.":
+		"Ask “Question?” and done.\nAsk “Question?” and done.",
+
+
 		"Before you ask the “How often…” question":
 		"Before you ask the “How often…” question",
 
@@ -680,12 +687,32 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 		"“He was ok”.":
 		"“He was ok.”",
 
+		"“He was ok”.\n“He was ok”.":
+		"“He was ok.”\n“He was ok.”",
+
+		"“He was ok”. “He was ok”.":
+		"“He was ok.” “He was ok.”",		
+
+		"“He was ok”. “He was ok”. “He was ok”.":
+		"“He was ok.” “He was ok.” “He was ok.”",		
+
+		"“He was ok”. “He was ok”. “He was ok”. “He was ok”.":
+		"“He was ok.” “He was ok.” “He was ok.” “He was ok.”",		
+
+
 		"“He was ok”?":
 		"“He was ok?”",
 
 
 		"“He was ok”. He was ok.":
 		"“He was ok.” He was ok.",
+
+		// ellipsis
+		"“Types of”…":
+		"“Types of…”",
+
+		"“Types of”…\n“Types of”…":
+		"“Types of…”\n“Types of…”",
 
 
 		...testFalsePositives,

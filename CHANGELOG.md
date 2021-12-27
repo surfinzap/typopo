@@ -11,6 +11,10 @@
   - We sell apples, oranges, … → We sell apples, oranges,…
   - (apples, oranges, … ) → (apples, oranges,…)
 
+### 🐛 Fixes
+- Fix swapping quotes and terminal punctuation in consecutive quoted sentences. Before the fix, punctuation was changed only in the first quoted sentence.
+  - “He was ok”. “He was ok”. → “He was ok.” “He was ok.”
+
 ### 🔨 Maintenance
 - Update NPM packages to their latest versions
 
