@@ -380,14 +380,38 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 		+ "$9"
 	);
 	
-	// Match the whole quoted sentence
+
+	// Match the whole quoted sentence starting at the beginning of paragraph
 	// and place terminal punctuation within that sentence.
 	string = string.replace(
 		new RegExp(
-			"([" + locale.sentencePunctuation + "][" + locale.spaces + "]|^)"
-		+ "(" + locale.leftDoubleQuote + ")"
-		+ "([^" + locale.rightDoubleQuote +"]+?)"
-		+ "([^" + locale.romanNumerals + "])"
+			"(^"
+		+        locale.leftDoubleQuote 
+		+ "[^" + locale.rightDoubleQuote +"]+?"
+		+ "[^" + locale.romanNumerals + "])"
+
+		+ "("  + locale.rightDoubleQuote + ")"
+		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
+		+ "(\\B)",
+
+			"gm"
+		),
+			"$1"
+		+ "$3"
+		+ "$2"
+		+ "$4"
+	);
+
+	// Match the whole quoted sentence starting after a sentence 
+	// and place terminal punctuation within that sentence.
+	string = string.replace(
+		new RegExp(
+			"([" + locale.sentencePunctuation + "]"
+		+ "["  + locale.spaces + "]"
+		+        locale.leftDoubleQuote
+		+ "[^" + locale.rightDoubleQuote +"]+?"
+		+ "[^" + locale.romanNumerals + "])"
+
 		+ "(" + locale.rightDoubleQuote + ")"
 		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
 		+ "(\\B)",
@@ -395,12 +419,33 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 			"g"
 		),
 			"$1"
-		+ "$2"
 		+ "$3"
+		+ "$2"
 		+ "$4"
-		+ "$6"
-		+ "$5"
-		+ "$7"
+	);
+
+
+	// Match the whole quoted sentence starting after a quoted sentence 
+	// and place terminal punctuation within that sentence.
+	string = string.replace(
+		new RegExp(
+			"([" + locale.sentencePunctuation + "]"
+		+ "["  + locale.rightDoubleQuote + "]"
+		+ "["  + locale.spaces + "]"
+		+        locale.leftDoubleQuote 
+		+ "[^" + locale.rightDoubleQuote +"]+?"
+		+ "[^" + locale.romanNumerals + "])"
+
+		+ "(" + locale.rightDoubleQuote + ")"
+		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
+		+ "(\\B)",
+
+			"g"
+		),
+			"$1"
+		+ "$3"
+		+ "$2"
+		+ "$4"
 	);
 
 	return string;
