@@ -1,5 +1,5 @@
 import { identifyMarkdownCodeTicks,
-				 placeMarkdownCodeTicks } from "../punctuation/markdown";
+         placeMarkdownCodeTicks } from "../punctuation/markdown";
 
 
 
@@ -193,7 +193,7 @@ export function identifyContractedYears(string, locale) {
 	@param {string} locale: locale option
 	@returns {string} output with identified single primes as a temporary variable string, e.g. {{typopo__sinlge-prime}}
 */
-export function identifySinglePrimes(string, locale) {
+export function identifySinglePrimes(string) {
 	return string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1$2{{typopo__single-prime}}");
 }
 
@@ -308,7 +308,7 @@ export function identifyStandaloneRightSingleQuote(string, locale) {
 	Identify single quote pairs 
 
 	Example
-	"a 'quoted material' here" → “a ‘quoted material’ here”
+	"a 'quoted material' here" → “a ‘quoted material’ here”
 
 	Assumptions and Limitations
 	- This function assumes apostrophes and standalone single quotes were identified. The function itself is part of the identifySingleQuotesWithinDoubleQuotes.
@@ -318,7 +318,7 @@ export function identifyStandaloneRightSingleQuote(string, locale) {
 	@param {string} locale: locale option
 	@returns {string} output with identified single quote pair
 */
-export function identifySingleQuotePairs(string, locale) {
+export function identifySingleQuotePairs(string) {
 
 	// identify one phrase wrapped in single quotes
 	return string.replace(
@@ -412,7 +412,7 @@ export function identifyResidualApostrophes(string, locale) {
 	@param {string} locale: locale option
 	@returns {string} output with a single quote pair
 */
-export function replaceSinglePrimeWSingleQuote(string, locale) {
+export function replaceSinglePrimeWSingleQuote(string) {
 
 	string = string.replace(
 		new RegExp(
@@ -501,7 +501,7 @@ export function swapSingleQuotesAndTerminalPunctuation(string, locale) {
 		+ "$6"
 	);
 
-	// place punctuation within a quoted sentence that’s in the middle of the sentence.
+	// place punctuation within a quoted sentence that’s in the middle of the sentence.
 	string = string.replace(
 		new RegExp(
 			"([^" + locale.sentencePunctuation + "])"
@@ -664,7 +664,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuratio
 	/* [2] Identify feet, arcminutes, minutes */
 	string = identifySinglePrimes(string, locale);
 
- 	/* [3] Identify single quote pair around a single word */
+	/* [3] Identify single quote pair around a single word */
 	string = identifySingleQuotePairAroundSingleWord(string, locale);
 
 	/* [4] Identify single quotes within double quotes */

@@ -202,7 +202,7 @@ describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 		"12′ 45″": "12′ 45″",
 		"12′ 45‘‘": "12′ 45″",
 		"12′ 45’’": "12′ 45″",
-		"12′ 45\'\'": "12′ 45″",
+		"12′ 45''": "12′ 45″",
 		"12′ 45′′": "12′ 45″",
 		"12''" : "12″",
 		
@@ -236,7 +236,7 @@ describe('Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 		"12′ 45 ″": "12′ 45 ″",
 		"12′ 45 ‘‘": "12′ 45 ″",
 		"12′ 45 ’’": "12′ 45 ″",
-		"12′ 45 \'\'": "12′ 45 ″",
+		"12′ 45 ''": "12′ 45 ″",
 		"12′ 45 ′′": "12′ 45 ″",	
 		"12 ''" : "12 ″",
 		
@@ -303,7 +303,7 @@ describe('Identify double quote pairs (en-us):\n', () => {
 		"«quoted material«":
 		"“quoted material”",
 
-		"’’quoted material\'\'":
+		"’’quoted material''":
 		"“quoted material”",
 		
 		"‹‹quoted material››":
@@ -647,7 +647,7 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 		"Only a “quoted part” in a sentence. “A whole sentence.”",
 
 
-		// place punctuation within a quoted sentence that’s in the middle of the sentence.
+		// place punctuation within a quoted sentence that’s in the middle of the sentence.
 		"Ask “What’s going on in here”? so you can dig deeper.":
 		"Ask “What’s going on in here?” so you can dig deeper.",
 

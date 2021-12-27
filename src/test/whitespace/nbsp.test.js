@@ -12,8 +12,6 @@ import {removeNbspBetweenMultiCharWords,
 				fixNbsp} from "../../lib/whitespace/nbsp";
 import assert from 'assert';
 import Locale from "../../locale/locale";
-import { cachedDataVersionTag } from "v8";
-
 
 
 describe('Remove non-breaking space between multi-letter words\n', () => {

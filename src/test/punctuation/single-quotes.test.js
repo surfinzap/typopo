@@ -232,7 +232,7 @@ describe('Identify common contractions at the end of the word as apostrophes (en
 	let unitTestCase = {
 		...testCase,
 		
-		// false positive, when it’s not a contracted word
+		// false positive, when it’s not a contracted word
 		"'something in'":
 		"'something in'",
 	}
@@ -439,7 +439,7 @@ describe('Identify feet and arcminutes following a 1–3 numbers (en-us):\n', ()
 
 describe('Identify standalone left single quote (en-us):\n', () => {
 	let unitTestCase = {
-		"\" \'word\"":
+		"\" 'word\"":
 		"\" {{typopo__left-single-quote--standalone}}word\"",
 
 		"\" ‚word\"":
@@ -480,7 +480,7 @@ describe('Identify standalone left single quote (en-us):\n', () => {
 	};
 
 	let moduleTestCase = {
-		// heads up! since it’s a standalone quote it’s fixed as apostrophe within a module
+		// heads up! since it’s a standalone quote it’s fixed as apostrophe within a module
 
 		"“ ‘word”":
 		"“ ’word”",	
@@ -541,7 +541,7 @@ describe('Identify standalone left single quote (en-us):\n', () => {
 
 describe('Identify standalone right single quote (en-us):\n', () => {
 	let unitTestCase = {
-		"\"word\'\"":
+		"\"word'\"":
 		"\"word{{typopo__right-single-quote--standalone}}\"",
 
 		"\"word‚\"":
@@ -590,7 +590,7 @@ describe('Identify standalone right single quote (en-us):\n', () => {
 	};
 
 	let moduleTestCase = {
-		// heads up! since it’s a standalone quote it’s fixed as apostrophe within a module
+		// heads up! since it’s a standalone quote it’s fixed as apostrophe within a module
 
 		"“word'”":
 		"“word’”",
@@ -797,7 +797,7 @@ describe('Replace a single qoute & a single prime with a single quote pair (en-u
 		"He said: “What about 'Localhost 3000', is that good?”":
 		"He said: “What about ‘Localhost 3000’, is that good?”",
 
-		"He said: “Here are 30 \'bucks\'”":
+		"He said: “Here are 30 'bucks'”":
 		"He said: “Here are 30 ‘bucks’”",
 				
 		// ...testFalsePositives,
@@ -934,7 +934,7 @@ describe('Swap single quotes and terminal punctuation for a quoted part (en-us):
 		"Only a ‘quoted part’ in a sentence. ‘A whole sentence.’",
 
 
-		// place punctuation within a quoted sentence that’s in the middle of the sentence.
+		// place punctuation within a quoted sentence that’s in the middle of the sentence.
 		"Ask ‘What’s going on in here’? so you can dig deeper.":
 		"Ask ‘What’s going on in here?’ so you can dig deeper.",
 
