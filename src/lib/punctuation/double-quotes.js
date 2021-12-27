@@ -330,6 +330,7 @@ export function replaceDoublePrimeWDoubleQuote(string) {
 */
 export function swapQuotesAndTerminalPunctuation(string, locale) {	
 
+	// match quoted part within a sentence and 
 	// place punctuation outside of quoted part
 	string = string.replace(
 		new RegExp(
@@ -351,7 +352,9 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 		+ "$6"
 	);
 
-	// place punctuation within a quoted sentence that’s in the middle of the sentence.
+	// Match quoted sentence within an unquoted sentence
+	// and place terminal punctuation of the quoted sentence
+	// within quotes
 	string = string.replace(
 		new RegExp(
 			"([^" + locale.sentencePunctuation + "])"
@@ -377,9 +380,8 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 		+ "$9"
 	);
 	
-
-	// place punctuation within a quoted sentence 
-	// following a previous sentence or starting from a beginning
+	// Match the whole quoted sentence
+	// and place terminal punctuation within that sentence.
 	string = string.replace(
 		new RegExp(
 			"([" + locale.sentencePunctuation + "][" + locale.spaces + "]|^)"
