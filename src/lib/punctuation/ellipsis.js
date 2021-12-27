@@ -129,7 +129,7 @@ export function fixEllipsisAsLastItem(string, locale) {
 */
 export function fixAposiopesisStartingParagraph(string, locale) {
 	let pattern =
-			"(^…)"
+			"(^" + locale.ellipsis + ")"
 		+ "([" + locale.spaces + "])"
 		+ "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
 	let re = new RegExp(pattern, "gm");
