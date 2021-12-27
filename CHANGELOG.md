@@ -1,5 +1,12 @@
 # Changelog for Typopo
 
+
+## 2.5.3 // 2021-?
+
+### 🔨 Maintenance
+- Update NPM packages to their latest versions
+
+
 ## 2.5.2 // 2021-09-04
 No changes in functionality in this release, just repackaging the bundle.
 
