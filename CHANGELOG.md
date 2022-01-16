@@ -1,8 +1,7 @@
 # Changelog for Typopo
 
 
-## 2.5.3 // 2022-?
-
+## 2.5.3 // 2022-01-16
 
 ### 💪 Improvements
 - Add or keep space between a multi-word abbreviation (e.g., i.e.) and a quoted word:
