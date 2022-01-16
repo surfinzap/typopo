@@ -1,7 +1,7 @@
 # Changelog for Typopo
 
 
-## 2.5.3 // 2021-?
+## 2.5.3 // 2022-?
 
 
 ### 💪 Improvements
@@ -73,7 +73,7 @@ New configuration option to keep Markdown code blocks in your Markdown files:
   - He was ok. “He was ok ”. → He was ok. “He was ok.”, *(before, when a right double quote was swapped with a terminal punctuation, the extra space wasn’t removed)*
   -  It’s 12" x 12". → It’s 12″ × 12″. *(before, the second prime was falsely identified as a right double quote)*
   - 12'' → 12″ (two dumb single quotes are fixed to a double prime around numbers)
-  - When you ask the “How often…” question *(before, the ellipsis was falsely swapped with a right double quote in this type of sentence)*
+  - When you ask the “How often…” question *(before, the ellipsis was falsely swapped with a right double quote in this type of Sentence)*
   - It’s a“nice” saying. → It’s a “nice” saying. *(now, the added space is a nbsp, when added before a single-word prepositions)*
 - When Typopo is configured as  `removeWhitespacesBeforeMarkdownList : false`, Markdown lists are now kept nested, even when they start with `+`
 
@@ -217,7 +217,7 @@ There are no changes in functionality in this release
 	* Charles IV → Charles⎵IV (en-us)
 
 ### Fixes
-* Fix accidental swapping of quotes and punctuation that was part of the Roman numeral. Before, the following sentence: _Byl to “Karel IV.”, ktery neco…_ was erroneously changed into _Byl to “Karel IV”. ktery neco…_.
+* Fix accidental swapping of quotes and punctuation that was part of the Roman numeral. Before, the following Sentence: _Byl to “Karel IV.”, ktery neco…_ was erroneously changed into _Byl to “Karel IV”. ktery neco…_.
 * Fix when non-breaking space is added around numbers in form of two separate rules:
 	* Number follows common abbreviation: On p 3 here you go → On p⎵3 here you go
 	* Number precedes a word: I bought 3 oranges → I bought 3⎵oranges
@@ -360,7 +360,7 @@ There are no changes in functionality in this release
 * Adds non-breaking spaces after ordinal Roman numerals
 * Adds non-breaking spaces after name initials (i.e. Philip K. Dick)
 * Fix: Remove multiple spaces, even they are non-breaking spaces, hair spaces or narrow non-breaking space
-* Fix: Abbreviations were (a.m., p.m.) were generating extra space at the end of the sentence or string
+* Fix: Abbreviations were (a.m., p.m.) were generating extra space at the end of the Sentence or string
 
 ### Code updates
 Complete codebase refactoring
@@ -373,7 +373,7 @@ Complete codebase refactoring
 
 ## 1.4.0 // 2017-01-15
 * “Removing empty lines” is now an optional parameter (in case you want to correct your plain-text based content or an email). By default, empty lines are removed
-* Dropped support for correcting capital letter at the beginning of the sentence. It yielded too much false positives. Feature may be re-introduced later in the future
+* Dropped support for correcting capital letter at the beginning of the Sentence. It yielded too much false positives. Feature may be re-introduced later in the future
 
 ## 1.3.1 // 2017-01-08
 * (hotfix) exclude false identification of i.e., e.g., a.m., p.m.
@@ -442,7 +442,7 @@ Complete codebase refactoring
 		 * remove space before aposiopesis, that is ending a sentence
 		 * space ellipsis correctly, when used around commas
 		 * remove spaces when ellipsis is used in brackets
-		 * remove space when aposiopesis is used at the beginning of the sentence
+		 * remove space when aposiopesis is used at the beginning of the Sentence
  * Stuff that went away
 		* remove spaces around slashes that are used in dramatic texts (since slashes can be used in various contexts and current implementation was not able to detect them all)
 
