@@ -246,8 +246,8 @@ export function fixEllipsisBetweenSentences(string, locale) {
 export function fixAposiopesisEndingParagraph(string, locale) {
 	let pattern =
 			"([" + locale.lowercaseChars + "])"
-		+ "([" + locale.spaces + "])"
-		+ "([" + locale.ellipsis + "]$)";
+		+ "([" + locale.spaces + "])+"
+		+ "([" + locale.ellipsis + "][" + locale.rightDoubleQuote + locale.rightSingleQuote + "]?$)";
 	let re = new RegExp(pattern, "gm");
 	return string.replace(re, "$1$3");
 }

@@ -3,6 +3,12 @@
 
 ## 2.5.4 // 2022-
 
+
+### 💪 Improvements
+- Remove spaces before aposiopesis in a quoted sentence, e.g.:
+  - `“Sentence ending …”` → `“Sentence ending…”` 
+  - `‘Sentence ending …’` → `‘Sentence ending …’`
+
 ### 🐛 Fixes
 - Update use cases when a space between the number sign (#) and the number is removed. Before, the space was falsely removed between level 2 markdown headings and numbers (e.g. “## 1. introduction” was falsely changed to “##1. introduction”). Now the space is kept. 
 
