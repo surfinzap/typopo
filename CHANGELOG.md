@@ -10,7 +10,7 @@
   - `‘Sentence ending …’` → `‘Sentence ending…’`
 
 ### 🐛 Fixes
-- Update use cases when a space between the number sign (#) and the number is removed. Before, the space was falsely removed between level 2 markdown headings and numbers (e.g. “## 1. introduction” was falsely changed to “##1. introduction”). Now the space is kept. (bug reported by @filipaldi)
+- Update use cases when a space between the number sign (#) and the number is removed. Before, the space was falsely removed between level 2 markdown headings and numbers (e.g. “## 1. introduction” was falsely changed to “##1. introduction”). Now the space is kept. (bug reported by [@filipaldi](https://github.com/filipaldi))
 
 
 ### 🔨 Maintenance
