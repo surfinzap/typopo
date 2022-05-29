@@ -24,6 +24,11 @@ describe('Remove extra space before number sign\n', () => {
 		// do not fix position at the beginning of the paragraph as it may be markdown title
 		"# 1 markdown title":
 		"# 1 markdown title",
+		
+		// false positive
+		// do not fix position at the beginning of the paragraph as it may be markdown title
+		"## 1. Markdown title":
+		"## 1. Markdown title",
 	};
 
 	Object.keys(testCase).forEach((key) => {

@@ -1,6 +1,12 @@
 # Changelog for Typopo
 
 
+## 2.5.4 // 2022-
+
+### 🐛 Fixes
+- Update use cases when a space between the number sign (#) and the number is removed. Before, the space was falsely removed between level 2 markdown headings and numbers (e.g. “## 1. introduction” was falsely changed to “##1. introduction”). Now the space is kept. 
+
+
 ### 🔨 Maintenance
 - Update NPM packages to their latest versions
 

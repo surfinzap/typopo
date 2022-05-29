@@ -1,6 +1,6 @@
 /*
 	Remove extra space, nbsp, hairSpace, narrowNbsp
-	after number sign and before number
+	after number sign (octothorpe) and before number
 
 	Exceptions
 	Do not remove spaces, when number sign is at the beginning of the paragraph and probably works as Markdown headline.
@@ -12,15 +12,14 @@ export function removeExtraSpacesAfterNumberSign(string, locale) {
 
 	return string.replace(
 		new RegExp(
-				"(?!^)" //match only if not at the beginning of the string
+				"([" + locale.spaces + "]+)" 
 			+ "(" + locale.numberSign + ")"
 			+ "([" + locale.spaces + "]+)"
 			+ "(" + locale.cardinalNumber + ")", 
 			"g"
 		),
-		"$1$3"
+		"$1$2$4"
 	);
-
 }
 
 
