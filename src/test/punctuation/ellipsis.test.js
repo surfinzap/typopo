@@ -279,8 +279,21 @@ describe('Fix spacing, when ellipsis is between sentences:\n', () => {
 
 describe('Fix spacing, when aposiopesis is ending a paragraph:\n', () => {
 	let testCase = {
-		"Sentence ending…": "Sentence ending…",
-		"Sentence ending …": "Sentence ending…",
+		"Sentence ending…": 
+		"Sentence ending…",
+
+		"Sentence ending …": 
+		"Sentence ending…",
+
+		"Sentence ending     …": 
+		"Sentence ending…",
+
+
+		"“Sentence ending …”": 
+		"“Sentence ending…”",
+
+		"‘Sentence ending …’": 
+		"‘Sentence ending…’",
 
 		"Sentence ending …\nSentence ending …": 
 		"Sentence ending…\nSentence ending…",
