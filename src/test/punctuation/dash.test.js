@@ -1,8 +1,7 @@
 import {replaceThreeHyphensWithEmDash,
 				replaceTwoHyphensWithEnDash,
-				replaceSpacedHyphenWithDash,
-				consolidateSpacedDashes,
-				fixDashSpacesBetweenWords,
+				identifySpacedHyphen,
+				fixDashesBetweenWords,
 				fixHyphenBetweenWordAndPunctuation,
 				fixDashBetweenCardinalNumbers,
 				fixDashBetweenPercentageRange,
@@ -38,126 +37,173 @@ describe('Replace 2 hyphens with an en dash\n', () => {
 
 
 
-describe('Replace spaced hyphen with an em dash (en-us, sk, cs, rue)\n', () => {
+
+
+describe('Identify a spaced hyphen between words (en-us, sk, cs, rue, de-de)\n', () => {
 	let testCase = {
-    "and - she said": "and — she said",
-    " - she said": " - she said", // false positive; no change at the beginning of paragraph
+
+		"word - word" : "word {{typopo__spacedHyphen}} word",
+		"word   -   word" : "word {{typopo__spacedHyphen}} word",
+		"word - word" : "word {{typopo__spacedHyphen}} word", //nbsp
+		"word - word" : "word {{typopo__spacedHyphen}} word", //hairSpace
+		"word - word" : "word {{typopo__spacedHyphen}} word", //narrowNbsp
+		"ptaškŷ -  čadič" : "ptaškŷ {{typopo__spacedHyphen}} čadič",  // non-latin chars
+		"хотїв - нияке" : "хотїв {{typopo__spacedHyphen}} нияке", // non-latin chars
+
+		/*
+			False positive: compound words
+		*/
+		"e -shop" : "e -shop",
+		"e- shop" : "e- shop",
+		"e- shop" : "e- shop", //nbsp
+		"e- shop" : "e- shop", //hairSpace
+		"e- shop" : "e- shop", //narrowNbsp
+
+
+		/*
+			False positive: hyphen at the beginning of the paragraph
+		*/ 
+    "- she said": "- she said",
+    " - she said": " - she said",
+    "  - she said": "  - she said",
+    "\t- she said": "\t- she said",
+    "\t\t- she said": "\t\t- she said",
     
 	};
 
 	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.strictEqual(replaceSpacedHyphenWithDash(key, new Locale("en-us")), testCase[key]);
-			assert.strictEqual(replaceSpacedHyphenWithDash(key, new Locale("cs")), testCase[key]);
-		});
-	});
-});
-
-describe('Replace spaced hyphen with an en dash (de-de)\n', () => {
-	let testCase = {
-		"und - er sagte": "und – er sagte",
-	};
-
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.strictEqual(replaceSpacedHyphenWithDash(key, new Locale("de-de")), testCase[key]);
-		});
+		it("unit test (en-us)", () => {
+			assert.strictEqual(identifySpacedHyphen(key, new Locale("en-us")), testCase[key]);
+		});	
 	});
 });
 
 
 
-describe('Replace spaced en dash with an em dash (en-us, sk, cs, rue)\n', () => {
+
+describe('Fix a dash, an en dash, an em dash and spacing between words (en-us)\n', () => {
 	let testCase = {
-		"and – she said": "and — she said",
-	};
-
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.strictEqual(consolidateSpacedDashes(key, new Locale("en-us")), testCase[key]);
-			assert.strictEqual(consolidateSpacedDashes(key, new Locale("sk")), testCase[key]);
-		});
-	});
-});
-
-describe('Replace spaced em dash with an en dash (de-de)\n', () => {
-	let testCase = {
-		"und — sie sagte": "und – sie sagte",
-	};
-
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.strictEqual(consolidateSpacedDashes(key, new Locale("de-de")), testCase[key]);
-		});
-	});
-});
-
-
-
-describe('Fix dash spaces between words (en-us)\n', () => {
-	let testCase = {
+    "and {{typopo__spacedHyphen}} she said": "and—she said",
+		"and – she said": "and—she said",
+		"and  –  she said": "and—she said",
 		"and — she said": "and—she said",
+		"and  —  she said": "and—she said",
 		"and — she said": "and—she said", //mixed spaces
-		"and— she said": "and—she said",
+		"and— she said": "and—she said", //mixed spaces
 		"and —she said": "and—she said",
 		"and—she said": "and—she said",
 	};
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.strictEqual(fixDashSpacesBetweenWords(key, new Locale("en-us")), testCase[key]);
-		});
-	});
-});
-
-describe('Fix dash spaces between words (rue, sk)\n', () => {
-	let testCase = {
-		"and — she said": "and — she said",
-		"and—she said": "and — she said",
-		"and —she said": "and — she said",
-		"and —čadič": "and — čadič",
-		"and —Čadič": "and — Čadič",
-		"Радостна комната —": "Радостна комната —", //false positive
-		};
-
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.strictEqual(fixDashSpacesBetweenWords(key, new Locale("rue")), testCase[key]);
-			assert.strictEqual(fixDashSpacesBetweenWords(key, new Locale("sk")), testCase[key]);
-		});
-	});
-});
-
-describe('Fix dash spaces between words (cs)\n', () => {
-	let testCase = {
-		"and — she said": "and – she said",
-		"and—she said": "and – she said",
-		};
-
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.strictEqual(fixDashSpacesBetweenWords(key, new Locale("cs")), testCase[key]);
-		});
-	});
-});
-
-describe('Fix dash spaces between words (de-de) \n', () => {
-	let testCase = {
-		"und –sie sagte": "und – sie sagte",
-		"und– sie sagte": "und – sie sagte",
-		"und – sie sagte": "und – sie sagte", //mixed spaces
-		"und–sie sagte": "und – sie sagte",
-		};
-
-	Object.keys(testCase).forEach((key) => {
-		it("unit test", () => {
-			assert.strictEqual(fixDashSpacesBetweenWords(key, new Locale("de-de")), testCase[key]);
+			assert.strictEqual(fixDashesBetweenWords(key, new Locale("en-us")), testCase[key]);
 		});
 		it("module test", () => {
+			assert.strictEqual(fixDash(key, new Locale("en-us")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Fix a dash, an en dash, an em dash and spacing between words (rue, sk)\n', () => {
+	let testCase = {
+    "ptaškŷ {{typopo__spacedHyphen}} čadič": "ptaškŷ — čadič",
+    "ptaškŷ {{typopo__spacedHyphen}} čadič": "ptaškŷ — čadič",
+		"ptaškŷ – čadič": "ptaškŷ — čadič",
+		"ptaškŷ  –  čadič": "ptaškŷ — čadič",
+		"ptaškŷ — čadič": "ptaškŷ — čadič",
+		"ptaškŷ  —  čadič": "ptaškŷ — čadič",
+		"ptaškŷ — čadič": "ptaškŷ — čadič", //mixed spaces
+		"ptaškŷ— čadič": "ptaškŷ — čadič", //mixed spaces
+		"ptaškŷ —čadič": "ptaškŷ — čadič",
+		"ptaškŷ—čadič": "ptaškŷ — čadič",
+
+    "хотїв {{typopo__spacedHyphen}} нияке": "хотїв — нияке",
+    "хотїв {{typopo__spacedHyphen}} нияке": "хотїв — нияке",
+		"хотїв – нияке": "хотїв — нияке",
+		"хотїв  –  нияке": "хотїв — нияке",
+		"хотїв — нияке": "хотїв — нияке",
+		"хотїв  —  нияке": "хотїв — нияке",
+		"хотїв — нияке": "хотїв — нияке", //mixed spaces
+		"хотїв— нияке": "хотїв — нияке", //mixed spaces
+		"хотїв —нияке": "хотїв — нияке",
+		"хотїв—нияке": "хотїв — нияке",
+
+	};
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test (rue)", () => {
+			assert.strictEqual(fixDashesBetweenWords(key, new Locale("rue")), testCase[key]);
+		});
+		it("unit test (sk)", () => {
+			assert.strictEqual(fixDashesBetweenWords(key, new Locale("sk")), testCase[key]);
+		});
+		it("module test (rue)", () => {
+			assert.strictEqual(fixDash(key, new Locale("rue")), testCase[key]);
+		});
+		it("module test (sk)", () => {
+			assert.strictEqual(fixDash(key, new Locale("sk")), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Fix a dash, an en dash, an em dash and spacing between words (cs)\n', () => {
+	let testCase = {
+    "domů {{typopo__spacedHyphen}} čadič": "domů – čadič",
+    "domů {{typopo__spacedHyphen}} čadič": "domů – čadič",
+		"domů – čadič": "domů – čadič",
+		"domů  –  čadič": "domů – čadič",
+		"domů — čadič": "domů – čadič",
+		"domů  —  čadič": "domů – čadič",
+		"domů — čadič": "domů – čadič", //mixed spaces
+		"domů— čadič": "domů – čadič", //mixed spaces
+		"domů —čadič": "domů – čadič",
+		"domů—čadič": "domů – čadič",
+
+	};
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test (cs)", () => {
+			assert.strictEqual(fixDashesBetweenWords(key, new Locale("cs")), testCase[key]);
+		});
+		it("module test (cs)", () => {
+			assert.strictEqual(fixDash(key, new Locale("cs")), testCase[key]);
+		});
+	});
+});
+
+
+describe('Fix a dash, an en dash, an em dash and spacing between words (de-de)\n', () => {
+	let testCase = {
+    "und {{typopo__spacedHyphen}} sie sagte": "und – sie sagte",
+    "und {{typopo__spacedHyphen}} sie sagte": "und – sie sagte",
+		"und – sie sagte": "und – sie sagte",
+		"und  –  sie sagte": "und – sie sagte",
+		"und — sie sagte": "und – sie sagte",
+		"und  —  sie sagte": "und – sie sagte",
+		"und — sie sagte": "und – sie sagte", //mixed spaces
+		"und— sie sagte": "und – sie sagte", //mixed spaces
+		"und —sie sagte": "und – sie sagte",
+		"und—sie sagte": "und – sie sagte",
+
+	};
+
+
+	Object.keys(testCase).forEach((key) => {
+		it("unit test (de-de)", () => {
+			assert.strictEqual(fixDashesBetweenWords(key, new Locale("de-de")), testCase[key]);
+		});
+		it("module test (de-de)", () => {
 			assert.strictEqual(fixDash(key, new Locale("de-de")), testCase[key]);
 		});
 	});
 });
+
 
 
 

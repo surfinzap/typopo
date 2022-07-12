@@ -10,50 +10,80 @@ export function replaceTwoHyphensWithEnDash(string) {
 
 
 
-export function replaceSpacedHyphenWithDash(string, locale) {
-	let pattern = "\\b[" + locale.spaces + "][" + locale.hyphen + "][" + locale.spaces + "]";
-	let re = new RegExp(pattern, "g");
-	let replacement = "";
 
-	switch (locale.locale) {
-		case "en-us":
-		case "rue":
-		case "sk":
-		case "cs":
-			replacement = locale.space + locale.emDash + locale.space;
-			break;
-		case "de-de":
-			replacement = locale.space + locale.enDash + locale.space;
-			break;
-	}
+/*
+	Identify a spaced hyphen between words and mark it as {{typopo__spacedHyphen}}
 
-	return string = string.replace(re, replacement);
+	We identify a hyphen before fixing it into a proper dash to avoid false identification of hyphen in compound words.
+
+	Example
+	word - word → word {{typopo__spacedHyphen}} word
+
+	Exceptions
+	- improperly spaced dash in words such as “e-shop”, e.g. “e -shop” (we fix this in hyphen.js)
+	- hyphens at the beginning of the paragraph that indicate unordered list
+
+
+	@param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with identified spaced hyphen as {{typopo__spacedHyphen}}
+*/
+export function identifySpacedHyphen(string, locale) {
+	return string.replace(
+		new RegExp(
+			"([" + locale.allChars + "])"
+		+ "([" + locale.spaces + "]+)"
+		+ "([" + locale.hyphen + "])"
+		+ "([" + locale.spaces + "]+)"
+		+ "([" + locale.allChars + "])", 
+			"g"
+		),
+		"$1" + locale.space + "{{typopo__spacedHyphen}}" + locale.space + "$5"
+	);
 }
+
+
 
 
 
 /*
-	Some languages require en dash, some require em dash.
-	This function will consolidate the dashes based on the locale
+	Identify:
+	- {{typopo__spacedHyphen}} 
+	- improperly used or spaced en dash 
+	- improperly used or spaced em dash 
+	between words and fix dash and spacing for given locale
 
-	@param {string} string — input text for identification
-	@returns {string} — output with an appropriate dash between spaces
+	Example
+	see tests
+
+  @param {string} string: input text for identification
+	@param {string} locale: locale option
+	@returns {string} output with fixed dashes and spaces between words
 */
-export function consolidateSpacedDashes(string, locale) {
+export function fixDashesBetweenWords(string, locale) {
+	let pattern = 
+			"([" + locale.allChars + "])"
+		+ "([" + locale.spaces + "]?)+"
+		+ "({{typopo__spacedHyphen}}|["+ locale.enDash + "|" + locale.emDash + "])"
+		+ "([" + locale.spaces + "]?)+"
+		+ "([" + locale.allChars + "])";
 
-	let pattern = "[" + locale.spaces + "][" + locale.enDash + "|" + locale.emDash + "][" + locale.spaces + "]";
 	let re = new RegExp(pattern, "g");
 	let replacement = "";
 
 	switch (locale.locale) {
 		case "en-us":
+			replacement = "$1" + locale.emDash + "$5";
+			break;
 		case "rue":
 		case "sk":
+			replacement = "$1" + locale.hairSpace + locale.emDash + locale.hairSpace + "$5";
+			break;
 		case "cs":
-			replacement = locale.space + locale.emDash + locale.space;
+			replacement = "$1" + locale.nbsp + locale.enDash + locale.space + "$5";
 			break;
 		case "de-de":
-			replacement = locale.space + locale.enDash + locale.space;
+			replacement = "$1" + locale.hairSpace + locale.enDash + locale.hairSpace + "$5";
 			break;
 	}
 
@@ -61,30 +91,6 @@ export function consolidateSpacedDashes(string, locale) {
 }
 
 
-
-export function fixDashSpacesBetweenWords(string, locale) {
-	let pattern = "([" + locale.spaces + "]?)([" + locale.emDash + locale.enDash + "])([" + locale.spaces + "]?)(["+ locale.allChars +"])";
-	let re = new RegExp(pattern, "g");
-	let replacement = "";
-
-	switch (locale.locale) {
-		case "en-us":
-			replacement = locale.emDash + "$4";
-			break;
-		case "rue":
-		case "sk":
-			replacement = locale.hairSpace + locale.emDash + locale.hairSpace + "$4";
-			break;
-		case "cs":
-			replacement = locale.nbsp + locale.enDash + locale.space + "$4";
-			break;
-		case "de-de":
-			replacement = locale.hairSpace + locale.enDash + locale.hairSpace + "$4";
-			break;
-	}
-
-	return string = string.replace(re, replacement);
-}
 
 
 /*
@@ -204,11 +210,10 @@ export function fixDashBetweenOrdinalNumbers(string, locale) {
 	@returns {string} — output with fixed dashes
 */
 export function fixDash(string, locale) {
-	string = replaceThreeHyphensWithEmDash(string, locale)
-	string = replaceTwoHyphensWithEnDash(string, locale)
-	string = replaceSpacedHyphenWithDash(string, locale);
-	string = consolidateSpacedDashes(string, locale);
-	string = fixDashSpacesBetweenWords(string, locale);
+	string = replaceThreeHyphensWithEmDash(string, locale);
+	string = replaceTwoHyphensWithEnDash(string, locale);
+	string = identifySpacedHyphen(string, locale);
+	string = fixDashesBetweenWords(string, locale);
 	string = fixHyphenBetweenWordAndPunctuation(string, locale);
 	string = fixDashBetweenCardinalNumbers(string, locale);
 	string = fixDashBetweenPercentageRange(string, locale);
