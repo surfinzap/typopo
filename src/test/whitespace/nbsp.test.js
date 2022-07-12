@@ -47,12 +47,14 @@ describe('Add non-breaking spaces after single-character prepositions\n', () => 
 		"a в хырбетї": "a в хырбетї",
 		"што є му вытыкане": "што є му вытыкане",
 		"ся ї не": "ся ї не",
+		"a s’a"	: "a s’a",
 
 		// false positives
 		"client’s customer" : "client’s customer",
 		"Ctrl+I and Ctrl+B or pasting an image." : "Ctrl+I and Ctrl+B or pasting an image.",
 		"Ctrl-I and Ctrl-B or pasting an image." : "Ctrl-I and Ctrl-B or pasting an image.",
 		"získává investici $25M na něco" : "získává investici $25M na něco", //no nbsp after $25M
+		"starŷm kresli" : "starŷm kresli" // non-latin chars in word 
 	};
 
 	Object.keys(testCase).forEach((key) => {
