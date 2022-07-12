@@ -1,7 +1,7 @@
 # Changelog for Typopo
 
 
-## 2.5.4 // 2022-
+## 2.5.4 // 2022-07-12
 
 
 ### 💪 Improvements
