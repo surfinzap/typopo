@@ -46,6 +46,23 @@ export function name(string, locale) {
 }
 
 
+export function withFunctionInReturn(string, locale) {
+		let pattern =
+			"(\\b[" + locale.uppercaseChars + "]["+ locale.lowercaseChars +"]+?)"
+		+ "([" + locale.spaces + "])"
+		+ "([" + locale.romanNumerals +"]+\\b)"
+		+ "("  + locale.romanOrdinalIndicator +")"
+		+ "([" + locale.nbsp + "]?)";
+		let re = new RegExp(pattern, "g");
+
+		return string.replace(re, function($0, $1, $2, $3, $4, $5){
+			//you use literals from $1 onwards
+
+		});
+}
+
+
+
 /* test */
 describe('Test case (en):\n', () => {
 	let testCase = {
