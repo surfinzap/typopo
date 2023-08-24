@@ -46,6 +46,7 @@ export default class Locale {
     this.rightSingleQuote = typopoLocale[locale].quotes.rightSingleQuote;
     this.apostrophe = "’"; // (8217) [1]
     this.singlePrime = "′";
+    this.backtick = "`";
     this.doubleQuoteAdepts = "„|“|”|\"|«|»|″|,{2,}|‘{2,}|’{2,}|'{2,}|‹{2,}|›{2,}|′{2,}|´{2,}|`{2,}";
     this.leftDoubleQuote = typopoLocale[locale].quotes.leftDoubleQuote;
     this.rightDoubleQuote = typopoLocale[locale].quotes.rightDoubleQuote;

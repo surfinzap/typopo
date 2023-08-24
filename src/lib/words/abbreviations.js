@@ -6,7 +6,7 @@
 	[1] Identify and replace pattern "I. FullName"
 	[2] Identify and replace pattern "I. I. FullName"
 	[3] Identify and replace pattern "I. I. I. FullName"
-
+
 	@param {string} input text for identification
 	@returns {string} corrected output
 */
@@ -75,7 +75,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
 	/* Partial patterns for a composition */
 	let patternPrecedingNonLatinBoundary = "([^" + locale.allChars + locale.enDash + locale.emDash + "]|^)";
 	let patternFollowingWord = "([" + locale.allChars + "]|\\D)";
-	let patternFollowingNonLatinBoundary = "([^" + locale.allChars + locale.leftDoubleQuote + locale.leftSingleQuote + "]|$)";
+	let patternFollowingNonLatinBoundary = "([^" + locale.allChars + locale.leftDoubleQuote + locale.leftSingleQuote + locale.backtick + "]|$)";
 
 
 	/* [1] Set locale-specific space between abbreviations */
@@ -165,7 +165,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
 	[1] Change single-word abbreviations from all locales abbr. patterns
 	[2] Identify and fix single-word abbreviations before the word
 	[3] Identify and fix single-word abbreviations after the word or on their own
-
+
 	@param {string} input text for identification
 	@returns {string} corrected output
 */

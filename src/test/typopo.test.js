@@ -84,54 +84,50 @@ let configKeepMarkdownCodeBlocks = {
 
 /* test cases */ 
 let testModules = {
+	// ellipsis
+	"Sentence ..….. another sentence": "Sentence … another sentence",
+	"Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
 
-  // ellipsis
-  "Sentence ..….. another sentence": "Sentence … another sentence",
-  "Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
+	// hyphen
+	"e- shop": "e-shop",
 
+	// section sign
+	"under Law §1782": "under Law § 1782",
+	// copyright
+	"Company (c)2017": "Company © 2017",
+	// exponents
+	"100 km3": "100 km³",
+	// plus-minus
+	"+-": "±",
+	// sound recording copyright
+	"Company (p)2017": "Company ℗ 2017",
+	//registered trademark
+	"Company (r)": "Company®",
+	// trademark
+	"Company (tm)": "Company™",
+	// number sign
+	"word # 9": "word #9",
 
+	// spaces
+	"Sentence and… ?": "Sentence and…?",
+	"🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
+	"🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
+	// nbsp
+	"v a v a v": "v a v a v",
+	/* eslint-disable no-irregular-whitespace */
+	// "the U.S. and" : "the U.S. and", not yet supported
 
-  // hyphen
-  "e- shop": "e-shop",
+	//case
+	CMSko: "CMSko",
+	cAPSLOCK: "Capslock",
 
-  // section sign
-  "under Law §1782": "under Law § 1782",
-  // copyright
-  "Company (c)2017": "Company © 2017",
-  // exponents
-  "100 km3": "100 km³",
-  // plus-minus
-  "+-": "±",
-  // sound recording copyright
-  "Company (p)2017": "Company ℗ 2017",
-  //registered trademark
-  "Company (r)": "Company®",
-  // trademark
-  "Company (tm)": "Company™",
-  // number sign
-  "word # 9": "word #9",
+	// publication identifiers
+	"ISSN 0000-0000": "ISSN 0000-0000",
+	"ISBN: 978-80-86102-81-8": "ISBN: 978-80-86102-81-8",
 
-  // spaces
-  "Sentence and… ?": "Sentence and…?",
-  // nbsp
-  "v a v a v": "v a v a v",
-  /* eslint-disable no-irregular-whitespace */
-  // "the U.S. and" : "the U.S. and", not yet supported
-
-
-  //case
-  "CMSko": "CMSko",
-  "cAPSLOCK": "Capslock",
-
-  // publication identifiers
-  "ISSN 0000-0000": "ISSN 0000-0000",
-  "ISBN: 978-80-86102-81-8": "ISBN: 978-80-86102-81-8",
-
-  // double primes
-  "It’s 12\" x 12\".":
-	"It’s 12″ × 12″.",
-
-}
+	// double primes
+	'It’s 12" x 12".': "It’s 12″ × 12″.",
+};
 
 let testRemoveLines = {
   "remove\n\nlines": "remove\nlines",
@@ -237,15 +233,15 @@ let testModuleSingleQuotesRue = {
 
 
 let testModuleAbbreviationsEnUs = {
-  // abbreviations
-  "(e.g.)": "(e.g.)",
-  "a.m.": "a.m.",
-  "5 a.m.": "5 a.m.",
-  "CH. CH. CH. Lambert": "CH.CH.CH. Lambert",
-  "the U.S.": "the U.S.",  
-  // punctuation trimming
-  "č., s., fol., e.g., i.e., str.,": "č., s., fol., e.g., i.e., str.,",
-}
+	// abbreviations
+	"(e.g.)": "(e.g.)",
+	"a.m.": "a.m.",
+	"5 a.m.": "5 a.m.",
+	"CH. CH. CH. Lambert": "CH.CH.CH. Lambert",
+	"the U.S.": "the U.S.",
+	// punctuation trimming
+	"č., s., fol., e.g., i.e., str.,": "č., s., fol., e.g., i.e., str.,",
+};
 
 let testModuleAbbreviationsDede = {
   // abbreviations
@@ -522,26 +518,21 @@ describe('Tests that all modules are plugged for rue', () => {
 
 describe('Test if markdown ticks are kept (integration test) (en-us):\n', () => {
 	let testCase = {
-		"```\ncode\n```":
-		"```\ncode\n```",
+		"```\ncode\n```": "```\ncode\n```",
 
-		"``code``":
-		"``code``",
+		"``code``": "``code``",
 
-		"``code code``":
-		"``code code``",
+		"``code code``": "``code code``",
 
-		"``code`` ``code``":
-		"``code`` ``code``",
+		"``code`` ``code``": "``code`` ``code``",
 
-		"`code`":
-		"`code`",
+		"`code`": "`code`",
 
-		"`code code`":
-		"`code code`",
+		"`code code`": "`code code`",
 
-		"`code` `code`":
-		"`code` `code`",
+		"`code` `code`": "`code` `code`",
+
+		"e.g. `something`": "e.g. `something`",
 	};
 
 	Object.keys(testCase).forEach((key) => {

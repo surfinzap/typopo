@@ -139,48 +139,52 @@ describe('Fix multiple-word abbreviations (sk, cs, rue, de-de)\n', () => {
 describe('Fix multiple-word abbreviations (en-us)\n', () => {
 	let testCase = {
 		/* General pattern for these locales assumes:
-			 * dots after each abbreviated word
-			 * no spaces between abbreviated words
-			 * normal space after the last abbreviated word
-		*/
-		"the U.S." : "the U.S.",
-		"the U. S." : "the U.S.",
+		 * dots after each abbreviated word
+		 * no spaces between abbreviated words
+		 * normal space after the last abbreviated word
+		 */
+		"the U.S.": "the U.S.",
+		"the U. S.": "the U.S.",
 
 		", e.g. something": ", e.g. something",
 		"(e.g. something": "(e.g. something",
 		"a e.g. something": "a e.g. something",
 		"abc\ne.g. something": "abc\ne.g. something",
-		"e.g. 100 km" : "e.g. 100 km",
-		"(e.g.)" : "(e.g.)",
-		"(e.g. )" : "(e.g.)",
-		"“e. g.”" : "“e.g.”",
-		"‘e. g.’" : "‘e.g.’",
-		"e. g." : "e.g.",
-		"č., s., fol., e. g., i.e., str.," : "č., s., fol., e.g., i.e., str.,",
-		
+		"e.g. 100 km": "e.g. 100 km",
+		"(e.g.)": "(e.g.)",
+		"(e.g. )": "(e.g.)",
+		"“e. g.”": "“e.g.”",
+		"‘e. g.’": "‘e.g.’",
+		"e. g.": "e.g.",
+		"č., s., fol., e. g., i.e., str.,": "č., s., fol., e.g., i.e., str.,",
+
 		"e.g. “something”": "e.g. “something”",
 		"e.g. ‘something’": "e.g. ‘something’",
 
+		"e.g. ```something```": "e.g. ```something```",
+		"e.g. `something`": "e.g. `something`",
+
 		"a i.e. something": "a i.e. something",
-		"i.e. 100 km" : "i.e. 100 km",
+		"i.e. 100 km": "i.e. 100 km",
 		"brie cheese": "brie cheese", // false positive
 		"Pam Grier": "Pam Grier", // false positive
-		"najkrajšie": "najkrajšie", // false positive for non-latin boundaries
-		"nevieš": "nevieš", // false positive for non-latin boundaries
-		"ieš": "ieš", // false positive for non-latin boundaries
-		"či e-mail marketing" : "či e-mail marketing", // false positive for non-latin boundaries
-		"(i.e.)" : "(i.e.)",
+		najkrajšie: "najkrajšie", // false positive for non-latin boundaries
+		nevieš: "nevieš", // false positive for non-latin boundaries
+		ieš: "ieš", // false positive for non-latin boundaries
+		"či e-mail marketing": "či e-mail marketing", // false positive for non-latin boundaries
+		"(i.e.)": "(i.e.)",
 
 		"4.20 p.m.": "4.20 p.m.",
 		"4.20 p.m. in the afternoon": "4.20 p.m. in the afternoon",
 		"She is the PM of the UK.": "She is the PM of the UK.", // false positive
-		"2 PMs" : "2 PMs",
+		"2 PMs": "2 PMs",
 
 		// Throwing extra space
-		"“We will continue tomorrow at 8:00 a.m.”": "“We will continue tomorrow at 8:00 a.m.”",
-		"We will continue tomorrow at 8:00 a.m.!": "We will continue tomorrow at 8:00 a.m.!",
-		"8 a.m. is the right time" : "8 a.m. is the right time",
-
+		"“We will continue tomorrow at 8:00 a.m.”":
+			"“We will continue tomorrow at 8:00 a.m.”",
+		"We will continue tomorrow at 8:00 a.m.!":
+			"We will continue tomorrow at 8:00 a.m.!",
+		"8 a.m. is the right time": "8 a.m. is the right time",
 	};
 
 
