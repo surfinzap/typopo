@@ -1,8 +1,12 @@
 # Changelog for Typopo
 
 
-## 2.5.4 // 2022-07-12
+## 2.5.5 // 2023-08
+### 🐛 Fixes
+- In Markdown, keep the space when e.g. is followed by `code`
 
+
+## 2.5.4 // 2022-07-12
 
 ### 💪 Improvements
 - Remove spaces before aposiopesis in a quoted sentence, e.g.:
