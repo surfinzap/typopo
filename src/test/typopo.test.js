@@ -239,6 +239,8 @@ let testModuleAbbreviationsEnUs = {
 	"5 a.m.": "5 a.m.",
 	"CH. CH. CH. Lambert": "CH.CH.CH. Lambert",
 	"the U.S.": "the U.S.",
+	"e.g. 🥳": "e.g. 🥳",
+	"i. e. 🥳": "i.e. 🥳",
 	// punctuation trimming
 	"č., s., fol., e.g., i.e., str.,": "č., s., fol., e.g., i.e., str.,",
 };

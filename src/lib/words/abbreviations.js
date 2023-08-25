@@ -75,7 +75,8 @@ export function fixMultipleWordAbbreviations(string, locale) {
 	/* Partial patterns for a composition */
 	let patternPrecedingNonLatinBoundary = "([^" + locale.allChars + locale.enDash + locale.emDash + "]|^)";
 	let patternFollowingWord = "([" + locale.allChars + "]|\\D)";
-	let patternFollowingNonLatinBoundary = "([^" + locale.allChars + locale.leftDoubleQuote + locale.leftSingleQuote + locale.backtick + "]|$)";
+	let patternFollowingNonLatinBoundary = "([^" + locale.allChars + locale.leftDoubleQuote + locale.leftSingleQuote + locale.backtick + "\\p{Emoji}]|$)"; 
+	
 
 
 	/* [1] Set locale-specific space between abbreviations */
@@ -140,7 +141,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
 	*/
 	for (let i = 0; i < abbreviationPatterns.length; i++) {
 			let pattern = patternPrecedingNonLatinBoundary + abbreviationPatterns[i] + patternFollowingNonLatinBoundary;
-			let re = new RegExp(pattern, "gi");
+			let re = new RegExp(pattern, "giu");
 
 			let replacement = "$1";
 			let abbrCount = ((abbreviationPatterns[i].match(/\(/g) || []).length)/3;
