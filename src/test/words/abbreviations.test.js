@@ -164,6 +164,8 @@ describe('Fix multiple-word abbreviations (en-us)\n', () => {
 		"e.g. ```something```": "e.g. ```something```",
 		"e.g. `something`": "e.g. `something`",
 
+		"e.g. 🥳": "e.g. 🥳",
+		"i. e. 🥳": "i.e. 🥳",
 		"a i.e. something": "a i.e. something",
 		"i.e. 100 km": "i.e. 100 km",
 		"brie cheese": "brie cheese", // false positive

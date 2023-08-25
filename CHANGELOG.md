@@ -2,8 +2,14 @@
 
 
 ## 2.5.5 // 2023-08
+
 ### 🐛 Fixes
-- In Markdown, keep the space when e.g. is followed by `code`
+- In Markdown, keep the space when e.g. is followed by `code` (e.g. `code`)
+- Keep the space when e.g. is followed by emoji (e.g. 🥳)
+
+### 🔨 Maintenance
+- Update build scripts
+
 
 
 ## 2.5.4 // 2022-07-12
@@ -22,7 +28,6 @@
 ### 🔨 Maintenance
 - Update NPM packages to their latest versions
 - Extra tests and code refactoring for dash.js
-
 
 
 
