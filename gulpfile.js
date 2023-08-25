@@ -99,7 +99,7 @@ function browserSyncReload(done) {
 }
 
 const watch = gulp.parallel(watchFiles, browserSync);
-const build = gulp.parallel(npmBuild, browserBuild);
+const build = gulp.parallel(npmBuild, browserBuild, copyHtmlToDest);
 
 exports.watch = watch;
 exports.build = build;
