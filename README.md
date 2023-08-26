@@ -33,7 +33,7 @@
 - [Special thanks](#special-thanks)
 
 ## Features
-Typopo fixes microtypography hickups in five languages:
+Typopo fixes microtypography hiccups in five languages:
 - English
 - German
 - Czech
@@ -41,7 +41,7 @@ Typopo fixes microtypography hickups in five languages:
 - Rusyn
 
 Typopo fixes punctuation:
-- double quotes (and accidentally-typed punctuation related to the use of double quotes)
+- double quotes (and accidentally typed punctuation related to the use of double quotes)
 - double primes
 - single quotes (with an assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages) and in pairs)
 - single primes
@@ -57,7 +57,7 @@ Typopo fixes whitespace characters:
 - removes extra white spaces
 	- at the beginning and the end of sentences (leading and trailing spaces)
 	- between words and paragraphs
-	- before or after a punctuation (where applicable)
+	- before or after punctuation (where applicable)
 	- around an ellipsis and an aposiopesis (where applicable)
 	- between a number sign (#) and a number
 	- before ordinal indicators (e.g. 1 st → 1st)
@@ -70,14 +70,14 @@ Typopo fixes whitespace characters:
 		- after “&”
 		- after cardinal numbers
 		- after ordinal numbers
-		- ordinal Roman numerals
+		- after ordinal Roman numerals
 		- after name initials (i.e. Philip K. Dick)
 		- after common single-word and multiple-word abbreviations
-		- before % (percent), ‰ (per mille), ‱ (permyriad)
+		- before % (percent), ‰ (per mille), ‱ (per myriad)
 
 Typopo fixes words:
 - accidental uPPERCASE
-- spelling of e.g., i.e., a.m. and p.m.
+- the spelling of e.g., i.e., a.m. and p.m.
 - ISSN and ISBN formatting
 
 Typopo fixes symbols:
@@ -165,7 +165,7 @@ configuration = {
 
 
 ## News & Releases
-Check out the [changelog](CHANGELOG.md) for what’s has been released.
+Check out the [changelog](CHANGELOG.md) for what has been released.
 
 [Subscribe to Typopo Newsletter](https://buttondown.email/Typopo) to be the first to know about all the new features and improvements.
 
@@ -178,9 +178,9 @@ Your support will let me continue improving Typopo ecosystem—[the app](https:/
 
 
 ## Feedback
-Have you found a bug? Do you have an idea for a feature request? You’re more then welcome to [submit an issue here on GitHub](https://github.com/surfinzap/typopo/issues/new/choose).
+Have you found a bug? Do you have an idea for a feature request? You’re more than welcome to [submit an issue here on GitHub](https://github.com/surfinzap/typopo/issues/new/choose).
 
-If you prefer to reach out me via email, feel free to drop me a line at <help@typopo.org>.
+If you prefer to email, drop me a line at <help@typopo.org>.
 
 
 ## License
