@@ -103,13 +103,11 @@ describe('Add non-breaking space after cardinal number\n', () => {
 		"2020 rokov": 
 		"2020 rokov",
 
-		/* eslint-disable no-irregular-whitespace */
 		/* false positive,
 		 * a number is already bound with abbreviation
 		 * Na str.⎵5 je obsah → Na str.⎵5 je obsah
 		 * 									 !→ Na str. 5⎵je obsah
 		 */
-		/* eslint-enable no-irregular-whitespace */
 		"Na str. 5 je obsah" : "Na str. 5 je obsah",
 	};
 

@@ -114,7 +114,6 @@ let testModules = {
 	"🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
 	// nbsp
 	"v a v a v": "v a v a v",
-	/* eslint-disable no-irregular-whitespace */
 	// "the U.S. and" : "the U.S. and", not yet supported
 
 	//case
