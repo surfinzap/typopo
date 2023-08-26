@@ -11,6 +11,9 @@
 ### 🐛 Fixes
 - In Markdown, keep the space when e.g. is followed by `code` (e.g. `code`)
 - Keep the space when e.g. is followed by emoji (e.g. 🥳)
+- Don’t swap the right double quote with ellipsis that follows closing bracket:
+  - `Ask “what if (the thing)…”` ⇏ `Ask “what if (the thing)”…`
+
 
 ### 🔨 Maintenance
 - Update build scripts

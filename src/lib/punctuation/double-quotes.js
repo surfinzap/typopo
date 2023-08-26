@@ -334,13 +334,13 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 	// place punctuation outside of quoted part
 	string = string.replace(
 		new RegExp(
-			"([^" + locale.sentencePunctuation + "])"
-		+ "([" + locale.spaces + "])"
-		+ "(" + locale.leftDoubleQuote + ")"
-		+ "([^" + locale.rightDoubleQuote +"]+?)"
-		+ "([^" + locale.romanNumerals + "])"
-		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"
-		+ "(" + locale.rightDoubleQuote + ")", 
+			"([^" + locale.sentencePunctuation + "])"  // 1
+		+ "([" + locale.spaces + "])"                // 2
+		+ "(" + locale.leftDoubleQuote + ")"         // 3
+		+ "([^" + locale.rightDoubleQuote +"]+?)"    // 4
+		+ "([^" + locale.romanNumerals + locale.closingBrackets + "])"  // 5
+		+ "([" + locale.terminalPunctuation + locale.ellipsis + "])"    // 6
+		+ "(" + locale.rightDoubleQuote + ")",       // 7
 			"g"
 		),
 			"$1"

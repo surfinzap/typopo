@@ -184,6 +184,9 @@ let testModuleDoubleQuotesEnUs = {
 
   "He was ok. \"He was ok \".": 
   "He was ok. “He was ok.”",
+
+  "Ask “what if (the thing)…”":
+  "Ask “what if (the thing)…”"
 }
 
 let testModuleDoubleQuotesDeDe = {
