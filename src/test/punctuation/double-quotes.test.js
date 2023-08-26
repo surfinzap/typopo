@@ -661,13 +661,18 @@ describe('Swap quotes and terminal punctuation for a quoted part (en-us):\n', ()
 		"Before you ask the “How often…” question":
 		"Before you ask the “How often…” question",
 
+		"Before you ask the “How often”… question":
+		"Before you ask the “How often…” question",
+
 		"“…example”":
 		"“…example”",
 
 		"abc “…example”":
-		"abc “…example”",		
-
-
+		"abc “…example”",	
+		
+		// Bracket before the ellipsis, false positive
+		"Ask “what if (the thing)…”":
+		"Ask “what if (the thing)…”",
 
 
 		// place punctuation within a quoted sentence
