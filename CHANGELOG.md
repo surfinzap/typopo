@@ -3,6 +3,11 @@
 
 ## 2.5.5 // 2023-08
 
+### 💪 Improvements
+- Replace a space with a non-breaking space before a single capital letter that is a part of the phrase:
+  - `Sputnik V` → `Sputnik⎵V`
+  - `The product X has launched.` → `The product⎵X has launched.`
+
 ### 🐛 Fixes
 - In Markdown, keep the space when e.g. is followed by `code` (e.g. `code`)
 - Keep the space when e.g. is followed by emoji (e.g. 🥳)
