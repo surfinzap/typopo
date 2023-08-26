@@ -9,6 +9,7 @@
 
 ### 🔨 Maintenance
 - Update build scripts
+- Update eslint configuration
 
 
 

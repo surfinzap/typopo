@@ -14,5 +14,7 @@ module.exports = {
     "sourceType": 'module',
     "parser": "babel-eslint"
   },
-  "rules": {}
+  "rules": {
+    'no-irregular-whitespace': 0,
+  }
 }

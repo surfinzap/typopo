@@ -185,7 +185,6 @@ export function fixAposiopesisBetweenSentences(string, locale) {
 
 
 
-/* eslint-disable no-irregular-whitespace */
 /*
 	Fix spacing, when aposiopesis is between words
 	This is a best effort guess, that we’re dealing with aposiopesis.
@@ -196,7 +195,6 @@ export function fixAposiopesisBetweenSentences(string, locale) {
 	@param {string} string — input text for identification
 	@returns {string} — output with fixed spacing
 */
-/* eslint-enable no-irregular-whitespace */
 export function fixAposiopesisBetweenWords(string, locale) {
 	let pattern =
 			"([" + locale.allChars + "])"

@@ -136,7 +136,6 @@ export function addNbspAfterRomanNumeral(string, locale) {
 }
 
 
-/* eslint-disable no-irregular-whitespace */
 /*
 	Fix non-breaking space around name with regnal number
 
@@ -152,7 +151,6 @@ export function addNbspAfterRomanNumeral(string, locale) {
 	@param {string} string — input text for identification
 	@returns {string} — output with correctly placed non-breaking space
 */
-/* eslint-enable no-irregular-whitespace */
 export function fixNbspForNameWithRegnalNumber(string, locale) {
 		let pattern =
 			"(\\b[" + locale.uppercaseChars + "]["+ locale.lowercaseChars +"]+?)"
