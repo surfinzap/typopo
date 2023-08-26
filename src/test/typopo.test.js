@@ -114,6 +114,28 @@ let testModules = {
 	"🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
 	// nbsp
 	"v a v a v": "v a v a v",
+  "The product X is missing the feature Y.":
+  "The product X is missing the feature Y.",
+
+
+  "Sputnik V": "Sputnik V",
+  "Človek Č": "Človek Č",
+  "© V Inc." : "© V Inc.",
+  "bola to I. kapitola" : "bola to I. kapitola",
+  "pán Šťastný" : "pán Šťastný",
+  "pán ŠŤASTNÝ" : "pán ŠŤASTNÝ",
+  "One sentence ends. A bad apple." : "One sentence ends. A bad apple.",
+  "One sentence ends? A bad apple." : "One sentence ends? A bad apple.",
+  "One sentence ends! A bad apple." : "One sentence ends! A bad apple.",
+  "sentence; C-level executive" : "sentence; C-level executive",
+  "sentence: C-level executive" : "sentence: C-level executive",
+  "sentence, C-level executive" : "sentence, C-level executive",
+  "I’d say… A-player" : "I’d say… A-player",
+  "sentence (brackets) A-player" : "sentence (brackets) A-player",
+  "sentence [brackets] A-player" : "sentence [brackets] A-player",
+  "sentence {brackets} A-player" : "sentence {brackets} A-player",
+  "A × A" : "A × A",
+
 	// "the U.S. and" : "the U.S. and", not yet supported
 
 	//case
@@ -244,7 +266,7 @@ let testModuleAbbreviationsEnUs = {
 	"č., s., fol., e.g., i.e., str.,": "č., s., fol., e.g., i.e., str.,",
 };
 
-let testModuleAbbreviationsDede = {
+let testModuleAbbreviationsDeDe = {
   // abbreviations
   "(e.g.)": "(e. g.)",
   "a.m.": "a. m.",
@@ -256,17 +278,82 @@ let testModuleAbbreviationsDede = {
 }
 
 let testModuleAbbreviationsSk = {
-  ...testModuleAbbreviationsDede
+  ...testModuleAbbreviationsDeDe
 }
 
 let testModuleAbbreviationsCs = {
-  ...testModuleAbbreviationsDede
+  ...testModuleAbbreviationsDeDe
 }
 
 let testModuleAbbreviationsRue = {
-  ...testModuleAbbreviationsDede
+  ...testModuleAbbreviationsDeDe
 }
 
+let testModuleNbsp = {
+  "The product X is missing the feature Y.":
+  "The product X is missing the feature Y.",
+
+
+  "Sputnik V": "Sputnik V",
+  "Človek Č": "Človek Č",
+  "© V Inc." : "© V Inc.",
+  
+  // false positives
+  "bola to I. kapitola" : "bola to I. kapitola",
+  "pán Šťastný" : "pán Šťastný",
+  "pán ŠŤASTNÝ" : "pán ŠŤASTNÝ",
+  "One sentence ends. A bad apple." : "One sentence ends. A bad apple.",
+  "One sentence ends? A bad apple." : "One sentence ends? A bad apple.",
+  "One sentence ends! A bad apple." : "One sentence ends! A bad apple.",
+  "sentence; C-level executive" : "sentence; C-level executive",
+  "sentence: C-level executive" : "sentence: C-level executive",
+  "sentence, C-level executive" : "sentence, C-level executive",
+  "I’d say… A-player" : "I’d say… A-player",
+  "sentence (brackets) A-player" : "sentence (brackets) A-player",
+  "sentence [brackets] A-player" : "sentence [brackets] A-player",
+  "sentence {brackets} A-player" : "sentence {brackets} A-player",
+  "A × A" : "A × A",
+}
+
+let testModuleNbspEnUs = {
+  ...testModuleNbsp,
+  // false positives
+  "When I talk" : "When I talk", // do not add nbsp before I
+  "“qouted part” A capital letter" : "“qouted part” A capital letter",
+  "qouted part’ A capital letter" : "qouted part’ A capital letter",
+}
+
+let testModuleNbspDeDe = {
+  ...testModuleNbsp,
+  "Vzorka I" : "Vzorka I",
+  "Vzorka I je fajn" : "Vzorka I je fajn", // remove nbsp after I
+  "Vzorka I je fajn" : "Vzorka I je fajn", // remove hairSpace after I
+  "Vzorka I je fajn" : "Vzorka I je fajn", // remove narrowNbsp after I
+
+  // false positives
+  "„qouted part“ A capital letter" : "„qouted part“ A capital letter",
+  "apostrophe’ A capital letter" : "apostrophe’ A capital letter"
+}
+
+let testModuleNbspSk = {
+  ...testModuleNbspDeDe
+}
+
+let testModuleNbspCs = {
+  ...testModuleNbspDeDe
+}
+
+let testModuleNbspRue = {
+  ...testModuleNbsp,
+  "Vzorka I" : "Vzorka I",
+  "Vzorka I je fajn" : "Vzorka I je fajn", // remove nbsp after I
+  "Vzorka I je fajn" : "Vzorka I je fajn", // remove hairSpace after I
+  "Vzorka I je fajn" : "Vzorka I je fajn", // remove narrowNbsp after I
+
+  // false positives
+  "«qouted part» A capital letter" : "«qouted part» A capital letter",
+  "apostrophe’ A capital letter" : "apostrophe’ A capital letter"
+}
 
 
 let testModuleCombinations = {
@@ -300,6 +387,7 @@ describe('Tests that all modules are plugged for en-us', () => {
     ...testModuleDoubleQuotesEnUs,
     ...testModuleSingleQuotesEnUs,
     ...testModuleAbbreviationsEnUs,
+    ...testModuleNbspEnUs,
 	};
   
   let testCaseDefault = {
@@ -344,7 +432,8 @@ describe('Tests that all modules are plugged for de-de', () => {
     ...testModules,
     ...testModuleDoubleQuotesDeDe,
     ...testModuleSingleQuotesDeDe,
-    ...testModuleAbbreviationsDede
+    ...testModuleAbbreviationsDeDe,
+    ...testModuleNbspDeDe,
   };
 
   let testCaseDefault = {
@@ -388,7 +477,9 @@ describe('Tests that all modules are plugged for sk', () => {
     ...testModules,
     ...testModuleDoubleQuotesSk,
     ...testModuleSingleQuotesSk,
-    ...testModuleAbbreviationsSk
+    ...testModuleAbbreviationsSk,
+    ...testModuleNbspSk
+
   };
 
   let testCaseDefault = {
@@ -433,7 +524,9 @@ describe('Tests that all modules are plugged for cs', () => {
     ...testModules,
     ...testModuleDoubleQuotesCs,
     ...testModuleSingleQuotesCs,
-    ...testModuleAbbreviationsCs
+    ...testModuleAbbreviationsCs,
+    ...testModuleNbspCs
+
   };
 
   let testCaseDefault = {
@@ -478,7 +571,9 @@ describe('Tests that all modules are plugged for rue', () => {
     ...testModules,
     ...testModuleDoubleQuotesRue,
     ...testModuleSingleQuotesRue,
-    ...testModuleAbbreviationsRue
+    ...testModuleAbbreviationsRue,
+    ...testModuleNbspRue
+
   };
 
   let testCaseDefault = {

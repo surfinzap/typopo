@@ -26,7 +26,7 @@
 	- [NPM package](#npm-package)
 	- [JavaScript library](#javascript-library)
 	- [API](#api)
-- [News & Releases](#news-releases)
+- [News \& Releases](#news-releases)
 - [Support](#support)
 - [Feedback](#feedback)
 - [License](#license)
@@ -71,7 +71,8 @@ Typopo fixes whitespace characters:
 		- after cardinal numbers
 		- after ordinal numbers
 		- after ordinal Roman numerals
-		- after name initials (i.e. Philip K. Dick)
+		- before single capital letters that are part of the phrase (e.g. Project X)
+		- after name initials (e.g. Philip K. Dick)
 		- after common single-word and multiple-word abbreviations
 		- before % (percent), ‰ (per mille), ‱ (per myriad)
 
