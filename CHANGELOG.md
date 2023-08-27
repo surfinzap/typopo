@@ -1,7 +1,7 @@
 # Changelog for Typopo
 
 
-## 2.5.5 // 2023-08
+## 2.5.5 // 2023-08-27
 
 ### 💪 Improvements
 - Replace a space with a non-breaking space before a single capital letter that is a part of the phrase:
@@ -14,10 +14,10 @@
 - Don’t swap the right double quote with ellipsis that follows closing bracket:
   - `Ask “what if (the thing)…”` ⇏ `Ask “what if (the thing)”…`
 
-
 ### 🔨 Maintenance
 - Update build scripts
 - Update eslint configuration
+- Update NPM packages to their latest versions
 
 
 
