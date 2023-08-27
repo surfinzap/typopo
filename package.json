@@ -1,59 +1,59 @@
 {
-  "name": "typopo",
-  "version": "2.5.4",
-  "description": "Fix frequent microtypography errors in multiple languages. Write neat texts without bothering about typography rules. Typopo works for English, German, Slovak, Czech and Rusyn language.",
-  "license": "MIT",
-  "author": {
-    "name": "Braňo Šandala",
-    "email": "hi@brano.me"
-  },
-  "scripts": {
-    "dev": "gulp watch",
-    "build": "gulp build",
-    "test": "mocha --require @babel/register ./src/test/**/*.test.js -R min",
-    "test:dev": "mocha --require @babel/register ./src/test/**/*.test.js -R min -w",
-    "lint": "eslint --ext .js ."
-  },
-  "main": "dist/typopo_dist.min.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/surfinzap/typopo"
-  },
-  "bugs": {
-    "url": "https://github.com/surfinzap/typopo/issues"
-  },
-  "keywords": [
-    "microtypography",
-    "typography",
-    "typos",
-    "typo",
-    "English",
-    "German",
-    "Slovak",
-    "Czech",
-    "Rusyn"
-  ],
-  "engines": {
-    "node": ">=6.9.4"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.22.10",
-    "@babel/core": "^7.22.11",
-    "@babel/preset-env": "^7.22.10",
-    "@babel/register": "^7.22.5",
-    "babelify": "^10.0.0",
-    "babel-eslint": "^10.1.0",
-    "browser-sync": "^2.29.3",
-    "browserify": "^17.0.0",
-    "eslint": "^8.48.0",
-    "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
-    "gulp-cli": "^2.3.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-sourcemaps": "^3.0.0",
-    "gulp-uglify": "^3.0.2",
-    "mocha": "^10.2.0",
-    "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
-  }
+	"name": "typopo",
+	"version": "2.5.5",
+	"description": "Fix frequent microtypography errors in multiple languages. Write neat texts without bothering about typography rules. Typopo works for English, German, Slovak, Czech and Rusyn language.",
+	"license": "MIT",
+	"author": {
+		"name": "Braňo Šandala",
+		"email": "hi@brano.me"
+	},
+	"scripts": {
+		"dev": "gulp watch",
+		"build": "gulp build",
+		"test": "mocha --require @babel/register ./src/test/**/*.test.js -R min",
+		"test:dev": "mocha --require @babel/register ./src/test/**/*.test.js -R min -w",
+		"lint": "eslint --ext .js ."
+	},
+	"main": "dist/typopo_dist.min.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/surfinzap/typopo"
+	},
+	"bugs": {
+		"url": "https://github.com/surfinzap/typopo/issues"
+	},
+	"keywords": [
+		"microtypography",
+		"typography",
+		"typos",
+		"typo",
+		"English",
+		"German",
+		"Slovak",
+		"Czech",
+		"Rusyn"
+	],
+	"engines": {
+		"node": ">=6.9.4"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.22.10",
+		"@babel/core": "^7.22.11",
+		"@babel/preset-env": "^7.22.10",
+		"@babel/register": "^7.22.5",
+		"babelify": "^10.0.0",
+		"babel-eslint": "^10.1.0",
+		"browser-sync": "^2.29.3",
+		"browserify": "^17.0.0",
+		"eslint": "^8.48.0",
+		"gulp": "^4.0.2",
+		"gulp-babel": "^8.0.0",
+		"gulp-cli": "^2.3.0",
+		"gulp-concat": "^2.6.1",
+		"gulp-sourcemaps": "^3.0.0",
+		"gulp-uglify": "^3.0.2",
+		"mocha": "^10.2.0",
+		"vinyl-buffer": "^1.0.1",
+		"vinyl-source-stream": "^2.0.0"
+	}
 }
