@@ -310,7 +310,7 @@ export function addNbspBeforeSingleLetter(string, locale) {
 
 	let re = new RegExp(pattern, "g");
 
-	return string.replace(re, function($0, $1, $2, $3, $4, $5, $6){
+	return string.replace(re, function($0, $1, $2, $3, $4, $5){
 		if (locale.locale == "en-us") {
 			// don't make changes after "I" in en-us
 			return $1 + locale.nbsp + $3 + $4
