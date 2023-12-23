@@ -8,6 +8,12 @@ describe('Replace 2 periods at the end of the sentecne with a single period\n', 
 	let testCase = {
 		"Sentence ending..": "Sentence ending.",
 		"He is a vice president at Apple Inc..": "He is a vice president at Apple Inc.",
+
+		//false positives
+		"../../filename.ext":"../../filename.ext",
+		"..\\..\\filename.ext":"..\\..\\filename.ext",
+		"../":"../",
+		"..\\":"..\\",
 	};
 
 

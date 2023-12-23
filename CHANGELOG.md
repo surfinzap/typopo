@@ -1,10 +1,15 @@
 # Changelog for Typopo
 
 
-## 2.5.6 // 
+## 2.5.6 // 2023-12-23
+
+### 🐛 Fixes
+- filepaths such as `../../file.ext` or `..\..\file.ext` were falsely chnaged to `././file.ext` or `.\.\file.ext`. with this release, they remain untouched
 
 ### 🔨 Maintenance
 - Update NPM packages to their latest versions
+
+
 
 ## 2.5.5 // 2023-08-27
 
