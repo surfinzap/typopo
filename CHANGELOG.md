@@ -1,6 +1,11 @@
 # Changelog for Typopo
 
 
+## 2.5.6 // 
+
+### 🔨 Maintenance
+- Update NPM packages to their latest versions
+
 ## 2.5.5 // 2023-08-27
 
 ### 💪 Improvements
