@@ -20,6 +20,7 @@
 	@param {string} locale: locale option
 	@returns {string} output with ...
 */
+/*eslint-disable*/
 export function name(string, locale) {	
 	let pattern =
 			"(\\b)"
@@ -41,8 +42,6 @@ export function name(string, locale) {
 		),
 		"$1"
 	);
-
-
 }
 
 

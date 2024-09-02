@@ -411,9 +411,7 @@ describe('Fix non-breaking space around name with regnal number (en-us)\n', () =
 		"Sequoia Capital" : "Sequoia Capital",
 
 		// Unsupported
-		/* eslint-disable no-irregular-whitespace */
 		// It’s more common to use “I + verb” in text than citing regnal names so this case is unsupported for now
-		/* eslint-enable no-irregular-whitespace */
 		"Charles I" : "Charles I",
 	};
 
