@@ -1,6 +1,15 @@
 # Changelog for Typopo
 
 
+
+## 2.5.7 //
+
+
+### 🔨 Maintenance
+- Change packaging from npm to pnpm
+
+
+
 ## 2.5.6 // 2023-12-23
 
 ### 🐛 Fixes
