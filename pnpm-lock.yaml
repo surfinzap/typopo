@@ -54,7 +54,7 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       mocha:
-        specifier: ^10.2.0
+        specifier: ^10.7.3
         version: 10.7.3
       vinyl-buffer:
         specifier: ^1.0.1

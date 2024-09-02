@@ -7,6 +7,7 @@
 
 ### 🔨 Maintenance
 - Change packaging from npm to pnpm
+- Update NPM packages to their latest versions
 
 
 
