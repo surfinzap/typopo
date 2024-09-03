@@ -4,6 +4,8 @@
 
 ## 2.5.7 //
 
+### 🐛 Fixes
+- Fix (#73) when the part of the file path was falsely identified as an ordinal number in `sk`, `cs`, `rue`, `de-de` locales
 
 ### 🔨 Maintenance
 - Change packaging from npm to pnpm

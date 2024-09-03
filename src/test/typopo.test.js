@@ -122,6 +122,7 @@ let testModules = {
   "Človek Č": "Človek Č",
   "© V Inc." : "© V Inc.",
   "bola to I. kapitola" : "bola to I. kapitola",
+  "url_to_image_5.jpg" : "url_to_image_5.jpg",
   "pán Šťastný" : "pán Šťastný",
   "pán ŠŤASTNÝ" : "pán ŠŤASTNÝ",
   "One sentence ends. A bad apple." : "One sentence ends. A bad apple.",
