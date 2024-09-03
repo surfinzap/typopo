@@ -4,6 +4,9 @@
 
 ## 2.5.7 //
 
+### 💪 Improvements
+- TBD exceptions on filenames 
+
 ### 🐛 Fixes
 - Fix (#73) when the part of the file path was falsely identified as an ordinal number in `sk`, `cs`, `rue`, `de-de` locales
 

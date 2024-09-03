@@ -317,6 +317,31 @@ let testModuleNbsp = {
   "sentence [brackets] A-player" : "sentence [brackets] A-player",
   "sentence {brackets} A-player" : "sentence {brackets} A-player",
   "A × A" : "A × A",
+
+  // false positive for filenames
+	"url-to-image-5.jpg" : 
+	"url-to-image-5.jpg",
+
+	"url_to_image_5.jpg" : 
+	"url_to_image_5.jpg",
+
+	"url%to%image%5.jpg" : 
+	"url%to%image%5.jpg",
+
+	"url to image 5.jpg" : 
+	"url to image 5.jpg",
+
+	"URL-TO-IMAGE-5.JPG" : 
+	"URL-TO-IMAGE-5.JPG",
+
+	"URL_TO_IMAGE_5.JPG" : 
+	"URL_TO_IMAGE_5.JPG",
+
+	"URL%TO%IMAGE%5.JPG" : 
+	"URL%TO%IMAGE%5.JPG",
+
+	"URL TO IMAGE 5.JPG" : 
+	"URL TO IMAGE 5.JPG",
 }
 
 let testModuleNbspEnUs = {

@@ -6,7 +6,8 @@ let exceptions = [];
 	Algorithm
 	[1] Identify email adresses
 	[2] Identify web URLs and IPs
-	[3] Mark them as temporary exceptions in format {{typopo__exception-[i]}}
+	[3] Identify common filenames
+	[4] Mark them as temporary exceptions in format {{typopo__exception-[i]}}
 
 	@param {string} input text for identification of exceptions
 	@returns {string} — output with identified exceptions in format {{typopo__exception-[i]}}
@@ -15,13 +16,15 @@ export function excludeExceptions(string, locale) {
 
 	/* [1] Identify email adresses */
 	identifyExceptionSet(string, locale.emailAddressPattern);
-
-
+	
 	/* [2] Identify web URLs and IPs */
 	identifyExceptionSet(string, locale.webUrlPattern);
+	
+	/* [3] Identify common filenames */
+	identifyExceptionSet(string, locale.filenamePattern);
 
 
-	/* [3] Mark them as temporary exceptions in format {{typopo__exception-[i]}} */
+	/* [4] Mark them as temporary exceptions in format {{typopo__exception-[i]}} */
 	for (var i = 0; i < exceptions.length; i++) {
 		var replacement = "{{typopo__exception-" + i + "}}";
 		string = string.replace(exceptions[i], replacement);
@@ -40,7 +43,7 @@ export function excludeExceptions(string, locale) {
 	@param {pattern} regular expression pattern to match exception
 */
 function identifyExceptionSet(string, pattern) {
-	var re = new RegExp(pattern, "g");
+	var re = new RegExp(pattern, "gi");
 	var matched_exceptions = string.match(re);
 	if (matched_exceptions != null) {
 		exceptions = exceptions.concat(matched_exceptions);
@@ -48,9 +51,7 @@ function identifyExceptionSet(string, pattern) {
 }
 
 /*
-	Replaces identified exceptions with real ones by change their
-	temporary representation in format {{typopo__exception-[i]}} with its
-	corresponding representation
+	Replaces identified exceptions with real ones by change their temporary representation in format {{typopo__exception-[i]}} with its 	corresponding representation
 
 	@param {string} input text with identified exceptions
 	@returns {string} output with placed exceptions

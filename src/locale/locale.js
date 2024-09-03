@@ -144,6 +144,10 @@ export default class Locale {
       "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
       ")+";
 
+    /* Filename pattern */
+    this.filenamePattern = "\\b[a-zA-Z0-9_%\\-]+\\.(asm|bat|bmp|c|cpp|cs|css|dart|doc|docx|gif|go|html|java|jpeg|jpg|js|json|kt|lua|md|odp|ods|odt|pdf|php|pl|png|ppt|pptx|py|r|rb|rs|scala|sh|sql|swift|tiff|ts|txt|vbs|xml|xls|xlsx|yaml|yml|zip|rar)\\b";
+
+  
 
     /* Numbers */
     this.cardinalNumber = "\\d";
