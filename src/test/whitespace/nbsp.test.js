@@ -245,14 +245,11 @@ describe('Add non-breaking space after ordinal number (sk, cs, rue, de-de)\n', (
 
 		"url%to%image%5.jpg" : 
 		"url%to%image%5.jpg",
-
 		
 		// unsolved for now
 		// "Přišlo jich 12. Dalsi veta.":
 		// "Přišlo jich 12. Dalsi veta.",
 		
-		// "url to image 5.jpg" : 
-		// "url to image 5.jpg",
 	};
 
 	Object.keys(testCase).forEach((key) => {
