@@ -92,19 +92,20 @@ export default class Locale {
     /*
       Source for webUrlPattern, emailAddressPattern
       http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/2.0_r1/android/text/util/Regex.java#Regex.0WEB_URL_PATTERN
+      webUrlPattern has been adjusted
     */
     this.webUrlPattern = "((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)" +
       "\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,64}(?:\\:(?:[a-zA-Z0-9\\$\\-\\_" +
       "\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,25})?\\@)?)?" +
       "((?:(?:[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}\\.)+" +  // named host
       "(?:" + // plus top level domain
-      "(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])" +
+      "(?:aero|arpa|asia|agency|a[cdefgilmnoqrstuwxz])" +
       "|(?:biz|b[abdefghijmnorstvwyz])" +
-      "|(?:cat|com|coop|c[acdfghiklmnoruvxyz])" +
-      "|d[ejkmoz]" +
+      "|(?:cat|cloud|com|company|coop|c[acdfghiklmnoruvxyz])" +
+      "|(?:dev|d[ejkmoz])" +
       "|(?:edu|e[cegrstu])" +
       "|f[ijkmor]" +
-      "|(?:gov|g[abdefghilmnpqrstuwy])" +
+      "|(?:gov|guide|g[abdefghilmnpqrstuwy])" +
       "|h[kmnrtu]" +
       "|(?:info|int|i[delmnoqrst])" +
       "|(?:jobs|j[emop])" +
@@ -112,15 +113,16 @@ export default class Locale {
       "|l[abcikrstuvy]" +
       "|(?:mil|mobi|museum|m[acdghklmnopqrstuvwxyz])" +
       "|(?:name|net|n[acefgilopruz])" +
-      "|(?:org|om)" +
+      "|(?:org|om|one)" +
       "|(?:pro|p[aefghklmnrstwy])" +
       "|qa" +
       "|r[eouw]" +
-      "|s[abcdeghijklmnortuvyz]" +
-      "|(?:tel|travel|t[cdfghjklmnoprtvwz])" +
+      "|(?:shop|store|s[abcdeghijklmnortuvyz])" +
+      "|(?:tel|travel|team|t[cdfghjklmnoprtvwz])" +
       "|u[agkmsyz]" +
       "|v[aceginu]" +
-      "|w[fs]" +
+      "|(?:work|w[fs])" +
+      "|(?:xyz)" +
       "|y[etu]" +
       "|z[amw]))" +
       "|(?:(?:25[0-5]|2[0-4]" + // or ip address
@@ -144,8 +146,9 @@ export default class Locale {
       "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
       ")+";
 
+
     /* Filename pattern */
-    this.filenamePattern = "\\b[a-zA-Z0-9_%\\-]+\\.(asm|bat|bmp|c|cpp|cs|css|dart|doc|docx|gif|go|html|java|jpeg|jpg|js|json|kt|lua|md|odp|ods|odt|pdf|php|pl|png|ppt|pptx|py|r|rb|rs|scala|sh|sql|swift|tiff|ts|txt|vbs|xml|xls|xlsx|yaml|yml|zip|rar)\\b";
+    this.filenamePattern = "\\b[a-zA-Z0-9_%\\-]+\\.(ai|asm|bat|bmp|c|cpp|cs|css|csv|dart|doc|docx|exe|gif|go|html|ics|java|jpeg|jpg|js|json|key|kt|less|lua|log|md|mp4|odp|ods|odt|pdf|php|pl|png|ppt|pptx|psd|py|r|rar|rb|rs|scala|scss|sh|svg|sql|swift|tar.gz|tar|tex|tiff|ts|txt|vbs|xml|xls|xlsx|yaml|yml|zip)\\b";
 
   
 
