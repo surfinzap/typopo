@@ -44,7 +44,7 @@
 		"babelify": "^10.0.0",
 		"browser-sync": "^3.0.2",
 		"browserify": "^17.0.0",
-		"eslint": "^9.9.1",
+		"eslint": "^9.10.0",
 		"gulp": "^5.0.0",
 		"gulp-babel": "^8.0.0",
 		"gulp-cli": "^3.0.0",
