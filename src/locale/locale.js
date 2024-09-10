@@ -90,11 +90,11 @@ export default class Locale {
     this.numberSign = "#";
 
     /*
-      Source for webUrlPattern, emailAddressPattern
+      Source for urlPattern, emailPattern
       http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/2.0_r1/android/text/util/Regex.java#Regex.0WEB_URL_PATTERN
-      webUrlPattern has been adjusted
+      urlPattern has been adjusted
     */
-    this.webUrlPattern = "((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)" +
+    this.urlPattern = "((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)" +
       "\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,64}(?:\\:(?:[a-zA-Z0-9\\$\\-\\_" +
       "\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,25})?\\@)?)?" +
       "((?:(?:[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}\\.)+" +  // named host
@@ -138,7 +138,7 @@ export default class Locale {
     // matching as foo.su
 
     /* Email pattern */
-    this.emailAddressPattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-]{1,256}" +
+    this.emailPattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-]{1,256}" +
       "\\@" +
       "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
       "(" +

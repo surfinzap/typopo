@@ -8,9 +8,10 @@
 - TBD exceptions on filenames 
 
 ### 🐛 Fixes
-- Fix (#73) when the part of the file path was falsely identified as an ordinal number in `sk`, `cs`, `rue`, `de-de` locales
+- Fix (#73): the part of the file path was falsely identified as an ordinal number in `sk`, `cs`, `rue`, `de-de` locales
 
 ### 🔨 Maintenance
+- Write additional tests for exceptions: URLs, filenames, and emails
 - Change packaging from npm to pnpm
 - Update NPM packages to their latest versions
 
