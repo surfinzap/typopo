@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+  # Enable manual trigger via workflow_dispatch
+  workflow_dispatch:
+
 jobs:
   test:
     runs-on: ubuntu-latest
