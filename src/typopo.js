@@ -53,7 +53,9 @@ export function fixTypos(string, locale, configuration) {
 	} : configuration;
 
 	// exclude exceptions from fixing
-	string = excludeExceptions(string, currentLocale);
+  const { processedText, exceptions } = excludeExceptions(string, currentLocale);
+  string = processedText;
+
 
 	if(configuration.removeLines) {
 		string = removeEmptyLines(string);
@@ -92,7 +94,7 @@ export function fixTypos(string, locale, configuration) {
 	string = fixNbsp(string, currentLocale);
 
 	// place excluded exceptions
-	string = placeExceptions(string);
+	string = placeExceptions(string, exceptions);
 
 	return string;
 }

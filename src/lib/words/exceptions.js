@@ -1,67 +1,76 @@
-let exceptions = [];
+/**
+ * Identifies and excludes following patterns
+ * - email addresses 
+ * - URLs
+ * - filenames
+ *
+ * @param {string} text - The input text to process.
+ * @param {Object} locale - An object containing the patterns to identify exceptions.
+ * @returns {Object} - Contains the processed text and the exceptions array.
+ */
+export function excludeExceptions(text, locale) {
+  let exceptions = []; 
 
-/*
-	Identifies exceptions that will be ommited from correction of any sort
+  collectExceptions(text, locale.emailPattern, exceptions); 
+  collectExceptions(text, locale.urlPattern, exceptions);     
+  collectExceptions(text, locale.filenamePattern, exceptions);    
 
-	Algorithm
-	[1] Identify email adresses
-	[2] Identify web URLs and IPs
-	[3] Mark them as temporary exceptions in format {{typopo__exception-[i]}}
+  const processedText = replaceExceptionsWithPlaceholders(text, exceptions);
 
-	@param {string} input text for identification of exceptions
-	@returns {string} — output with identified exceptions in format {{typopo__exception-[i]}}
-*/
-export function excludeExceptions(string, locale) {
-
-	/* [1] Identify email adresses */
-	identifyExceptionSet(string, locale.emailAddressPattern);
-
-
-	/* [2] Identify web URLs and IPs */
-	identifyExceptionSet(string, locale.webUrlPattern);
-
-
-	/* [3] Mark them as temporary exceptions in format {{typopo__exception-[i]}} */
-	for (var i = 0; i < exceptions.length; i++) {
-		var replacement = "{{typopo__exception-" + i + "}}";
-		string = string.replace(exceptions[i], replacement);
-	}
-
-	return string;
+  return { processedText, exceptions };
 }
 
 
 
-/*
-	Identifies set of exceptions for given pattern
-	Used as helper function for excludeExceptions(string, locale)
+/**
+ * Identifies and collects exceptions based on a given pattern.
+ * 
+ * @param {string} text - The input text to search for exceptions.
+ * @param {string} pattern - A regex pattern to identify exceptions.
+ * @param {Array} exceptions - The array of collected exceptions.
+ * @returns {Array} - Updated exceptions array.
+ */
+function collectExceptions(text, pattern, exceptions) {
+  const regex = new RegExp(pattern, "gi");
+  const matchedExceptions = text.match(regex);
 
-	@param {string} input text for identification of exceptions
-	@param {pattern} regular expression pattern to match exception
-*/
-function identifyExceptionSet(string, pattern) {
-	var re = new RegExp(pattern, "g");
-	var matched_exceptions = string.match(re);
-	if (matched_exceptions != null) {
-		exceptions = exceptions.concat(matched_exceptions);
-	}
+  if (matchedExceptions) {
+    matchedExceptions.forEach(match => exceptions.push(match));
+  }
+
+  return exceptions;
 }
 
-/*
-	Replaces identified exceptions with real ones by change their
-	temporary representation in format {{typopo__exception-[i]}} with its
-	corresponding representation
 
-	@param {string} input text with identified exceptions
-	@returns {string} output with placed exceptions
-*/
-export function placeExceptions(string) {
-	for (var i = 0; i < exceptions.length; i++) {
-		var pattern = "{{typopo__exception-" + i + "}}"
-		var re = new RegExp(pattern, "g");
-		var replacement = exceptions[i];
-		string = string.replace(re, replacement);
-	}
 
-	return string;
+/**
+ * Replaces the identified exceptions in the text with placeholders.
+ * 
+ * @param {string} text - The input text where exceptions are replaced with placeholders.
+ * @param {Array} exceptions - The array of collected exceptions.
+ * @returns {string} - The text with placeholders in place of exceptions.
+ */
+function replaceExceptionsWithPlaceholders(text, exceptions) {
+  return exceptions.reduce((updatedText, exception, index) => {
+    const placeholder = `{{typopo__exception-${index}}}`;
+    return updatedText.replace(exception, placeholder);
+  }, text);
+}
+
+
+
+
+
+/**
+ * Restores the original exceptions in the text by replacing the placeholders with the actual exceptions.
+ * 
+ * @param {string} text - The input text with placeholders.
+ * @param {Array} exceptions - The array of original exceptions.
+ * @returns {string} - The text with the original exceptions restored.
+ */
+export function placeExceptions(text, exceptions) {
+  return exceptions.reduce((updatedText, exception, index) => {
+    const placeholderPattern = new RegExp(`{{typopo__exception-${index}}}`, "g");
+    return updatedText.replace(placeholderPattern, exception);
+  }, text);
 }

@@ -5,14 +5,15 @@
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/surfinzap/typopo?color=7b00cb&style=flat)
 ![GitHub](https://img.shields.io/github/license/surfinzap/typopo?color=7b00cb&style=flat)
-![Tests](https://github.com/surfinzap/typopo/workflows/Tests/badge.svg?branch=master)
+![Tests](https://github.com/surfinzap/typopo/actions/workflows/run-tests.yml/badge.svg)
+
 
 ## Links
 - [Official website](https://typopo.org)
-- [Online app](https://typopo.org)
+- [Online app](https://app.typopo.org)
 - [VS Code extension](https://marketplace.visualstudio.com/items?itemName=brano.typopo-vscode) and corresponding [repository](https://github.com/surfinzap/typopo-vscode)
 - [NPM package](https://www.npmjs.com/package/typopo)
-- [Support the project at Patreon](https://www.patreon.com/branosandala)
+- [Support the project, buy me a coffee](https://ko-fi.com/branosandala)
 - [Subscribe to a newsletter to get updates](https://buttondown.email/Typopo)
 - [Follow on twitter](https://twitter.com/typopo_app)
 

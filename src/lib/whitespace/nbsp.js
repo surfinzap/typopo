@@ -129,7 +129,7 @@ export function addNbspAfterOrdinalNumber(string, locale) {
 
 	return string.replace(
 		new RegExp(
-				"([^" + locale.nbsp + locale.cardinalNumber + "]|^)"
+				"([^" + locale.nbsp + locale.cardinalNumber + "_%\\-]|^)"
 			+ "("+ locale.cardinalNumber +"{1,2})"
 			+ "("+ locale.ordinalIndicator +")"
 			+ "(["+ locale.spaces +"]?)"

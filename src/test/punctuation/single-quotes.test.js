@@ -315,9 +315,13 @@ describe('Identify contracted years as apostrophes (en-us):\n', () => {
 	let testCase = {
 		"INCHEBA '89": "INCHEBA ’89",
 		"in '70s": "in ’70s",
+		"Q1 '23": "Q1 ’23",
+
+
 
 	};
 	
+
 	let unitTestCase = {
 		...testCase,
 		

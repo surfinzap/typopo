@@ -158,7 +158,7 @@ export function identifyInWordContractions(string, locale) {
 export function identifyContractedYears(string, locale) {	
 	return string.replace(
 		new RegExp(
-			"([^0-9])"
+			"([^0-9]|[A-Z][0-9])"
 		+ "([" + locale.spaces + "])"
 		+ "(" + locale.singleQuoteAdepts + ")"
 		+ "([" + locale.cardinalNumber + "]{2})", 

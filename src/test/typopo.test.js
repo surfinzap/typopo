@@ -122,6 +122,7 @@ let testModules = {
   "Človek Č": "Človek Č",
   "© V Inc." : "© V Inc.",
   "bola to I. kapitola" : "bola to I. kapitola",
+  "url_to_image_5.jpg" : "url_to_image_5.jpg",
   "pán Šťastný" : "pán Šťastný",
   "pán ŠŤASTNÝ" : "pán ŠŤASTNÝ",
   "One sentence ends. A bad apple." : "One sentence ends. A bad apple.",
@@ -225,6 +226,7 @@ let testModuleSingleQuotesEnUs = {
   "I''''m": "I’m",
   "He said: “What about 'name' and 'other name'?”":
     "He said: “What about ‘name’ and ‘other name’?”",
+  "Q1 '23 ": "Q1 ’23", // false positive
 }
 
 let testModuleSingleQuotesDeDe = {
@@ -316,6 +318,31 @@ let testModuleNbsp = {
   "sentence [brackets] A-player" : "sentence [brackets] A-player",
   "sentence {brackets} A-player" : "sentence {brackets} A-player",
   "A × A" : "A × A",
+
+  // false positive for filenames
+	"url-to-image-5.jpg" : 
+	"url-to-image-5.jpg",
+
+	"url_to_image_5.jpg" : 
+	"url_to_image_5.jpg",
+
+	"url%to%image%5.jpg" : 
+	"url%to%image%5.jpg",
+
+	"url to image 5.jpg" : 
+	"url to image 5.jpg",
+
+	"URL-TO-IMAGE-5.JPG" : 
+	"URL-TO-IMAGE-5.JPG",
+
+	"URL_TO_IMAGE_5.JPG" : 
+	"URL_TO_IMAGE_5.JPG",
+
+	"URL%TO%IMAGE%5.JPG" : 
+	"URL%TO%IMAGE%5.JPG",
+
+	"URL TO IMAGE 5.JPG" : 
+	"URL TO IMAGE 5.JPG",
 }
 
 let testModuleNbspEnUs = {
