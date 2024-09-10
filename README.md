@@ -5,7 +5,8 @@
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/surfinzap/typopo?color=7b00cb&style=flat)
 ![GitHub](https://img.shields.io/github/license/surfinzap/typopo?color=7b00cb&style=flat)
-![Tests](https://github.com/surfinzap/typopo/workflows/Tests/badge.svg?branch=master)
+![Tests](https://github.com/surfinzap/typopo/actions/workflows/run-tests.yml/badge.svg)
+
 
 ## Links
 - [Official website](https://typopo.org)
