@@ -226,6 +226,7 @@ let testModuleSingleQuotesEnUs = {
   "I''''m": "I’m",
   "He said: “What about 'name' and 'other name'?”":
     "He said: “What about ‘name’ and ‘other name’?”",
+  "Q1 '23 ": "Q1 ’23", // false positive
 }
 
 let testModuleSingleQuotesDeDe = {

@@ -9,6 +9,7 @@
 
 ### 🐛 Fixes
 - Fix (#73): the part of the file path was falsely identified as an ordinal number in `sk`, `cs`, `rue`, `de-de` locales
+- Fix: Q1 ’23 was falsely changed to Q1’23
 
 ### 🔨 Maintenance
 - Write additional tests for exceptions: URLs, filenames, and emails
