@@ -96,5 +96,7 @@ export function fixTypos(string, locale, configuration) {
 	// place excluded exceptions
 	string = placeExceptions(string, exceptions);
 
-	return string;
+	if (true) {
+		return string;
+	}
 }
