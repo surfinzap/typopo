@@ -96,6 +96,7 @@ export function fixTypos(string, locale, configuration) {
 	// place excluded exceptions
 	string = placeExceptions(string, exceptions);
 
+	console.log('hey');
 	if (true) {
 		return string;
 
