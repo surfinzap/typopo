@@ -1,1 +1,4 @@
 pnpm build
+
+# Add dist folder to the commit
+git add dist/
