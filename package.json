@@ -17,7 +17,7 @@
 	},
 	"lint-staged": {
 		"src/**/*": [
-			"pnpm build"
+			"pnpm build --"
 		]
 	},
 	"main": "dist/typopo_dist.min.js",
