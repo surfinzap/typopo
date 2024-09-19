@@ -16,9 +16,7 @@
 		"prepare": "husky"
 	},
 	"lint-staged": {
-		"src/**/*": [
-			"pnpm build --"
-		]
+		"src/**/*": []
 	},
 	"main": "dist/typopo_dist.min.js",
 	"repository": {
