@@ -54,7 +54,6 @@ function devBrowserBuild() {
 		.pipe(sourcemaps.init())
 		.pipe(sourcemaps.write('./maps'))
 		.pipe(gulp.dest(paths.dev.dest))
-		.pipe(browsersync.stream());
 }
 
 function browserBuild() {
