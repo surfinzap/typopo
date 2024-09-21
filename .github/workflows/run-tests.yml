@@ -37,6 +37,9 @@ jobs:
         env:
           CI: true
 
+      - name: List test files
+        run: ls -l ./src/test/**/*.test.js
+
       # Sanitize the test-result.txt by removing non-printable characters
       - name: Sanitize test output
         run: |
