@@ -42,6 +42,9 @@ jobs:
         run: |
           tr -cd '\11\12\15\40-\176' < test-result.txt > sanitized-test-result.txt
 
+      - name: Check Node.js version
+        run: node -v
+
       - name: Print sanitized test output
         run: cat sanitized-test-result.txt
 
