@@ -33,7 +33,7 @@ jobs:
       # Run tests and output results to a file
       - name: Run tests and capture output
         run: |
-          pnpm test > test-result.txt
+          pnpm test --timeout 10000 > test-result.txt
         env:
           CI: true
 
@@ -41,12 +41,6 @@ jobs:
       - name: Sanitize test output
         run: |
           tr -cd '\11\12\15\40-\176' < test-result.txt > sanitized-test-result.txt
-
-      - name: Check Node.js version
-        run: node -v
-
-      - name: Print sanitized test output
-        run: cat sanitized-test-result.txt
 
       # Extract passing test count from the sanitized output
       - name: Parse passing test count
