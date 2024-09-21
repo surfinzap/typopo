@@ -33,20 +33,20 @@ jobs:
       # Run tests and output results to a file
       - name: Run tests and capture output
         run: |
-          pnpm test > test-output.txt
+          pnpm test > test-result.txt
         env:
           CI: true
 
-      # Sanitize the test-output.txt by removing non-printable characters
+      # Sanitize the test-result.txt by removing non-printable characters
       - name: Sanitize test output
         run: |
-          tr -cd '\11\12\15\40-\176' < test-output.txt > clean-test-output.txt
+          tr -cd '\11\12\15\40-\176' < test-result.txt > sanitized-test-result.txt
 
       # Extract passing test count from the sanitized output
       - name: Parse passing test count
         id: test_count
         run: |
-          PASSING_TESTS=$(grep -Eo '[0-9]+ passing' clean-test-output.txt | grep -Eo '[0-9]+')
+          PASSING_TESTS=$(grep -Eo '[0-9]+ passing' sanitized-test-result.txt | grep -Eo '[0-9]+')
           echo "Passing tests: $PASSING_TESTS"
           # Create JSON file with the test count
           echo "{ \"schemaVersion\": 1, \"label\": \"Tests\", \"message\": \"$PASSING_TESTS passing\", \"color\": \"green\" }" > tests-status.json

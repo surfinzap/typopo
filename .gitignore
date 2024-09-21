@@ -50,3 +50,9 @@ node_modules/
 
 # IDE stuff
 .idea/
+
+
+# Github actions temp files for test count 
+test-result.txt
+sanitized-test-result.txt
+
