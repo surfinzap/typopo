@@ -46,7 +46,7 @@ const copyrightBanner = `/*!
 // Update version in typopo.js
 function updateTypopoJsCopyrightBanner() {
 
-  const bannerRegex = /\/\*\![\s\S]*?\*\//;
+  const bannerRegex = /\/\*\![\s\S]*?\*\/\s*/;
 
   return gulp.src(paths.root.src)
     .pipe(replace(bannerRegex, '')) 

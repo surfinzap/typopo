@@ -6,6 +6,7 @@
 
 ### 🔨 Maintenance
 - Add a build automation
+- Automate copyright notice updates in source and dist files
  
 
 
