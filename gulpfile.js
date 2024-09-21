@@ -10,6 +10,8 @@ const replace = require('gulp-replace');
 const header = require('gulp-header');
 const packageJson = require('./package.json');
 
+const currentYear = new Date().getFullYear();
+
 var paths = {
 	dev: {
 		html: 'demo/typopo-demo.html',
@@ -36,7 +38,7 @@ var paths = {
 // Copyright banner for the minified files
 const copyrightBanner = `/*!
  * Typopo v${packageJson.version} (https://typopo.org)
- * Copyright 2015–2024 Braňo Šandala (https://brano.me)
+ * Copyright 2015–${currentYear} Braňo Šandala (https://brano.me)
  * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */
 `;
