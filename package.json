@@ -10,7 +10,7 @@
 	"scripts": {
 		"dev": "gulp watch",
 		"build": "gulp build",
-		"test": "mocha --require @babel/register ./src/test/**/*.test.js -R --reporter spec --no-colors",
+		"test": "mocha --require @babel/register ./src/test/**/*.test.js -R spec --no-colors",
 		"test:dev": "mocha --require @babel/register ./src/test/**/*.test.js -R min -w",
 		"lint": "eslint src/",
 		"prepare": "husky"
