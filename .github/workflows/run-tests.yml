@@ -33,7 +33,7 @@ jobs:
       # Run tests and output results to a file
       - name: Run tests and capture output
         run: |
-          pnpm test --timeout 10000 > test-result.txt
+          pnpm test > test-result.txt
         env:
           CI: true
 
