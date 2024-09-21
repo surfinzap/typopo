@@ -43,7 +43,7 @@ jobs:
           tr -cd '\11\12\15\40-\176' < test-result.txt > sanitized-test-result.txt
 
       - name: Print sanitized test output
-        run: cat clean-test-output.txt
+        run: cat sanitized-test-result.txt
 
       # Extract passing test count from the sanitized output
       - name: Parse passing test count
