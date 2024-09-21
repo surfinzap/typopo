@@ -37,11 +37,16 @@ jobs:
         env:
           CI: true
 
-      # Extract passing test count from the output
+      # Sanitize the test-output.txt by removing non-printable characters
+      - name: Sanitize test output
+        run: |
+          tr -cd '\11\12\15\40-\176' < test-output.txt > clean-test-output.txt
+
+      # Extract passing test count from the sanitized output
       - name: Parse passing test count
         id: test_count
         run: |
-          PASSING_TESTS=$(grep -Po '\d+ passing' test-output.txt | grep -Po '\d+')
+          PASSING_TESTS=$(grep -Eo '[0-9]+ passing' clean-test-output.txt | grep -Eo '[0-9]+')
           echo "Passing tests: $PASSING_TESTS"
           # Create JSON file with the test count
           echo "{ \"schemaVersion\": 1, \"label\": \"Tests\", \"message\": \"$PASSING_TESTS passing\", \"color\": \"green\" }" > tests-status.json
