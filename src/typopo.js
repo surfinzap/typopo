@@ -18,8 +18,7 @@ import {fixSectionSign} from "./lib/symbols/section-sign";
 import {fixCopyright} from "./lib/symbols/copyright";
 import {fixSoundRecordingCopyright} from "./lib/symbols/sound-recording-copyright";
 import {fixPlusMinus} from "./lib/symbols/plus-minus";
-import {fixRegisteredTrademark} from "./lib/symbols/registered-trademark";
-import {fixTrademark} from "./lib/symbols/trademark";
+import {fixMarks} from "./lib/symbols/marks";
 import {fixExponents} from "./lib/symbols/exponents";
 import {fixNumberSign} from "./lib/symbols/number-sign";
 import {fixAbbreviations} from "./lib/words/abbreviations";
@@ -76,8 +75,7 @@ export function fixTypos(string, locale, configuration) {
 	string = fixCopyright(string, currentLocale);
 	string = fixSoundRecordingCopyright(string, currentLocale);
 	string = fixPlusMinus(string, currentLocale);
-	string = fixRegisteredTrademark(string, currentLocale);
-	string = fixTrademark(string, currentLocale);
+	string = fixMarks(string, currentLocale);
 	string = fixExponents(string, currentLocale);
 	string = fixNumberSign(string, currentLocale);
 

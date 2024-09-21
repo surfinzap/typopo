@@ -103,8 +103,13 @@ let testModules = {
 	"Company (p)2017": "Company ℗ 2017",
 	//registered trademark
 	"Company (r)": "Company®",
+	"Company ( r )": "Company®",
+  //service trademark
+	"Company (sm)": "Company℠",
+	"Company ( sm )": "Company℠",
 	// trademark
 	"Company (tm)": "Company™",
+	"Company ( tm )": "Company™",
 	// number sign
 	"word # 9": "word #9",
 
