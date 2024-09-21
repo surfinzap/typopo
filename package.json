@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"author": {
 		"name": "Braňo Šandala",
-		"email": "hi@brano.me"
+		"email": "help@typopo.org"
 	},
 	"scripts": {
 		"dev": "gulp watch",
