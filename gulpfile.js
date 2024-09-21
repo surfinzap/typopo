@@ -26,6 +26,10 @@ var paths = {
 		src: 'src/typopo.js',
 		name: 'typopo_dist.min.js',
 		dest: 'dist/'
+	},
+	root: {
+		src: 'src/typopo.js',
+		dest: 'src/'
 	}
 };
 
@@ -38,11 +42,14 @@ const copyrightBanner = `/*!
 `;
 
 // Update version in typopo.js
-function updateVersion() {
-	const version = packageJson.version;
-	return gulp.src('src/typopo.js')
-		.pipe(replace(/Typopo v\d+\.\d+\.\d+/g, `Typopo v${version}`))
-		.pipe(gulp.dest('src/'));
+function updateTypopoJsCopyrightBanner() {
+
+  const bannerRegex = /\/\*\![\s\S]*?\*\//;
+
+  return gulp.src(paths.root.src)
+    .pipe(replace(bannerRegex, '')) 
+    .pipe(header(copyrightBanner))  
+    .pipe(gulp.dest(paths.root.dest)); 
 }
 
 function devBrowserBuild() {
@@ -119,7 +126,7 @@ const build = gulp.parallel(npmBuild, browserBuild, copyHtmlToDest);
 
 exports.watch = watch;
 exports.build = build;
-exports.updateVersion = updateVersion;
+exports.updateTypopoJsCopyrightBanner = updateTypopoJsCopyrightBanner;
 /*
  * Define default task that can be called by just running `gulp` from cli
  */

@@ -1,5 +1,5 @@
 # Update the version in typopo.js before committing
-gulp updateVersion
+gulp updateTypopoJsCopyrightBanner
 
 # Add updated files to the commit
 git add src/typopo.js
