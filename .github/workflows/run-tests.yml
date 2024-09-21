@@ -1,4 +1,4 @@
-name: Run Mocha Tests
+name: Tests
 
 on: 
   push:
@@ -7,8 +7,7 @@ on:
   pull_request:
     branches:
       - main
-        
-  workflow_dispatch: # Enable manual trigger via workflow_dispatch
+  workflow_dispatch:
 
 jobs:
   test:
@@ -26,14 +25,34 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Install pnpm
       - name: Install pnpm
         run: npm install -g pnpm
 
-      # Install dependencies using pnpm
       - run: pnpm install
 
-      # Run tests using pnpm
-      - run: pnpm test
+      # Run tests and output results to a file
+      - name: Run tests and capture output
+        run: |
+          pnpm test > test-output.txt
         env:
           CI: true
+
+      # Extract passing test count from the output
+      - name: Parse passing test count
+        id: test_count
+        run: |
+          PASSING_TESTS=$(grep -Po '\d+ passing' test-output.txt | grep -Po '\d+')
+          echo "Passing tests: $PASSING_TESTS"
+          # Create JSON file with the test count
+          echo "{ \"schemaVersion\": 1, \"label\": \"Tests\", \"message\": \"$PASSING_TESTS passing\", \"color\": \"green\" }" > tests-status.json
+
+      # Commit the updated JSON file back to the repo
+      - name: Commit test count JSON
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add tests-status.json
+          git commit -m "Update test count"
+          git push origin main
+        # Prevents workflow from failing if no changes are made
+        continue-on-error: true
