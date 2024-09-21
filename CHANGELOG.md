@@ -2,6 +2,13 @@
 
 
 
+## 2.5.8 //
+
+### 🔨 Maintenance
+- Add a build automation
+ 
+
+
 ## 2.5.7 // 2024-09-11
 
 ### 🐛 Fixes

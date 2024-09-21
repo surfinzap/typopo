@@ -1,7 +1,7 @@
 /*!
  * Typopo 2.5.5
  *
- * Copyright 2015–23 Braňo Šandala
+ * Copyright 2015–24 Braňo Šandala
  * Released under the MIT license
  *
  * Date: 2023-08-27
@@ -96,5 +96,5 @@ export function fixTypos(string, locale, configuration) {
 	// place excluded exceptions
 	string = placeExceptions(string, exceptions);
 
-	return string;
+  return string;
 }
