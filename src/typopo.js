@@ -1,12 +1,8 @@
 /*!
- * Typopo 2.5.5
- *
- * Copyright 2015–24 Braňo Šandala
- * Released under the MIT license
- *
- * Date: 2023-08-27
+ * Typopo v2.5.7 (https://typopo.org)
+ * Copyright 2015–2024 Braňo Šandala (https://brano.me)
+ * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */
-
 import Locale from "./locale/locale";
 import {removeEmptyLines} from "./lib/whitespace/lines";
 import {fixNbsp} from "./lib/whitespace/nbsp";

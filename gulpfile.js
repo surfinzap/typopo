@@ -6,6 +6,11 @@ const browserify = require('browserify');
 const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
+const replace = require('gulp-replace');
+const header = require('gulp-header');
+const packageJson = require('./package.json');
+
+const currentYear = new Date().getFullYear();
 
 var paths = {
 	dev: {
@@ -23,12 +28,31 @@ var paths = {
 		src: 'src/typopo.js',
 		name: 'typopo_dist.min.js',
 		dest: 'dist/'
+	},
+	root: {
+		src: 'src/typopo.js',
+		dest: 'src/'
 	}
 };
 
-/*
- * Define our tasks using plain functions
+// Copyright banner for the minified files
+const copyrightBanner = `/*!
+ * Typopo v${packageJson.version} (https://typopo.org)
+ * Copyright 2015–${currentYear} Braňo Šandala (https://brano.me)
+ * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */
+`;
+
+// Update version in typopo.js
+function updateTypopoJsCopyrightBanner() {
+
+  const bannerRegex = /\/\*\![\s\S]*?\*\/\s*/;
+
+  return gulp.src(paths.root.src)
+    .pipe(replace(bannerRegex, '')) 
+    .pipe(header(copyrightBanner))  
+    .pipe(gulp.dest(paths.root.dest)); 
+}
 
 function devBrowserBuild() {
 	return browserify({entries: paths.browser.src, debug: true})
@@ -39,17 +63,17 @@ function devBrowserBuild() {
 		.pipe(sourcemaps.init())
 		.pipe(sourcemaps.write('./maps'))
 		.pipe(gulp.dest(paths.dev.dest))
- }
-
+}
 
 function browserBuild() {
 	return browserify({ entries: paths.browser.src, debug: false })
-	.transform(babelify)
-	.bundle()
-	.pipe(source(paths.browser.name))
-	.pipe(buffer())
-	.pipe(uglify())
-	.pipe(gulp.dest(paths.browser.dest));
+		.transform(babelify)
+		.bundle()
+		.pipe(source(paths.browser.name))
+		.pipe(buffer())
+		.pipe(uglify())
+		.pipe(header(copyrightBanner)) // Add the header
+		.pipe(gulp.dest(paths.browser.dest));
 }
 
 function npmBuild() {
@@ -59,7 +83,8 @@ function npmBuild() {
 		.pipe(source(paths.npm.name))
 		.pipe(buffer())
 		.pipe(uglify())
-		.pipe(gulp.dest(paths.npm.dest))
+		.pipe(header(copyrightBanner)) // Add the header
+		.pipe(gulp.dest(paths.npm.dest));
 }
 
 function copyHtmlToDest() {
@@ -103,6 +128,7 @@ const build = gulp.parallel(npmBuild, browserBuild, copyHtmlToDest);
 
 exports.watch = watch;
 exports.build = build;
+exports.updateTypopoJsCopyrightBanner = updateTypopoJsCopyrightBanner;
 /*
  * Define default task that can be called by just running `gulp` from cli
  */
