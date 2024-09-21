@@ -6,6 +6,9 @@ const browserify = require('browserify');
 const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
+const replace = require('gulp-replace');
+const header = require('gulp-header');
+const packageJson = require('./package.json');
 
 var paths = {
 	dev: {
@@ -26,9 +29,21 @@ var paths = {
 	}
 };
 
-/*
- * Define our tasks using plain functions
+// Copyright banner for the minified files
+const copyrightBanner = `/*!
+ * Typopo v${packageJson.version} (https://typopo.org)
+ * Copyright 2015–2024 Braňo Šandala (https://brano.me)
+ * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */
+`;
+
+// Update version in typopo.js
+function updateVersion() {
+	const version = packageJson.version;
+	return gulp.src('src/typopo.js')
+		.pipe(replace(/Typopo v\d+\.\d+\.\d+/g, `Typopo v${version}`))
+		.pipe(gulp.dest('src/'));
+}
 
 function devBrowserBuild() {
 	return browserify({entries: paths.browser.src, debug: true})
@@ -39,17 +54,18 @@ function devBrowserBuild() {
 		.pipe(sourcemaps.init())
 		.pipe(sourcemaps.write('./maps'))
 		.pipe(gulp.dest(paths.dev.dest))
- }
-
+		.pipe(browsersync.stream());
+}
 
 function browserBuild() {
 	return browserify({ entries: paths.browser.src, debug: false })
-	.transform(babelify)
-	.bundle()
-	.pipe(source(paths.browser.name))
-	.pipe(buffer())
-	.pipe(uglify())
-	.pipe(gulp.dest(paths.browser.dest));
+		.transform(babelify)
+		.bundle()
+		.pipe(source(paths.browser.name))
+		.pipe(buffer())
+		.pipe(uglify())
+		.pipe(header(copyrightBanner)) // Add the header
+		.pipe(gulp.dest(paths.browser.dest));
 }
 
 function npmBuild() {
@@ -59,7 +75,8 @@ function npmBuild() {
 		.pipe(source(paths.npm.name))
 		.pipe(buffer())
 		.pipe(uglify())
-		.pipe(gulp.dest(paths.npm.dest))
+		.pipe(header(copyrightBanner)) // Add the header
+		.pipe(gulp.dest(paths.npm.dest));
 }
 
 function copyHtmlToDest() {
@@ -103,6 +120,7 @@ const build = gulp.parallel(npmBuild, browserBuild, copyHtmlToDest);
 
 exports.watch = watch;
 exports.build = build;
+exports.updateVersion = updateVersion;
 /*
  * Define default task that can be called by just running `gulp` from cli
  */
