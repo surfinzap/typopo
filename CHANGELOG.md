@@ -2,11 +2,16 @@
 
 
 
-## 2.5.8 //
+## 2.5.8 // 2024-09-22
+
+### 💪 Improvements
+- Fix Service Mark, when indicated in brackets, i.e. `Brand(sm)` → `Brand℠`
 
 ### 🔨 Maintenance
 - Add a build automation
 - Automate copyright notice updates in source and dist files
+- Refactor code for Registered Trademark (®), Trademark (™), Copyright (©), and Sound Recording Copyright (℗)
+- Update dev dependencies to their latest versions
  
 
 

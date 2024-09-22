@@ -390,7 +390,7 @@ describe('Remove trailing spaces\n', () => {
 
 
 
-describe('Add space before symbol, e.g. ©\n', () => {
+describe('Add space before a symbol, e.g. ©\n', () => {
 	let testCase = {
 		"© 2017": "© 2017",
 		"(© 2017)": "(© 2017)",
@@ -399,7 +399,12 @@ describe('Add space before symbol, e.g. ©\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("unit test", () => {
-			assert.strictEqual(addSpaceBeforeSymbol(key, new Locale("en-us"), "©"), testCase[key]);
+			assert.strictEqual(
+				addSpaceBeforeSymbol(
+					key, 
+					"©", 
+					new Locale("en-us")
+				), testCase[key]);
 		});
 	});
 });

@@ -1,5 +1,5 @@
 /*!
- * Typopo v2.5.7 (https://typopo.org)
+ * Typopo v2.5.8 (https://typopo.org)
  * Copyright 2015–2024 Braňo Šandala (https://brano.me)
  * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */
@@ -15,11 +15,9 @@ import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
 import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
 import {fixMultiplicationSign} from "./lib/symbols/multiplication-sign";
 import {fixSectionSign} from "./lib/symbols/section-sign";
-import {fixCopyright} from "./lib/symbols/copyright";
-import {fixSoundRecordingCopyright} from "./lib/symbols/sound-recording-copyright";
+import {fixCopyrights} from "./lib/symbols/copyrights";
 import {fixPlusMinus} from "./lib/symbols/plus-minus";
-import {fixRegisteredTrademark} from "./lib/symbols/registered-trademark";
-import {fixTrademark} from "./lib/symbols/trademark";
+import {fixMarks} from "./lib/symbols/marks";
 import {fixExponents} from "./lib/symbols/exponents";
 import {fixNumberSign} from "./lib/symbols/number-sign";
 import {fixAbbreviations} from "./lib/words/abbreviations";
@@ -73,11 +71,9 @@ export function fixTypos(string, locale, configuration) {
 	// symbols
 	string = fixMultiplicationSign(string, currentLocale);
 	string = fixSectionSign(string, currentLocale);
-	string = fixCopyright(string, currentLocale);
-	string = fixSoundRecordingCopyright(string, currentLocale);
+	string = fixCopyrights(string, currentLocale);
 	string = fixPlusMinus(string, currentLocale);
-	string = fixRegisteredTrademark(string, currentLocale);
-	string = fixTrademark(string, currentLocale);
+	string = fixMarks(string, currentLocale);
 	string = fixExponents(string, currentLocale);
 	string = fixNumberSign(string, currentLocale);
 

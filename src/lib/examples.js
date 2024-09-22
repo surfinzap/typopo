@@ -63,7 +63,7 @@ export function withFunctionInReturn(string, locale) {
 
 
 /* test */
-describe('Test case (en):\n', () => {
+describe('Test case (en-us):\n', () => {
 	let testCase = {
 		...somePartialTestCase,
 	};

@@ -653,7 +653,7 @@ describe('Add space after symbol, e.g. ©\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("just unit tests", () => {
-			assert.strictEqual(addNbspAfterSymbol(key, new Locale("en-us"), "©"), testCase[key]);
+			assert.strictEqual(addNbspAfterSymbol(key, "©",  new Locale("en-us")), testCase[key]);
 		});
 	});
 });
@@ -669,7 +669,7 @@ describe('Replaces various spaces with non-breaking space after symbol, e.g. ©\
 
 	Object.keys(testCase).forEach((key) => {
 		it("just unit tests", () => {
-			assert.strictEqual(replaceSpacesWithNbspAfterSymbol(key, new Locale("en-us"), "©"), testCase[key]);
+			assert.strictEqual(replaceSpacesWithNbspAfterSymbol(key, "©", new Locale("en-us")), testCase[key]);
 		});
 	});
 });

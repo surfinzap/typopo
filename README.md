@@ -88,6 +88,7 @@ Typopo fixes symbols:
 - copyright ((c)2020 → © 2020)
 - sound recording copyright ((p)2020 → ℗ 2020)
 - registered trademark (Brand(r) → Brand®)
+- service mark (Brand(sm) → Brand℠)
 - trademark (Brand(tm) → Brand™)
 - plus-minus sign (+-, -+ → ±)
 - square and cube exponents (e.g. 100 µm² → 100 µm², 50 km³ → 50 km³)

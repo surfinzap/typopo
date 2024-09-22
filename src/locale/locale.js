@@ -78,8 +78,9 @@ export default class Locale {
     this.ampersand = "&";
     this.sectionSign = "§";
     this.copyright = "©";
-    this.registeredTrademark = "®";
     this.soundRecordingCopyright = "℗";
+    this.registeredTrademark = "®";
+    this.serviceMark = "℠";
     this.trademark = "™";
     this.plus = "+";
     this.minus = "−";
