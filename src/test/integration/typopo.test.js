@@ -95,12 +95,29 @@ let testModules = {
 	"under Law §1782": "under Law § 1782",
 	// copyright
 	"Company (c)2017": "Company © 2017",
+  "( c ) 2017": "© 2017",
+  "( c     ) 2017": "© 2017",
+  "( c )2017": "© 2017",
+  "Company (c)  2017": "Company © 2017",
+  "Company (c)   2017": "Company © 2017",
+  "Company  (c) 2017": "Company © 2017",
+  "Company   (c) 2017": "Company © 2017",
+  "Company ©    2017": "Company © 2017",
+
 	// exponents
 	"100 km3": "100 km³",
 	// plus-minus
 	"+-": "±",
 	// sound recording copyright
 	"Company (p)2017": "Company ℗ 2017",
+  "( p ) 2017": "℗ 2017",
+  "( p     ) 2017": "℗ 2017",
+  "( p )2017": "℗ 2017",
+  "Company (p)  2017": "Company ℗ 2017",
+  "Company (p)   2017": "Company ℗ 2017",
+  "Company  (p) 2017": "Company ℗ 2017",
+  "Company   (p) 2017": "Company ℗ 2017",
+  "Company ℗    2017": "Company ℗ 2017",
 	//registered trademark
 	"Company (r)": "Company®",
 	"Company ( r )": "Company®",

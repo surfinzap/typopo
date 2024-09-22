@@ -15,8 +15,7 @@ import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
 import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
 import {fixMultiplicationSign} from "./lib/symbols/multiplication-sign";
 import {fixSectionSign} from "./lib/symbols/section-sign";
-import {fixCopyright} from "./lib/symbols/copyright";
-import {fixSoundRecordingCopyright} from "./lib/symbols/sound-recording-copyright";
+import {fixCopyrights} from "./lib/symbols/copyrights";
 import {fixPlusMinus} from "./lib/symbols/plus-minus";
 import {fixMarks} from "./lib/symbols/marks";
 import {fixExponents} from "./lib/symbols/exponents";
@@ -72,8 +71,7 @@ export function fixTypos(string, locale, configuration) {
 	// symbols
 	string = fixMultiplicationSign(string, currentLocale);
 	string = fixSectionSign(string, currentLocale);
-	string = fixCopyright(string, currentLocale);
-	string = fixSoundRecordingCopyright(string, currentLocale);
+	string = fixCopyrights(string, currentLocale);
 	string = fixPlusMinus(string, currentLocale);
 	string = fixMarks(string, currentLocale);
 	string = fixExponents(string, currentLocale);

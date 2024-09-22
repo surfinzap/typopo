@@ -10,7 +10,8 @@
 ### 🔨 Maintenance
 - Add a build automation
 - Automate copyright notice updates in source and dist files
-- Refactor code for Registered Trademark (®) and Trademark (™)
+- Refactor code for Registered Trademark (®), Trademark (™), Copyright (©), and Sound Recording Copyright (℗)
+- 
  
 
 

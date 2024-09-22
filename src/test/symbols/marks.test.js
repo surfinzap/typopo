@@ -72,7 +72,6 @@ function testMarks(testCase, markPattern, replacementMark) {
       });
     });
   });
-
 }
 
 
