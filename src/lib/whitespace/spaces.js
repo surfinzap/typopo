@@ -249,7 +249,7 @@ export function addSpaceAfterClosingBrackets(string, locale) {
 
 
 
-export function addSpaceBeforeSymbol(string, locale, symbol) {
+export function addSpaceBeforeSymbol(string, symbol, locale) {
 	let pattern = "([^" + locale.spaces + locale.openingBrackets + "])("+ symbol +")";
 	let re = new RegExp(pattern, "g");
 	let replacement = "$1" + locale.space + "$2";

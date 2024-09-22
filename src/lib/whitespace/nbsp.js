@@ -335,7 +335,7 @@ export function addNbspBeforeSingleLetter(string, locale) {
 	@param {string} string — input text for identification
 	@returns {string} — output with correctly added non-breaking space
 */
-export function addNbspAfterSymbol(string, locale, symbol) {
+export function addNbspAfterSymbol(string, symbol, locale) {
 	let pattern = "("+ symbol +")([^" + locale.spaces + "])";
 	let re = new RegExp(pattern, "g");
 	let replacement = "$1" + locale.nbsp + "$2";
@@ -351,7 +351,7 @@ export function addNbspAfterSymbol(string, locale, symbol) {
 	@param {string} string — input text for identification
 	@returns {string} — output with correctly placed non-breaking space
 */
-export function replaceSpacesWithNbspAfterSymbol(string, locale, symbol) {
+export function replaceSpacesWithNbspAfterSymbol(string, symbol, locale) {
 	let pattern = "("+ symbol +")([" + locale.spaces + "])";
 	let re = new RegExp(pattern, "g");
 	let replacement = "$1" + locale.nbsp;

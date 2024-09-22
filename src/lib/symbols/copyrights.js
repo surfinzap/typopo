@@ -37,9 +37,9 @@ export function replaceCopyright(string, copyrightLetter, copyrightSign, locale)
  * @returns {string} - The string with the consolidated spaces around the copyright sign
  */
 export function consolidateSpaces(string, copyrightSign, locale) {
-  string = addSpaceBeforeSymbol(string, locale, copyrightSign);
-  string = addNbspAfterSymbol(string, locale, copyrightSign);
-  string = replaceSpacesWithNbspAfterSymbol(string, locale, copyrightSign);  
+  string = addSpaceBeforeSymbol(string,  copyrightSign, locale);
+  string = addNbspAfterSymbol(string, copyrightSign, locale);
+  string = replaceSpacesWithNbspAfterSymbol(string, copyrightSign, locale);  
   return string;
 }
 
