@@ -67,7 +67,7 @@ export function fixInitials(string, locale) {
 	[2] Change multiple-word abbreviations from all locales abbr. patterns
 	[3] Identify and fix multiple-word abbreviations before the word
 	[4] Identify and fix multiple-word abbreviations after the word or on their own
-
+
 	@param {string} input text for identification
 	@returns {string} corrected output
 */
