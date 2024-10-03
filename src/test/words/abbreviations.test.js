@@ -170,9 +170,9 @@ describe('Fix multiple-word abbreviations (en-us)\n', () => {
 		"i.e. 100 km": "i.e. 100 km",
 		"brie cheese": "brie cheese", // false positive
 		"Pam Grier": "Pam Grier", // false positive
-		najkrajšie: "najkrajšie", // false positive for non-latin boundaries
-		nevieš: "nevieš", // false positive for non-latin boundaries
-		ieš: "ieš", // false positive for non-latin boundaries
+		"najkrajšie": "najkrajšie", // false positive for non-latin boundaries
+		"nevieš": "nevieš", // false positive for non-latin boundaries
+		"ieš": "ieš", // false positive for non-latin boundaries
 		"či e-mail marketing": "či e-mail marketing", // false positive for non-latin boundaries
 		"(i.e.)": "(i.e.)",
 
