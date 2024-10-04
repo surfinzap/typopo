@@ -1,4 +1,4 @@
-import {replaceMark, fixMarks} from "../../src/lib/symbols/marks";
+import {replaceMark, fixMarks} from "../../src/modules/symbols/marks";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 

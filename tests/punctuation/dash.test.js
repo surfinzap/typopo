@@ -6,7 +6,7 @@ import {replaceThreeHyphensWithEmDash,
 				fixDashBetweenCardinalNumbers,
 				fixDashBetweenPercentageRange,
 				fixDashBetweenOrdinalNumbers,
-				fixDash} from "../../src/lib/punctuation/dash";
+				fixDash} from "../../src/modules/punctuation/dash";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 

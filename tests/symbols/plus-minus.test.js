@@ -1,4 +1,4 @@
-import {fixPlusMinus} from "../../src/lib/symbols/plus-minus";
+import {fixPlusMinus} from "../../src/modules/symbols/plus-minus";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 

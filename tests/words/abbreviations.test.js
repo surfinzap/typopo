@@ -1,7 +1,7 @@
 import {fixAbbreviations,
 				fixInitials,
 				fixMultipleWordAbbreviations,
-				fixSingleWordAbbreviations} from "../../src/lib/words/abbreviations";
+				fixSingleWordAbbreviations} from "../../src/modules/words/abbreviations";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 

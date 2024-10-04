@@ -10,7 +10,7 @@ import {removeNbspBetweenMultiCharWords,
 				addNbspBeforeSingleLetter,
 				addNbspAfterSymbol,
 				replaceSpacesWithNbspAfterSymbol,
-				fixNbsp} from "../../src/lib/whitespace/nbsp";
+				fixNbsp} from "../../src/modules/whitespace/nbsp";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 

@@ -1,4 +1,4 @@
-import {fixSectionSign} from "../../src/lib/symbols/section-sign";
+import {fixSectionSign} from "../../src/modules/symbols/section-sign";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 

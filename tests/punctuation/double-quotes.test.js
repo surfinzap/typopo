@@ -13,7 +13,7 @@ import {removeExtraPunctuationBeforeQuotes,
 				addSpaceBeforeLeftDoubleQuote,
 				addSpaceAfterRightDoubleQuote,
 				fixDoubleQuotesAndPrimes} 
-				from "../../src/lib/punctuation/double-quotes";
+				from "../../src/modules/punctuation/double-quotes";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 

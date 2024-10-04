@@ -1,4 +1,4 @@
-import {fixPeriod} from "../../src/lib/punctuation/period";
+import {fixPeriod} from "../../src/modules/punctuation/period";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 

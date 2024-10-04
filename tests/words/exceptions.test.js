@@ -1,5 +1,5 @@
 import assert from "assert";
-import { excludeExceptions, placeExceptions } from "../../src/lib/words/exceptions";
+import { excludeExceptions, placeExceptions } from "../../src/modules/words/exceptions";
 import Locale from "../../src/locale/locale";
 
 // Mock locale for URL pattern

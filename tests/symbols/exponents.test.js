@@ -1,6 +1,6 @@
 import {fixExponents,
 				fixSquares,
-				fixCubes} from "../../src/lib/symbols/exponents";
+				fixCubes} from "../../src/modules/symbols/exponents";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 

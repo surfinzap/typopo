@@ -1,5 +1,5 @@
 import {fixHyphen,
-				fixSpaceAroundHyphen} from "../../src/lib/punctuation/hyphen";
+				fixSpaceAroundHyphen} from "../../src/modules/punctuation/hyphen";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 

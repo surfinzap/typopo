@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {fixCase} from "../../src/lib/words/case";
+import {fixCase} from "../../src/modules/words/case";
 import Locale from "../../src/locale/locale";
 
 describe('Fix accidental uPPERCASE\n', () => {

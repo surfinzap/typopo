@@ -1,5 +1,5 @@
 import {removeExtraSpacesAfterNumberSign,
-				fixNumberSign} from "../../src/lib/symbols/number-sign";
+				fixNumberSign} from "../../src/modules/symbols/number-sign";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 

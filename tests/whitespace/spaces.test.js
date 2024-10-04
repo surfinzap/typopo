@@ -10,7 +10,7 @@ import {removeMultipleSpaces,
 				addSpaceAfterClosingBrackets,
 				removeSpacesAtParagraphEnd,
 				addSpaceBeforeSymbol,
-				fixSpaces} from "../../src/lib/whitespace/spaces";
+				fixSpaces} from "../../src/modules/whitespace/spaces";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 

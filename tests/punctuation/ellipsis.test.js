@@ -9,7 +9,7 @@ import {replaceThreeCharsWithEllipsis,
 				fixEllipsisBetweenSentences,
 				fixAposiopesisEndingParagraph,
 				fixEllipsis,
-				fixEllipsisAsLastItem} from "../../src/lib/punctuation/ellipsis";
+				fixEllipsisAsLastItem} from "../../src/modules/punctuation/ellipsis";
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 
