@@ -1,7 +1,7 @@
 # Update the version in typopo.js before committing
 gulp updateTypopoJsCopyrightBanner
 
-# Add updated files to the commit
+# Add updated file version to the commit
 git add src/typopo.js
 
 # run build

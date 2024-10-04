@@ -9,9 +9,9 @@ import {replaceThreeCharsWithEllipsis,
 				fixEllipsisBetweenSentences,
 				fixAposiopesisEndingParagraph,
 				fixEllipsis,
-				fixEllipsisAsLastItem} from "../../lib/punctuation/ellipsis";
+				fixEllipsisAsLastItem} from "../../src/lib/punctuation/ellipsis";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 
 describe('Replace periods/ellipses with a single ellipsis:\n', () => {

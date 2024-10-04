@@ -17,8 +17,8 @@ import {identifyContractedAnd,
 				swapSingleQuotesAndTerminalPunctuation,
 				removeExtraSpaceAroundSinglePrime,
 				fixSingleQuotesPrimesAndApostrophes} 
-				from "../../lib/punctuation/single-quotes";
-import Locale from "../../locale/locale";
+				from "../../src/lib/punctuation/single-quotes";
+import Locale from "../../src/locale/locale";
 
 import assert from 'assert';
 

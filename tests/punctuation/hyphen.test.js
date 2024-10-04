@@ -1,7 +1,7 @@
 import {fixHyphen,
-				fixSpaceAroundHyphen} from "../../lib/punctuation/hyphen";
+				fixSpaceAroundHyphen} from "../../src/lib/punctuation/hyphen";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 
 

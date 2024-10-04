@@ -1,6 +1,6 @@
-import {fixPeriod} from "../../lib/punctuation/period";
+import {fixPeriod} from "../../src/lib/punctuation/period";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 
 
@@ -10,7 +10,7 @@ describe('Replace 2 periods at the end of the sentecne with a single period\n', 
 		"He is a vice president at Apple Inc..": "He is a vice president at Apple Inc.",
 
 		//false positives
-		"../../filename.ext":"../../filename.ext",
+		"../../src/filename.ext":"../../src/filename.ext",
 		"..\\..\\filename.ext":"..\\..\\filename.ext",
 		"../":"../",
 		"..\\":"..\\",

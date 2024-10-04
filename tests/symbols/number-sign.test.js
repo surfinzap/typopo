@@ -1,7 +1,7 @@
 import {removeExtraSpacesAfterNumberSign,
-				fixNumberSign} from "../../lib/symbols/number-sign";
+				fixNumberSign} from "../../src/lib/symbols/number-sign";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 describe('Remove extra space before number sign\n', () => {
 	let testCase = {

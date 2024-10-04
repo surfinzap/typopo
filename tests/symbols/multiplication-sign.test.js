@@ -2,9 +2,9 @@ import {fixMultiplicationSignBetweenNumbers,
 				fixMultiplicationSignBetweenWords,
 				fixMultiplicationSignBetweenNumberAndWord,
 				fixNbspAroundMultiplicationSign,
-				fixMultiplicationSign} from "../../lib/symbols/multiplication-sign";
+				fixMultiplicationSign} from "../../src/lib/symbols/multiplication-sign";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 
 

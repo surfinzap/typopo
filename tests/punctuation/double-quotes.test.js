@@ -13,9 +13,9 @@ import {removeExtraPunctuationBeforeQuotes,
 				addSpaceBeforeLeftDoubleQuote,
 				addSpaceAfterRightDoubleQuote,
 				fixDoubleQuotesAndPrimes} 
-				from "../../lib/punctuation/double-quotes";
+				from "../../src/lib/punctuation/double-quotes";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 
 let configIgnoreMarkdownCodeBlocks = {

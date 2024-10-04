@@ -1,4 +1,4 @@
-import {removeEmptyLines} from "../../lib/whitespace/lines";
+import {removeEmptyLines} from "../../src/lib/whitespace/lines";
 import assert from 'assert';
 
 describe('Remove empty lines\n', () => {
