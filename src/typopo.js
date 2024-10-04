@@ -4,27 +4,27 @@
  * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */
 import Locale from "./locale/locale";
-import {removeEmptyLines} from "./lib/whitespace/lines";
-import {fixNbsp} from "./lib/whitespace/nbsp";
-import {fixSpaces} from "./lib/whitespace/spaces";
-import {fixPeriod} from "./lib/punctuation/period";
-import {fixEllipsis} from "./lib/punctuation/ellipsis";
-import {fixHyphen} from "./lib/punctuation/hyphen";
-import {fixDash} from "./lib/punctuation/dash";
-import {fixDoubleQuotesAndPrimes} from "./lib/punctuation/double-quotes";
-import {fixSingleQuotesPrimesAndApostrophes} from "./lib/punctuation/single-quotes";
-import {fixMultiplicationSign} from "./lib/symbols/multiplication-sign";
-import {fixSectionSign} from "./lib/symbols/section-sign";
-import {fixCopyrights} from "./lib/symbols/copyrights";
-import {fixPlusMinus} from "./lib/symbols/plus-minus";
-import {fixMarks} from "./lib/symbols/marks";
-import {fixExponents} from "./lib/symbols/exponents";
-import {fixNumberSign} from "./lib/symbols/number-sign";
-import {fixAbbreviations} from "./lib/words/abbreviations";
-import {fixCase} from "./lib/words/case";
-import {fixPubId} from "./lib/words/pub-id";
+import {removeEmptyLines} from "./modules/whitespace/lines";
+import {fixNbsp} from "./modules/whitespace/nbsp";
+import {fixSpaces} from "./modules/whitespace/spaces";
+import {fixPeriod} from "./modules/punctuation/period";
+import {fixEllipsis} from "./modules/punctuation/ellipsis";
+import {fixHyphen} from "./modules/punctuation/hyphen";
+import {fixDash} from "./modules/punctuation/dash";
+import {fixDoubleQuotesAndPrimes} from "./modules/punctuation/double-quotes";
+import {fixSingleQuotesPrimesAndApostrophes} from "./modules/punctuation/single-quotes";
+import {fixMultiplicationSign} from "./modules/symbols/multiplication-sign";
+import {fixSectionSign} from "./modules/symbols/section-sign";
+import {fixCopyrights} from "./modules/symbols/copyrights";
+import {fixPlusMinus} from "./modules/symbols/plus-minus";
+import {fixMarks} from "./modules/symbols/marks";
+import {fixExponents} from "./modules/symbols/exponents";
+import {fixNumberSign} from "./modules/symbols/number-sign";
+import {fixAbbreviations} from "./modules/words/abbreviations";
+import {fixCase} from "./modules/words/case";
+import {fixPubId} from "./modules/words/pub-id";
 import {excludeExceptions,
-				placeExceptions} from "./lib/words/exceptions";
+				placeExceptions} from "./modules/words/exceptions";
 
 
 /*

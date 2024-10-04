@@ -10,9 +10,9 @@ import {removeNbspBetweenMultiCharWords,
 				addNbspBeforeSingleLetter,
 				addNbspAfterSymbol,
 				replaceSpacesWithNbspAfterSymbol,
-				fixNbsp} from "../../lib/whitespace/nbsp";
+				fixNbsp} from "../../src/modules/whitespace/nbsp";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 
 describe('Remove non-breaking space between multi-letter words\n', () => {

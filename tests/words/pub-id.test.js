@@ -2,9 +2,9 @@ import {fixPubId,
 				fixISSN,
 				fixISBN10,
 				fixISBN13,
-				fixISBNnumber} from "../../lib/words/pub-id";
+				fixISBNnumber} from "../../src/modules/words/pub-id";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 
 

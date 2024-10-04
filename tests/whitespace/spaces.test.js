@@ -10,9 +10,9 @@ import {removeMultipleSpaces,
 				addSpaceAfterClosingBrackets,
 				removeSpacesAtParagraphEnd,
 				addSpaceBeforeSymbol,
-				fixSpaces} from "../../lib/whitespace/spaces";
+				fixSpaces} from "../../src/modules/whitespace/spaces";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 let configRemoveWhitespacesBeforeParagraphs = {
   removeWhitespacesBeforeMarkdownList: true,

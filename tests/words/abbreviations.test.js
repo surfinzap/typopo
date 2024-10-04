@@ -1,9 +1,9 @@
 import {fixAbbreviations,
 				fixInitials,
 				fixMultipleWordAbbreviations,
-				fixSingleWordAbbreviations} from "../../lib/words/abbreviations";
+				fixSingleWordAbbreviations} from "../../src/modules/words/abbreviations";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 
 describe('Fix Initials (sk, cs, rue, de-de)\n', () => {

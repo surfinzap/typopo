@@ -1,8 +1,8 @@
 import {fixExponents,
 				fixSquares,
-				fixCubes} from "../../lib/symbols/exponents";
+				fixCubes} from "../../src/modules/symbols/exponents";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 describe('Fix squares\n', () => {
 	let testCase = {

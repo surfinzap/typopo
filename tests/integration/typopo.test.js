@@ -1,4 +1,4 @@
-import {fixTypos} from '../../typopo.js';
+import {fixTypos} from '../../src/typopo.js';
 import assert from 'assert';
 
 describe('Test consistency of internal variables', () => {

@@ -6,9 +6,9 @@ import {replaceThreeHyphensWithEmDash,
 				fixDashBetweenCardinalNumbers,
 				fixDashBetweenPercentageRange,
 				fixDashBetweenOrdinalNumbers,
-				fixDash} from "../../lib/punctuation/dash";
+				fixDash} from "../../src/modules/punctuation/dash";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 describe('Replace 3 hyphens with an em dash\n', () => {
 	let testCase = {

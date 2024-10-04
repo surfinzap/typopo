@@ -1,6 +1,6 @@
-import {fixSectionSign} from "../../lib/symbols/section-sign";
+import {fixSectionSign} from "../../src/modules/symbols/section-sign";
 import assert from 'assert';
-import Locale from "../../locale/locale";
+import Locale from "../../src/locale/locale";
 
 describe('Fix section sign (§)\n', () => {
 	let testCase = {
