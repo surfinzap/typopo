@@ -189,13 +189,14 @@ describe('Add non-breaking space after ordinal number (en)\n', () => {
     "3rd amendment": "3rd amendment",
     "4th amendment": "4th amendment",
     "18th amendment": "18th amendment",
+    "1st March": "1st March",
+    "2nd March": "2nd March",
+    "3rd March": "3rd March",
     "15th March": "15th March",
     
     // false positive, 3+ digits
     "158th amendment": "158th amendment",
     "1158th amendment": "1158th amendment",
-
-
 
   };
 
