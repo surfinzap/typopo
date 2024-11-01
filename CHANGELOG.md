@@ -4,7 +4,7 @@
 ## 2.5.9 //
 
 ### 🔨 Maintenance
-- Reorganie the folder structure
+- Reorganize the folder structure
 - Update NPM packages to their latest versions
 
 

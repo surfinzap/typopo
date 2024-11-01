@@ -2,15 +2,15 @@
 export function removeExtraPeriod(string) {
 
 
-	return string.replace(
-		new RegExp(
-			"\\.{2}(?![\\\\/])",
-			"g"
-		),
-		"."
-	);
+  return string.replace(
+    new RegExp(
+      "\\.{2}(?![\\\\/])",
+      "g"
+    ),
+    "."
+  );
 }
 
 export function fixPeriod(string) {
-	return removeExtraPeriod(string);
+  return removeExtraPeriod(string);
 }
