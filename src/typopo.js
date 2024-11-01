@@ -24,69 +24,69 @@ import {fixAbbreviations} from "./modules/words/abbreviations";
 import {fixCase} from "./modules/words/case";
 import {fixPubId} from "./modules/words/pub-id";
 import {excludeExceptions,
-				placeExceptions} from "./modules/words/exceptions";
+        placeExceptions} from "./modules/words/exceptions";
 
 
 /*
-	Correct typos
+  Correct typos
 
-	@param {string} string — input text for correction
-	@param {locale} string — (optional, default: en) supported languages: en, sk, cs, rue.
-	@param {configuration} object — (optional) configuration
-	@returns {string} corrected output
+  @param {string} string — input text for correction
+  @param {locale} string — (optional, default: en) supported languages: en, sk, cs, rue.
+  @param {configuration} object — (optional) configuration
+  @returns {string} corrected output
 */
 export function fixTypos(string, locale, configuration) {
-	locale = (typeof locale === "undefined") ? "en-us" : locale;
+  locale = (typeof locale === "undefined") ? "en-us" : locale;
 
-	let currentLocale = new Locale(locale);
+  let currentLocale = new Locale(locale);
 
-	configuration = (typeof configuration === "undefined") ? {
+  configuration = (typeof configuration === "undefined") ? {
     removeLines : true,
     removeWhitespacesBeforeMarkdownList : true,
     keepMarkdownCodeBlocks : false,
-	} : configuration;
+  } : configuration;
 
-	// exclude exceptions from fixing
+  // exclude exceptions from fixing
   const { processedText, exceptions } = excludeExceptions(string, currentLocale);
   string = processedText;
 
 
-	if(configuration.removeLines) {
-		string = removeEmptyLines(string);
-	}
+  if(configuration.removeLines) {
+    string = removeEmptyLines(string);
+  }
 
-	// ellipsis (since it can have different spacing around, it has to go before spaces cleanup)
-	string = fixEllipsis(string, currentLocale);
+  // ellipsis (since it can have different spacing around, it has to go before spaces cleanup)
+  string = fixEllipsis(string, currentLocale);
 
-	// spaces cleanup
-	string = fixSpaces(string, currentLocale, configuration);
+  // spaces cleanup
+  string = fixSpaces(string, currentLocale, configuration);
 
-	// punctuation
-	string = fixPeriod(string);
-	string = fixDash(string, currentLocale);
-	string = fixHyphen(string, currentLocale);
-	string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale, configuration);
-	string = fixDoubleQuotesAndPrimes(string, currentLocale, configuration);
+  // punctuation
+  string = fixPeriod(string);
+  string = fixDash(string, currentLocale);
+  string = fixHyphen(string, currentLocale);
+  string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale, configuration);
+  string = fixDoubleQuotesAndPrimes(string, currentLocale, configuration);
 
-	// symbols
-	string = fixMultiplicationSign(string, currentLocale);
-	string = fixSectionSign(string, currentLocale);
-	string = fixCopyrights(string, currentLocale);
-	string = fixPlusMinus(string, currentLocale);
-	string = fixMarks(string, currentLocale);
-	string = fixExponents(string, currentLocale);
-	string = fixNumberSign(string, currentLocale);
+  // symbols
+  string = fixMultiplicationSign(string, currentLocale);
+  string = fixSectionSign(string, currentLocale);
+  string = fixCopyrights(string, currentLocale);
+  string = fixPlusMinus(string, currentLocale);
+  string = fixMarks(string, currentLocale);
+  string = fixExponents(string, currentLocale);
+  string = fixNumberSign(string, currentLocale);
 
-	// words
-	string = fixCase(string, currentLocale);
-	string = fixAbbreviations(string, currentLocale);
-	string = fixPubId(string, currentLocale);
+  // words
+  string = fixCase(string, currentLocale);
+  string = fixAbbreviations(string, currentLocale);
+  string = fixPubId(string, currentLocale);
 
-	// spaces
-	string = fixNbsp(string, currentLocale);
+  // spaces
+  string = fixNbsp(string, currentLocale);
 
-	// place excluded exceptions
-	string = placeExceptions(string, exceptions);
+  // place excluded exceptions
+  string = placeExceptions(string, exceptions);
 
   return string;
 }

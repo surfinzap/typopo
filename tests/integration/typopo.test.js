@@ -4,60 +4,60 @@ import assert from 'assert';
 describe('Test consistency of internal variables', () => {
   let testCase = {
 
-		/*
-		 We are using temporary {variables} in curly brackets as text replacement
-		 in some functions. Make sure that variables in curly brackets do not change
-		 in course of running algorithm.
-		 */
-		"{{test-variable}}": "{{test-variable}}",
-		"{{test-variable}} at the beginning of the sentence.": "{{test-variable}} at the beginning of the sentence.",
-		"And {{test-variable}} in the middle of the sentence.": "And {{test-variable}} in the middle of the sentence.",
-	};
+    /*
+     We are using temporary {variables} in curly brackets as text replacement
+     in some functions. Make sure that variables in curly brackets do not change
+     in course of running algorithm.
+     */
+    "{{test-variable}}": "{{test-variable}}",
+    "{{test-variable}} at the beginning of the sentence.": "{{test-variable}} at the beginning of the sentence.",
+    "And {{test-variable}} in the middle of the sentence.": "And {{test-variable}} in the middle of the sentence.",
+  };
 
-	Object.keys(testCase).forEach((key) => {
-		it("", () => {
-			assert.strictEqual(fixTypos(key, "en-us"), testCase[key]);
-		});
-	});
+  Object.keys(testCase).forEach((key) => {
+    it("", () => {
+      assert.strictEqual(fixTypos(key, "en-us"), testCase[key]);
+    });
+  });
 });
 
 describe('Test that exceptions remain intact', () => {
-	let testCase = {
+  let testCase = {
 
-		/*
-		 Exceptions
+    /*
+     Exceptions
 
-		 This is list of exceptions that we want skip while correcting errors,
-		 namely:
-		 [1] URL address
-		 [2] IP address
-		 [3] Email adress
+     This is list of exceptions that we want skip while correcting errors,
+     namely:
+     [1] URL address
+     [2] IP address
+     [3] Email adress
 
-		 Sidenote: List of tests is incomplete, however to identify
-		 all kinds of URLs, IPs or emails, we’re adapting following implementation:
-		 http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/2.0_r1/android/text/util/Regex.java#Regex.0WEB_URL_PATTERN
-		 */
+     Sidenote: List of tests is incomplete, however to identify
+     all kinds of URLs, IPs or emails, we’re adapting following implementation:
+     http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/2.0_r1/android/text/util/Regex.java#Regex.0WEB_URL_PATTERN
+     */
 
-		// [1] URL address
-		"www.tota.sk": "www.tota.sk",
-		"http://www.tota.sk": "http://www.tota.sk",
+    // [1] URL address
+    "www.tota.sk": "www.tota.sk",
+    "http://www.tota.sk": "http://www.tota.sk",
 
-		// [2] IP address
-		"127.0.0.1": "127.0.0.1",
+    // [2] IP address
+    "127.0.0.1": "127.0.0.1",
 
-		// [3] Email address
-		"mail@domain.com": "mail@domain.com",
+    // [3] Email address
+    "mail@domain.com": "mail@domain.com",
 
-		// test order of replacements
-		"www.tota.sk and 127.0.0.1 and mail@domain.com": "www.tota.sk and 127.0.0.1 and mail@domain.com",
+    // test order of replacements
+    "www.tota.sk and 127.0.0.1 and mail@domain.com": "www.tota.sk and 127.0.0.1 and mail@domain.com",
 
-	};
+  };
 
-	Object.keys(testCase).forEach((key) => {
-		it("", () => {
-			assert.strictEqual(fixTypos(key, "en-us"), testCase[key]);
-		});
-	});
+  Object.keys(testCase).forEach((key) => {
+    it("", () => {
+      assert.strictEqual(fixTypos(key, "en-us"), testCase[key]);
+    });
+  });
 });
 
 
@@ -84,17 +84,17 @@ let configKeepMarkdownCodeBlocks = {
 
 /* test cases */ 
 let testModules = {
-	// ellipsis
-	"Sentence ..….. another sentence": "Sentence … another sentence",
-	"Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
+  // ellipsis
+  "Sentence ..….. another sentence": "Sentence … another sentence",
+  "Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
 
-	// hyphen
-	"e- shop": "e-shop",
+  // hyphen
+  "e- shop": "e-shop",
 
-	// section sign
-	"under Law §1782": "under Law § 1782",
-	// copyright
-	"Company (c)2017": "Company © 2017",
+  // section sign
+  "under Law §1782": "under Law § 1782",
+  // copyright
+  "Company (c)2017": "Company © 2017",
   "( c ) 2017": "© 2017",
   "( c     ) 2017": "© 2017",
   "( c )2017": "© 2017",
@@ -104,12 +104,12 @@ let testModules = {
   "Company   (c) 2017": "Company © 2017",
   "Company ©    2017": "Company © 2017",
 
-	// exponents
-	"100 km3": "100 km³",
-	// plus-minus
-	"+-": "±",
-	// sound recording copyright
-	"Company (p)2017": "Company ℗ 2017",
+  // exponents
+  "100 km3": "100 km³",
+  // plus-minus
+  "+-": "±",
+  // sound recording copyright
+  "Company (p)2017": "Company ℗ 2017",
   "( p ) 2017": "℗ 2017",
   "( p     ) 2017": "℗ 2017",
   "( p )2017": "℗ 2017",
@@ -118,24 +118,24 @@ let testModules = {
   "Company  (p) 2017": "Company ℗ 2017",
   "Company   (p) 2017": "Company ℗ 2017",
   "Company ℗    2017": "Company ℗ 2017",
-	//registered trademark
-	"Company (r)": "Company®",
-	"Company ( r )": "Company®",
+  //registered trademark
+  "Company (r)": "Company®",
+  "Company ( r )": "Company®",
   //service trademark
-	"Company (sm)": "Company℠",
-	"Company ( sm )": "Company℠",
-	// trademark
-	"Company (tm)": "Company™",
-	"Company ( tm )": "Company™",
-	// number sign
-	"word # 9": "word #9",
+  "Company (sm)": "Company℠",
+  "Company ( sm )": "Company℠",
+  // trademark
+  "Company (tm)": "Company™",
+  "Company ( tm )": "Company™",
+  // number sign
+  "word # 9": "word #9",
 
-	// spaces
-	"Sentence and… ?": "Sentence and…?",
-	"🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
-	"🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
-	// nbsp
-	"v a v a v": "v a v a v",
+  // spaces
+  "Sentence and… ?": "Sentence and…?",
+  "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
+  "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
+  // nbsp
+  "v a v a v": "v a v a v",
   "The product X is missing the feature Y.":
   "The product X is missing the feature Y.",
 
@@ -159,18 +159,18 @@ let testModules = {
   "sentence {brackets} A-player" : "sentence {brackets} A-player",
   "A × A" : "A × A",
 
-	// "the U.S. and" : "the U.S. and", not yet supported
+  // "the U.S. and" : "the U.S. and", not yet supported
 
-	//case
-	CMSko: "CMSko",
-	cAPSLOCK: "Capslock",
+  //case
+  CMSko: "CMSko",
+  cAPSLOCK: "Capslock",
 
-	// publication identifiers
-	"ISSN 0000-0000": "ISSN 0000-0000",
-	"ISBN: 978-80-86102-81-8": "ISBN: 978-80-86102-81-8",
+  // publication identifiers
+  "ISSN 0000-0000": "ISSN 0000-0000",
+  "ISBN: 978-80-86102-81-8": "ISBN: 978-80-86102-81-8",
 
-	// double primes
-	'It’s 12" x 12".': "It’s 12″ × 12″.",
+  // double primes
+  'It’s 12" x 12".': "It’s 12″ × 12″.",
 };
 
 let testRemoveLines = {
@@ -281,16 +281,16 @@ let testModuleSingleQuotesRue = {
 
 
 let testModuleAbbreviationsEnUs = {
-	// abbreviations
-	"(e.g.)": "(e.g.)",
-	"a.m.": "a.m.",
-	"5 a.m.": "5 a.m.",
-	"CH. CH. CH. Lambert": "CH.CH.CH. Lambert",
-	"the U.S.": "the U.S.",
-	"e.g. 🥳": "e.g. 🥳",
-	"i. e. 🥳": "i.e. 🥳",
-	// punctuation trimming
-	"č., s., fol., e.g., i.e., str.,": "č., s., fol., e.g., i.e., str.,",
+  // abbreviations
+  "(e.g.)": "(e.g.)",
+  "a.m.": "a.m.",
+  "5 a.m.": "5 a.m.",
+  "CH. CH. CH. Lambert": "CH.CH.CH. Lambert",
+  "the U.S.": "the U.S.",
+  "e.g. 🥳": "e.g. 🥳",
+  "i. e. 🥳": "i.e. 🥳",
+  // punctuation trimming
+  "č., s., fol., e.g., i.e., str.,": "č., s., fol., e.g., i.e., str.,",
 };
 
 let testModuleAbbreviationsDeDe = {
@@ -342,29 +342,29 @@ let testModuleNbsp = {
   "A × A" : "A × A",
 
   // false positive for filenames
-	"url-to-image-5.jpg" : 
-	"url-to-image-5.jpg",
+  "url-to-image-5.jpg" : 
+  "url-to-image-5.jpg",
 
-	"url_to_image_5.jpg" : 
-	"url_to_image_5.jpg",
+  "url_to_image_5.jpg" : 
+  "url_to_image_5.jpg",
 
-	"url%to%image%5.jpg" : 
-	"url%to%image%5.jpg",
+  "url%to%image%5.jpg" : 
+  "url%to%image%5.jpg",
 
-	"url to image 5.jpg" : 
-	"url to image 5.jpg",
+  "url to image 5.jpg" : 
+  "url to image 5.jpg",
 
-	"URL-TO-IMAGE-5.JPG" : 
-	"URL-TO-IMAGE-5.JPG",
+  "URL-TO-IMAGE-5.JPG" : 
+  "URL-TO-IMAGE-5.JPG",
 
-	"URL_TO_IMAGE_5.JPG" : 
-	"URL_TO_IMAGE_5.JPG",
+  "URL_TO_IMAGE_5.JPG" : 
+  "URL_TO_IMAGE_5.JPG",
 
-	"URL%TO%IMAGE%5.JPG" : 
-	"URL%TO%IMAGE%5.JPG",
+  "URL%TO%IMAGE%5.JPG" : 
+  "URL%TO%IMAGE%5.JPG",
 
-	"URL TO IMAGE 5.JPG" : 
-	"URL TO IMAGE 5.JPG",
+  "URL TO IMAGE 5.JPG" : 
+  "URL TO IMAGE 5.JPG",
 }
 
 let testModuleNbspEnUs = {
@@ -433,14 +433,14 @@ let testModuleCombinations = {
 };
 
 describe('Tests that all modules are plugged for en-us', () => {
-	let testCase = {
+  let testCase = {
     ...testModules,
     ...testModuleCombinations,
     ...testModuleDoubleQuotesEnUs,
     ...testModuleSingleQuotesEnUs,
     ...testModuleAbbreviationsEnUs,
     ...testModuleNbspEnUs,
-	};
+  };
   
   let testCaseDefault = {
     ...testCase,   
@@ -448,8 +448,8 @@ describe('Tests that all modules are plugged for en-us', () => {
     ...testRemoveWhitespacesBeforeMarkdownList
   }
 
-	Object.keys(testCaseDefault).forEach((key) => {
-		it("integration test w config: default", () => {
+  Object.keys(testCaseDefault).forEach((key) => {
+    it("integration test w config: default", () => {
       assert.strictEqual(fixTypos(key, "en-us", configDefault), testCaseDefault[key]);
     });  
   });
@@ -665,33 +665,33 @@ describe('Tests that all modules are plugged for rue', () => {
 
 
 describe('Test if markdown ticks are kept (integration test) (en-us):\n', () => {
-	let testCase = {
-		"```\ncode\n```": "```\ncode\n```",
+  let testCase = {
+    "```\ncode\n```": "```\ncode\n```",
 
-		"``code``": "``code``",
+    "``code``": "``code``",
 
-		"``code code``": "``code code``",
+    "``code code``": "``code code``",
 
-		"``code`` ``code``": "``code`` ``code``",
+    "``code`` ``code``": "``code`` ``code``",
 
-		"`code`": "`code`",
+    "`code`": "`code`",
 
-		"`code code`": "`code code`",
+    "`code code`": "`code code`",
 
-		"`code` `code`": "`code` `code`",
+    "`code` `code`": "`code` `code`",
 
-		"e.g. `something`": "e.g. `something`",
-	};
+    "e.g. `something`": "e.g. `something`",
+  };
 
-	Object.keys(testCase).forEach((key) => {
+  Object.keys(testCase).forEach((key) => {
 
-		it("keepMarkdownCodeBlocks: true” configuration", () => {
-			assert.strictEqual(
-				fixTypos(
-					key, 
-					"en-us",
-					configKeepMarkdownCodeBlocks
-				), testCase[key]);
-		});
-	});
+    it("keepMarkdownCodeBlocks: true” configuration", () => {
+      assert.strictEqual(
+        fixTypos(
+          key, 
+          "en-us",
+          configKeepMarkdownCodeBlocks
+        ), testCase[key]);
+    });
+  });
 });
