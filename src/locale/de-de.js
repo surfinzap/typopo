@@ -11,38 +11,44 @@ const numbers = {
 }
 
 const singleWordAbbreviations = [
-  "S",
-  "z",
-  "St",
-  "Stk",
-  "Mo",
+  "Bhf",
+  "ca",
   "Di",
-  "Mi",
   "Do",
   "Fr",
-  "Sa",
-  "So",
-  "Bhf",
-  "Hbf",
-  "Nr",
-  "ca",
-  "usw",
   "geb",
   "gest",
-  "u"
+  "Hbf",
+  "Mi",
+  "Mo",
+  "Nr",
+  "S",
+  "Sa",
+  "So",
+  "St",
+  "Stk", 
+  "u",
+  "usw",
+  "z",
 ]
 
-// Disregard correct spelling in your locale
-// and provide abbreviations in format “abbr abbr abbr…”
+
+/*
+  The list of common multi-word abbrevations that,
+  stripped down of its micro-typography treatment.
+*/ 
 const multipleWordAbbreviations = [
   "b w",
   "d h",
   "d i",
   "e V",
+  "Ges m b H",
   "n Chr",
+  "n u Z",
   "s a",
   "s o",
   "s u",
+  "u a m",
   "u a",
   "u ä",
   "u Ä",
@@ -52,13 +58,10 @@ const multipleWordAbbreviations = [
   "u zw",
   "v a",
   "v Chr",
+  "v u Z",
   "z B",
   "z T",
   "z Zt",
-  "n u Z",
-  "u a m",
-  "v u Z",
-  "Ges m b H",
 ]
 
 

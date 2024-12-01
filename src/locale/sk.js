@@ -27,8 +27,10 @@ const singleWordAbbreviations = [
   "vyd"
 ]
 
-// Disregard correct spelling in your locale
-// and provide abbreviations in format “abbr abbr abbr…”
+/*
+  The list of common multi-word abbrevations that,
+  stripped down of its micro-typography treatment.
+*/
 const multipleWordAbbreviations = [
   "hl m",
   "n l",

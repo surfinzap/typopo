@@ -55,8 +55,8 @@ export default class Locale {
     /* Spaces */
     this.space = " ";
     this.nbsp = " ";
-    this.hairSpace = " "; //&#8202;
-    this.narrowNbsp = " "; //&#8239;
+    this.hairSpace = " "; // &#8202; U+200A
+    this.narrowNbsp = " "; // &#8239; U+202F
     this.spaces = this.space + this.nbsp + this.hairSpace + this.narrowNbsp;
 
     /* Punctuation*/

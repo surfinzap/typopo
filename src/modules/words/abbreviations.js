@@ -1,6 +1,6 @@
 /*
   Fixes spaces around initials for First and up to two Middle names
-  It won't fix any other abbreviation.
+  It won’t fix any other abbreviation.
 
   Algorithm
   [1] Identify and replace pattern "I. FullName"
@@ -110,7 +110,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
      Algorithm as follows:
      * build up pattern by setting preceding and following boundaries
      * build replacement of concatenating
-        * preceding boundary
+       * preceding boundary
        * n-1 word abbreviations where locale-specific space will be
        * nth abbreviation the will follow with a normal space
        * following boundary
@@ -134,7 +134,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
      Algorithm follows:
      * build up pattern by setting preceding and following boundaries
      * build replacement of concatenating
-        * preceding boundary
+       * preceding boundary
        * n-1 word abbreviations where locale-specific space will be
        * nth abbreviation the will follow with no space
        * following boundary
