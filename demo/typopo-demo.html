@@ -46,6 +46,9 @@
 	<button id="fix-typos--de-de">
 		German
 	</button>
+	<button id="fix-typos--de-ch">
+		Swiss Standard German
+	</button>
 </div>
 
 <textarea id="textarea" class="typopo__textarea translit__textarea" placeholder="Enter some text" autofocus>
@@ -88,6 +91,10 @@
 
 	$("#fix-typos--de-de").click(function() {
 		$('#textarea').val(fixTypos($('#textarea').val(), 'de-de'));
+	});
+
+	$("#fix-typos--de-ch").click(function() {
+		$('#textarea').val(fixTypos($('#textarea').val(), 'de-ch'));
 	});
 </script>
 

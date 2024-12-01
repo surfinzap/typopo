@@ -1,7 +1,11 @@
 # Changelog for Typopo
 
 
-## 2.5.9 //
+## 2.6.0 //
+
+### ✨ New features
+- Support for de-CH
+
 
 ### 🔨 Maintenance
 - Reorganize the folder structure

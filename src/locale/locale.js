@@ -5,6 +5,7 @@ import localeEnUs from "./en-us";
 import localeRue from "./rue";
 import localeSk from "./sk";
 import localeDeDe from "./de-de";
+import localeDeCh from "./de-ch";
 
 const typopoLocale = {
   "cs" : localeCs,
@@ -12,6 +13,7 @@ const typopoLocale = {
   "rue" : localeRue,
   "sk" : localeSk,
   "de-de" : localeDeDe,
+  "de-ch" : localeDeCh,
 }
 
 export default class Locale {
