@@ -89,6 +89,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
     case "sk":
     case "cs":
     case "de-de":
+    case "de-ch":
       abbrSpace = locale.nbsp;
       break;
   }

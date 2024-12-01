@@ -86,7 +86,15 @@ describe('Fix Initials (en-us)\n', () => {
 });
 
 
-describe('Fix multiple-word abbreviations (sk, cs, rue, de-de)\n', () => {
+describe('Fix multiple-word abbreviations (sk, cs, rue, de-de, de-ch)\n', () => {
+  let testLocales = [
+    "sk",
+    "cs",
+    "rue",
+    "de-de",
+    "de-ch"
+  ];
+
   let testCase = {
     /* General pattern for these locales assumes:
        * dots after each abbreviated word
@@ -114,6 +122,7 @@ describe('Fix multiple-word abbreviations (sk, cs, rue, de-de)\n', () => {
     "im Jahr 200 v.u.Z." : "im Jahr 200 v. u. Z.",
     "v. u. Z." : "v. u. Z.",
     "v.u.Z." : "v. u. Z.",
+    "u. a. m. something" : "u. a. m. something",
 
     // random abbreviations to randomly check various localization
     "1000 pr. n. l." : "1000 pr. n. l.",
@@ -121,18 +130,19 @@ describe('Fix multiple-word abbreviations (sk, cs, rue, de-de)\n', () => {
     "Das Tier, d. h. der Fisch, lebte noch lange." : "Das Tier, d. h. der Fisch, lebte noch lange.",
     "Das Tier – d. i. der Fisch – lebte noch lange." : "Das Tier – d. i. der Fisch – lebte noch lange.",
     "Das Tier (d. h. der Fisch) lebte noch lange." : "Das Tier (d. h. der Fisch) lebte noch lange.",
-    "т. зн. незвыкле" : "т. зн. незвыкле"
+    "т. зн. незвыкле" : "т. зн. незвыкле",
+    "o. Ä. something" : "o. Ä. something"
   };
 
-
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      assert.strictEqual(fixMultipleWordAbbreviations(key, new Locale("sk")), testCase[key]);
-    });
-    it("module test", () => {
-      assert.strictEqual(fixAbbreviations(key, new Locale("sk")), testCase[key]);
-    });
+  testLocales.forEach((locale) => {
+    Object.keys(testCase).forEach((key) => {
+      it(`unit test (${locale})`, () => {
+        assert.strictEqual(fixMultipleWordAbbreviations(key, new Locale(locale)), testCase[key]);
+      });
+      it(`module test (${locale})`, () => {
+        assert.strictEqual(fixAbbreviations(key, new Locale(locale)), testCase[key]);
+      });
+    });    
   });
 });
 
@@ -202,8 +212,17 @@ describe('Fix multiple-word abbreviations (en-us)\n', () => {
 });
 
 
-describe('Fix Single-word abbreviations (sk, cs, rue, de-de, en-us)\n', () => {
-  let testCase = {
+describe('Fix Single-word abbreviations (sk, cs, rue, de-de, de-ch, en-us)\n', () => {
+  let testLocales = [
+    "sk",
+    "cs",
+    "rue",
+    "de-de",
+    "de-ch",
+    "en-us"
+  ];
+
+  let testCaseModule = {
     /* General pattern for these locales assumes nbsp after abbreviation
     */
     "č. 5 žije" : "č. 5 žije", // set nbsp
@@ -212,28 +231,40 @@ describe('Fix Single-word abbreviations (sk, cs, rue, de-de, en-us)\n', () => {
     "áno, č. 5 žije" : "áno, č. 5 žije", // identify abbreviation after sentence punctuation
     "Prines kvetináč. 5 je super číslo." : "Prines kvetináč. 5 je super číslo.", //false positive where abbreviation is part of the previous sentence
     "(pp. 10–25)" : "(pp. 10–25)", // abbr. in brackets
-    "t. č. 555-729-458" : "t. č. 555-729-458", // false positive, do not correct single-word abbr. that's part of the multiple-word abbr
-    "t. č. dačo" : "t. č. dačo", // false positive, do not correct single-word abbr. that's part of the multiple-word abbr (word variation)
-    "4.20 p.m." : "4.20 p.m.", // false positive
-
+    
     "str. 38" : "str. 38", // other abbreviation example
     "str. 7" : "str. 7", // other abbreviation example
     "str. p" : "str. p", // other abbreviation example
     "tzv. rýč" : "tzv. rýč", // other abbreviation example
-
+    
     "10 č." : "10 č.", // abbreviation at the end of the word
     "10 p." : "10 p.", // abbreviation at the end of the word
     "10 str." : "10 str.", // abbreviation at the end of the word
     "(10 p.)" : "(10 p.)", // abbreviation at the end of the word & in brackets
-
-    "the U.S. and" : "the U.S. and", //false positive
   };
+  
+  let testCaseUnit = {
+    ...testCaseModule,
+    "t. č. 555-729-458" : "t. č. 555-729-458", // false positive, do not correct single-word abbr. that's part of the multiple-word abbr
+    "t. č. dačo" : "t. č. dačo", // false positive, do not correct single-word abbr. that's part of the multiple-word abbr (word variation)
+    "4.20 p.m." : "4.20 p.m.", // false positive
+    "the U.S. and" : "the U.S. and", //false positive
+  }
 
 
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      assert.strictEqual(fixSingleWordAbbreviations(key, new Locale("sk")), testCase[key]);
+  testLocales.forEach((locale) => {
+    Object.keys(testCaseUnit).forEach((key) => {
+      it(`unit test (${locale})`, () => {
+        assert.strictEqual(fixSingleWordAbbreviations(key, new Locale(locale)), testCaseUnit[key]);
+      });
+  
     });
+    Object.keys(testCaseModule).forEach((key) => {
+      it(`module test (${locale})`, () => {
+        assert.strictEqual(fixAbbreviations(key, new Locale(locale)), testCaseModule[key]);
+      });
+    });  
   });
+
 });
