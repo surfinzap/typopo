@@ -6,7 +6,15 @@ import assert from 'assert';
 import Locale from "../../src/locale/locale";
 
 
-describe('Fix Initials (sk, cs, rue, de-de)\n', () => {
+describe('Fix Initials (sk, cs, rue, de-de, de-ch)\n', () => {
+  let testLocales = [
+    "sk",
+    "cs",
+    "rue",
+    "de-de",
+    "de-ch"
+  ];
+
   let testCase = {
     // test cases for first name initials
     "J. Novak": "J. Novak",	// essential case, nbsp missing
@@ -34,13 +42,14 @@ describe('Fix Initials (sk, cs, rue, de-de)\n', () => {
     "F. X. R." : "F. X. R.",
   };
 
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      assert.strictEqual(fixInitials(key, new Locale("sk")), testCase[key]);
-    });
-    it("module test", () => {
-      assert.strictEqual(fixAbbreviations(key, new Locale("sk")), testCase[key]);
+  testLocales.forEach((locale) => {
+    Object.keys(testCase).forEach((key) => {
+      it(`unit test (${locale})`, () => {
+        assert.strictEqual(fixInitials(key, new Locale(locale)), testCase[key]);
+      });
+      it(`module test (${locale})`, () => {
+        assert.strictEqual(fixAbbreviations(key, new Locale(locale)), testCase[key]);
+      });
     });
   });
 });

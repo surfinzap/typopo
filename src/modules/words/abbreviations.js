@@ -26,6 +26,7 @@ export function fixInitials(string, locale) {
     case "sk":
     case "cs":
     case "de-de":
+    case "de-ch":
       initialSpace = locale.nbsp;
       break;
   }
