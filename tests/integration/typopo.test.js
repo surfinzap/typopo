@@ -685,7 +685,7 @@ describe('Test if markdown ticks are kept (integration test) (en-us):\n', () => 
 
   Object.keys(testCase).forEach((key) => {
 
-    it("keepMarkdownCodeBlocks: true” configuration", () => {
+    it("“keepMarkdownCodeBlocks: true” configuration", () => {
       assert.strictEqual(
         fixTypos(
           key, 
