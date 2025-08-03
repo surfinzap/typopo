@@ -59,7 +59,7 @@
 		"gulp-uglify": "^3.0.2",
 		"husky": "^9.1.7",
 		"lint-staged": "^15.2.10",
-		"mocha": "^10.8.2",
+		"mocha": "^11.7.1",
 		"vinyl-buffer": "^1.0.1",
 		"vinyl-source-stream": "^2.0.0"
 	}
