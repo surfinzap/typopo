@@ -175,7 +175,7 @@ Check out the [changelog](CHANGELOG.md) for what has been released.
 
 
 ## Support
-If you love Typopo and you find it helpful, [support the project via Patreon](https://www.patreon.com/branosandala).
+If you love Typopo and you find it helpful, [buy me a coffee](https://ko-fi.com/branosandala).
 
 Your support will let me continue improving Typopo ecosystem—[the app](https://typopo.org), [NPM package](https://www.npmjs.com/package/typopo) and [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=brano.typopo-vscode).
 
