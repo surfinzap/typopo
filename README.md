@@ -11,7 +11,7 @@
 ## Links
 - [Official website](https://typopo.org)
 - [Online app](https://app.typopo.org)
-- [VS Code extension](https://marketplace.visualstudio.com/items?itemName=brano.typopo-vscode) and corresponding [repository](https://github.com/surfinzap/typopo-vscode)
+- [VS Code extension](https://marketplace.visualstudio.com/items?itemName=brano.typopo-vscode) and the corresponding [repository](https://github.com/surfinzap/typopo-vscode)
 - [NPM package](https://www.npmjs.com/package/typopo)
 - [Support the project, buy me a coffee](https://ko-fi.com/branosandala)
 - [Subscribe to a newsletter to get updates](https://buttondown.email/Typopo)

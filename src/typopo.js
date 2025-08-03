@@ -1,6 +1,6 @@
 /*!
  * Typopo v2.5.8 (https://typopo.org)
- * Copyright 2015–2024 Braňo Šandala (https://brano.me)
+ * Copyright 2015–2025 Braňo Šandala (https://brano.me)
  * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */
 import Locale from "./locale/locale";

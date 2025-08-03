@@ -22,8 +22,11 @@ const singleWordAbbreviations = [
 
 ]
 
-// Disregard correct spelling in your locale
-// and provide abbreviations in format “abbr abbr abbr…”
+
+/*
+  The list of common multi-word abbrevations that are
+  stripped down of its micro-typography treatment.
+*/
 const multipleWordAbbreviations = [
   "т зн",
   "Е Ч",

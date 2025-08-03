@@ -6,7 +6,15 @@ import assert from 'assert';
 import Locale from "../../src/locale/locale";
 
 
+const testLocales = [
+  "sk",
+  "cs",
+  "rue",
+  "de-de"
+];
+
 describe('Fix Initials (sk, cs, rue, de-de)\n', () => {
+
   let testCase = {
     // test cases for first name initials
     "J. Novak": "J. Novak",	// essential case, nbsp missing
@@ -34,19 +42,23 @@ describe('Fix Initials (sk, cs, rue, de-de)\n', () => {
     "F. X. R." : "F. X. R.",
   };
 
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      assert.strictEqual(fixInitials(key, new Locale("sk")), testCase[key]);
-    });
-    it("module test", () => {
-      assert.strictEqual(fixAbbreviations(key, new Locale("sk")), testCase[key]);
+ testLocales.forEach((locale) => {
+    Object.keys(testCase).forEach((key) => {
+      it(`unit test (${locale})`, () => {
+        assert.strictEqual(fixInitials(key, new Locale(locale)), testCase[key]);
+      });
+      it(`module test (${locale})`, () => {
+        assert.strictEqual(fixAbbreviations(key, new Locale(locale)), testCase[key]);
+      });
     });
   });
 });
 
 describe('Fix Initials (en-us)\n', () => {
+
+
   let testCase = {
+
     // test cases for first name initials
     "J. Novak": "J. Novak",	// essential case, nbsp missing
     "J.Novak": "J. Novak",	// space missing
@@ -125,15 +137,16 @@ describe('Fix multiple-word abbreviations (sk, cs, rue, de-de)\n', () => {
   };
 
 
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      assert.strictEqual(fixMultipleWordAbbreviations(key, new Locale("sk")), testCase[key]);
-    });
-    it("module test", () => {
-      assert.strictEqual(fixAbbreviations(key, new Locale("sk")), testCase[key]);
-    });
-  });
+  testLocales.forEach((locale) => {
+    Object.keys(testCase).forEach((key) => {
+      it(`unit test (${locale})`, () => {
+        assert.strictEqual(fixMultipleWordAbbreviations(key, new Locale(locale)), testCase[key]);
+      });
+      it(`module test (${locale})`, () => {
+        assert.strictEqual(fixAbbreviations(key, new Locale(locale)), testCase[key]);
+      });
+    });    
+  });    
 });
 
 describe('Fix multiple-word abbreviations (en-us)\n', () => {
@@ -203,6 +216,7 @@ describe('Fix multiple-word abbreviations (en-us)\n', () => {
 
 
 describe('Fix Single-word abbreviations (sk, cs, rue, de-de, en-us)\n', () => {
+
   let testCase = {
     /* General pattern for these locales assumes nbsp after abbreviation
     */
@@ -229,11 +243,11 @@ describe('Fix Single-word abbreviations (sk, cs, rue, de-de, en-us)\n', () => {
     "the U.S. and" : "the U.S. and", //false positive
   };
 
-
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      assert.strictEqual(fixSingleWordAbbreviations(key, new Locale("sk")), testCase[key]);
-    });
-  });
+  testLocales.forEach((locale) => {
+    Object.keys(testCase).forEach((key) => {
+      it(`unit test (${locale})`, () => {
+        assert.strictEqual(fixSingleWordAbbreviations(key, new Locale(locale)), testCase[key]);
+      });
+    });    
+  }); 
 });
