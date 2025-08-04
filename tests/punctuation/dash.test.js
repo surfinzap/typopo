@@ -1,6 +1,5 @@
 import {replaceThreeHyphensWithEmDash,
         replaceTwoHyphensWithEnDash,
-        identifySpacedHyphen,
         fixDashesBetweenWords,
         fixHyphenBetweenWordAndPunctuation,
         fixDashBetweenCardinalNumbers,
@@ -36,20 +35,7 @@ describe('Replace 2 hyphens with an en dash\n', () => {
 });
 
 
-
-
-
-describe('Identify a spaced hyphen between words (en-us, sk, cs, rue, de-de)\n', () => {
-  let testCase = {
-
-    "word - word" : "word {{typopo__spacedHyphen}} word",
-    "word   -   word" : "word {{typopo__spacedHyphen}} word",
-    "word - word" : "word {{typopo__spacedHyphen}} word", //nbsp
-    "word - word" : "word {{typopo__spacedHyphen}} word", //hairSpace
-    "word - word" : "word {{typopo__spacedHyphen}} word", //narrowNbsp
-    "ptaškŷ -  čadič" : "ptaškŷ {{typopo__spacedHyphen}} čadič",  // non-latin chars
-    "хотїв - нияке" : "хотїв {{typopo__spacedHyphen}} нияке", // non-latin chars
-
+let dashFalsePositives = {
     /*
       False positive: compound words
     */
@@ -68,22 +54,15 @@ describe('Identify a spaced hyphen between words (en-us, sk, cs, rue, de-de)\n',
     "  - she said": "  - she said",
     "\t- she said": "\t- she said",
     "\t\t- she said": "\t\t- she said",
-    
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test (en-us)", () => {
-      assert.strictEqual(identifySpacedHyphen(key, new Locale("en-us")), testCase[key]);
-    });	
-  });
-});
-
+}
 
 
 
 describe('Fix a dash, an en dash, an em dash and spacing between words (en-us)\n', () => {
   let testCase = {
-    "and {{typopo__spacedHyphen}} she said": "and—she said",
+    ...dashFalsePositives,
+
+    "and - she said": "and—she said",
     "and – she said": "and—she said",
     "and  –  she said": "and—she said",
     "and — she said": "and—she said",
@@ -92,6 +71,12 @@ describe('Fix a dash, an en dash, an em dash and spacing between words (en-us)\n
     "and— she said": "and—she said", //mixed spaces
     "and —she said": "and—she said",
     "and—she said": "and—she said",
+
+    "word - word" : "word—word", //nbsp
+    "word - word" : "word—word", //hairSpace
+    "word - word" : "word—word", //narrowNbsp
+    "ptaškŷ -  čadič" : "ptaškŷ—čadič",  // non-latin chars
+    "хотїв - нияке" : "хотїв—нияке", // non-latin chars
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -108,8 +93,10 @@ describe('Fix a dash, an en dash, an em dash and spacing between words (en-us)\n
 
 describe('Fix a dash, an en dash, an em dash and spacing between words (rue, sk)\n', () => {
   let testCase = {
-    "ptaškŷ {{typopo__spacedHyphen}} čadič": "ptaškŷ — čadič",
-    "ptaškŷ {{typopo__spacedHyphen}} čadič": "ptaškŷ — čadič",
+    ...dashFalsePositives,
+
+    "ptaškŷ - čadič": "ptaškŷ — čadič",
+    "ptaškŷ - čadič": "ptaškŷ — čadič",
     "ptaškŷ – čadič": "ptaškŷ — čadič",
     "ptaškŷ  –  čadič": "ptaškŷ — čadič",
     "ptaškŷ — čadič": "ptaškŷ — čadič",
@@ -119,8 +106,8 @@ describe('Fix a dash, an en dash, an em dash and spacing between words (rue, sk)
     "ptaškŷ —čadič": "ptaškŷ — čadič",
     "ptaškŷ—čadič": "ptaškŷ — čadič",
 
-    "хотїв {{typopo__spacedHyphen}} нияке": "хотїв — нияке",
-    "хотїв {{typopo__spacedHyphen}} нияке": "хотїв — нияке",
+    "хотїв - нияке": "хотїв — нияке",
+    "хотїв - нияке": "хотїв — нияке",
     "хотїв – нияке": "хотїв — нияке",
     "хотїв  –  нияке": "хотїв — нияке",
     "хотїв — нияке": "хотїв — нияке",
@@ -130,6 +117,10 @@ describe('Fix a dash, an en dash, an em dash and spacing between words (rue, sk)
     "хотїв —нияке": "хотїв — нияке",
     "хотїв—нияке": "хотїв — нияке",
 
+    "word - word" : "word — word", //nbsp
+    "word - word" : "word — word", //hairSpace
+    "word - word" : "word — word", //narrowNbsp
+    "ptaškŷ -  čadič" : "ptaškŷ — čadič",  // non-latin chars
   };
 
 
@@ -153,8 +144,10 @@ describe('Fix a dash, an en dash, an em dash and spacing between words (rue, sk)
 
 describe('Fix a dash, an en dash, an em dash and spacing between words (cs)\n', () => {
   let testCase = {
-    "domů {{typopo__spacedHyphen}} čadič": "domů – čadič",
-    "domů {{typopo__spacedHyphen}} čadič": "domů – čadič",
+    ...dashFalsePositives,
+
+    "domů - čadič": "domů – čadič",
+    "domů - čadič": "domů – čadič",
     "domů – čadič": "domů – čadič",
     "domů  –  čadič": "domů – čadič",
     "domů — čadič": "domů – čadič",
@@ -164,6 +157,11 @@ describe('Fix a dash, an en dash, an em dash and spacing between words (cs)\n', 
     "domů —čadič": "domů – čadič",
     "domů—čadič": "domů – čadič",
 
+    "word - word" : "word – word", //nbsp
+    "word - word" : "word – word", //hairSpace
+    "word - word" : "word – word", //narrowNbsp
+    "ptaškŷ -  čadič" : "ptaškŷ – čadič",  // non-latin chars
+    "хотїв - нияке" : "хотїв – нияке", // non-latin chars
   };
 
 
@@ -180,8 +178,10 @@ describe('Fix a dash, an en dash, an em dash and spacing between words (cs)\n', 
 
 describe('Fix a dash, an en dash, an em dash and spacing between words (de-de)\n', () => {
   let testCase = {
-    "und {{typopo__spacedHyphen}} sie sagte": "und – sie sagte",
-    "und {{typopo__spacedHyphen}} sie sagte": "und – sie sagte",
+    ...dashFalsePositives,
+
+    "und - sie sagte": "und – sie sagte",
+    "und - sie sagte": "und – sie sagte",
     "und – sie sagte": "und – sie sagte",
     "und  –  sie sagte": "und – sie sagte",
     "und — sie sagte": "und – sie sagte",
@@ -190,6 +190,12 @@ describe('Fix a dash, an en dash, an em dash and spacing between words (de-de)\n
     "und— sie sagte": "und – sie sagte", //mixed spaces
     "und —sie sagte": "und – sie sagte",
     "und—sie sagte": "und – sie sagte",
+
+    "word - word" : "word – word", //nbsp
+    "word - word" : "word – word", //hairSpace
+    "word - word" : "word – word", //narrowNbsp
+    "ptaškŷ -  čadič" : "ptaškŷ – čadič",  // non-latin chars
+    "хотїв - нияке" : "хотїв – нияке", // non-latin chars
 
   };
 

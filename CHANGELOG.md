@@ -6,6 +6,7 @@
 ### 🔨 Maintenance
 - Reorganize the folder structure
 - Update NPM packages to their latest versions			
+- Code refactoring
 
 
 
