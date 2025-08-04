@@ -1,20 +1,20 @@
 import { replaceWithOverlapHandling } from "../../utils/regex-overlap.js";
 
-
+//
 
 export function replaceThreeHyphensWithEmDash(string) {
   return string.replace(/(---)/g, "—");
 }
 
-
+//
 
 export function replaceTwoHyphensWithEnDash(string) {
   return string.replace(/(--)/g, "–");
 }
 
+//
 
-
-/*
+/**
   Identify:
   - improperly used hyphen with spaces around
   - improperly used or spaced en dash 
@@ -33,14 +33,15 @@ export function replaceTwoHyphensWithEnDash(string) {
   @returns {string} output with fixed dashes and spaces between words
 */
 export function fixDashesBetweenWords(string, locale) {
+  // prettier-ignore
   let pattern = 
-      "([" + locale.allChars + "])" 
-    + "("
-      + "[" + locale.spaces + "]*[" + locale.enDash + locale.emDash + "][" + locale.spaces + "]*" 
-      + "|"
-      + "[" + locale.spaces + "]+[" + locale.hyphen + "][" + locale.spaces + "]+" 
-    + ")"
-    + "([" + locale.allChars + "])";
+      "([" + locale.allChars + "])" + 
+      "(" +
+        "[" + locale.spaces + "]*[" + locale.enDash + locale.emDash + "][" + locale.spaces + "]*" +
+        "|" +
+        "[" + locale.spaces + "]+[" + locale.hyphen + "][" + locale.spaces + "]+" +
+      ")" +
+      "([" + locale.allChars + "])";
 
   let re = new RegExp(pattern, "g");
   let replacement = "";
@@ -64,9 +65,9 @@ export function fixDashesBetweenWords(string, locale) {
   return string.replace(re, replacement);
 }
 
+//
 
-
-/*
+/**
   Replace hyphen placed between a word and punctuation,
   or placed at the end of a paragaph.
 
@@ -80,7 +81,13 @@ export function fixDashesBetweenWords(string, locale) {
   @returns {string} — output with locale-specific dash and spacing between a word and a punctuation.
 */
 export function fixHyphenBetweenWordAndPunctuation(string, locale) {
-  let pattern = "(["+ locale.allChars +"])(["+ locale.spaces +"]?)("+ locale.hyphen +")(["+ locale.spaces +"]?)(["+ locale.sentencePunctuation +"\\n\\r])";
+  // prettier-ignore
+  let pattern = 
+      "(["+ locale.allChars +"])" + 
+      "(["+ locale.spaces +"]?)" + 
+      "("+ locale.hyphen +")" + 
+      "(["+ locale.spaces +"]?)" + 
+      "(["+ locale.sentencePunctuation +"\\n\\r])";
   let re = new RegExp(pattern, "g");
   let replacement = "";
 
@@ -100,12 +107,12 @@ export function fixHyphenBetweenWordAndPunctuation(string, locale) {
       break;
   }
 
-  return string = string.replace(re, replacement);
+  return string.replace(re, replacement);
 }
 
+//
 
-
-/*
+/**
   Replace hyphen or dash, placed between 2 cardinal numbers,
   with an en dash; including cases when there is an extra space
   from either one side or both sides of the dash
@@ -120,15 +127,16 @@ export function fixHyphenBetweenWordAndPunctuation(string, locale) {
 */
 export function fixDashBetweenCardinalNumbers(string, locale) {
   /* [1] Match the pattern with overlap handling */
+  // prettier-ignore
   let pattern =
-        "(" + locale.cardinalNumber + ")"
-      + "([" + locale.spaces + "]?"
-      + "[" + locale.hyphen + locale.enDash + locale.emDash + "]"
-      + "[" + locale.spaces + "]?)"
-      + "(" + locale.cardinalNumber + ")";
+      "(" + locale.cardinalNumber + ")" +
+      "([" + locale.spaces + "]?" +
+      "[" + locale.hyphen + locale.enDash + locale.emDash + "]" +
+      "[" + locale.spaces + "]?)" +
+      "(" + locale.cardinalNumber + ")";
   let re = new RegExp(pattern, "g");
   let replacement = "$1" + "{{typopo__endash}}" + "$3";
-  string = replaceWithOverlapHandling(string, re, replacement)
+  string = replaceWithOverlapHandling(string, re, replacement);
 
   /* [2] Replace enDash adepts with actual enDashes */
   pattern = "{{typopo__endash}}";
@@ -138,9 +146,9 @@ export function fixDashBetweenCardinalNumbers(string, locale) {
   return string.replace(re, replacement);
 }
 
+//
 
-
-/*
+/**
   Replace hyphen or dash, placed between percentage range,
   with an en dash; including cases when there is an extra space
   from either one side or both sides of the dash
@@ -149,15 +157,19 @@ export function fixDashBetweenCardinalNumbers(string, locale) {
   @returns {string} — output with en dash between percentage range
 */
 export function fixDashBetweenPercentageRange(string, locale) {
-  let pattern = "([" + locale.percent + locale.permille + locale.permyriad + "])([" + locale.spaces + "]?[" + locale.hyphen + locale.enDash + locale.emDash + "][" + locale.spaces + "]?)(" + locale.cardinalNumber + ")";
+  // prettier-ignore
+  let pattern = 
+      "([" + locale.percent + locale.permille + locale.permyriad + "])" + 
+      "([" + locale.spaces + "]?[" + locale.hyphen + locale.enDash + locale.emDash + "][" + locale.spaces + "]?)" + 
+      "(" + locale.cardinalNumber + ")";
   let re = new RegExp(pattern, "g");
   let replacement = "$1" + locale.enDash + "$3";
   return string.replace(re, replacement);
 }
 
+//
 
-
-/*
+/**
   Replace hyphen or dash, placed between 2 ordinal numbers,
   with an en dash; including cases when there is an extra space
   from either one side or both sides of the dash
@@ -166,16 +178,23 @@ export function fixDashBetweenPercentageRange(string, locale) {
   @returns {string} — output with dash between ordinal numbers
 */
 export function fixDashBetweenOrdinalNumbers(string, locale) {
-  let pattern = "(" + locale.cardinalNumber + ")(" + locale.ordinalIndicator + ")([" + locale.spaces + "]?[" + locale.hyphen + locale.enDash + locale.emDash + "][" + locale.spaces + "]?)(" + locale.cardinalNumber + ")(" + locale.ordinalIndicator + ")";
+  // prettier-ignore
+  let pattern = 
+      "(" + locale.cardinalNumber + ")" + 
+      "(" + locale.ordinalIndicator + ")" + 
+      "([" + locale.spaces + "]?[" + locale.hyphen + locale.enDash + locale.emDash + "][" + locale.spaces + "]?)" + 
+      "(" + locale.cardinalNumber + ")" + 
+      "(" + locale.ordinalIndicator + ")";
+
   let re = new RegExp(pattern, "gi");
   let replacement = "$1$2" + locale.enDash + "$4$5";
 
   return string.replace(re, replacement);
 }
 
+//
 
-
-/*
+/**
   Fixes dashes
 
   @param {string} string — input text for identification
@@ -184,7 +203,7 @@ export function fixDashBetweenOrdinalNumbers(string, locale) {
 export function fixDash(string, locale) {
   string = replaceThreeHyphensWithEmDash(string, locale);
   string = replaceTwoHyphensWithEnDash(string, locale);
-  string = fixDashesBetweenWords(string, locale); 
+  string = fixDashesBetweenWords(string, locale);
   string = fixHyphenBetweenWordAndPunctuation(string, locale);
   string = fixDashBetweenCardinalNumbers(string, locale);
   string = fixDashBetweenPercentageRange(string, locale);

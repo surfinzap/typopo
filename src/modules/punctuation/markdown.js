@@ -1,9 +1,10 @@
 /* 
-  Utility classes to identify and handle exceptions for Markdown files
+  Utility functions to identify and handle exceptions for Markdown files.
+*/
 
+//
 
-
-/*
+/** 
   Identify markdown code ticks that wrap code blocks, so they’re not fixed as apostrophes
 
   Examples
@@ -22,62 +23,61 @@
   @param {string} string: input text for identification
   @returns {string} output with identified markdown ticks that wrap code blocks
 */
-export function identifyMarkdownCodeTicks(string, configuration) {	
-
+export function identifyMarkdownCodeTicks(string, configuration) {
   if (configuration.keepMarkdownCodeBlocks) {
-
     // ```
     // fenced code block
     // ```
+    // prettier-ignore
     string = string.replace(
       new RegExp(
-        "(\\s*)"
-      + "(```)", 
-        "g"
+        "(\\s*)" +
+        "(```)", 
+      "g"
       ),
-        "$1"
-      + "{{typopo__markdown_tick}}"
-      + "{{typopo__markdown_tick}}"
-      + "{{typopo__markdown_tick}}"
-    )
-  
-    // ``escaping inline `code block` in Markdown file``
-    string = string.replace(
-      new RegExp(
-        "(``)"
-      + "(.+?)"
-      + "(``)", 
-        "g"
-      ),
-        "{{typopo__markdown_tick}}"
-      + "{{typopo__markdown_tick}}"
-      + "$2"
-      + "{{typopo__markdown_tick}}"
-      + "{{typopo__markdown_tick}}"
-    )
-  
-  
-    // inline `code block`
-    string = string.replace(
-      new RegExp(
-        "(`)"
-      + "(.+?)"
-      + "(`)", 
-        "g"
-      ),
-        "{{typopo__markdown_tick}}"
-      + "$2"
-      + "{{typopo__markdown_tick}}"
-    )
+      "$1" +
+      "{{typopo__markdown_tick}}" +
+      "{{typopo__markdown_tick}}" +
+      "{{typopo__markdown_tick}}"
+    );
 
+    // ``escaping inline `code block` in Markdown file``
+    // prettier-ignore
+    string = string.replace(
+      new RegExp(
+        "(``)" +
+        "(.+?)" +
+        "(``)",
+      "g"
+      ),
+      "{{typopo__markdown_tick}}" +
+      "{{typopo__markdown_tick}}" +
+      "$2" +
+      "{{typopo__markdown_tick}}" +
+      "{{typopo__markdown_tick}}"
+    );
+
+    // inline `code block`
+    // prettier-ignore
+    string = string.replace(
+      new RegExp(
+        "(`)" +
+        "(.+?)" +
+        "(`)",
+      "g"
+      ),
+      "{{typopo__markdown_tick}}" +
+      "$2" +
+      "{{typopo__markdown_tick}}"
+    );
   }
 
   return string;
 }
 
+//
 
-
-/*
+/**
   Place markdown code ticks, identified in identifyMarkdownCodeTicks
 
   Docs
@@ -86,9 +86,9 @@ export function identifyMarkdownCodeTicks(string, configuration) {
   @param {string} string: input text for identification
   @returns {string} output with placed Markdown code tick
 */
-export function placeMarkdownCodeTicks(string, configuration) {	
-
+export function placeMarkdownCodeTicks(string, configuration) {
   if (configuration.keepMarkdownCodeBlocks) {
+    // prettier-ignore
     string = string.replace(
       new RegExp(
         "{{typopo__markdown_tick}}",
@@ -100,4 +100,3 @@ export function placeMarkdownCodeTicks(string, configuration) {
 
   return string;
 }
-

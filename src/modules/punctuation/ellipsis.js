@@ -10,9 +10,9 @@
   http://www.liteera.cz/slovnik/vypustka
 */
 
+//
 
-
-/*
+/**
   Replace 3 and more dots/ellipses with an ellipsis
 
   Example:
@@ -23,15 +23,15 @@
   @returns {string} — output with fixed ellipsis
 */
 export function replaceThreeCharsWithEllipsis(string, locale) {
-  let pattern = "[" +  locale.ellipsis + "\\.]{3,}";
+  let pattern = "[" + locale.ellipsis + "\\.]{3,}";
   let re = new RegExp(pattern, "g");
   let replacement = locale.ellipsis;
   return string.replace(re, replacement);
 }
 
+//
 
-
-/*
+/**
   Replace combination of period/ellipsis with an ellipsis
 
   Example:
@@ -41,18 +41,20 @@ export function replaceThreeCharsWithEllipsis(string, locale) {
   @returns {string} — output with fixed ellipsis
 */
 export function replaceTwoCharsWithEllipsis(string, locale) {
+  // prettier-ignore
   let pattern =
-          "\\." + locale.ellipsis + "|"
-        + locale.ellipsis + "{2,}|"
-        + locale.ellipsis + "\\.";
+      "\\." + locale.ellipsis + "|" +
+      locale.ellipsis + "{2,}|" +
+      locale.ellipsis + "\\.";
+
   let re = new RegExp(pattern, "g");
   let replacement = locale.ellipsis;
   return string.replace(re, replacement);
 }
 
+//
 
-
-/*
+/**
   Replace two periods between words (spaces) with an ellipsis
 
   Example
@@ -68,9 +70,9 @@ export function replaceTwoPeriodsWithEllipsis(string, locale) {
   return string.replace(re, replacement);
 }
 
+//
 
-
-/*
+/**
   Fix spacing, when ellipsis is used around commas
 
   Example:
@@ -81,18 +83,20 @@ export function replaceTwoPeriodsWithEllipsis(string, locale) {
   @returns {string} — output with fixed spacing around ellipsis
 */
 export function fixEllipsisSpacingAroundCommas(string, locale) {
+  // prettier-ignore
   let pattern = 
-      ","
-    + "[" + locale.spaces + "]?" 
-    + locale.ellipsis 
-    + "[" + locale.spaces + "]?"
-    + ",";
+      "," +
+      "[" + locale.spaces + "]?" +
+      locale.ellipsis +
+      "[" + locale.spaces + "]?" +
+      ",";
   let re = new RegExp(pattern, "g");
   return string.replace(re, ", …,");
 }
 
+//
 
-/*
+/**
   Fix spacing, when ellipsis is used as the last item in the list
 
   Example:
@@ -103,22 +107,23 @@ export function fixEllipsisSpacingAroundCommas(string, locale) {
   @returns {string} — output with fixed spacing around ellipsis
 */
 export function fixEllipsisAsLastItem(string, locale) {
+  // prettier-ignore
   let pattern = 
-      "(,)"
-    + "([" + locale.spaces + "])?"
-    + "(" + locale.ellipsis + ")"
-    + "([" + locale.spaces + "])?"
-    + "(\\B|[" + locale.closingBrackets + "])"
-    + "([^,]|$)"
+      "(,)" +
+      "([" + locale.spaces + "])?" +
+      "(" + locale.ellipsis + ")" +
+      "([" + locale.spaces + "])?" +
+      "(\\B|[" + locale.closingBrackets + "])" +
+      "([^,]|$)";
 
   let re = new RegExp(pattern, "g");
 
   return string.replace(re, "$1$3$5$6");
 }
 
+//
 
-
-/*
+/**
   Fix spacing, when aposiopesis is starting a paragraph
 
   Examples:
@@ -128,17 +133,18 @@ export function fixEllipsisAsLastItem(string, locale) {
   @returns {string} — output with fixed spacing
 */
 export function fixAposiopesisStartingParagraph(string, locale) {
+  // prettier-ignore
   let pattern =
-      "(^" + locale.ellipsis + ")"
-    + "([" + locale.spaces + "])"
-    + "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
+      "(^" + locale.ellipsis + ")" +
+      "([" + locale.spaces + "])" +
+      "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
   let re = new RegExp(pattern, "gm");
   return string.replace(re, "$1$3");
 }
 
+//
 
-
-/*
+/**
   Fix spacing, when aposiopesis is starting a sentence
 
   Examples:
@@ -149,19 +155,20 @@ export function fixAposiopesisStartingParagraph(string, locale) {
   @returns {string} — output with fixed spacing
 */
 export function fixAposiopesisStartingSentence(string, locale) {
+  // prettier-ignore
   let pattern =
-      "([" + locale.sentencePunctuation + locale.terminalQuotes + "])"
-    + "([" + locale.spaces + "]?)"
-    + "([" + locale.ellipsis +"])"
-    + "([" + locale.spaces + "]?)"
-    + "([" + locale.lowercaseChars +"])";
+      "([" + locale.sentencePunctuation + locale.terminalQuotes + "])" +
+      "([" + locale.spaces + "]?)" +
+      "([" + locale.ellipsis +"])" +
+      "([" + locale.spaces + "]?)" +
+      "([" + locale.lowercaseChars +"])";
   let re = new RegExp(pattern, "g");
   return string.replace(re, "$1 $3$5");
 }
 
+//
 
-
-/*
+/**
   Fix spacing, when aposiopesis is between sentences
   Aposiopesis × Ellipsis between sentences? Ellipsis follows a finished sentece.
 
@@ -173,19 +180,20 @@ export function fixAposiopesisStartingSentence(string, locale) {
   @returns {string} — output with fixed spacing
 */
 export function fixAposiopesisBetweenSentences(string, locale) {
+  // prettier-ignore
   let pattern =
-      "([" + locale.lowercaseChars + "])"
-    + "([" + locale.spaces + "])"
-    + "([" + locale.ellipsis + "])"
-    + "([" + locale.spaces + "]?)"
-    + "([" + locale.uppercaseChars + "])";
+      "([" + locale.lowercaseChars + "])" +
+      "([" + locale.spaces + "])" +
+      "([" + locale.ellipsis + "])" +
+      "([" + locale.spaces + "]?)" +
+      "([" + locale.uppercaseChars + "])";
   let re = new RegExp(pattern, "g");
   return string.replace(re, "$1$3 $5");
 }
 
+//
 
-
-/*
+/**
   Fix spacing, when aposiopesis is between words
   This is a best effort guess, that we’re dealing with aposiopesis.
 
@@ -196,17 +204,18 @@ export function fixAposiopesisBetweenSentences(string, locale) {
   @returns {string} — output with fixed spacing
 */
 export function fixAposiopesisBetweenWords(string, locale) {
+  // prettier-ignore
   let pattern =
-      "([" + locale.allChars + "])"
-    + "([" + locale.ellipsis + "])"
-    + "([" + locale.allChars + "])";
+      "([" + locale.allChars + "])" +
+      "([" + locale.ellipsis + "])" +
+      "([" + locale.allChars + "])";
   let re = new RegExp(pattern, "g");
   return string.replace(re, "$1$2 $3");
 }
 
+//
 
-
-/*
+/**
   Fix spacing, when ellipsis is between sentences
   Aposiopesis × Ellipsis between sentences? Ellipsis follows a finished sentece.
 
@@ -220,19 +229,20 @@ export function fixAposiopesisBetweenWords(string, locale) {
 export function fixEllipsisBetweenSentences(string, locale) {
   /* [4]	keep spaces around ellipsis when it is used at the beginning
             of the full sentence in the middle of the paragraph */
+  // prettier-ignore
   let pattern =
-      "([" + locale.sentencePunctuation + locale.terminalQuotes + "])"
-    + "([" + locale.spaces + "]?)"
-    + "(" + locale.ellipsis +")"
-    + "([" + locale.spaces + "]?)"
-    + "([" + locale.uppercaseChars +"])";
+      "([" + locale.sentencePunctuation + locale.terminalQuotes + "])" +
+      "([" + locale.spaces + "]?)" +
+      "(" + locale.ellipsis +")" +
+      "([" + locale.spaces + "]?)" +
+      "([" + locale.uppercaseChars +"])";
   let re = new RegExp(pattern, "g");
   return string.replace(re, "$1 $3 $5");
 }
 
+//
 
-
-/*
+/**
   Fix spacing, when aposiopesis is ending a paragraph
 
   Examples:
@@ -242,15 +252,16 @@ export function fixEllipsisBetweenSentences(string, locale) {
   @returns {string} — output with fixed spacing
 */
 export function fixAposiopesisEndingParagraph(string, locale) {
+  // prettier-ignore
   let pattern =
-      "([" + locale.lowercaseChars + "])"
-    + "([" + locale.spaces + "])+"
-    + "([" + locale.ellipsis + "][" + locale.rightDoubleQuote + locale.rightSingleQuote + "]?$)";
+      "([" + locale.lowercaseChars + "])" +
+      "([" + locale.spaces + "])+" +
+      "([" + locale.ellipsis + "][" + locale.rightDoubleQuote + locale.rightSingleQuote + "]?$)";
   let re = new RegExp(pattern, "gm");
   return string.replace(re, "$1$3");
 }
 
-
+//
 
 export function fixEllipsis(string, locale) {
   string = replaceThreeCharsWithEllipsis(string, locale);
