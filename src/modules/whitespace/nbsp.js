@@ -1,14 +1,18 @@
-import {replaceWithOverlapHandling} from "../../utils/regex-overlap.js";
+import { replaceWithOverlapHandling } from "../../utils/regex-overlap.js";
+
+//
 
 export function removeNbspBetweenMultiCharWords(string, locale) {
+  // prettier-ignore
   let pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})(["+ locale.nbsp + locale.narrowNbsp +"])(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})";
   let re = new RegExp(pattern, "g");
-  
+
   return replaceWithOverlapHandling(string, re, "$1 $3");
 }
 
+//
 
-/*
+/**
   Replace a space with a non-breaking space after a single-letter preposition
 
   Examples:
@@ -30,27 +34,29 @@ export function removeNbspBetweenMultiCharWords(string, locale) {
 */
 export function addNbspAfterPreposition(string, locale) {
   // a) small letter prepositions
+  // prettier-ignore
   let pattern =
-      "(^|[" + locale.space + "]|[^" + locale.allChars + locale.cardinalNumber + locale.apostrophe + locale.plus + locale.minus + locale.hyphen + "])"
-    + "([" + locale.lowercaseChars + "])"
-    + "([" + locale.space + "])";
+      "(^|[" + locale.space + "]|[^" + locale.allChars + locale.cardinalNumber + locale.apostrophe + locale.plus + locale.minus + locale.hyphen + "])" +
+      "([" + locale.lowercaseChars + "])" +
+      "([" + locale.space + "])";
   let re = new RegExp(pattern, "g");
   let replacement = "$1$2" + locale.nbsp;
-  
+
   string = replaceWithOverlapHandling(string, re, replacement);
-  
+
   // b) capital letter prepositions at the beggining of the sentence
+  // prettier-ignore
   pattern = 
-    "(^|[" 
-      + locale.sentencePunctuation
-      + locale.ellipsis
-      + locale.copyright
-      + locale.registeredTrademark
-      + locale.soundRecordingCopyright
-      + "])"
-  + "(["+ locale.spaces +"]?)"
-  + "(["+ locale.uppercaseChars +"])"
-  + "(["+ locale.spaces +"])"
+    "(^|[" +
+      locale.sentencePunctuation +
+      locale.ellipsis +
+      locale.copyright +
+      locale.registeredTrademark +
+      locale.soundRecordingCopyright +
+      "])" +
+    "(["+ locale.spaces +"]?)" +
+    "(["+ locale.uppercaseChars +"])" +
+    "(["+ locale.spaces +"])";
 
   re = new RegExp(pattern, "g");
   replacement = "$1$2$3" + locale.nbsp;
@@ -59,24 +65,25 @@ export function addNbspAfterPreposition(string, locale) {
   // c) “I” in English
 
   if (locale.locale == "en-us") {
+    // prettier-ignore
     string = string.replace(
       new RegExp(
-        "(^|[" + locale.spaces + "])"
-      + "(I)" 
-      + "(["+ locale.spaces +"])", 
+        "(^|[" + locale.spaces + "])" +
+        "(I)" +
+        "(["+ locale.spaces +"])", 
         "g"
       ),
       "$1$2" + locale.nbsp
     );
   }
 
-
   return string;
 }
 
-
+//
 
 export function addNbspAfterAmpersand(string, locale) {
+  // prettier-ignore
   let pattern = "([" + locale.spaces + "])(" + locale.ampersand + ")([" + locale.spaces + "])";
   let re = new RegExp(pattern, "g");
   let replacement = " $2" + locale.nbsp;
@@ -84,9 +91,9 @@ export function addNbspAfterAmpersand(string, locale) {
   return string.replace(re, replacement);
 }
 
+//
 
-
-/*
+/**
   Add a non-breaking space after a cardinal number (up to 99) that precedes a word.
 
   Assumptions and Limitations
@@ -97,24 +104,25 @@ export function addNbspAfterAmpersand(string, locale) {
   @returns {string} output with nbsp after cardinal numbers
 */
 export function addNbspAfterCardinalNumber(string, locale) {
-
+  // prettier-ignore
   return string.replace(
     new RegExp(
-        "([^" + locale.nbsp + locale.cardinalNumber + "]|^)"
-      + "(" + locale.cardinalNumber + "{1,2})"
-      + "([" + locale.spaces + "])"
-      + "(["+ locale.allChars +"])", 
+        "([^" + locale.nbsp + locale.cardinalNumber + "]|^)" +
+        "(" + locale.cardinalNumber + "{1,2})" +
+        "([" + locale.spaces + "])" +
+        "(["+ locale.allChars +"])", 
       "g"
     ),
-      "$1"
-    + "$2"
-    + locale.nbsp
-    + "$4"
+      "$1" +
+      "$2" +
+      locale.nbsp +
+      "$4"
   );
 }
 
+//
 
-/*
+/**
   Add a non-breaking space after on ordinal number (up to 99) that precedes a word.
 
   Assumptions and Limitations
@@ -125,28 +133,28 @@ export function addNbspAfterCardinalNumber(string, locale) {
   @returns {string} output with nbsp after ordinal numbers
 */
 export function addNbspAfterOrdinalNumber(string, locale) {
-
+  // prettier-ignore
   return string.replace(
     new RegExp(
-        "([^" + locale.nbsp + locale.cardinalNumber + "_%\\-]|^)"
-      + "("+ locale.cardinalNumber +"{1,2})"
-      + "("+ locale.ordinalIndicator +")"
-      + "(["+ locale.spaces +"]?)"
-      + "(["+ locale.allChars +"])", 
+        "([^" + locale.nbsp + locale.cardinalNumber + "_%\\-]|^)" +
+        "("+ locale.cardinalNumber +"{1,2})" +
+        "("+ locale.ordinalIndicator +")" +
+        "(["+ locale.spaces +"]?)" +
+        "(["+ locale.allChars +"])", 
       "g"
     ),
-      "$1"
-    + "$2"
-    + "$3"
-    + locale.nbsp
-    + "$5"
+      "$1" +
+      "$2" +
+      "$3" +
+      locale.nbsp +
+      "$5"
   );
-
 }
 
-
+//
 
 export function addNbspWithinOrdinalDate(string, locale) {
+  // prettier-ignore
   let pattern = "("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"]?)("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"]?)("+ locale.cardinalNumber +")";
   let re = new RegExp(pattern, "g");
   let replacement = "";
@@ -166,8 +174,9 @@ export function addNbspWithinOrdinalDate(string, locale) {
   return string.replace(re, replacement);
 }
 
+//
 
-/*
+/**
   Fix non-breaking space after Ordinal Roman Number
 
   Examples:
@@ -180,13 +189,14 @@ export function addNbspWithinOrdinalDate(string, locale) {
 */
 export function addNbspAfterRomanNumeral(string, locale) {
   // we can identify roman numeral effectively only if it has an ordinal indicator
-  if(locale.romanOrdinalIndicator != "") {
+  if (locale.romanOrdinalIndicator != "") {
+    // prettier-ignore
     let pattern =
-        "(\\b)"
-      + "(["+ locale.romanNumerals + "]+)"
-      + "("+ locale.romanOrdinalIndicator +")"
-      + "(["+ locale.spaces +"]?)"
-      + "([" + locale.allChars + locale.cardinalNumber + "])";
+        "(\\b)" +
+        "(["+ locale.romanNumerals + "]+)" +
+        "("+ locale.romanOrdinalIndicator +")" +
+        "(["+ locale.spaces +"]?)" +
+        "([" + locale.allChars + locale.cardinalNumber + "])";
     let re = new RegExp(pattern, "g");
     let replacement = "$1$2$3" + locale.nbsp + "$5";
 
@@ -196,8 +206,9 @@ export function addNbspAfterRomanNumeral(string, locale) {
   return string;
 }
 
+//
 
-/*
+/**
   Fix non-breaking space around name with regnal number
 
   Examples:
@@ -213,40 +224,38 @@ export function addNbspAfterRomanNumeral(string, locale) {
   @returns {string} — output with correctly placed non-breaking space
 */
 export function fixNbspForNameWithRegnalNumber(string, locale) {
-    let pattern =
-      "(\\b[" + locale.uppercaseChars + "]["+ locale.lowercaseChars +"]+?)"
-      + "([" + locale.spaces + "])"
-      + "([" + locale.romanNumerals +"]+\\b)"
-      + "("  + locale.romanOrdinalIndicator +")"
-      + "([" + locale.nbsp + "]?)";
-    let re = new RegExp(pattern, "g");
+  // prettier-ignore
+  let pattern =
+      "(\\b[" + locale.uppercaseChars + "]["+ locale.lowercaseChars +"]+?)" +
+      "([" + locale.spaces + "])" +
+      "([" + locale.romanNumerals +"]+\\b)" +
+      "("  + locale.romanOrdinalIndicator +")" +
+      "([" + locale.nbsp + "]?)";
+  let re = new RegExp(pattern, "g");
 
-    return string.replace(re, function($0, $1, $2, $3, $4, $5){
-      if ($5 == "" && $3 == "I")  {
-        return $1 + locale.space + $3 + $4;
-      }
-      else if ($5 == "" && $3 != "I") {
-        return $1 + locale.nbsp + $3 + $4;
-      }
-      else if ($5 == locale.nbsp && $3 == "I") {
-        return $1 + locale.space + $3 + $4 + $5;
-      }
-      else {
-        return $1 + locale.nbsp + $3 + $4 + locale.space;
-      }
-
-    });
+  return string.replace(re, function ($0, $1, $2, $3, $4, $5) {
+    if ($5 == "" && $3 == "I") {
+      return $1 + locale.space + $3 + $4;
+    } else if ($5 == "" && $3 != "I") {
+      return $1 + locale.nbsp + $3 + $4;
+    } else if ($5 == locale.nbsp && $3 == "I") {
+      return $1 + locale.space + $3 + $4 + $5;
+    } else {
+      return $1 + locale.nbsp + $3 + $4 + locale.space;
+    }
+  });
 }
 
+//
 
-
-/*
+/**
   Fix nbsp before % (percent), ‰ (permille) and ‱ (permyriad)
 
   @param {string} string — input text for identification
   @returns {string} — output with correctly added non-breaking space
 */
 export function addNbspBeforePercent(string, locale) {
+  // prettier-ignore
   let pattern = "([" + locale.spaces + "])([" + locale.percent + locale.permille + locale.permyriad + "])";
   let re = new RegExp(pattern, "g");
   let replacement = locale.nbsp + "$2";
@@ -254,10 +263,9 @@ export function addNbspBeforePercent(string, locale) {
   return string.replace(re, replacement);
 }
 
+//
 
-
-
-/*
+/**
   Add/Swap non-breaking space before a single capital letter in a sentence
 
   Examples:
@@ -291,43 +299,45 @@ export function addNbspBeforeSingleLetter(string, locale) {
     uppercaseChars = uppercaseChars.replace(/A-Z/g, "A-HJ-Z");
   }
 
+  // prettier-ignore
   let pattern = 
-    "([^" 
-        + locale.sentencePunctuation
-        + locale.ellipsis
-        + locale.closingBrackets
-        + locale.rightDoubleQuote
-        + locale.rightSingleQuote
-        + locale.apostrophe
-        + locale.multiplicationSign
-        + locale.emDash
-        + locale.enDash
-        + "])"
-    + "(["+ locale.spaces +"])"
-    + "(["+ uppercaseChars +"])"
-    + "((["+ locale.spaces +"])|(\\.$|$))";
+    "([^" +
+        locale.sentencePunctuation +
+        locale.ellipsis +
+        locale.closingBrackets +
+        locale.rightDoubleQuote +
+        locale.rightSingleQuote +
+        locale.apostrophe +
+        locale.multiplicationSign +
+        locale.emDash +
+        locale.enDash +
+        "])" +
+    "(["+ locale.spaces +"])" +
+    "(["+ uppercaseChars +"])" +
+    "((["+ locale.spaces +"])|(\\.$|$))";
 
   let re = new RegExp(pattern, "g");
 
-  return string.replace(re, function($0, $1, $2, $3, $4, $5){
+  return string.replace(re, function ($0, $1, $2, $3, $4, $5) {
     if (locale.locale == "en-us") {
       // don't make changes after "I" in en-us
-      return $1 + locale.nbsp + $3 + $4
-
-    } else if ($3 == "I" && ($5 == locale.nbsp || $5 == locale.hairSpace || $5 == locale.narrowNbsp)) {
-      // replace nbsp after "I" in other languages 
-      return $1 + locale.nbsp + $3 + locale.space
-
+      return $1 + locale.nbsp + $3 + $4;
+    } else if (
+      $3 == "I" &&
+      ($5 == locale.nbsp || $5 == locale.hairSpace || $5 == locale.narrowNbsp)
+    ) {
+      // replace nbsp after "I" in other languages
+      return $1 + locale.nbsp + $3 + locale.space;
     } else {
       // just add nbsp before single word capital letter in the rest of the cases
-      return $1 + locale.nbsp + $3 + $4	
-
+      return $1 + locale.nbsp + $3 + $4;
     }
   });
 }
 
+//
 
-/*
+/**
   Helper function that adds nbsp after symbols
   in their respective *.js files
 
@@ -335,6 +345,7 @@ export function addNbspBeforeSingleLetter(string, locale) {
   @returns {string} — output with correctly added non-breaking space
 */
 export function addNbspAfterSymbol(string, symbol, locale) {
+  // prettier-ignore
   let pattern = "("+ symbol +")([^" + locale.spaces + "])";
   let re = new RegExp(pattern, "g");
   let replacement = "$1" + locale.nbsp + "$2";
@@ -342,8 +353,9 @@ export function addNbspAfterSymbol(string, symbol, locale) {
   return string.replace(re, replacement);
 }
 
+//
 
-/*
+/**
   Helper function that fixes various spaces for nbsp after symbols
   in their respective *.js files
 
@@ -351,6 +363,7 @@ export function addNbspAfterSymbol(string, symbol, locale) {
   @returns {string} — output with correctly placed non-breaking space
 */
 export function replaceSpacesWithNbspAfterSymbol(string, symbol, locale) {
+  // prettier-ignore
   let pattern = "("+ symbol +")([" + locale.spaces + "])";
   let re = new RegExp(pattern, "g");
   let replacement = "$1" + locale.nbsp;
@@ -358,10 +371,9 @@ export function replaceSpacesWithNbspAfterSymbol(string, symbol, locale) {
   return string.replace(re, replacement);
 }
 
+//
 
-
-
-/*
+/**
   Consolidates the use of non-breaking spaces
 
   @param {string} string — input text for identification
