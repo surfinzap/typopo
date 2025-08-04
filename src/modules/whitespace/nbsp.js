@@ -1,11 +1,10 @@
+import {replaceWithOverlapHandling} from "../../utils/regex-overlap.js";
 
 export function removeNbspBetweenMultiCharWords(string, locale) {
   let pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})(["+ locale.nbsp + locale.narrowNbsp +"])(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})";
   let re = new RegExp(pattern, "g");
-  string =  string.replace(re, "$1 $3");
-  string =  string.replace(re, "$1 $3"); //calling it twice to catch odd/even occurences
-
-  return string;
+  
+  return replaceWithOverlapHandling(string, re, "$1 $3");
 }
 
 
@@ -37,8 +36,8 @@ export function addNbspAfterPreposition(string, locale) {
     + "([" + locale.space + "])";
   let re = new RegExp(pattern, "g");
   let replacement = "$1$2" + locale.nbsp;
-  string = string.replace(re, replacement);
-  string = string.replace(re, replacement); //calling it twice to catch odd/even occurences
+  
+  string = replaceWithOverlapHandling(string, re, replacement);
   
   // b) capital letter prepositions at the beggining of the sentence
   pattern = 

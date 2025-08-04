@@ -1,5 +1,7 @@
+import { replaceWithOverlapHandling } from "../../utils/regex-overlap.js";
+
 /*
-  Replace “x/X” with “×” in the following contexts:
+  Replace "x/X" with "×" in the following contexts:
   * 5 x 5 			→ 5⎵×⎵5 				(number × number)
   * 5″ x 4″ 		→ 5″⎵×⎵4″				(number including double/single primes)
   * 5 mm X 5 mm → 5 mm⎵×⎵5 mm		(number with measurement)
@@ -16,15 +18,12 @@ export function fixMultiplicationSignBetweenNumbers(string, locale) {
       + "([" + locale.spaces + "]?[" + locale.lowercaseChars + locale.singlePrime + locale.doublePrime + "]*)"
       + "([" + locale.spaces + "][x][" + locale.spaces + "])"
       + "([" + locale.cardinalNumber + "]+)"
-      + "([" + locale.spaces + "]?[" + locale.lowercaseChars + locale.singlePrime + locale.doublePrime + "]*)";
+      + "([" + locale.spaces + "]?[" + locale.lowercaseChars + locale.singlePrime + locale.doublePrime + "]*)"; 
 
   let re = new RegExp(pattern, "gi");
   let replacement = "$1$2" + locale.nbsp +  locale.multiplicationSign + locale.nbsp + "$4$5";
 
-  string = string.replace(re, replacement);
-  string = string.replace(re, replacement); // run it twice to catch odd/even occurences
-
-  return string;
+  return replaceWithOverlapHandling(string, re, replacement);
 }
 
 
@@ -49,10 +48,7 @@ export function fixMultiplicationSignBetweenWords(string, locale) {
   let re = new RegExp(pattern, "g");
   let replacement = "$1" + locale.nbsp +  locale.multiplicationSign + locale.nbsp + "$3";
 
-  string = string.replace(re, replacement);
-  string = string.replace(re, replacement); // run it twice to catch odd/even occurences
-
-  return string;
+  return replaceWithOverlapHandling(string, re, replacement);
 }
 
 

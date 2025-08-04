@@ -57,4 +57,5 @@ test-result.txt
 sanitized-test-result.txt
 
 # AI assistants
+.claude/
 CLAUDE.md
