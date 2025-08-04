@@ -49,7 +49,7 @@ jobs:
           PASSING_TESTS=$(grep -Eo '[0-9]+ passing' sanitized-test-result.txt | grep -Eo '[0-9]+')
           echo "Passing tests: $PASSING_TESTS"
           # Create JSON file with the test count
-          echo "{ \"schemaVersion\": 1, \"label\": \"tests\", \"message\": \"$PASSING_TESTS tests passing\", \"color\": \"green\" }" > tests-status.json
+          echo "{ \"schemaVersion\": 1, \"label\": \"tests\", \"message\": \"$PASSING_TESTS tests passing\", \"color\": \"#007f50\" }" > tests-status.json
 
       # Commit the updated JSON file back to the repo
       - name: Commit test count JSON
