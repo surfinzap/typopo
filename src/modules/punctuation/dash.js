@@ -33,7 +33,8 @@ export function replaceTwoHyphensWithEnDash(string) {
   @returns {string} output with fixed dashes and spaces between words
 */
 export function fixDashesBetweenWords(string, locale) {
-  let pattern = "([" + locale.allChars + "])" 
+  let pattern = 
+      "([" + locale.allChars + "])" 
     + "("
       + "[" + locale.spaces + "]*[" + locale.enDash + locale.emDash + "][" + locale.spaces + "]*" 
       + "|"
@@ -62,7 +63,6 @@ export function fixDashesBetweenWords(string, locale) {
 
   return string.replace(re, replacement);
 }
-
 
 
 

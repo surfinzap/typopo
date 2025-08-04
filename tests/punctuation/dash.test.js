@@ -9,6 +9,8 @@ import {replaceThreeHyphensWithEmDash,
 import assert from 'assert';
 import Locale from "../../src/locale/locale";
 
+
+
 describe('Replace 3 hyphens with an em dash\n', () => {
   let testCase = {
     "and --- she said": "and — she said",
@@ -20,6 +22,7 @@ describe('Replace 3 hyphens with an em dash\n', () => {
     });
   });
 });
+
 
 
 describe('Replace 2 hyphens with an en dash\n', () => {
