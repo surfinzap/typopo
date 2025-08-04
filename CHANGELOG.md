@@ -5,7 +5,7 @@
 
 ### 🔨 Maintenance
 - Reorganize the folder structure
-- Update NPM packages to their latest versions
+- Update NPM packages to their latest versions			
 
 
 

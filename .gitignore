@@ -56,3 +56,5 @@ node_modules/
 test-result.txt
 sanitized-test-result.txt
 
+# AI assistants
+CLAUDE.md
