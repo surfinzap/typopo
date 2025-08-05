@@ -1,0 +1,13 @@
+# Ignore everything by default
+*
+
+# Only format these directories
+!src/
+!tests/
+!src/**
+!tests/**
+
+# But ignore specific files if needed
+dist/
+build/
+node_modules/
