@@ -1,14 +1,14 @@
 const quotes = {
-  leftDoubleQuote : 				"„",
-  rightDoubleQuote : 				"“",
-  leftSingleQuote : 				"‚",
-  rightSingleQuote : 				"‘",
+  leftDoubleQuote:  "„",
+  rightDoubleQuote: "“",
+  leftSingleQuote:  "‚",
+  rightSingleQuote: "‘",
 };
 
 const numbers = {
-  ordinalIndicator :				"\\.",
-  romanOrdinalIndicator :		"\\.",
-}
+  ordinalIndicator:      "\\.",
+  romanOrdinalIndicator: "\\.",
+};
 
 const singleWordAbbreviations = [
   "č",
@@ -24,9 +24,8 @@ const singleWordAbbreviations = [
   "čl",
   "cit",
   "roč",
-  "vyd"
-]
-
+  "vyd",
+];
 
 /*
   The list of common multi-word abbrevations that are
@@ -41,12 +40,12 @@ const multipleWordAbbreviations = [
   "s l",
   "t j",
   "zodp red",
-  "t č"
-]
+  "t č",
+];
 
 export default {
   quotes,
   numbers,
   singleWordAbbreviations,
-  multipleWordAbbreviations
-}
+  multipleWordAbbreviations,
+};
