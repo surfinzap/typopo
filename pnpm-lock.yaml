@@ -23,6 +23,9 @@ importers:
       '@eslint/js':
         specifier: ^9.32.0
         version: 9.32.0
+      '@huggingface/prettier-plugin-vertical-align':
+        specifier: ^0.2.3
+        version: 0.2.3
       babelify:
         specifier: ^10.0.0
         version: 10.0.0(@babel/core@7.28.0)
@@ -68,6 +71,9 @@ importers:
       mocha:
         specifier: ^11.7.1
         version: 11.7.1
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
       vinyl-buffer:
         specifier: ^1.0.1
         version: 1.0.1
@@ -660,6 +666,9 @@ packages:
   '@gulpjs/to-absolute-glob@4.0.0':
     resolution: {integrity: sha512-kjotm7XJrJ6v+7knhPaRgaT6q8F8K2jiafwYdNHLzmV0uGLuZY43FK6smNSHUPrhq5kX2slCUy+RGG/xGqmIKA==}
     engines: {node: '>=10.13.0'}
+
+  '@huggingface/prettier-plugin-vertical-align@0.2.3':
+    resolution: {integrity: sha512-x0IqKYPT92TIJRaZJueinnQenVWniWuJcTP4/RbiwYPY5g8ygTyUdVM62Q1GoNWEOcREqkq/JVrmmvO0VILx/A==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2411,6 +2420,11 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
+  prettier@3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
 
@@ -3835,6 +3849,8 @@ snapshots:
   '@gulpjs/to-absolute-glob@4.0.0':
     dependencies:
       is-negated-glob: 1.0.0
+
+  '@huggingface/prettier-plugin-vertical-align@0.2.3': {}
 
   '@humanfs/core@0.19.1': {}
 
@@ -5809,6 +5825,8 @@ snapshots:
       source-map: 0.6.1
 
   prelude-ls@1.2.1: {}
+
+  prettier@3.6.2: {}
 
   process-nextick-args@2.0.1: {}
 
