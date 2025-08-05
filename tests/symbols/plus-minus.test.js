@@ -1,8 +1,8 @@
-import {fixPlusMinus} from "../../src/modules/symbols/plus-minus";
-import assert from 'assert';
+import { fixPlusMinus } from "../../src/modules/symbols/plus-minus";
+import assert from "assert";
 import Locale from "../../src/locale/locale";
 
-describe('Fix plus-minus symbol ±\n', () => {
+describe("Fix plus-minus symbol ±\n", () => {
   let testCase = {
     "+-": "±",
     "-+": "±",
