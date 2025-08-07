@@ -1,0 +1,78 @@
+I've just realized that I'm I could use backticks format for majority of regexes.
+
+Scope: all *.js files in src/ where applicable
+
+So, in all of those files, I'm using the pattern for regexes to be written on multiple lines for better readability.
+
+Example:
+```js
+// prettier-ignore
+let pattern =
+    "(" + locale.cardinalNumber + ")" +
+    "([" + locale.spaces + "]?" +
+    "[" + locale.hyphen + locale.enDash + locale.emDash + "]" +
+    "[" + locale.spaces + "]?)" +
+    "(" + locale.cardinalNumber + ")";
+let re = new RegExp(pattern, "g");
+let replacement = "$1" + "{{typopo__endash}}" + "$3";
+```
+
+I'd like this pattern to be changed to backticks option:
+```js
+// prettier-ignore
+let pattern =
+    `(${locale.cardinalNumber})` +
+    `([${locale.spaces}]?` +
+    `[${locale.hyphen}${locale.enDash}${locale.emDash}]` +
+    `[${locale.spaces}]?)` +
+    `(${locale.cardinalNumber})`;
+let re = new RegExp(pattern, "g");
+let replacement = `$1{{typopo__endash}}$3`;
+```
+
+always keep `// prettier-ignore`
+
+There is one more rule, because last time, you've been changing it. So in some cases I have these shorthand style, where pattern, re, and replacement are combined, e.g.
+```js
+string = string.replace(
+  new RegExp(
+    "([^0-9]|^)" +
+    "(" + locale.doubleQuoteAdepts + ")" +
+    "(.+?)" +
+    "(\\d+)" +
+    "(" + locale.doubleQuoteAdepts + ")" +
+    "([" + locale.terminalPunctuation + locale.ellipsis + "])", 
+    "g"
+  ),
+    "$1" +
+    "$2" +
+    "$3" +
+    "$4" +
+    "$6" +
+    "$5"
+)
+```
+
+in this case, change it to backticks and keep the shorthand. don't expand into pattern, re, replacemant. I'd like result like this:
+```
+  string = string.replace(
+      new RegExp(
+          `([^0-9]|^)` +
+          `(${locale.doubleQuoteAdepts})` +
+          `(.+?)` +
+          `(\\d+)` +
+          `(${locale.doubleQuoteAdepts})` +
+          `([${locale.terminalPunctuation}${locale.ellipsis}])`,
+          "g"
+      ),
+      `$1` +
+      `$2` +
+      `$3` +
+      `$4` +
+      `$6` +
+      `$5`
+  );
+```
+
+Thanks
+
