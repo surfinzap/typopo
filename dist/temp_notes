@@ -1,8 +1,6 @@
-I've just realized that I'm I could use backticks format for majority of regexes.
+A while back I asked you to change regexes defined as pattern to backticks version:
 
-Scope: all *.js files in src/ where applicable
-
-So, in all of those files, I'm using the pattern for regexes to be written on multiple lines for better readability.
+I'm using the pattern for regexes to be written on multiple lines for better readability.
 
 Example:
 ```js
@@ -32,7 +30,7 @@ let replacement = `$1{{typopo__endash}}$3`;
 
 always keep `// prettier-ignore`
 
-There is one more rule, because last time, you've been changing it. So in some cases I have these shorthand style, where pattern, re, and replacement are combined, e.g.
+There is one more rule. In some cases I have these shorthand style, where pattern, re, and replacement are combined, e.g.
 ```js
 string = string.replace(
   new RegExp(
@@ -54,7 +52,7 @@ string = string.replace(
 ```
 
 in this case, change it to backticks and keep the shorthand. don't expand into pattern, re, replacemant. I'd like result like this:
-```
+```js
   string = string.replace(
       new RegExp(
           `([^0-9]|^)` +
@@ -74,5 +72,9 @@ in this case, change it to backticks and keep the shorthand. don't expand into p
   );
 ```
 
-Thanks
+Last time, you did impressively well, but you forgot to do the files:
+- double-quotes.js
+- ellipsis.js
+
+Can you do them please? 
 

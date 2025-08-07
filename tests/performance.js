@@ -20,48 +20,78 @@ function generateBadlyFormattedText(length) {
     "Philip K.Dick",
   ];
 
-  let text = "";
+  const chunks = [];
+  let currentLength = 0;
   let patternIndex = 0;
 
-  while (text.length < length) {
-    text += badPatterns[patternIndex % badPatterns.length] + " ";
+  while (currentLength < length) {
+    const pattern = badPatterns[patternIndex % badPatterns.length] + " ";
+    chunks.push(pattern);
+    currentLength += pattern.length;
     patternIndex++;
   }
 
-  return text.substring(0, length);
+  return chunks.join("").substring(0, length);
 }
 
 function runPerformanceTest(textLength, iterations = 1000) {
   const testText = generateBadlyFormattedText(textLength);
-  const times = [];
+
+  // For large texts, reduce iterations to avoid excessive runtime
+  const actualIterations = textLength > 50000 ? Math.min(iterations, 100) : iterations;
+
+  // Tracking variables for statistics (streaming calculations)
+  let totalTime = 0;
+  let minTime = Infinity;
+  let maxTime = -Infinity;
+  const sampleTimes = []; // Only store samples for median, not all times
 
   // Warm up
   for (let i = 0; i < 5; i++) {
     typopo.fixTypos(testText, "en-us");
   }
 
-  // Actual test
-  for (let i = 0; i < iterations; i++) {
+  for (let i = 0; i < actualIterations; i++) {
     const start = performance.now();
     const result = typopo.fixTypos(testText, "en-us");
     const end = performance.now();
-    times.push(end - start);
+
+    const duration = end - start;
+    totalTime += duration;
+    minTime = Math.min(minTime, duration);
+    maxTime = Math.max(maxTime, duration);
+
+    // Store only every 10th sample for median calculation to save memory
+    if (i % Math.max(1, Math.floor(actualIterations / 100)) === 0) {
+      sampleTimes.push(duration);
+    }
   }
 
   // Calculate statistics
-  const avgTime = times.reduce((a, b) => a + b, 0) / times.length;
-  const minTime = Math.min(...times);
-  const maxTime = Math.max(...times);
-  const medianTime = times.sort((a, b) => a - b)[Math.floor(times.length / 2)];
+  const avgTime = totalTime / actualIterations;
+  const medianTime =
+    sampleTimes.length > 0
+      ? sampleTimes.sort((a, b) => a - b)[Math.floor(sampleTimes.length / 2)]
+      : avgTime;
 
-  console.log(`=== Performance Results (${testText.length} chars) ===`);
+  console.log(
+    `=== Performance Results (${testText.length} chars, ${actualIterations} iterations) ===`
+  );
   console.log(`Avg time:  ${avgTime.toFixed(2)}ms`);
   console.log(`Med time:  ${medianTime.toFixed(2)}ms`);
   console.log(`Min time:  ${minTime.toFixed(2)}ms`);
   console.log(`Max time:  ${maxTime.toFixed(2)}ms`);
-  console.log(`Char/ms:   ${(testText.length / avgTime).toFixed(0)}\n`);
+  console.log(`Char/ms:   ${(testText.length / avgTime).toFixed(0)}`);
+  console.log(`Total time: ${(totalTime / 1000).toFixed(2)}s\n`);
 
-  return { avgTime, minTime, maxTime, medianTime, textLength: testText.length };
+  return {
+    avgTime,
+    minTime,
+    maxTime,
+    medianTime,
+    textLength: testText.length,
+    iterations: actualIterations,
+  };
 }
 
 console.log("Starting performance tests...");
