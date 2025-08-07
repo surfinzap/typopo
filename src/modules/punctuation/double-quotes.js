@@ -47,10 +47,10 @@ export function removeExtraPunctuationBeforeQuotes(string, locale) {
 export function removeExtraPunctuationAfterQuotes(string, locale) {
   // prettier-ignore
   let pattern =
-      "([^"+ locale.romanNumerals + "])" +
-      "([" + locale.sentencePunctuation + "])" +
-      "("  + locale.doubleQuoteAdepts + ")" +
-      "([" + locale.sentencePunctuation + "])";
+      `([^${locale.romanNumerals}])` +
+      `([${locale.sentencePunctuation}])` +
+      `(${locale.doubleQuoteAdepts})` +
+      `([${locale.sentencePunctuation}])`;
   let re = new RegExp(pattern, "g");
 
   return string.replace(re, "$1$2$3");
@@ -89,34 +89,34 @@ export function identifyDoublePrimes(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "([^0-9]|^)" +
-      "(" + locale.doubleQuoteAdepts + ")" +
-      "(.+?)" +
-      "(\\d+)" +
-      "(" + locale.doubleQuoteAdepts + ")" +
-      "([" + locale.terminalPunctuation + locale.ellipsis + "])", 
+      `([^0-9]|^)` +
+      `(${locale.doubleQuoteAdepts})` +
+      `(.+?)` +
+      `(\\d+)` +
+      `(${locale.doubleQuoteAdepts})` +
+      `([${locale.terminalPunctuation}${locale.ellipsis}])`,
       "g"
     ),
-      "$1" +
-      "$2" +
-      "$3" +
-      "$4" +
-      "$6" +
-      "$5"
+      `$1` +
+      `$2` +
+      `$3` +
+      `$4` +
+      `$6` +
+      `$5`
   )
 
   // [2]
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "(\\b\\d{1,3})"
-    + "([" + locale.spaces +"]?)"
-    + "(“|”|\"|″|‘{2,}|’{2,}|'{2,}|′{2,})", 
+      `(\\b\\d{1,3})` +
+      `([${locale.spaces}]?)` +
+      `(“|”|\\"|″|‘{2,}|’{2,}|'{2,}|′{2,})`,
       "g"
     ),
-      "$1"
-    + "$2"
-    + "{{typopo__double-prime}}"
+      `$1` +
+      `$2` +
+      `{{typopo__double-prime}}`
   )
 
   return string;
@@ -142,28 +142,28 @@ export function identifyDoubleQuotePairs(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "(" + locale.doubleQuoteAdepts + ")" +
-      "(\\d+)" +
-      "({{typopo__double-prime}})",
+      `(${locale.doubleQuoteAdepts})` +
+      `(\\d+)` +
+      `({{typopo__double-prime}})`,
       "g"
     ),
-      "{{typopo__left-double-quote}}" +
-      "$2" +
-      "{{typopo__right-double-quote}}"
+      `{{typopo__left-double-quote}}` +
+      `$2` +
+      `{{typopo__right-double-quote}}`
   );
 
   // generic rule
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "(" + locale.doubleQuoteAdepts + ")" +
-      "(.*?)" +
-      "(" + locale.doubleQuoteAdepts + ")",
+      `(${locale.doubleQuoteAdepts})` +
+      `(.*?)` +
+      `(${locale.doubleQuoteAdepts})`,
       "g"
     ),
-      "{{typopo__left-double-quote}}" +
-      "$2" +
-      "{{typopo__right-double-quote}}"
+      `{{typopo__left-double-quote}}` +
+      `$2` +
+      `{{typopo__right-double-quote}}`
   );
 
   return string;
@@ -188,8 +188,8 @@ export function identifyDoubleQuotePairs(string, locale) {
 export function identifyStandaloneLeftDoubleQuote(string, locale) {
   // prettier-ignore
   let pattern = 
-      "(" + locale.doubleQuoteAdepts + ")" +
-      "([0-9" + locale.lowercaseChars + locale.uppercaseChars + "])";
+      `(${locale.doubleQuoteAdepts})` +
+      `([0-9${locale.lowercaseChars}${locale.uppercaseChars}])`;
 
   let re = new RegExp(pattern, "g");
   return string.replace(re, "{{typopo__left-double-quote--standalone}}$2");
@@ -214,8 +214,8 @@ export function identifyStandaloneLeftDoubleQuote(string, locale) {
 export function identifyStandaloneRightDoubleQuote(string, locale) {
   // prettier-ignore
   let pattern = 
-      "([" + locale.lowercaseChars + locale.uppercaseChars + locale.sentencePunctuation + locale.ellipsis + "])" +
-      "(" + locale.doubleQuoteAdepts + ")";
+      `([${locale.lowercaseChars}${locale.uppercaseChars}${locale.sentencePunctuation}${locale.ellipsis}])` +
+      `(${locale.doubleQuoteAdepts})`;
   let re = new RegExp(pattern, "g");
 
   return string.replace(re, "$1{{typopo__right-double-quote--standalone}}");
@@ -236,9 +236,9 @@ export function identifyStandaloneRightDoubleQuote(string, locale) {
 export function removeUnidentifiedDoubleQuote(string, locale) {
   // prettier-ignore
   let pattern = 
-      "([" + locale.spaces + "])" +
-      "(" + locale.doubleQuoteAdepts + ")" +
-      "([" + locale.spaces + "])";
+      `([${locale.spaces}])` +
+      `(${locale.doubleQuoteAdepts})` +
+      `([${locale.spaces}])`;
   let re = new RegExp(pattern, "g");
   return string.replace(re, "$1");
 }
@@ -266,27 +266,27 @@ export function replaceDoublePrimeWDoubleQuote(string) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "({{typopo__left-double-quote--standalone}})" +
-      "(.*?)" +
-      "({{typopo__double-prime}})",
+      `({{typopo__left-double-quote--standalone}})` +
+      `(.*?)` +
+      `({{typopo__double-prime}})`,
       "g"
     ),
-    "{{typopo__left-double-quote}}" +
-    "$2" +
-    "{{typopo__right-double-quote}}"
+    `{{typopo__left-double-quote}}` +
+    `$2` +
+    `{{typopo__right-double-quote}}`
   );
 
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "({{typopo__double-prime}})" +
-      "(.*?)" +
-      "({{typopo__right-double-quote--standalone}})",
+      `({{typopo__double-prime}})` +
+      `(.*?)` +
+      `({{typopo__right-double-quote--standalone}})`,
       "g"
     ),
-    "{{typopo__left-double-quote}}" +
-    "$2" +
-    "{{typopo__right-double-quote}}"
+    `{{typopo__left-double-quote}}` +
+    `$2` +
+    `{{typopo__right-double-quote}}`
   );
 
   return string;
@@ -336,22 +336,22 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "([^" + locale.sentencePunctuation + "])" +  // 1
-      "([" + locale.spaces + "])" +                // 2
-      "(" + locale.leftDoubleQuote + ")" +         // 3
-      "([^" + locale.rightDoubleQuote +"]+?)" +    // 4
-      "([^" + locale.romanNumerals + locale.closingBrackets + "])" +  // 5
-      "([" + locale.terminalPunctuation + locale.ellipsis + "])" +    // 6
-      "(" + locale.rightDoubleQuote + ")",       // 7
+      `([^${locale.sentencePunctuation}])` +  // 1
+      `([${locale.spaces}])` +                // 2
+      `(${locale.leftDoubleQuote})` +         // 3
+      `([^${locale.rightDoubleQuote}]+?)` +    // 4
+      `([^${locale.romanNumerals}${locale.closingBrackets}])` +  // 5
+      `([${locale.terminalPunctuation}${locale.ellipsis}])` +    // 6
+      `(${locale.rightDoubleQuote})`,       // 7
       "g"
     ),
-    "$1" +
-    "$2" +
-    "$3" +
-    "$4" +
-    "$5" +
-    "$7" +
-    "$6"
+    `$1` +
+    `$2` +
+    `$3` +
+    `$4` +
+    `$5` +
+    `$7` +
+    `$6`
   );
 
   // Match quoted sentence within an unquoted sentence
@@ -360,27 +360,27 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "([^" + locale.sentencePunctuation + "])" +
-      "([" + locale.spaces + "])" +
-      "(" + locale.leftDoubleQuote + ")" +
-      "(.+?)" +
-      "([^" + locale.romanNumerals + "])" +
-      "(" + locale.rightDoubleQuote + ")" +
-      "([" + locale.terminalPunctuation + locale.ellipsis + "])" +
-      "([" + locale.spaces + "])" +
-      "([" + locale.lowercaseChars + "])",
+      `([^${locale.sentencePunctuation}])` +
+      `([${locale.spaces}])` +
+      `(${locale.leftDoubleQuote})` +
+      `(.+?)` +
+      `([^${locale.romanNumerals}])` +
+      `(${locale.rightDoubleQuote})` +
+      `([${locale.terminalPunctuation}${locale.ellipsis}])` +
+      `([${locale.spaces}])` +
+      `([${locale.lowercaseChars}])`,
 
       "g"
     ),
-      "$1" +
-      "$2" +
-      "$3" +
-      "$4" +
-      "$5" +
-      "$7" +
-      "$6" +
-      "$8" +
-      "$9"
+      `$1` +
+      `$2` +
+      `$3` +
+      `$4` +
+      `$5` +
+      `$7` +
+      `$6` +
+      `$8` +
+      `$9`
   );
 
   // Match the whole quoted sentence starting at the beginning of paragraph
@@ -388,19 +388,18 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "(^" +   locale.leftDoubleQuote +
-        "[^" + locale.rightDoubleQuote +"]+?" +
-        "[^" + locale.romanNumerals + "]" +
-      ")" +
-      "("  + locale.rightDoubleQuote + ")" +
-      "([" + locale.terminalPunctuation + locale.ellipsis + "])" +
-      "(\\B)",
+      `(^${locale.leftDoubleQuote}` +
+        `[^${locale.rightDoubleQuote}]+?` +
+        `[^${locale.romanNumerals}])` +
+      `(${locale.rightDoubleQuote})` +
+      `([${locale.terminalPunctuation}${locale.ellipsis}])` +
+      `(\\B)`,
       "gm"
     ),
-      "$1" +
-      "$3" +
-      "$2" +
-      "$4"
+      `$1` +
+      `$3` +
+      `$2` +
+      `$4`
   );
 
   // Match the whole quoted sentence starting after a sentence
@@ -408,21 +407,20 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "([" +   locale.sentencePunctuation + "]" +
-        "["  + locale.spaces + "]" +
-               locale.leftDoubleQuote +
-        "[^" + locale.rightDoubleQuote +"]+?" +
-        "[^" + locale.romanNumerals + "]" +
-      ")" +
-      "(" + locale.rightDoubleQuote + ")" +
-      "([" + locale.terminalPunctuation + locale.ellipsis + "])" +
-      "(\\B)",
+      `([${locale.sentencePunctuation}]` +
+        `[${locale.spaces}]` +
+               `${locale.leftDoubleQuote}` +
+        `[^${locale.rightDoubleQuote}]+?` +
+        `[^${locale.romanNumerals}])` +
+      `(${locale.rightDoubleQuote})` +
+      `([${locale.terminalPunctuation}${locale.ellipsis}])` +
+      `(\\B)`,
       "g"
     ),
-      "$1" +
-      "$3" +
-      "$2" +
-      "$4"
+      `$1` +
+      `$3` +
+      `$2` +
+      `$4`
   );
 
   // Match the whole quoted sentence starting after a quoted sentence
@@ -430,23 +428,23 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "([" + locale.sentencePunctuation + "]"
-    + "["  + locale.rightDoubleQuote + "]"
-    + "["  + locale.spaces + "]"
-    +        locale.leftDoubleQuote 
-    + "[^" + locale.rightDoubleQuote +"]+?"
-    + "[^" + locale.romanNumerals + "])"
+      `([${locale.sentencePunctuation}]` +
+      `[${locale.rightDoubleQuote}]` +
+      `[${locale.spaces}]` +
+      `${locale.leftDoubleQuote}` +
+      `[^${locale.rightDoubleQuote}]+?` +
+      `[^${locale.romanNumerals}])` +
 
-    + "(" + locale.rightDoubleQuote + ")"
-    + "([" + locale.terminalPunctuation + locale.ellipsis + "])"
-    + "(\\B)",
+      `(${locale.rightDoubleQuote})` +
+      `([${locale.terminalPunctuation}${locale.ellipsis}])` +
+      `(\\B)`,
 
       "g"
     ),
-      "$1"
-    + "$3"
-    + "$2"
-    + "$4"
+      `$1` +
+      `$3` +
+      `$2` +
+      `$4`
   );
 
   return string;
@@ -496,9 +494,9 @@ export function placeLocaleDoubleQuotes(string, locale) {
 export function removeExtraCommaAfterSentencePunctuation(string, locale) {
   // prettier-ignore
   let pattern = 
-      "([" + locale.sentencePunctuation + "])" +
-      "([,])" +
-      "(" + locale.rightDoubleQuote +")";
+      `([${locale.sentencePunctuation}])` +
+      `([,])` +
+      `(${locale.rightDoubleQuote})`;
 
   let re = new RegExp(pattern, "g");
   return string.replace(re, "$1$3");
@@ -529,28 +527,28 @@ export function removeExtraSpacesAroundQuotes(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "("+ locale.leftDoubleQuote +")" +
-      "(["+ locale.spaces +"])", 
+      `(${locale.leftDoubleQuote})` +
+      `([${locale.spaces}])`,
     "g"),
-    "$1"
+    `$1`
   );
 
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "(["+ locale.spaces +"])" +
-      "("+ locale.rightDoubleQuote +")",
+      `([${locale.spaces}])` +
+      `(${locale.rightDoubleQuote})`,
     "g"),
-    "$2"
+    `$2`
   );
 
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "(["+ locale.spaces +"])" +
-      "("+ locale.doublePrime +")", 
+      `([${locale.spaces}])` +
+      `(${locale.doublePrime})`,
     "g"),
-    "$2"
+    `$2`
   );
 
   return string;
@@ -573,10 +571,10 @@ export function addSpaceBeforeLeftDoubleQuote(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "([" + locale.sentencePunctuation + locale.allChars + "])" +
-      "(["+ locale.leftDoubleQuote +"])", 
+      `([${locale.sentencePunctuation}${locale.allChars}])` +
+      `([${locale.leftDoubleQuote}])`,
     "g"),
-    "$1 $2"
+    `$1 $2`
   );
 
   string = addNbspAfterPreposition(string, locale);
@@ -601,10 +599,10 @@ export function addSpaceAfterRightDoubleQuote(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      "([" + locale.rightDoubleQuote + "])" +
-      "([" + locale.allChars + "])",
+      `([${locale.rightDoubleQuote}])` +
+      `([${locale.allChars}])`,
     "g"),
-    "$1 $2"
+    `$1 $2`
   );
 }
 

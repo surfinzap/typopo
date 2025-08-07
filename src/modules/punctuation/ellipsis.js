@@ -85,13 +85,13 @@ export function replaceTwoPeriodsWithEllipsis(string, locale) {
 export function fixEllipsisSpacingAroundCommas(string, locale) {
   // prettier-ignore
   let pattern = 
-      "," +
-      "[" + locale.spaces + "]?" +
-      locale.ellipsis +
-      "[" + locale.spaces + "]?" +
-      ",";
+      `(,)` +
+      `([${locale.spaces}]?)` +
+      `(${locale.ellipsis})` +
+      `([${locale.spaces}]?)` +
+      `(,)`;
   let re = new RegExp(pattern, "g");
-  return string.replace(re, ", …,");
+  return string.replace(re, `$1 ${locale.ellipsis}$5`);
 }
 
 //
@@ -109,12 +109,12 @@ export function fixEllipsisSpacingAroundCommas(string, locale) {
 export function fixEllipsisAsLastItem(string, locale) {
   // prettier-ignore
   let pattern = 
-      "(,)" +
-      "([" + locale.spaces + "])?" +
-      "(" + locale.ellipsis + ")" +
-      "([" + locale.spaces + "])?" +
-      "(\\B|[" + locale.closingBrackets + "])" +
-      "([^,]|$)";
+      `(,)` +
+      `([${locale.spaces}]?)` +
+      `(${locale.ellipsis})` +
+      `([${locale.spaces}]?)` +
+      `(\\B|[${locale.closingBrackets}])` +
+      `([^,]|$)`;
 
   let re = new RegExp(pattern, "g");
 
@@ -135,9 +135,9 @@ export function fixEllipsisAsLastItem(string, locale) {
 export function fixAposiopesisStartingParagraph(string, locale) {
   // prettier-ignore
   let pattern =
-      "(^" + locale.ellipsis + ")" +
-      "([" + locale.spaces + "])" +
-      "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
+      `(^${locale.ellipsis})` +
+      `([${locale.spaces}])` +
+      `([${locale.lowercaseChars}${locale.uppercaseChars}])`;
   let re = new RegExp(pattern, "gm");
   return string.replace(re, "$1$3");
 }
@@ -157,11 +157,11 @@ export function fixAposiopesisStartingParagraph(string, locale) {
 export function fixAposiopesisStartingSentence(string, locale) {
   // prettier-ignore
   let pattern =
-      "([" + locale.sentencePunctuation + locale.terminalQuotes + "])" +
-      "([" + locale.spaces + "]?)" +
-      "([" + locale.ellipsis +"])" +
-      "([" + locale.spaces + "]?)" +
-      "([" + locale.lowercaseChars +"])";
+      `([${locale.sentencePunctuation}${locale.terminalQuotes}])` +
+      `([${locale.spaces}]?)` +
+      `([${locale.ellipsis}])` +
+      `([${locale.spaces}]?)` +
+      `([${locale.lowercaseChars}])`;
   let re = new RegExp(pattern, "g");
   return string.replace(re, "$1 $3$5");
 }
@@ -182,11 +182,11 @@ export function fixAposiopesisStartingSentence(string, locale) {
 export function fixAposiopesisBetweenSentences(string, locale) {
   // prettier-ignore
   let pattern =
-      "([" + locale.lowercaseChars + "])" +
-      "([" + locale.spaces + "])" +
-      "([" + locale.ellipsis + "])" +
-      "([" + locale.spaces + "]?)" +
-      "([" + locale.uppercaseChars + "])";
+      `([${locale.lowercaseChars}])` +
+      `([${locale.spaces}])` +
+      `([${locale.ellipsis}])` +
+      `([${locale.spaces}]?)` +
+      `([${locale.uppercaseChars}])`;
   let re = new RegExp(pattern, "g");
   return string.replace(re, "$1$3 $5");
 }
@@ -206,9 +206,9 @@ export function fixAposiopesisBetweenSentences(string, locale) {
 export function fixAposiopesisBetweenWords(string, locale) {
   // prettier-ignore
   let pattern =
-      "([" + locale.allChars + "])" +
-      "([" + locale.ellipsis + "])" +
-      "([" + locale.allChars + "])";
+      `([${locale.allChars}])` +
+      `([${locale.ellipsis}])` +
+      `([${locale.allChars}])`;
   let re = new RegExp(pattern, "g");
   return string.replace(re, "$1$2 $3");
 }
@@ -231,11 +231,11 @@ export function fixEllipsisBetweenSentences(string, locale) {
             of the full sentence in the middle of the paragraph */
   // prettier-ignore
   let pattern =
-      "([" + locale.sentencePunctuation + locale.terminalQuotes + "])" +
-      "([" + locale.spaces + "]?)" +
-      "(" + locale.ellipsis +")" +
-      "([" + locale.spaces + "]?)" +
-      "([" + locale.uppercaseChars +"])";
+      `([${locale.sentencePunctuation}${locale.terminalQuotes}])` +
+      `([${locale.spaces}]?)` +
+      `(${locale.ellipsis})` +
+      `([${locale.spaces}]?)` +
+      `([${locale.uppercaseChars}])`;
   let re = new RegExp(pattern, "g");
   return string.replace(re, "$1 $3 $5");
 }
@@ -254,9 +254,9 @@ export function fixEllipsisBetweenSentences(string, locale) {
 export function fixAposiopesisEndingParagraph(string, locale) {
   // prettier-ignore
   let pattern =
-      "([" + locale.lowercaseChars + "])" +
-      "([" + locale.spaces + "])+" +
-      "([" + locale.ellipsis + "][" + locale.rightDoubleQuote + locale.rightSingleQuote + "]?$)";
+      `([${locale.lowercaseChars}])` +
+      `([${locale.spaces}])+` +
+      `([${locale.ellipsis}][${locale.rightDoubleQuote}${locale.rightSingleQuote}]?$)`;
   let re = new RegExp(pattern, "gm");
   return string.replace(re, "$1$3");
 }
