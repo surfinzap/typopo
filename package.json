@@ -12,6 +12,7 @@
 		"build": "gulp build",
 		"test": "mocha --require @babel/register ./tests/**/*.test.js -R min --no-colors",
 		"test:dev": "mocha --require @babel/register ./tests/**/*.test.js -R min -w",
+		"test:perf": "node tests/performance.js",
 		"lint": "eslint src/",
 		"prepare": "husky"
 	},
