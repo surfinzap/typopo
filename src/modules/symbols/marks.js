@@ -13,12 +13,12 @@ export function replaceMark(string, markPattern, replacementMark, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      "([^0-9]|^)" +
-      "([" + locale.spaces + "]*)" +
-      "(\\(" + markPattern + "\\)|" + replacementMark + ")",
+      `([^0-9]|^)` +
+      `([${locale.spaces}]*)` +
+      `(\\(${markPattern}\\)|${replacementMark})`,
       "gi"
     ),
-    "$1" + replacementMark
+    `$1${replacementMark}`
   );
 }
 

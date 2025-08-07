@@ -4,10 +4,10 @@ import { replaceWithOverlapHandling } from "../../utils/regex-overlap.js";
 
 export function removeNbspBetweenMultiCharWords(string, locale) {
   // prettier-ignore
-  let pattern = "(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})(["+ locale.nbsp + locale.narrowNbsp +"])(["+ locale.lowercaseChars + locale.uppercaseChars +"]{2,})";
+  let pattern = `([${locale.lowercaseChars}${locale.uppercaseChars}]{2,})([${locale.nbsp}${locale.narrowNbsp}])([${locale.lowercaseChars}${locale.uppercaseChars}]{2,})`;
   let re = new RegExp(pattern, "g");
 
-  return replaceWithOverlapHandling(string, re, "$1 $3");
+  return replaceWithOverlapHandling(string, re, `$1 $3`);
 }
 
 //
@@ -36,30 +36,29 @@ export function addNbspAfterPreposition(string, locale) {
   // a) small letter prepositions
   // prettier-ignore
   let pattern =
-      "(^|[" + locale.space + "]|[^" + locale.allChars + locale.cardinalNumber + locale.apostrophe + locale.plus + locale.minus + locale.hyphen + "])" +
-      "([" + locale.lowercaseChars + "])" +
-      "([" + locale.space + "])";
+      `(^|[${locale.space}]|[^${locale.allChars}${locale.cardinalNumber}${locale.apostrophe}${locale.plus}${locale.minus}${locale.hyphen}])` +
+      `([${locale.lowercaseChars}])` +
+      `([${locale.space}])`;
   let re = new RegExp(pattern, "g");
-  let replacement = "$1$2" + locale.nbsp;
+  let replacement = `$1$2${locale.nbsp}`;
 
   string = replaceWithOverlapHandling(string, re, replacement);
 
   // b) capital letter prepositions at the beggining of the sentence
   // prettier-ignore
   pattern = 
-    "(^|[" +
-      locale.sentencePunctuation +
-      locale.ellipsis +
-      locale.copyright +
-      locale.registeredTrademark +
-      locale.soundRecordingCopyright +
-      "])" +
-    "(["+ locale.spaces +"]?)" +
-    "(["+ locale.uppercaseChars +"])" +
-    "(["+ locale.spaces +"])";
+    `(^|[${locale.sentencePunctuation}` + 
+        `${locale.ellipsis}` + 
+        `${locale.copyright}` + 
+        `${locale.registeredTrademark}` + 
+        `${locale.soundRecordingCopyright}]` + 
+        `)` +
+    `([${locale.spaces}]?)` +
+    `([${locale.uppercaseChars}])` +
+    `([${locale.spaces}])`;
 
   re = new RegExp(pattern, "g");
-  replacement = "$1$2$3" + locale.nbsp;
+  replacement = `$1$2$3${locale.nbsp}`;
   string = string.replace(re, replacement);
 
   // c) “I” in English
@@ -68,12 +67,12 @@ export function addNbspAfterPreposition(string, locale) {
     // prettier-ignore
     string = string.replace(
       new RegExp(
-        "(^|[" + locale.spaces + "])" +
-        "(I)" +
-        "(["+ locale.spaces +"])", 
+        `(^|[${locale.spaces}])` +
+        `(I)` +
+        `([${locale.spaces}])`, 
         "g"
       ),
-      "$1$2" + locale.nbsp
+      `$1$2${locale.nbsp}`
     );
   }
 
@@ -84,9 +83,9 @@ export function addNbspAfterPreposition(string, locale) {
 
 export function addNbspAfterAmpersand(string, locale) {
   // prettier-ignore
-  let pattern = "([" + locale.spaces + "])(" + locale.ampersand + ")([" + locale.spaces + "])";
+  let pattern = `([${locale.spaces}])(${locale.ampersand})([${locale.spaces}])`;
   let re = new RegExp(pattern, "g");
-  let replacement = " $2" + locale.nbsp;
+  let replacement = ` $2${locale.nbsp}`;
 
   return string.replace(re, replacement);
 }
@@ -107,16 +106,16 @@ export function addNbspAfterCardinalNumber(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        "([^" + locale.nbsp + locale.cardinalNumber + "]|^)" +
-        "(" + locale.cardinalNumber + "{1,2})" +
-        "([" + locale.spaces + "])" +
-        "(["+ locale.allChars +"])", 
+        `([^${locale.nbsp}${locale.cardinalNumber}]|^)` +
+        `(${locale.cardinalNumber}{1,2})` +
+        `([${locale.spaces}])` +
+        `([${locale.allChars}])`, 
       "g"
     ),
-      "$1" +
-      "$2" +
-      locale.nbsp +
-      "$4"
+      `$1` +
+      `$2` +
+      `${locale.nbsp}` +
+      `$4`
   );
 }
 

@@ -23,7 +23,7 @@
   @returns {string} — output with fixed ellipsis
 */
 export function replaceThreeCharsWithEllipsis(string, locale) {
-  let pattern = "[" + locale.ellipsis + "\\.]{3,}";
+  let pattern = `[${locale.ellipsis}\\.]{3,}`;
   let re = new RegExp(pattern, "g");
   let replacement = locale.ellipsis;
   return string.replace(re, replacement);
@@ -43,9 +43,9 @@ export function replaceThreeCharsWithEllipsis(string, locale) {
 export function replaceTwoCharsWithEllipsis(string, locale) {
   // prettier-ignore
   let pattern =
-      "\\." + locale.ellipsis + "|" +
-      locale.ellipsis + "{2,}|" +
-      locale.ellipsis + "\\.";
+      `\\.${locale.ellipsis}|` +
+      `${locale.ellipsis}{2,}|` +
+      `${locale.ellipsis}\\.`;
 
   let re = new RegExp(pattern, "g");
   let replacement = locale.ellipsis;
@@ -64,9 +64,9 @@ export function replaceTwoCharsWithEllipsis(string, locale) {
   @returns {string} — output with fixed ellipsis
 */
 export function replaceTwoPeriodsWithEllipsis(string, locale) {
-  let pattern = "[" + locale.spaces + "]\\.{2}[" + locale.spaces + "]";
+  let pattern = `[${locale.spaces}]\\.{2}[${locale.spaces}]`;
   let re = new RegExp(pattern, "g");
-  let replacement = locale.space + locale.ellipsis + locale.space;
+  let replacement = `${locale.space}${locale.ellipsis}${locale.space}`;
   return string.replace(re, replacement);
 }
 

@@ -1,9 +1,9 @@
 function fixExponent(string, locale, originalExponent, fixedExponent) {
   let metrePrefixes = "m|dam|hm|km|Mm|Gm|Tm|Pm|Em|Zm|Ym|m|dm|cm|mm|µm|nm|pm|fm|am|zm|ym";
   // prettier-ignore
-  let pattern = "([" + locale.spaces + locale.slash + "])(" + metrePrefixes + ")(" + originalExponent + ")";
+  let pattern = `([${locale.spaces}${locale.slash}])(${metrePrefixes})(${originalExponent})`;
   let re = new RegExp(pattern, "g");
-  let replacement = "$1$2" + fixedExponent;
+  let replacement = `$1$2${fixedExponent}`;
   return string.replace(re, replacement);
 }
 

@@ -18,12 +18,12 @@ export function replaceCopyright(string, copyrightLetter, copyrightSign, locale)
   // prettier-ignore
   return string.replace(
     new RegExp(
-      "(\\(" + copyrightLetter + "\\))" +
-      "([" + locale.spaces + "]*)" +
-      "(" + locale.cardinalNumber + ")",
+      `(\\(${copyrightLetter}\\))` +
+      `([${locale.spaces}]*)` +
+      `(${locale.cardinalNumber})`,
       "gi"
     ),
-    copyrightSign + "$2$3"
+    `${copyrightSign}$2$3`
   );
 }
 

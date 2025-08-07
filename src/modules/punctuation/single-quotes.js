@@ -38,21 +38,15 @@ export function identifyContractedAnd(string, locale) {
     // prettier-ignore
     string = string.replace(
       new RegExp(
-        "(" + item[0] + ")" +
-        "([" + locale.spaces + "])?" +
-        "(" + locale.singleQuoteAdepts + ")" +
-        "(n)" +
-        "(" + locale.singleQuoteAdepts + ")" +
-        "([" + locale.spaces + "])?" +
-        "(" + item[1] + ")", 
+        `(${item[0]})` +
+        `([${locale.spaces}]?)` +
+        `(${locale.singleQuoteAdepts})` +
+        `(n)` +
+        `(${locale.singleQuoteAdepts})` +
+        `([${locale.spaces}]?)` +
+        `(${item[1]})`, 
       "gi"),
-      "$1" +
-      locale.nbsp +
-      "{{typopo__apostrophe}}" +
-      "$4" +
-      "{{typopo__apostrophe}}" +
-      locale.nbsp +
-      "$7"
+      `$1${locale.nbsp}{{typopo__apostrophe}}$4{{typopo__apostrophe}}${locale.nbsp}$7`
     );
   });
 
@@ -79,12 +73,11 @@ export function identifyContractedBeginnings(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      "(" + locale.singleQuoteAdepts + ")" +
-      "(" + contractedWords + ")", 
+      `(${locale.singleQuoteAdepts})` +
+      `(${contractedWords})`, 
       "gi"
     ),
-      "{{typopo__apostrophe}}" +
-      "$2"
+      `{{typopo__apostrophe}}$2`
   );
 }
 
@@ -104,12 +97,11 @@ export function identifyContractedEnds(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      "(\\Bin)" +
-      "(" + locale.singleQuoteAdepts + ")",
+      `(\\Bin)` +
+      `(${locale.singleQuoteAdepts})`,
       "gi"
     ),
-      "$1" +
-      "{{typopo__apostrophe}}"
+      `$1{{typopo__apostrophe}}`
   );
 }
 
@@ -129,14 +121,12 @@ export function identifyInWordContractions(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        "(["+ locale.cardinalNumber + locale.allChars +"])" +
-        "(" + locale.singleQuoteAdepts +")+" +
-        "(["+ locale.allChars +"])", 
+        `([${locale.cardinalNumber}${locale.allChars}])` +
+        `(${locale.singleQuoteAdepts})+` +
+        `([${locale.allChars}])`, 
       "g"
     ),
-      "$1" +
-      "{{typopo__apostrophe}}" +
-      "$3"
+      `$1{{typopo__apostrophe}}$3`
   );
 }
 
@@ -160,16 +150,13 @@ export function identifyContractedYears(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      "([^0-9]|[A-Z][0-9])" +
-      "([" + locale.spaces + "])" +
-      "(" + locale.singleQuoteAdepts + ")" +
-      "([" + locale.cardinalNumber + "]{2})", 
+      `([^0-9]|[A-Z][0-9])` +
+      `([${locale.spaces}])` +
+      `(${locale.singleQuoteAdepts})` +
+      `([${locale.cardinalNumber}]{2})`, 
       "g"
     ),
-      "$1" +
-      "$2" +
-      "{{typopo__apostrophe}}" +
-      "$4"
+      `$1$2{{typopo__apostrophe}}$4`
   );
 }
 
@@ -217,14 +204,12 @@ export function identifyStandaloneLeftSingleQuote(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        "([" + locale.spaces + locale.emDash + locale.enDash + "])" +
-        "(" + locale.singleQuoteAdepts + "|,)" +
-        "(["+ locale.allChars +"])",
+        `([${locale.spaces}${locale.emDash}${locale.enDash}])` +
+        `(${locale.singleQuoteAdepts}|,)` +
+        `([${locale.allChars}])`,
       "g"
     ),
-      "$1" +
-      "{{typopo__left-single-quote--standalone}}" +
-      "$3"
+      `$1{{typopo__left-single-quote--standalone}}$3`
   );
 }
 
@@ -251,9 +236,9 @@ export function identifySingleQuotesWithinDoubleQuotes(string, locale) {
   return string.replace(
     // prettier-ignore
     new RegExp(
-        "(" + locale.doubleQuoteAdepts + ")"
-      + "(.*?)"
-      + "(" + locale.doubleQuoteAdepts + ")",
+        `(${locale.doubleQuoteAdepts})` +
+        `(.*?)` +
+        `(${locale.doubleQuoteAdepts})`,
       "g"
     ),
     function ($0, $1, $2, $3) {
@@ -285,16 +270,13 @@ export function identifyStandaloneRightSingleQuote(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      "(["+ locale.allChars +"])" +
-      "(["+ locale.sentencePunctuation +"])?" +
-      "(" + locale.singleQuoteAdepts + ")" +
-      "([ "+ locale.sentencePunctuation +"])?",
+      `([${locale.allChars}])` +
+      `([${locale.sentencePunctuation}])?` +
+      `(${locale.singleQuoteAdepts})` +
+      `([ ${locale.sentencePunctuation}])?`,
       "g"
     ),
-      "$1" +
-      "$2" +
-      "{{typopo__right-single-quote--standalone}}" +
-      "$4"
+      `$1$2{{typopo__right-single-quote--standalone}}$4`
   );
 }
 
@@ -319,14 +301,12 @@ export function identifySingleQuotePairs(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      "({{typopo__left-single-quote--standalone}})" +
-      "(.*)" +
-      "({{typopo__right-single-quote--standalone}})",
+      `({{typopo__left-single-quote--standalone}})` +
+      `(.*)` +
+      `({{typopo__right-single-quote--standalone}})`,
       "g"
     ),
-      "{{typopo__left-single-quote}}" + 
-      "$2" + 
-      "{{typopo__right-single-quote}}"
+      `{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}`
   );
 }
 
@@ -346,18 +326,14 @@ export function identifySingleQuotePairAroundSingleWord(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        "(\\B)" +
-        "(" + locale.singleQuoteAdepts + ")" +
-        "([" + locale.allChars + "]+)" +
-        "(" + locale.singleQuoteAdepts + ")" +
-        "(\\B)",
+        `(\\B)` +
+        `(${locale.singleQuoteAdepts})` +
+        `([${locale.allChars}]+)` +
+        `(${locale.singleQuoteAdepts})` +
+        `(\\B)`,
       "g"
     ),
-      "$1" +
-      "{{typopo__left-single-quote}}" +
-      "$3" +
-      "{{typopo__right-single-quote}}" +
-      "$5"
+      `$1{{typopo__left-single-quote}}$3{{typopo__right-single-quote}}$5`
   );
 }
 
@@ -380,10 +356,10 @@ export function identifyResidualApostrophes(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      "(" + locale.singleQuoteAdepts + ")",
+      `(${locale.singleQuoteAdepts})`,
       "g"
     ),
-      "{{typopo__apostrophe}}"
+      `{{typopo__apostrophe}}`
   );
 }
 
@@ -409,27 +385,23 @@ export function replaceSinglePrimeWSingleQuote(string) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "({{typopo__left-single-quote--standalone}})" +
-      "(.*?)" +
-      "({{typopo__single-prime}})",
+      `({{typopo__left-single-quote--standalone}})` +
+      `(.*?)` +
+      `({{typopo__single-prime}})`,
       "g"
     ),
-      "{{typopo__left-single-quote}}" +
-      "$2" +
-      "{{typopo__right-single-quote}}"
+      `{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}`
   );
 
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "({{typopo__single-prime}})" +
-      "(.*?)" +
-      "({{typopo__right-single-quote--standalone}})",
+      `({{typopo__single-prime}})` +
+      `(.*?)` +
+      `({{typopo__right-single-quote--standalone}})`,
       "g"
     ),
-      "{{typopo__left-single-quote}}" +
-      "$2" +
-      "{{typopo__right-single-quote}}"
+      `{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}`
   );
 
   return string;
@@ -477,49 +449,35 @@ export function swapSingleQuotesAndTerminalPunctuation(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "([^" + locale.sentencePunctuation + "])" +
-      "([" + locale.spaces + "])" +
-      "(" + locale.leftSingleQuote + ")" +
-      "([^" + locale.rightSingleQuote +"]+?)" +
-      "([^" + locale.romanNumerals + "])" +
-      "([" + locale.terminalPunctuation + locale.ellipsis + "])" +
-      "(" + locale.rightSingleQuote + ")", 
+      `([^${locale.sentencePunctuation}])` +
+      `([${locale.spaces}])` +
+      `(${locale.leftSingleQuote})` +
+      `([^${locale.rightSingleQuote}]+?)` +
+      `([^${locale.romanNumerals}])` +
+      `([${locale.terminalPunctuation}${locale.ellipsis}])` +
+      `(${locale.rightSingleQuote})`, 
       "g"
     ),
-      "$1" +
-      "$2" +
-      "$3" +
-      "$4" +
-      "$5" +
-      "$7" +
-      "$6"
+      `$1$2$3$4$5$7$6`
   );
 
   // place punctuation within a quoted sentence that’s in the middle of the sentence.
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "([^" + locale.sentencePunctuation + "])" +
-      "([" + locale.spaces + "])" +
-      "(" + locale.leftSingleQuote + ")" +
-      "(.+?)" +
-      "([^" + locale.romanNumerals + "])" +
-      "(" + locale.rightSingleQuote + ")" +
-      "([" + locale.terminalPunctuation + locale.ellipsis + "])" +
-      "([" + locale.spaces + "])" +
-      "([" + locale.lowercaseChars + "])",
+      `([^${locale.sentencePunctuation}])` +
+      `([${locale.spaces}])` +
+      `(${locale.leftSingleQuote})` +
+      `(.+?)` +
+      `([^${locale.romanNumerals}])` +
+      `(${locale.rightSingleQuote})` +
+      `([${locale.terminalPunctuation}${locale.ellipsis}])` +
+      `([${locale.spaces}])` +
+      `([${locale.lowercaseChars}])`,
 
       "g"
     ),
-      "$1" +
-      "$2" +
-      "$3" +
-      "$4" +
-      "$5" +
-      "$7" +
-      "$6" +
-      "$8" +
-      "$9"
+      `$1$2$3$4$5$7$6$8$9`
   );
 
   // place punctuation within a quoted sentence
@@ -527,23 +485,17 @@ export function swapSingleQuotesAndTerminalPunctuation(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "([" + locale.sentencePunctuation + "][" + locale.spaces + "]|^)" +
-      "(" + locale.leftSingleQuote + ")" +
-      "([^" + locale.rightSingleQuote +"]+?)" +
-      "([^" + locale.romanNumerals + "])" +
-      "(" + locale.rightSingleQuote + ")" +
-      "([" + locale.terminalPunctuation + locale.ellipsis + "])" +
-      "(\\B)",
+      `([${locale.sentencePunctuation}][${locale.spaces}]|^)` +
+      `(${locale.leftSingleQuote})` +
+      `([^${locale.rightSingleQuote}]+?)` +
+      `([^${locale.romanNumerals}])` +
+      `(${locale.rightSingleQuote})` +
+      `([${locale.terminalPunctuation}${locale.ellipsis}])` +
+      `(\\B)`,
 
       "g"
     ),
-      "$1" +
-      "$2" +
-      "$3" +
-      "$4" +
-      "$6" +
-      "$5" +
-      "$7"
+      `$1$2$3$4$6$5$7`
   );
 
   return string;
@@ -571,11 +523,11 @@ export function removeExtraSpaceAroundSinglePrime(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      "(["+ locale.spaces +"])"
-    + "("+ locale.singlePrime +")", 
+      `([${locale.spaces}])` +
+      `(${locale.singlePrime})`, 
       "g"
     ),
-    "$2"
+    `$2`
   )
 }
 

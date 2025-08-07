@@ -1,10 +1,10 @@
 function addSpaceBeforeSectionSign(string, locale) {
   // prettier-ignore
   let pattern = 
-      "([^" + locale.spaces + locale.sectionSign + locale.openingBrackets + "])" + 
-      "("+ locale.sectionSign +")";
+      `([^${locale.spaces}${locale.sectionSign}${locale.openingBrackets}])` + 
+      `(${locale.sectionSign})`;
   let re = new RegExp(pattern, "g");
-  let replacement = "$1" + locale.space + "$2";
+  let replacement = `$1${locale.space}$2`;
 
   return string.replace(re, replacement);
 }
@@ -14,10 +14,10 @@ function addSpaceBeforeSectionSign(string, locale) {
 function addNbspAfterSectionSign(string, locale) {
   // prettier-ignore
   let pattern = 
-      "("+ locale.sectionSign +")" + 
-      "([^" + locale.spaces + locale.sectionSign +"])";
+      `(${locale.sectionSign})` + 
+      `([^${locale.spaces}${locale.sectionSign}])`;
   let re = new RegExp(pattern, "g");
-  let replacement = "$1" + locale.nbsp + "$2";
+  let replacement = `$1${locale.nbsp}$2`;
 
   return string.replace(re, replacement);
 }
@@ -27,10 +27,10 @@ function addNbspAfterSectionSign(string, locale) {
 function replaceSpacesAfterSectionSign(string, locale) {
   // prettier-ignore
   let pattern = 
-      "("+ locale.sectionSign +")" + 
-      "([" + locale.spaces + "])";
+      `(${locale.sectionSign})` + 
+      `([${locale.spaces}])`;
   let re = new RegExp(pattern, "g");
-  let replacement = "$1" + locale.nbsp;
+  let replacement = `$1${locale.nbsp}`;
 
   return string.replace(re, replacement);
 }

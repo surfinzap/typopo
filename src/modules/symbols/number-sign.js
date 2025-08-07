@@ -12,13 +12,13 @@ export function removeExtraSpacesAfterNumberSign(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        "([" + locale.spaces + "]+)" +
-        "(" + locale.numberSign + ")" +
-        "([" + locale.spaces + "]+)" +
-        "(" + locale.cardinalNumber + ")", 
+        `([${locale.spaces}]+)` +
+        `(${locale.numberSign})` +
+        `([${locale.spaces}]+)` +
+        `(${locale.cardinalNumber})`, 
         "g"
     ),
-    "$1$2$4"
+    `$1$2$4`
   );
 }
 

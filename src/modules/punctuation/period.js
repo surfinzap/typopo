@@ -3,10 +3,10 @@ export function removeExtraPeriod(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      "\\.{2}(?![\\\\/])",
+      `\\.{2}(?![\\\\/])`,
       "g"
     ),
-    "."
+    `.`
   );
 }
 

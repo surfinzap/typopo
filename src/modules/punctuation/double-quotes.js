@@ -20,10 +20,10 @@ import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../punctuatio
 export function removeExtraPunctuationBeforeQuotes(string, locale) {
   // prettier-ignore
   let pattern =
-      "([^"+ locale.romanNumerals + "])" +
-      "([" + locale.sentencePunctuation + "])" +
-      "([" + locale.sentencePunctuation + "])" +
-      "("  + locale.doubleQuoteAdepts + ")";
+      `([^${locale.romanNumerals}])` +
+      `([${locale.sentencePunctuation}])` +
+      `([${locale.sentencePunctuation}])` +
+      `(${locale.doubleQuoteAdepts})`;
   let re = new RegExp(pattern, "g");
 
   return string.replace(re, "$1$2$4");

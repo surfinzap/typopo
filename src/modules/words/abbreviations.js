@@ -13,9 +13,9 @@
 export function fixInitials(string, locale) {
   // define pattern for initial and a full name
   // prettier-ignore
-  let initialPattern = "(["+ locale.uppercaseChars + "]["+ locale.allChars + "]?\\.)(["+ locale.spaces +"]?)";
+  let initialPattern = `([${locale.uppercaseChars}][${locale.allChars}]?\\.)([${locale.spaces}]?)`;
   // prettier-ignore
-  let fullNamePattern = "(["+ locale.allChars + "]{2,}[^\\.])";
+  let fullNamePattern = `([${locale.allChars}]{2,}[^\\.])`;
 
   // define locale-specific spacing for multiple initials
   let initialSpace = "";
@@ -34,19 +34,19 @@ export function fixInitials(string, locale) {
   // [1] Identify and replace pattern "I. FullName"
   let pattern = initialPattern + fullNamePattern;
   let re = new RegExp(pattern, "g");
-  let replacement = "$1" + locale.nbsp + "$3";
+  let replacement = `$1${locale.nbsp}$3`;
   string = string.replace(re, replacement);
 
   // [2] Identify and replace pattern "I. I. FullName"
   pattern = initialPattern + initialPattern + fullNamePattern;
   re = new RegExp(pattern, "g");
-  replacement = "$1" + initialSpace + "$3" + locale.space + "$5";
+  replacement = `$1${initialSpace}$3${locale.space}$5`;
   string = string.replace(re, replacement);
 
   // [3] Identify and replace pattern "I. I. I. FullName"
   pattern = initialPattern + initialPattern + initialPattern + fullNamePattern;
   re = new RegExp(pattern, "g");
-  replacement = "$1" + initialSpace + "$3" + initialSpace + "$5" + locale.space + "$7";
+  replacement = `$1${initialSpace}$3${initialSpace}$5${locale.space}$7`;
   string = string.replace(re, replacement);
 
   return string;

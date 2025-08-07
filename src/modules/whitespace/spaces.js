@@ -7,11 +7,11 @@
 export function removeMultipleSpaces(string, locale) {
   // prettier-ignore
   let pattern = 
-      "(\\S)" +
-      "([" + locale.spaces + "]{2,})" +
-      "(\\S)";
+      `(\\S)` +
+      `([${locale.spaces}]{2,})` +
+      `(\\S)`;
   let re = new RegExp(pattern, "g");
-  return string.replace(re, "$1 $3");
+  return string.replace(re, `$1 $3`);
 }
 
 //
@@ -81,9 +81,9 @@ export function removeSpacesAtParagraphEnd(string) {
 
 export function removeSpaceBeforeSentencePausePunctuation(string, locale) {
   // prettier-ignore
-  let pattern = "([" + locale.spaces + "])([" + locale.sentencePausePunctuation + "])([^\\-\\)]|$)";
+  let pattern = `([${locale.spaces}])([${locale.sentencePausePunctuation}])([^\\-\\)]|$)`;
   let re = new RegExp(pattern, "g");
-  return string.replace(re, "$2$3");
+  return string.replace(re, `$2$3`);
 }
 
 //
@@ -106,10 +106,10 @@ export function removeSpaceBeforeSentencePausePunctuation(string, locale) {
 export function removeSpaceBeforeTerminalPunctuation(string, locale) {
   // prettier-ignore
   let pattern =
-      "([" + locale.spaces + "])" +
-      "([" + locale.terminalPunctuation + locale.closingBrackets + locale.degree + "])";
+      `([${locale.spaces}])` +
+      `([${locale.terminalPunctuation}${locale.closingBrackets}${locale.degree}])`;
   let re = new RegExp(pattern, "g");
-  return string.replace(re, "$2");
+  return string.replace(re, `$2`);
 }
 
 //
@@ -128,12 +128,12 @@ export function removeSpaceBeforeTerminalPunctuation(string, locale) {
 export function removeSpaceBeforeOrdinalIndicator(string, locale) {
   // prettier-ignore
   let pattern =
-        "("+ locale.cardinalNumber + ")" +
-        "(["+ locale.spaces +"]?)" +
-        "("+ locale.ordinalIndicator +")" +
-        "([" + locale.spaces + "]|\\b)"; //to avoid cathing "4 th" in "4 there"
+        `(${locale.cardinalNumber})` +
+        `([${locale.spaces}]?)` +
+        `(${locale.ordinalIndicator})` +
+        `([${locale.spaces}]|\\b)`; //to avoid cathing "4 th" in "4 there"
   let re = new RegExp(pattern, "g");
-  let replacement = "$1$3$4";
+  let replacement = `$1$3$4`;
 
   return string.replace(re, replacement);
 }
@@ -143,10 +143,10 @@ export function removeSpaceBeforeOrdinalIndicator(string, locale) {
 export function removeSpaceAfterOpeningBrackets(string, locale) {
   // prettier-ignore
   let pattern =
-      "([" + locale.openingBrackets + "])" +
-      "([" + locale.spaces + "])";
+      `([${locale.openingBrackets}])` +
+      `([${locale.spaces}])`;
   let re = new RegExp(pattern, "g");
-  return string.replace(re, "$1");
+  return string.replace(re, `$1`);
 }
 
 /**
@@ -174,17 +174,17 @@ export function removeSpaceAfterOpeningBrackets(string, locale) {
 export function addSpaceBeforeOpeningBrackets(string, locale) {
   // prettier-ignore
   let pattern =
-      "([" + locale.lowercaseChars + locale.uppercaseChars + "])" +
-      "([" + locale.openingBrackets + "])" +
-      "([" + locale.lowercaseChars + locale.uppercaseChars + locale.ellipsis + "])" +
-      "([" + locale.lowercaseChars + locale.uppercaseChars + locale.ellipsis + locale.closingBrackets + "])";
+      `([${locale.lowercaseChars}${locale.uppercaseChars}])` +
+      `([${locale.openingBrackets}])` +
+      `([${locale.lowercaseChars}${locale.uppercaseChars}${locale.ellipsis}])` +
+      `([${locale.lowercaseChars}${locale.uppercaseChars}${locale.ellipsis}${locale.closingBrackets}])`;
   let re = new RegExp(pattern, "g");
 
   return string.replace(re, function ($0, $1, $2, $3, $4) {
     if (($3 == "s") | ($3 == "S") | ($3 + $4 == "es") | ($3 + $4 == "ES")) {
-      return $1 + $2 + $3 + $4;
+      return `${$1}${$2}${$3}${$4}`;
     } else {
-      return $1 + locale.space + $2 + $3 + $4;
+      return `${$1}${locale.space}${$2}${$3}${$4}`;
     }
   });
 }
@@ -204,11 +204,11 @@ export function addSpaceBeforeOpeningBrackets(string, locale) {
 export function addSpaceAfterTerminalPunctuation(string, locale) {
   // prettier-ignore
   var pattern =
-      "([" + locale.lowercaseChars + locale.uppercaseChars + "]{2,}|["+ locale.ellipsis + "])" +
-      "([" + locale.terminalPunctuation + "])" +
-      "([" + locale.uppercaseChars + "])";
+      `([${locale.lowercaseChars}${locale.uppercaseChars}]{2,}|[${locale.ellipsis}])` +
+      `([${locale.terminalPunctuation}])` +
+      `([${locale.uppercaseChars}])`;
   var re = new RegExp(pattern, "g");
-  return string.replace(re, "$1$2 $3");
+  return string.replace(re, `$1$2 $3`);
 }
 
 //
@@ -226,11 +226,11 @@ export function addSpaceAfterTerminalPunctuation(string, locale) {
 export function addSpaceAfterSentencePause(string, locale) {
   // prettier-ignore
   var pattern =
-      "([" + locale.lowercaseChars + locale.uppercaseChars + "]{2,}|["+ locale.ellipsis + "])" +
-      "([" + locale.sentencePausePunctuation + "])" +
-      "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
+      `([${locale.lowercaseChars}${locale.uppercaseChars}]{2,}|[${locale.ellipsis}])` +
+      `([${locale.sentencePausePunctuation}])` +
+      `([${locale.lowercaseChars}${locale.uppercaseChars}])`;
   var re = new RegExp(pattern, "g");
-  return string.replace(re, "$1$2 $3");
+  return string.replace(re, `$1$2 $3`);
 }
 
 //
@@ -247,19 +247,19 @@ export function addSpaceAfterSentencePause(string, locale) {
 export function addSpaceAfterClosingBrackets(string, locale) {
   // prettier-ignore
   var pattern =
-      "([" + locale.closingBrackets + "])" +
-      "([" + locale.lowercaseChars + locale.uppercaseChars + "])";
+      `([${locale.closingBrackets}])` +
+      `([${locale.lowercaseChars}${locale.uppercaseChars}])`;
   var re = new RegExp(pattern, "g");
-  return string.replace(re, "$1 $2");
+  return string.replace(re, `$1 $2`);
 }
 
 //
 
 export function addSpaceBeforeSymbol(string, symbol, locale) {
   // prettier-ignore
-  let pattern = "([^" + locale.spaces + locale.openingBrackets + "])("+ symbol +")";
+  let pattern = `([^${locale.spaces}${locale.openingBrackets}])(${symbol})`;
   let re = new RegExp(pattern, "g");
-  let replacement = "$1" + locale.space + "$2";
+  let replacement = `$1${locale.space}$2`;
 
   return string.replace(re, replacement);
 }

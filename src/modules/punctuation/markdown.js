@@ -31,44 +31,35 @@ export function identifyMarkdownCodeTicks(string, configuration) {
     // prettier-ignore
     string = string.replace(
       new RegExp(
-        "(\\s*)" +
-        "(```)", 
+        `(\\s*)` +
+        `(\`\`\`)`, 
       "g"
       ),
-      "$1" +
-      "{{typopo__markdown_tick}}" +
-      "{{typopo__markdown_tick}}" +
-      "{{typopo__markdown_tick}}"
+      `$1{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}`
     );
 
     // ``escaping inline `code block` in Markdown file``
     // prettier-ignore
     string = string.replace(
       new RegExp(
-        "(``)" +
-        "(.+?)" +
-        "(``)",
+        `(\`\`)` +
+        `(.+?)` +
+        `(\`\`)`,
       "g"
       ),
-      "{{typopo__markdown_tick}}" +
-      "{{typopo__markdown_tick}}" +
-      "$2" +
-      "{{typopo__markdown_tick}}" +
-      "{{typopo__markdown_tick}}"
+      `{{typopo__markdown_tick}}{{typopo__markdown_tick}}$2{{typopo__markdown_tick}}{{typopo__markdown_tick}}`
     );
 
     // inline `code block`
     // prettier-ignore
     string = string.replace(
       new RegExp(
-        "(`)" +
-        "(.+?)" +
-        "(`)",
+        `(\`)` +
+        `(.+?)` +
+        `(\`)`,
       "g"
       ),
-      "{{typopo__markdown_tick}}" +
-      "$2" +
-      "{{typopo__markdown_tick}}"
+      `{{typopo__markdown_tick}}$2{{typopo__markdown_tick}}`
     );
   }
 
@@ -91,10 +82,10 @@ export function placeMarkdownCodeTicks(string, configuration) {
     // prettier-ignore
     string = string.replace(
       new RegExp(
-        "{{typopo__markdown_tick}}",
+        `{{typopo__markdown_tick}}`,
         "g"
       ),
-        "`"
+        `\``
     )
   }
 

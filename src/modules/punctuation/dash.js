@@ -35,30 +35,30 @@ export function replaceTwoHyphensWithEnDash(string) {
 export function fixDashesBetweenWords(string, locale) {
   // prettier-ignore
   let pattern = 
-      "([" + locale.allChars + "])" + 
-      "(" +
-        "[" + locale.spaces + "]*[" + locale.enDash + locale.emDash + "][" + locale.spaces + "]*" +
-        "|" +
-        "[" + locale.spaces + "]+[" + locale.hyphen + "][" + locale.spaces + "]+" +
-      ")" +
-      "([" + locale.allChars + "])";
+      `([${locale.allChars}])` + 
+      `(` +
+        `[${locale.spaces}]*[${locale.enDash}${locale.emDash}][${locale.spaces}]*` +
+        `|` +
+        `[${locale.spaces}]+[${locale.hyphen}][${locale.spaces}]+` +
+      `)` +
+      `([${locale.allChars}])`;
 
   let re = new RegExp(pattern, "g");
   let replacement = "";
 
   switch (locale.locale) {
     case "en-us":
-      replacement = "$1" + locale.emDash + "$3";
+      replacement = `$1${locale.emDash}$3`;
       break;
     case "rue":
     case "sk":
-      replacement = "$1" + locale.hairSpace + locale.emDash + locale.hairSpace + "$3";
+      replacement = `$1${locale.hairSpace}${locale.emDash}${locale.hairSpace}$3`;
       break;
     case "cs":
-      replacement = "$1" + locale.nbsp + locale.enDash + locale.space + "$3";
+      replacement = `$1${locale.nbsp}${locale.enDash}${locale.space}$3`;
       break;
     case "de-de":
-      replacement = "$1" + locale.hairSpace + locale.enDash + locale.hairSpace + "$3";
+      replacement = `$1${locale.hairSpace}${locale.enDash}${locale.hairSpace}$3`;
       break;
   }
 
@@ -83,27 +83,27 @@ export function fixDashesBetweenWords(string, locale) {
 export function fixHyphenBetweenWordAndPunctuation(string, locale) {
   // prettier-ignore
   let pattern = 
-      "(["+ locale.allChars +"])" + 
-      "(["+ locale.spaces +"]?)" + 
-      "("+ locale.hyphen +")" + 
-      "(["+ locale.spaces +"]?)" + 
-      "(["+ locale.sentencePunctuation +"\\n\\r])";
+      `([${locale.allChars}])` + 
+      `([${locale.spaces}]?)` + 
+      `(${locale.hyphen})` + 
+      `([${locale.spaces}]?)` + 
+      `([${locale.sentencePunctuation}\\n\\r])`;
   let re = new RegExp(pattern, "g");
   let replacement = "";
 
   switch (locale.locale) {
     case "en-us":
-      replacement = "$1" + locale.emDash + "$5";
+      replacement = `$1${locale.emDash}$5`;
       break;
     case "rue":
     case "sk":
-      replacement = "$1" + locale.hairSpace + locale.emDash + "$5";
+      replacement = `$1${locale.hairSpace}${locale.emDash}$5`;
       break;
     case "cs":
-      replacement = "$1" + locale.nbsp + locale.enDash + "$5";
+      replacement = `$1${locale.nbsp}${locale.enDash}$5`;
       break;
     case "de-de":
-      replacement = "$1" + locale.hairSpace + locale.enDash + "$5";
+      replacement = `$1${locale.hairSpace}${locale.enDash}$5`;
       break;
   }
 
@@ -129,17 +129,17 @@ export function fixDashBetweenCardinalNumbers(string, locale) {
   /* [1] Match the pattern with overlap handling */
   // prettier-ignore
   let pattern =
-      "(" + locale.cardinalNumber + ")" +
-      "([" + locale.spaces + "]?" +
-      "[" + locale.hyphen + locale.enDash + locale.emDash + "]" +
-      "[" + locale.spaces + "]?)" +
-      "(" + locale.cardinalNumber + ")";
+      `(${locale.cardinalNumber})` +
+      `([${locale.spaces}]?` +
+      `[${locale.hyphen}${locale.enDash}${locale.emDash}]` +
+      `[${locale.spaces}]?)` +
+      `(${locale.cardinalNumber})`;
   let re = new RegExp(pattern, "g");
-  let replacement = "$1" + "{{typopo__endash}}" + "$3";
+  let replacement = `$1{{typopo__endash}}$3`;
   string = replaceWithOverlapHandling(string, re, replacement);
 
   /* [2] Replace enDash adepts with actual enDashes */
-  pattern = "{{typopo__endash}}";
+  pattern = `{{typopo__endash}}`;
   re = new RegExp(pattern, "g");
   replacement = locale.enDash;
 
@@ -159,17 +159,18 @@ export function fixDashBetweenCardinalNumbers(string, locale) {
 export function fixDashBetweenPercentageRange(string, locale) {
   // prettier-ignore
   let pattern = 
-      "([" + locale.percent + locale.permille + locale.permyriad + "])" + 
-      "([" + locale.spaces + "]?[" + locale.hyphen + locale.enDash + locale.emDash + "][" + locale.spaces + "]?)" + 
-      "(" + locale.cardinalNumber + ")";
+      `([${locale.percent}${locale.permille}${locale.permyriad}])` + 
+      `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)` + 
+      `(${locale.cardinalNumber})`;
   let re = new RegExp(pattern, "g");
-  let replacement = "$1" + locale.enDash + "$3";
+  let replacement = `$1${locale.enDash}$3`;
   return string.replace(re, replacement);
 }
 
 //
 
 /**
+ * 
   Replace hyphen or dash, placed between 2 ordinal numbers,
   with an en dash; including cases when there is an extra space
   from either one side or both sides of the dash
@@ -180,14 +181,14 @@ export function fixDashBetweenPercentageRange(string, locale) {
 export function fixDashBetweenOrdinalNumbers(string, locale) {
   // prettier-ignore
   let pattern = 
-      "(" + locale.cardinalNumber + ")" + 
-      "(" + locale.ordinalIndicator + ")" + 
-      "([" + locale.spaces + "]?[" + locale.hyphen + locale.enDash + locale.emDash + "][" + locale.spaces + "]?)" + 
-      "(" + locale.cardinalNumber + ")" + 
-      "(" + locale.ordinalIndicator + ")";
+      `(${locale.cardinalNumber})` + 
+      `(${locale.ordinalIndicator})` + 
+      `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)` + 
+      `(${locale.cardinalNumber})` + 
+      `(${locale.ordinalIndicator})`;
 
   let re = new RegExp(pattern, "gi");
-  let replacement = "$1$2" + locale.enDash + "$4$5";
+  let replacement = `$1$2${locale.enDash}$4$5`;
 
   return string.replace(re, replacement);
 }

@@ -17,14 +17,14 @@ import { replaceWithOverlapHandling } from "../../utils/regex-overlap.js";
 export function fixMultiplicationSignBetweenNumbers(string, locale) {
   // prettier-ignore
   let pattern =
-        "([" + locale.cardinalNumber + "]+)" +
-        "([" + locale.spaces + "]?[" + locale.lowercaseChars + locale.singlePrime + locale.doublePrime + "]*)" +
-        "([" + locale.spaces + "][x][" + locale.spaces + "])" +
-        "([" + locale.cardinalNumber + "]+)" +
-        "([" + locale.spaces + "]?[" + locale.lowercaseChars + locale.singlePrime + locale.doublePrime + "]*)";
+        `([${locale.cardinalNumber}]+)` +
+        `([${locale.spaces}]?[${locale.lowercaseChars}${locale.singlePrime}${locale.doublePrime}]*)` +
+        `([${locale.spaces}][x][${locale.spaces}])` +
+        `([${locale.cardinalNumber}]+)` +
+        `([${locale.spaces}]?[${locale.lowercaseChars}${locale.singlePrime}${locale.doublePrime}]*)`;
 
   let re = new RegExp(pattern, "gi");
-  let replacement = "$1$2" + locale.nbsp + locale.multiplicationSign + locale.nbsp + "$4$5";
+  let replacement = `$1$2${locale.nbsp}${locale.multiplicationSign}${locale.nbsp}$4$5`;
 
   return replaceWithOverlapHandling(string, re, replacement);
 }
@@ -45,12 +45,12 @@ export function fixMultiplicationSignBetweenNumbers(string, locale) {
 export function fixMultiplicationSignBetweenWords(string, locale) {
   // prettier-ignore
   let pattern =
-        "([" + locale.allChars + "]+)" +
-        "([" + locale.spaces + "][x][" + locale.spaces + "])" +
-        "([" + locale.allChars + "]+)";
+        `([${locale.allChars}]+)` +
+        `([${locale.spaces}][x][${locale.spaces}])` +
+        `([${locale.allChars}]+)`;
 
   let re = new RegExp(pattern, "g");
-  let replacement = "$1" + locale.nbsp + locale.multiplicationSign + locale.nbsp + "$3";
+  let replacement = `$1${locale.nbsp}${locale.multiplicationSign}${locale.nbsp}$3`;
 
   return replaceWithOverlapHandling(string, re, replacement);
 }
@@ -70,18 +70,18 @@ export function fixMultiplicationSignBetweenWords(string, locale) {
 export function fixMultiplicationSignBetweenNumberAndWord(string, locale) {
   // prettier-ignore
   let pattern =
-        "([" + locale.cardinalNumber + "])" +
-        "([" + locale.spaces + "]?)" +
-        "([x|×])" +
-        "([" + locale.spaces + "])" +
-        "([" + locale.lowercaseChars + "]+)";
+        `([${locale.cardinalNumber}])` +
+        `([${locale.spaces}]?)` +
+        `([x|×])` +
+        `([${locale.spaces}])` +
+        `([${locale.lowercaseChars}]+)`;
   let re = new RegExp(pattern, "gi");
 
   string = string.replace(re, function ($0, $1, $2, $3, $4, $5) {
     if ($2 == "") {
-      return $1 + $2 + locale.multiplicationSign + locale.nbsp + $5;
+      return `${$1}${$2}${locale.multiplicationSign}${locale.nbsp}${$5}`;
     }
-    return $1 + locale.nbsp + locale.multiplicationSign + locale.nbsp + $5;
+    return `${$1}${locale.nbsp}${locale.multiplicationSign}${locale.nbsp}${$5}`;
   });
 
   return string;
@@ -101,13 +101,13 @@ export function fixMultiplicationSignBetweenNumberAndWord(string, locale) {
 export function fixNbspAroundMultiplicationSign(string, locale) {
   // prettier-ignore
   let pattern =
-        "([" + locale.cardinalNumber + "]+)" +
-        "([" + locale.singlePrime + locale.doublePrime + "])?" +
-        "([x|×])" +
-        "([" + locale.cardinalNumber + "]+)" +
-        "([" + locale.singlePrime + locale.doublePrime + "])?";
+        `([${locale.cardinalNumber}]+)` +
+        `([${locale.singlePrime}${locale.doublePrime}])?` +
+        `([x|×])` +
+        `([${locale.cardinalNumber}]+)` +
+        `([${locale.singlePrime}${locale.doublePrime}])?`;
   let re = new RegExp(pattern, "gi");
-  let replacement = "$1$2" + locale.nbsp + locale.multiplicationSign + locale.nbsp + "$4$5";
+  let replacement = `$1$2${locale.nbsp}${locale.multiplicationSign}${locale.nbsp}$4$5`;
 
   return string.replace(re, replacement);
 }

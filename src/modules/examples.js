@@ -26,11 +26,11 @@
 export function name(string, locale) {
   // prettier-ignore
   let pattern =
-      "(\\b)" +
-      "(["+ locale.romanNumerals + "]+)" +
-      "(" + locale.romanOrdinalIndicator +")" +
-      "(["+ locale.spaces +"]?)" +
-      "(["+ locale.allChars + locale.cardinalNumber + "])";
+      `(\\b)` +
+      `([${locale.romanNumerals}]+)` +
+      `(${locale.romanOrdinalIndicator})` +
+      `([${locale.spaces}]?)` +
+      `([${locale.allChars}${locale.cardinalNumber}])`;
   let re = new RegExp(pattern, "g");
   let replacement = locale.ellipsis;
 
@@ -40,11 +40,11 @@ export function name(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      "("+ locale.leftDoubleQuote +")" +
-      "(["+ locale.spaces +"])", 
+      `(${locale.leftDoubleQuote})` +
+      `([${locale.spaces}])`, 
       "g"
     ),
-    "$1"
+    `$1`
   );
 }
 
@@ -53,11 +53,11 @@ export function name(string, locale) {
 export function withFunctionInReturn(string, locale) {
   // prettier-ignore
   let pattern =
-      "(\\b[" + locale.uppercaseChars + "]["+ locale.lowercaseChars +"]+?)" +
-      "([" + locale.spaces + "])" +
-      "([" + locale.romanNumerals +"]+\\b)" +
-      "("  + locale.romanOrdinalIndicator +")" +
-      "([" + locale.nbsp + "]?)";
+      `(\\b[${locale.uppercaseChars}][${locale.lowercaseChars}]+?)` +
+      `([${locale.spaces}])` +
+      `([${locale.romanNumerals}]+\\b)` +
+      `(${locale.romanOrdinalIndicator})` +
+      `([${locale.nbsp}]?)`;
   let re = new RegExp(pattern, "g");
 
   return string.replace(re, function ($0, $1, $2, $3, $4, $5) {

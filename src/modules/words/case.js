@@ -16,13 +16,13 @@ export function fixCase(string, locale) {
   /* [1] two first uppercase letters (i.e. UPpercase) */
   // prettier-ignore
   let pattern = 
-      "([^" + locale.allChars + "]|^)" + 
-      "(["+ locale.uppercaseChars +"]{2})" + 
-      "(["+ locale.lowercaseChars +"]{2,})";
+      `([^${locale.allChars}]|^)` + 
+      `([${locale.uppercaseChars}]{2})` + 
+      `([${locale.lowercaseChars}]{2,})`;
   let re = new RegExp(pattern, "g");
 
   string = string.replace(re, function ($0, $1, $2, $3) {
-    return $1 + $2.substring(0, 1) + $2.substring(1).toLowerCase() + $3;
+    return `${$1}${$2.substring(0, 1)}${$2.substring(1).toLowerCase()}${$3}`;
   });
 
   /* [2] Swapped cases (n-letter cases, i.e. uPPERCASE)
@@ -31,13 +31,13 @@ export function fixCase(string, locale) {
   */
   // prettier-ignore
   pattern = 
-      "(\\b)" + 
-      "(?!iOS)" + 
-      "(["+ locale.lowercaseChars +"])" + 
-      "(["+ locale.uppercaseChars +"]{2,})";
+      `(\\b)` + 
+      `(?!iOS)` + 
+      `([${locale.lowercaseChars}])` + 
+      `([${locale.uppercaseChars}]{2,})`;
   re = new RegExp(pattern, "g");
   string = string.replace(re, function ($0, $1, $2, $3) {
-    return $1 + $2.toUpperCase() + $3.toLowerCase();
+    return `${$1}${$2.toUpperCase()}${$3.toLowerCase()}`;
   });
 
   return string;
