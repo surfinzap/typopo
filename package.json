@@ -48,6 +48,7 @@
 		"@babel/register": "^7.27.1",
 		"@eslint/js": "^9.32.0",
 		"@huggingface/prettier-plugin-vertical-align": "^0.2.3",
+		"@swc/core": "^1.13.3",
 		"babelify": "^10.0.0",
 		"browser-sync": "^3.0.4",
 		"browserify": "^17.0.1",
@@ -59,11 +60,11 @@
 		"gulp-header": "^2.0.9",
 		"gulp-replace": "^1.1.4",
 		"gulp-sourcemaps": "^3.0.0",
-		"gulp-uglify": "^3.0.2",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.1.4",
 		"mocha": "^11.7.1",
 		"prettier": "^3.6.2",
+		"through2": "^4.0.2",
 		"vinyl-buffer": "^1.0.1",
 		"vinyl-source-stream": "^2.0.0"
 	}
