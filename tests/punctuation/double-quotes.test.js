@@ -153,7 +153,7 @@ describe("Remove punctuation after double quotes (en-us):\n", () => {
 
 describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us):\n", () => {
   let testCase = {
-    '12′ 45"': "12′ 45″",
+    '12′ 45"':  "12′ 45″",
     "12′ 45“":  "12′ 45″",
     "12′ 45”":  "12′ 45″",
     "12′ 45″":  "12′ 45″",
@@ -181,7 +181,7 @@ describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
   };
 
   let unitTestCase = {
-    '12′ 45 "': "12′ 45 ″",
+    '12′ 45 "':  "12′ 45 ″",
     "12′ 45 “":  "12′ 45 ″",
     "12′ 45 ”":  "12′ 45 ″",
     "12′ 45 ″":  "12′ 45 ″",

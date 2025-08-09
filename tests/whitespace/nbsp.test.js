@@ -62,11 +62,11 @@ describe("Add non-breaking spaces after single-letter prepositions\n", () => {
     "a s’a":                 "a s’a",
 
     // false positives
-    "client’s customer":                      "client’s customer",
-    "Ctrl+I and Ctrl+B or pasting an image.": "Ctrl+I and Ctrl+B or pasting an image.",
-    "Ctrl-I and Ctrl-B or pasting an image.": "Ctrl-I and Ctrl-B or pasting an image.",
-    "získává investici $25M na něco":         "získává investici $25M na něco", //no nbsp after $25M
-    "starŷm kresli":                          "starŷm kresli", // non-latin chars in word
+    "client’s customer":                       "client’s customer",
+    "Ctrl+I and Ctrl+B or pasting an image.":  "Ctrl+I and Ctrl+B or pasting an image.",
+    "Ctrl-I and Ctrl-B or pasting an image.":  "Ctrl-I and Ctrl-B or pasting an image.",
+    "získává investici $25M na něco":          "získává investici $25M na něco", //no nbsp after $25M
+    "starŷm kresli":                           "starŷm kresli", // non-latin chars in word
     "The product X is missing the feature Y.": "The product X is missing the feature Y.", // no nbsp after a single capital letter in the middle of the sentence
   };
 
