@@ -11,6 +11,7 @@
 - Update NPM packages to their latest versions			
 - Refactor the source code
 - Remove unused packages
+- Update the build pipeline to vite
 
 
 
