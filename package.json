@@ -21,8 +21,14 @@
 		"prepare": "husky"
 	},
 	"lint-staged": {
-		"src/**/*.js": ["eslint --fix", "prettier --write"],
-		"tests/**/*.js": ["eslint --fix", "prettier --write"]
+		"src/**/*.js": [
+			"eslint --fix",
+			"prettier --write"
+		],
+		"tests/**/*.js": [
+			"eslint --fix",
+			"prettier --write"
+		]
 	},
 	"main": "dist/typopo_dist.min.js",
 	"repository": {
@@ -52,7 +58,6 @@
 		"@babel/register": "^7.27.1",
 		"@eslint/js": "^9.33.0",
 		"@huggingface/prettier-plugin-vertical-align": "^0.2.3",
-		"@swc/core": "^1.13.3",
 		"eslint": "^9.33.0",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.1.5",

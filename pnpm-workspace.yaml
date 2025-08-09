@@ -1,5 +1,2 @@
 ignoredBuiltDependencies:
   - es5-ext
-
-onlyBuiltDependencies:
-  - '@swc/core'
