@@ -1,6 +1,36 @@
 import { fixTypos } from "../../src/typopo.js";
 import assert from "assert";
 
+// Loading minified version
+let fixTyposMinified = null;
+const isWatchMode = process.argv.includes("-w") || process.argv.includes("--watch");
+
+if (!isWatchMode) {
+  try {
+    const minified = require("../../dist/typopo_dist.min.js");
+    fixTyposMinified = minified.fixTypos;
+    console.log("Minified version loaded for testing");
+  } catch (error) {
+    console.log("Minified version not available, skipping minified tests");
+  }
+}
+
+function runBothVersions(testCase, locale, config) {
+  Object.keys(testCase).forEach((key) => {
+    it(`source: ${key.substring(0, 30)}${key.length > 30 ? "..." : ""}`, () => {
+      assert.strictEqual(fixTypos(key, locale, config), testCase[key]);
+    });
+  });
+
+  if (fixTyposMinified) {
+    Object.keys(testCase).forEach((key) => {
+      it(`minified: ${key.substring(0, 30)}${key.length > 30 ? "..." : ""}`, () => {
+        assert.strictEqual(fixTyposMinified(key, locale, config), testCase[key]);
+      });
+    });
+  }
+}
+
 describe("Test consistency of internal variables", () => {
   let testCase = {
     /*
@@ -13,11 +43,7 @@ describe("Test consistency of internal variables", () => {
     "And {{test-variable}} in the middle of the sentence.": "And {{test-variable}} in the middle of the sentence.",
   };
 
-  Object.keys(testCase).forEach((key) => {
-    it("", () => {
-      assert.strictEqual(fixTypos(key, "en-us"), testCase[key]);
-    });
-  });
+  runBothVersions(testCase, "en-us");
 });
 
 describe("Test that exceptions remain intact", () => {
@@ -51,11 +77,7 @@ describe("Test that exceptions remain intact", () => {
       "www.tota.sk and 127.0.0.1 and mail@domain.com",
   };
 
-  Object.keys(testCase).forEach((key) => {
-    it("", () => {
-      assert.strictEqual(fixTypos(key, "en-us"), testCase[key]);
-    });
-  });
+  runBothVersions(testCase, "en-us");
 });
 
 /* typopo configurations */
@@ -128,11 +150,11 @@ let testModules = {
   "word # 9":           "word #9",
 
   // spaces
-  "Sentence and… ?":    "Sentence and…?",
-  "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
-  "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
+  "Sentence and… ?":                         "Sentence and…?",
+  "🥳 word 🥳 word 🥳":                      "🥳 word 🥳 word 🥳",
+  "🥳 word 🥳 word 🥳":                      "🥳 word 🥳 word 🥳",
   // nbsp
-  "v a v a v":          "v a v a v",
+  "v a v a v":                               "v a v a v",
   "The product X is missing the feature Y.": "The product X is missing the feature Y.",
 
   "Sputnik V":                       "Sputnik V",
@@ -193,9 +215,9 @@ let testKeepWhitespacesBeforeMarkdownList = {
 let testModuleDoubleQuotesEnUs = {
   // double quotes
   "English „English„ „English„ English": "English “English” “English” English",
-  'He said: "Here’s a 12" record."':  "He said: “Here’s a 12″ record.”",
-  '12′ 45"':                            "12′ 45″",
-  '3° 5′ 30"':                          "3° 5′ 30″",
+  'He said: "Here’s a 12" record."':     "He said: “Here’s a 12″ record.”",
+  '12′ 45"':                             "12′ 45″",
+  '3° 5′ 30"':                           "3° 5′ 30″",
   "12\"3'00°":                           "12″3′00°",
 
   'He was ok. "He was ok ".': "He was ok. “He was ok.”",
@@ -206,9 +228,9 @@ let testModuleDoubleQuotesEnUs = {
 let testModuleDoubleQuotesDeDe = {
   // double quotes
   "English „English„ „English„ English": "English „English“ „English“ English",
-  'He said: "Here’s a 12" record."':  "He said: „Here’s a 12″ record.“",
-  '12′ 45"':                            "12′ 45″",
-  '3° 5′ 30"':                          "3° 5′ 30″",
+  'He said: "Here’s a 12" record."':     "He said: „Here’s a 12″ record.“",
+  '12′ 45"':                             "12′ 45″",
+  '3° 5′ 30"':                           "3° 5′ 30″",
   "12\"3'00°":                           "12″3′00°",
 };
 
@@ -223,9 +245,9 @@ let testModuleDoubleQuotesCs = {
 let testModuleDoubleQuotesRue = {
   // double quotes
   "English „English„ „English„ English": "English «English» «English» English",
-  'He said: "Here’s a 12" record."':  "He said: «Here’s a 12″ record.»",
-  '12′ 45"':                            "12′ 45″",
-  '3° 5′ 30"':                          "3° 5′ 30″",
+  'He said: "Here’s a 12" record."':     "He said: «Here’s a 12″ record.»",
+  '12′ 45"':                             "12′ 45″",
+  '3° 5′ 30"':                           "3° 5′ 30″",
   "12\"3'00°":                           "12″3′00°",
 };
 
@@ -418,41 +440,36 @@ describe("Tests that all modules are plugged for en-us", () => {
     ...testModuleNbspEnUs,
   };
 
-  let testCaseDefault = {
-    ...testCase,
-    ...testRemoveLines,
-    ...testRemoveWhitespacesBeforeMarkdownList,
-  };
+  describe("with default config", () => {
+    let testCaseDefault = {
+      ...testCase,
+      ...testRemoveLines,
+      ...testRemoveWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseDefault).forEach((key) => {
-    it("integration test w config: default", () => {
-      assert.strictEqual(fixTypos(key, "en-us", configDefault), testCaseDefault[key]);
-    });
+    runBothVersions(testCaseDefault, "en-us", configDefault);
   });
 
-  let testCaseKeepLines = {
-    ...testCase,
-    ...testKeepLines,
-  };
+  describe("with removeLines=false", () => {
+    let testCaseKeepLines = {
+      ...testCase,
+      ...testKeepLines,
+    };
 
-  Object.keys(testCaseKeepLines).forEach((key) => {
-    it("integration test w config: removeLines=false", () => {
-      assert.strictEqual(fixTypos(key, "en-us", configKeepLines), testCaseKeepLines[key]);
-    });
+    runBothVersions(testCaseKeepLines, "en-us", configKeepLines);
   });
 
-  let testCaseKeepWhitespacesBeforeMarkdownList = {
-    ...testCase,
-    ...testKeepWhitespacesBeforeMarkdownList,
-  };
+  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
+    let testCaseKeepWhitespacesBeforeMarkdownList = {
+      ...testCase,
+      ...testKeepWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseKeepWhitespacesBeforeMarkdownList).forEach((key) => {
-    it("integration test w config: removeWhitespacesBeforeMarkdownList=false", () => {
-      assert.strictEqual(
-        fixTypos(key, "en-us", configKeepWhitespacesBeforeMarkdownList),
-        testCaseKeepWhitespacesBeforeMarkdownList[key]
-      );
-    });
+    runBothVersions(
+      testCaseKeepWhitespacesBeforeMarkdownList,
+      "en-us",
+      configKeepWhitespacesBeforeMarkdownList
+    );
   });
 });
 
@@ -465,41 +482,36 @@ describe("Tests that all modules are plugged for de-de", () => {
     ...testModuleNbspDeDe,
   };
 
-  let testCaseDefault = {
-    ...testCase,
-    ...testRemoveLines,
-    ...testRemoveWhitespacesBeforeMarkdownList,
-  };
+  describe("with default config", () => {
+    let testCaseDefault = {
+      ...testCase,
+      ...testRemoveLines,
+      ...testRemoveWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseDefault).forEach((key) => {
-    it("integration test w config: default", () => {
-      assert.strictEqual(fixTypos(key, "de-de", configDefault), testCaseDefault[key]);
-    });
+    runBothVersions(testCaseDefault, "de-de", configDefault);
   });
 
-  let testCaseKeepLines = {
-    ...testCase,
-    ...testKeepLines,
-  };
+  describe("with removeLines=false", () => {
+    let testCaseKeepLines = {
+      ...testCase,
+      ...testKeepLines,
+    };
 
-  Object.keys(testCaseKeepLines).forEach((key) => {
-    it("integration test w config: removeLines=false", () => {
-      assert.strictEqual(fixTypos(key, "de-de", configKeepLines), testCaseKeepLines[key]);
-    });
+    runBothVersions(testCaseKeepLines, "de-de", configKeepLines);
   });
 
-  let testCaseKeepWhitespacesBeforeMarkdownList = {
-    ...testCase,
-    ...testKeepWhitespacesBeforeMarkdownList,
-  };
+  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
+    let testCaseKeepWhitespacesBeforeMarkdownList = {
+      ...testCase,
+      ...testKeepWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseKeepWhitespacesBeforeMarkdownList).forEach((key) => {
-    it("integration test w config: removeWhitespacesBeforeMarkdownList=false", () => {
-      assert.strictEqual(
-        fixTypos(key, "de-de", configKeepWhitespacesBeforeMarkdownList),
-        testCaseKeepWhitespacesBeforeMarkdownList[key]
-      );
-    });
+    runBothVersions(
+      testCaseKeepWhitespacesBeforeMarkdownList,
+      "de-de",
+      configKeepWhitespacesBeforeMarkdownList
+    );
   });
 });
 
@@ -512,41 +524,36 @@ describe("Tests that all modules are plugged for sk", () => {
     ...testModuleNbspSk,
   };
 
-  let testCaseDefault = {
-    ...testCase,
-    ...testRemoveLines,
-    ...testRemoveWhitespacesBeforeMarkdownList,
-  };
+  describe("with default config", () => {
+    let testCaseDefault = {
+      ...testCase,
+      ...testRemoveLines,
+      ...testRemoveWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseDefault).forEach((key) => {
-    it("integration test w config: default", () => {
-      assert.strictEqual(fixTypos(key, "sk", configDefault), testCaseDefault[key]);
-    });
+    runBothVersions(testCaseDefault, "sk", configDefault);
   });
 
-  let testCaseKeepLines = {
-    ...testCase,
-    ...testKeepLines,
-  };
+  describe("with removeLines=false", () => {
+    let testCaseKeepLines = {
+      ...testCase,
+      ...testKeepLines,
+    };
 
-  Object.keys(testCaseKeepLines).forEach((key) => {
-    it("integration test w config: removeLines=false", () => {
-      assert.strictEqual(fixTypos(key, "sk", configKeepLines), testCaseKeepLines[key]);
-    });
+    runBothVersions(testCaseKeepLines, "sk", configKeepLines);
   });
 
-  let testCaseKeepWhitespacesBeforeMarkdownList = {
-    ...testCase,
-    ...testKeepWhitespacesBeforeMarkdownList,
-  };
+  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
+    let testCaseKeepWhitespacesBeforeMarkdownList = {
+      ...testCase,
+      ...testKeepWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseKeepWhitespacesBeforeMarkdownList).forEach((key) => {
-    it("integration test w config: removeWhitespacesBeforeMarkdownList=false", () => {
-      assert.strictEqual(
-        fixTypos(key, "sk", configKeepWhitespacesBeforeMarkdownList),
-        testCaseKeepWhitespacesBeforeMarkdownList[key]
-      );
-    });
+    runBothVersions(
+      testCaseKeepWhitespacesBeforeMarkdownList,
+      "sk",
+      configKeepWhitespacesBeforeMarkdownList
+    );
   });
 });
 
@@ -559,41 +566,36 @@ describe("Tests that all modules are plugged for cs", () => {
     ...testModuleNbspCs,
   };
 
-  let testCaseDefault = {
-    ...testCase,
-    ...testRemoveLines,
-    ...testRemoveWhitespacesBeforeMarkdownList,
-  };
+  describe("with default config", () => {
+    let testCaseDefault = {
+      ...testCase,
+      ...testRemoveLines,
+      ...testRemoveWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseDefault).forEach((key) => {
-    it("integration test w config: default", () => {
-      assert.strictEqual(fixTypos(key, "cs", configDefault), testCaseDefault[key]);
-    });
+    runBothVersions(testCaseDefault, "cs", configDefault);
   });
 
-  let testCaseKeepLines = {
-    ...testCase,
-    ...testKeepLines,
-  };
+  describe("with removeLines=false", () => {
+    let testCaseKeepLines = {
+      ...testCase,
+      ...testKeepLines,
+    };
 
-  Object.keys(testCaseKeepLines).forEach((key) => {
-    it("integration test w config: removeLines=false", () => {
-      assert.strictEqual(fixTypos(key, "cs", configKeepLines), testCaseKeepLines[key]);
-    });
+    runBothVersions(testCaseKeepLines, "cs", configKeepLines);
   });
 
-  let testCaseKeepWhitespacesBeforeMarkdownList = {
-    ...testCase,
-    ...testKeepWhitespacesBeforeMarkdownList,
-  };
+  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
+    let testCaseKeepWhitespacesBeforeMarkdownList = {
+      ...testCase,
+      ...testKeepWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseKeepWhitespacesBeforeMarkdownList).forEach((key) => {
-    it("integration test w config: removeWhitespacesBeforeMarkdownList=false", () => {
-      assert.strictEqual(
-        fixTypos(key, "cs", configKeepWhitespacesBeforeMarkdownList),
-        testCaseKeepWhitespacesBeforeMarkdownList[key]
-      );
-    });
+    runBothVersions(
+      testCaseKeepWhitespacesBeforeMarkdownList,
+      "cs",
+      configKeepWhitespacesBeforeMarkdownList
+    );
   });
 });
 
@@ -606,41 +608,36 @@ describe("Tests that all modules are plugged for rue", () => {
     ...testModuleNbspRue,
   };
 
-  let testCaseDefault = {
-    ...testCase,
-    ...testRemoveLines,
-    ...testRemoveWhitespacesBeforeMarkdownList,
-  };
+  describe("with default config", () => {
+    let testCaseDefault = {
+      ...testCase,
+      ...testRemoveLines,
+      ...testRemoveWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseDefault).forEach((key) => {
-    it("integration test w config: default", () => {
-      assert.strictEqual(fixTypos(key, "rue", configDefault), testCaseDefault[key]);
-    });
+    runBothVersions(testCaseDefault, "rue", configDefault);
   });
 
-  let testCaseKeepLines = {
-    ...testCase,
-    ...testKeepLines,
-  };
+  describe("with removeLines=false", () => {
+    let testCaseKeepLines = {
+      ...testCase,
+      ...testKeepLines,
+    };
 
-  Object.keys(testCaseKeepLines).forEach((key) => {
-    it("integration test w config: removeLines=false", () => {
-      assert.strictEqual(fixTypos(key, "rue", configKeepLines), testCaseKeepLines[key]);
-    });
+    runBothVersions(testCaseKeepLines, "rue", configKeepLines);
   });
 
-  let testCaseKeepWhitespacesBeforeMarkdownList = {
-    ...testCase,
-    ...testKeepWhitespacesBeforeMarkdownList,
-  };
+  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
+    let testCaseKeepWhitespacesBeforeMarkdownList = {
+      ...testCase,
+      ...testKeepWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseKeepWhitespacesBeforeMarkdownList).forEach((key) => {
-    it("integration test w config: removeWhitespacesBeforeMarkdownList=false", () => {
-      assert.strictEqual(
-        fixTypos(key, "rue", configKeepWhitespacesBeforeMarkdownList),
-        testCaseKeepWhitespacesBeforeMarkdownList[key]
-      );
-    });
+    runBothVersions(
+      testCaseKeepWhitespacesBeforeMarkdownList,
+      "rue",
+      configKeepWhitespacesBeforeMarkdownList
+    );
   });
 });
 
@@ -663,9 +660,5 @@ describe("Test if markdown ticks are kept (integration test) (en-us):\n", () => 
     "e.g. `something`": "e.g. `something`",
   };
 
-  Object.keys(testCase).forEach((key) => {
-    it("keepMarkdownCodeBlocks: true” configuration", () => {
-      assert.strictEqual(fixTypos(key, "en-us", configKeepMarkdownCodeBlocks), testCase[key]);
-    });
-  });
+  runBothVersions(testCase, "en-us", configKeepMarkdownCodeBlocks);
 });
