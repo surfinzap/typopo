@@ -5,7 +5,7 @@ const packageJson = require('./package.json');
 
 const currentYear = new Date().getFullYear();
 const copyrightBanner = `/*!
- * husky Typopo v${packageJson.version} (https://typopo.org)
+ * Typopo v${packageJson.version} (https://typopo.org)
  * Copyright 2015–${currentYear} Braňo Šandala (https://brano.me)
  * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */`;
