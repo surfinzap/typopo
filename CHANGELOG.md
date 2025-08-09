@@ -3,14 +3,14 @@
 
 ## 2.5.9 //
 
-
 ### 💪 Improvements
 - Lower the bundle size by few kBs
 
 ### 🔨 Maintenance
 - Reorganize the folder structure
 - Update NPM packages to their latest versions			
-- Code refactoring and formatting
+- Refactor the source code
+- Remove unused packages
 
 
 
