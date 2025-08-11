@@ -1,6 +1,6 @@
-import { fixPlusMinus } from "../../src/modules/symbols/plus-minus";
+import { fixPlusMinus } from "../../src/modules/symbols/plus-minus.js";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 describe("Fix plus-minus symbol ±\n", () => {
   let testCase = {

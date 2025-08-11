@@ -1,5 +1,5 @@
-import { addSpaceBeforeSymbol } from "../whitespace/spaces";
-import { addNbspAfterSymbol, replaceSpacesWithNbspAfterSymbol } from "../whitespace/nbsp";
+import { addSpaceBeforeSymbol } from "../whitespace/spaces.js";
+import { addNbspAfterSymbol, replaceSpacesWithNbspAfterSymbol } from "../whitespace/nbsp.js";
 
 //
 

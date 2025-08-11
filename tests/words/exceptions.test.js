@@ -1,6 +1,6 @@
 import assert from "assert";
-import { excludeExceptions, placeExceptions } from "../../src/modules/words/exceptions";
-import Locale from "../../src/locale/locale";
+import { excludeExceptions, placeExceptions } from "../../src/modules/words/exceptions.js";
+import Locale from "../../src/locale/locale.js";
 
 // Mock locale for URL pattern
 const locale = new Locale("en-us");

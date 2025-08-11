@@ -13,7 +13,7 @@ import {
   fixEllipsisAsLastItem,
 } from "../../src/modules/punctuation/ellipsis";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 describe("Replace periods/ellipses with a single ellipsis:\n", () => {
   let testCase = {

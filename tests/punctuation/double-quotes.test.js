@@ -16,7 +16,7 @@ import {
   fixDoubleQuotesAndPrimes,
 } from "../../src/modules/punctuation/double-quotes";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 let configIgnoreMarkdownCodeBlocks = {
   keepMarkdownCodeBlocks: false,

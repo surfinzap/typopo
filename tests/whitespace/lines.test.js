@@ -1,4 +1,4 @@
-import { removeEmptyLines } from "../../src/modules/whitespace/lines";
+import { removeEmptyLines } from "../../src/modules/whitespace/lines.js";
 import assert from "assert";
 
 describe("Remove empty lines\n", () => {

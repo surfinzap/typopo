@@ -3,7 +3,7 @@ import {
   fixNumberSign,
 } from "../../src/modules/symbols/number-sign";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 describe("Remove extra space before number sign\n", () => {
   let testCase = {

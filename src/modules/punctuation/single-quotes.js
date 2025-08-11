@@ -1,4 +1,4 @@
-import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../punctuation/markdown";
+import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../punctuation/markdown.js";
 
 //
 

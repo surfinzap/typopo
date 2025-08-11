@@ -14,7 +14,7 @@ import {
   fixSpaces,
 } from "../../src/modules/whitespace/spaces";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 let configRemoveWhitespacesBeforeParagraphs = {
   removeWhitespacesBeforeMarkdownList: true,

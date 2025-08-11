@@ -1,6 +1,6 @@
-import { fixPeriod } from "../../src/modules/punctuation/period";
+import { fixPeriod } from "../../src/modules/punctuation/period.js";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 describe("Replace 2 periods at the end of the sentecne with a single period\n", () => {
   let testCase = {

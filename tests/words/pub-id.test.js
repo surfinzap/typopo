@@ -6,7 +6,7 @@ import {
   fixISBNnumber,
 } from "../../src/modules/words/pub-id";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 describe("Fix ISSN format\n", () => {
   let testCase = {

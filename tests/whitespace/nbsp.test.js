@@ -14,7 +14,7 @@ import {
   fixNbsp,
 } from "../../src/modules/whitespace/nbsp";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 describe("Remove non-breaking space between multi-letter words\n", () => {
   let testCase = {

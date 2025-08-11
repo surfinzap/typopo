@@ -1,6 +1,6 @@
-import { replaceMark, fixMarks } from "../../src/modules/symbols/marks";
+import { replaceMark, fixMarks } from "../../src/modules/symbols/marks.js";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 const locales = ["en-us", "de-de", "sk", "cs", "rue"];
 

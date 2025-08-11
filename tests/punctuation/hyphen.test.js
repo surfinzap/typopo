@@ -1,6 +1,6 @@
-import { fixHyphen, fixSpaceAroundHyphen } from "../../src/modules/punctuation/hyphen";
+import { fixHyphen, fixSpaceAroundHyphen } from "../../src/modules/punctuation/hyphen.js";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 describe("Fix spaces around hyphen\n", () => {
   let testCase = {

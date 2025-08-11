@@ -6,7 +6,7 @@ import {
   fixMultiplicationSign,
 } from "../../src/modules/symbols/multiplication-sign";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 describe("Fix multiplication sign between numbers\n", () => {
   let testCase = {

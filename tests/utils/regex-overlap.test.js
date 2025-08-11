@@ -1,4 +1,4 @@
-import { strict as assert } from "assert";
+import assert from "assert";
 import { replaceWithOverlapHandling } from "../../src/utils/regex-overlap.js";
 
 describe("replaceWithOverlapHandling", () => {

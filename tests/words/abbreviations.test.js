@@ -5,7 +5,7 @@ import {
   fixSingleWordAbbreviations,
 } from "../../src/modules/words/abbreviations";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 const testLocales = ["sk", "cs", "rue", "de-de"];
 

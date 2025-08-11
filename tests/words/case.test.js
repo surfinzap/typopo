@@ -1,6 +1,6 @@
 import assert from "assert";
-import { fixCase } from "../../src/modules/words/case";
-import Locale from "../../src/locale/locale";
+import { fixCase } from "../../src/modules/words/case.js";
+import Locale from "../../src/locale/locale.js";
 
 describe("Fix accidental uPPERCASE\n", () => {
   let testCase = {

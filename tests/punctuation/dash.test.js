@@ -9,7 +9,7 @@ import {
   fixDash,
 } from "../../src/modules/punctuation/dash";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 describe("Replace 3 hyphens with an em dash\n", () => {
   let testCase = {

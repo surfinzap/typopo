@@ -1,10 +1,10 @@
-// import loc from "../locale/locale";
+// import loc from "../locale/locale.js";
 
-import localeCs from "./cs";
-import localeEnUs from "./en-us";
-import localeRue from "./rue";
-import localeSk from "./sk";
-import localeDeDe from "./de-de";
+import localeCs from "./cs.js";
+import localeEnUs from "./en-us.js";
+import localeRue from "./rue.js";
+import localeSk from "./sk.js";
+import localeDeDe from "./de-de.js";
 
 const typopoLocale = {
   "cs":    localeCs,

@@ -1,6 +1,6 @@
-import { fixExponents, fixSquares, fixCubes } from "../../src/modules/symbols/exponents";
+import { fixExponents, fixSquares, fixCubes } from "../../src/modules/symbols/exponents.js";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 describe("Fix squares\n", () => {
   let testCase = {

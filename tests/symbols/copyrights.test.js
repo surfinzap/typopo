@@ -1,6 +1,6 @@
-import { fixCopyrights } from "../../src/modules/symbols/copyrights";
+import { fixCopyrights } from "../../src/modules/symbols/copyrights.js";
 import assert from "assert";
-import Locale from "../../src/locale/locale";
+import Locale from "../../src/locale/locale.js";
 
 const locales = ["en-us", "de-de", "sk", "cs", "rue"];
 
