@@ -364,12 +364,6 @@ describe("Add non-breaking space after roman numeral (sk, cs, de-de, rue)\nExtra
 });
 
 describe("Fix non-breaking space around name with regnal number (sk, cs, de-de, rue)\n", () => {
-  let unitTestCase = {
-    // correct placement in mix of languages
-    "When I talk to emerging product designers": "When I talk to emerging product designers",
-    ...moduleTestCase,
-  };
-
   let moduleTestCase = {
     // Place non-breaking space between name and roman numeral
     "Karel IV. byl římsko-německý král.": "Karel IV. byl římsko-německý král.",
@@ -377,6 +371,12 @@ describe("Fix non-breaking space around name with regnal number (sk, cs, de-de, 
     "Karel IV.":                          "Karel IV.",
     //false positive
     "je to IV. cenová skupina":           "je to IV. cenová skupina",
+  };
+
+  let unitTestCase = {
+    // correct placement in mix of languages
+    "When I talk to emerging product designers": "When I talk to emerging product designers",
+    ...moduleTestCase,
   };
 
   Object.keys(unitTestCase).forEach((key) => {
