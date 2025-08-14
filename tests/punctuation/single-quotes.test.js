@@ -15,7 +15,7 @@ import {
   swapSingleQuotesAndTerminalPunctuation,
   removeExtraSpaceAroundSinglePrime,
   fixSingleQuotesPrimesAndApostrophes,
-} from "../../src/modules/punctuation/single-quotes";
+} from "../../src/modules/punctuation/single-quotes.js";
 import Locale from "../../src/locale/locale.js";
 
 import assert from "assert";

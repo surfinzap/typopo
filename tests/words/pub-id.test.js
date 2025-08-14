@@ -4,7 +4,7 @@ import {
   fixISBN10,
   fixISBN13,
   fixISBNnumber,
-} from "../../src/modules/words/pub-id";
+} from "../../src/modules/words/pub-id.js";
 import assert from "assert";
 import Locale from "../../src/locale/locale.js";
 

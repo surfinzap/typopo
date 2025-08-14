@@ -12,7 +12,7 @@ import {
   addNbspAfterSymbol,
   replaceSpacesWithNbspAfterSymbol,
   fixNbsp,
-} from "../../src/modules/whitespace/nbsp";
+} from "../../src/modules/whitespace/nbsp.js";
 import assert from "assert";
 import Locale from "../../src/locale/locale.js";
 

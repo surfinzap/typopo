@@ -12,7 +12,7 @@ import {
   removeSpacesAtParagraphEnd,
   addSpaceBeforeSymbol,
   fixSpaces,
-} from "../../src/modules/whitespace/spaces";
+} from "../../src/modules/whitespace/spaces.js";
 import assert from "assert";
 import Locale from "../../src/locale/locale.js";
 

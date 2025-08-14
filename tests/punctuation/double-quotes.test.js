@@ -14,7 +14,7 @@ import {
   addSpaceBeforeLeftDoubleQuote,
   addSpaceAfterRightDoubleQuote,
   fixDoubleQuotesAndPrimes,
-} from "../../src/modules/punctuation/double-quotes";
+} from "../../src/modules/punctuation/double-quotes.js";
 import assert from "assert";
 import Locale from "../../src/locale/locale.js";
 

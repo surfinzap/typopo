@@ -3,7 +3,7 @@ import {
   fixInitials,
   fixMultipleWordAbbreviations,
   fixSingleWordAbbreviations,
-} from "../../src/modules/words/abbreviations";
+} from "../../src/modules/words/abbreviations.js";
 import assert from "assert";
 import Locale from "../../src/locale/locale.js";
 

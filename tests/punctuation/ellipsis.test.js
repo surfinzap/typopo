@@ -11,7 +11,7 @@ import {
   fixAposiopesisEndingParagraph,
   fixEllipsis,
   fixEllipsisAsLastItem,
-} from "../../src/modules/punctuation/ellipsis";
+} from "../../src/modules/punctuation/ellipsis.js";
 import assert from "assert";
 import Locale from "../../src/locale/locale.js";
 

@@ -7,7 +7,7 @@ import {
   fixDashBetweenPercentageRange,
   fixDashBetweenOrdinalNumbers,
   fixDash,
-} from "../../src/modules/punctuation/dash";
+} from "../../src/modules/punctuation/dash.js";
 import assert from "assert";
 import Locale from "../../src/locale/locale.js";
 

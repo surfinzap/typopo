@@ -1,7 +1,7 @@
 import {
   identifyMarkdownCodeTicks,
   placeMarkdownCodeTicks,
-} from "../../src/modules/punctuation/markdown";
+} from "../../src/modules/punctuation/markdown.js";
 
 import assert from "assert";
 

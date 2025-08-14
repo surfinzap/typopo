@@ -1,7 +1,7 @@
 import {
   removeExtraSpacesAfterNumberSign,
   fixNumberSign,
-} from "../../src/modules/symbols/number-sign";
+} from "../../src/modules/symbols/number-sign.js";
 import assert from "assert";
 import Locale from "../../src/locale/locale.js";
 

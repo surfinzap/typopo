@@ -4,7 +4,7 @@ import {
   fixMultiplicationSignBetweenNumberAndWord,
   fixNbspAroundMultiplicationSign,
   fixMultiplicationSign,
-} from "../../src/modules/symbols/multiplication-sign";
+} from "../../src/modules/symbols/multiplication-sign.js";
 import assert from "assert";
 import Locale from "../../src/locale/locale.js";
 
