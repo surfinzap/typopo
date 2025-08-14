@@ -1,5 +1,5 @@
 import { fixPeriod } from "../../src/modules/punctuation/period.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
 describe("Replace 2 periods at the end of the sentecne with a single period\n", () => {
@@ -16,7 +16,7 @@ describe("Replace 2 periods at the end of the sentecne with a single period\n", 
 
   Object.keys(testCase).forEach((key) => {
     it("", () => {
-      assert.strictEqual(fixPeriod(key, new Locale("rue")), testCase[key]);
+      expect(fixPeriod(key, new Locale("rue"))).toBe(testCase[key]);
     });
   });
 });

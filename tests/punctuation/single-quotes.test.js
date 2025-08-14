@@ -18,7 +18,7 @@ import {
 } from "../../src/modules/punctuation/single-quotes.js";
 import Locale from "../../src/locale/locale.js";
 
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 
 let configIgnoreMarkdownCodeBlocks = {
   keepMarkdownCodeBlocks: false,
@@ -82,7 +82,7 @@ describe("Identify contracted and (’n’) as apostrophes (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleSingleQuotes(
           identifyContractedAnd(key, new Locale("en-us")),
           new Locale("en-us")
@@ -94,7 +94,7 @@ describe("Identify contracted and (’n’) as apostrophes (en-us):\n", () => {
 
   Object.keys(moduleTestCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -137,7 +137,7 @@ describe("Identify common contractions at the beginning of the word as apostroph
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleSingleQuotes(
           identifyContractedBeginnings(key, new Locale("en-us")),
           new Locale("en-us")
@@ -149,7 +149,7 @@ describe("Identify common contractions at the beginning of the word as apostroph
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -181,7 +181,7 @@ describe("Identify common contractions at the end of the word as apostrophes (en
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleSingleQuotes(
           identifyContractedEnds(key, new Locale("en-us")),
           new Locale("en-us")
@@ -193,7 +193,7 @@ describe("Identify common contractions at the end of the word as apostrophes (en
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -224,7 +224,7 @@ describe("Identify in-word contractions as apostrophes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleSingleQuotes(
           identifyInWordContractions(key, new Locale("en-us")),
           new Locale("en-us")
@@ -236,7 +236,7 @@ describe("Identify in-word contractions as apostrophes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -264,7 +264,7 @@ describe("Identify contracted years as apostrophes (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleSingleQuotes(
           identifyContractedYears(key, new Locale("en-us")),
           new Locale("en-us")
@@ -276,7 +276,7 @@ describe("Identify contracted years as apostrophes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -326,7 +326,7 @@ describe("Identify feet and arcminutes following a 1–3 numbers (en-us):\n", ()
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleSingleQuotes(
           identifySinglePrimes(key, new Locale("en-us")),
           new Locale("en-us")
@@ -338,7 +338,7 @@ describe("Identify feet and arcminutes following a 1–3 numbers (en-us):\n", ()
 
   Object.keys(moduleTestCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -403,7 +403,7 @@ describe("Identify standalone left single quote (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         identifyStandaloneLeftSingleQuote(key, new Locale("en-us")),
         unitTestCase[key]
       );
@@ -412,7 +412,7 @@ describe("Identify standalone left single quote (en-us):\n", () => {
 
   Object.keys(moduleTestCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -491,7 +491,7 @@ describe("Identify standalone right single quote (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         identifyStandaloneRightSingleQuote(key, new Locale("en-us")),
         unitTestCase[key]
       );
@@ -500,7 +500,7 @@ describe("Identify standalone right single quote (en-us):\n", () => {
 
   Object.keys(moduleTestCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -539,13 +539,13 @@ describe("Identify single quote pairs (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(identifySingleQuotePairs(key, new Locale("en-us")), unitTestCase[key]);
+      expect(identifySingleQuotePairs(key, new Locale("en-us"))).toBe(unitTestCase[key]);
     });
   });
 
   Object.keys(moduleTestCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -584,7 +584,7 @@ describe("Identify single quote pairs around single word (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleSingleQuotes(
           identifySingleQuotePairAroundSingleWord(key, new Locale("en-us")),
           new Locale("en-us")
@@ -596,7 +596,7 @@ describe("Identify single quote pairs around single word (en-us):\n", () => {
 
   Object.keys(moduleTestCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -630,7 +630,7 @@ describe("Replace a single qoute & a single prime with a single quote pair (en-u
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         replaceSinglePrimeWSingleQuote(key, new Locale("en-us")),
         unitTestCase[key]
       );
@@ -639,7 +639,7 @@ describe("Replace a single qoute & a single prime with a single quote pair (en-u
 
   Object.keys(moduleTestCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -658,7 +658,7 @@ describe("Identify residual apostrophes  (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleSingleQuotes(
           identifyResidualApostrophes(key, new Locale("en-us")),
           new Locale("en-us")
@@ -670,7 +670,7 @@ describe("Identify residual apostrophes  (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -691,7 +691,7 @@ describe("Remove extra space around a single prime:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         removeExtraSpaceAroundSinglePrime(key, new Locale("en-us")),
         testCase[key]
       );
@@ -700,7 +700,7 @@ describe("Remove extra space around a single prime:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -766,13 +766,13 @@ describe("Swap single quotes and terminal punctuation for a quoted part (en-us):
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         swapSingleQuotesAndTerminalPunctuation(key, new Locale("en-us")),
         testCase[key]
       );
     });
     // it("module test", () => {
-    // 	assert.strictEqual(
+    // 	expect(
     // 		fixSingleQuotesPrimesAndApostrophes(
     // 			key,
     // 			new Locale("en-us"),
@@ -808,7 +808,7 @@ describe("Single quotes in default language (en-us)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test (en)", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("en-us"),
@@ -842,15 +842,15 @@ describe("Single quotes in (sk, cs, de-de)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("should fix single quotes, primes and apostrophes in (sk, cs, de-de)", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(key, new Locale("sk"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(key, new Locale("cs"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(
           key,
           new Locale("de-de"),
@@ -879,7 +879,7 @@ describe("Single quotes in (rue)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("should fix single quotes, primes and apostrophes in Rusyn", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(key, new Locale("rue"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -914,7 +914,7 @@ describe("Test if markdown ticks are kept (single quotes) (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("keepMarkdownCodeBlocks: true” configuration", () => {
-      assert.strictEqual(
+      expect(
         fixSingleQuotesPrimesAndApostrophes(key, new Locale("en-us"), configKeepMarkdownCodeBlocks),
         testCase[key]
       );

@@ -3,7 +3,7 @@ import {
   placeMarkdownCodeTicks,
 } from "../../src/modules/punctuation/markdown.js";
 
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 
 let configKeepMarkdownCodeBlocks = {
   keepMarkdownCodeBlocks: true,
@@ -49,7 +49,7 @@ describe("Identify markdown code ticks:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         identifyMarkdownCodeTicks(key, configKeepMarkdownCodeBlocks),
         testCase[key]
       );
@@ -93,7 +93,7 @@ describe("Place markdown code ticks:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(placeMarkdownCodeTicks(key, configKeepMarkdownCodeBlocks), testCase[key]);
+      expect(placeMarkdownCodeTicks(key, configKeepMarkdownCodeBlocks)).toBe(testCase[key]);
     });
   });
 });
@@ -125,7 +125,7 @@ describe("Ignore markdown code ticks:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         identifyMarkdownCodeTicks(key, configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -134,7 +134,7 @@ describe("Ignore markdown code ticks:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeMarkdownCodeTicks(key, configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );

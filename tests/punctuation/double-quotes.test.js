@@ -15,7 +15,7 @@ import {
   addSpaceAfterRightDoubleQuote,
   fixDoubleQuotesAndPrimes,
 } from "../../src/modules/punctuation/double-quotes.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
 let configIgnoreMarkdownCodeBlocks = {
@@ -113,13 +113,13 @@ describe("Remove punctuation before double quotes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         removeExtraPunctuationBeforeQuotes(key, new Locale("en-us")),
         testCase[key]
       );
     });
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -137,13 +137,13 @@ describe("Remove punctuation after double quotes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         removeExtraPunctuationAfterQuotes(key, new Locale("en-us")),
         testCase[key]
       );
     });
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -209,7 +209,7 @@ describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleDoubleQuotes(
           identifyDoublePrimes(key, new Locale("en-us")),
           new Locale("en-us")
@@ -221,7 +221,7 @@ describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -286,7 +286,7 @@ describe("Identify double quote pairs (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleDoubleQuotes(
           identifyDoubleQuotePairs(key, new Locale("en-us")),
           new Locale("en-us")
@@ -298,7 +298,7 @@ describe("Identify double quote pairs (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -329,7 +329,7 @@ describe("Identify standalone left double quote (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleDoubleQuotes(
           identifyStandaloneLeftDoubleQuote(key, new Locale("en-us")),
           new Locale("en-us")
@@ -339,7 +339,7 @@ describe("Identify standalone left double quote (en-us):\n", () => {
     });
 
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -372,7 +372,7 @@ describe("Identify standalone right double quote (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleDoubleQuotes(
           identifyStandaloneRightDoubleQuote(key, new Locale("en-us")),
           new Locale("en-us")
@@ -382,7 +382,7 @@ describe("Identify standalone right double quote (en-us):\n", () => {
     });
 
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -409,7 +409,7 @@ describe("Remove unidentified double quotes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         placeLocaleDoubleQuotes(
           removeUnidentifiedDoubleQuote(key, new Locale("en-us")),
           new Locale("en-us")
@@ -419,7 +419,7 @@ describe("Remove unidentified double quotes (en-us):\n", () => {
     });
 
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -449,7 +449,7 @@ describe("Replace a double qoute & a double prime with a double quote pair (en-u
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         replaceDoublePrimeWDoubleQuote(key, new Locale("en-us")),
         unitTestCase[key]
       );
@@ -458,7 +458,7 @@ describe("Replace a double qoute & a double prime with a double quote pair (en-u
 
   Object.keys(moduleTestCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         moduleTestCase[key]
       );
@@ -546,10 +546,10 @@ describe("Swap quotes and terminal punctuation for a quoted part (en-us):\n", ()
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(swapQuotesAndTerminalPunctuation(key, new Locale("en-us")), testCase[key]);
+      expect(swapQuotesAndTerminalPunctuation(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -576,13 +576,13 @@ describe("Remove extra comma after sentence punctuation in direct speech (en-us)
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         removeExtraCommaAfterSentencePunctuation(key, new Locale("en-us")),
         testCase[key]
       );
     });
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -609,10 +609,10 @@ describe("Remove extra spaces around quotes and primes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(removeExtraSpacesAroundQuotes(key, new Locale("en-us")), testCase[key]);
+      expect(removeExtraSpacesAroundQuotes(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -633,10 +633,10 @@ describe("Add a missing space before a left double quote (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(addSpaceBeforeLeftDoubleQuote(key, new Locale("en-us")), testCase[key]);
+      expect(addSpaceBeforeLeftDoubleQuote(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -657,10 +657,10 @@ describe("Add a missing space after a left double quote (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(addSpaceAfterRightDoubleQuote(key, new Locale("en-us")), testCase[key]);
+      expect(addSpaceAfterRightDoubleQuote(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -676,7 +676,7 @@ describe("Double quotes in default language (en-us)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -691,21 +691,21 @@ describe("Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n",
 
   Object.keys(testCase).forEach((key) => {
     it("module test (sk)", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("sk"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
     });
 
     it("module test (cs)", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("cs"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
     });
 
     it("module test (de-de)", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("de-de"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -720,7 +720,7 @@ describe("Double quotes in Rusyn language (rue)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test (rue)", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("rue"), configIgnoreMarkdownCodeBlocks),
         testCase[key]
       );
@@ -755,7 +755,7 @@ describe("Test if markdown ticks are kept (double quotes) (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("keepMarkdownCodeBlocks: true” configuration", () => {
-      assert.strictEqual(
+      expect(
         fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configKeepMarkdownCodeBlocks),
         testCase[key]
       );

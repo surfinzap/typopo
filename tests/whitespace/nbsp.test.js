@@ -13,7 +13,7 @@ import {
   replaceSpacesWithNbspAfterSymbol,
   fixNbsp,
 } from "../../src/modules/whitespace/nbsp.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
 describe("Remove non-breaking space between multi-letter words\n", () => {
@@ -28,10 +28,10 @@ describe("Remove non-breaking space between multi-letter words\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(removeNbspBetweenMultiCharWords(key, new Locale("en-us")), testCase[key]);
+      expect(removeNbspBetweenMultiCharWords(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("en-us")), testCase[key]);
+      expect(fixNbsp(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -84,41 +84,41 @@ describe("Add non-breaking spaces after single-letter prepositions\n", () => {
 
   Object.keys(testEnUS).forEach((key) => {
     it("unit test (en-us)", () => {
-      assert.strictEqual(addNbspAfterPreposition(key, new Locale("en-us")), testEnUS[key]);
+      expect(addNbspAfterPreposition(key, new Locale("en-us"))).toBe(testEnUS[key]);
     });
 
     it("module test (en-us)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("en-us")), testEnUS[key]);
+      expect(fixNbsp(key, new Locale("en-us"))).toBe(testEnUS[key]);
     });
   });
 
   Object.keys(testDeDeSkCsRue).forEach((key) => {
     it("unit test (de-de)", () => {
-      assert.strictEqual(addNbspAfterPreposition(key, new Locale("de-de")), testDeDeSkCsRue[key]);
+      expect(addNbspAfterPreposition(key, new Locale("de-de"))).toBe(testDeDeSkCsRue[key]);
     });
     it("module test (de-de)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("de-de")), testDeDeSkCsRue[key]);
+      expect(fixNbsp(key, new Locale("de-de"))).toBe(testDeDeSkCsRue[key]);
     });
 
     it("unit test (sk)", () => {
-      assert.strictEqual(addNbspAfterPreposition(key, new Locale("sk")), testDeDeSkCsRue[key]);
+      expect(addNbspAfterPreposition(key, new Locale("sk"))).toBe(testDeDeSkCsRue[key]);
     });
     it("module test (sk)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("sk")), testDeDeSkCsRue[key]);
+      expect(fixNbsp(key, new Locale("sk"))).toBe(testDeDeSkCsRue[key]);
     });
 
     it("unit test (rue)", () => {
-      assert.strictEqual(addNbspAfterPreposition(key, new Locale("rue")), testDeDeSkCsRue[key]);
+      expect(addNbspAfterPreposition(key, new Locale("rue"))).toBe(testDeDeSkCsRue[key]);
     });
     it("module test (rue)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("rue")), testDeDeSkCsRue[key]);
+      expect(fixNbsp(key, new Locale("rue"))).toBe(testDeDeSkCsRue[key]);
     });
 
     it("unit test (cs)", () => {
-      assert.strictEqual(addNbspAfterPreposition(key, new Locale("cs")), testDeDeSkCsRue[key]);
+      expect(addNbspAfterPreposition(key, new Locale("cs"))).toBe(testDeDeSkCsRue[key]);
     });
     it("module test (cs)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("cs")), testDeDeSkCsRue[key]);
+      expect(fixNbsp(key, new Locale("cs"))).toBe(testDeDeSkCsRue[key]);
     });
   });
 });
@@ -130,10 +130,10 @@ describe("Add non-breaking space after ampersand\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(addNbspAfterAmpersand(key, new Locale("en-us")), testCase[key]);
+      expect(addNbspAfterAmpersand(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("en-us")), testCase[key]);
+      expect(fixNbsp(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -163,10 +163,10 @@ describe("Add non-breaking space after cardinal number\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(addNbspAfterCardinalNumber(key, new Locale("en-us")), testCase[key]);
+      expect(addNbspAfterCardinalNumber(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("en-us")), testCase[key]);
+      expect(fixNbsp(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -190,10 +190,10 @@ describe("Add non-breaking space after ordinal number (en)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(addNbspAfterOrdinalNumber(key, new Locale("en-us")), testCase[key]);
+      expect(addNbspAfterOrdinalNumber(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("en-us")), testCase[key]);
+      expect(fixNbsp(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -231,28 +231,28 @@ describe("Add non-breaking space after ordinal number (sk, cs, rue, de-de)\n", (
 
   Object.keys(testCase).forEach((key) => {
     it("unit test (sk)", () => {
-      assert.strictEqual(addNbspAfterOrdinalNumber(key, new Locale("sk")), testCase[key]);
+      expect(addNbspAfterOrdinalNumber(key, new Locale("sk"))).toBe(testCase[key]);
     });
     it("unit test (cs)", () => {
-      assert.strictEqual(addNbspAfterOrdinalNumber(key, new Locale("cs")), testCase[key]);
+      expect(addNbspAfterOrdinalNumber(key, new Locale("cs"))).toBe(testCase[key]);
     });
     it("unit test (de-de)", () => {
-      assert.strictEqual(addNbspAfterOrdinalNumber(key, new Locale("de-de")), testCase[key]);
+      expect(addNbspAfterOrdinalNumber(key, new Locale("de-de"))).toBe(testCase[key]);
     });
     it("unit test (rue)", () => {
-      assert.strictEqual(addNbspAfterOrdinalNumber(key, new Locale("rue")), testCase[key]);
+      expect(addNbspAfterOrdinalNumber(key, new Locale("rue"))).toBe(testCase[key]);
     });
     it("module test (sk)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("sk")), testCase[key]);
+      expect(fixNbsp(key, new Locale("sk"))).toBe(testCase[key]);
     });
     it("module test (cs)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("cs")), testCase[key]);
+      expect(fixNbsp(key, new Locale("cs"))).toBe(testCase[key]);
     });
     it("module test (de-de)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("de-de")), testCase[key]);
+      expect(fixNbsp(key, new Locale("de-de"))).toBe(testCase[key]);
     });
     it("module test (rue)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("rue")), testCase[key]);
+      expect(fixNbsp(key, new Locale("rue"))).toBe(testCase[key]);
     });
   });
 });
@@ -266,14 +266,14 @@ describe("Add non-breaking space within ordinal date (sk, cs, rue)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(addNbspWithinOrdinalDate(key, new Locale("sk")), testCase[key]);
-      assert.strictEqual(addNbspWithinOrdinalDate(key, new Locale("cs")), testCase[key]);
-      assert.strictEqual(addNbspWithinOrdinalDate(key, new Locale("rue")), testCase[key]);
+      expect(addNbspWithinOrdinalDate(key, new Locale("sk"))).toBe(testCase[key]);
+      expect(addNbspWithinOrdinalDate(key, new Locale("cs"))).toBe(testCase[key]);
+      expect(addNbspWithinOrdinalDate(key, new Locale("rue"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("sk")), testCase[key]);
-      assert.strictEqual(fixNbsp(key, new Locale("cs")), testCase[key]);
-      assert.strictEqual(fixNbsp(key, new Locale("rue")), testCase[key]);
+      expect(fixNbsp(key, new Locale("sk"))).toBe(testCase[key]);
+      expect(fixNbsp(key, new Locale("cs"))).toBe(testCase[key]);
+      expect(fixNbsp(key, new Locale("rue"))).toBe(testCase[key]);
     });
   });
 });
@@ -290,10 +290,10 @@ describe("Add non-breaking space within ordinal date (de-de)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(addNbspWithinOrdinalDate(key, new Locale("de-de")), testCase[key]);
+      expect(addNbspWithinOrdinalDate(key, new Locale("de-de"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("de-de")), testCase[key]);
+      expect(fixNbsp(key, new Locale("de-de"))).toBe(testCase[key]);
     });
   });
 });
@@ -315,28 +315,28 @@ describe("Add non-breaking space after roman numeral (sk, cs, de-de, rue)\n", ()
 
   Object.keys(testCase).forEach((key) => {
     it("unit test (sk)", () => {
-      assert.strictEqual(addNbspAfterRomanNumeral(key, new Locale("sk")), testCase[key]);
+      expect(addNbspAfterRomanNumeral(key, new Locale("sk"))).toBe(testCase[key]);
     });
     it("unit test (cs)", () => {
-      assert.strictEqual(addNbspAfterRomanNumeral(key, new Locale("cs")), testCase[key]);
+      expect(addNbspAfterRomanNumeral(key, new Locale("cs"))).toBe(testCase[key]);
     });
     it("unit test (de-de)", () => {
-      assert.strictEqual(addNbspAfterRomanNumeral(key, new Locale("de-de")), testCase[key]);
+      expect(addNbspAfterRomanNumeral(key, new Locale("de-de"))).toBe(testCase[key]);
     });
     it("unit test (rue)", () => {
-      assert.strictEqual(addNbspAfterRomanNumeral(key, new Locale("rue")), testCase[key]);
+      expect(addNbspAfterRomanNumeral(key, new Locale("rue"))).toBe(testCase[key]);
     });
     it("module test (sk)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("sk")), testCase[key]);
+      expect(fixNbsp(key, new Locale("sk"))).toBe(testCase[key]);
     });
     it("module test (cs)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("cs")), testCase[key]);
+      expect(fixNbsp(key, new Locale("cs"))).toBe(testCase[key]);
     });
     it("module test (de-de)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("de-de")), testCase[key]);
+      expect(fixNbsp(key, new Locale("de-de"))).toBe(testCase[key]);
     });
     it("module test (rue)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("rue")), testCase[key]);
+      expect(fixNbsp(key, new Locale("rue"))).toBe(testCase[key]);
     });
   });
 });
@@ -349,16 +349,16 @@ describe("Add non-breaking space after roman numeral (sk, cs, de-de, rue)\nExtra
 
   Object.keys(testCase).forEach((key) => {
     it("unit test (sk)", () => {
-      assert.strictEqual(addNbspAfterRomanNumeral(key, new Locale("sk")), testCase[key]);
+      expect(addNbspAfterRomanNumeral(key, new Locale("sk"))).toBe(testCase[key]);
     });
     it("unit test (cs)", () => {
-      assert.strictEqual(addNbspAfterRomanNumeral(key, new Locale("cs")), testCase[key]);
+      expect(addNbspAfterRomanNumeral(key, new Locale("cs"))).toBe(testCase[key]);
     });
     it("unit test (de-de)", () => {
-      assert.strictEqual(addNbspAfterRomanNumeral(key, new Locale("de-de")), testCase[key]);
+      expect(addNbspAfterRomanNumeral(key, new Locale("de-de"))).toBe(testCase[key]);
     });
     it("unit test (rue)", () => {
-      assert.strictEqual(addNbspAfterRomanNumeral(key, new Locale("rue")), testCase[key]);
+      expect(addNbspAfterRomanNumeral(key, new Locale("rue"))).toBe(testCase[key]);
     });
   });
 });
@@ -381,21 +381,21 @@ describe("Fix non-breaking space around name with regnal number (sk, cs, de-de, 
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixNbspForNameWithRegnalNumber(key, new Locale("sk")), unitTestCase[key]);
-      assert.strictEqual(fixNbspForNameWithRegnalNumber(key, new Locale("cs")), unitTestCase[key]);
-      assert.strictEqual(
+      expect(fixNbspForNameWithRegnalNumber(key, new Locale("sk"))).toBe(unitTestCase[key]);
+      expect(fixNbspForNameWithRegnalNumber(key, new Locale("cs"))).toBe(unitTestCase[key]);
+      expect(
         fixNbspForNameWithRegnalNumber(key, new Locale("de-de")),
         unitTestCase[key]
       );
-      assert.strictEqual(fixNbspForNameWithRegnalNumber(key, new Locale("rue")), unitTestCase[key]);
+      expect(fixNbspForNameWithRegnalNumber(key, new Locale("rue"))).toBe(unitTestCase[key]);
     });
   });
   Object.keys(moduleTestCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("sk")), moduleTestCase[key]);
-      assert.strictEqual(fixNbsp(key, new Locale("cs")), moduleTestCase[key]);
-      assert.strictEqual(fixNbsp(key, new Locale("de-de")), moduleTestCase[key]);
-      assert.strictEqual(fixNbsp(key, new Locale("rue")), moduleTestCase[key]);
+      expect(fixNbsp(key, new Locale("sk"))).toBe(moduleTestCase[key]);
+      expect(fixNbsp(key, new Locale("cs"))).toBe(moduleTestCase[key]);
+      expect(fixNbsp(key, new Locale("de-de"))).toBe(moduleTestCase[key]);
+      expect(fixNbsp(key, new Locale("rue"))).toBe(moduleTestCase[key]);
     });
   });
 });
@@ -420,10 +420,10 @@ describe("Fix non-breaking space around name with regnal number (en-us)\n", () =
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixNbspForNameWithRegnalNumber(key, new Locale("en-us")), testCase[key]);
+      expect(fixNbspForNameWithRegnalNumber(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("en-us")), testCase[key]);
+      expect(fixNbsp(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -450,10 +450,10 @@ describe("Add nbsp before percent, permille, permyriad\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(addNbspBeforePercent(key, new Locale("en-us")), testCase[key]);
+      expect(addNbspBeforePercent(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("en-us")), testCase[key]);
+      expect(fixNbsp(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -520,52 +520,52 @@ describe("Add nbsp before single capital letter in a sentence\n", () => {
 
   Object.keys(testEnUs).forEach((key) => {
     it("unit tests (en-us)", () => {
-      assert.strictEqual(addNbspBeforeSingleLetter(key, new Locale("en-us")), testEnUs[key]);
+      expect(addNbspBeforeSingleLetter(key, new Locale("en-us"))).toBe(testEnUs[key]);
     });
   });
   Object.keys(testDeDeSkCs).forEach((key) => {
     it("unit tests (de-de)", () => {
-      assert.strictEqual(addNbspBeforeSingleLetter(key, new Locale("de-de")), testDeDeSkCs[key]);
+      expect(addNbspBeforeSingleLetter(key, new Locale("de-de"))).toBe(testDeDeSkCs[key]);
     });
   });
   Object.keys(testDeDeSkCs).forEach((key) => {
     it("unit tests (sk)", () => {
-      assert.strictEqual(addNbspBeforeSingleLetter(key, new Locale("sk")), testDeDeSkCs[key]);
+      expect(addNbspBeforeSingleLetter(key, new Locale("sk"))).toBe(testDeDeSkCs[key]);
     });
   });
   Object.keys(testDeDeSkCs).forEach((key) => {
     it("unit tests (cs)", () => {
-      assert.strictEqual(addNbspBeforeSingleLetter(key, new Locale("cs")), testDeDeSkCs[key]);
+      expect(addNbspBeforeSingleLetter(key, new Locale("cs"))).toBe(testDeDeSkCs[key]);
     });
   });
   Object.keys(testRue).forEach((key) => {
     it("unit tests (rue)", () => {
-      assert.strictEqual(addNbspBeforeSingleLetter(key, new Locale("rue")), testRue[key]);
+      expect(addNbspBeforeSingleLetter(key, new Locale("rue"))).toBe(testRue[key]);
     });
   });
   Object.keys(testEnUs).forEach((key) => {
     it("module tests (en-us)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("en-us")), testEnUs[key]);
+      expect(fixNbsp(key, new Locale("en-us"))).toBe(testEnUs[key]);
     });
   });
   Object.keys(testDeDeSkCs).forEach((key) => {
     it("module tests (de-de)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("de-de")), testDeDeSkCs[key]);
+      expect(fixNbsp(key, new Locale("de-de"))).toBe(testDeDeSkCs[key]);
     });
   });
   Object.keys(testDeDeSkCs).forEach((key) => {
     it("module tests (sk)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("sk")), testDeDeSkCs[key]);
+      expect(fixNbsp(key, new Locale("sk"))).toBe(testDeDeSkCs[key]);
     });
   });
   Object.keys(testDeDeSkCs).forEach((key) => {
     it("module tests (cs)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("cs")), testDeDeSkCs[key]);
+      expect(fixNbsp(key, new Locale("cs"))).toBe(testDeDeSkCs[key]);
     });
   });
   Object.keys(testRue).forEach((key) => {
     it("module tests (rue)", () => {
-      assert.strictEqual(fixNbsp(key, new Locale("rue")), testRue[key]);
+      expect(fixNbsp(key, new Locale("rue"))).toBe(testRue[key]);
     });
   });
 });
@@ -578,7 +578,7 @@ describe("Add space after symbol, e.g. ©\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("just unit tests", () => {
-      assert.strictEqual(addNbspAfterSymbol(key, "©", new Locale("en-us")), testCase[key]);
+      expect(addNbspAfterSymbol(key, "©", new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -592,7 +592,7 @@ describe("Replaces various spaces with non-breaking space after symbol, e.g. ©\
 
   Object.keys(testCase).forEach((key) => {
     it("just unit tests", () => {
-      assert.strictEqual(
+      expect(
         replaceSpacesWithNbspAfterSymbol(key, "©", new Locale("en-us")),
         testCase[key]
       );

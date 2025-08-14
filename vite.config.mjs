@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
-const packageJson = require('./package.json');
+import { readFileSync } from 'fs';
+
+const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
 
 
 const currentYear = new Date().getFullYear();
@@ -20,7 +22,7 @@ export default defineConfig(({ mode }) => {
         entry: resolve(isNpmBuild ? 'src/typopo.js' : 'src/browser_typopo.js'),
         name: 'typopo',
         formats: ['umd'],
-        fileName: (format) => isNpmBuild ? 'typopo_dist.min.js' : 'typopo.min.js'
+        fileName: (format) => isNpmBuild ? 'typopo_dist.min.cjs' : 'typopo.min.js'
       },
       outDir: 'dist',
       minify: 'esbuild',

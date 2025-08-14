@@ -1,5 +1,5 @@
 import { removeEmptyLines } from "../../src/modules/whitespace/lines.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 
 describe("Remove empty lines\n", () => {
   let testCase = {
@@ -13,7 +13,7 @@ describe("Remove empty lines\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(removeEmptyLines(key), testCase[key]);
+      expect(removeEmptyLines(key)).toBe(testCase[key]);
     });
   });
 });

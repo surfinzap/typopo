@@ -5,7 +5,7 @@ import {
   fixISBN13,
   fixISBNnumber,
 } from "../../src/modules/words/pub-id.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
 describe("Fix ISSN format\n", () => {
@@ -20,10 +20,10 @@ describe("Fix ISSN format\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixISSN(key, new Locale("en-us")), testCase[key]);
+      expect(fixISSN(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixPubId(key, new Locale("en-us")), testCase[key]);
+      expect(fixPubId(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -41,10 +41,10 @@ describe("Fix ISBN10 format\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixISBN10(key, new Locale("en-us")), testCase[key]);
+      expect(fixISBN10(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixPubId(key, new Locale("en-us")), testCase[key]);
+      expect(fixPubId(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -62,10 +62,10 @@ describe("Fix ISBN13 format\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixISBN13(key, new Locale("en-us")), testCase[key]);
+      expect(fixISBN13(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixPubId(key, new Locale("en-us")), testCase[key]);
+      expect(fixPubId(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -92,10 +92,10 @@ describe("Fix ISBN number\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixISBNnumber(key, new Locale("en-us")), testCase[key]);
+      expect(fixISBNnumber(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixPubId(key, new Locale("en-us")), testCase[key]);
+      expect(fixPubId(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });

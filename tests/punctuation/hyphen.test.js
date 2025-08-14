@@ -1,5 +1,5 @@
 import { fixHyphen, fixSpaceAroundHyphen } from "../../src/modules/punctuation/hyphen.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
 describe("Fix spaces around hyphen\n", () => {
@@ -14,10 +14,10 @@ describe("Fix spaces around hyphen\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit tests", () => {
-      assert.strictEqual(fixSpaceAroundHyphen(key, new Locale("en-us")), testCase[key]);
+      expect(fixSpaceAroundHyphen(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module tests", () => {
-      assert.strictEqual(fixHyphen(key, new Locale("en-us")), testCase[key]);
+      expect(fixHyphen(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });

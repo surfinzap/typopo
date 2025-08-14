@@ -1,5 +1,5 @@
 import { fixCopyrights } from "../../src/modules/symbols/copyrights.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
 const locales = ["en-us", "de-de", "sk", "cs", "rue"];
@@ -40,7 +40,7 @@ function testCopyrights(testCase, copyrightSign) {
   locales.forEach(function (locale) {
     Object.keys(testCase).forEach((key) => {
       it(`module test, ${copyrightSign}, ${locale}`, () => {
-        assert.strictEqual(fixCopyrights(key, new Locale(locale)), testCase[key]);
+        expect(fixCopyrights(key, new Locale(locale))).toBe(testCase[key]);
       });
     });
   });

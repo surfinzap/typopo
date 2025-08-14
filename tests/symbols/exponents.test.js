@@ -1,5 +1,5 @@
 import { fixExponents, fixSquares, fixCubes } from "../../src/modules/symbols/exponents.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
 describe("Fix squares\n", () => {
@@ -54,12 +54,12 @@ describe("Fix squares\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit tests", () => {
-      assert.strictEqual(fixSquares(key, new Locale("en-us")), testCase[key]);
+      expect(fixSquares(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
   Object.keys(testCase).forEach((key) => {
     it("module tests", () => {
-      assert.strictEqual(fixExponents(key, new Locale("en-us")), testCase[key]);
+      expect(fixExponents(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -93,12 +93,12 @@ describe("Fix cubes\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit tests", () => {
-      assert.strictEqual(fixCubes(key, new Locale("en-us")), testCase[key]);
+      expect(fixCubes(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
   Object.keys(testCase).forEach((key) => {
     it("module tests", () => {
-      assert.strictEqual(fixExponents(key, new Locale("en-us")), testCase[key]);
+      expect(fixExponents(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });

@@ -1,4 +1,4 @@
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import { fixCase } from "../../src/modules/words/case.js";
 import Locale from "../../src/locale/locale.js";
 
@@ -37,7 +37,7 @@ describe("Fix accidental uPPERCASE\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      assert.strictEqual(fixCase(key, new Locale("en-us")), testCase[key]);
+      expect(fixCase(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });

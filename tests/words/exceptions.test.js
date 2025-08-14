@@ -1,4 +1,4 @@
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import { excludeExceptions, placeExceptions } from "../../src/modules/words/exceptions.js";
 import Locale from "../../src/locale/locale.js";
 
@@ -311,12 +311,12 @@ function testExcludeExceptions(testCase, label) {
 
   // Assert
   it(`shouldn’t exclude test string “${testString}”`, () => {
-    assert.strictEqual(countMatches(processedText, testString), 3);
+    expect(countMatches(processedText, testString)).toBe(3);
   });
 
   modifiedTestCase.forEach((item) => {
     it(`should exclude all ${label}s `, () => {
-      assert.strictEqual(
+      expect(
         processedText.includes(item),
         false,
         `${item} should be excluded from the processed text.`
@@ -352,7 +352,7 @@ function testPlaceExceptions(testCase, label) {
 
   // Assert
   it(`original text and text after replacement should be equal for ${label}`, () => {
-    assert.strictEqual(replacedText, testItemsString);
+    expect(replacedText).toBe(testItemsString);
   });
 }
 

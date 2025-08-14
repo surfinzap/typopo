@@ -1,8 +1,10 @@
 // performance-test.js
-const { performance } = require("perf_hooks");
+import { performance } from "perf_hooks";
+import { createRequire } from "module";
 
-// Load the minified version
-const typopo = require("../dist/typopo_dist.min.js");
+// Load the minified version using createRequire for CommonJS compatibility
+const requireFromModule = createRequire(import.meta.url);
+const typopo = requireFromModule("../dist/typopo_dist.min.cjs");
 
 function generateBadlyFormattedText(length) {
   const badPatterns = [

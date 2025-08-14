@@ -1,5 +1,5 @@
 import { fixPlusMinus } from "../../src/modules/symbols/plus-minus.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
 describe("Fix plus-minus symbol ±\n", () => {
@@ -10,7 +10,7 @@ describe("Fix plus-minus symbol ±\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("", () => {
-      assert.strictEqual(fixPlusMinus(key, new Locale("en-us")), testCase[key]);
+      expect(fixPlusMinus(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });

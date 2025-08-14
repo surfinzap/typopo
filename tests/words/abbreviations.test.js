@@ -4,7 +4,7 @@ import {
   fixMultipleWordAbbreviations,
   fixSingleWordAbbreviations,
 } from "../../src/modules/words/abbreviations.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
 const testLocales = ["sk", "cs", "rue", "de-de"];
@@ -40,10 +40,10 @@ describe("Fix Initials (sk, cs, rue, de-de)\n", () => {
   testLocales.forEach((locale) => {
     Object.keys(testCase).forEach((key) => {
       it(`unit test (${locale})`, () => {
-        assert.strictEqual(fixInitials(key, new Locale(locale)), testCase[key]);
+        expect(fixInitials(key, new Locale(locale))).toBe(testCase[key]);
       });
       it(`module test (${locale})`, () => {
-        assert.strictEqual(fixAbbreviations(key, new Locale(locale)), testCase[key]);
+        expect(fixAbbreviations(key, new Locale(locale))).toBe(testCase[key]);
       });
     });
   });
@@ -80,10 +80,10 @@ describe("Fix Initials (en-us)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixInitials(key, new Locale("en-us")), testCase[key]);
+      expect(fixInitials(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixAbbreviations(key, new Locale("en-us")), testCase[key]);
+      expect(fixAbbreviations(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -129,10 +129,10 @@ describe("Fix multiple-word abbreviations (sk, cs, rue, de-de)\n", () => {
   testLocales.forEach((locale) => {
     Object.keys(testCase).forEach((key) => {
       it(`unit test (${locale})`, () => {
-        assert.strictEqual(fixMultipleWordAbbreviations(key, new Locale(locale)), testCase[key]);
+        expect(fixMultipleWordAbbreviations(key, new Locale(locale))).toBe(testCase[key]);
       });
       it(`module test (${locale})`, () => {
-        assert.strictEqual(fixAbbreviations(key, new Locale(locale)), testCase[key]);
+        expect(fixAbbreviations(key, new Locale(locale))).toBe(testCase[key]);
       });
     });
   });
@@ -191,10 +191,10 @@ describe("Fix multiple-word abbreviations (en-us)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixMultipleWordAbbreviations(key, new Locale("en-us")), testCase[key]);
+      expect(fixMultipleWordAbbreviations(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixAbbreviations(key, new Locale("en-us")), testCase[key]);
+      expect(fixAbbreviations(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -229,7 +229,7 @@ describe("Fix Single-word abbreviations (sk, cs, rue, de-de, en-us)\n", () => {
   testLocales.forEach((locale) => {
     Object.keys(testCase).forEach((key) => {
       it(`unit test (${locale})`, () => {
-        assert.strictEqual(fixSingleWordAbbreviations(key, new Locale(locale)), testCase[key]);
+        expect(fixSingleWordAbbreviations(key, new Locale(locale))).toBe(testCase[key]);
       });
     });
   });

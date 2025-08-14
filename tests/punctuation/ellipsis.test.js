@@ -12,7 +12,7 @@ import {
   fixEllipsis,
   fixEllipsisAsLastItem,
 } from "../../src/modules/punctuation/ellipsis.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
 describe("Replace periods/ellipses with a single ellipsis:\n", () => {
@@ -35,10 +35,10 @@ describe("Replace periods/ellipses with a single ellipsis:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(replaceThreeCharsWithEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(replaceThreeCharsWithEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -53,10 +53,10 @@ describe("Replace combination of period/ellipsis with an ellipsis:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(replaceTwoCharsWithEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(replaceTwoCharsWithEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -68,10 +68,10 @@ describe("Replace two periods between words (spaces) with an ellipsis:\n", () =>
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(replaceTwoPeriodsWithEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(replaceTwoPeriodsWithEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -89,10 +89,10 @@ describe("Fix spacing, when ellipsis is used around commas:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixEllipsisSpacingAroundCommas(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsisSpacingAroundCommas(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -130,10 +130,10 @@ describe("Fix spacing, when ellipsis is used as a list item int the list:\n", ()
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixEllipsisAsLastItem(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsisAsLastItem(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -147,10 +147,10 @@ describe("Fix spacing, when aposiopesis is starting a paragraph:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixAposiopesisStartingParagraph(key, new Locale("en-us")), testCase[key]);
+      expect(fixAposiopesisStartingParagraph(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -172,10 +172,10 @@ describe("Fix spacing, when aposiopesis is starting a sentence:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixAposiopesisStartingSentence(key, new Locale("en-us")), testCase[key]);
+      expect(fixAposiopesisStartingSentence(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -189,10 +189,10 @@ describe("Fix spacing, when aposiopesis is between sentences:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixAposiopesisBetweenSentences(key, new Locale("en-us")), testCase[key]);
+      expect(fixAposiopesisBetweenSentences(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -205,10 +205,10 @@ describe("Fix spacing, when aposiopesis is between words:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixAposiopesisBetweenWords(key, new Locale("en-us")), testCase[key]);
+      expect(fixAposiopesisBetweenWords(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -239,10 +239,10 @@ describe("Fix spacing, when ellipsis is between sentences:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixEllipsisBetweenSentences(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsisBetweenSentences(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -264,10 +264,10 @@ describe("Fix spacing, when aposiopesis is ending a paragraph:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixAposiopesisEndingParagraph(key, new Locale("en-us")), testCase[key]);
+      expect(fixAposiopesisEndingParagraph(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixEllipsis(key, new Locale("en-us")), testCase[key]);
+      expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });

@@ -2,7 +2,7 @@ import {
   removeExtraSpacesAfterNumberSign,
   fixNumberSign,
 } from "../../src/modules/symbols/number-sign.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
 describe("Remove extra space before number sign\n", () => {
@@ -28,10 +28,10 @@ describe("Remove extra space before number sign\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(removeExtraSpacesAfterNumberSign(key, new Locale("en-us")), testCase[key]);
+      expect(removeExtraSpacesAfterNumberSign(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixNumberSign(key, new Locale("en-us")), testCase[key]);
+      expect(fixNumberSign(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });

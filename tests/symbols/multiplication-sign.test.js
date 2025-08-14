@@ -5,7 +5,7 @@ import {
   fixNbspAroundMultiplicationSign,
   fixMultiplicationSign,
 } from "../../src/modules/symbols/multiplication-sign.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
 describe("Fix multiplication sign between numbers\n", () => {
@@ -29,13 +29,13 @@ describe("Fix multiplication sign between numbers\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         fixMultiplicationSignBetweenNumbers(key, new Locale("en-us")),
         testCase[key]
       );
     });
     it("module test", () => {
-      assert.strictEqual(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
+      expect(fixMultiplicationSign(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -53,13 +53,13 @@ describe("Fix multiplication sign between words\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         fixMultiplicationSignBetweenWords(key, new Locale("en-us")),
         testCase[key]
       );
     });
     it("module test", () => {
-      assert.strictEqual(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
+      expect(fixMultiplicationSign(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -77,13 +77,13 @@ describe("Fix multiplication sign between a number and a word\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(
+      expect(
         fixMultiplicationSignBetweenNumberAndWord(key, new Locale("en-us")),
         testCase[key]
       );
     });
     it("module test", () => {
-      assert.strictEqual(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
+      expect(fixMultiplicationSign(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -98,10 +98,10 @@ describe("Fix nbsp around multiplication sign\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      assert.strictEqual(fixNbspAroundMultiplicationSign(key, new Locale("en-us")), testCase[key]);
+      expect(fixNbspAroundMultiplicationSign(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      assert.strictEqual(fixMultiplicationSign(key, new Locale("en-us")), testCase[key]);
+      expect(fixMultiplicationSign(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });

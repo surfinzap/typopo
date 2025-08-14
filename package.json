@@ -2,6 +2,7 @@
 	"name": "typopo",
 	"version": "2.5.8",
 	"description": "Fix frequent microtypography errors in multiple languages. Write neat texts without bothering about typography rules. Typopo works for English, German, Slovak, Czech and Rusyn language.",
+	"type": "module",
 	"license": "MIT",
 	"author": {
 		"name": "Braňo Šandala",
@@ -12,9 +13,9 @@
 		"build": "npm run build:npm && npm run build:browser",
 		"build:npm": "vite build --mode npm",
 		"build:browser": "vite build --mode browser",
-		"test": "mocha --require @babel/register ./tests/**/*.test.js -R min --no-colors",
-		"test:dev": "mocha --require @babel/register ./tests/**/*.test.js -R min -w",
-		"test:perf": "node tests/performance.js",
+		"test": "vitest run",
+		"test:dev": "vitest",
+		"test:perf": "node tests/performance.test.js",
 		"lint": "eslint src/",
 		"lint:fix": "eslint src/ --fix",
 		"format": "prettier --write src/ tests/",
@@ -30,7 +31,7 @@
 			"prettier --write"
 		]
 	},
-	"main": "dist/typopo_dist.min.js",
+	"main": "dist/typopo_dist.min.cjs",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/surfinzap/typopo"
@@ -53,15 +54,12 @@
 		"node": ">=6.9.4"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.28.0",
-		"@babel/preset-env": "^7.28.0",
-		"@babel/register": "^7.27.1",
 		"@eslint/js": "^9.33.0",
 		"@huggingface/prettier-plugin-vertical-align": "^0.2.3",
 		"eslint": "^9.33.0",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.1.5",
-		"mocha": "^11.7.1",
+		"vitest": "^2.1.8",
 		"prettier": "^3.6.2",
 		"vite": "^6.3.5"
 	}

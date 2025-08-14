@@ -1,31 +1,31 @@
 import { fixTypos } from "../../src/typopo.js";
-import assert from "assert";
+import { describe, it, expect } from "vitest";
 
-// Loading minified version
+// Loading minified version for comparison testing
 let fixTyposMinified = null;
-const isWatchMode = process.argv.includes("-w") || process.argv.includes("--watch");
 
-if (!isWatchMode) {
-  try {
-    const minified = require("../../dist/typopo_dist.min.js");
-    fixTyposMinified = minified.fixTypos;
-    console.log("Minified version loaded for testing");
-  } catch (error) {
-    console.log("Minified version not available, skipping minified tests");
-  }
+try {
+  // Try to load the UMD build using createRequire for CommonJS compatibility
+  const { createRequire } = await import('module');
+  const requireFromModule = createRequire(import.meta.url);
+  const minified = requireFromModule("../../dist/typopo_dist.min.cjs");
+  fixTyposMinified = minified.fixTypos;
+  console.log("Minified version loaded for testing");
+} catch (error) {
+  console.log(`Minified version not available (${error.message}), skipping minified tests`);
 }
 
 function runBothVersions(testCase, locale, config) {
   Object.keys(testCase).forEach((key) => {
     it(`source: ${key.substring(0, 30)}${key.length > 30 ? "..." : ""}`, () => {
-      assert.strictEqual(fixTypos(key, locale, config), testCase[key]);
+      expect(fixTypos(key, locale, config)).toBe(testCase[key]);
     });
   });
 
   if (fixTyposMinified) {
     Object.keys(testCase).forEach((key) => {
       it(`minified: ${key.substring(0, 30)}${key.length > 30 ? "..." : ""}`, () => {
-        assert.strictEqual(fixTyposMinified(key, locale, config), testCase[key]);
+        expect(fixTyposMinified(key, locale, config)).toBe(testCase[key]);
       });
     });
   }
