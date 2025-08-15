@@ -20,7 +20,7 @@ export default defineConfig(() => {
         entry: resolve('src/typopo.js'),
         name: 'typopo',
         formats: ['umd'],
-        fileName: 'typopo_dist.min.cjs'
+        fileName: () => 'typopo_dist.min.cjs'
       },
       outDir: 'dist',
       minify: 'esbuild',
@@ -28,8 +28,6 @@ export default defineConfig(() => {
       emptyOutDir: false,
       rollupOptions: {
         output: {
-          format: 'umd',
-          name: 'typopo',
           banner: copyrightBanner
         }
       },
