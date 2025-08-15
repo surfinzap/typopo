@@ -12,7 +12,7 @@
 		"dev": "vite --config vite.dev.config.mjs",
 		"build": "vite build",
 		"test": "vitest run",
-		"test:dev": "vitest",
+		"test:dev": "cross-env SOURCE_ONLY=true vitest",
 		"test:perf": "node tests/performance.test.js",
 		"lint": "eslint src/",
 		"lint:fix": "eslint src/ --fix",
@@ -54,6 +54,7 @@
 	"devDependencies": {
 		"@eslint/js": "^9.33.0",
 		"@huggingface/prettier-plugin-vertical-align": "^0.2.3",
+		"cross-env": "^10.0.0",
 		"eslint": "^9.33.0",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.1.5",

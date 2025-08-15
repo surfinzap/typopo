@@ -4,14 +4,18 @@ import { describe, it, expect } from "vitest";
 // Loading minified version for comparison testing
 let fixTyposMinified = null;
 
-try {
-  const { createRequire } = await import("module");
-  const requireFromModule = createRequire(import.meta.url);
-  const minified = requireFromModule("../../dist/typopo.min.cjs");
-  fixTyposMinified = minified.fixTypos;
-  console.log("Minified version loaded for testing");
-} catch (error) {
-  console.log(`Minified version not available (${error.message}), skipping minified tests`);
+if (!process.env.SOURCE_ONLY) {
+  try {
+    const { createRequire } = await import("module");
+    const requireFromModule = createRequire(import.meta.url);
+    const minified = requireFromModule("../../dist/typopo.min.cjs");
+    fixTyposMinified = minified.fixTypos;
+    console.log("Minified version loaded for testing");
+  } catch (error) {
+    console.log(`Minified version not available (${error.message}), skipping minified tests`);
+  }
+} else {
+  console.log("SOURCE_ONLY mode: skipping minified tests");
 }
 
 function runBothVersions(testCase, locale, config) {
