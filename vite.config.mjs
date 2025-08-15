@@ -12,9 +12,20 @@ const copyrightBanner = `/*!
  * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */`;
 
-// Library build configuration
+const addTopBanner = () => ({
+  name: 'add-top-banner',
+  generateBundle(options, bundle) {
+    for (const [fileName, chunk] of Object.entries(bundle)) {
+      if (chunk.type === 'chunk') {
+        chunk.code = copyrightBanner + '\n' + chunk.code;
+      }
+    }
+  }
+});
+
 export default defineConfig(() => {
   return {
+    plugins: [addTopBanner()],
     build: {
       lib: {
         entry: resolve('src/typopo.js'),
@@ -26,11 +37,6 @@ export default defineConfig(() => {
       minify: 'esbuild',
       sourcemap: false,
       emptyOutDir: false,
-      rollupOptions: {
-        output: {
-          banner: copyrightBanner
-        }
-      },
       target: ['es2015', 'edge18', 'firefox60', 'chrome61', 'safari11']
     }
   };
