@@ -10,9 +10,7 @@
 	},
 	"scripts": {
 		"dev": "vite --config vite.dev.config.mjs",
-		"build": "npm run build:npm && npm run build:browser",
-		"build:npm": "vite build --mode npm",
-		"build:browser": "vite build --mode browser",
+		"build": "vite build",
 		"test": "vitest run",
 		"test:dev": "vitest",
 		"test:perf": "node tests/performance.test.js",

@@ -95,7 +95,7 @@ Typopo fixes symbols:
 
 ## Use
 
-You can use Typopo as an [online app](#online-app), [VS Code extension](#vs-code-extension), [NPM package](#npm-package) or [JavaScript library](#javascript-library).
+You can use Typopo as an [online app](#online-app), [VS Code extension](#vs-code-extension), or [NPM package](#npm-package).
 
 
 
@@ -124,10 +124,6 @@ import { fixTypos } from 'typopo';
 ```
 
 Check out an [API](#api) on how to use the package.
-
-
-### JavaScript library
-Download dist/typopo.min.js and include it in your web project or CMS. Check out an [API](#api) on how to use the library.
 
 
 

@@ -1,7 +1,10 @@
 # Changelog for Typopo
 
 
-## 2.5.9 //
+## 3.0.0 //
+
+### 💥 Breaking changes
+- Remove the browser bundle; Typopo now supports NPM distribution only
 
 ### 💪 Improvements
 - Lower the bundle size by few kBs
@@ -11,7 +14,7 @@
 - Update NPM packages to their latest versions			
 - Refactor the source code
 - Remove unused packages
-- Update the build pipeline to vite
+- Update the build pipeline to vite, vitest 
 
 
 

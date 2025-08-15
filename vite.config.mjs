@@ -13,16 +13,14 @@ const copyrightBanner = `/*!
  */`;
 
 // Library build configuration
-export default defineConfig(({ mode }) => {
-  const isNpmBuild = mode === 'npm';
-  
+export default defineConfig(() => {
   return {
     build: {
       lib: {
-        entry: resolve(isNpmBuild ? 'src/typopo.js' : 'src/browser_typopo.js'),
+        entry: resolve('src/typopo.js'),
         name: 'typopo',
         formats: ['umd'],
-        fileName: (format) => isNpmBuild ? 'typopo_dist.min.cjs' : 'typopo.min.js'
+        fileName: 'typopo_dist.min.cjs'
       },
       outDir: 'dist',
       minify: 'esbuild',
