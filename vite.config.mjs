@@ -14,8 +14,8 @@ const copyrightBanner = `/*!
 
 const addTopBanner = () => ({
   name: 'add-top-banner',
-  generateBundle(options, bundle) {
-    for (const [fileName, chunk] of Object.entries(bundle)) {
+  generateBundle(_options, bundle) {
+    for (const chunk of Object.values(bundle)) {
       if (chunk.type === 'chunk') {
         chunk.code = copyrightBanner + '\n' + chunk.code;
       }
