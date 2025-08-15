@@ -1,12 +1,11 @@
 import { fixTypos } from "../../src/typopo.js";
 import { describe, it, expect } from "vitest";
+import { createRequire } from "module";
 
-// Loading minified version for comparison testing
 let fixTyposMinified = null;
 
 if (!process.env.SOURCE_ONLY) {
   try {
-    const { createRequire } = await import("module");
     const requireFromModule = createRequire(import.meta.url);
     const minified = requireFromModule("../../dist/typopo.min.cjs");
     fixTyposMinified = minified.fixTypos;
