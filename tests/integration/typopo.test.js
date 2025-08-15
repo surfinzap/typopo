@@ -5,10 +5,9 @@ import { describe, it, expect } from "vitest";
 let fixTyposMinified = null;
 
 try {
-  // Try to load the UMD build using createRequire for CommonJS compatibility
-  const { createRequire } = await import('module');
+  const { createRequire } = await import("module");
   const requireFromModule = createRequire(import.meta.url);
-  const minified = requireFromModule("../../dist/typopo_dist.min.cjs");
+  const minified = requireFromModule("../../dist/typopo.min.cjs");
   fixTyposMinified = minified.fixTypos;
   console.log("Minified version loaded for testing");
 } catch (error) {
@@ -662,3 +661,4 @@ describe("Test if markdown ticks are kept (integration test) (en-us):\n", () => 
 
   runBothVersions(testCase, "en-us", configKeepMarkdownCodeBlocks);
 });
+

@@ -20,7 +20,7 @@ export default defineConfig(() => {
         entry: resolve('src/typopo.js'),
         name: 'typopo',
         formats: ['umd'],
-        fileName: () => 'typopo_dist.min.cjs'
+        fileName: () => 'typopo.min.cjs'
       },
       outDir: 'dist',
       minify: 'esbuild',

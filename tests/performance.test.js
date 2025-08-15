@@ -4,7 +4,7 @@ import { createRequire } from "module";
 
 // Load the minified version using createRequire for CommonJS compatibility
 const requireFromModule = createRequire(import.meta.url);
-const typopo = requireFromModule("../dist/typopo_dist.min.cjs");
+const typopo = requireFromModule("../dist/typopo.min.cjs");
 
 function generateBadlyFormattedText(length) {
   const badPatterns = [
