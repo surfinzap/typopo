@@ -5,7 +5,7 @@ export default defineConfig({
     include: ['tests/**/*.test.js'],
     exclude: ['tests/performance.test.js'],
     environment: 'node',
-    reporter: 'default',
+    reporter: 'dot',
     watch: {
       include: ['src/**', 'tests/**']
     },
