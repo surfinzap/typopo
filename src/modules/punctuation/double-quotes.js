@@ -273,32 +273,29 @@ export function removeUnidentifiedDoubleQuote(string, locale) {
 */
 export function replaceDoublePrimeWDoubleQuote(string) {
   // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `({{typopo__left-double-quote--standalone}})` +
-      `(.*?)` +
-      `({{typopo__double-prime}})`,
-      "g"
-    ),
-    `{{typopo__left-double-quote}}` +
-    `$2` +
-    `{{typopo__right-double-quote}}`
-  );
-
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `({{typopo__double-prime}})` +
-      `(.*?)` +
-      `({{typopo__right-double-quote--standalone}})`,
-      "g"
-    ),
-    `{{typopo__left-double-quote}}` +
-    `$2` +
-    `{{typopo__right-double-quote}}`
-  );
-
-  return string;
+  return string
+    .replace(
+      new RegExp(
+        `({{typopo__left-double-quote--standalone}})` +
+        `(.*?)` +
+        `({{typopo__double-prime}})`,
+        "g"
+      ),
+      `{{typopo__left-double-quote}}` +
+      `$2` +
+      `{{typopo__right-double-quote}}`
+    )
+    .replace(
+      new RegExp(
+        `({{typopo__double-prime}})` +
+        `(.*?)` +
+        `({{typopo__right-double-quote--standalone}})`,
+        "g"
+      ),
+      `{{typopo__left-double-quote}}` +
+      `$2` +
+      `{{typopo__right-double-quote}}`
+    );
 }
 
 //
