@@ -44,16 +44,14 @@ export function identifyMarkdownCodeTicks(string, configuration) {
   @returns {string} output with placed Markdown code tick
 */
 export function placeMarkdownCodeTicks(string, configuration) {
-  if (configuration.keepMarkdownCodeBlocks) {
-    // prettier-ignore
-    string = string.replace(
-      new RegExp(
-        `${TICK}`,
-        "g"
-      ),
-        `\``
-    )
-  }
+  if (!configuration.keepMarkdownCodeBlocks) return string;
 
-  return string;
+  // prettier-ignore
+  return string.replace(
+    new RegExp(
+      `${TICK}`,
+      "g"
+    ),
+      `\``
+  )
 }
