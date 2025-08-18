@@ -1,7 +1,4 @@
-import {
-  identifyMarkdownCodeTicks,
-  placeMarkdownCodeTicks,
-} from "../../src/modules/punctuation/markdown.js";
+import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../../src/utils/markdown.js";
 
 import { describe, it, expect } from "vitest";
 
@@ -49,10 +46,7 @@ describe("Identify markdown code ticks:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        identifyMarkdownCodeTicks(key, configKeepMarkdownCodeBlocks),
-        testCase[key]
-      );
+      expect(identifyMarkdownCodeTicks(key, configKeepMarkdownCodeBlocks), testCase[key]);
     });
   });
 });
@@ -125,19 +119,14 @@ describe("Ignore markdown code ticks:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        identifyMarkdownCodeTicks(key, configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+      expect(identifyMarkdownCodeTicks(key, configIgnoreMarkdownCodeBlocks), testCase[key]);
     });
   });
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        placeMarkdownCodeTicks(key, configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+      expect(placeMarkdownCodeTicks(key, configIgnoreMarkdownCodeBlocks), testCase[key]);
     });
   });
 });
+

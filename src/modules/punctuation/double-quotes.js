@@ -1,5 +1,5 @@
 import { addNbspAfterPreposition } from "../whitespace/nbsp.js";
-import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../punctuation/markdown.js";
+import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../../utils/markdown.js";
 
 //
 
