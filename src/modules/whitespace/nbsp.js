@@ -4,10 +4,16 @@ import { replaceWithOverlapHandling } from "../../utils/regex-overlap.js";
 
 export function removeNbspBetweenMultiCharWords(string, locale) {
   // prettier-ignore
-  let pattern = `([${locale.lowercaseChars}${locale.uppercaseChars}]{2,})([${locale.nbsp}${locale.narrowNbsp}])([${locale.lowercaseChars}${locale.uppercaseChars}]{2,})`;
-  let re = new RegExp(pattern, "g");
-
-  return replaceWithOverlapHandling(string, re, `$1 $3`);
+  return replaceWithOverlapHandling(
+    string,
+    new RegExp(
+      `([${locale.lowercaseChars}${locale.uppercaseChars}]{2,})` +
+      `([${locale.nbsp}${locale.narrowNbsp}])` +
+      `([${locale.lowercaseChars}${locale.uppercaseChars}]{2,})`, 
+      "g"
+    ),
+    `$1 $3`
+  );
 }
 
 //
@@ -83,11 +89,10 @@ export function addNbspAfterPreposition(string, locale) {
 
 export function addNbspAfterAmpersand(string, locale) {
   // prettier-ignore
-  let pattern = `([${locale.spaces}])(${locale.ampersand})([${locale.spaces}])`;
-  let re = new RegExp(pattern, "g");
-  let replacement = ` $2${locale.nbsp}`;
-
-  return string.replace(re, replacement);
+  return string.replace(
+    new RegExp(`([${locale.spaces}])(${locale.ampersand})([${locale.spaces}])`, "g"),
+    ` $2${locale.nbsp}`
+  );
 }
 
 //
@@ -135,18 +140,14 @@ export function addNbspAfterOrdinalNumber(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        "([^" + locale.nbsp + locale.cardinalNumber + "_%\\-]|^)" +
-        "("+ locale.cardinalNumber +"{1,2})" +
-        "("+ locale.ordinalIndicator +")" +
-        "(["+ locale.spaces +"]?)" +
-        "(["+ locale.allChars +"])", 
+      `([^${locale.nbsp}${locale.cardinalNumber}_%\\-]|^)` +
+      `(${locale.cardinalNumber}{1,2})` +
+      `(${locale.ordinalIndicator})` +
+      `([${locale.spaces}]?)` +
+      `([${locale.allChars}])`,
       "g"
     ),
-      "$1" +
-      "$2" +
-      "$3" +
-      locale.nbsp +
-      "$5"
+    `$1$2$3${locale.nbsp}$5`
   );
 }
 
@@ -154,8 +155,6 @@ export function addNbspAfterOrdinalNumber(string, locale) {
 
 export function addNbspWithinOrdinalDate(string, locale) {
   // prettier-ignore
-  let pattern = "("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"]?)("+ locale.cardinalNumber +")("+ locale.ordinalIndicator +")(["+ locale.spaces +"]?)("+ locale.cardinalNumber +")";
-  let re = new RegExp(pattern, "g");
   let replacement = "";
 
   switch (locale.locale) {
@@ -163,14 +162,26 @@ export function addNbspWithinOrdinalDate(string, locale) {
     case "rue":
     case "sk":
     case "cs":
-      replacement = "$1$2" + locale.nbsp + "$4$5" + locale.nbsp + "$7";
+      replacement = `$1$2${locale.nbsp}$4$5${locale.nbsp}$7`;
       break;
     case "de-de":
-      replacement = "$1$2" + locale.nbsp + "$4$5" + locale.space + "$7";
+      replacement = `$1$2${locale.nbsp}$4$5${locale.space}$7`;
       break;
   }
 
-  return string.replace(re, replacement);
+  return string.replace(
+    new RegExp(
+      `(${locale.cardinalNumber})` +
+      `(${locale.ordinalIndicator})` +
+      `([${locale.spaces}]?)` +
+      `(${locale.cardinalNumber})` +
+      `(${locale.ordinalIndicator})` +
+      `([${locale.spaces}]?)` +
+      `(${locale.cardinalNumber})`,
+      "g"
+    ),
+    replacement
+  );
 }
 
 //
@@ -190,16 +201,17 @@ export function addNbspAfterRomanNumeral(string, locale) {
   // we can identify roman numeral effectively only if it has an ordinal indicator
   if (locale.romanOrdinalIndicator != "") {
     // prettier-ignore
-    let pattern =
-        "(\\b)" +
-        "(["+ locale.romanNumerals + "]+)" +
-        "("+ locale.romanOrdinalIndicator +")" +
-        "(["+ locale.spaces +"]?)" +
-        "([" + locale.allChars + locale.cardinalNumber + "])";
-    let re = new RegExp(pattern, "g");
-    let replacement = "$1$2$3" + locale.nbsp + "$5";
-
-    return string.replace(re, replacement);
+    return string.replace(
+      new RegExp(
+        `(\\b)` +
+        `([${locale.romanNumerals}]+)` +
+        `(${locale.romanOrdinalIndicator})` +
+        `([${locale.spaces}]?)` +
+        `([${locale.allChars}${locale.cardinalNumber}])`,
+        "g"
+      ),
+      `$1$2$3${locale.nbsp}$5`
+    );
   }
 
   return string;
@@ -225,11 +237,11 @@ export function addNbspAfterRomanNumeral(string, locale) {
 export function fixNbspForNameWithRegnalNumber(string, locale) {
   // prettier-ignore
   let pattern =
-      "(\\b[" + locale.uppercaseChars + "]["+ locale.lowercaseChars +"]+?)" +
-      "([" + locale.spaces + "])" +
-      "([" + locale.romanNumerals +"]+\\b)" +
-      "("  + locale.romanOrdinalIndicator +")" +
-      "([" + locale.nbsp + "]?)";
+      `(\\b[${locale.uppercaseChars}][${locale.lowercaseChars}]+?)` +
+      `([${locale.spaces}])` +
+      `([${locale.romanNumerals}]+\\b)` +
+      `(${locale.romanOrdinalIndicator})` +
+      `([${locale.nbsp}]?)`;
   let re = new RegExp(pattern, "g");
 
   return string.replace(re, function ($0, $1, $2, $3, $4, $5) {
@@ -255,11 +267,14 @@ export function fixNbspForNameWithRegnalNumber(string, locale) {
 */
 export function addNbspBeforePercent(string, locale) {
   // prettier-ignore
-  let pattern = "([" + locale.spaces + "])([" + locale.percent + locale.permille + locale.permyriad + "])";
-  let re = new RegExp(pattern, "g");
-  let replacement = locale.nbsp + "$2";
-
-  return string.replace(re, replacement);
+  return string.replace(
+    new RegExp(
+      `([${locale.spaces}])` +
+      `([${locale.percent}${locale.permille}${locale.permyriad}])`,
+      "g"
+    ),
+    `${locale.nbsp}$2`
+  );
 }
 
 //
@@ -300,20 +315,10 @@ export function addNbspBeforeSingleLetter(string, locale) {
 
   // prettier-ignore
   let pattern = 
-    "([^" +
-        locale.sentencePunctuation +
-        locale.ellipsis +
-        locale.closingBrackets +
-        locale.rightDoubleQuote +
-        locale.rightSingleQuote +
-        locale.apostrophe +
-        locale.multiplicationSign +
-        locale.emDash +
-        locale.enDash +
-        "])" +
-    "(["+ locale.spaces +"])" +
-    "(["+ uppercaseChars +"])" +
-    "((["+ locale.spaces +"])|(\\.$|$))";
+    `([^${locale.sentencePunctuation}${locale.ellipsis}${locale.closingBrackets}${locale.rightDoubleQuote}${locale.rightSingleQuote}${locale.apostrophe}${locale.multiplicationSign}${locale.emDash}${locale.enDash}])` +
+    `([${locale.spaces}])` +
+    `([${uppercaseChars}])` +
+    `(([${locale.spaces}])|(\\.$|$))`;
 
   let re = new RegExp(pattern, "g");
 
@@ -345,11 +350,10 @@ export function addNbspBeforeSingleLetter(string, locale) {
 */
 export function addNbspAfterSymbol(string, symbol, locale) {
   // prettier-ignore
-  let pattern = "("+ symbol +")([^" + locale.spaces + "])";
-  let re = new RegExp(pattern, "g");
-  let replacement = "$1" + locale.nbsp + "$2";
-
-  return string.replace(re, replacement);
+  return string.replace(
+    new RegExp(`(${symbol})([^${locale.spaces}])`, "g"),
+    `$1${locale.nbsp}$2`
+  );
 }
 
 //
@@ -363,11 +367,10 @@ export function addNbspAfterSymbol(string, symbol, locale) {
 */
 export function replaceSpacesWithNbspAfterSymbol(string, symbol, locale) {
   // prettier-ignore
-  let pattern = "("+ symbol +")([" + locale.spaces + "])";
-  let re = new RegExp(pattern, "g");
-  let replacement = "$1" + locale.nbsp;
-
-  return string.replace(re, replacement);
+  return string.replace(
+    new RegExp(`(${symbol})([${locale.spaces}])`, "g"),
+    `$1${locale.nbsp}`
+  );
 }
 
 //
