@@ -1,38 +1,41 @@
 function addSpaceBeforeSectionSign(string, locale) {
   // prettier-ignore
-  let pattern = 
+  return string.replace(
+    new RegExp(
       `([^${locale.spaces}${locale.sectionSign}${locale.openingBrackets}])` + 
-      `(${locale.sectionSign})`;
-  let re = new RegExp(pattern, "g");
-  let replacement = `$1${locale.space}$2`;
-
-  return string.replace(re, replacement);
+      `(${locale.sectionSign})`,
+      "g"
+    ),
+    `$1${locale.space}$2`
+  );
 }
 
 //
 
 function addNbspAfterSectionSign(string, locale) {
   // prettier-ignore
-  let pattern = 
+  return string.replace(
+    new RegExp(
       `(${locale.sectionSign})` + 
-      `([^${locale.spaces}${locale.sectionSign}])`;
-  let re = new RegExp(pattern, "g");
-  let replacement = `$1${locale.nbsp}$2`;
-
-  return string.replace(re, replacement);
+      `([^${locale.spaces}${locale.sectionSign}])`,
+      "g"
+    ),
+    `$1${locale.nbsp}$2`
+  );
 }
 
 //
 
 function replaceSpacesAfterSectionSign(string, locale) {
   // prettier-ignore
-  let pattern = 
+  return string.replace(
+    new RegExp(
       `(${locale.sectionSign})` + 
-      `([${locale.spaces}])`;
-  let re = new RegExp(pattern, "g");
-  let replacement = `$1${locale.nbsp}`;
-
-  return string.replace(re, replacement);
+      `([${locale.spaces}])`,
+      "g"
+    ),
+    `$1${locale.nbsp}`
+  );
 }
 
 //

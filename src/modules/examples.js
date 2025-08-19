@@ -25,26 +25,16 @@
 /*eslint-disable*/
 export function name(string, locale) {
   // prettier-ignore
-  let pattern =
+  return string.replace(
+    new RegExp(
       `(\\b)` +
       `([${locale.romanNumerals}]+)` +
       `(${locale.romanOrdinalIndicator})` +
       `([${locale.spaces}]?)` +
-      `([${locale.allChars}${locale.cardinalNumber}])`;
-  let re = new RegExp(pattern, "g");
-  let replacement = locale.ellipsis;
-
-  return string.replace(re, replacement);
-
-  // shorter version
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(${locale.leftDoubleQuote})` +
-      `([${locale.spaces}])`, 
+      `([${locale.allChars}${locale.cardinalNumber}])`,
       "g"
     ),
-    `$1`
+    locale.ellipsis
   );
 }
 

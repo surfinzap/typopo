@@ -7,11 +7,11 @@
 - Remove the browser bundle; Typopo now supports NPM distribution only
 
 ### 💪 Improvements
-- Lower the bundle size by few kBs
+- Lower the bundle size by few kBs (40284 vs. )
 
 ### 🔨 Maintenance
 - Reorganize the folder structure
-- Update NPM packages to their latest versions			
+- Update NPM packages to their latest versions 
 - Refactor the source code
 - Remove unused packages
 - Update the build pipeline to vite, vitest 

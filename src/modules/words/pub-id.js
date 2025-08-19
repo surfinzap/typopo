@@ -16,17 +16,18 @@
 */
 export function fixISSN(string, locale) {
   // prettier-ignore
-  let pattern =
+  return string.replace(
+    new RegExp(
       `(issn)` +
       `(:?)` +
       `([${locale.spaces}]?)` +
       `(\\d{4})` +
       `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)` +
-      `(\\d{4})`;
-  let re = new RegExp(pattern, "gi");
-  let replacement = `ISSN$2${locale.nbsp}$4-$6`;
-
-  return string.replace(re, replacement);
+      `(\\d{4})`,
+      "gi"
+    ),
+    `ISSN$2${locale.nbsp}$4-$6`
+  );
 }
 
 //
@@ -50,7 +51,8 @@ export function fixISBN10(string, locale) {
   // prettier-ignore
   let dashedSpace = `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)`;
   // prettier-ignore
-  let pattern =
+  return string.replace(
+    new RegExp(
       `(isbn)` +
       `(:?)` +
       `([${locale.spaces}]?)` +
@@ -60,11 +62,11 @@ export function fixISBN10(string, locale) {
       dashedSpace +
       `(\\d+)` +
       dashedSpace +
-      `(X|\\d+)`;
-  let re = new RegExp(pattern, "gi");
-  let replacement = `ISBN$2${locale.nbsp}$4-$6-$8-$10`;
-
-  return string.replace(re, replacement);
+      `(X|\\d+)`,
+      "gi"
+    ),
+    `ISBN$2${locale.nbsp}$4-$6-$8-$10`
+  );
 }
 
 //
@@ -88,7 +90,8 @@ export function fixISBN13(string, locale) {
   // prettier-ignore
   let dashedSpace = `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)`;
   // prettier-ignore
-  let pattern =
+  return string.replace(
+    new RegExp(
       `(isbn)` +
       `(:?)` +
       `([${locale.spaces}]?)` +
@@ -100,11 +103,11 @@ export function fixISBN13(string, locale) {
       dashedSpace +
       `(\\d+)` +
       dashedSpace +
-      `(X|\\d+)`;
-  let re = new RegExp(pattern, "gi");
-  let replacement = `ISBN$2${locale.nbsp}$4-$6-$8-$10-$12`;
-
-  return string.replace(re, replacement);
+      `(X|\\d+)`,
+      "gi"
+    ),
+    `ISBN$2${locale.nbsp}$4-$6-$8-$10-$12`
+  );
 }
 
 //
@@ -127,7 +130,8 @@ export function fixISBNnumber(string, locale) {
   // prettier-ignore
   let dashedSpace = `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)`;
   // prettier-ignore
-  let pattern =
+  return string.replace(
+    new RegExp(
       `(\\d+)` +
       dashedSpace +
       `(\\d+)` +
@@ -136,11 +140,11 @@ export function fixISBNnumber(string, locale) {
       dashedSpace +
       `(\\d+)` +
       dashedSpace +
-      `(X|\\d+?)`;
-  let re = new RegExp(pattern, "g");
-  let replacement = `$1-$3-$5-$7-$9`;
-
-  return string.replace(re, replacement);
+      `(X|\\d+?)`,
+      "g"
+    ),
+    `$1-$3-$5-$7-$9`
+  );
 }
 
 //

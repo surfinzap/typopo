@@ -23,10 +23,10 @@
   @returns {string} — output with fixed ellipsis
 */
 export function replaceThreeCharsWithEllipsis(string, locale) {
-  let pattern = `[${locale.ellipsis}\\.]{3,}`;
-  let re = new RegExp(pattern, "g");
-  let replacement = locale.ellipsis;
-  return string.replace(re, replacement);
+  return string.replace(
+    new RegExp(`[${locale.ellipsis}\\.]{3,}`, "g"),
+    locale.ellipsis
+  );
 }
 
 //
@@ -42,14 +42,15 @@ export function replaceThreeCharsWithEllipsis(string, locale) {
 */
 export function replaceTwoCharsWithEllipsis(string, locale) {
   // prettier-ignore
-  let pattern =
+  return string.replace(
+    new RegExp(
       `\\.${locale.ellipsis}|` +
       `${locale.ellipsis}{2,}|` +
-      `${locale.ellipsis}\\.`;
-
-  let re = new RegExp(pattern, "g");
-  let replacement = locale.ellipsis;
-  return string.replace(re, replacement);
+      `${locale.ellipsis}\\.`,
+      "g"
+    ),
+    locale.ellipsis
+  );
 }
 
 //
@@ -64,10 +65,10 @@ export function replaceTwoCharsWithEllipsis(string, locale) {
   @returns {string} — output with fixed ellipsis
 */
 export function replaceTwoPeriodsWithEllipsis(string, locale) {
-  let pattern = `[${locale.spaces}]\\.{2}[${locale.spaces}]`;
-  let re = new RegExp(pattern, "g");
-  let replacement = `${locale.space}${locale.ellipsis}${locale.space}`;
-  return string.replace(re, replacement);
+  return string.replace(
+    new RegExp(`[${locale.spaces}]\\.{2}[${locale.spaces}]`, "g"),
+    `${locale.space}${locale.ellipsis}${locale.space}`
+  );
 }
 
 //
@@ -84,14 +85,17 @@ export function replaceTwoPeriodsWithEllipsis(string, locale) {
 */
 export function fixEllipsisSpacingAroundCommas(string, locale) {
   // prettier-ignore
-  let pattern = 
+  return string.replace(
+    new RegExp(
       `(,)` +
       `([${locale.spaces}]?)` +
       `(${locale.ellipsis})` +
       `([${locale.spaces}]?)` +
-      `(,)`;
-  let re = new RegExp(pattern, "g");
-  return string.replace(re, `$1 ${locale.ellipsis}$5`);
+      `(,)`,
+      "g"
+    ),
+    `$1 ${locale.ellipsis}$5`
+  );
 }
 
 //
@@ -108,17 +112,18 @@ export function fixEllipsisSpacingAroundCommas(string, locale) {
 */
 export function fixEllipsisAsLastItem(string, locale) {
   // prettier-ignore
-  let pattern = 
+  return string.replace(
+    new RegExp(
       `(,)` +
       `([${locale.spaces}]?)` +
       `(${locale.ellipsis})` +
       `([${locale.spaces}]?)` +
       `(\\B|[${locale.closingBrackets}])` +
-      `([^,]|$)`;
-
-  let re = new RegExp(pattern, "g");
-
-  return string.replace(re, "$1$3$5$6");
+      `([^,]|$)`,
+      "g"
+    ),
+    "$1$3$5$6"
+  );
 }
 
 //
@@ -134,12 +139,15 @@ export function fixEllipsisAsLastItem(string, locale) {
 */
 export function fixAposiopesisStartingParagraph(string, locale) {
   // prettier-ignore
-  let pattern =
+  return string.replace(
+    new RegExp(
       `(^${locale.ellipsis})` +
       `([${locale.spaces}])` +
-      `([${locale.lowercaseChars}${locale.uppercaseChars}])`;
-  let re = new RegExp(pattern, "gm");
-  return string.replace(re, "$1$3");
+      `([${locale.lowercaseChars}${locale.uppercaseChars}])`,
+      "gm"
+    ),
+    "$1$3"
+  );
 }
 
 //
@@ -156,14 +164,17 @@ export function fixAposiopesisStartingParagraph(string, locale) {
 */
 export function fixAposiopesisStartingSentence(string, locale) {
   // prettier-ignore
-  let pattern =
+  return string.replace(
+    new RegExp(
       `([${locale.sentencePunctuation}${locale.terminalQuotes}])` +
       `([${locale.spaces}]?)` +
       `([${locale.ellipsis}])` +
       `([${locale.spaces}]?)` +
-      `([${locale.lowercaseChars}])`;
-  let re = new RegExp(pattern, "g");
-  return string.replace(re, "$1 $3$5");
+      `([${locale.lowercaseChars}])`,
+      "g"
+    ),
+    "$1 $3$5"
+  );
 }
 
 //
@@ -181,14 +192,17 @@ export function fixAposiopesisStartingSentence(string, locale) {
 */
 export function fixAposiopesisBetweenSentences(string, locale) {
   // prettier-ignore
-  let pattern =
+  return string.replace(
+    new RegExp(
       `([${locale.lowercaseChars}])` +
       `([${locale.spaces}])` +
       `([${locale.ellipsis}])` +
       `([${locale.spaces}]?)` +
-      `([${locale.uppercaseChars}])`;
-  let re = new RegExp(pattern, "g");
-  return string.replace(re, "$1$3 $5");
+      `([${locale.uppercaseChars}])`,
+      "g"
+    ),
+    "$1$3 $5"
+  );
 }
 
 //
@@ -205,12 +219,15 @@ export function fixAposiopesisBetweenSentences(string, locale) {
 */
 export function fixAposiopesisBetweenWords(string, locale) {
   // prettier-ignore
-  let pattern =
+  return string.replace(
+    new RegExp(
       `([${locale.allChars}])` +
       `([${locale.ellipsis}])` +
-      `([${locale.allChars}])`;
-  let re = new RegExp(pattern, "g");
-  return string.replace(re, "$1$2 $3");
+      `([${locale.allChars}])`,
+      "g"
+    ),
+    "$1$2 $3"
+  );
 }
 
 //
@@ -230,14 +247,17 @@ export function fixEllipsisBetweenSentences(string, locale) {
   /* [4]	keep spaces around ellipsis when it is used at the beginning
             of the full sentence in the middle of the paragraph */
   // prettier-ignore
-  let pattern =
+  return string.replace(
+    new RegExp(
       `([${locale.sentencePunctuation}${locale.terminalQuotes}])` +
       `([${locale.spaces}]?)` +
       `(${locale.ellipsis})` +
       `([${locale.spaces}]?)` +
-      `([${locale.uppercaseChars}])`;
-  let re = new RegExp(pattern, "g");
-  return string.replace(re, "$1 $3 $5");
+      `([${locale.uppercaseChars}])`,
+      "g"
+    ),
+    "$1 $3 $5"
+  );
 }
 
 //
@@ -253,12 +273,15 @@ export function fixEllipsisBetweenSentences(string, locale) {
 */
 export function fixAposiopesisEndingParagraph(string, locale) {
   // prettier-ignore
-  let pattern =
+  return string.replace(
+    new RegExp(
       `([${locale.lowercaseChars}])` +
       `([${locale.spaces}])+` +
-      `([${locale.ellipsis}][${locale.rightDoubleQuote}${locale.rightSingleQuote}]?$)`;
-  let re = new RegExp(pattern, "gm");
-  return string.replace(re, "$1$3");
+      `([${locale.ellipsis}][${locale.rightDoubleQuote}${locale.rightSingleQuote}]?$)`,
+      "gm"
+    ),
+    "$1$3"
+  );
 }
 
 //
