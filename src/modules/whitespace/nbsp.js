@@ -41,34 +41,36 @@ export function removeNbspBetweenMultiCharWords(string, locale) {
 export function addNbspAfterPreposition(string, locale) {
   // a) small letter prepositions
   // prettier-ignore
-  let pattern =
+  string = replaceWithOverlapHandling(
+    string,
+    new RegExp(
       `(^|[${locale.space}]|[^${locale.allChars}${locale.cardinalNumber}${locale.apostrophe}${locale.plus}${locale.minus}${locale.hyphen}])` +
       `([${locale.lowercaseChars}])` +
-      `([${locale.space}])`;
-  let re = new RegExp(pattern, "g");
-  let replacement = `$1$2${locale.nbsp}`;
-
-  string = replaceWithOverlapHandling(string, re, replacement);
+      `([${locale.space}])`,
+      "g"
+    ),
+    `$1$2${locale.nbsp}`
+  );
 
   // b) capital letter prepositions at the beggining of the sentence
   // prettier-ignore
-  pattern = 
-    `(^|[${locale.sentencePunctuation}` + 
-        `${locale.ellipsis}` + 
-        `${locale.copyright}` + 
-        `${locale.registeredTrademark}` + 
-        `${locale.soundRecordingCopyright}]` + 
-        `)` +
-    `([${locale.spaces}]?)` +
-    `([${locale.uppercaseChars}])` +
-    `([${locale.spaces}])`;
+  string = string.replace(
+    new RegExp(
+      `(^|[${locale.sentencePunctuation}` + 
+          `${locale.ellipsis}` + 
+          `${locale.copyright}` + 
+          `${locale.registeredTrademark}` + 
+          `${locale.soundRecordingCopyright}]` + 
+          `)` +
+      `([${locale.spaces}]?)` +
+      `([${locale.uppercaseChars}])` +
+      `([${locale.spaces}])`,
+      "g"
+    ),
+    `$1$2$3${locale.nbsp}`
+  );
 
-  re = new RegExp(pattern, "g");
-  replacement = `$1$2$3${locale.nbsp}`;
-  string = string.replace(re, replacement);
-
-  // c) “I” in English
-
+  // c) "I" in English
   if (locale.locale == "en-us") {
     // prettier-ignore
     string = string.replace(

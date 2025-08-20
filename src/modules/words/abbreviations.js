@@ -11,43 +11,47 @@
   @returns {string} corrected output
 */
 export function fixInitials(string, locale) {
-  // define pattern for initial and a full name
-  // prettier-ignore
-  let initialPattern = `([${locale.uppercaseChars}][${locale.allChars}]?\\.)([${locale.spaces}]?)`;
-  // prettier-ignore
-  let fullNamePattern = `([${locale.allChars}]{2,}[^\\.])`;
+  const INITIAL_SPACE = {
+    "en-us": "",
+    "rue":   locale.nbsp,
+    "sk":    locale.nbsp,
+    "cs":    locale.nbsp,
+    "de-de": locale.nbsp,
+  };
 
-  // define locale-specific spacing for multiple initials
-  let initialSpace = "";
-  switch (locale.locale) {
-    case "en-us":
-      initialSpace = "";
-      break;
-    case "rue":
-    case "sk":
-    case "cs":
-    case "de-de":
-      initialSpace = locale.nbsp;
-      break;
-  }
+  const initialSpace = INITIAL_SPACE[locale.locale] || "";
+  const initialPattern = `([${locale.uppercaseChars}][${locale.allChars}]?\\.)([${locale.spaces}]?)`;
+  const fullNamePattern = `([${locale.allChars}]{2,}[^\\.])`;
 
   // [1] Identify and replace pattern "I. FullName"
-  let pattern = initialPattern + fullNamePattern;
-  let re = new RegExp(pattern, "g");
-  let replacement = `$1${locale.nbsp}$3`;
-  string = string.replace(re, replacement);
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      initialPattern + fullNamePattern, 
+      "g"
+    ),
+    `$1${locale.nbsp}$3`
+  );
 
   // [2] Identify and replace pattern "I. I. FullName"
-  pattern = initialPattern + initialPattern + fullNamePattern;
-  re = new RegExp(pattern, "g");
-  replacement = `$1${initialSpace}$3${locale.space}$5`;
-  string = string.replace(re, replacement);
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      initialPattern + initialPattern + fullNamePattern,
+      "g"
+    ),
+    `$1${initialSpace}$3${locale.space}$5`
+  );
 
   // [3] Identify and replace pattern "I. I. I. FullName"
-  pattern = initialPattern + initialPattern + initialPattern + fullNamePattern;
-  re = new RegExp(pattern, "g");
-  replacement = `$1${initialSpace}$3${initialSpace}$5${locale.space}$7`;
-  string = string.replace(re, replacement);
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      initialPattern + initialPattern + initialPattern + fullNamePattern, 
+      "g"
+    ),
+    `$1${initialSpace}$3${initialSpace}$5${locale.space}$7`
+  );
 
   return string;
 }
