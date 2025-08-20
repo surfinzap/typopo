@@ -25,7 +25,7 @@ export function replaceTwoHyphensWithEnDash(string) {
   see tests
 
   Exceptions
-  - improperly spaced dash in words such as “e-shop”, e.g. “e -shop” (we fix this in hyphen.js)
+  - improperly spaced dash in words such as "e-shop", e.g. "e -shop" (we fix this in hyphen.js)
   - hyphens at the beginning of the paragraph that indicate unordered list
 
   @param {string} string: input text for identification
@@ -33,36 +33,27 @@ export function replaceTwoHyphensWithEnDash(string) {
   @returns {string} output with fixed dashes and spaces between words
 */
 export function fixDashesBetweenWords(string, locale) {
+  const DASH_REPLACEMENT = {
+    "en-us": (locale) => `$1${locale.emDash}$3`,
+    "rue":   (locale) => `$1${locale.hairSpace}${locale.emDash}${locale.hairSpace}$3`,
+    "sk":    (locale) => `$1${locale.hairSpace}${locale.emDash}${locale.hairSpace}$3`,
+    "cs":    (locale) => `$1${locale.nbsp}${locale.enDash}${locale.space}$3`,
+    "de-de": (locale) => `$1${locale.hairSpace}${locale.enDash}${locale.hairSpace}$3`,
+  };
+
   // prettier-ignore
-  let pattern = 
-      `([${locale.allChars}])` + 
+  return string.replace(
+    new RegExp(
+            `([${locale.allChars}])` + 
       `(` +
-        `[${locale.spaces}]*[${locale.enDash}${locale.emDash}][${locale.spaces}]*` +
+        `[${locale.spaces}]*[${locale.enDash}${locale.emDash}][${locale.spaces}]*` + 
         `|` +
         `[${locale.spaces}]+[${locale.hyphen}][${locale.spaces}]+` +
       `)` +
-      `([${locale.allChars}])`;
-
-  let re = new RegExp(pattern, "g");
-  let replacement = "";
-
-  switch (locale.locale) {
-    case "en-us":
-      replacement = `$1${locale.emDash}$3`;
-      break;
-    case "rue":
-    case "sk":
-      replacement = `$1${locale.hairSpace}${locale.emDash}${locale.hairSpace}$3`;
-      break;
-    case "cs":
-      replacement = `$1${locale.nbsp}${locale.enDash}${locale.space}$3`;
-      break;
-    case "de-de":
-      replacement = `$1${locale.hairSpace}${locale.enDash}${locale.hairSpace}$3`;
-      break;
-  }
-
-  return string.replace(re, replacement);
+      `([${locale.allChars}])`, 
+      "g"
+    ), 
+    DASH_REPLACEMENT[locale.locale]?.(locale) || "");
 }
 
 //
@@ -81,33 +72,25 @@ export function fixDashesBetweenWords(string, locale) {
   @returns {string} — output with locale-specific dash and spacing between a word and a punctuation.
 */
 export function fixHyphenBetweenWordAndPunctuation(string, locale) {
+  const HYPHEN_PUNCTUATION_REPLACEMENT = {
+    "en-us": (locale) => `$1${locale.emDash}$5`,
+    "rue":   (locale) => `$1${locale.hairSpace}${locale.emDash}$5`,
+    "sk":    (locale) => `$1${locale.hairSpace}${locale.emDash}$5`,
+    "cs":    (locale) => `$1${locale.nbsp}${locale.enDash}$5`,
+    "de-de": (locale) => `$1${locale.hairSpace}${locale.enDash}$5`,
+  };
+
   // prettier-ignore
-  let pattern = 
+  return string.replace(
+    new RegExp(
       `([${locale.allChars}])` + 
       `([${locale.spaces}]?)` + 
-      `(${locale.hyphen})` + 
+      `(${locale.hyphen})` +
       `([${locale.spaces}]?)` + 
-      `([${locale.sentencePunctuation}\\n\\r])`;
-  let re = new RegExp(pattern, "g");
-  let replacement = "";
-
-  switch (locale.locale) {
-    case "en-us":
-      replacement = `$1${locale.emDash}$5`;
-      break;
-    case "rue":
-    case "sk":
-      replacement = `$1${locale.hairSpace}${locale.emDash}$5`;
-      break;
-    case "cs":
-      replacement = `$1${locale.nbsp}${locale.enDash}$5`;
-      break;
-    case "de-de":
-      replacement = `$1${locale.hairSpace}${locale.enDash}$5`;
-      break;
-  }
-
-  return string.replace(re, replacement);
+      `([${locale.sentencePunctuation}\\n\\r])`, 
+      "g"
+    ),
+    HYPHEN_PUNCTUATION_REPLACEMENT[locale.locale]?.(locale) || "");
 }
 
 //
@@ -117,8 +100,7 @@ export function fixHyphenBetweenWordAndPunctuation(string, locale) {
   with an en dash; including cases when there is an extra space
   from either one side or both sides of the dash
 
-  Because in edge cases we would need to tackle overlapping regex matches
-  (e.g. 1–2–3), we've made the function bit more verbose.
+  Algorithm is split in two passes, to prevent the loops of matching the already fixed en dash.
   [1] Match the pattern with overlap handling
   [2] Replace enDash adepts with actual enDashes
 
@@ -128,22 +110,27 @@ export function fixHyphenBetweenWordAndPunctuation(string, locale) {
 export function fixDashBetweenCardinalNumbers(string, locale) {
   /* [1] Match the pattern with overlap handling */
   // prettier-ignore
-  let pattern =
+  string = replaceWithOverlapHandling(
+    string, 
+    new RegExp(
       `(${locale.cardinalNumber})` +
       `([${locale.spaces}]?` +
       `[${locale.hyphen}${locale.enDash}${locale.emDash}]` +
       `[${locale.spaces}]?)` +
-      `(${locale.cardinalNumber})`;
-  let re = new RegExp(pattern, "g");
-  let replacement = `$1{{typopo__endash}}$3`;
-  string = replaceWithOverlapHandling(string, re, replacement);
+      `(${locale.cardinalNumber})`, 
+      "g"
+    ), 
+    `$1{{typopo__endash}}$3`
+  );
 
   /* [2] Replace enDash adepts with actual enDashes */
-  pattern = `{{typopo__endash}}`;
-  re = new RegExp(pattern, "g");
-  replacement = locale.enDash;
-
-  return string.replace(re, replacement);
+  // prettier-ignore
+  return string.replace(
+    new RegExp(
+      `{{typopo__endash}}`, 
+      "g"
+    ), locale.enDash
+  );
 }
 
 //
@@ -158,13 +145,15 @@ export function fixDashBetweenCardinalNumbers(string, locale) {
 */
 export function fixDashBetweenPercentageRange(string, locale) {
   // prettier-ignore
-  let pattern = 
+  return string.replace(
+    new RegExp(
       `([${locale.percent}${locale.permille}${locale.permyriad}])` + 
       `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)` + 
-      `(${locale.cardinalNumber})`;
-  let re = new RegExp(pattern, "g");
-  let replacement = `$1${locale.enDash}$3`;
-  return string.replace(re, replacement);
+      `(${locale.cardinalNumber})`, 
+      "g"
+    ), 
+    `$1${locale.enDash}$3`
+  );
 }
 
 //
@@ -180,17 +169,17 @@ export function fixDashBetweenPercentageRange(string, locale) {
 */
 export function fixDashBetweenOrdinalNumbers(string, locale) {
   // prettier-ignore
-  let pattern = 
+  return string.replace(
+    new RegExp(
       `(${locale.cardinalNumber})` + 
       `(${locale.ordinalIndicator})` + 
       `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)` + 
       `(${locale.cardinalNumber})` + 
-      `(${locale.ordinalIndicator})`;
-
-  let re = new RegExp(pattern, "gi");
-  let replacement = `$1$2${locale.enDash}$4$5`;
-
-  return string.replace(re, replacement);
+      `(${locale.ordinalIndicator})`, 
+      "gi"
+    ), 
+    `$1$2${locale.enDash}$4$5`
+  );
 }
 
 //
