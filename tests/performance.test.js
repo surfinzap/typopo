@@ -55,7 +55,7 @@ function runPerformanceTest(textLength, iterations = 1000) {
 
   for (let i = 0; i < actualIterations; i++) {
     const start = performance.now();
-    const result = typopo.fixTypos(testText, "en-us");
+    typopo.fixTypos(testText, "en-us");
     const end = performance.now();
 
     const duration = end - start;
