@@ -1,21 +1,29 @@
 export function fixSpaceAroundHyphen(string, locale) {
+  // Fix hyphen with space after: "word- word" → "word-word"
   // prettier-ignore
-  let pattern = 
+  string = string.replace(
+    new RegExp(
       `([${locale.allChars}])` + 
       `(-)` + 
-      `([${locale.spaces}])` +
-      `([${locale.allChars}])`;
-  let re = new RegExp(pattern, "g");
-  string = string.replace(re, `$1-$4`);
+      `([${locale.spaces}])` + 
+      `([${locale.allChars}])`,
+      "g"
+    ), 
+    `$1-$4`
+  );
 
+  // Fix hyphen with space before: "word -word" → "word-word"
   // prettier-ignore
-  pattern = 
+  string = string.replace(
+    new RegExp(
       `([${locale.allChars}])` + 
       `([${locale.spaces}])` + 
-      `(-)` +
-      `([${locale.allChars}])`;
-  re = new RegExp(pattern, "g");
-  string = string.replace(re, `$1-$4`);
+      `(-)` + 
+      `([${locale.allChars}])`,
+      "g"
+    ), 
+    `$1-$4`
+  );
 
   return string;
 }

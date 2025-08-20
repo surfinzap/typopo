@@ -34,8 +34,7 @@ export function removeSpacesAtParagraphBeginning(string, locale, configuration) 
   /* [1] split the lines manually */
   let lines = string.split(/\r?\n/);
 
-  let pattern = "(^\\s+)([-\\*\\+]*)"; // identify whitespaces and markdown list indicators -/*
-  let re = new RegExp(pattern, "g");
+  let re = new RegExp("(^\\s+)([-\\*\\+]*)", "g"); // identify whitespaces and markdown list indicators -/*
 
   for (let i = 0; i < lines.length; i++) {
     lines[i] = lines[i].replace(re, function ($0, $1, $2) {
@@ -68,8 +67,7 @@ export function removeSpacesAtParagraphBeginning(string, locale, configuration) 
 export function removeSpacesAtParagraphEnd(string) {
   /* [1] split the lines manually */
   let lines = string.split(/\r?\n/);
-  let pattern = "(\\s+$)";
-  let re = new RegExp(pattern, "g");
+  let re = new RegExp("(\\s+$)", "g");
 
   /* [2] remove empty spaces or tabs at the end of the paragraph*/
   for (let i = 0; i < lines.length; i++) {
@@ -85,7 +83,12 @@ export function removeSpacesAtParagraphEnd(string) {
 export function removeSpaceBeforeSentencePausePunctuation(string, locale) {
   // prettier-ignore
   return string.replace(
-    new RegExp(`([${locale.spaces}])([${locale.sentencePausePunctuation}])([^\\-\\)]|$)`, "g"),
+    new RegExp(
+      `([${locale.spaces}])` +
+      `([${locale.sentencePausePunctuation}])` +
+      `([^\\-\\)]|$)`, 
+      "g"
+    ),
     `$2$3`
   );
 }
