@@ -7,7 +7,7 @@
 - Remove the browser bundle; Typopo now supports NPM distribution only
 
 ### 💪 Improvements
-- Lower the bundle size by few kBs (40284 vs. )
+- 25% bundle size reduction (40284 vs. 30470) 
 
 ### 🔨 Maintenance
 - Reorganize the folder structure
