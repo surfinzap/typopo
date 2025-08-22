@@ -37,7 +37,7 @@ export default defineConfig(() => {
       minify: 'esbuild',
       sourcemap: false,
       emptyOutDir: false,
-      target: ['es2015', 'edge18', 'firefox60', 'chrome61', 'safari11']
+      target: ['es2020', 'chrome80', 'firefox78', 'safari14', 'edge88']
     }
   };
 });
