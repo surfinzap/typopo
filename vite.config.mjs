@@ -30,8 +30,8 @@ export default defineConfig(() => {
       lib: {
         entry: resolve('src/typopo.js'),
         name: 'typopo',
-        formats: ['umd'],
-        fileName: () => 'typopo.min.cjs'
+        formats: ['es', 'cjs', 'umd'],
+        fileName: (format) => `typopo.${format}.js`
       },
       outDir: 'dist',
       minify: 'esbuild',

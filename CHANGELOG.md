@@ -1,13 +1,10 @@
 # Changelog for Typopo
 
 
-## 3.0.0 //
-
-### 💥 Breaking changes
-- Remove the browser bundle; Typopo now supports NPM distribution only
+## 2.6.0 //
 
 ### 💪 Improvements
-- 25% bundle size reduction (40284 vs. 30470) 
+- 25% bundle size reduction (40284 vs. 30470), depending on what module
 
 ### 🔨 Maintenance
 - Reorganize the folder structure

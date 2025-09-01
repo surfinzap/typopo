@@ -24,8 +24,10 @@
 - [Use](#use)
 	- [Online app](#online-app)
 	- [VS Code extension](#vs-code-extension)
-	- [NPM package](#npm-package)
-	- [JavaScript library](#javascript-library)
+	- [Installation](#installation)
+		- [ES Module (Recommended)](#es-module-recommended)
+		- [CommonJS](#commonjs)
+		- [Browser/UMD](#browserumd)
 	- [API](#api)
 - [News \& Releases](#news-releases)
 - [Support](#support)
@@ -112,19 +114,33 @@ The online app is useful especially when you’re a book designer or a DTP ope
 ![Typopo—VS Code extension](assets/typopo--vs-code-animation--html.gif "VS code extension")
 
 
-### NPM package
-Install Typopo as an NPM package in your web project:
-```
+### Installation
+
+#### ES Module (Recommended)
+For modern Node.js and bundler environments:
+```bash
 npm install typopo
 ```
-
-Import the package:
-```
+```javascript
 import { fixTypos } from 'typopo';
 ```
 
-Check out an [API](#api) on how to use the package.
+#### CommonJS
+For legacy Node.js environments or when require() is needed:
+```javascript
+const { fixTypos } = require('typopo');
+```
 
+#### Browser/UMD
+For direct browser usage without a bundler:
+```html
+<script src="https://unpkg.com/typopo/dist/typopo.umd.js"></script>
+<script>
+  const correctedText = typopo.fixTypos('Your text here');
+</script>
+```
+
+Check out the [API](#api) section for usage details.
 
 
 ### API

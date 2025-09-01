@@ -29,7 +29,15 @@
 			"prettier --write"
 		]
 	},
-	"main": "dist/typopo.min.cjs",
+  "main": "./dist/typopo.cjs.js",
+  "module": "./dist/typopo.es.js",
+  "browser": "./dist/typopo.umd.js", 
+  "exports": {
+    ".": {
+      "import": "./dist/typopo.es.js",
+      "require": "./dist/typopo.cjs.js"
+    }
+  },
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/surfinzap/typopo"
