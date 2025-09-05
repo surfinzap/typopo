@@ -1,23 +1,36 @@
 import { fixTypos } from "../../src/typopo.js";
 import { describe, it, expect } from "vitest";
 import { createRequire } from "module";
+import { readFileSync } from "fs";
+import { JSDOM } from "jsdom";
 
 let fixTyposMinified = null;
+let fixTyposUmd = null;
 
 if (!process.env.SOURCE_ONLY) {
   try {
     const requireFromModule = createRequire(import.meta.url);
     const minified = requireFromModule("../../dist/typopo.cjs");
     fixTyposMinified = minified.fixTypos;
-    console.log("Minified version loaded for testing");
+    console.log("CJS version loaded for testing");
   } catch (error) {
-    console.log(`Minified version not available (${error.message}), skipping minified tests`);
+    console.log(`CJS version not available (${error.message}), skipping CJS tests`);
+  }
+
+  try {
+    // Load UMD version using jsdom simulation
+    const umdCode = readFileSync("./dist/typopo.umd.js", "utf8");
+    const dom = new JSDOM(`<script>${umdCode}</script>`, { runScripts: "dangerously" });
+    fixTyposUmd = dom.window.typopo.fixTypos;
+    console.log("UMD version loaded for testing");
+  } catch (error) {
+    console.log(`UMD version not available (${error.message}), skipping UMD tests`);
   }
 } else {
   console.log("SOURCE_ONLY mode: skipping minified tests");
 }
 
-function runBothVersions(testCase, locale, config) {
+function runAllVersions(testCase, locale, config) {
   Object.keys(testCase).forEach((key) => {
     it(`source: ${key.substring(0, 30)}${key.length > 30 ? "..." : ""}`, () => {
       expect(fixTypos(key, locale, config)).toBe(testCase[key]);
@@ -26,8 +39,16 @@ function runBothVersions(testCase, locale, config) {
 
   if (fixTyposMinified) {
     Object.keys(testCase).forEach((key) => {
-      it(`minified: ${key.substring(0, 30)}${key.length > 30 ? "..." : ""}`, () => {
+      it(`cjs: ${key.substring(0, 30)}${key.length > 30 ? "..." : ""}`, () => {
         expect(fixTyposMinified(key, locale, config)).toBe(testCase[key]);
+      });
+    });
+  }
+
+  if (fixTyposUmd) {
+    Object.keys(testCase).forEach((key) => {
+      it(`umd: ${key.substring(0, 30)}${key.length > 30 ? "..." : ""}`, () => {
+        expect(fixTyposUmd(key, locale, config)).toBe(testCase[key]);
       });
     });
   }
@@ -45,7 +66,7 @@ describe("Test consistency of internal variables", () => {
     "And {{test-variable}} in the middle of the sentence.": "And {{test-variable}} in the middle of the sentence.",
   };
 
-  runBothVersions(testCase, "en-us");
+  runAllVersions(testCase, "en-us");
 });
 
 describe("Test that exceptions remain intact", () => {
@@ -79,7 +100,7 @@ describe("Test that exceptions remain intact", () => {
       "www.tota.sk and 127.0.0.1 and mail@domain.com",
   };
 
-  runBothVersions(testCase, "en-us");
+  runAllVersions(testCase, "en-us");
 });
 
 /* typopo configurations */
@@ -449,7 +470,7 @@ describe("Tests that all modules are plugged for en-us", () => {
       ...testRemoveWhitespacesBeforeMarkdownList,
     };
 
-    runBothVersions(testCaseDefault, "en-us", configDefault);
+    runAllVersions(testCaseDefault, "en-us", configDefault);
   });
 
   describe("with removeLines=false", () => {
@@ -458,7 +479,7 @@ describe("Tests that all modules are plugged for en-us", () => {
       ...testKeepLines,
     };
 
-    runBothVersions(testCaseKeepLines, "en-us", configKeepLines);
+    runAllVersions(testCaseKeepLines, "en-us", configKeepLines);
   });
 
   describe("with removeWhitespacesBeforeMarkdownList=false", () => {
@@ -467,7 +488,7 @@ describe("Tests that all modules are plugged for en-us", () => {
       ...testKeepWhitespacesBeforeMarkdownList,
     };
 
-    runBothVersions(
+    runAllVersions(
       testCaseKeepWhitespacesBeforeMarkdownList,
       "en-us",
       configKeepWhitespacesBeforeMarkdownList
@@ -491,7 +512,7 @@ describe("Tests that all modules are plugged for de-de", () => {
       ...testRemoveWhitespacesBeforeMarkdownList,
     };
 
-    runBothVersions(testCaseDefault, "de-de", configDefault);
+    runAllVersions(testCaseDefault, "de-de", configDefault);
   });
 
   describe("with removeLines=false", () => {
@@ -500,7 +521,7 @@ describe("Tests that all modules are plugged for de-de", () => {
       ...testKeepLines,
     };
 
-    runBothVersions(testCaseKeepLines, "de-de", configKeepLines);
+    runAllVersions(testCaseKeepLines, "de-de", configKeepLines);
   });
 
   describe("with removeWhitespacesBeforeMarkdownList=false", () => {
@@ -509,7 +530,7 @@ describe("Tests that all modules are plugged for de-de", () => {
       ...testKeepWhitespacesBeforeMarkdownList,
     };
 
-    runBothVersions(
+    runAllVersions(
       testCaseKeepWhitespacesBeforeMarkdownList,
       "de-de",
       configKeepWhitespacesBeforeMarkdownList
@@ -533,7 +554,7 @@ describe("Tests that all modules are plugged for sk", () => {
       ...testRemoveWhitespacesBeforeMarkdownList,
     };
 
-    runBothVersions(testCaseDefault, "sk", configDefault);
+    runAllVersions(testCaseDefault, "sk", configDefault);
   });
 
   describe("with removeLines=false", () => {
@@ -542,7 +563,7 @@ describe("Tests that all modules are plugged for sk", () => {
       ...testKeepLines,
     };
 
-    runBothVersions(testCaseKeepLines, "sk", configKeepLines);
+    runAllVersions(testCaseKeepLines, "sk", configKeepLines);
   });
 
   describe("with removeWhitespacesBeforeMarkdownList=false", () => {
@@ -551,7 +572,7 @@ describe("Tests that all modules are plugged for sk", () => {
       ...testKeepWhitespacesBeforeMarkdownList,
     };
 
-    runBothVersions(
+    runAllVersions(
       testCaseKeepWhitespacesBeforeMarkdownList,
       "sk",
       configKeepWhitespacesBeforeMarkdownList
@@ -575,7 +596,7 @@ describe("Tests that all modules are plugged for cs", () => {
       ...testRemoveWhitespacesBeforeMarkdownList,
     };
 
-    runBothVersions(testCaseDefault, "cs", configDefault);
+    runAllVersions(testCaseDefault, "cs", configDefault);
   });
 
   describe("with removeLines=false", () => {
@@ -584,7 +605,7 @@ describe("Tests that all modules are plugged for cs", () => {
       ...testKeepLines,
     };
 
-    runBothVersions(testCaseKeepLines, "cs", configKeepLines);
+    runAllVersions(testCaseKeepLines, "cs", configKeepLines);
   });
 
   describe("with removeWhitespacesBeforeMarkdownList=false", () => {
@@ -593,7 +614,7 @@ describe("Tests that all modules are plugged for cs", () => {
       ...testKeepWhitespacesBeforeMarkdownList,
     };
 
-    runBothVersions(
+    runAllVersions(
       testCaseKeepWhitespacesBeforeMarkdownList,
       "cs",
       configKeepWhitespacesBeforeMarkdownList
@@ -617,7 +638,7 @@ describe("Tests that all modules are plugged for rue", () => {
       ...testRemoveWhitespacesBeforeMarkdownList,
     };
 
-    runBothVersions(testCaseDefault, "rue", configDefault);
+    runAllVersions(testCaseDefault, "rue", configDefault);
   });
 
   describe("with removeLines=false", () => {
@@ -626,7 +647,7 @@ describe("Tests that all modules are plugged for rue", () => {
       ...testKeepLines,
     };
 
-    runBothVersions(testCaseKeepLines, "rue", configKeepLines);
+    runAllVersions(testCaseKeepLines, "rue", configKeepLines);
   });
 
   describe("with removeWhitespacesBeforeMarkdownList=false", () => {
@@ -635,7 +656,7 @@ describe("Tests that all modules are plugged for rue", () => {
       ...testKeepWhitespacesBeforeMarkdownList,
     };
 
-    runBothVersions(
+    runAllVersions(
       testCaseKeepWhitespacesBeforeMarkdownList,
       "rue",
       configKeepWhitespacesBeforeMarkdownList
@@ -662,6 +683,6 @@ describe("Test if markdown ticks are kept (integration test) (en-us):\n", () => 
     "e.g. `something`": "e.g. `something`",
   };
 
-  runBothVersions(testCase, "en-us", configKeepMarkdownCodeBlocks);
+  runAllVersions(testCase, "en-us", configKeepMarkdownCodeBlocks);
 });
 

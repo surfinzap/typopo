@@ -29,15 +29,15 @@
 			"prettier --write"
 		]
 	},
-  "main": "./dist/typopo.cjs",
-  "module": "./dist/typopo.es.js",
-  "browser": "./dist/typopo.umd.js", 
-  "exports": {
-    ".": {
-      "import": "./dist/typopo.es.js",
-      "require": "./dist/typopo.cjs"
-    }
-  },
+	"main": "./dist/typopo.cjs",
+	"module": "./dist/typopo.es.js",
+	"browser": "./dist/typopo.umd.js",
+	"exports": {
+		".": {
+			"import": "./dist/typopo.es.js",
+			"require": "./dist/typopo.cjs"
+		}
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/surfinzap/typopo"
@@ -65,6 +65,7 @@
 		"cross-env": "^10.0.0",
 		"eslint": "^9.33.0",
 		"husky": "^9.1.7",
+		"jsdom": "^26.1.0",
 		"lint-staged": "^16.1.5",
 		"prettier": "^3.6.2",
 		"vite": "^6.3.5",
