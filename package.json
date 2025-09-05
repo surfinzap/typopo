@@ -9,7 +9,6 @@
 		"email": "help@typopo.org"
 	},
 	"scripts": {
-		"dev": "vite --config vite.dev.config.mjs",
 		"build": "vite build",
 		"test": "vitest run",
 		"test:dev": "cross-env SOURCE_ONLY=true vitest",

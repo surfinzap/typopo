@@ -427,10 +427,7 @@ function Re(n) {
   return ye(n);
 }
 function _e(n, e) {
-  return n.replace(
-    new RegExp(`[${e.ellipsis}\\.]{3,}`, "g"),
-    e.ellipsis
-  );
+  return n.replace(new RegExp(`[${e.ellipsis}\\.]{3,}`, "g"), e.ellipsis);
 }
 function Ce(n, e) {
   return n.replace(
