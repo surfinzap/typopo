@@ -729,6 +729,7 @@ describe("Swap single quotes and terminal punctuation for a quoted part (en-us):
       expect(swapSingleQuotesAndTerminalPunctuation(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     // This would need to support standalone single quotes. There is a conflict how apostrophes are identified earlier
+    // also it would a different handling of Rusyn constractions
     // it("module test", () => {
     //   expect(
     //     fixSingleQuotesPrimesAndApostrophes(

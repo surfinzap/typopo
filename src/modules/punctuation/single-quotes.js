@@ -204,9 +204,9 @@ export function identifyStandaloneLeftSingleQuote(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        `([${locale.spaces}${locale.emDash}${locale.enDash}])` +
+        `(^|[${locale.spaces}${locale.emDash}${locale.enDash}])` +
         `(${locale.singleQuoteAdepts}|,)` +
-        `([${locale.allChars}])`,
+        `([${locale.allChars}${locale.ellipsis}])`,
       "g"
     ),
       `$1{{typopo__left-single-quote--standalone}}$3`
@@ -214,6 +214,33 @@ export function identifyStandaloneLeftSingleQuote(string, locale) {
 }
 
 //
+
+/**
+  Identify standalone right single quote
+
+  Algorithm
+  Find right single quotes:
+  - following a word
+  - optionally, following a sentence punctuation
+  - optionally, preceding a space or a sentence punctuation
+
+  @param {string} string: input text for identification
+  @param {string} locale: locale option
+  @returns {string} output with identified standalone right single quote
+*/
+export function identifyStandaloneRightSingleQuote(string, locale) {
+  // prettier-ignore
+  return string.replace(
+    new RegExp(
+      `([${locale.allChars}])` +
+      `([${locale.sentencePunctuation}${locale.ellipsis}])?` +
+      `(${locale.singleQuoteAdepts})` +
+      `([ ${locale.sentencePunctuation}])?`,
+      "g"
+    ),
+      `$1$2{{typopo__right-single-quote--standalone}}$4`
+  );
+}
 
 /**
   Identify single quotes within double quotes
@@ -254,35 +281,6 @@ export function identifySingleQuotesWithinDoubleQuotes(string, locale) {
 //
 
 /**
-  Identify standalone right single quote
-
-  Algorithm
-  Find right single quotes:
-  - following a word
-  - optionally, following a sentence punctuation
-  - optionally, preceding a space or a sentence punctuation
-
-  @param {string} string: input text for identification
-  @param {string} locale: locale option
-  @returns {string} output with identified standalone right single quote
-*/
-export function identifyStandaloneRightSingleQuote(string, locale) {
-  // prettier-ignore
-  return string.replace(
-    new RegExp(
-      `([${locale.allChars}])` +
-      `([${locale.sentencePunctuation}])?` +
-      `(${locale.singleQuoteAdepts})` +
-      `([ ${locale.sentencePunctuation}])?`,
-      "g"
-    ),
-      `$1$2{{typopo__right-single-quote--standalone}}$4`
-  );
-}
-
-//
-
-/**
   Identify single quote pairs 
 
   Example
@@ -298,6 +296,7 @@ export function identifyStandaloneRightSingleQuote(string, locale) {
 */
 export function identifySingleQuotePairs(string) {
   // identify one phrase wrapped in single quotes
+  // note the greediness is because of Rusyn contractions
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -610,6 +609,11 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuratio
 
   /* [5] Replace a single qoute & a single prime with a single quote pair */
   string = replaceSinglePrimeWSingleQuote(string, locale);
+
+  // /* [5.1] Identify standalone single quotes (not within double quotes) */
+  // string = identifyStandaloneLeftSingleQuote(string, locale);
+  // string = identifyStandaloneRightSingleQuote(string, locale);
+  // string = identifySingleQuotePairs(string, locale);
 
   /* [6] Identify residual apostrophes*/
   string = identifyResidualApostrophes(string, locale);

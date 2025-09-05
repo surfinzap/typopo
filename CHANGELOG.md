@@ -2,9 +2,15 @@
 
 
 ## 2.6.0 //
+This version includes a couple of bug fixes, few new features and a completely rewritten build pipeline.
+
+### ✨ New features
+
 
 ### 💪 Improvements
-- 25% bundle size reduction (40284 vs. 30470), depending on what module
+- Typopo has now separate builds to be used as ES module, CommonJS import, and for a direct browser usage. 
+- CommonJS and UMD distributions were reduced ~25% in bundle size.
+
 
 ### 🔨 Maintenance
 - Reorganize the folder structure

@@ -881,7 +881,7 @@ function bn(n) {
 function fn(n, e) {
   return n.replace(
     new RegExp(
-      `([${e.spaces}${e.emDash}${e.enDash}])(${e.singleQuoteAdepts}|,)([${e.allChars}])`,
+      `(^|[${e.spaces}${e.emDash}${e.enDash}])(${e.singleQuoteAdepts}|,)([${e.allChars}${e.ellipsis}])`,
       "g"
     ),
     "$1{{typopo__left-single-quote--standalone}}$3"
@@ -889,23 +889,23 @@ function fn(n, e) {
 }
 function mn(n, e) {
   return n.replace(
+    new RegExp(
+      `([${e.allChars}])([${e.sentencePunctuation}${e.ellipsis}])?(${e.singleQuoteAdepts})([ ${e.sentencePunctuation}])?`,
+      "g"
+    ),
+    "$1$2{{typopo__right-single-quote--standalone}}$4"
+  );
+}
+function cn(n, e) {
+  return n.replace(
     // prettier-ignore
     new RegExp(
       `(${e.doubleQuoteAdepts})(.*?)(${e.doubleQuoteAdepts})`,
       "g"
     ),
     function(t, r, p, s) {
-      return p = fn(p, e), p = cn(p, e), p = gn(p), r + p + s;
+      return p = fn(p, e), p = mn(p, e), p = gn(p), r + p + s;
     }
-  );
-}
-function cn(n, e) {
-  return n.replace(
-    new RegExp(
-      `([${e.allChars}])([${e.sentencePunctuation}])?(${e.singleQuoteAdepts})([ ${e.sentencePunctuation}])?`,
-      "g"
-    ),
-    "$1$2{{typopo__right-single-quote--standalone}}$4"
   );
 }
 function gn(n) {
@@ -987,7 +987,7 @@ function Rn(n, e) {
   ), n = n.replace(/{{typopo__left-single-quote}}/g, e.leftSingleQuote), n = n.replace(/{{typopo__right-single-quote}}/g, e.rightSingleQuote), n = n.replace(/{{typopo__markdown_syntax_highlight}}/g, "```"), n;
 }
 function _n(n, e, t) {
-  return n = E(n, t), n = $n(n, e), n = an(n, e), n = dn(n, e), n = hn(n, e), n = on(n, e), n = bn(n), n = wn(n, e), n = mn(n, e), n = Sn(n), n = xn(n, e), n = Rn(n, e), n = y(n, t), n = En(n, e), n = yn(n, e), n;
+  return n = E(n, t), n = $n(n, e), n = an(n, e), n = dn(n, e), n = hn(n, e), n = on(n, e), n = bn(n), n = wn(n, e), n = cn(n, e), n = Sn(n), n = xn(n, e), n = Rn(n, e), n = y(n, t), n = En(n, e), n = yn(n, e), n;
 }
 function Cn(n, e) {
   return m(
