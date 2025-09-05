@@ -685,4 +685,3 @@ describe("Test if markdown ticks are kept (integration test) (en-us):\n", () => 
 
   runAllVersions(testCase, "en-us", configKeepMarkdownCodeBlocks);
 });
-

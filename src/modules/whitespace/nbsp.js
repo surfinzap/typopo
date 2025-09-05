@@ -174,12 +174,12 @@ export function addNbspWithinOrdinalDate(string, locale) {
   return string.replace(
     new RegExp(
       `(${locale.cardinalNumber})` +
-      `(${locale.ordinalIndicator})` +
-      `([${locale.spaces}]?)` +
-      `(${locale.cardinalNumber})` +
-      `(${locale.ordinalIndicator})` +
-      `([${locale.spaces}]?)` +
-      `(${locale.cardinalNumber})`,
+        `(${locale.ordinalIndicator})` +
+        `([${locale.spaces}]?)` +
+        `(${locale.cardinalNumber})` +
+        `(${locale.ordinalIndicator})` +
+        `([${locale.spaces}]?)` +
+        `(${locale.cardinalNumber})`,
       "g"
     ),
     replacement

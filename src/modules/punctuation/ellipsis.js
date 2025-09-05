@@ -23,10 +23,7 @@
   @returns {string} — output with fixed ellipsis
 */
 export function replaceThreeCharsWithEllipsis(string, locale) {
-  return string.replace(
-    new RegExp(`[${locale.ellipsis}\\.]{3,}`, "g"),
-    locale.ellipsis
-  );
+  return string.replace(new RegExp(`[${locale.ellipsis}\\.]{3,}`, "g"), locale.ellipsis);
 }
 
 //
