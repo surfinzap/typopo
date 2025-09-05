@@ -29,13 +29,13 @@
 			"prettier --write"
 		]
 	},
-  "main": "./dist/typopo.cjs.js",
+  "main": "./dist/typopo.cjs",
   "module": "./dist/typopo.es.js",
   "browser": "./dist/typopo.umd.js", 
   "exports": {
     ".": {
       "import": "./dist/typopo.es.js",
-      "require": "./dist/typopo.cjs.js"
+      "require": "./dist/typopo.cjs"
     }
   },
 	"repository": {

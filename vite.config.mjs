@@ -31,12 +31,12 @@ export default defineConfig(() => {
         entry: resolve('src/typopo.js'),
         name: 'typopo',
         formats: ['es', 'cjs', 'umd'],
-        fileName: (format) => `typopo.${format}.js`
+        fileName: (format) => format === 'cjs' ? `typopo.cjs` : `typopo.${format}.js`
       },
       outDir: 'dist',
       minify: 'esbuild',
       sourcemap: false,
-      emptyOutDir: false,
+      emptyOutDir: true,
       target: ['es2020', 'chrome80', 'firefox78', 'safari14', 'edge88']
     }
   };

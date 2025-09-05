@@ -7,7 +7,7 @@ let fixTyposMinified = null;
 if (!process.env.SOURCE_ONLY) {
   try {
     const requireFromModule = createRequire(import.meta.url);
-    const minified = requireFromModule("../../dist/typopo.min.cjs");
+    const minified = requireFromModule("../../dist/typopo.cjs");
     fixTyposMinified = minified.fixTypos;
     console.log("Minified version loaded for testing");
   } catch (error) {
