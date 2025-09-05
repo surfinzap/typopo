@@ -86,9 +86,8 @@ describe("Identify contracted and (’n’) as apostrophes (en-us):\n", () => {
         placeLocaleSingleQuotes(
           identifyContractedAnd(key, new Locale("en-us")),
           new Locale("en-us")
-        ),
-        unitTestCase[key]
-      );
+        )
+      ).toBe(unitTestCase[key]);
     });
   });
 
@@ -99,9 +98,8 @@ describe("Identify contracted and (’n’) as apostrophes (en-us):\n", () => {
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        moduleTestCase[key]
-      );
+        )
+      ).toBe(moduleTestCase[key]);
     });
   });
 });
@@ -141,9 +139,8 @@ describe("Identify common contractions at the beginning of the word as apostroph
         placeLocaleSingleQuotes(
           identifyContractedBeginnings(key, new Locale("en-us")),
           new Locale("en-us")
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
   });
 
@@ -154,9 +151,8 @@ describe("Identify common contractions at the beginning of the word as apostroph
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -185,9 +181,8 @@ describe("Identify common contractions at the end of the word as apostrophes (en
         placeLocaleSingleQuotes(
           identifyContractedEnds(key, new Locale("en-us")),
           new Locale("en-us")
-        ),
-        unitTestCase[key]
-      );
+        )
+      ).toBe(unitTestCase[key]);
     });
   });
 
@@ -198,9 +193,8 @@ describe("Identify common contractions at the end of the word as apostrophes (en
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -228,9 +222,8 @@ describe("Identify in-word contractions as apostrophes (en-us):\n", () => {
         placeLocaleSingleQuotes(
           identifyInWordContractions(key, new Locale("en-us")),
           new Locale("en-us")
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
   });
 
@@ -241,9 +234,8 @@ describe("Identify in-word contractions as apostrophes (en-us):\n", () => {
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -268,9 +260,8 @@ describe("Identify contracted years as apostrophes (en-us):\n", () => {
         placeLocaleSingleQuotes(
           identifyContractedYears(key, new Locale("en-us")),
           new Locale("en-us")
-        ),
-        unitTestCase[key]
-      );
+        )
+      ).toBe(unitTestCase[key]);
     });
   });
 
@@ -281,9 +272,8 @@ describe("Identify contracted years as apostrophes (en-us):\n", () => {
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -327,12 +317,8 @@ describe("Identify feet and arcminutes following a 1–3 numbers (en-us):\n", ()
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
       expect(
-        placeLocaleSingleQuotes(
-          identifySinglePrimes(key, new Locale("en-us")),
-          new Locale("en-us")
-        ),
-        unitTestCase[key]
-      );
+        placeLocaleSingleQuotes(identifySinglePrimes(key, new Locale("en-us")), new Locale("en-us"))
+      ).toBe(unitTestCase[key]);
     });
   });
 
@@ -343,9 +329,8 @@ describe("Identify feet and arcminutes following a 1–3 numbers (en-us):\n", ()
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        moduleTestCase[key]
-      );
+        )
+      ).toBe(moduleTestCase[key]);
     });
   });
 });
@@ -403,10 +388,7 @@ describe("Identify standalone left single quote (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        identifyStandaloneLeftSingleQuote(key, new Locale("en-us")),
-        unitTestCase[key]
-      );
+      expect(identifyStandaloneLeftSingleQuote(key, new Locale("en-us"))).toBe(unitTestCase[key]);
     });
   });
 
@@ -417,9 +399,8 @@ describe("Identify standalone left single quote (en-us):\n", () => {
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        moduleTestCase[key]
-      );
+        )
+      ).toBe(moduleTestCase[key]);
     });
   });
 });
@@ -491,10 +472,7 @@ describe("Identify standalone right single quote (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        identifyStandaloneRightSingleQuote(key, new Locale("en-us")),
-        unitTestCase[key]
-      );
+      expect(identifyStandaloneRightSingleQuote(key, new Locale("en-us"))).toBe(unitTestCase[key]);
     });
   });
 
@@ -505,9 +483,8 @@ describe("Identify standalone right single quote (en-us):\n", () => {
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        moduleTestCase[key]
-      );
+        )
+      ).toBe(moduleTestCase[key]);
     });
   });
 });
@@ -550,9 +527,8 @@ describe("Identify single quote pairs (en-us):\n", () => {
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        moduleTestCase[key]
-      );
+        )
+      ).toBe(moduleTestCase[key]);
     });
   });
 });
@@ -588,9 +564,8 @@ describe("Identify single quote pairs around single word (en-us):\n", () => {
         placeLocaleSingleQuotes(
           identifySingleQuotePairAroundSingleWord(key, new Locale("en-us")),
           new Locale("en-us")
-        ),
-        unitTestCase[key]
-      );
+        )
+      ).toBe(unitTestCase[key]);
     });
   });
 
@@ -601,9 +576,8 @@ describe("Identify single quote pairs around single word (en-us):\n", () => {
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        moduleTestCase[key]
-      );
+        )
+      ).toBe(moduleTestCase[key]);
     });
   });
 });
@@ -615,8 +589,6 @@ describe("Replace a single qoute & a single prime with a single quote pair (en-u
 
     "{{typopo__single-prime}}word{{typopo__right-single-quote--standalone}}":
       "{{typopo__left-single-quote}}word{{typopo__right-single-quote}}",
-
-    // ...testFalsePositives,
   };
 
   let moduleTestCase = {
@@ -624,16 +596,11 @@ describe("Replace a single qoute & a single prime with a single quote pair (en-u
       "He said: “What about ‘Localhost 3000’, is that good?”",
 
     "He said: “Here are 30 'bucks'”": "He said: “Here are 30 ‘bucks’”",
-
-    // ...testFalsePositives,
   };
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        replaceSinglePrimeWSingleQuote(key, new Locale("en-us")),
-        unitTestCase[key]
-      );
+      expect(replaceSinglePrimeWSingleQuote(key, new Locale("en-us"))).toBe(unitTestCase[key]);
     });
   });
 
@@ -644,9 +611,8 @@ describe("Replace a single qoute & a single prime with a single quote pair (en-u
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        moduleTestCase[key]
-      );
+        )
+      ).toBe(moduleTestCase[key]);
     });
   });
 });
@@ -662,9 +628,8 @@ describe("Identify residual apostrophes  (en-us):\n", () => {
         placeLocaleSingleQuotes(
           identifyResidualApostrophes(key, new Locale("en-us")),
           new Locale("en-us")
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
   });
 
@@ -675,9 +640,8 @@ describe("Identify residual apostrophes  (en-us):\n", () => {
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -691,10 +655,7 @@ describe("Remove extra space around a single prime:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        removeExtraSpaceAroundSinglePrime(key, new Locale("en-us")),
-        testCase[key]
-      );
+      expect(removeExtraSpaceAroundSinglePrime(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 
@@ -705,9 +666,8 @@ describe("Remove extra space around a single prime:\n", () => {
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -766,19 +726,17 @@ describe("Swap single quotes and terminal punctuation for a quoted part (en-us):
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        swapSingleQuotesAndTerminalPunctuation(key, new Locale("en-us")),
-        testCase[key]
-      );
+      expect(swapSingleQuotesAndTerminalPunctuation(key, new Locale("en-us"))).toBe(testCase[key]);
     });
-    // it("module test", () => {
-    // 	expect(
-    // 		fixSingleQuotesPrimesAndApostrophes(
-    // 			key,
-    // 			new Locale("en-us"),
-    // 			configIgnoreMarkdownCodeBlocks
-    // 		), testCase[key]);
-    // });
+    it("module test", () => {
+      expect(
+        fixSingleQuotesPrimesAndApostrophes(
+          key,
+          new Locale("en-us"),
+          configIgnoreMarkdownCodeBlocks
+        )
+      ).toBe(testCase[key]);
+    });
   });
 });
 
@@ -813,9 +771,8 @@ describe("Single quotes in default language (en-us)\n", () => {
           key,
           new Locale("en-us"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -855,9 +812,8 @@ describe("Single quotes in (sk, cs, de-de)\n", () => {
           key,
           new Locale("de-de"),
           configIgnoreMarkdownCodeBlocks
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -880,9 +836,8 @@ describe("Single quotes in (rue)\n", () => {
   Object.keys(testCase).forEach((key) => {
     it("should fix single quotes, primes and apostrophes in Rusyn", () => {
       expect(
-        fixSingleQuotesPrimesAndApostrophes(key, new Locale("rue"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixSingleQuotesPrimesAndApostrophes(key, new Locale("rue"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -915,9 +870,8 @@ describe("Test if markdown ticks are kept (single quotes) (en-us):\n", () => {
   Object.keys(testCase).forEach((key) => {
     it("keepMarkdownCodeBlocks: true” configuration", () => {
       expect(
-        fixSingleQuotesPrimesAndApostrophes(key, new Locale("en-us"), configKeepMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixSingleQuotesPrimesAndApostrophes(key, new Locale("en-us"), configKeepMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });

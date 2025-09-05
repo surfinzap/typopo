@@ -119,13 +119,11 @@ describe("Remove spaces and tabs at beginning of the paragraph\n", () => {
           key,
           new Locale("en-us"),
           configRemoveWhitespacesBeforeParagraphs
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
     it("module test", () => {
-      expect(
-        fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs),
+      expect(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs)).toBe(
         testCase[key]
       );
     });
@@ -145,13 +143,11 @@ describe("Remove spaces and tabs at beginning of the paragraph, but keep spaces 
           key,
           new Locale("en-us"),
           configKeepWhitespacesBeforeMarkdownList
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
     it("module test", () => {
-      expect(
-        fixSpaces(key, new Locale("en-us"), configKeepWhitespacesBeforeMarkdownList),
+      expect(fixSpaces(key, new Locale("en-us"), configKeepWhitespacesBeforeMarkdownList)).toBe(
         testCase[key]
       );
     });
@@ -173,8 +169,7 @@ describe("Remove space before sentence pause-punctuation\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit tests", () => {
-      expect(
-        removeSpaceBeforeSentencePausePunctuation(key, new Locale("en-us")),
+      expect(removeSpaceBeforeSentencePausePunctuation(key, new Locale("en-us"))).toBe(
         testCase[key]
       );
     });
@@ -206,10 +201,7 @@ describe("Remove space before a terminal punctuation, closing brackets and a deg
 
   Object.keys(testCase).forEach((key) => {
     it("unit tests", () => {
-      expect(
-        removeSpaceBeforeTerminalPunctuation(key, new Locale("en-us")),
-        testCase[key]
-      );
+      expect(removeSpaceBeforeTerminalPunctuation(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
@@ -227,15 +219,11 @@ describe("Remove space before ordinal indicator (en-us)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit tests", () => {
-      expect(
-        removeSpaceBeforeOrdinalIndicator(key, new Locale("en-us")),
-        testCase[key]
-      );
+      expect(removeSpaceBeforeOrdinalIndicator(key, new Locale("en-us"))).toBe(testCase[key]);
     });
 
     it("module tests", () => {
-      expect(
-        fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs),
+      expect(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs)).toBe(
         testCase[key]
       );
     });
@@ -253,10 +241,7 @@ describe("Remove space before ordinal indicator (sk, cs, rue, de-de)\n", () => {
       expect(removeSpaceBeforeOrdinalIndicator(key, new Locale("sk"))).toBe(testCase[key]);
       expect(removeSpaceBeforeOrdinalIndicator(key, new Locale("cs"))).toBe(testCase[key]);
       expect(removeSpaceBeforeOrdinalIndicator(key, new Locale("rue"))).toBe(testCase[key]);
-      expect(
-        removeSpaceBeforeOrdinalIndicator(key, new Locale("de-de")),
-        testCase[key]
-      );
+      expect(removeSpaceBeforeOrdinalIndicator(key, new Locale("de-de"))).toBe(testCase[key]);
     });
   });
 });
@@ -318,8 +303,7 @@ describe("Add space after terminal punctuation\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      expect(
-        fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs),
+      expect(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs)).toBe(
         testCase[key]
       );
     });
@@ -350,8 +334,7 @@ describe("Add a space after sentence pause punctuation\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      expect(
-        fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs),
+      expect(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs)).toBe(
         testCase[key]
       );
     });
@@ -377,8 +360,7 @@ describe("Add a space after closing brackets\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      expect(
-        fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs),
+      expect(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs)).toBe(
         testCase[key]
       );
     });
@@ -404,8 +386,7 @@ describe("Remove trailing spaces\n", () => {
       expect(removeSpacesAtParagraphEnd(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
-      expect(
-        fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs),
+      expect(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs)).toBe(
         testCase[key]
       );
     });

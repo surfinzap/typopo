@@ -27,29 +27,6 @@ describe("Fix squares\n", () => {
     "100 ym2":        "100 ym²",
     "Holmen 80 g/m2": "Holmen 80 g/m²",
     "Madam2":         "Madam2", //false positive
-
-    // m2
-    // dam2
-    // hm2
-    // km2
-    // Mm2
-    // Gm2
-    // Tm2
-    // Pm2
-    // Em2
-    // Zm2
-    // Ym2
-    // m2
-    // dm2
-    // cm2
-    // mm2
-    // µm2
-    // nm2
-    // pm2
-    // fm2
-    // am2
-    // zm2
-    // ym2
   };
 
   Object.keys(testCase).forEach((key) => {

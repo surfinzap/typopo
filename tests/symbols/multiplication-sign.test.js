@@ -29,10 +29,7 @@ describe("Fix multiplication sign between numbers\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        fixMultiplicationSignBetweenNumbers(key, new Locale("en-us")),
-        testCase[key]
-      );
+      expect(fixMultiplicationSignBetweenNumbers(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixMultiplicationSign(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -53,10 +50,7 @@ describe("Fix multiplication sign between words\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        fixMultiplicationSignBetweenWords(key, new Locale("en-us")),
-        testCase[key]
-      );
+      expect(fixMultiplicationSignBetweenWords(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixMultiplicationSign(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -77,8 +71,7 @@ describe("Fix multiplication sign between a number and a word\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        fixMultiplicationSignBetweenNumberAndWord(key, new Locale("en-us")),
+      expect(fixMultiplicationSignBetweenNumberAndWord(key, new Locale("en-us"))).toBe(
         testCase[key]
       );
     });

@@ -50,8 +50,7 @@ function testMarks(testCase, markPattern, replacementMark) {
   locales.forEach(function (locale) {
     Object.keys(testCase).forEach((key) => {
       it(`unit test, ${replacementMark}, ${locale}`, () => {
-        expect(
-          replaceMark(key, markPattern, replacementMark, new Locale(locale)),
+        expect(replaceMark(key, markPattern, replacementMark, new Locale(locale))).toBe(
           testCase[key]
         );
       });

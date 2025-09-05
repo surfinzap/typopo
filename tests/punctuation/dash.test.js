@@ -218,10 +218,7 @@ describe("Fix hyphen between word and punctuation (en-us)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        fixHyphenBetweenWordAndPunctuation(key, new Locale("en-us")),
-        testCase[key]
-      );
+      expect(fixHyphenBetweenWordAndPunctuation(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixDash(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -292,10 +289,7 @@ describe("Fix hyphen between word and punctuation (de-de)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        fixHyphenBetweenWordAndPunctuation(key, new Locale("de-de")),
-        testCase[key]
-      );
+      expect(fixHyphenBetweenWordAndPunctuation(key, new Locale("de-de"))).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixDash(key, new Locale("de-de"))).toBe(testCase[key]);

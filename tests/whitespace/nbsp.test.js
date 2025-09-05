@@ -383,10 +383,7 @@ describe("Fix non-breaking space around name with regnal number (sk, cs, de-de, 
     it("unit test", () => {
       expect(fixNbspForNameWithRegnalNumber(key, new Locale("sk"))).toBe(unitTestCase[key]);
       expect(fixNbspForNameWithRegnalNumber(key, new Locale("cs"))).toBe(unitTestCase[key]);
-      expect(
-        fixNbspForNameWithRegnalNumber(key, new Locale("de-de")),
-        unitTestCase[key]
-      );
+      expect(fixNbspForNameWithRegnalNumber(key, new Locale("de-de")), unitTestCase[key]);
       expect(fixNbspForNameWithRegnalNumber(key, new Locale("rue"))).toBe(unitTestCase[key]);
     });
   });
@@ -592,10 +589,7 @@ describe("Replaces various spaces with non-breaking space after symbol, e.g. ©\
 
   Object.keys(testCase).forEach((key) => {
     it("just unit tests", () => {
-      expect(
-        replaceSpacesWithNbspAfterSymbol(key, "©", new Locale("en-us")),
-        testCase[key]
-      );
+      expect(replaceSpacesWithNbspAfterSymbol(key, "©", new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });

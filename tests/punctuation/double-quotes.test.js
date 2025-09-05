@@ -113,16 +113,12 @@ describe("Remove punctuation before double quotes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        removeExtraPunctuationBeforeQuotes(key, new Locale("en-us")),
-        testCase[key]
-      );
+      expect(removeExtraPunctuationBeforeQuotes(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -137,16 +133,12 @@ describe("Remove punctuation after double quotes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        removeExtraPunctuationAfterQuotes(key, new Locale("en-us")),
-        testCase[key]
-      );
+      expect(removeExtraPunctuationAfterQuotes(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -210,21 +202,16 @@ describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
       expect(
-        placeLocaleDoubleQuotes(
-          identifyDoublePrimes(key, new Locale("en-us")),
-          new Locale("en-us")
-        ),
-        unitTestCase[key]
-      );
+        placeLocaleDoubleQuotes(identifyDoublePrimes(key, new Locale("en-us")), new Locale("en-us"))
+      ).toBe(unitTestCase[key]);
     });
   });
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -290,18 +277,16 @@ describe("Identify double quote pairs (en-us):\n", () => {
         placeLocaleDoubleQuotes(
           identifyDoubleQuotePairs(key, new Locale("en-us")),
           new Locale("en-us")
-        ),
-        unitTestCase[key]
-      );
+        )
+      ).toBe(unitTestCase[key]);
     });
   });
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -333,16 +318,14 @@ describe("Identify standalone left double quote (en-us):\n", () => {
         placeLocaleDoubleQuotes(
           identifyStandaloneLeftDoubleQuote(key, new Locale("en-us")),
           new Locale("en-us")
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
 
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -376,16 +359,14 @@ describe("Identify standalone right double quote (en-us):\n", () => {
         placeLocaleDoubleQuotes(
           identifyStandaloneRightDoubleQuote(key, new Locale("en-us")),
           new Locale("en-us")
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
 
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -413,16 +394,14 @@ describe("Remove unidentified double quotes (en-us):\n", () => {
         placeLocaleDoubleQuotes(
           removeUnidentifiedDoubleQuote(key, new Locale("en-us")),
           new Locale("en-us")
-        ),
-        testCase[key]
-      );
+        )
+      ).toBe(testCase[key]);
     });
 
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -449,19 +428,15 @@ describe("Replace a double qoute & a double prime with a double quote pair (en-u
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        replaceDoublePrimeWDoubleQuote(key, new Locale("en-us")),
-        unitTestCase[key]
-      );
+      expect(replaceDoublePrimeWDoubleQuote(key, new Locale("en-us"))).toBe(unitTestCase[key]);
     });
   });
 
   Object.keys(moduleTestCase).forEach((key) => {
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        moduleTestCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(moduleTestCase[key]);
     });
   });
 });
@@ -550,9 +525,8 @@ describe("Swap quotes and terminal punctuation for a quoted part (en-us):\n", ()
     });
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -576,16 +550,14 @@ describe("Remove extra comma after sentence punctuation in direct speech (en-us)
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        removeExtraCommaAfterSentencePunctuation(key, new Locale("en-us")),
+      expect(removeExtraCommaAfterSentencePunctuation(key, new Locale("en-us"))).toBe(
         testCase[key]
       );
     });
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -613,9 +585,8 @@ describe("Remove extra spaces around quotes and primes (en-us):\n", () => {
     });
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -637,9 +608,8 @@ describe("Add a missing space before a left double quote (en-us):\n", () => {
     });
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -661,9 +631,8 @@ describe("Add a missing space after a left double quote (en-us):\n", () => {
     });
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -677,9 +646,8 @@ describe("Double quotes in default language (en-us)\n", () => {
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -691,24 +659,21 @@ describe("Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n",
 
   Object.keys(testCase).forEach((key) => {
     it("module test (sk)", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("sk"), configIgnoreMarkdownCodeBlocks),
+      expect(fixDoubleQuotesAndPrimes(key, new Locale("sk"), configIgnoreMarkdownCodeBlocks)).toBe(
         testCase[key]
       );
     });
 
     it("module test (cs)", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("cs"), configIgnoreMarkdownCodeBlocks),
+      expect(fixDoubleQuotesAndPrimes(key, new Locale("cs"), configIgnoreMarkdownCodeBlocks)).toBe(
         testCase[key]
       );
     });
 
     it("module test (de-de)", () => {
       expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("de-de"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
+        fixDoubleQuotesAndPrimes(key, new Locale("de-de"), configIgnoreMarkdownCodeBlocks)
+      ).toBe(testCase[key]);
     });
   });
 });
@@ -720,8 +685,7 @@ describe("Double quotes in Rusyn language (rue)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test (rue)", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("rue"), configIgnoreMarkdownCodeBlocks),
+      expect(fixDoubleQuotesAndPrimes(key, new Locale("rue"), configIgnoreMarkdownCodeBlocks)).toBe(
         testCase[key]
       );
     });
@@ -755,8 +719,7 @@ describe("Test if markdown ticks are kept (double quotes) (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("keepMarkdownCodeBlocks: true” configuration", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configKeepMarkdownCodeBlocks),
+      expect(fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configKeepMarkdownCodeBlocks)).toBe(
         testCase[key]
       );
     });

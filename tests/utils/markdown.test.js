@@ -46,7 +46,7 @@ describe("Identify markdown code ticks:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(identifyMarkdownCodeTicks(key, configKeepMarkdownCodeBlocks), testCase[key]);
+      expect(identifyMarkdownCodeTicks(key, configKeepMarkdownCodeBlocks)).toBe(testCase[key]);
     });
   });
 });
@@ -119,14 +119,13 @@ describe("Ignore markdown code ticks:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(identifyMarkdownCodeTicks(key, configIgnoreMarkdownCodeBlocks), testCase[key]);
+      expect(identifyMarkdownCodeTicks(key, configIgnoreMarkdownCodeBlocks)).toBe(testCase[key]);
     });
   });
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(placeMarkdownCodeTicks(key, configIgnoreMarkdownCodeBlocks), testCase[key]);
+      expect(placeMarkdownCodeTicks(key, configIgnoreMarkdownCodeBlocks)).toBe(testCase[key]);
     });
   });
 });
-
