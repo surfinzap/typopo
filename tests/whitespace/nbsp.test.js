@@ -7,7 +7,7 @@ import {
   addNbspWithinOrdinalDate,
   addNbspAfterRomanNumeral,
   fixNbspForNameWithRegnalNumber,
-  addNbspBeforePercent,
+  fixSpaceBeforePercent,
   addNbspBeforeSingleLetter,
   addNbspAfterSymbol,
   replaceSpacesWithNbspAfterSymbol,
@@ -426,31 +426,47 @@ describe("Fix non-breaking space around name with regnal number (en-us)\n", () =
 });
 
 describe("Add nbsp before percent, permille, permyriad\n", () => {
-  let testCase = {
+  let testCaseSk = {
     "20 %":      "20 %",
     "20 %–30 %": "20 %–30 %",
     "20 ‰":      "20 ‰",
     "20 ‰–30 ‰": "20 ‰–30 ‰",
     "20 ‱":      "20 ‱",
     "20 ‱–30 ‱": "20 ‱–30 ‱",
-
-    /* false positives
-       we won't include nbsp, if there was no space in the first place.
-       some languages distinguish when percent is used
-       * as a noun → 20 %
-       * as an adjective → 20%
-       we cannot fix that without additional context
-    */
-    "20%":     "20%",
-    "20%–30%": "20%–30%",
   };
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(addNbspBeforePercent(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(fixNbsp(key, new Locale("en-us"))).toBe(testCase[key]);
+  let testCaseDeDe = {
+    "20 %":      "20 %",
+    "20 %–30 %": "20 %–30 %",
+    "20 ‰":      "20 ‰",
+    "20 ‰–30 ‰": "20 ‰–30 ‰",
+    "20 ‱":      "20 ‱",
+    "20 ‱–30 ‱": "20 ‱–30 ‱",
+  };
+
+  let testCaseEnUs = {
+    "20 %":      "20%",
+    "20 %–30 %": "20%–30%",
+    "20 ‰":      "20‰",
+    "20 ‰–30 ‰": "20‰–30‰",
+    "20 ‱":      "20‱",
+    "20 ‱–30 ‱": "20‱–30‱",
+  };
+
+  const testConfigs = [
+    { testCase: testCaseSk, locale: "sk" },
+    { testCase: testCaseDeDe, locale: "de-de" },
+    { testCase: testCaseEnUs, locale: "en-us" },
+  ];
+
+  testConfigs.forEach(({ testCase, locale }) => {
+    Object.keys(testCase).forEach((key) => {
+      it("unit test", () => {
+        expect(fixSpaceBeforePercent(key, new Locale(locale))).toBe(testCase[key]);
+      });
+      it("module test", () => {
+        expect(fixNbsp(key, new Locale(locale))).toBe(testCase[key]);
+      });
     });
   });
 });

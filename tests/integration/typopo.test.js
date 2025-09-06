@@ -450,7 +450,7 @@ let testModuleCombinations = {
   "quote [ ….. ] with parts left out": "quote […] with parts left out",
 
   // combination of dash.js and nbsp.js for percent, permille, permyriad
-  "20 ‱ – 30 ‱": "20 ‱–30 ‱",
+  "20 ‱ – 30 ‱": "20‱–30‱",
 };
 
 describe("Tests that all modules are plugged for en-us", () => {

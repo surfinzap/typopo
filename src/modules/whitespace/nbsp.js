@@ -264,18 +264,35 @@ export function fixNbspForNameWithRegnalNumber(string, locale) {
 /**
   Fix nbsp before % (percent), ‰ (permille) and ‱ (permyriad)
 
+  Locale differences
+  - en-us prefers no space (https://www.chicagomanualofstyle.org/qanda/data/faq/topics/Numbers/faq0005.html)
+  - de-de prefers narrow nbsp for perecent used as noun (https://german.stackexchange.com/questions/41550/what-does-din-5008-exactly-say-about-percent-character)
+  - sk, cs, rue prefers nbsp for percent used as noun
+
+  In sk, cs, rue, de-de, when percent is used as an adjective, there is no space between a number and a percent sign. This algorithm does not cover this use case, just tries to fix a space if there is one. 
+
+
   @param {string} string — input text for identification
   @returns {string} — output with correctly added non-breaking space
 */
-export function addNbspBeforePercent(string, locale) {
+export function fixSpaceBeforePercent(string, locale) {
+  const SPACE_REPLACEMENT = {
+    "en-us": () => ``,
+    "sk":    (locale) => `${locale.nbsp}`,
+    "cs":    (locale) => `${locale.nbsp}`,
+    "rue":   (locale) => `${locale.nbsp}`,
+    "de-de": (locale) => `${locale.narrowNbsp}`,
+  };
+
   // prettier-ignore
   return string.replace(
     new RegExp(
+      `(\\d)` +
       `([${locale.spaces}])` +
       `([${locale.percent}${locale.permille}${locale.permyriad}])`,
       "g"
     ),
-    `${locale.nbsp}$2`
+    `$1${SPACE_REPLACEMENT[locale.locale]?.(locale)}$3`
   );
 }
 
@@ -393,7 +410,7 @@ export function fixNbsp(string, locale) {
   string = addNbspAfterRomanNumeral(string, locale);
   string = addNbspBeforeSingleLetter(string, locale);
   string = fixNbspForNameWithRegnalNumber(string, locale);
-  string = addNbspBeforePercent(string, locale);
+  string = fixSpaceBeforePercent(string, locale);
 
   return string;
 }

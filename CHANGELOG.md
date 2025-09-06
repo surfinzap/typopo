@@ -7,6 +7,12 @@ This version includes a couple of bug fixes, few new features and a completely r
 ### ✨ New features
 
 
+### 🐛 Fixes
+- if there is a space between a digit and a percentage sign (i.e. 15 %), now it will be:
+  - removed for `en-us` ([source](https://www.chicagomanualofstyle.org/qanda/data/faq/topics/Numbers/faq0005.html))
+  - changed to a narrow non-breaking space for `de-de` ([source](https://german.stackexchange.com/questions/41550/what-does-din-5008-exactly-say-about-percent-character))
+  - changed to a non-breaking space for `sk`, `cs`, `rue`
+
 ### 💪 Improvements
 - Typopo has now separate builds to be used as ES module, CommonJS import, and for a direct browser usage. 
 - CommonJS and UMD distributions were reduced ~25% in bundle size.

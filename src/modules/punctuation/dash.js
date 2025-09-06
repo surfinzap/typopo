@@ -53,7 +53,8 @@ export function fixDashesBetweenWords(string, locale) {
       `([${locale.allChars}])`, 
       "g"
     ), 
-    DASH_REPLACEMENT[locale.locale]?.(locale) || "");
+    DASH_REPLACEMENT[locale.locale]?.(locale) || ""
+  );
 }
 
 //
