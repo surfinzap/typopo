@@ -87,20 +87,20 @@ const A = {
   "t j",
   "zodp red",
   "t č"
-], F = {
+], H = {
   quotes: j,
   numbers: Z,
   singleWordAbbreviations: T,
   multipleWordAbbreviations: O
-}, H = {
+}, U = {
   leftDoubleQuote: "„",
   rightDoubleQuote: "“",
   leftSingleQuote: "‚",
   rightSingleQuote: "‘"
-}, U = {
+}, X = {
   ordinalIndicator: "\\.",
   romanOrdinalIndicator: "\\."
-}, X = [
+}, F = [
   "S",
   "z",
   "St",
@@ -146,15 +146,15 @@ const A = {
   "v u Z",
   "Ges m b H"
 ], V = {
-  quotes: H,
-  numbers: U,
-  singleWordAbbreviations: X,
+  quotes: U,
+  numbers: X,
+  singleWordAbbreviations: F,
   multipleWordAbbreviations: G
 }, d = {
   cs: P,
   "en-us": W,
   rue: M,
-  sk: F,
+  sk: H,
   "de-de": V
 };
 class J {
@@ -601,7 +601,7 @@ function Oe(n, e) {
     e.enDash
   );
 }
-function Fe(n, e) {
+function He(n, e) {
   return n.replace(
     new RegExp(
       `([${e.percent}${e.permille}${e.permyriad}])([${e.spaces}]?[${e.hyphen}${e.enDash}${e.emDash}][${e.spaces}]?)(${e.cardinalNumber})`,
@@ -610,7 +610,7 @@ function Fe(n, e) {
     `$1${e.enDash}$3`
   );
 }
-function He(n, e) {
+function Ue(n, e) {
   return n.replace(
     new RegExp(
       `(${e.cardinalNumber})(${e.ordinalIndicator})([${e.spaces}]?[${e.hyphen}${e.enDash}${e.emDash}][${e.spaces}]?)(${e.cardinalNumber})(${e.ordinalIndicator})`,
@@ -619,8 +619,8 @@ function He(n, e) {
     `$1$2${e.enDash}$4$5`
   );
 }
-function Ue(n, e) {
-  return n = Me(n), n = je(n), n = Ze(n, e), n = Te(n, e), n = Oe(n, e), n = Fe(n, e), n = He(n, e), n;
+function Xe(n, e) {
+  return n = Me(n), n = je(n), n = Ze(n, e), n = Te(n, e), n = Oe(n, e), n = He(n, e), n = Ue(n, e), n;
 }
 const h = "{{typopo__markdown_tick}}";
 function E(n, e) {
@@ -635,7 +635,7 @@ function y(n, e) {
     "`"
   ) : n;
 }
-function Xe(n, e) {
+function Fe(n, e) {
   return n.replace(
     new RegExp(
       `([^${e.romanNumerals}])([${e.sentencePunctuation}])([${e.sentencePunctuation}])(${e.doubleQuoteAdepts})`,
@@ -817,7 +817,7 @@ function $n(n, e) {
   );
 }
 function un(n, e, t) {
-  return n = E(n, t), n = Xe(n, e), n = Ge(n, e), n = Ve(n, e), n = Je(n, e), n = Ke(n, e), n = Ye(n, e), n = le(n, e), n = en(n), n = tn(n, e), n = y(n, t), n = pn(n, e), n = sn(n, e), n = $n(n, e), n = nn(n, e), n = rn(n, e), n;
+  return n = E(n, t), n = Fe(n, e), n = Ge(n, e), n = Ve(n, e), n = Je(n, e), n = Ke(n, e), n = Ye(n, e), n = le(n, e), n = en(n), n = tn(n, e), n = y(n, t), n = pn(n, e), n = sn(n, e), n = $n(n, e), n = nn(n, e), n = rn(n, e), n;
 }
 function an(n, e) {
   return [
@@ -1163,7 +1163,7 @@ function On(n, e) {
     n = n.replace(new RegExp(u, "g"), $);
   return n;
 }
-function Fn(n, e) {
+function Hn(n, e) {
   let t = `([^${e.allChars}${e.enDash}${e.emDash}]|^)`, p = `([${e.allChars}]|\\D)`, r = `([^${e.allChars}${e.leftDoubleQuote}${e.leftSingleQuote}${e.backtick}\\p{Emoji}]|$)`;
   const s = _(e);
   let u = [];
@@ -1187,7 +1187,7 @@ function Fn(n, e) {
   }
   return n;
 }
-function Hn(n, e) {
+function Un(n, e) {
   let t = [];
   for (let $ = 0; $ < e.singleWordAbbreviations.length; $++)
     t[$] = `(${e.singleWordAbbreviations[$]})(\\.)([${e.spaces}]?)`;
@@ -1203,10 +1203,10 @@ function Hn(n, e) {
   }
   return n;
 }
-function Un(n, e) {
-  return n = On(n, e), n = Fn(n, e), n = Hn(n, e), n;
-}
 function Xn(n, e) {
+  return n = On(n, e), n = Hn(n, e), n = Un(n, e), n;
+}
+function Fn(n, e) {
   return n = n.replace(
     new RegExp(
       `([^${e.allChars}]|^)([${e.uppercaseChars}]{2})([${e.lowercaseChars}]{2,})`,
@@ -1301,7 +1301,7 @@ function tt(n, e, t) {
     keepMarkdownCodeBlocks: !1
   } : t;
   const { processedText: r, exceptions: s } = ln(n, p);
-  return n = r, t.removeLines && (n = K(n)), n = Ie(n, p), n = ye(n, p, t), n = _e(n), n = Ue(n, p), n = Le(n, p), n = An(n, p, t), n = un(n, p, t), n = vn(n, p), n = Wn(n, p), n = qn(n, p), n = In(n, p), n = zn(n, p), n = jn(n, p), n = Tn(n, p), n = Xn(n, p), n = Un(n, p), n = Yn(n, p), n = ae(n, p), n = nt(n, s), n;
+  return n = r, t.removeLines && (n = K(n)), n = Ie(n, p), n = ye(n, p, t), n = _e(n), n = Xe(n, p), n = Le(n, p), n = An(n, p, t), n = un(n, p, t), n = vn(n, p), n = Wn(n, p), n = qn(n, p), n = In(n, p), n = zn(n, p), n = jn(n, p), n = Tn(n, p), n = Fn(n, p), n = Xn(n, p), n = Yn(n, p), n = ae(n, p), n = nt(n, s), n;
 }
 export {
   tt as fixTypos
