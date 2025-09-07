@@ -97,20 +97,15 @@ export function fixInitials(string, locale) {
   const initialPattern = `([${locale.uppercaseChars}][${locale.allChars}]?\\.)([${locale.spaces}]?)`;
   const fullNamePattern = `([${locale.allChars}]{2,}[^\\.])`;
 
-  // [1] Identify and replace pattern "I. FullName"
-  string = string.replace(new RegExp(initialPattern + fullNamePattern, "g"), `$1${locale.nbsp}$3`);
+  const patterns = [
+    { pattern: initialPattern + fullNamePattern, replacement: `$1${locale.nbsp}$3` },
+    { pattern: initialPattern + initialPattern + fullNamePattern, replacement: `$1${initialSpace}$3${locale.space}$5` },
+    { pattern: initialPattern + initialPattern + initialPattern + fullNamePattern, replacement: `$1${initialSpace}$3${initialSpace}$5${locale.space}$7` }
+  ];
 
-  // [2] Identify and replace pattern "I. I. FullName"
-  string = string.replace(
-    new RegExp(initialPattern + initialPattern + fullNamePattern, "g"),
-    `$1${initialSpace}$3${locale.space}$5`
-  );
-
-  // [3] Identify and replace pattern "I. I. I. FullName"
-  string = string.replace(
-    new RegExp(initialPattern + initialPattern + initialPattern + fullNamePattern, "g"),
-    `$1${initialSpace}$3${initialSpace}$5${locale.space}$7`
-  );
+  for (const { pattern, replacement } of patterns) {
+    string = string.replace(new RegExp(pattern, "g"), replacement);
+  }
 
   return string;
 }
