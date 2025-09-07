@@ -3,7 +3,7 @@
  * Copyright 2015–2025 Braňo Šandala (https://brano.me)
  * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */
-const _ = {
+const A = {
   leftDoubleQuote: "„",
   rightDoubleQuote: "“",
   leftSingleQuote: "‚",
@@ -23,43 +23,43 @@ const _ = {
   "sv",
   "tj",
   "tzv"
-], A = ["hl m", "n l", "p n l", "př n l"], D = {
-  quotes: _,
+], D = ["hl m", "n l", "p n l", "př n l"], P = {
+  quotes: A,
   numbers: C,
   singleWordAbbreviations: Q,
-  multipleWordAbbreviations: A
-}, P = {
+  multipleWordAbbreviations: D
+}, v = {
   leftDoubleQuote: "“",
   rightDoubleQuote: "”",
   leftSingleQuote: "‘",
   rightSingleQuote: "’"
-}, v = {
+}, k = {
   ordinalIndicator: "st|nd|rd|th",
   romanOrdinalIndicator: ""
-}, k = ["p", "pp", "no", "vol"], N = ["U S", "e g", "i e", "a m", "p m"], B = {
-  quotes: P,
-  numbers: v,
-  singleWordAbbreviations: k,
-  multipleWordAbbreviations: N
-}, W = {
+}, N = ["p", "pp", "no", "vol"], B = ["U S", "e g", "i e", "a m", "p m"], W = {
+  quotes: v,
+  numbers: k,
+  singleWordAbbreviations: N,
+  multipleWordAbbreviations: B
+}, q = {
   leftDoubleQuote: "«",
   rightDoubleQuote: "»",
   leftSingleQuote: "‹",
   rightSingleQuote: "›"
-}, q = {
+}, I = {
   ordinalIndicator: "\\.",
   romanOrdinalIndicator: "\\."
-}, I = ["ціт", "ст", "канц", "абз", "тзв", "Зб", "ч", "напр"], z = ["т зн", "Е Ч", "евід ч", "род ч", "т ч", "т д"], L = {
-  quotes: W,
-  numbers: q,
-  singleWordAbbreviations: I,
-  multipleWordAbbreviations: z
-}, M = {
+}, z = ["ціт", "ст", "канц", "абз", "тзв", "Зб", "ч", "напр"], L = ["т зн", "Е Ч", "евід ч", "род ч", "т ч", "т д"], M = {
+  quotes: q,
+  numbers: I,
+  singleWordAbbreviations: z,
+  multipleWordAbbreviations: L
+}, j = {
   leftDoubleQuote: "„",
   rightDoubleQuote: "“",
   leftSingleQuote: "‚",
   rightSingleQuote: "‘"
-}, j = {
+}, Z = {
   ordinalIndicator: "\\.",
   romanOrdinalIndicator: "\\."
 }, T = [
@@ -77,7 +77,7 @@ const _ = {
   "cit",
   "roč",
   "vyd"
-], Z = [
+], O = [
   "hl m",
   "n l",
   "p n l",
@@ -87,20 +87,20 @@ const _ = {
   "t j",
   "zodp red",
   "t č"
-], O = {
-  quotes: M,
-  numbers: j,
+], F = {
+  quotes: j,
+  numbers: Z,
   singleWordAbbreviations: T,
-  multipleWordAbbreviations: Z
-}, F = {
+  multipleWordAbbreviations: O
+}, H = {
   leftDoubleQuote: "„",
   rightDoubleQuote: "“",
   leftSingleQuote: "‚",
   rightSingleQuote: "‘"
-}, H = {
+}, U = {
   ordinalIndicator: "\\.",
   romanOrdinalIndicator: "\\."
-}, U = [
+}, X = [
   "S",
   "z",
   "St",
@@ -120,7 +120,7 @@ const _ = {
   "geb",
   "gest",
   "u"
-], X = [
+], G = [
   "b w",
   "d h",
   "d i",
@@ -145,19 +145,19 @@ const _ = {
   "u a m",
   "v u Z",
   "Ges m b H"
-], G = {
-  quotes: F,
-  numbers: H,
-  singleWordAbbreviations: U,
-  multipleWordAbbreviations: X
+], V = {
+  quotes: H,
+  numbers: U,
+  singleWordAbbreviations: X,
+  multipleWordAbbreviations: G
 }, d = {
-  cs: D,
-  "en-us": B,
-  rue: L,
-  sk: O,
-  "de-de": G
+  cs: P,
+  "en-us": W,
+  rue: M,
+  sk: F,
+  "de-de": V
 };
-class V {
+class J {
   constructor(e) {
     this.locale = e, this.nonLatinLowercase = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях", this.nonLatinUppercase = "ÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŶŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ", this.nonLatinChars = this.nonLatinLowercase + this.nonLatinUppercase, this.lowercaseChars = "a-z" + this.nonLatinLowercase, this.uppercaseChars = "A-Z" + this.nonLatinUppercase, this.allChars = this.lowercaseChars + this.uppercaseChars, this.singleQuoteAdepts = "‚|'|‘|’|ʼ|‛|´|`|′|‹|›", this.leftSingleQuote = d[e].quotes.leftSingleQuote, this.rightSingleQuote = d[e].quotes.rightSingleQuote, this.apostrophe = "’", this.singlePrime = "′", this.backtick = "`", this.doubleQuoteAdepts = "„|“|”|\"|«|»|″|,{2,}|‘{2,}|’{2,}|'{2,}|‹{2,}|›{2,}|′{2,}|´{2,}|`{2,}", this.leftDoubleQuote = d[e].quotes.leftDoubleQuote, this.rightDoubleQuote = d[e].quotes.rightDoubleQuote, this.doublePrime = "″", this.space = " ", this.nbsp = " ", this.hairSpace = " ", this.narrowNbsp = " ", this.spaces = this.space + this.nbsp + this.hairSpace + this.narrowNbsp, this.terminalPunctuation = "\\.\\!\\?", this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote, this.sentencePausePunctuation = "\\,\\:\\;", this.sentencePunctuation = this.sentencePausePunctuation + this.terminalPunctuation, this.openingBrackets = "\\(\\[\\{", this.closingBrackets = "\\)\\]\\}", this.ellipsis = "…", this.hyphen = "-", this.enDash = "–", this.emDash = "—", this.slash = "/", this.degree = "°", this.multiplicationSign = "×", this.ampersand = "&", this.sectionSign = "§", this.copyright = "©", this.soundRecordingCopyright = "℗", this.registeredTrademark = "®", this.serviceMark = "℠", this.trademark = "™", this.plus = "+", this.minus = "−", this.plusMinus = "±", this.percent = "%", this.permille = "‰", this.permyriad = "‱", this.numberSign = "#", this.urlPattern = "((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,64}(?:\\:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,25})?\\@)?)?((?:(?:[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}\\.)+(?:(?:aero|arpa|asia|agency|a[cdefgilmnoqrstuwxz])|(?:biz|b[abdefghijmnorstvwyz])|(?:cat|cloud|com|company|coop|c[acdfghiklmnoruvxyz])|(?:dev|d[ejkmoz])|(?:edu|e[cegrstu])|f[ijkmor]|(?:gov|guide|g[abdefghilmnpqrstuwy])|h[kmnrtu]|(?:info|int|i[delmnoqrst])|(?:jobs|j[emop])|k[eghimnrwyz]|l[abcikrstuvy]|(?:mil|mobi|museum|m[acdghklmnopqrstuvwxyz])|(?:name|net|n[acefgilopruz])|(?:org|om|one)|(?:pro|p[aefghklmnrstwy])|qa|r[eouw]|(?:shop|store|s[abcdeghijklmnortuvyz])|(?:tel|travel|team|t[cdfghjklmnoprtvwz])|u[agkmsyz]|v[aceginu]|(?:work|w[fs])|(?:xyz)|y[etu]|z[amw]))|(?:(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])))(?:\\:\\d{1,5})?)(\\/(?:(?:[a-zA-Z0-9\\;\\/\\?\\:\\@\\&\\=\\#\\~\\-\\.\\+\\!\\*\\'\\(\\)\\,\\_])|(?:\\%[a-fA-F0-9]{2}))*)?(?:\\b|$)", this.emailPattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+", this.filenamePattern = "\\b[a-zA-Z0-9_%\\-]+\\.(ai|asm|bat|bmp|c|cpp|cs|css|csv|dart|doc|docx|exe|gif|go|html|ics|java|jpeg|jpg|js|json|key|kt|less|lua|log|md|mp4|odp|ods|odt|pdf|php|pl|png|ppt|pptx|psd|py|r|rar|rb|rs|scala|scss|sh|svg|sql|swift|tar.gz|tar|tex|tiff|ts|txt|vbs|xml|xls|xlsx|yaml|yml|zip)\\b", this.cardinalNumber = "\\d", this.ordinalIndicator = d[e].numbers.ordinalIndicator, this.romanNumerals = "IVXLCDM", this.romanOrdinalIndicator = d[e].numbers.romanOrdinalIndicator, this.singleWordAbbreviations = [];
     for (e in d)
@@ -171,7 +171,7 @@ class V {
       );
   }
 }
-function J(n) {
+function K(n) {
   return n.replace(/[\n\r]{2,}/gm, `
 `);
 }
@@ -181,7 +181,7 @@ function m(n, e, t) {
     $ = s, s = s.replace(e, t), r++;
   return s;
 }
-function K(n, e) {
+function Y(n, e) {
   return m(
     n,
     new RegExp(
@@ -213,13 +213,13 @@ function S(n, e) {
     `$1$2${e.nbsp}`
   )), n;
 }
-function Y(n, e) {
+function l(n, e) {
   return n.replace(
     new RegExp(`([${e.spaces}])(${e.ampersand})([${e.spaces}])`, "g"),
     ` $2${e.nbsp}`
   );
 }
-function l(n, e) {
+function ee(n, e) {
   return n.replace(
     new RegExp(
       `([^${e.nbsp}${e.cardinalNumber}]|^)(${e.cardinalNumber}{1,2})([${e.spaces}])([${e.allChars}])`,
@@ -228,7 +228,7 @@ function l(n, e) {
     `$1$2${e.nbsp}$4`
   );
 }
-function ee(n, e) {
+function ne(n, e) {
   return n.replace(
     new RegExp(
       `([^${e.nbsp}${e.cardinalNumber}_%\\-]|^)(${e.cardinalNumber}{1,2})(${e.ordinalIndicator})([${e.spaces}]?)([${e.allChars}])`,
@@ -237,7 +237,7 @@ function ee(n, e) {
     `$1$2$3${e.nbsp}$5`
   );
 }
-function ne(n, e) {
+function te(n, e) {
   let t = "";
   switch (e.locale) {
     case "en-us":
@@ -258,7 +258,7 @@ function ne(n, e) {
     t
   );
 }
-function te(n, e) {
+function re(n, e) {
   return e.romanOrdinalIndicator != "" ? n.replace(
     new RegExp(
       `(\\b)([${e.romanNumerals}]+)(${e.romanOrdinalIndicator})([${e.spaces}]?)([${e.allChars}${e.cardinalNumber}])`,
@@ -267,13 +267,13 @@ function te(n, e) {
     `$1$2$3${e.nbsp}$5`
   ) : n;
 }
-function re(n, e) {
+function pe(n, e) {
   let t = `(\\b[${e.uppercaseChars}][${e.lowercaseChars}]+?)([${e.spaces}])([${e.romanNumerals}]+\\b)(${e.romanOrdinalIndicator})([${e.nbsp}]?)`, p = new RegExp(t, "g");
   return n.replace(p, function(r, s, $, u, i, o) {
     return o == "" && u == "I" ? s + e.space + u + i : o == "" && u != "I" ? s + e.nbsp + u + i : o == e.nbsp && u == "I" ? s + e.space + u + i + o : s + e.nbsp + u + i + e.space;
   });
 }
-function pe(n, e) {
+function se(n, e) {
   var p;
   const t = {
     "en-us": () => "",
@@ -290,7 +290,7 @@ function pe(n, e) {
     `$1${(p = t[e.locale]) == null ? void 0 : p.call(t, e)}$3`
   );
 }
-function se(n, e) {
+function ue(n, e) {
   let t = e.uppercaseChars;
   e.locale == "en-us" && (t = t.replace(/A-Z/g, "A-HJ-Z"));
   let p = `([^${e.sentencePunctuation}${e.ellipsis}${e.closingBrackets}${e.rightDoubleQuote}${e.rightSingleQuote}${e.apostrophe}${e.multiplicationSign}${e.emDash}${e.enDash}])([${e.spaces}])([${t}])(([${e.spaces}])|(\\.$|$))`, r = new RegExp(p, "g");
@@ -298,22 +298,22 @@ function se(n, e) {
     return e.locale == "en-us" ? $ + e.nbsp + i + o : i == "I" && (a == e.nbsp || a == e.hairSpace || a == e.narrowNbsp) ? $ + e.nbsp + i + e.space : $ + e.nbsp + i + o;
   });
 }
-function ue(n, e, t) {
+function $e(n, e, t) {
   return n.replace(
     new RegExp(`(${e})([^${t.spaces}])`, "g"),
     `$1${t.nbsp}$2`
   );
 }
-function $e(n, e, t) {
+function ie(n, e, t) {
   return n.replace(
     new RegExp(`(${e})([${t.spaces}])`, "g"),
     `$1${t.nbsp}`
   );
 }
-function ie(n, e) {
-  return n = K(n, e), n = S(n, e), n = Y(n, e), n = l(n, e), n = ee(n, e), n = ne(n, e), n = te(n, e), n = se(n, e), n = re(n, e), n = pe(n, e), n;
-}
 function ae(n, e) {
+  return n = Y(n, e), n = S(n, e), n = l(n, e), n = ee(n, e), n = ne(n, e), n = te(n, e), n = re(n, e), n = ue(n, e), n = pe(n, e), n = se(n, e), n;
+}
+function oe(n, e) {
   return n.replace(
     new RegExp(
       `(\\S)([${e.spaces}]{2,})(\\S)`,
@@ -322,7 +322,7 @@ function ae(n, e) {
     "$1 $3"
   );
 }
-function oe(n, e, t) {
+function de(n, e, t) {
   let p = n.split(/\r?\n/), r = new RegExp("(^\\s+)([-\\*\\+]*)", "g");
   for (let s = 0; s < p.length; s++)
     p[s] = p[s].replace(r, function($, u, i) {
@@ -331,14 +331,14 @@ function oe(n, e, t) {
   return p.join(`
 `);
 }
-function de(n) {
+function he(n) {
   let e = n.split(/\r?\n/), t = new RegExp("(\\s+$)", "g");
   for (let p = 0; p < e.length; p++)
     e[p] = e[p].replace(t, "");
   return e.join(`
 `);
 }
-function he(n, e) {
+function be(n, e) {
   return n.replace(
     new RegExp(
       `([${e.spaces}])([${e.sentencePausePunctuation}])([^\\-\\)]|$)`,
@@ -347,7 +347,7 @@ function he(n, e) {
     "$2$3"
   );
 }
-function be(n, e) {
+function fe(n, e) {
   return n.replace(
     new RegExp(
       `([${e.spaces}])([${e.terminalPunctuation}${e.closingBrackets}${e.degree}])`,
@@ -356,7 +356,7 @@ function be(n, e) {
     "$2"
   );
 }
-function fe(n, e) {
+function me(n, e) {
   return n.replace(
     new RegExp(
       `(${e.cardinalNumber})([${e.spaces}]?)(${e.ordinalIndicator})([${e.spaces}]|\\b)`,
@@ -366,7 +366,7 @@ function fe(n, e) {
     "$1$3$4"
   );
 }
-function me(n, e) {
+function ce(n, e) {
   return n.replace(
     new RegExp(
       `([${e.openingBrackets}])([${e.spaces}])`,
@@ -375,7 +375,7 @@ function me(n, e) {
     "$1"
   );
 }
-function ce(n, e) {
+function ge(n, e) {
   return n.replace(
     new RegExp(
       `([${e.lowercaseChars}${e.uppercaseChars}])([${e.openingBrackets}])([${e.lowercaseChars}${e.uppercaseChars}${e.ellipsis}])([${e.lowercaseChars}${e.uppercaseChars}${e.ellipsis}${e.closingBrackets}])`,
@@ -386,7 +386,7 @@ function ce(n, e) {
     }
   );
 }
-function ge(n, e) {
+function we(n, e) {
   return n.replace(
     new RegExp(
       `([${e.lowercaseChars}${e.uppercaseChars}]{2,}|[${e.ellipsis}])([${e.terminalPunctuation}])([${e.uppercaseChars}])`,
@@ -395,7 +395,7 @@ function ge(n, e) {
     "$1$2 $3"
   );
 }
-function we(n, e) {
+function xe(n, e) {
   return n.replace(
     new RegExp(
       `([${e.lowercaseChars}${e.uppercaseChars}]{2,}|[${e.ellipsis}])([${e.sentencePausePunctuation}])([${e.lowercaseChars}${e.uppercaseChars}])`,
@@ -404,7 +404,7 @@ function we(n, e) {
     "$1$2 $3"
   );
 }
-function xe(n, e) {
+function Se(n, e) {
   return n.replace(
     new RegExp(
       `([${e.closingBrackets}])([${e.lowercaseChars}${e.uppercaseChars}])`,
@@ -413,16 +413,16 @@ function xe(n, e) {
     "$1 $2"
   );
 }
-function Se(n, e, t) {
+function Ee(n, e, t) {
   return n.replace(
     new RegExp(`([^${t.spaces}${t.openingBrackets}])(${e})`, "g"),
     `$1${t.space}$2`
   );
 }
-function Ee(n, e, t) {
-  return n = ae(n, e), n = oe(n, e, t), n = de(n), n = he(n, e), n = be(n, e), n = fe(n, e), n = me(n, e), n = ce(n, e), n = ge(n, e), n = xe(n, e), n = we(n, e), n;
+function ye(n, e, t) {
+  return n = oe(n, e), n = de(n, e, t), n = he(n), n = be(n, e), n = fe(n, e), n = me(n, e), n = ce(n, e), n = ge(n, e), n = we(n, e), n = Se(n, e), n = xe(n, e), n;
 }
-function ye(n) {
+function Re(n) {
   return n.replace(
     new RegExp(
       "\\.{2}(?![\\\\/])",
@@ -431,10 +431,10 @@ function ye(n) {
     "."
   );
 }
-function Re(n) {
-  return ye(n);
+function _e(n) {
+  return Re(n);
 }
-function _e(n, e) {
+function Ae(n, e) {
   return n.replace(new RegExp(`[${e.ellipsis}\\.]{3,}`, "g"), e.ellipsis);
 }
 function Ce(n, e) {
@@ -452,7 +452,7 @@ function Qe(n, e) {
     `${e.space}${e.ellipsis}${e.space}`
   );
 }
-function Ae(n, e) {
+function De(n, e) {
   return n.replace(
     new RegExp(
       `(,)([${e.spaces}]?)(${e.ellipsis})([${e.spaces}]?)(,)`,
@@ -461,7 +461,7 @@ function Ae(n, e) {
     `$1 ${e.ellipsis}$5`
   );
 }
-function De(n, e) {
+function Pe(n, e) {
   return n.replace(
     new RegExp(
       `(,)([${e.spaces}]?)(${e.ellipsis})([${e.spaces}]?)(\\B|[${e.closingBrackets}])([^,]|$)`,
@@ -470,7 +470,7 @@ function De(n, e) {
     "$1$3$5$6"
   );
 }
-function Pe(n, e) {
+function ve(n, e) {
   return n.replace(
     new RegExp(
       `(^${e.ellipsis})([${e.spaces}])([${e.lowercaseChars}${e.uppercaseChars}])`,
@@ -479,7 +479,7 @@ function Pe(n, e) {
     "$1$3"
   );
 }
-function ve(n, e) {
+function ke(n, e) {
   return n.replace(
     new RegExp(
       `([${e.sentencePunctuation}${e.terminalQuotes}])([${e.spaces}]?)([${e.ellipsis}])([${e.spaces}]?)([${e.lowercaseChars}])`,
@@ -488,7 +488,7 @@ function ve(n, e) {
     "$1 $3$5"
   );
 }
-function ke(n, e) {
+function Ne(n, e) {
   return n.replace(
     new RegExp(
       `([${e.lowercaseChars}])([${e.spaces}])([${e.ellipsis}])([${e.spaces}]?)([${e.uppercaseChars}])`,
@@ -497,7 +497,7 @@ function ke(n, e) {
     "$1$3 $5"
   );
 }
-function Ne(n, e) {
+function Be(n, e) {
   return n.replace(
     new RegExp(
       `([${e.allChars}])([${e.ellipsis}])([${e.allChars}])`,
@@ -506,7 +506,7 @@ function Ne(n, e) {
     "$1$2 $3"
   );
 }
-function Be(n, e) {
+function We(n, e) {
   return n.replace(
     new RegExp(
       `([${e.sentencePunctuation}${e.terminalQuotes}])([${e.spaces}]?)(${e.ellipsis})([${e.spaces}]?)([${e.uppercaseChars}])`,
@@ -515,7 +515,7 @@ function Be(n, e) {
     "$1 $3 $5"
   );
 }
-function We(n, e) {
+function qe(n, e) {
   return n.replace(
     new RegExp(
       `([${e.lowercaseChars}])([${e.spaces}])+([${e.ellipsis}][${e.rightDoubleQuote}${e.rightSingleQuote}]?$)`,
@@ -524,10 +524,10 @@ function We(n, e) {
     "$1$3"
   );
 }
-function qe(n, e) {
-  return n = _e(n, e), n = Ae(n, e), n = De(n, e), n = Pe(n, e), n = ve(n, e), n = ke(n, e), n = Ne(n, e), n = Be(n, e), n = We(n, e), n = Ce(n, e), n = Qe(n, e), n;
-}
 function Ie(n, e) {
+  return n = Ae(n, e), n = De(n, e), n = Pe(n, e), n = ve(n, e), n = ke(n, e), n = Ne(n, e), n = Be(n, e), n = We(n, e), n = qe(n, e), n = Ce(n, e), n = Qe(n, e), n;
+}
+function ze(n, e) {
   return n = n.replace(
     new RegExp(
       `([${e.allChars}])(-)([${e.spaces}])([${e.allChars}])`,
@@ -542,16 +542,16 @@ function Ie(n, e) {
     "$1-$4"
   ), n;
 }
-function ze(n, e) {
-  return n = Ie(n, e), n;
-}
-function Le(n) {
-  return n.replace(/(---)/g, "—");
+function Le(n, e) {
+  return n = ze(n, e), n;
 }
 function Me(n) {
+  return n.replace(/(---)/g, "—");
+}
+function je(n) {
   return n.replace(/(--)/g, "–");
 }
-function je(n, e) {
+function Ze(n, e) {
   var p;
   const t = {
     "en-us": (r) => `$1${r.emDash}$3`,
@@ -585,7 +585,7 @@ function Te(n, e) {
     ((p = t[e.locale]) == null ? void 0 : p.call(t, e)) || ""
   );
 }
-function Ze(n, e) {
+function Oe(n, e) {
   return n = m(
     n,
     new RegExp(
@@ -601,7 +601,7 @@ function Ze(n, e) {
     e.enDash
   );
 }
-function Oe(n, e) {
+function Fe(n, e) {
   return n.replace(
     new RegExp(
       `([${e.percent}${e.permille}${e.permyriad}])([${e.spaces}]?[${e.hyphen}${e.enDash}${e.emDash}][${e.spaces}]?)(${e.cardinalNumber})`,
@@ -610,7 +610,7 @@ function Oe(n, e) {
     `$1${e.enDash}$3`
   );
 }
-function Fe(n, e) {
+function He(n, e) {
   return n.replace(
     new RegExp(
       `(${e.cardinalNumber})(${e.ordinalIndicator})([${e.spaces}]?[${e.hyphen}${e.enDash}${e.emDash}][${e.spaces}]?)(${e.cardinalNumber})(${e.ordinalIndicator})`,
@@ -619,8 +619,8 @@ function Fe(n, e) {
     `$1$2${e.enDash}$4$5`
   );
 }
-function He(n, e) {
-  return n = Le(n), n = Me(n), n = je(n, e), n = Te(n, e), n = Ze(n, e), n = Oe(n, e), n = Fe(n, e), n;
+function Ue(n, e) {
+  return n = Me(n), n = je(n), n = Ze(n, e), n = Te(n, e), n = Oe(n, e), n = Fe(n, e), n = He(n, e), n;
 }
 const h = "{{typopo__markdown_tick}}";
 function E(n, e) {
@@ -635,7 +635,7 @@ function y(n, e) {
     "`"
   ) : n;
 }
-function Ue(n, e) {
+function Xe(n, e) {
   return n.replace(
     new RegExp(
       `([^${e.romanNumerals}])([${e.sentencePunctuation}])([${e.sentencePunctuation}])(${e.doubleQuoteAdepts})`,
@@ -644,7 +644,7 @@ function Ue(n, e) {
     "$1$2$4"
   );
 }
-function Xe(n, e) {
+function Ge(n, e) {
   return n.replace(
     new RegExp(
       `([^${e.romanNumerals}])([${e.sentencePunctuation}])(${e.doubleQuoteAdepts})([${e.sentencePunctuation}])`,
@@ -653,7 +653,7 @@ function Xe(n, e) {
     "$1$2$3"
   );
 }
-function Ge(n, e) {
+function Ve(n, e) {
   return n = n.replace(
     new RegExp(
       `([^0-9]|^)(${e.doubleQuoteAdepts})(.+?)(\\d+)(${e.doubleQuoteAdepts})([${e.terminalPunctuation}${e.ellipsis}])`,
@@ -668,7 +668,7 @@ function Ge(n, e) {
     "$1$2{{typopo__double-prime}}"
   ), n;
 }
-function Ve(n, e) {
+function Je(n, e) {
   return n = n.replace(
     new RegExp(
       `(${e.doubleQuoteAdepts})(\\d+)({{typopo__double-prime}})`,
@@ -683,7 +683,7 @@ function Ve(n, e) {
     "{{typopo__left-double-quote}}$2{{typopo__right-double-quote}}"
   ), n;
 }
-function Je(n, e) {
+function Ke(n, e) {
   return n.replace(
     new RegExp(
       `(${e.doubleQuoteAdepts})([0-9${e.lowercaseChars}${e.uppercaseChars}])`,
@@ -692,7 +692,7 @@ function Je(n, e) {
     "{{typopo__left-double-quote--standalone}}$2"
   );
 }
-function Ke(n, e) {
+function Ye(n, e) {
   return n.replace(
     new RegExp(
       `([${e.lowercaseChars}${e.uppercaseChars}${e.sentencePunctuation}${e.ellipsis}])(${e.doubleQuoteAdepts})`,
@@ -701,7 +701,7 @@ function Ke(n, e) {
     "$1{{typopo__right-double-quote--standalone}}"
   );
 }
-function Ye(n, e) {
+function le(n, e) {
   return n.replace(
     new RegExp(
       `([${e.spaces}])(${e.doubleQuoteAdepts})([${e.spaces}])`,
@@ -710,7 +710,7 @@ function Ye(n, e) {
     "$1"
   );
 }
-function le(n) {
+function en(n) {
   return n.replace(
     new RegExp(
       "({{typopo__left-double-quote--standalone}})(.*?)({{typopo__double-prime}})",
@@ -725,7 +725,7 @@ function le(n) {
     "{{typopo__left-double-quote}}$2{{typopo__right-double-quote}}"
   );
 }
-function en(n, e) {
+function nn(n, e) {
   return n = n.replace(
     new RegExp(
       `([^${e.sentencePunctuation}])([${e.spaces}])(${e.leftDoubleQuote})([^${e.rightDoubleQuote}]+?)([^${e.romanNumerals}${e.closingBrackets}])([${e.terminalPunctuation}${e.ellipsis}])(${e.rightDoubleQuote})`,
@@ -759,7 +759,7 @@ function en(n, e) {
     "$1$3$2$4"
   ), n;
 }
-function nn(n, e) {
+function tn(n, e) {
   return n.replace(/{{typopo__double-prime}}/g, e.doublePrime).replace(
     /({{typopo__left-double-quote}}|{{typopo__left-double-quote--standalone}})/g,
     e.leftDoubleQuote
@@ -768,7 +768,7 @@ function nn(n, e) {
     e.rightDoubleQuote
   );
 }
-function tn(n, e) {
+function rn(n, e) {
   return n.replace(
     new RegExp(
       `([${e.sentencePunctuation}])([,])(${e.rightDoubleQuote})`,
@@ -777,7 +777,7 @@ function tn(n, e) {
     "$1$3"
   );
 }
-function rn(n, e) {
+function pn(n, e) {
   return n = n.replace(
     new RegExp(
       `(${e.leftDoubleQuote})([${e.spaces}])`,
@@ -798,7 +798,7 @@ function rn(n, e) {
     "$2"
   ), n;
 }
-function pn(n, e) {
+function sn(n, e) {
   return n = n.replace(
     new RegExp(
       `([${e.sentencePunctuation}${e.allChars}])([${e.leftDoubleQuote}])`,
@@ -807,7 +807,7 @@ function pn(n, e) {
     "$1 $2"
   ), n = S(n, e), n;
 }
-function sn(n, e) {
+function un(n, e) {
   return n.replace(
     new RegExp(
       `([${e.rightDoubleQuote}])([${e.allChars}])`,
@@ -816,10 +816,10 @@ function sn(n, e) {
     "$1 $2"
   );
 }
-function un(n, e, t) {
-  return n = E(n, t), n = Ue(n, e), n = Xe(n, e), n = Ge(n, e), n = Ve(n, e), n = Je(n, e), n = Ke(n, e), n = Ye(n, e), n = le(n), n = nn(n, e), n = y(n, t), n = rn(n, e), n = pn(n, e), n = sn(n, e), n = en(n, e), n = tn(n, e), n;
+function $n(n, e, t) {
+  return n = E(n, t), n = Xe(n, e), n = Ge(n, e), n = Ve(n, e), n = Je(n, e), n = Ke(n, e), n = Ye(n, e), n = le(n, e), n = en(n), n = tn(n, e), n = y(n, t), n = pn(n, e), n = sn(n, e), n = un(n, e), n = nn(n, e), n = rn(n, e), n;
 }
-function $n(n, e) {
+function an(n, e) {
   return [
     ["dead", "buried"],
     ["drill", "bass"],
@@ -843,7 +843,7 @@ function $n(n, e) {
     );
   }), n;
 }
-function an(n, e) {
+function on(n, e) {
   let t = "cause|em|mid|midst|mongst|prentice|round|sblood|ssdeath|sfoot|sheart|shun|slid|slife|slight|snails|strewth|til|tis|twas|tween|twere|twill|twixt|twould";
   return n.replace(
     new RegExp(
@@ -853,7 +853,7 @@ function an(n, e) {
     "{{typopo__apostrophe}}$2"
   );
 }
-function on(n, e) {
+function dn(n, e) {
   return n.replace(
     new RegExp(
       `(\\Bin)(${e.singleQuoteAdepts})`,
@@ -862,7 +862,7 @@ function on(n, e) {
     "$1{{typopo__apostrophe}}"
   );
 }
-function dn(n, e) {
+function hn(n, e) {
   return n.replace(
     new RegExp(
       `([${e.cardinalNumber}${e.allChars}])(${e.singleQuoteAdepts})+([${e.allChars}])`,
@@ -871,7 +871,7 @@ function dn(n, e) {
     "$1{{typopo__apostrophe}}$3"
   );
 }
-function hn(n, e) {
+function bn(n, e) {
   return n.replace(
     new RegExp(
       `([^0-9]|[A-Z][0-9])([${e.spaces}])(${e.singleQuoteAdepts})([${e.cardinalNumber}]{2})`,
@@ -880,10 +880,10 @@ function hn(n, e) {
     "$1$2{{typopo__apostrophe}}$4"
   );
 }
-function bn(n) {
+function fn(n) {
   return n.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1$2{{typopo__single-prime}}");
 }
-function fn(n, e) {
+function mn(n, e) {
   return n.replace(
     new RegExp(
       `(^|[${e.spaces}${e.emDash}${e.enDash}])(${e.singleQuoteAdepts}|,)([${e.allChars}${e.ellipsis}])`,
@@ -892,7 +892,7 @@ function fn(n, e) {
     "$1{{typopo__left-single-quote--standalone}}$3"
   );
 }
-function mn(n, e) {
+function cn(n, e) {
   return n.replace(
     new RegExp(
       `([${e.allChars}])([${e.sentencePunctuation}${e.ellipsis}])?(${e.singleQuoteAdepts})([ ${e.sentencePunctuation}])?`,
@@ -901,7 +901,7 @@ function mn(n, e) {
     "$1$2{{typopo__right-single-quote--standalone}}$4"
   );
 }
-function cn(n, e) {
+function gn(n, e) {
   return n.replace(
     // prettier-ignore
     new RegExp(
@@ -909,11 +909,11 @@ function cn(n, e) {
       "g"
     ),
     function(t, p, r, s) {
-      return r = fn(r, e), r = mn(r, e), r = gn(r), p + r + s;
+      return r = mn(r, e), r = cn(r, e), r = wn(r), p + r + s;
     }
   );
 }
-function gn(n) {
+function wn(n) {
   return n.replace(
     new RegExp(
       "({{typopo__left-single-quote--standalone}})(.*)({{typopo__right-single-quote--standalone}})",
@@ -922,7 +922,7 @@ function gn(n) {
     "{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}"
   );
 }
-function wn(n, e) {
+function xn(n, e) {
   return n.replace(
     new RegExp(
       `(\\B)(${e.singleQuoteAdepts})([${e.allChars}]+)(${e.singleQuoteAdepts})(\\B)`,
@@ -931,7 +931,7 @@ function wn(n, e) {
     "$1{{typopo__left-single-quote}}$3{{typopo__right-single-quote}}$5"
   );
 }
-function xn(n, e) {
+function Sn(n, e) {
   return n.replace(
     new RegExp(
       `(${e.singleQuoteAdepts})`,
@@ -940,7 +940,7 @@ function xn(n, e) {
     "{{typopo__apostrophe}}"
   );
 }
-function Sn(n) {
+function En(n) {
   return n = n.replace(
     new RegExp(
       "({{typopo__left-single-quote--standalone}})(.*?)({{typopo__single-prime}})",
@@ -955,7 +955,7 @@ function Sn(n) {
     "{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}"
   ), n;
 }
-function En(n, e) {
+function yn(n, e) {
   return n = n.replace(
     new RegExp(
       `([^${e.sentencePunctuation}])([${e.spaces}])(${e.leftSingleQuote})([^${e.rightSingleQuote}]+?)([^${e.romanNumerals}])([${e.terminalPunctuation}${e.ellipsis}])(${e.rightSingleQuote})`,
@@ -976,7 +976,7 @@ function En(n, e) {
     "$1$2$3$4$6$5$7"
   ), n;
 }
-function yn(n, e) {
+function Rn(n, e) {
   return n.replace(
     new RegExp(
       `([${e.spaces}])(${e.singlePrime})`,
@@ -985,14 +985,14 @@ function yn(n, e) {
     "$2"
   );
 }
-function Rn(n, e) {
+function _n(n, e) {
   return n = n.replace(/({{typopo__single-prime}})/g, e.singlePrime), n = n.replace(
     /{{typopo__apostrophe}}|{{typopo__left-single-quote--standalone}}|{{typopo__right-single-quote--standalone}}/g,
     e.apostrophe
   ), n = n.replace(/{{typopo__left-single-quote}}/g, e.leftSingleQuote), n = n.replace(/{{typopo__right-single-quote}}/g, e.rightSingleQuote), n = n.replace(/{{typopo__markdown_syntax_highlight}}/g, "```"), n;
 }
-function _n(n, e, t) {
-  return n = E(n, t), n = $n(n, e), n = an(n, e), n = dn(n, e), n = hn(n, e), n = on(n, e), n = bn(n), n = wn(n, e), n = cn(n, e), n = Sn(n), n = xn(n, e), n = Rn(n, e), n = y(n, t), n = En(n, e), n = yn(n, e), n;
+function An(n, e, t) {
+  return n = E(n, t), n = an(n, e), n = on(n, e), n = hn(n, e), n = bn(n, e), n = dn(n, e), n = fn(n), n = xn(n, e), n = gn(n, e), n = En(n), n = Sn(n, e), n = _n(n, e), n = y(n, t), n = yn(n, e), n = Rn(n, e), n;
 }
 function Cn(n, e) {
   return m(
@@ -1014,7 +1014,7 @@ function Qn(n, e) {
     `$1${e.nbsp}${e.multiplicationSign}${e.nbsp}$3`
   );
 }
-function An(n, e) {
+function Dn(n, e) {
   return n.replace(
     new RegExp(
       `([${e.cardinalNumber}])([${e.spaces}]?)([x|×])([${e.spaces}])([${e.lowercaseChars}]+)`,
@@ -1025,7 +1025,7 @@ function An(n, e) {
     }
   );
 }
-function Dn(n, e) {
+function Pn(n, e) {
   return n.replace(
     new RegExp(
       `([${e.cardinalNumber}]+)([${e.singlePrime}${e.doublePrime}])?([x|×])([${e.cardinalNumber}]+)([${e.singlePrime}${e.doublePrime}])?`,
@@ -1034,10 +1034,10 @@ function Dn(n, e) {
     `$1$2${e.nbsp}${e.multiplicationSign}${e.nbsp}$4$5`
   );
 }
-function Pn(n, e) {
-  return n = Cn(n, e), n = Qn(n, e), n = An(n, e), n = Dn(n, e), n;
-}
 function vn(n, e) {
+  return n = Cn(n, e), n = Qn(n, e), n = Dn(n, e), n = Pn(n, e), n;
+}
+function kn(n, e) {
   return n.replace(
     new RegExp(
       `([^${e.spaces}${e.sectionSign}${e.openingBrackets}])(${e.sectionSign})`,
@@ -1046,7 +1046,7 @@ function vn(n, e) {
     `$1${e.space}$2`
   );
 }
-function kn(n, e) {
+function Nn(n, e) {
   return n.replace(
     new RegExp(
       `(${e.sectionSign})([^${e.spaces}${e.sectionSign}])`,
@@ -1055,7 +1055,7 @@ function kn(n, e) {
     `$1${e.nbsp}$2`
   );
 }
-function Nn(n, e) {
+function Bn(n, e) {
   return n.replace(
     new RegExp(
       `(${e.sectionSign})([${e.spaces}])`,
@@ -1064,8 +1064,8 @@ function Nn(n, e) {
     `$1${e.nbsp}`
   );
 }
-function Bn(n, e) {
-  return n = vn(n, e), n = kn(n, e), n = Nn(n, e), n;
+function Wn(n, e) {
+  return n = kn(n, e), n = Nn(n, e), n = Bn(n, e), n;
 }
 function w(n, e, t, p) {
   return n.replace(
@@ -1077,12 +1077,12 @@ function w(n, e, t, p) {
   );
 }
 function x(n, e, t) {
-  return n = Se(n, e, t), n = ue(n, e, t), n = $e(n, e, t), n;
-}
-function Wn(n, e) {
-  return n = w(n, "c", e.copyright, e), n = x(n, e.copyright, e), n = w(n, "p", e.soundRecordingCopyright, e), n = x(n, e.soundRecordingCopyright, e), n;
+  return n = Ee(n, e, t), n = $e(n, e, t), n = ie(n, e, t), n;
 }
 function qn(n, e) {
+  return n = w(n, "c", e.copyright, e), n = x(n, e.copyright, e), n = w(n, "p", e.soundRecordingCopyright, e), n = x(n, e.soundRecordingCopyright, e), n;
+}
+function In(n, e) {
   return n.replace(
     new RegExp(
       "(\\+\\-)|(\\-\\+)",
@@ -1100,7 +1100,7 @@ function c(n, e, t, p) {
     `$1${t}`
   );
 }
-function In(n, e) {
+function zn(n, e) {
   return n = c(n, "r", e.registeredTrademark, e), n = c(n, "sm", e.serviceMark, e), n = c(n, "tm", e.trademark, e), n;
 }
 function R(n, e, t, p) {
@@ -1110,16 +1110,16 @@ function R(n, e, t, p) {
     `$1$2${p}`
   );
 }
-function zn(n, e) {
+function Ln(n, e) {
   return R(n, e, "2", "²");
 }
-function Ln(n, e) {
+function Mn(n, e) {
   return R(n, e, "3", "³");
 }
-function Mn(n, e) {
-  return n = zn(n, e), n = Ln(n, e), n;
-}
 function jn(n, e) {
+  return n = Ln(n, e), n = Mn(n, e), n;
+}
+function Zn(n, e) {
   return n.replace(
     new RegExp(
       `([${e.spaces}]+)(${e.numberSign})([${e.spaces}]+)(${e.cardinalNumber})`,
@@ -1129,50 +1129,43 @@ function jn(n, e) {
   );
 }
 function Tn(n, e) {
-  return n = jn(n, e), n;
+  return n = Zn(n, e), n;
 }
-function Zn(n, e) {
-  const p = {
+function _(n) {
+  return {
     "en-us": "",
-    rue: e.nbsp,
-    sk: e.nbsp,
-    cs: e.nbsp,
-    "de-de": e.nbsp
-  }[e.locale] || "", r = `([${e.uppercaseChars}][${e.allChars}]?\\.)([${e.spaces}]?)`, s = `([${e.allChars}]{2,}[^\\.])`, $ = [
+    rue: n.nbsp,
+    sk: n.nbsp,
+    cs: n.nbsp,
+    "de-de": n.nbsp
+  }[n.locale];
+}
+function On(n, e) {
+  const t = _(e), p = `([${e.uppercaseChars}][${e.allChars}]?\\.)([${e.spaces}]?)`, r = `([${e.allChars}]{2,}[^\\.])`, s = [
     // prettier-ignore
     {
       // "I. FullName"
-      pattern: `${r}${s}`,
+      pattern: `${p}${r}`,
       replacement: `$1${e.nbsp}$3`
     },
     {
       // "I. I. FullName"
-      pattern: `${r}${r}${s}`,
-      replacement: `$1${p}$3${e.space}$5`
+      pattern: `${p}${p}${r}`,
+      replacement: `$1${t}$3${e.space}$5`
     },
     {
       // "I. I. I. FullName"
-      pattern: `${r}${r}${r}${s}`,
-      replacement: `$1${p}$3${p}$5${e.space}$7`
+      pattern: `${p}${p}${p}${r}`,
+      replacement: `$1${t}$3${t}$5${e.space}$7`
     }
   ];
-  for (const { pattern: u, replacement: i } of $)
-    n = n.replace(new RegExp(u, "g"), i);
+  for (const { pattern: $, replacement: u } of s)
+    n = n.replace(new RegExp($, "g"), u);
   return n;
 }
-function On(n, e) {
-  let t = "([^" + e.allChars + e.enDash + e.emDash + "]|^)", p = "([" + e.allChars + "]|\\D)", r = "([^" + e.allChars + e.leftDoubleQuote + e.leftSingleQuote + e.backtick + "\\p{Emoji}]|$)", s = "";
-  switch (e.locale) {
-    case "en-us":
-      s = "";
-      break;
-    case "rue":
-    case "sk":
-    case "cs":
-    case "de-de":
-      s = e.nbsp;
-      break;
-  }
+function Fn(n, e) {
+  let t = "([^" + e.allChars + e.enDash + e.emDash + "]|^)", p = "([" + e.allChars + "]|\\D)", r = "([^" + e.allChars + e.leftDoubleQuote + e.leftSingleQuote + e.backtick + "\\p{Emoji}]|$)";
+  const s = _(e);
   let $ = [];
   for (let u = 0; u < e.multipleWordAbbreviations.length; u++) {
     let i = e.multipleWordAbbreviations[u].split(" "), o = "";
@@ -1194,7 +1187,7 @@ function On(n, e) {
   }
   return n;
 }
-function Fn(n, e) {
+function Hn(n, e) {
   let t = [];
   for (let u = 0; u < e.singleWordAbbreviations.length; u++)
     t[u] = "(" + e.singleWordAbbreviations[u] + ")(\\.)([" + e.spaces + "]?)";
@@ -1210,10 +1203,10 @@ function Fn(n, e) {
   }
   return n;
 }
-function Hn(n, e) {
-  return n = Zn(n, e), n = On(n, e), n = Fn(n, e), n;
-}
 function Un(n, e) {
+  return n = On(n, e), n = Fn(n, e), n = Hn(n, e), n;
+}
+function Xn(n, e) {
   return n = n.replace(
     new RegExp(
       `([^${e.allChars}]|^)([${e.uppercaseChars}]{2})([${e.lowercaseChars}]{2,})`,
@@ -1232,7 +1225,7 @@ function Un(n, e) {
     }
   );
 }
-function Xn(n, e) {
+function Gn(n, e) {
   return n.replace(
     new RegExp(
       `(issn)(:?)([${e.spaces}]?)(\\d{4})([${e.spaces}]?[${e.hyphen}${e.enDash}${e.emDash}][${e.spaces}]?)(\\d{4})`,
@@ -1241,7 +1234,7 @@ function Xn(n, e) {
     `ISSN$2${e.nbsp}$4-$6`
   );
 }
-function Gn(n, e) {
+function Vn(n, e) {
   let t = `([${e.spaces}]?[${e.hyphen}${e.enDash}${e.emDash}][${e.spaces}]?)`;
   return n.replace(
     new RegExp(
@@ -1251,7 +1244,7 @@ function Gn(n, e) {
     `ISBN$2${e.nbsp}$4-$6-$8-$10`
   );
 }
-function Vn(n, e) {
+function Jn(n, e) {
   let t = `([${e.spaces}]?[${e.hyphen}${e.enDash}${e.emDash}][${e.spaces}]?)`;
   return n.replace(
     new RegExp(
@@ -1261,7 +1254,7 @@ function Vn(n, e) {
     `ISBN$2${e.nbsp}$4-$6-$8-$10-$12`
   );
 }
-function Jn(n, e) {
+function Kn(n, e) {
   let t = `([${e.spaces}]?[${e.hyphen}${e.enDash}${e.emDash}][${e.spaces}]?)`;
   return n.replace(
     new RegExp(
@@ -1271,24 +1264,24 @@ function Jn(n, e) {
     "$1-$3-$5-$7-$9"
   );
 }
-function Kn(n, e) {
-  return n = Xn(n, e), n = Gn(n, e), n = Vn(n, e), n = Jn(n, e), n;
-}
 function Yn(n, e) {
+  return n = Gn(n, e), n = Vn(n, e), n = Jn(n, e), n = Kn(n, e), n;
+}
+function ln(n, e) {
   let t = [];
-  return g(n, e.emailPattern, t), g(n, e.urlPattern, t), g(n, e.filenamePattern, t), { processedText: ln(n, t), exceptions: t };
+  return g(n, e.emailPattern, t), g(n, e.urlPattern, t), g(n, e.filenamePattern, t), { processedText: et(n, t), exceptions: t };
 }
 function g(n, e, t) {
   const p = new RegExp(e, "gi"), r = n.match(p);
   return r && r.forEach((s) => t.push(s)), t;
 }
-function ln(n, e) {
+function et(n, e) {
   return e.reduce((t, p, r) => {
     const s = `{{typopo__exception-${r}}}`;
     return t.replace(p, s);
   }, n);
 }
-function et(n, e) {
+function nt(n, e) {
   return e.reduce((t, p, r) => {
     const s = new RegExp(`{{typopo__exception-${r}}}`, "g");
     return t.replace(s, p);
@@ -1299,17 +1292,17 @@ function et(n, e) {
  * Copyright 2015–2025 Braňo Šandala (https://brano.me)
  * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */
-function nt(n, e, t) {
+function tt(n, e, t) {
   e = typeof e > "u" ? "en-us" : e;
-  let p = new V(e);
+  let p = new J(e);
   t = typeof t > "u" ? {
     removeLines: !0,
     removeWhitespacesBeforeMarkdownList: !0,
     keepMarkdownCodeBlocks: !1
   } : t;
-  const { processedText: r, exceptions: s } = Yn(n, p);
-  return n = r, t.removeLines && (n = J(n)), n = qe(n, p), n = Ee(n, p, t), n = Re(n), n = He(n, p), n = ze(n, p), n = _n(n, p, t), n = un(n, p, t), n = Pn(n, p), n = Bn(n, p), n = Wn(n, p), n = qn(n, p), n = In(n, p), n = Mn(n, p), n = Tn(n, p), n = Un(n, p), n = Hn(n, p), n = Kn(n, p), n = ie(n, p), n = et(n, s), n;
+  const { processedText: r, exceptions: s } = ln(n, p);
+  return n = r, t.removeLines && (n = K(n)), n = Ie(n, p), n = ye(n, p, t), n = _e(n), n = Ue(n, p), n = Le(n, p), n = An(n, p, t), n = $n(n, p, t), n = vn(n, p), n = Wn(n, p), n = qn(n, p), n = In(n, p), n = zn(n, p), n = jn(n, p), n = Tn(n, p), n = Xn(n, p), n = Un(n, p), n = Yn(n, p), n = ae(n, p), n = nt(n, s), n;
 }
 export {
-  nt as fixTypos
+  tt as fixTypos
 };

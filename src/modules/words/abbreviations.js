@@ -1,17 +1,5 @@
-/**
-  Fixes spaces around initials for First and up to two Middle names
-  It won’t fix any other abbreviation.
-
-  Algorithm
-  [1] Identify and replace pattern "I. FullName"
-  [2] Identify and replace pattern "I. I. FullName"
-  [3] Identify and replace pattern "I. I. I. FullName"
-
-  @param {string} input text for identification
-  @returns {string} corrected output
-*/
-export function fixInitials(string, locale) {
-  const INITIAL_SPACE = {
+function getAbbreviationSpace(locale) {
+  const ABBR_SPACE = {
     "en-us": "",
     "rue":   locale.nbsp,
     "sk":    locale.nbsp,
@@ -19,7 +7,23 @@ export function fixInitials(string, locale) {
     "de-de": locale.nbsp,
   };
 
-  const initialSpace = INITIAL_SPACE[locale.locale] || "";
+  return ABBR_SPACE[locale.locale];
+}
+
+/**
+ Fixes spaces around initials for First and up to two Middle names
+ It won’t fix any other abbreviation.
+ 
+ Algorithm
+ [1] Identify and replace pattern "I. FullName"
+  [2] Identify and replace pattern "I. I. FullName"
+  [3] Identify and replace pattern "I. I. I. FullName"
+
+  @param {string} input text for identification
+  @returns {string} corrected output
+  */
+export function fixInitials(string, locale) {
+  const abbrSpace = getAbbreviationSpace(locale);
   const initialPattern = `([${locale.uppercaseChars}][${locale.allChars}]?\\.)([${locale.spaces}]?)`;
   const fullNamePattern = `([${locale.allChars}]{2,}[^\\.])`;
 
@@ -32,12 +36,12 @@ export function fixInitials(string, locale) {
     {
       // "I. I. FullName"
       pattern:     `${initialPattern}${initialPattern}${fullNamePattern}`,
-      replacement: `$1${initialSpace}$3${locale.space}$5`,
+      replacement: `$1${abbrSpace}$3${locale.space}$5`,
     },
     {
       // "I. I. I. FullName"
       pattern:     `${initialPattern}${initialPattern}${initialPattern}${fullNamePattern}`,
-      replacement: `$1${initialSpace}$3${initialSpace}$5${locale.space}$7`,
+      replacement: `$1${abbrSpace}$3${abbrSpace}$5${locale.space}$7`,
     },
   ];
 
@@ -78,18 +82,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
     "\\p{Emoji}]|$)";
 
   /* [1] Set locale-specific space between abbreviations */
-  let abbrSpace = "";
-  switch (locale.locale) {
-    case "en-us":
-      abbrSpace = "";
-      break;
-    case "rue":
-    case "sk":
-    case "cs":
-    case "de-de":
-      abbrSpace = locale.nbsp;
-      break;
-  }
+  const abbrSpace = getAbbreviationSpace(locale);
 
   /* [2] Change multiple-word abbreviations from all locales abbr. patterns */
   let abbreviationPatterns = [];
