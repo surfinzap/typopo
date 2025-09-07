@@ -71,15 +71,10 @@ export function fixInitials(string, locale) {
 export function fixMultipleWordAbbreviations(string, locale) {
   /* Partial patterns for a composition */
   let patternPrecedingNonLatinBoundary =
-    "([^" + locale.allChars + locale.enDash + locale.emDash + "]|^)";
-  let patternFollowingWord = "([" + locale.allChars + "]|\\D)";
+    `([^${locale.allChars}${locale.enDash}${locale.emDash}]|^)`;
+  let patternFollowingWord = `([${locale.allChars}]|\\D)`;
   let patternFollowingNonLatinBoundary =
-    "([^" +
-    locale.allChars +
-    locale.leftDoubleQuote +
-    locale.leftSingleQuote +
-    locale.backtick +
-    "\\p{Emoji}]|$)";
+    `([^${locale.allChars}${locale.leftDoubleQuote}${locale.leftSingleQuote}${locale.backtick}\\p{Emoji}]|$)`;
 
   /* [1] Set locale-specific space between abbreviations */
   const abbrSpace = getAbbreviationSpace(locale);
@@ -90,7 +85,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
     let splitAbbreviation = locale.multipleWordAbbreviations[i].split(" ");
     let abbrevationPattern = "";
     for (let j = 0; j < splitAbbreviation.length; j++) {
-      abbrevationPattern += "(" + splitAbbreviation[j] + ")(\\.)([" + locale.spaces + "]?)";
+      abbrevationPattern += `(${splitAbbreviation[j]})(\\.)([${locale.spaces}]?)`;
     }
     abbreviationPatterns[i] = abbrevationPattern;
   }
@@ -106,15 +101,15 @@ export function fixMultipleWordAbbreviations(string, locale) {
        * following boundary
   */
   for (let i = 0; i < abbreviationPatterns.length; i++) {
-    let pattern = patternPrecedingNonLatinBoundary + abbreviationPatterns[i] + patternFollowingWord;
+    let pattern = `${patternPrecedingNonLatinBoundary}${abbreviationPatterns[i]}${patternFollowingWord}`;
     let re = new RegExp(pattern, "gi");
 
     let replacement = "$1";
     let abbrCount = (abbreviationPatterns[i].match(/\(/g) || []).length / 3;
     for (let j = 0; j < abbrCount - 1; j++) {
-      replacement += "$" + (j * 3 + 2) + "." + abbrSpace;
+      replacement += `$${j * 3 + 2}.${abbrSpace}`;
     }
-    replacement += "$" + ((abbrCount - 1) * 3 + 2) + ". $" + (abbrCount * 3 + 2);
+    replacement += `$${(abbrCount - 1) * 3 + 2}. $${abbrCount * 3 + 2}`;
 
     string = string.replace(re, replacement);
   }
@@ -131,15 +126,15 @@ export function fixMultipleWordAbbreviations(string, locale) {
   */
   for (let i = 0; i < abbreviationPatterns.length; i++) {
     let pattern =
-      patternPrecedingNonLatinBoundary + abbreviationPatterns[i] + patternFollowingNonLatinBoundary;
+      `${patternPrecedingNonLatinBoundary}${abbreviationPatterns[i]}${patternFollowingNonLatinBoundary}`;
     let re = new RegExp(pattern, "giu");
 
     let replacement = "$1";
     let abbrCount = (abbreviationPatterns[i].match(/\(/g) || []).length / 3;
     for (let j = 0; j < abbrCount - 1; j++) {
-      replacement += "$" + (j * 3 + 2) + "." + abbrSpace;
+      replacement += `$${j * 3 + 2}.${abbrSpace}`;
     }
-    replacement += "$" + ((abbrCount - 1) * 3 + 2) + ".$" + (abbrCount * 3 + 2);
+    replacement += `$${(abbrCount - 1) * 3 + 2}.$${abbrCount * 3 + 2}`;
 
     string = string.replace(re, replacement);
   }
@@ -167,31 +162,31 @@ export function fixSingleWordAbbreviations(string, locale) {
   let abbreviationPatterns = [];
   for (let i = 0; i < locale.singleWordAbbreviations.length; i++) {
     abbreviationPatterns[i] =
-      "(" + locale.singleWordAbbreviations[i] + ")(\\.)([" + locale.spaces + "]?)";
+      `(${locale.singleWordAbbreviations[i]})(\\.)([${locale.spaces}]?)`;
   }
 
   /* [2] Identify single-word abbreviations before the word
    */
   // prettier-ignore
-  let patternPrecedingNonLatinBoundary = "([^" + locale.allChars + locale.enDash + locale.emDash + locale.nbsp + "\\.]|^)";
-  let patternFollowingWord = "([" + locale.allChars + "\\d]+)([^\\.]|$)";
+  let patternPrecedingNonLatinBoundary = `([^${locale.allChars}${locale.enDash}${locale.emDash}${locale.nbsp}\\.]|^)`;
+  let patternFollowingWord = `([${locale.allChars}\\d]+)([^\\.]|$)`;
 
   for (let i = 0; i < abbreviationPatterns.length; i++) {
-    let pattern = patternPrecedingNonLatinBoundary + abbreviationPatterns[i] + patternFollowingWord;
+    let pattern = `${patternPrecedingNonLatinBoundary}${abbreviationPatterns[i]}${patternFollowingWord}`;
     let re = new RegExp(pattern, "gi");
-    let replacement = "$1$2$3" + locale.nbsp + "$5$6";
+    let replacement = `$1$2$3${locale.nbsp}$5$6`;
 
     string = string.replace(re, replacement);
   }
 
   /* [3] Identify single-word abbreviations after the word
    */
-  let patternPrecedingWord = "([" + locale.allChars + "\\d])([" + locale.spaces + "])";
-  let patternFollowingNonLatinBoundary = "([^" + locale.spaces + locale.allChars + "\\d]|$)";
+  let patternPrecedingWord = `([${locale.allChars}\\d])([${locale.spaces}])`;
+  let patternFollowingNonLatinBoundary = `([^${locale.spaces}${locale.allChars}\\d]|$)`;
   for (let i = 0; i < abbreviationPatterns.length; i++) {
-    let pattern = patternPrecedingWord + abbreviationPatterns[i] + patternFollowingNonLatinBoundary;
+    let pattern = `${patternPrecedingWord}${abbreviationPatterns[i]}${patternFollowingNonLatinBoundary}`;
     let re = new RegExp(pattern, "gi");
-    let replacement = "$1" + locale.nbsp + "$3$4$5$6";
+    let replacement = `$1${locale.nbsp}$3$4$5$6`;
 
     string = string.replace(re, replacement);
   }
