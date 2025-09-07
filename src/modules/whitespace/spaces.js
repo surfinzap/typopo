@@ -34,7 +34,7 @@ export function removeSpacesAtParagraphBeginning(string, locale, configuration) 
   /* [1] split the lines manually */
   let lines = string.split(/\r?\n/);
 
-  let re = new RegExp("(^\\s+)([-\\*\\+]*)", "g"); // identify whitespaces and markdown list indicators -/*
+  let re = new RegExp("(^\\s+)([-\\*\\+\\>]*)", "g"); // identify whitespaces and markdown list and blockquote indicators -/*>
 
   for (let i = 0; i < lines.length; i++) {
     lines[i] = lines[i].replace(re, function ($0, $1, $2) {

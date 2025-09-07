@@ -91,6 +91,10 @@ let testRemoveSpacesBeforeMarkdownList = {
   "  + list":   "+ list",
   "\t+ list":   "+ list",
   "\t\t+ list": "+ list",
+  " > list":    "> list",
+  "  > list":   "> list",
+  "\t> list":   "> list",
+  "\t\t> list": "> list",
 };
 
 let testKeepSpacesBeforeMarkdownList = {
@@ -104,6 +108,12 @@ let testKeepSpacesBeforeMarkdownList = {
   "\t* list":   "\t* list",
   " * list":    " * list", //nbsp
   " * list":    " * list", //narrowNbsp
+  " > list":    " > list",
+  "   > list":  "   > list",
+  "\t\t> list": "\t\t> list",
+  "\t> list":   "\t> list",
+  " > list":    " > list", //nbsp
+  " > list":    " > list", //narrowNbsp
 };
 
 describe("Remove spaces and tabs at beginning of the paragraph\n", () => {

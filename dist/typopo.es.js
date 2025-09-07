@@ -323,7 +323,7 @@ function ae(n, e) {
   );
 }
 function oe(n, e, t) {
-  let r = n.split(/\r?\n/), p = new RegExp("(^\\s+)([-\\*\\+]*)", "g");
+  let r = n.split(/\r?\n/), p = new RegExp("(^\\s+)([-\\*\\+\\>]*)", "g");
   for (let s = 0; s < r.length; s++)
     r[s] = r[s].replace(p, function(u, $, i) {
       return t.removeWhitespacesBeforeMarkdownList == !1 && i != "" ? $ + i : i;

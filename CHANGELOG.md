@@ -5,7 +5,11 @@
 This version includes a couple of bug fixes, few new features and a completely rewritten build pipeline.
 
 ### ✨ New features
+- test preview
+- > test preview
 
+  > test preview
+- test preview
 
 ### 🐛 Fixes
 - if there is a space between a digit and a percentage sign (i.e. 15 %), now it will be:
@@ -15,6 +19,7 @@ This version includes a couple of bug fixes, few new features and a completely r
 
 ### 💪 Improvements
 - Typopo has now separate builds to be used as ES module, CommonJS import, and for a direct browser usage. 
+- `removeWhitespacesBeforeMarkdownList: false` now also keeps spaces before nested markdown blockquotes 
 - CommonJS and UMD distributions were reduced ~25% in bundle size.
 
 
