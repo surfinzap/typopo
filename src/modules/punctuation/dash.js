@@ -34,17 +34,17 @@ export function replaceTwoHyphensWithEnDash(string) {
 */
 export function fixDashesBetweenWords(string, locale) {
   const DASH_REPLACEMENT = {
-    "en-us": (locale) => `$1${locale.emDash}$3`,
-    "rue":   (locale) => `$1${locale.hairSpace}${locale.emDash}${locale.hairSpace}$3`,
-    "sk":    (locale) => `$1${locale.hairSpace}${locale.emDash}${locale.hairSpace}$3`,
-    "cs":    (locale) => `$1${locale.nbsp}${locale.enDash}${locale.space}$3`,
-    "de-de": (locale) => `$1${locale.hairSpace}${locale.enDash}${locale.hairSpace}$3`,
+    "en-us": (locale) => `${locale.emDash}`,
+    "rue":   (locale) => `${locale.hairSpace}${locale.emDash}${locale.hairSpace}`,
+    "sk":    (locale) => `${locale.hairSpace}${locale.emDash}${locale.hairSpace}`,
+    "cs":    (locale) => `${locale.nbsp}${locale.enDash}${locale.space}`,
+    "de-de": (locale) => `${locale.hairSpace}${locale.enDash}${locale.hairSpace}`,
   };
 
   // prettier-ignore
   return string.replace(
     new RegExp(
-            `([${locale.allChars}])` + 
+      `([${locale.allChars}])` + 
       `(` +
         `[${locale.spaces}]*[${locale.enDash}${locale.emDash}][${locale.spaces}]*` + 
         `|` +
@@ -53,7 +53,7 @@ export function fixDashesBetweenWords(string, locale) {
       `([${locale.allChars}])`, 
       "g"
     ), 
-    DASH_REPLACEMENT[locale.locale]?.(locale) || ""
+    `$1${DASH_REPLACEMENT[locale.locale]?.(locale)}$3`
   );
 }
 

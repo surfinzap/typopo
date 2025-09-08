@@ -554,18 +554,18 @@ function Me(n) {
 function je(n, e) {
   var r;
   const t = {
-    "en-us": (p) => `$1${p.emDash}$3`,
-    rue: (p) => `$1${p.hairSpace}${p.emDash}${p.hairSpace}$3`,
-    sk: (p) => `$1${p.hairSpace}${p.emDash}${p.hairSpace}$3`,
-    cs: (p) => `$1${p.nbsp}${p.enDash}${p.space}$3`,
-    "de-de": (p) => `$1${p.hairSpace}${p.enDash}${p.hairSpace}$3`
+    "en-us": (p) => `${p.emDash}`,
+    rue: (p) => `${p.hairSpace}${p.emDash}${p.hairSpace}`,
+    sk: (p) => `${p.hairSpace}${p.emDash}${p.hairSpace}`,
+    cs: (p) => `${p.nbsp}${p.enDash}${p.space}`,
+    "de-de": (p) => `${p.hairSpace}${p.enDash}${p.hairSpace}`
   };
   return n.replace(
     new RegExp(
       `([${e.allChars}])([${e.spaces}]*[${e.enDash}${e.emDash}][${e.spaces}]*|[${e.spaces}]+[${e.hyphen}][${e.spaces}]+)([${e.allChars}])`,
       "g"
     ),
-    ((r = t[e.locale]) == null ? void 0 : r.call(t, e)) || ""
+    `$1${(r = t[e.locale]) == null ? void 0 : r.call(t, e)}$3`
   );
 }
 function Ze(n, e) {
