@@ -18,7 +18,6 @@ This release brings significant improvements to the build system and typography 
 - `removeWhitespacesBeforeMarkdownList: false` now also keeps spaces before nested markdown blockquotes 
 - CommonJS and UMD distributions were reduced ~25% in bundle size.
 
-
 ### 🔨 Maintenance
 - Reorganize the folder structure
 - Update NPM packages to their latest versions 
