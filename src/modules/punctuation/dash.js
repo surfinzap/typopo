@@ -19,7 +19,7 @@ export function replaceTwoHyphensWithEnDash(string) {
   - improperly used hyphen with spaces around
   - improperly used or spaced en dash 
   - improperly used or spaced em dash 
-  between words and fix dash and spacing for given locale
+  between words, or, between a word and a nummber and fix dash and spacing for given locale
 
   Example
   see tests
@@ -44,13 +44,13 @@ export function fixDashesBetweenWords(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.allChars}])` + 
+      `([${locale.allChars}\\d])` + 
       `(` +
         `[${locale.spaces}]*[${locale.enDash}${locale.emDash}][${locale.spaces}]*` + 
         `|` +
         `[${locale.spaces}]+[${locale.hyphen}][${locale.spaces}]+` +
       `)` +
-      `([${locale.allChars}])`, 
+      `([${locale.allChars}\\d])`, 
       "g"
     ), 
     `$1${DASH_REPLACEMENT[locale.locale]?.(locale)}$3`

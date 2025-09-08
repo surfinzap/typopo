@@ -74,6 +74,18 @@ describe("Fix a dash, an en dash, an em dash and spacing between words (en-us)\n
     "word - word":     "word—word", //narrowNbsp
     "ptaškŷ -  čadič": "ptaškŷ—čadič", // non-latin chars
     "хотїв - нияке":   "хотїв—нияке", // non-latin chars
+
+    "…the top 10 - and explore…":  "…the top 10—and explore…",
+    "…the top 10 – and explore…":  "…the top 10—and explore…",
+    "…the top 10 –  and explore…": "…the top 10—and explore…",
+    "…the top 10–and explore…":    "…the top 10—and explore…",
+    "…the top 10 — and explore…":  "…the top 10—and explore…",
+
+    "…like to see - 7 wonders…":  "…like to see—7 wonders…",
+    "…like to see – 7 wonders…":  "…like to see—7 wonders…",
+    "…like to see –  7 wonders…": "…like to see—7 wonders…",
+    "…like to see–7 wonders…":    "…like to see—7 wonders…",
+    "…like to see — 7 wonders…":  "…like to see—7 wonders…",
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -116,6 +128,18 @@ describe("Fix a dash, an en dash, an em dash and spacing between words (rue, sk)
     "word - word":     "word — word", //hairSpace
     "word - word":     "word — word", //narrowNbsp
     "ptaškŷ -  čadič": "ptaškŷ — čadič", // non-latin chars
+
+    "…the top 10 - and explore…":  "…the top 10 — and explore…",
+    "…the top 10 – and explore…":  "…the top 10 — and explore…",
+    "…the top 10 –  and explore…": "…the top 10 — and explore…",
+    "…the top 10–and explore…":    "…the top 10 — and explore…",
+    "…the top 10 — and explore…":  "…the top 10 — and explore…",
+
+    "…like to see - 7 wonders…":  "…like to see — 7 wonders…",
+    "…like to see – 7 wonders…":  "…like to see — 7 wonders…",
+    "…like to see –  7 wonders…": "…like to see — 7 wonders…",
+    "…like to see–7 wonders…":    "…like to see — 7 wonders…",
+    "…like to see — 7 wonders…":  "…like to see — 7 wonders…",
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -154,6 +178,18 @@ describe("Fix a dash, an en dash, an em dash and spacing between words (cs)\n", 
     "word - word":     "word – word", //narrowNbsp
     "ptaškŷ -  čadič": "ptaškŷ – čadič", // non-latin chars
     "хотїв - нияке":   "хотїв – нияке", // non-latin chars
+
+    "…the top 10 - and explore…":  "…the top 10 – and explore…",
+    "…the top 10 – and explore…":  "…the top 10 – and explore…",
+    "…the top 10 –  and explore…": "…the top 10 – and explore…",
+    "…the top 10–and explore…":    "…the top 10 – and explore…",
+    "…the top 10 — and explore…":  "…the top 10 – and explore…",
+
+    "…like to see - 7 wonders…":  "…like to see – 7 wonders…",
+    "…like to see – 7 wonders…":  "…like to see – 7 wonders…",
+    "…like to see –  7 wonders…": "…like to see – 7 wonders…",
+    "…like to see–7 wonders…":    "…like to see – 7 wonders…",
+    "…like to see — 7 wonders…":  "…like to see – 7 wonders…",
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -186,6 +222,18 @@ describe("Fix a dash, an en dash, an em dash and spacing between words (de-de)\n
     "word - word":     "word – word", //narrowNbsp
     "ptaškŷ -  čadič": "ptaškŷ – čadič", // non-latin chars
     "хотїв - нияке":   "хотїв – нияке", // non-latin chars
+
+    "…the top 10 - and explore…":  "…the top 10 – and explore…",
+    "…the top 10 – and explore…":  "…the top 10 – and explore…",
+    "…the top 10 –  and explore…": "…the top 10 – and explore…",
+    "…the top 10–and explore…":    "…the top 10 – and explore…",
+    "…the top 10 — and explore…":  "…the top 10 – and explore…",
+
+    "…like to see - 7 wonders…":  "…like to see – 7 wonders…",
+    "…like to see – 7 wonders…":  "…like to see – 7 wonders…",
+    "…like to see –  7 wonders…": "…like to see – 7 wonders…",
+    "…like to see–7 wonders…":    "…like to see – 7 wonders…",
+    "…like to see — 7 wonders…":  "…like to see – 7 wonders…",
   };
 
   Object.keys(testCase).forEach((key) => {

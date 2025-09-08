@@ -562,7 +562,7 @@ function je(n, e) {
   };
   return n.replace(
     new RegExp(
-      `([${e.allChars}])([${e.spaces}]*[${e.enDash}${e.emDash}][${e.spaces}]*|[${e.spaces}]+[${e.hyphen}][${e.spaces}]+)([${e.allChars}])`,
+      `([${e.allChars}\\d])([${e.spaces}]*[${e.enDash}${e.emDash}][${e.spaces}]*|[${e.spaces}]+[${e.hyphen}][${e.spaces}]+)([${e.allChars}\\d])`,
       "g"
     ),
     `$1${(r = t[e.locale]) == null ? void 0 : r.call(t, e)}$3`

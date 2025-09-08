@@ -5,11 +5,7 @@
 This version includes a couple of bug fixes, few new features and a completely rewritten build pipeline.
 
 ### ✨ New features
-- test preview
-- > test preview
-
-  > test preview
-- test preview
+- fix dash between word and a number, e.g. `Access full ETF holdings—not just the top 10—and explore…`
 
 ### 🐛 Fixes
 - if there is a space between a digit and a percentage sign (i.e. 15 %), now it will be:
