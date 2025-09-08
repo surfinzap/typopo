@@ -1,11 +1,11 @@
 # Changelog for Typopo
 
 
-## 2.6.0 //
-This version includes a couple of bug fixes, few new features and a completely rewritten build pipeline.
+## 2.6.0 // 2025-08-09
+This release brings significant improvements to the build system and typography handling, along with important bug fixes for percentage formatting across different languages. The modernized build pipeline delivers better performance and smaller bundle sizes while maintaining compatibility across all supported environments.
 
 ### ✨ New features
-- fix dash between word and a number, e.g. `Access full ETF holdings—not just the top 10—and explore…`
+- Fix dash between word and a number, e.g. `Access full ETF holdings—not just the top 10—and explore…`
 
 ### 🐛 Fixes
 - if there is a space between a digit and a percentage sign (i.e. 15 %), now it will be:
@@ -14,7 +14,7 @@ This version includes a couple of bug fixes, few new features and a completely r
   - changed to a non-breaking space for `sk`, `cs`, `rue`
 
 ### 💪 Improvements
-- Typopo has now separate builds to be used as ES module, CommonJS import, and for a direct browser usage. 
+- Typopo now has separate builds to be used as ES module, CommonJS import, and for direct browser usage. 
 - `removeWhitespacesBeforeMarkdownList: false` now also keeps spaces before nested markdown blockquotes 
 - CommonJS and UMD distributions were reduced ~25% in bundle size.
 
@@ -24,7 +24,7 @@ This version includes a couple of bug fixes, few new features and a completely r
 - Update NPM packages to their latest versions 
 - Refactor the source code
 - Remove unused packages
-- Update the build pipeline to vite, vitest 
+- Update the build pipeline to Vite and Vitest 
 
 
 
