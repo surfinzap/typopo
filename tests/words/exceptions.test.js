@@ -1,6 +1,6 @@
-import assert from "assert";
-import { excludeExceptions, placeExceptions } from "../../src/modules/words/exceptions";
-import Locale from "../../src/locale/locale";
+import { describe, it, expect } from "vitest";
+import { excludeExceptions, placeExceptions } from "../../src/modules/words/exceptions.js";
+import Locale from "../../src/locale/locale.js";
 
 // Mock locale for URL pattern
 const locale = new Locale("en-us");
@@ -56,7 +56,7 @@ const emails = [
   "contact@api.net",
   "sales@website.co",
   "test.account@domain.com",
-  "billing@company.travel"
+  "billing@company.travel",
 ];
 
 const urls = [
@@ -273,16 +273,15 @@ const filenames = [
   "windows.bat",
 ];
 
-
 function countMatches(text, string) {
-  const regex = new RegExp(string, 'g');  
-  const matches = text.match(regex);   
-  return matches ? matches.length : 0;       
+  const regex = new RegExp(string, "g");
+  const matches = text.match(regex);
+  return matches ? matches.length : 0;
 }
 
 function prepareTestItems(testCase, testString = "just the string") {
   // Add uppercase to testCase items
-  const modifiedTestCase = testCase.concat(testCase.map(item => item.toUpperCase()));
+  const modifiedTestCase = testCase.concat(testCase.map((item) => item.toUpperCase()));
 
   // Expand testCase with duplicate items
   const testItemsArray = [...modifiedTestCase];
@@ -294,83 +293,82 @@ function prepareTestItems(testCase, testString = "just the string") {
   testItemsArray.splice(Math.floor(testItemsArray.length / 2), 0, testString);
   testItemsArray.push(testString);
 
-  const testItemsString = testItemsArray.join(' ');
+  const testItemsString = testItemsArray.join(" ");
 
   return {
-    modifiedTestCase,   
+    modifiedTestCase,
     testItemsString,
-    testString
+    testString,
   };
 }
 
 function testExcludeExceptions(testCase, label) {
-  // Arrange 
+  // Arrange
   const { modifiedTestCase, testItemsString, testString } = prepareTestItems(testCase);
 
-  // Act 
+  // Act
   const { processedText } = excludeExceptions(testItemsString, locale);
-  
 
   // Assert
   it(`shouldn’t exclude test string “${testString}”`, () => {
-    assert.strictEqual(countMatches(processedText, testString), 3);
+    expect(countMatches(processedText, testString)).toBe(3);
   });
 
   modifiedTestCase.forEach((item) => {
     it(`should exclude all ${label}s `, () => {
-      assert.strictEqual(processedText.includes(item), false, `${item} should be excluded from the processed text.`);
+      expect(
+        processedText.includes(item),
+        false,
+        `${item} should be excluded from the processed text.`
+      );
     });
   });
 }
 
-
-
 describe("Exclude Exceptions: Emails", () => {
-  testExcludeExceptions(emails, 'email');
+  testExcludeExceptions(emails, "email");
 });
 
 describe("Exclude Exceptions: URLs", () => {
-  testExcludeExceptions(urls, 'URL');
+  testExcludeExceptions(urls, "URL");
 });
 
 describe("Exclude Exceptions: filenames", () => {
-  testExcludeExceptions(filenames, 'filename');
+  testExcludeExceptions(filenames, "filename");
 });
 
 describe("Exclude Exceptions: Emails+URLs+filenames", () => {
   const allExceptions = emails.concat(urls, filenames);
-  testExcludeExceptions(allExceptions, 'Emails+URLs+filenames');
+  testExcludeExceptions(allExceptions, "Emails+URLs+filenames");
 });
 
-
 function testPlaceExceptions(testCase, label) {
-  // Arrange 
+  // Arrange
   const { testItemsString } = prepareTestItems(testCase);
 
-  // Act 
+  // Act
   const { processedText, exceptions } = excludeExceptions(testItemsString, locale);
   const replacedText = placeExceptions(processedText, exceptions);
 
   // Assert
   it(`original text and text after replacement should be equal for ${label}`, () => {
-    assert.strictEqual(replacedText, testItemsString);
+    expect(replacedText).toBe(testItemsString);
   });
 }
 
-
 describe("Place Exceptions: Emails", () => {
-  testPlaceExceptions(emails, 'email');
+  testPlaceExceptions(emails, "email");
 });
 
 describe("Place Exceptions: URLs", () => {
-  testPlaceExceptions(urls, 'URL');
+  testPlaceExceptions(urls, "URL");
 });
 
 describe("Place Exceptions: filenames", () => {
-  testPlaceExceptions(filenames, 'filename');
+  testPlaceExceptions(filenames, "filename");
 });
 
 describe("Place Exceptions: Emails+URLs+filenames", () => {
   const allExceptions = emails.concat(urls, filenames);
-  testPlaceExceptions(allExceptions, 'Emails+URLs+filenames');
+  testPlaceExceptions(allExceptions, "Emails+URLs+filenames");
 });

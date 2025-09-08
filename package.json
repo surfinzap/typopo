@@ -1,24 +1,42 @@
 {
 	"name": "typopo",
-	"version": "2.5.8",
+	"version": "2.6.0",
 	"description": "Fix frequent microtypography errors in multiple languages. Write neat texts without bothering about typography rules. Typopo works for English, German, Slovak, Czech and Rusyn language.",
+	"type": "module",
 	"license": "MIT",
 	"author": {
 		"name": "Braňo Šandala",
 		"email": "help@typopo.org"
 	},
 	"scripts": {
-		"dev": "gulp watch",
-		"build": "gulp build",
-		"test": "mocha --require @babel/register ./tests/**/*.test.js -R min --no-colors",
-		"test:dev": "mocha --require @babel/register ./tests/**/*.test.js -R min -w",
+		"build": "vite build",
+		"test": "vitest run",
+		"test:dev": "cross-env SOURCE_ONLY=true vitest",
+		"test:perf": "node tests/performance.test.js",
 		"lint": "eslint src/",
+		"lint:fix": "eslint src/ --fix",
+		"format": "prettier --write src/ tests/",
 		"prepare": "husky"
 	},
 	"lint-staged": {
-		"src/**/*": []
+		"src/**/*.js": [
+			"eslint --fix",
+			"prettier --write"
+		],
+		"tests/**/*.js": [
+			"eslint --fix",
+			"prettier --write"
+		]
 	},
-	"main": "dist/typopo_dist.min.js",
+	"main": "./dist/typopo.cjs",
+	"module": "./dist/typopo.es.js",
+	"browser": "./dist/typopo.umd.js",
+	"exports": {
+		".": {
+			"import": "./dist/typopo.es.js",
+			"require": "./dist/typopo.cjs"
+		}
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/surfinzap/typopo"
@@ -41,26 +59,15 @@
 		"node": ">=6.9.4"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.25.9",
-		"@babel/core": "^7.26.0",
-		"@babel/preset-env": "^7.26.0",
-		"@babel/register": "^7.25.9",
-		"babelify": "^10.0.0",
-		"browser-sync": "^3.0.3",
-		"browserify": "^17.0.1",
-		"eslint": "^9.16.0",
-		"gulp": "^5.0.0",
-		"gulp-babel": "^8.0.0",
-		"gulp-cli": "^3.0.0",
-		"gulp-concat": "^2.6.1",
-		"gulp-header": "^2.0.9",
-		"gulp-replace": "^1.1.4",
-		"gulp-sourcemaps": "^3.0.0",
-		"gulp-uglify": "^3.0.2",
+		"@eslint/js": "^9.35.0",
+		"@huggingface/prettier-plugin-vertical-align": "^0.2.3",
+		"cross-env": "^10.0.0",
+		"eslint": "^9.35.0",
 		"husky": "^9.1.7",
-		"lint-staged": "^15.2.10",
-		"mocha": "^10.8.2",
-		"vinyl-buffer": "^1.0.1",
-		"vinyl-source-stream": "^2.0.0"
+		"jsdom": "^26.1.0",
+		"lint-staged": "^16.1.6",
+		"prettier": "^3.6.2",
+		"vite": "^7.1.4",
+		"vitest": "^3.2.4"
 	}
 }

@@ -10,8 +10,8 @@
 
 ## Links
 - [Official website](https://typopo.org)
-- [Online app](https://app.typopo.org)
-- [VS Code extension](https://marketplace.visualstudio.com/items?itemName=brano.typopo-vscode) and corresponding [repository](https://github.com/surfinzap/typopo-vscode)
+- [Online app](https://typopo.org/app)
+- [VS Code extension](https://marketplace.visualstudio.com/items?itemName=brano.typopo-vscode) and the corresponding [repository](https://github.com/surfinzap/typopo-vscode)
 - [NPM package](https://www.npmjs.com/package/typopo)
 - [Support the project, buy me a coffee](https://ko-fi.com/branosandala)
 - [Subscribe to a newsletter to get updates](https://buttondown.email/Typopo)
@@ -24,8 +24,10 @@
 - [Use](#use)
 	- [Online app](#online-app)
 	- [VS Code extension](#vs-code-extension)
-	- [NPM package](#npm-package)
-	- [JavaScript library](#javascript-library)
+	- [Installation](#installation)
+		- [ES Module (Recommended)](#es-module-recommended)
+		- [CommonJS](#commonjs)
+		- [Browser/UMD](#browserumd)
 	- [API](#api)
 - [News \& Releases](#news-releases)
 - [Support](#support)
@@ -95,7 +97,7 @@ Typopo fixes symbols:
 
 ## Use
 
-You can use Typopo as an [online app](#online-app), [VS Code extension](#vs-code-extension), [NPM package](#npm-package) or [JavaScript library](#javascript-library).
+You can use Typopo as an [online app](#online-app), [VS Code extension](#vs-code-extension), or [NPM package](#npm-package).
 
 
 
@@ -112,23 +114,33 @@ The online app is useful especially when you’re a book designer or a DTP ope
 ![Typopo—VS Code extension](assets/typopo--vs-code-animation--html.gif "VS code extension")
 
 
-### NPM package
-Install Typopo as an NPM package in your web project:
-```
+### Installation
+
+#### ES Module (Recommended)
+For modern Node.js and bundler environments:
+```bash
 npm install typopo
 ```
-
-Import the package:
-```
+```javascript
 import { fixTypos } from 'typopo';
 ```
 
-Check out an [API](#api) on how to use the package.
+#### CommonJS
+For legacy Node.js environments or when require() is needed:
+```javascript
+const { fixTypos } = require('typopo');
+```
 
+#### Browser/UMD
+For direct browser usage without a bundler:
+```html
+<script src="https://unpkg.com/typopo/dist/typopo.umd.js"></script>
+<script>
+  const correctedText = typopo.fixTypos('Your text here');
+</script>
+```
 
-### JavaScript library
-Download dist/typopo.min.js and include it in your web project or CMS. Check out an [API](#api) on how to use the library.
-
+Check out the [API](#api) section for usage details.
 
 
 ### API
@@ -150,9 +162,8 @@ configuration = {
 	// If true, removes empty lines between paragraphs
 	removeLines : true, 
   
-	// if true, removes empty lines before a nested Markdown list; 
-	// set as false when you use Typopo to fix typography of your Markdown files
-	// see examples: https://github.com/surfinzap/typopo/releases/tag/2%2F4%2F0
+	// if true, removes empty spaces before a nested Markdown list or blockquote; 
+	// set as false when you use Typopo to fix typography of your Markdown files and you want to keep the nesting
 	removeWhitespacesBeforeMarkdownList : true, 
 
 	// if true, markdown code blocks (i.e. `code`, ``code``, ```code```) will be ignored from being identified as incorrectly used single quote or double quote pairs
@@ -175,7 +186,7 @@ Check out the [changelog](CHANGELOG.md) for what has been released.
 
 
 ## Support
-If you love Typopo and you find it helpful, [support the project via Patreon](https://www.patreon.com/branosandala).
+If you love Typopo and you find it helpful, [buy me a coffee](https://ko-fi.com/branosandala).
 
 Your support will let me continue improving Typopo ecosystem—[the app](https://typopo.org), [NPM package](https://www.npmjs.com/package/typopo) and [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=brano.typopo-vscode).
 

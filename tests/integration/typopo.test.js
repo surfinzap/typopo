@@ -1,29 +1,76 @@
-import {fixTypos} from '../../src/typopo.js';
-import assert from 'assert';
+import { fixTypos } from "../../src/typopo.js";
+import { describe, it, expect } from "vitest";
+import { createRequire } from "module";
+import { readFileSync } from "fs";
+import { JSDOM } from "jsdom";
 
-describe('Test consistency of internal variables', () => {
+let fixTyposMinified = null;
+let fixTyposUmd = null;
+
+if (!process.env.SOURCE_ONLY) {
+  try {
+    const requireFromModule = createRequire(import.meta.url);
+    const minified = requireFromModule("../../dist/typopo.cjs");
+    fixTyposMinified = minified.fixTypos;
+    console.log("CJS version loaded for testing");
+  } catch (error) {
+    console.log(`CJS version not available (${error.message}), skipping CJS tests`);
+  }
+
+  try {
+    // Load UMD version using jsdom simulation
+    const umdCode = readFileSync("./dist/typopo.umd.js", "utf8");
+    const dom = new JSDOM(`<script>${umdCode}</script>`, { runScripts: "dangerously" });
+    fixTyposUmd = dom.window.typopo.fixTypos;
+    console.log("UMD version loaded for testing");
+  } catch (error) {
+    console.log(`UMD version not available (${error.message}), skipping UMD tests`);
+  }
+} else {
+  console.log("SOURCE_ONLY mode: skipping minified tests");
+}
+
+function runAllVersions(testCase, locale, config) {
+  Object.keys(testCase).forEach((key) => {
+    it(`source: ${key.substring(0, 30)}${key.length > 30 ? "..." : ""}`, () => {
+      expect(fixTypos(key, locale, config)).toBe(testCase[key]);
+    });
+  });
+
+  if (fixTyposMinified) {
+    Object.keys(testCase).forEach((key) => {
+      it(`cjs: ${key.substring(0, 30)}${key.length > 30 ? "..." : ""}`, () => {
+        expect(fixTyposMinified(key, locale, config)).toBe(testCase[key]);
+      });
+    });
+  }
+
+  if (fixTyposUmd) {
+    Object.keys(testCase).forEach((key) => {
+      it(`umd: ${key.substring(0, 30)}${key.length > 30 ? "..." : ""}`, () => {
+        expect(fixTyposUmd(key, locale, config)).toBe(testCase[key]);
+      });
+    });
+  }
+}
+
+describe("Test consistency of internal variables", () => {
   let testCase = {
-
     /*
      We are using temporary {variables} in curly brackets as text replacement
      in some functions. Make sure that variables in curly brackets do not change
      in course of running algorithm.
      */
-    "{{test-variable}}": "{{test-variable}}",
-    "{{test-variable}} at the beginning of the sentence.": "{{test-variable}} at the beginning of the sentence.",
+    "{{test-variable}}":                                    "{{test-variable}}",
+    "{{test-variable}} at the beginning of the sentence.":  "{{test-variable}} at the beginning of the sentence.",
     "And {{test-variable}} in the middle of the sentence.": "And {{test-variable}} in the middle of the sentence.",
   };
 
-  Object.keys(testCase).forEach((key) => {
-    it("", () => {
-      assert.strictEqual(fixTypos(key, "en-us"), testCase[key]);
-    });
-  });
+  runAllVersions(testCase, "en-us");
 });
 
-describe('Test that exceptions remain intact', () => {
+describe("Test that exceptions remain intact", () => {
   let testCase = {
-
     /*
      Exceptions
 
@@ -39,7 +86,7 @@ describe('Test that exceptions remain intact', () => {
      */
 
     // [1] URL address
-    "www.tota.sk": "www.tota.sk",
+    "www.tota.sk":        "www.tota.sk",
     "http://www.tota.sk": "http://www.tota.sk",
 
     // [2] IP address
@@ -49,124 +96,117 @@ describe('Test that exceptions remain intact', () => {
     "mail@domain.com": "mail@domain.com",
 
     // test order of replacements
-    "www.tota.sk and 127.0.0.1 and mail@domain.com": "www.tota.sk and 127.0.0.1 and mail@domain.com",
-
+    "www.tota.sk and 127.0.0.1 and mail@domain.com":
+      "www.tota.sk and 127.0.0.1 and mail@domain.com",
   };
 
-  Object.keys(testCase).forEach((key) => {
-    it("", () => {
-      assert.strictEqual(fixTypos(key, "en-us"), testCase[key]);
-    });
-  });
+  runAllVersions(testCase, "en-us");
 });
-
 
 /* typopo configurations */
 let configDefault = {
-  removeLines: true,
+  removeLines:                         true,
   removeWhitespacesBeforeMarkdownList: true,
-}
+};
 
 let configKeepLines = {
-  removeLines: false,
+  removeLines:                         false,
   removeWhitespacesBeforeMarkdownList: true,
-}
+};
 
 let configKeepWhitespacesBeforeMarkdownList = {
-  removeLines: true,
+  removeLines:                         true,
   removeWhitespacesBeforeMarkdownList: false,
-}
+};
 
 let configKeepMarkdownCodeBlocks = {
   keepMarkdownCodeBlocks: true,
-  removeLines: false,
-}
+  removeLines:            false,
+};
 
-/* test cases */ 
+/* test cases */
 let testModules = {
   // ellipsis
-  "Sentence ..….. another sentence": "Sentence … another sentence",
+  "Sentence ..….. another sentence":      "Sentence … another sentence",
   "Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
 
   // hyphen
   "e- shop": "e-shop",
 
   // section sign
-  "under Law §1782": "under Law § 1782",
+  "under Law §1782":    "under Law § 1782",
   // copyright
-  "Company (c)2017": "Company © 2017",
-  "( c ) 2017": "© 2017",
-  "( c     ) 2017": "© 2017",
-  "( c )2017": "© 2017",
-  "Company (c)  2017": "Company © 2017",
+  "Company (c)2017":    "Company © 2017",
+  "( c ) 2017":         "© 2017",
+  "( c     ) 2017":     "© 2017",
+  "( c )2017":          "© 2017",
+  "Company (c)  2017":  "Company © 2017",
   "Company (c)   2017": "Company © 2017",
-  "Company  (c) 2017": "Company © 2017",
+  "Company  (c) 2017":  "Company © 2017",
   "Company   (c) 2017": "Company © 2017",
-  "Company ©    2017": "Company © 2017",
+  "Company ©    2017":  "Company © 2017",
 
   // exponents
-  "100 km3": "100 km³",
+  "100 km3":            "100 km³",
   // plus-minus
-  "+-": "±",
+  "+-":                 "±",
   // sound recording copyright
-  "Company (p)2017": "Company ℗ 2017",
-  "( p ) 2017": "℗ 2017",
-  "( p     ) 2017": "℗ 2017",
-  "( p )2017": "℗ 2017",
-  "Company (p)  2017": "Company ℗ 2017",
+  "Company (p)2017":    "Company ℗ 2017",
+  "( p ) 2017":         "℗ 2017",
+  "( p     ) 2017":     "℗ 2017",
+  "( p )2017":          "℗ 2017",
+  "Company (p)  2017":  "Company ℗ 2017",
   "Company (p)   2017": "Company ℗ 2017",
-  "Company  (p) 2017": "Company ℗ 2017",
+  "Company  (p) 2017":  "Company ℗ 2017",
   "Company   (p) 2017": "Company ℗ 2017",
-  "Company ℗    2017": "Company ℗ 2017",
+  "Company ℗    2017":  "Company ℗ 2017",
   //registered trademark
-  "Company (r)": "Company®",
-  "Company ( r )": "Company®",
+  "Company (r)":        "Company®",
+  "Company ( r )":      "Company®",
   //service trademark
-  "Company (sm)": "Company℠",
-  "Company ( sm )": "Company℠",
+  "Company (sm)":       "Company℠",
+  "Company ( sm )":     "Company℠",
   // trademark
-  "Company (tm)": "Company™",
-  "Company ( tm )": "Company™",
+  "Company (tm)":       "Company™",
+  "Company ( tm )":     "Company™",
   // number sign
-  "word # 9": "word #9",
+  "word # 9":           "word #9",
 
   // spaces
-  "Sentence and… ?": "Sentence and…?",
-  "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
-  "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
+  "Sentence and… ?":                         "Sentence and…?",
+  "🥳 word 🥳 word 🥳":                      "🥳 word 🥳 word 🥳",
+  "🥳 word 🥳 word 🥳":                      "🥳 word 🥳 word 🥳",
   // nbsp
-  "v a v a v": "v a v a v",
-  "The product X is missing the feature Y.":
-  "The product X is missing the feature Y.",
+  "v a v a v":                               "v a v a v",
+  "The product X is missing the feature Y.": "The product X is missing the feature Y.",
 
-
-  "Sputnik V": "Sputnik V",
-  "Človek Č": "Človek Č",
-  "© V Inc." : "© V Inc.",
-  "bola to I. kapitola" : "bola to I. kapitola",
-  "url_to_image_5.jpg" : "url_to_image_5.jpg",
-  "pán Šťastný" : "pán Šťastný",
-  "pán ŠŤASTNÝ" : "pán ŠŤASTNÝ",
-  "One sentence ends. A bad apple." : "One sentence ends. A bad apple.",
-  "One sentence ends? A bad apple." : "One sentence ends? A bad apple.",
-  "One sentence ends! A bad apple." : "One sentence ends! A bad apple.",
-  "sentence; C-level executive" : "sentence; C-level executive",
-  "sentence: C-level executive" : "sentence: C-level executive",
-  "sentence, C-level executive" : "sentence, C-level executive",
-  "I’d say… A-player" : "I’d say… A-player",
-  "sentence (brackets) A-player" : "sentence (brackets) A-player",
-  "sentence [brackets] A-player" : "sentence [brackets] A-player",
-  "sentence {brackets} A-player" : "sentence {brackets} A-player",
-  "A × A" : "A × A",
+  "Sputnik V":                       "Sputnik V",
+  "Človek Č":                        "Človek Č",
+  "© V Inc.":                        "© V Inc.",
+  "bola to I. kapitola":             "bola to I. kapitola",
+  "url_to_image_5.jpg":              "url_to_image_5.jpg",
+  "pán Šťastný":                     "pán Šťastný",
+  "pán ŠŤASTNÝ":                     "pán ŠŤASTNÝ",
+  "One sentence ends. A bad apple.": "One sentence ends. A bad apple.",
+  "One sentence ends? A bad apple.": "One sentence ends? A bad apple.",
+  "One sentence ends! A bad apple.": "One sentence ends! A bad apple.",
+  "sentence; C-level executive":     "sentence; C-level executive",
+  "sentence: C-level executive":     "sentence: C-level executive",
+  "sentence, C-level executive":     "sentence, C-level executive",
+  "I’d say… A-player":               "I’d say… A-player",
+  "sentence (brackets) A-player":    "sentence (brackets) A-player",
+  "sentence [brackets] A-player":    "sentence [brackets] A-player",
+  "sentence {brackets} A-player":    "sentence {brackets} A-player",
+  "A × A":                           "A × A",
 
   // "the U.S. and" : "the U.S. and", not yet supported
 
   //case
-  CMSko: "CMSko",
+  CMSko:    "CMSko",
   cAPSLOCK: "Capslock",
 
   // publication identifiers
-  "ISSN 0000-0000": "ISSN 0000-0000",
+  "ISSN 0000-0000":          "ISSN 0000-0000",
   "ISBN: 978-80-86102-81-8": "ISBN: 978-80-86102-81-8",
 
   // double primes
@@ -175,241 +215,222 @@ let testModules = {
 
 let testRemoveLines = {
   "remove\n\nlines": "remove\nlines",
-}
+};
 
 let testKeepLines = {
   "keep\n\nlines": "keep\n\nlines",
-}
-
+};
 
 let testRemoveWhitespacesBeforeMarkdownList = {
-  "  - list item": "- list item",
-  "  * list item": "* list item",
+  "  - list item":   "- list item",
+  "  * list item":   "* list item",
   "\t\t- list item": "- list item",
   "\t\t* list item": "* list item",
-}
+};
 
 let testKeepWhitespacesBeforeMarkdownList = {
-  "  - list item": "  - list item",
-  "  * list item": "  * list item",
+  "  - list item":   "  - list item",
+  "  * list item":   "  * list item",
   "\t\t- list item": "\t\t- list item",
   "\t\t* list item": "\t\t* list item",
-}
-
+};
 
 let testModuleDoubleQuotesEnUs = {
   // double quotes
   "English „English„ „English„ English": "English “English” “English” English",
-  "He said: \"Here’s a 12\" record.\"": "He said: “Here’s a 12″ record.”",
-  "12′ 45\"": "12′ 45″",
-  "3° 5′ 30\"": "3° 5′ 30″",
-  "12\"3'00°": "12″3′00°",
+  'He said: "Here’s a 12" record."':     "He said: “Here’s a 12″ record.”",
+  '12′ 45"':                             "12′ 45″",
+  '3° 5′ 30"':                           "3° 5′ 30″",
+  "12\"3'00°":                           "12″3′00°",
 
-  "He was ok. \"He was ok \".": 
-  "He was ok. “He was ok.”",
+  'He was ok. "He was ok ".': "He was ok. “He was ok.”",
 
-  "Ask “what if (the thing)…”":
-  "Ask “what if (the thing)…”"
-}
+  "Ask “what if (the thing)…”": "Ask “what if (the thing)…”",
+};
 
 let testModuleDoubleQuotesDeDe = {
   // double quotes
   "English „English„ „English„ English": "English „English“ „English“ English",
-  "He said: \"Here’s a 12\" record.\"": "He said: „Here’s a 12″ record.“",
-  "12′ 45\"": "12′ 45″",
-  "3° 5′ 30\"": "3° 5′ 30″",
-  "12\"3'00°": "12″3′00°",
-}
+  'He said: "Here’s a 12" record."':     "He said: „Here’s a 12″ record.“",
+  '12′ 45"':                             "12′ 45″",
+  '3° 5′ 30"':                           "3° 5′ 30″",
+  "12\"3'00°":                           "12″3′00°",
+};
 
 let testModuleDoubleQuotesSk = {
   ...testModuleDoubleQuotesDeDe,
-}
+};
 
 let testModuleDoubleQuotesCs = {
   ...testModuleDoubleQuotesDeDe,
-}
+};
 
 let testModuleDoubleQuotesRue = {
   // double quotes
   "English „English„ „English„ English": "English «English» «English» English",
-  "He said: \"Here’s a 12\" record.\"": "He said: «Here’s a 12″ record.»",
-  "12′ 45\"": "12′ 45″",
-  "3° 5′ 30\"": "3° 5′ 30″",
-  "12\"3'00°": "12″3′00°",
-}
-
-
+  'He said: "Here’s a 12" record."':     "He said: «Here’s a 12″ record.»",
+  '12′ 45"':                             "12′ 45″",
+  '3° 5′ 30"':                           "3° 5′ 30″",
+  "12\"3'00°":                           "12″3′00°",
+};
 
 let testModuleSingleQuotesEnUs = {
   // single quotes
   "Let's test this: “however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said”":
     "Let’s test this: “however, ‘quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,’ he said”",
-  "I'''m": "I’m",
+  "I'''m":  "I’m",
   "I''''m": "I’m",
   "He said: “What about 'name' and 'other name'?”":
     "He said: “What about ‘name’ and ‘other name’?”",
   "Q1 '23 ": "Q1 ’23", // false positive
-}
+};
 
 let testModuleSingleQuotesDeDe = {
   // single quotes
   "Let's test this: “however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said”":
     "Let’s test this: „however, ‚quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,‘ he said“",
-  "I'''m": "I’m",
+  "I'''m":  "I’m",
   "I''''m": "I’m",
   "He said: “What about 'name' and 'other name'?”":
     "He said: „What about ‚name‘ and ‚other name‘?“",
-}
+};
 
 let testModuleSingleQuotesSk = {
-  ...testModuleSingleQuotesDeDe
-}
+  ...testModuleSingleQuotesDeDe,
+};
 
 let testModuleSingleQuotesCs = {
-  ...testModuleSingleQuotesDeDe
-}
+  ...testModuleSingleQuotesDeDe,
+};
 
 let testModuleSingleQuotesRue = {
   // single quotes
   "Let's test this: “however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said”":
     "Let’s test this: «however, ‹quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,› he said»",
-  "I'''m": "I’m",
+  "I'''m":  "I’m",
   "I''''m": "I’m",
   "He said: “What about 'name' and 'other name'?”":
     "He said: «What about ‹name› and ‹other name›?»",
-}
-
+};
 
 let testModuleAbbreviationsEnUs = {
   // abbreviations
-  "(e.g.)": "(e.g.)",
-  "a.m.": "a.m.",
-  "5 a.m.": "5 a.m.",
-  "CH. CH. CH. Lambert": "CH.CH.CH. Lambert",
-  "the U.S.": "the U.S.",
-  "e.g. 🥳": "e.g. 🥳",
-  "i. e. 🥳": "i.e. 🥳",
+  "(e.g.)":                          "(e.g.)",
+  "a.m.":                            "a.m.",
+  "5 a.m.":                          "5 a.m.",
+  "CH. CH. CH. Lambert":             "CH.CH.CH. Lambert",
+  "the U.S.":                        "the U.S.",
+  "e.g. 🥳":                         "e.g. 🥳",
+  "i. e. 🥳":                        "i.e. 🥳",
   // punctuation trimming
   "č., s., fol., e.g., i.e., str.,": "č., s., fol., e.g., i.e., str.,",
 };
 
 let testModuleAbbreviationsDeDe = {
   // abbreviations
-  "(e.g.)": "(e. g.)",
-  "a.m.": "a. m.",
-  "5 a.m.": "5 a. m.",
-  "CH. CH. CH. Lambert": "CH. CH. CH. Lambert",
-  "the U.S.": "the U. S.",
+  "(e.g.)":                          "(e. g.)",
+  "a.m.":                            "a. m.",
+  "5 a.m.":                          "5 a. m.",
+  "CH. CH. CH. Lambert":             "CH. CH. CH. Lambert",
+  "the U.S.":                        "the U. S.",
   // punctuation trimming
   "č., s., fol., e.g., i.e., str.,": "č., s., fol., e. g., i. e., str.,",
-}
+};
 
 let testModuleAbbreviationsSk = {
-  ...testModuleAbbreviationsDeDe
-}
+  ...testModuleAbbreviationsDeDe,
+};
 
 let testModuleAbbreviationsCs = {
-  ...testModuleAbbreviationsDeDe
-}
+  ...testModuleAbbreviationsDeDe,
+};
 
 let testModuleAbbreviationsRue = {
-  ...testModuleAbbreviationsDeDe
-}
+  ...testModuleAbbreviationsDeDe,
+};
 
 let testModuleNbsp = {
-  "The product X is missing the feature Y.":
-  "The product X is missing the feature Y.",
-
+  "The product X is missing the feature Y.": "The product X is missing the feature Y.",
 
   "Sputnik V": "Sputnik V",
-  "Človek Č": "Človek Č",
-  "© V Inc." : "© V Inc.",
-  
+  "Človek Č":  "Človek Č",
+  "© V Inc.":  "© V Inc.",
+
   // false positives
-  "bola to I. kapitola" : "bola to I. kapitola",
-  "pán Šťastný" : "pán Šťastný",
-  "pán ŠŤASTNÝ" : "pán ŠŤASTNÝ",
-  "One sentence ends. A bad apple." : "One sentence ends. A bad apple.",
-  "One sentence ends? A bad apple." : "One sentence ends? A bad apple.",
-  "One sentence ends! A bad apple." : "One sentence ends! A bad apple.",
-  "sentence; C-level executive" : "sentence; C-level executive",
-  "sentence: C-level executive" : "sentence: C-level executive",
-  "sentence, C-level executive" : "sentence, C-level executive",
-  "I’d say… A-player" : "I’d say… A-player",
-  "sentence (brackets) A-player" : "sentence (brackets) A-player",
-  "sentence [brackets] A-player" : "sentence [brackets] A-player",
-  "sentence {brackets} A-player" : "sentence {brackets} A-player",
-  "A × A" : "A × A",
+  "bola to I. kapitola":             "bola to I. kapitola",
+  "pán Šťastný":                     "pán Šťastný",
+  "pán ŠŤASTNÝ":                     "pán ŠŤASTNÝ",
+  "One sentence ends. A bad apple.": "One sentence ends. A bad apple.",
+  "One sentence ends? A bad apple.": "One sentence ends? A bad apple.",
+  "One sentence ends! A bad apple.": "One sentence ends! A bad apple.",
+  "sentence; C-level executive":     "sentence; C-level executive",
+  "sentence: C-level executive":     "sentence: C-level executive",
+  "sentence, C-level executive":     "sentence, C-level executive",
+  "I’d say… A-player":               "I’d say… A-player",
+  "sentence (brackets) A-player":    "sentence (brackets) A-player",
+  "sentence [brackets] A-player":    "sentence [brackets] A-player",
+  "sentence {brackets} A-player":    "sentence {brackets} A-player",
+  "A × A":                           "A × A",
 
   // false positive for filenames
-  "url-to-image-5.jpg" : 
-  "url-to-image-5.jpg",
+  "url-to-image-5.jpg": "url-to-image-5.jpg",
 
-  "url_to_image_5.jpg" : 
-  "url_to_image_5.jpg",
+  "url_to_image_5.jpg": "url_to_image_5.jpg",
 
-  "url%to%image%5.jpg" : 
-  "url%to%image%5.jpg",
+  "url%to%image%5.jpg": "url%to%image%5.jpg",
 
-  "url to image 5.jpg" : 
-  "url to image 5.jpg",
+  "url to image 5.jpg": "url to image 5.jpg",
 
-  "URL-TO-IMAGE-5.JPG" : 
-  "URL-TO-IMAGE-5.JPG",
+  "URL-TO-IMAGE-5.JPG": "URL-TO-IMAGE-5.JPG",
 
-  "URL_TO_IMAGE_5.JPG" : 
-  "URL_TO_IMAGE_5.JPG",
+  "URL_TO_IMAGE_5.JPG": "URL_TO_IMAGE_5.JPG",
 
-  "URL%TO%IMAGE%5.JPG" : 
-  "URL%TO%IMAGE%5.JPG",
+  "URL%TO%IMAGE%5.JPG": "URL%TO%IMAGE%5.JPG",
 
-  "URL TO IMAGE 5.JPG" : 
-  "URL TO IMAGE 5.JPG",
-}
+  "URL TO IMAGE 5.JPG": "URL TO IMAGE 5.JPG",
+};
 
 let testModuleNbspEnUs = {
   ...testModuleNbsp,
   // false positives
-  "When I talk" : "When I talk", // do not add nbsp before I
-  "“qouted part” A capital letter" : "“qouted part” A capital letter",
-  "qouted part’ A capital letter" : "qouted part’ A capital letter",
-}
+  "When I talk":                    "When I talk", // do not add nbsp before I
+  "“qouted part” A capital letter": "“qouted part” A capital letter",
+  "qouted part’ A capital letter":  "qouted part’ A capital letter",
+};
 
 let testModuleNbspDeDe = {
   ...testModuleNbsp,
-  "Vzorka I" : "Vzorka I",
-  "Vzorka I je fajn" : "Vzorka I je fajn", // remove nbsp after I
-  "Vzorka I je fajn" : "Vzorka I je fajn", // remove hairSpace after I
-  "Vzorka I je fajn" : "Vzorka I je fajn", // remove narrowNbsp after I
+  "Vzorka I":         "Vzorka I",
+  "Vzorka I je fajn": "Vzorka I je fajn", // remove nbsp after I
+  "Vzorka I je fajn": "Vzorka I je fajn", // remove hairSpace after I
+  "Vzorka I je fajn": "Vzorka I je fajn", // remove narrowNbsp after I
 
   // false positives
-  "„qouted part“ A capital letter" : "„qouted part“ A capital letter",
-  "apostrophe’ A capital letter" : "apostrophe’ A capital letter"
-}
+  "„qouted part“ A capital letter": "„qouted part“ A capital letter",
+  "apostrophe’ A capital letter":   "apostrophe’ A capital letter",
+};
 
 let testModuleNbspSk = {
-  ...testModuleNbspDeDe
-}
+  ...testModuleNbspDeDe,
+};
 
 let testModuleNbspCs = {
-  ...testModuleNbspDeDe
-}
+  ...testModuleNbspDeDe,
+};
 
 let testModuleNbspRue = {
   ...testModuleNbsp,
-  "Vzorka I" : "Vzorka I",
-  "Vzorka I je fajn" : "Vzorka I je fajn", // remove nbsp after I
-  "Vzorka I je fajn" : "Vzorka I je fajn", // remove hairSpace after I
-  "Vzorka I je fajn" : "Vzorka I je fajn", // remove narrowNbsp after I
+  "Vzorka I":         "Vzorka I",
+  "Vzorka I je fajn": "Vzorka I je fajn", // remove nbsp after I
+  "Vzorka I je fajn": "Vzorka I je fajn", // remove hairSpace after I
+  "Vzorka I je fajn": "Vzorka I je fajn", // remove narrowNbsp after I
 
   // false positives
-  "«qouted part» A capital letter" : "«qouted part» A capital letter",
-  "apostrophe’ A capital letter" : "apostrophe’ A capital letter"
-}
-
+  "«qouted part» A capital letter": "«qouted part» A capital letter",
+  "apostrophe’ A capital letter":   "apostrophe’ A capital letter",
+};
 
 let testModuleCombinations = {
-
   /*
    Selected combination of rules processed within modules that may clash.
    */
@@ -422,17 +443,17 @@ let testModuleCombinations = {
   /*	Combination of resolving issues with ellipsis and brackets together.
       In scientific discourse, […] is used to signify deliberately omitted
       parts (e.g. of a quotation) */
-  "quote [...]with parts left out": "quote […] with parts left out",
-  "quote[…] with parts left out": "quote […] with parts left out",
-  "quote [ ...] with parts left out": "quote […] with parts left out",
+  "quote [...]with parts left out":    "quote […] with parts left out",
+  "quote[…] with parts left out":      "quote […] with parts left out",
+  "quote [ ...] with parts left out":  "quote […] with parts left out",
   "quote [.... ] with parts left out": "quote […] with parts left out",
   "quote [ ….. ] with parts left out": "quote […] with parts left out",
 
   // combination of dash.js and nbsp.js for percent, permille, permyriad
-  "20 ‱ – 30 ‱": "20 ‱–30 ‱",
+  "20 ‱ – 30 ‱": "20‱–30‱",
 };
 
-describe('Tests that all modules are plugged for en-us', () => {
+describe("Tests that all modules are plugged for en-us", () => {
   let testCase = {
     ...testModules,
     ...testModuleCombinations,
@@ -441,45 +462,41 @@ describe('Tests that all modules are plugged for en-us', () => {
     ...testModuleAbbreviationsEnUs,
     ...testModuleNbspEnUs,
   };
-  
-  let testCaseDefault = {
-    ...testCase,   
-    ...testRemoveLines,
-    ...testRemoveWhitespacesBeforeMarkdownList
-  }
 
-  Object.keys(testCaseDefault).forEach((key) => {
-    it("integration test w config: default", () => {
-      assert.strictEqual(fixTypos(key, "en-us", configDefault), testCaseDefault[key]);
-    });  
-  });
-  
-  let testCaseKeepLines = {
-    ...testCase,
-    ...testKeepLines
-  }
+  describe("with default config", () => {
+    let testCaseDefault = {
+      ...testCase,
+      ...testRemoveLines,
+      ...testRemoveWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseKeepLines).forEach((key) => {
-    it("integration test w config: removeLines=false", () => {
-      assert.strictEqual(fixTypos(key, "en-us", configKeepLines), testCaseKeepLines[key]);
-    });
+    runAllVersions(testCaseDefault, "en-us", configDefault);
   });
 
-  let testCaseKeepWhitespacesBeforeMarkdownList = {
-    ...testCase,
-    ...testKeepWhitespacesBeforeMarkdownList
-  }
+  describe("with removeLines=false", () => {
+    let testCaseKeepLines = {
+      ...testCase,
+      ...testKeepLines,
+    };
 
-  Object.keys(testCaseKeepWhitespacesBeforeMarkdownList).forEach((key) => {
-    it("integration test w config: removeWhitespacesBeforeMarkdownList=false", () => {
-      assert.strictEqual(fixTypos(key, "en-us", configKeepWhitespacesBeforeMarkdownList), testCaseKeepWhitespacesBeforeMarkdownList[key]);
-    });
-  });  
+    runAllVersions(testCaseKeepLines, "en-us", configKeepLines);
+  });
+
+  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
+    let testCaseKeepWhitespacesBeforeMarkdownList = {
+      ...testCase,
+      ...testKeepWhitespacesBeforeMarkdownList,
+    };
+
+    runAllVersions(
+      testCaseKeepWhitespacesBeforeMarkdownList,
+      "en-us",
+      configKeepWhitespacesBeforeMarkdownList
+    );
+  });
 });
 
-
-
-describe('Tests that all modules are plugged for de-de', () => {
+describe("Tests that all modules are plugged for de-de", () => {
   let testCase = {
     ...testModules,
     ...testModuleDoubleQuotesDeDe,
@@ -488,183 +505,166 @@ describe('Tests that all modules are plugged for de-de', () => {
     ...testModuleNbspDeDe,
   };
 
-  let testCaseDefault = {
-    ...testCase,
-    ...testRemoveLines,
-    ...testRemoveWhitespacesBeforeMarkdownList
-  }
+  describe("with default config", () => {
+    let testCaseDefault = {
+      ...testCase,
+      ...testRemoveLines,
+      ...testRemoveWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseDefault).forEach((key) => {
-    it("integration test w config: default", () => {
-      assert.strictEqual(fixTypos(key, "de-de", configDefault), testCaseDefault[key]);
-    });
+    runAllVersions(testCaseDefault, "de-de", configDefault);
   });
 
-  let testCaseKeepLines = {
-    ...testCase,
-    ...testKeepLines
-  }
+  describe("with removeLines=false", () => {
+    let testCaseKeepLines = {
+      ...testCase,
+      ...testKeepLines,
+    };
 
-  Object.keys(testCaseKeepLines).forEach((key) => {
-    it("integration test w config: removeLines=false", () => {
-      assert.strictEqual(fixTypos(key, "de-de", configKeepLines), testCaseKeepLines[key]);
-    });
+    runAllVersions(testCaseKeepLines, "de-de", configKeepLines);
   });
 
-  let testCaseKeepWhitespacesBeforeMarkdownList = {
-    ...testCase,
-    ...testKeepWhitespacesBeforeMarkdownList
-  }
+  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
+    let testCaseKeepWhitespacesBeforeMarkdownList = {
+      ...testCase,
+      ...testKeepWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseKeepWhitespacesBeforeMarkdownList).forEach((key) => {
-    it("integration test w config: removeWhitespacesBeforeMarkdownList=false", () => {
-      assert.strictEqual(fixTypos(key, "de-de", configKeepWhitespacesBeforeMarkdownList), testCaseKeepWhitespacesBeforeMarkdownList[key]);
-    });
+    runAllVersions(
+      testCaseKeepWhitespacesBeforeMarkdownList,
+      "de-de",
+      configKeepWhitespacesBeforeMarkdownList
+    );
   });
 });
 
-
-describe('Tests that all modules are plugged for sk', () => {
+describe("Tests that all modules are plugged for sk", () => {
   let testCase = {
     ...testModules,
     ...testModuleDoubleQuotesSk,
     ...testModuleSingleQuotesSk,
     ...testModuleAbbreviationsSk,
-    ...testModuleNbspSk
-
+    ...testModuleNbspSk,
   };
 
-  let testCaseDefault = {
-    ...testCase,
-    ...testRemoveLines,
-    ...testRemoveWhitespacesBeforeMarkdownList
-  }
+  describe("with default config", () => {
+    let testCaseDefault = {
+      ...testCase,
+      ...testRemoveLines,
+      ...testRemoveWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseDefault).forEach((key) => {
-    it("integration test w config: default", () => {
-      assert.strictEqual(fixTypos(key, "sk", configDefault), testCaseDefault[key]);
-    });
+    runAllVersions(testCaseDefault, "sk", configDefault);
   });
 
-  let testCaseKeepLines = {
-    ...testCase,
-    ...testKeepLines
-  }
+  describe("with removeLines=false", () => {
+    let testCaseKeepLines = {
+      ...testCase,
+      ...testKeepLines,
+    };
 
-  Object.keys(testCaseKeepLines).forEach((key) => {
-    it("integration test w config: removeLines=false", () => {
-      assert.strictEqual(fixTypos(key, "sk", configKeepLines), testCaseKeepLines[key]);
-    });
+    runAllVersions(testCaseKeepLines, "sk", configKeepLines);
   });
 
-  let testCaseKeepWhitespacesBeforeMarkdownList = {
-    ...testCase,
-    ...testKeepWhitespacesBeforeMarkdownList
-  }
+  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
+    let testCaseKeepWhitespacesBeforeMarkdownList = {
+      ...testCase,
+      ...testKeepWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseKeepWhitespacesBeforeMarkdownList).forEach((key) => {
-    it("integration test w config: removeWhitespacesBeforeMarkdownList=false", () => {
-      assert.strictEqual(fixTypos(key, "sk", configKeepWhitespacesBeforeMarkdownList), testCaseKeepWhitespacesBeforeMarkdownList[key]);
-    });
+    runAllVersions(
+      testCaseKeepWhitespacesBeforeMarkdownList,
+      "sk",
+      configKeepWhitespacesBeforeMarkdownList
+    );
   });
 });
 
-
-
-describe('Tests that all modules are plugged for cs', () => {
+describe("Tests that all modules are plugged for cs", () => {
   let testCase = {
     ...testModules,
     ...testModuleDoubleQuotesCs,
     ...testModuleSingleQuotesCs,
     ...testModuleAbbreviationsCs,
-    ...testModuleNbspCs
-
+    ...testModuleNbspCs,
   };
 
-  let testCaseDefault = {
-    ...testCase,
-    ...testRemoveLines,
-    ...testRemoveWhitespacesBeforeMarkdownList
-  }
+  describe("with default config", () => {
+    let testCaseDefault = {
+      ...testCase,
+      ...testRemoveLines,
+      ...testRemoveWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseDefault).forEach((key) => {
-    it("integration test w config: default", () => {
-      assert.strictEqual(fixTypos(key, "cs", configDefault), testCaseDefault[key]);
-    });
+    runAllVersions(testCaseDefault, "cs", configDefault);
   });
 
-  let testCaseKeepLines = {
-    ...testCase,
-    ...testKeepLines
-  }
+  describe("with removeLines=false", () => {
+    let testCaseKeepLines = {
+      ...testCase,
+      ...testKeepLines,
+    };
 
-  Object.keys(testCaseKeepLines).forEach((key) => {
-    it("integration test w config: removeLines=false", () => {
-      assert.strictEqual(fixTypos(key, "cs", configKeepLines), testCaseKeepLines[key]);
-    });
+    runAllVersions(testCaseKeepLines, "cs", configKeepLines);
   });
 
-  let testCaseKeepWhitespacesBeforeMarkdownList = {
-    ...testCase,
-    ...testKeepWhitespacesBeforeMarkdownList
-  }
+  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
+    let testCaseKeepWhitespacesBeforeMarkdownList = {
+      ...testCase,
+      ...testKeepWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseKeepWhitespacesBeforeMarkdownList).forEach((key) => {
-    it("integration test w config: removeWhitespacesBeforeMarkdownList=false", () => {
-      assert.strictEqual(fixTypos(key, "cs", configKeepWhitespacesBeforeMarkdownList), testCaseKeepWhitespacesBeforeMarkdownList[key]);
-    });
+    runAllVersions(
+      testCaseKeepWhitespacesBeforeMarkdownList,
+      "cs",
+      configKeepWhitespacesBeforeMarkdownList
+    );
   });
 });
 
-
-
-describe('Tests that all modules are plugged for rue', () => {
+describe("Tests that all modules are plugged for rue", () => {
   let testCase = {
     ...testModules,
     ...testModuleDoubleQuotesRue,
     ...testModuleSingleQuotesRue,
     ...testModuleAbbreviationsRue,
-    ...testModuleNbspRue
-
+    ...testModuleNbspRue,
   };
 
-  let testCaseDefault = {
-    ...testCase,
-    ...testRemoveLines,
-    ...testRemoveWhitespacesBeforeMarkdownList
-  }
+  describe("with default config", () => {
+    let testCaseDefault = {
+      ...testCase,
+      ...testRemoveLines,
+      ...testRemoveWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseDefault).forEach((key) => {
-    it("integration test w config: default", () => {
-      assert.strictEqual(fixTypos(key, "rue", configDefault), testCaseDefault[key]);
-    });
+    runAllVersions(testCaseDefault, "rue", configDefault);
   });
 
-  let testCaseKeepLines = {
-    ...testCase,
-    ...testKeepLines
-  }
+  describe("with removeLines=false", () => {
+    let testCaseKeepLines = {
+      ...testCase,
+      ...testKeepLines,
+    };
 
-  Object.keys(testCaseKeepLines).forEach((key) => {
-    it("integration test w config: removeLines=false", () => {
-      assert.strictEqual(fixTypos(key, "rue", configKeepLines), testCaseKeepLines[key]);
-    });
+    runAllVersions(testCaseKeepLines, "rue", configKeepLines);
   });
 
-  let testCaseKeepWhitespacesBeforeMarkdownList = {
-    ...testCase,
-    ...testKeepWhitespacesBeforeMarkdownList
-  }
+  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
+    let testCaseKeepWhitespacesBeforeMarkdownList = {
+      ...testCase,
+      ...testKeepWhitespacesBeforeMarkdownList,
+    };
 
-  Object.keys(testCaseKeepWhitespacesBeforeMarkdownList).forEach((key) => {
-    it("integration test w config: removeWhitespacesBeforeMarkdownList=false", () => {
-      assert.strictEqual(fixTypos(key, "rue", configKeepWhitespacesBeforeMarkdownList), testCaseKeepWhitespacesBeforeMarkdownList[key]);
-    });
+    runAllVersions(
+      testCaseKeepWhitespacesBeforeMarkdownList,
+      "rue",
+      configKeepWhitespacesBeforeMarkdownList
+    );
   });
 });
 
-
-describe('Test if markdown ticks are kept (integration test) (en-us):\n', () => {
+describe("Test if markdown ticks are kept (integration test) (en-us):\n", () => {
   let testCase = {
     "```\ncode\n```": "```\ncode\n```",
 
@@ -683,15 +683,5 @@ describe('Test if markdown ticks are kept (integration test) (en-us):\n', () => 
     "e.g. `something`": "e.g. `something`",
   };
 
-  Object.keys(testCase).forEach((key) => {
-
-    it("keepMarkdownCodeBlocks: true” configuration", () => {
-      assert.strictEqual(
-        fixTypos(
-          key, 
-          "en-us",
-          configKeepMarkdownCodeBlocks
-        ), testCase[key]);
-    });
-  });
+  runAllVersions(testCase, "en-us", configKeepMarkdownCodeBlocks);
 });

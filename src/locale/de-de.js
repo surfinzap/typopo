@@ -1,14 +1,14 @@
 const quotes = {
-  leftDoubleQuote : 				"„",
-  rightDoubleQuote : 				"“",
-  leftSingleQuote : 				"‚",
-  rightSingleQuote : 				"‘",
+  leftDoubleQuote:  "„",
+  rightDoubleQuote: "“",
+  leftSingleQuote:  "‚",
+  rightSingleQuote: "‘",
 };
 
 const numbers = {
-  ordinalIndicator :				"\\.",
-  romanOrdinalIndicator :		"\\.",
-}
+  ordinalIndicator:      "\\.",
+  romanOrdinalIndicator: "\\.",
+};
 
 const singleWordAbbreviations = [
   "S",
@@ -29,11 +29,13 @@ const singleWordAbbreviations = [
   "usw",
   "geb",
   "gest",
-  "u"
-]
+  "u",
+];
 
-// Disregard correct spelling in your locale
-// and provide abbreviations in format “abbr abbr abbr…”
+/*
+  The list of common multi-word abbrevations that are
+  stripped down of its micro-typography treatment.
+*/
 const multipleWordAbbreviations = [
   "b w",
   "d h",
@@ -59,12 +61,11 @@ const multipleWordAbbreviations = [
   "u a m",
   "v u Z",
   "Ges m b H",
-]
-
+];
 
 export default {
   quotes,
   numbers,
   singleWordAbbreviations,
-  multipleWordAbbreviations
-}
+  multipleWordAbbreviations,
+};

@@ -1,4 +1,3 @@
-// eslint.config.mjs
 import js from '@eslint/js';
 
 // Define globals for the environments you want to support

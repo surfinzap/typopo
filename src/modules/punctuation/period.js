@@ -1,13 +1,12 @@
 /* replace 2 periods at the end of the sentence with a single period */
 export function removeExtraPeriod(string) {
-
-
+  // prettier-ignore
   return string.replace(
     new RegExp(
-      "\\.{2}(?![\\\\/])",
+      `\\.{2}(?![\\\\/])`,
       "g"
     ),
-    "."
+    `.`
   );
 }
 
