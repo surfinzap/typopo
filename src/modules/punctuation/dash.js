@@ -71,6 +71,7 @@ export function fixDashesBetweenWords(string, locale) {
   so there is a dash -		→ so there is a dash—
 
   @param {string} string — input text for identification
+  @param {string} locale: locale option
   @returns {string} — output with locale-specific dash and spacing between a word and a punctuation.
 */
 export function fixHyphenBetweenWordAndPunctuation(string, locale) {
@@ -168,6 +169,7 @@ export function fixDashBetweenPercentageRange(string) {
   from either one side or both sides of the dash
 
   @param {string} string — input text for identification
+  @param {string} locale: locale option
   @returns {string} — output with dash between ordinal numbers
 */
 export function fixDashBetweenOrdinalNumbers(string, locale) {
@@ -191,6 +193,7 @@ export function fixDashBetweenOrdinalNumbers(string, locale) {
   Fixes dashes
 
   @param {string} string — input text for identification
+  @param {string} locale: locale option
   @returns {string} — output with fixed dashes
 */
 export function fixDash(string, locale) {

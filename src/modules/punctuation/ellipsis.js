@@ -268,6 +268,7 @@ export function fixEllipsisBetweenSentences(string, locale) {
   Sentence ending … → Sentence ending…
 
   @param {string} string — input text for identification
+  @param {string} locale: locale option
   @returns {string} — output with fixed spacing
 */
 export function fixAposiopesisEndingParagraph(string, locale) {
@@ -285,6 +286,11 @@ export function fixAposiopesisEndingParagraph(string, locale) {
 
 //
 
+/**
+  @param {string} string — input text for identification
+  @param {string} locale: locale option
+  @returns {string} — output with fixed ellipsis
+*/
 export function fixEllipsis(string, locale) {
   string = replaceThreeCharsWithEllipsis(string);
   string = fixEllipsisSpacingAroundCommas(string);

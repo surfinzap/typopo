@@ -1,5 +1,9 @@
 import { base } from "../../const.js";
 
+/**
+  @param {string} locale: locale option
+  @returns {string} appropriate spacing for abbreviations based on locale
+*/
 function getAbbreviationSpace(locale) {
   const ABBR_SPACE = {
     "en-us": "",

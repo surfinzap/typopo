@@ -157,6 +157,11 @@ export function addNbspAfterOrdinalNumber(string, locale) {
 
 //
 
+/**
+  @param {string} string: input text for identification
+  @param {string} locale: locale option
+  @returns {string} output with added non-breaking space within ordinal dates
+*/
 export function addNbspWithinOrdinalDate(string, locale) {
   // prettier-ignore
   let replacement = "";
