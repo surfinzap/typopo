@@ -301,9 +301,9 @@ describe("Identify feet and arcminutes following a 1–3 numbers (en-us):\n", ()
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        placeLocaleSingleQuotes(identifySinglePrimes(key, new Locale("en-us")), new Locale("en-us"))
-      ).toBe(unitTestCase[key]);
+      expect(placeLocaleSingleQuotes(identifySinglePrimes(key), new Locale("en-us"))).toBe(
+        unitTestCase[key]
+      );
     });
   });
 
@@ -582,7 +582,7 @@ describe("Replace a single qoute & a single prime with a single quote pair (en-u
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(replaceSinglePrimeWSingleQuote(key, new Locale("en-us"))).toBe(unitTestCase[key]);
+      expect(replaceSinglePrimeWSingleQuote(key)).toBe(unitTestCase[key]);
     });
   });
 

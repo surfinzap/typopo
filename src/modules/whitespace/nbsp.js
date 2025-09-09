@@ -108,7 +108,6 @@ export function addNbspAfterAmpersand(string) {
   We’ll identify and place nbsp for 1- or 2-digit cardinal numbers.
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with nbsp after cardinal numbers
 */
 export function addNbspAfterCardinalNumber(string) {

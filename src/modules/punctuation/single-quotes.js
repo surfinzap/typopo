@@ -174,10 +174,9 @@ export function identifyContractedYears(string) {
   We’re not using base.singleQuoteAdepts variable as commas and low-positioned quotes are ommited
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified single primes as a temporary variable string, e.g. {{typopo__sinlge-prime}}
 */
-export function identifySinglePrimes(string, locale) {
+export function identifySinglePrimes(string) {
   return string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1$2{{typopo__single-prime}}");
 }
 
@@ -366,10 +365,9 @@ export function identifyResidualApostrophes(string) {
 
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with a single quote pair
 */
-export function replaceSinglePrimeWSingleQuote(string, locale) {
+export function replaceSinglePrimeWSingleQuote(string) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
@@ -587,7 +585,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuratio
   string = identifyContractedEnds(string);
 
   /* [2] Identify feet, arcminutes, minutes */
-  string = identifySinglePrimes(string, locale);
+  string = identifySinglePrimes(string);
 
   /* [3] Identify single quote pair around a single word */
   string = identifySingleQuotePairAroundSingleWord(string);
@@ -596,7 +594,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuratio
   string = identifySingleQuotesWithinDoubleQuotes(string);
 
   /* [5] Replace a single qoute & a single prime with a single quote pair */
-  string = replaceSinglePrimeWSingleQuote(string, locale);
+  string = replaceSinglePrimeWSingleQuote(string);
 
   /* [6] Identify residual apostrophes*/
   string = identifyResidualApostrophes(string);
