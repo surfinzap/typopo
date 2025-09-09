@@ -1,4 +1,5 @@
 import { replaceWithOverlapHandling } from "../../utils/regex-overlap.js";
+import { base } from "../../const.js";
 
 //
 
@@ -14,19 +15,19 @@ import { replaceWithOverlapHandling } from "../../utils/regex-overlap.js";
   @param {string} string — input text for identification
   @returns {string} — output with replaced and spaced multiplication sign
 */
-export function fixMultiplicationSignBetweenNumbers(string, locale) {
+export function fixMultiplicationSignBetweenNumbers(string) {
   // prettier-ignore
   return replaceWithOverlapHandling(
     string,
     new RegExp(
-      `([${locale.cardinalNumber}]+)` +
-      `([${locale.spaces}]?[${locale.lowercaseChars}${locale.singlePrime}${locale.doublePrime}]*)` +
-      `([${locale.spaces}][x][${locale.spaces}])` +
-      `([${locale.cardinalNumber}]+)` +
-      `([${locale.spaces}]?[${locale.lowercaseChars}${locale.singlePrime}${locale.doublePrime}]*)`,
+      `([${base.cardinalNumber}]+)` +
+      `([${base.spaces}]?[${base.lowercaseChars}${base.singlePrime}${base.doublePrime}]*)` +
+      `([${base.spaces}][x][${base.spaces}])` +
+      `([${base.cardinalNumber}]+)` +
+      `([${base.spaces}]?[${base.lowercaseChars}${base.singlePrime}${base.doublePrime}]*)`,
       "gi"
     ),
-    `$1$2${locale.nbsp}${locale.multiplicationSign}${locale.nbsp}$4$5`
+    `$1$2${base.nbsp}${base.multiplicationSign}${base.nbsp}$4$5`
   );
 }
 
@@ -43,17 +44,17 @@ export function fixMultiplicationSignBetweenNumbers(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with replaced and spaced multiplication sign
 */
-export function fixMultiplicationSignBetweenWords(string, locale) {
+export function fixMultiplicationSignBetweenWords(string) {
   // prettier-ignore
   return replaceWithOverlapHandling(
     string,
     new RegExp(
-      `([${locale.allChars}]+)` +
-      `([${locale.spaces}][x][${locale.spaces}])` +
-      `([${locale.allChars}]+)`,
+      `([${base.allChars}]+)` +
+      `([${base.spaces}][x][${base.spaces}])` +
+      `([${base.allChars}]+)`,
       "g"
     ),
-    `$1${locale.nbsp}${locale.multiplicationSign}${locale.nbsp}$3`
+    `$1${base.nbsp}${base.multiplicationSign}${base.nbsp}$3`
   );
 }
 
@@ -69,22 +70,22 @@ export function fixMultiplicationSignBetweenWords(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with replaced and spaced multiplication sign
 */
-export function fixMultiplicationSignBetweenNumberAndWord(string, locale) {
+export function fixMultiplicationSignBetweenNumberAndWord(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.cardinalNumber}])` +
-      `([${locale.spaces}]?)` +
+      `([${base.cardinalNumber}])` +
+      `([${base.spaces}]?)` +
       `([x|×])` +
-      `([${locale.spaces}])` +
-      `([${locale.lowercaseChars}]+)`,
+      `([${base.spaces}])` +
+      `([${base.lowercaseChars}]+)`,
       "gi"
     ),
     function ($0, $1, $2, $3, $4, $5) {
       if ($2 == "") {
-        return `${$1}${$2}${locale.multiplicationSign}${locale.nbsp}${$5}`;
+        return `${$1}${$2}${base.multiplicationSign}${base.nbsp}${$5}`;
       }
-      return `${$1}${locale.nbsp}${locale.multiplicationSign}${locale.nbsp}${$5}`;
+      return `${$1}${base.nbsp}${base.multiplicationSign}${base.nbsp}${$5}`;
     }
   );
 }
@@ -100,28 +101,28 @@ export function fixMultiplicationSignBetweenNumberAndWord(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with spaced multiplication sign
 */
-export function fixNbspAroundMultiplicationSign(string, locale) {
+export function fixNbspAroundMultiplicationSign(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.cardinalNumber}]+)` +
-      `([${locale.singlePrime}${locale.doublePrime}])?` +
+      `([${base.cardinalNumber}]+)` +
+      `([${base.singlePrime}${base.doublePrime}])?` +
       `([x|×])` +
-      `([${locale.cardinalNumber}]+)` +
-      `([${locale.singlePrime}${locale.doublePrime}])?`,
+      `([${base.cardinalNumber}]+)` +
+      `([${base.singlePrime}${base.doublePrime}])?`,
       "gi"
     ),
-    `$1$2${locale.nbsp}${locale.multiplicationSign}${locale.nbsp}$4$5`
+    `$1$2${base.nbsp}${base.multiplicationSign}${base.nbsp}$4$5`
   );
 }
 
 //
 
-export function fixMultiplicationSign(string, locale) {
-  string = fixMultiplicationSignBetweenNumbers(string, locale);
-  string = fixMultiplicationSignBetweenWords(string, locale);
-  string = fixMultiplicationSignBetweenNumberAndWord(string, locale);
-  string = fixNbspAroundMultiplicationSign(string, locale);
+export function fixMultiplicationSign(string) {
+  string = fixMultiplicationSignBetweenNumbers(string);
+  string = fixMultiplicationSignBetweenWords(string);
+  string = fixMultiplicationSignBetweenNumberAndWord(string);
+  string = fixNbspAroundMultiplicationSign(string);
 
   return string;
 }

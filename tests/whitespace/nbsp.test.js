@@ -28,7 +28,7 @@ describe("Remove non-breaking space between multi-letter words\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(removeNbspBetweenMultiCharWords(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(removeNbspBetweenMultiCharWords(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixNbsp(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -130,7 +130,7 @@ describe("Add non-breaking space after ampersand\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(addNbspAfterAmpersand(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(addNbspAfterAmpersand(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixNbsp(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -163,7 +163,7 @@ describe("Add non-breaking space after cardinal number\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(addNbspAfterCardinalNumber(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(addNbspAfterCardinalNumber(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixNbsp(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -591,7 +591,7 @@ describe("Add space after symbol, e.g. ©\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("just unit tests", () => {
-      expect(addNbspAfterSymbol(key, "©", new Locale("en-us"))).toBe(testCase[key]);
+      expect(addNbspAfterSymbol(key, "©")).toBe(testCase[key]);
     });
   });
 });
@@ -605,7 +605,7 @@ describe("Replaces various spaces with non-breaking space after symbol, e.g. ©\
 
   Object.keys(testCase).forEach((key) => {
     it("just unit tests", () => {
-      expect(replaceSpacesWithNbspAfterSymbol(key, "©", new Locale("en-us"))).toBe(testCase[key]);
+      expect(replaceSpacesWithNbspAfterSymbol(key, "©")).toBe(testCase[key]);
     });
   });
 });

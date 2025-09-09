@@ -1,10 +1,12 @@
+import { base } from "../../const.js";
+
 function getAbbreviationSpace(locale) {
   const ABBR_SPACE = {
     "en-us": "",
-    "rue":   locale.nbsp,
-    "sk":    locale.nbsp,
-    "cs":    locale.nbsp,
-    "de-de": locale.nbsp,
+    "rue":   base.nbsp,
+    "sk":    base.nbsp,
+    "cs":    base.nbsp,
+    "de-de": base.nbsp,
   };
 
   return ABBR_SPACE[locale.locale];
@@ -24,24 +26,24 @@ function getAbbreviationSpace(locale) {
   */
 export function fixInitials(string, locale) {
   const abbrSpace = getAbbreviationSpace(locale);
-  const initialPattern = `([${locale.uppercaseChars}][${locale.allChars}]?\\.)([${locale.spaces}]?)`;
-  const fullNamePattern = `([${locale.allChars}]{2,}[^\\.])`;
+  const initialPattern = `([${base.uppercaseChars}][${base.allChars}]?\\.)([${base.spaces}]?)`;
+  const fullNamePattern = `([${base.allChars}]{2,}[^\\.])`;
 
   const patterns = [
     // prettier-ignore
     { 
       // "I. FullName"
       pattern: `${initialPattern}${fullNamePattern}`, 
-      replacement: `$1${locale.nbsp}$3` },
+      replacement: `$1${base.nbsp}$3` },
     {
       // "I. I. FullName"
       pattern:     `${initialPattern}${initialPattern}${fullNamePattern}`,
-      replacement: `$1${abbrSpace}$3${locale.space}$5`,
+      replacement: `$1${abbrSpace}$3${base.space}$5`,
     },
     {
       // "I. I. I. FullName"
       pattern:     `${initialPattern}${initialPattern}${initialPattern}${fullNamePattern}`,
-      replacement: `$1${abbrSpace}$3${abbrSpace}$5${locale.space}$7`,
+      replacement: `$1${abbrSpace}$3${abbrSpace}$5${base.space}$7`,
     },
   ];
 
@@ -70,9 +72,9 @@ export function fixInitials(string, locale) {
 */
 export function fixMultipleWordAbbreviations(string, locale) {
   /* Partial patterns for a composition */
-  let precedingNonLatinBoundary = `([^${locale.allChars}${locale.enDash}${locale.emDash}]|^)`;
-  let followingWord = `([${locale.allChars}]|\\D)`;
-  let followingNonLatinBoundary = `([^${locale.allChars}${locale.leftDoubleQuote}${locale.leftSingleQuote}${locale.backtick}\\p{Emoji}]|$)`;
+  let precedingNonLatinBoundary = `([^${base.allChars}${base.enDash}${base.emDash}]|^)`;
+  let followingWord = `([${base.allChars}]|\\D)`;
+  let followingNonLatinBoundary = `([^${base.allChars}${locale.leftDoubleQuote}${locale.leftSingleQuote}${base.backtick}\\p{Emoji}]|$)`;
 
   /* [1] Set locale-specific space between abbreviations */
   const abbrSpace = getAbbreviationSpace(locale);
@@ -83,7 +85,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
     let splitAbbreviation = locale.multipleWordAbbreviations[i].split(" ");
     let abbrevationPattern = "";
     for (let j = 0; j < splitAbbreviation.length; j++) {
-      abbrevationPattern += `(${splitAbbreviation[j]})(\\.)([${locale.spaces}]?)`;
+      abbrevationPattern += `(${splitAbbreviation[j]})(\\.)([${base.spaces}]?)`;
     }
     abbreviationPatterns[i] = abbrevationPattern;
   }
@@ -156,14 +158,14 @@ export function fixSingleWordAbbreviations(string, locale) {
   /* [1] Change single-word abbreviations from all locales abbr. patterns */
   let abbreviationPatterns = [];
   for (let i = 0; i < locale.singleWordAbbreviations.length; i++) {
-    abbreviationPatterns[i] = `(${locale.singleWordAbbreviations[i]})(\\.)([${locale.spaces}]?)`;
+    abbreviationPatterns[i] = `(${locale.singleWordAbbreviations[i]})(\\.)([${base.spaces}]?)`;
   }
 
   /* [2] Identify single-word abbreviations before the word
    */
   // prettier-ignore
-  let precedingNonLatinBoundary = `([^${locale.allChars}${locale.enDash}${locale.emDash}${locale.nbsp}\\.]|^)`;
-  let followingWord = `([${locale.allChars}\\d]+)([^\\.]|$)`;
+  let precedingNonLatinBoundary = `([^${base.allChars}${base.enDash}${base.emDash}${base.nbsp}\\.]|^)`;
+  let followingWord = `([${base.allChars}\\d]+)([^\\.]|$)`;
 
   for (let i = 0; i < abbreviationPatterns.length; i++) {
     // prettier-ignore
@@ -172,14 +174,14 @@ export function fixSingleWordAbbreviations(string, locale) {
         `${precedingNonLatinBoundary}${abbreviationPatterns[i]}${followingWord}`, 
         "gi"
       ), 
-      `$1$2$3${locale.nbsp}$5$6`
+      `$1$2$3${base.nbsp}$5$6`
     );
   }
 
   /* [3] Identify single-word abbreviations after the word
    */
-  let precedingWord = `([${locale.allChars}\\d])([${locale.spaces}])`;
-  let followingNonLatinBoundary = `([^${locale.spaces}${locale.allChars}\\d]|$)`;
+  let precedingWord = `([${base.allChars}\\d])([${base.spaces}])`;
+  let followingNonLatinBoundary = `([^${base.spaces}${base.allChars}\\d]|$)`;
   for (let i = 0; i < abbreviationPatterns.length; i++) {
     // prettier-ignore
     string = string.replace(
@@ -187,7 +189,7 @@ export function fixSingleWordAbbreviations(string, locale) {
         `${precedingWord}${abbreviationPatterns[i]}${followingNonLatinBoundary}`, 
         "gi"
       ), 
-      `$1${locale.nbsp}$3$4$5$6`
+      `$1${base.nbsp}$3$4$5$6`
     );
   }
 

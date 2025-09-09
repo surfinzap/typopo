@@ -1,3 +1,4 @@
+import { base } from "../../const.js";
 import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../../utils/markdown.js";
 
 //
@@ -15,10 +16,9 @@ import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../../utils/m
 
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified contractions as apostrophes
 */
-export function identifyContractedAnd(string, locale) {
+export function identifyContractedAnd(string) {
   let commonContractions = [
     ["dead", "buried"],
     ["drill", "bass"],
@@ -39,14 +39,14 @@ export function identifyContractedAnd(string, locale) {
     string = string.replace(
       new RegExp(
         `(${item[0]})` +
-        `([${locale.spaces}]?)` +
-        `(${locale.singleQuoteAdepts})` +
+        `([${base.spaces}]?)` +
+        `(${base.singleQuoteAdepts})` +
         `(n)` +
-        `(${locale.singleQuoteAdepts})` +
-        `([${locale.spaces}]?)` +
+        `(${base.singleQuoteAdepts})` +
+        `([${base.spaces}]?)` +
         `(${item[1]})`, 
       "gi"),
-      `$1${locale.nbsp}{{typopo__apostrophe}}$4{{typopo__apostrophe}}${locale.nbsp}$7`
+      `$1${base.nbsp}{{typopo__apostrophe}}$4{{typopo__apostrophe}}${base.nbsp}$7`
     );
   });
 
@@ -63,17 +63,16 @@ export function identifyContractedAnd(string, locale) {
   ’em, ’cause,… see list of words in the function
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified contractions as apostrophes
 */
-export function identifyContractedBeginnings(string, locale) {
+export function identifyContractedBeginnings(string) {
   let contractedWords =
     "cause|em|mid|midst|mongst|prentice|round|sblood|ssdeath|sfoot|sheart|shun|slid|slife|slight|snails|strewth|til|tis|twas|tween|twere|twill|twixt|twould";
 
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${locale.singleQuoteAdepts})` +
+      `(${base.singleQuoteAdepts})` +
       `(${contractedWords})`, 
       "gi"
     ),
@@ -90,15 +89,14 @@ export function identifyContractedBeginnings(string, locale) {
   contraction of an -ing form, e.g. nottin’
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified contractions as apostrophes
 */
-export function identifyContractedEnds(string, locale) {
+export function identifyContractedEnds(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
       `(\\Bin)` +
-      `(${locale.singleQuoteAdepts})`,
+      `(${base.singleQuoteAdepts})`,
       "gi"
     ),
       `$1{{typopo__apostrophe}}`
@@ -114,16 +112,15 @@ export function identifyContractedEnds(string, locale) {
   Don’t, I’m, O’Doole, 69’ers,…
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified contractions as apostrophes
 */
-export function identifyInWordContractions(string, locale) {
+export function identifyInWordContractions(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        `([${locale.cardinalNumber}${locale.allChars}])` +
-        `(${locale.singleQuoteAdepts})+` +
-        `([${locale.allChars}])`, 
+        `([${base.cardinalNumber}${base.allChars}])` +
+        `(${base.singleQuoteAdepts})+` +
+        `([${base.allChars}])`, 
       "g"
     ),
       `$1{{typopo__apostrophe}}$3`
@@ -141,19 +138,17 @@ export function identifyInWordContractions(string, locale) {
   Exceptions
   12 '45″ // when there is a wrongly spaced feet
 
-
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified contractions as apostrophes
 */
-export function identifyContractedYears(string, locale) {
+export function identifyContractedYears(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
       `([^0-9]|[A-Z][0-9])` +
-      `([${locale.spaces}])` +
-      `(${locale.singleQuoteAdepts})` +
-      `([${locale.cardinalNumber}]{2})`, 
+      `([${base.spaces}])` +
+      `(${base.singleQuoteAdepts})` +
+      `([${base.cardinalNumber}]{2})`, 
       "g"
     ),
       `$1$2{{typopo__apostrophe}}$4`
@@ -176,10 +171,9 @@ export function identifyContractedYears(string, locale) {
   → this is corrected in replaceSinglePrimeWSingleQuote
 
   Implementation note
-  We’re not using locale.singleQuoteAdepts variable as commas and low-positioned quotes are ommited
+  We’re not using base.singleQuoteAdepts variable as commas and low-positioned quotes are ommited
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified single primes as a temporary variable string, e.g. {{typopo__sinlge-prime}}
 */
 export function identifySinglePrimes(string) {
@@ -197,16 +191,15 @@ export function identifySinglePrimes(string) {
   - preceding a word
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified standalone left single quote
 */
-export function identifyStandaloneLeftSingleQuote(string, locale) {
+export function identifyStandaloneLeftSingleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        `(^|[${locale.spaces}${locale.emDash}${locale.enDash}])` +
-        `(${locale.singleQuoteAdepts}|,)` +
-        `([${locale.allChars}${locale.ellipsis}])`,
+        `(^|[${base.spaces}${base.emDash}${base.enDash}])` +
+        `(${base.singleQuoteAdepts}|,)` +
+        `([${base.allChars}${base.ellipsis}])`,
       "g"
     ),
       `$1{{typopo__left-single-quote--standalone}}$3`
@@ -225,17 +218,16 @@ export function identifyStandaloneLeftSingleQuote(string, locale) {
   - optionally, preceding a space or a sentence punctuation
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified standalone right single quote
 */
-export function identifyStandaloneRightSingleQuote(string, locale) {
+export function identifyStandaloneRightSingleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.allChars}])` +
-      `([${locale.sentencePunctuation}${locale.ellipsis}])?` +
-      `(${locale.singleQuoteAdepts})` +
-      `([ ${locale.sentencePunctuation}])?`,
+      `([${base.allChars}])` +
+      `([${base.sentencePunctuation}${base.ellipsis}])?` +
+      `(${base.singleQuoteAdepts})` +
+      `([ ${base.sentencePunctuation}])?`,
       "g"
     ),
       `$1$2{{typopo__right-single-quote--standalone}}$4`
@@ -256,22 +248,21 @@ export function identifyStandaloneRightSingleQuote(string, locale) {
     - single quote pairs
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified standalone left single quote
 */
-export function identifySingleQuotesWithinDoubleQuotes(string, locale) {
+export function identifySingleQuotesWithinDoubleQuotes(string) {
   return string.replace(
     // prettier-ignore
     new RegExp(
-        `(${locale.doubleQuoteAdepts})` +
+        `(${base.doubleQuoteAdepts})` +
         `(.*?)` +
-        `(${locale.doubleQuoteAdepts})`,
+        `(${base.doubleQuoteAdepts})`,
       "g"
     ),
     function ($0, $1, $2, $3) {
-      $2 = identifyStandaloneLeftSingleQuote($2, locale);
-      $2 = identifyStandaloneRightSingleQuote($2, locale);
-      $2 = identifySingleQuotePairs($2, locale);
+      $2 = identifyStandaloneLeftSingleQuote($2);
+      $2 = identifyStandaloneRightSingleQuote($2);
+      $2 = identifySingleQuotePairs($2);
 
       return $1 + $2 + $3;
     }
@@ -291,7 +282,6 @@ export function identifySingleQuotesWithinDoubleQuotes(string, locale) {
   - It is difficult to identify all contractions at the end of the word, and thus it is difficult to identify single quote pairs. This function therefore only identifies one single quote pair with a double quote pair
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified single quote pair
 */
 export function identifySingleQuotePairs(string) {
@@ -318,17 +308,16 @@ export function identifySingleQuotePairs(string) {
  'word' → ‘word’
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified single quote pairs around single word
 */
-export function identifySingleQuotePairAroundSingleWord(string, locale) {
+export function identifySingleQuotePairAroundSingleWord(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
         `(\\B)` +
-        `(${locale.singleQuoteAdepts})` +
-        `([${locale.allChars}]+)` +
-        `(${locale.singleQuoteAdepts})` +
+        `(${base.singleQuoteAdepts})` +
+        `([${base.allChars}]+)` +
+        `(${base.singleQuoteAdepts})` +
         `(\\B)`,
       "g"
     ),
@@ -348,14 +337,13 @@ export function identifySingleQuotePairAroundSingleWord(string, locale) {
   This function runs as last in the row identification function as it catches what’s left.
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with identified single quote pairs
 */
-export function identifyResidualApostrophes(string, locale) {
+export function identifyResidualApostrophes(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${locale.singleQuoteAdepts})`,
+      `(${base.singleQuoteAdepts})`,
       "g"
     ),
       `{{typopo__apostrophe}}`
@@ -377,7 +365,6 @@ export function identifyResidualApostrophes(string, locale) {
 
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with a single quote pair
 */
 export function replaceSinglePrimeWSingleQuote(string) {
@@ -448,12 +435,12 @@ export function swapSingleQuotesAndTerminalPunctuation(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([^${locale.sentencePunctuation}])` +
-      `([${locale.spaces}])` +
+      `([^${base.sentencePunctuation}])` +
+      `([${base.spaces}])` +
       `(${locale.leftSingleQuote})` +
       `([^${locale.rightSingleQuote}]+?)` +
-      `([^${locale.romanNumerals}])` +
-      `([${locale.terminalPunctuation}${locale.ellipsis}])` +
+      `([^${base.romanNumerals}])` +
+      `([${base.terminalPunctuation}${base.ellipsis}])` +
       `(${locale.rightSingleQuote})`, 
       "g"
     ),
@@ -464,15 +451,15 @@ export function swapSingleQuotesAndTerminalPunctuation(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([^${locale.sentencePunctuation}])` +
-      `([${locale.spaces}])` +
+      `([^${base.sentencePunctuation}])` +
+      `([${base.spaces}])` +
       `(${locale.leftSingleQuote})` +
       `(.+?)` +
-      `([^${locale.romanNumerals}])` +
+      `([^${base.romanNumerals}])` +
       `(${locale.rightSingleQuote})` +
-      `([${locale.terminalPunctuation}${locale.ellipsis}])` +
-      `([${locale.spaces}])` +
-      `([${locale.lowercaseChars}])`,
+      `([${base.terminalPunctuation}${base.ellipsis}])` +
+      `([${base.spaces}])` +
+      `([${base.lowercaseChars}])`,
 
       "g"
     ),
@@ -484,12 +471,12 @@ export function swapSingleQuotesAndTerminalPunctuation(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([${locale.sentencePunctuation}][${locale.spaces}]|^)` +
+      `([${base.sentencePunctuation}][${base.spaces}]|^)` +
       `(${locale.leftSingleQuote})` +
       `([^${locale.rightSingleQuote}]+?)` +
-      `([^${locale.romanNumerals}])` +
+      `([^${base.romanNumerals}])` +
       `(${locale.rightSingleQuote})` +
-      `([${locale.terminalPunctuation}${locale.ellipsis}])` +
+      `([${base.terminalPunctuation}${base.ellipsis}])` +
       `(\\B)`,
 
       "g"
@@ -515,15 +502,14 @@ export function swapSingleQuotesAndTerminalPunctuation(string, locale) {
 
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
   @returns {string} output with adjusted spacing around single quotes and single primes
 */
-export function removeExtraSpaceAroundSinglePrime(string, locale) {
+export function removeExtraSpaceAroundSinglePrime(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.spaces}])` +
-      `(${locale.singlePrime})`, 
+      `([${base.spaces}])` +
+      `(${base.singlePrime})`, 
       "g"
     ),
     `$2`
@@ -545,11 +531,11 @@ export function removeExtraSpaceAroundSinglePrime(string, locale) {
   @returns {string} an output with locale-specific single quotes and single primes
 */
 export function placeLocaleSingleQuotes(string, locale) {
-  string = string.replace(/({{typopo__single-prime}})/g, locale.singlePrime);
+  string = string.replace(/({{typopo__single-prime}})/g, base.singlePrime);
 
   string = string.replace(
     /{{typopo__apostrophe}}|{{typopo__left-single-quote--standalone}}|{{typopo__right-single-quote--standalone}}/g,
-    locale.apostrophe
+    base.apostrophe
   );
 
   string = string.replace(/{{typopo__left-single-quote}}/g, locale.leftSingleQuote);
@@ -592,31 +578,26 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuratio
   string = identifyMarkdownCodeTicks(string, configuration);
 
   /* [1] Identify common apostrophe contractions */
-  string = identifyContractedAnd(string, locale);
-  string = identifyContractedBeginnings(string, locale);
-  string = identifyInWordContractions(string, locale);
-  string = identifyContractedYears(string, locale);
-  string = identifyContractedEnds(string, locale);
+  string = identifyContractedAnd(string);
+  string = identifyContractedBeginnings(string);
+  string = identifyInWordContractions(string);
+  string = identifyContractedYears(string);
+  string = identifyContractedEnds(string);
 
   /* [2] Identify feet, arcminutes, minutes */
   string = identifySinglePrimes(string, locale);
 
   /* [3] Identify single quote pair around a single word */
-  string = identifySingleQuotePairAroundSingleWord(string, locale);
+  string = identifySingleQuotePairAroundSingleWord(string);
 
   /* [4] Identify single quotes within double quotes */
-  string = identifySingleQuotesWithinDoubleQuotes(string, locale);
+  string = identifySingleQuotesWithinDoubleQuotes(string);
 
   /* [5] Replace a single qoute & a single prime with a single quote pair */
   string = replaceSinglePrimeWSingleQuote(string, locale);
 
-  // /* [5.1] Identify standalone single quotes (not within double quotes) */
-  // string = identifyStandaloneLeftSingleQuote(string, locale);
-  // string = identifyStandaloneRightSingleQuote(string, locale);
-  // string = identifySingleQuotePairs(string, locale);
-
   /* [6] Identify residual apostrophes*/
-  string = identifyResidualApostrophes(string, locale);
+  string = identifyResidualApostrophes(string);
 
   /* [7] Replace all identified punctuation with appropriate punctuation in given language */
   string = placeLocaleSingleQuotes(string, locale);
@@ -626,7 +607,7 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuratio
   string = swapSingleQuotesAndTerminalPunctuation(string, locale);
 
   /* [9] Consolidate spaces around single primes */
-  string = removeExtraSpaceAroundSinglePrime(string, locale);
+  string = removeExtraSpaceAroundSinglePrime(string);
 
   return string;
 }

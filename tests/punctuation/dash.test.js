@@ -394,7 +394,7 @@ describe("Fix dash between cardinal numbers\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(fixDashBetweenCardinalNumbers(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixDashBetweenCardinalNumbers(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixDash(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -423,7 +423,7 @@ describe("Fix dash between percentage range\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(fixDashBetweenPercentageRange(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixDashBetweenPercentageRange(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixDash(key, new Locale("en-us"))).toBe(testCase[key]);

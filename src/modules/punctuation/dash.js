@@ -1,4 +1,5 @@
 import { replaceWithOverlapHandling } from "../../utils/regex-overlap.js";
+import { base } from "../../const.js";
 
 //
 
@@ -34,26 +35,26 @@ export function replaceTwoHyphensWithEnDash(string) {
 */
 export function fixDashesBetweenWords(string, locale) {
   const DASH_REPLACEMENT = {
-    "en-us": (locale) => `${locale.emDash}`,
-    "rue":   (locale) => `${locale.hairSpace}${locale.emDash}${locale.hairSpace}`,
-    "sk":    (locale) => `${locale.hairSpace}${locale.emDash}${locale.hairSpace}`,
-    "cs":    (locale) => `${locale.nbsp}${locale.enDash}${locale.space}`,
-    "de-de": (locale) => `${locale.hairSpace}${locale.enDash}${locale.hairSpace}`,
+    "en-us": `${base.emDash}`,
+    "rue":   `${base.hairSpace}${base.emDash}${base.hairSpace}`,
+    "sk":    `${base.hairSpace}${base.emDash}${base.hairSpace}`,
+    "cs":    `${base.nbsp}${base.enDash}${base.space}`,
+    "de-de": `${base.hairSpace}${base.enDash}${base.hairSpace}`,
   };
 
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.allChars}\\d])` + 
+      `([${base.allChars}\\d])` + 
       `(` +
-        `[${locale.spaces}]*[${locale.enDash}${locale.emDash}][${locale.spaces}]*` + 
+        `[${base.spaces}]*[${base.enDash}${base.emDash}][${base.spaces}]*` + 
         `|` +
-        `[${locale.spaces}]+[${locale.hyphen}][${locale.spaces}]+` +
+        `[${base.spaces}]+[${base.hyphen}][${base.spaces}]+` +
       `)` +
-      `([${locale.allChars}\\d])`, 
+      `([${base.allChars}\\d])`, 
       "g"
     ), 
-    `$1${DASH_REPLACEMENT[locale.locale]?.(locale)}$3`
+    `$1${DASH_REPLACEMENT[locale.locale]}$3`
   );
 }
 
@@ -74,24 +75,25 @@ export function fixDashesBetweenWords(string, locale) {
 */
 export function fixHyphenBetweenWordAndPunctuation(string, locale) {
   const HYPHEN_PUNCTUATION_REPLACEMENT = {
-    "en-us": (locale) => `$1${locale.emDash}$5`,
-    "rue":   (locale) => `$1${locale.hairSpace}${locale.emDash}$5`,
-    "sk":    (locale) => `$1${locale.hairSpace}${locale.emDash}$5`,
-    "cs":    (locale) => `$1${locale.nbsp}${locale.enDash}$5`,
-    "de-de": (locale) => `$1${locale.hairSpace}${locale.enDash}$5`,
+    "en-us": `${base.emDash}`,
+    "rue":   `${base.hairSpace}${base.emDash}`,
+    "sk":    `${base.hairSpace}${base.emDash}`,
+    "cs":    `${base.nbsp}${base.enDash}`,
+    "de-de": `${base.hairSpace}${base.enDash}`,
   };
 
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.allChars}])` + 
-      `([${locale.spaces}]?)` + 
-      `(${locale.hyphen})` +
-      `([${locale.spaces}]?)` + 
-      `([${locale.sentencePunctuation}\\n\\r])`, 
+      `([${base.allChars}])` + 
+      `([${base.spaces}]?)` + 
+      `(${base.hyphen})` +
+      `([${base.spaces}]?)` + 
+      `([${base.sentencePunctuation}\\n\\r])`, 
       "g"
     ),
-    HYPHEN_PUNCTUATION_REPLACEMENT[locale.locale]?.(locale) || "");
+    `$1${HYPHEN_PUNCTUATION_REPLACEMENT[locale.locale]}$5`
+  );
 }
 
 //
@@ -108,17 +110,17 @@ export function fixHyphenBetweenWordAndPunctuation(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with en dash between cardinal numbers
 */
-export function fixDashBetweenCardinalNumbers(string, locale) {
+export function fixDashBetweenCardinalNumbers(string) {
   /* [1] Match the pattern with overlap handling */
   // prettier-ignore
   string = replaceWithOverlapHandling(
     string, 
     new RegExp(
-      `(${locale.cardinalNumber})` +
-      `([${locale.spaces}]?` +
-      `[${locale.hyphen}${locale.enDash}${locale.emDash}]` +
-      `[${locale.spaces}]?)` +
-      `(${locale.cardinalNumber})`, 
+      `(${base.cardinalNumber})` +
+      `([${base.spaces}]?` +
+      `[${base.hyphen}${base.enDash}${base.emDash}]` +
+      `[${base.spaces}]?)` +
+      `(${base.cardinalNumber})`, 
       "g"
     ), 
     `$1{{typopo__endash}}$3`
@@ -130,7 +132,7 @@ export function fixDashBetweenCardinalNumbers(string, locale) {
     new RegExp(
       `{{typopo__endash}}`, 
       "g"
-    ), locale.enDash
+    ), base.enDash
   );
 }
 
@@ -144,16 +146,16 @@ export function fixDashBetweenCardinalNumbers(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with en dash between percentage range
 */
-export function fixDashBetweenPercentageRange(string, locale) {
+export function fixDashBetweenPercentageRange(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.percent}${locale.permille}${locale.permyriad}])` + 
-      `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)` + 
-      `(${locale.cardinalNumber})`, 
+      `([${base.percent}${base.permille}${base.permyriad}])` + 
+      `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}][${base.spaces}]?)` + 
+      `(${base.cardinalNumber})`, 
       "g"
     ), 
-    `$1${locale.enDash}$3`
+    `$1${base.enDash}$3`
   );
 }
 
@@ -172,14 +174,14 @@ export function fixDashBetweenOrdinalNumbers(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${locale.cardinalNumber})` + 
+      `(${base.cardinalNumber})` + 
       `(${locale.ordinalIndicator})` + 
-      `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)` + 
-      `(${locale.cardinalNumber})` + 
+      `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}][${base.spaces}]?)` + 
+      `(${base.cardinalNumber})` + 
       `(${locale.ordinalIndicator})`, 
       "gi"
     ), 
-    `$1$2${locale.enDash}$4$5`
+    `$1$2${base.enDash}$4$5`
   );
 }
 
@@ -196,8 +198,8 @@ export function fixDash(string, locale) {
   string = replaceTwoHyphensWithEnDash(string, locale);
   string = fixDashesBetweenWords(string, locale);
   string = fixHyphenBetweenWordAndPunctuation(string, locale);
-  string = fixDashBetweenCardinalNumbers(string, locale);
-  string = fixDashBetweenPercentageRange(string, locale);
+  string = fixDashBetweenCardinalNumbers(string);
+  string = fixDashBetweenPercentageRange(string);
   string = fixDashBetweenOrdinalNumbers(string, locale);
   return string;
 }

@@ -1,15 +1,17 @@
+import { base } from "../../const.js";
+
 /**
   Removes mutliple spaces between words 
 
   @param {string} string — input text for identification
   @returns {string} — output with removed spaces between words
 */
-export function removeMultipleSpaces(string, locale) {
+export function removeMultipleSpaces(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
       `(\\S)` +
-      `([${locale.spaces}]{2,})` +
+      `([${base.spaces}]{2,})` +
       `(\\S)`,
       "g"
     ),
@@ -28,9 +30,10 @@ export function removeMultipleSpaces(string, locale) {
   [4] join lines together to a single string
 
   @param {string} string — input text for identification
+  @param {object} configuration — typopo configuration
   @returns {string} — output with removed spaces at the beginning of paragraphs
 */
-export function removeSpacesAtParagraphBeginning(string, locale, configuration) {
+export function removeSpacesAtParagraphBeginning(string, configuration) {
   /* [1] split the lines manually */
   let lines = string.split(/\r?\n/);
 
@@ -80,12 +83,12 @@ export function removeSpacesAtParagraphEnd(string) {
 
 //
 
-export function removeSpaceBeforeSentencePausePunctuation(string, locale) {
+export function removeSpaceBeforeSentencePausePunctuation(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.spaces}])` +
-      `([${locale.sentencePausePunctuation}])` +
+      `([${base.spaces}])` +
+      `([${base.sentencePausePunctuation}])` +
       `([^\\-\\)]|$)`, 
       "g"
     ),
@@ -110,12 +113,12 @@ export function removeSpaceBeforeSentencePausePunctuation(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with removed spaces before terminal punctuation
 */
-export function removeSpaceBeforeTerminalPunctuation(string, locale) {
+export function removeSpaceBeforeTerminalPunctuation(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.spaces}])` +
-      `([${locale.terminalPunctuation}${locale.closingBrackets}${locale.degree}])`,
+      `([${base.spaces}])` +
+      `([${base.terminalPunctuation}${base.closingBrackets}${base.degree}])`,
       "g"
     ),
     `$2`
@@ -133,16 +136,17 @@ export function removeSpaceBeforeTerminalPunctuation(string, locale) {
   1 . spoj → 1. spoj
 
   @param {string} string — input text for identification
+  @param {string} locale: locale option
   @returns {string} — output with removed spaces before ordinal indicator
 */
 export function removeSpaceBeforeOrdinalIndicator(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${locale.cardinalNumber})` +
-      `([${locale.spaces}]?)` +
+      `(${base.cardinalNumber})` +
+      `([${base.spaces}]?)` +
       `(${locale.ordinalIndicator})` +
-      `([${locale.spaces}]|\\b)`, //to avoid cathing "4 th" in "4 there"
+      `([${base.spaces}]|\\b)`, //to avoid cathing "4 th" in "4 there"
       "g"
     ),
     `$1$3$4`
@@ -151,12 +155,12 @@ export function removeSpaceBeforeOrdinalIndicator(string, locale) {
 
 //
 
-export function removeSpaceAfterOpeningBrackets(string, locale) {
+export function removeSpaceAfterOpeningBrackets(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.openingBrackets}])` +
-      `([${locale.spaces}])`,
+      `([${base.openingBrackets}])` +
+      `([${base.spaces}])`,
       "g"
     ),
     `$1`
@@ -185,21 +189,21 @@ export function removeSpaceAfterOpeningBrackets(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with a space before an opening bracket
 */
-export function addSpaceBeforeOpeningBrackets(string, locale) {
+export function addSpaceBeforeOpeningBrackets(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.lowercaseChars}${locale.uppercaseChars}])` +
-      `([${locale.openingBrackets}])` +
-      `([${locale.lowercaseChars}${locale.uppercaseChars}${locale.ellipsis}])` +
-      `([${locale.lowercaseChars}${locale.uppercaseChars}${locale.ellipsis}${locale.closingBrackets}])`,
+      `([${base.lowercaseChars}${base.uppercaseChars}])` +
+      `([${base.openingBrackets}])` +
+      `([${base.lowercaseChars}${base.uppercaseChars}${base.ellipsis}])` +
+      `([${base.lowercaseChars}${base.uppercaseChars}${base.ellipsis}${base.closingBrackets}])`,
       "g"
     ),
     function ($0, $1, $2, $3, $4) {
       if (($3 == "s") | ($3 == "S") | ($3 + $4 == "es") | ($3 + $4 == "ES")) {
         return `${$1}${$2}${$3}${$4}`;
       } else {
-        return `${$1}${locale.space}${$2}${$3}${$4}`;
+        return `${$1}${base.space}${$2}${$3}${$4}`;
       }
     }
   );
@@ -217,13 +221,13 @@ export function addSpaceBeforeOpeningBrackets(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with a space after terminal punctuation
 */
-export function addSpaceAfterTerminalPunctuation(string, locale) {
+export function addSpaceAfterTerminalPunctuation(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.lowercaseChars}${locale.uppercaseChars}]{2,}|[${locale.ellipsis}])` +
-      `([${locale.terminalPunctuation}])` +
-      `([${locale.uppercaseChars}])`,
+      `([${base.lowercaseChars}${base.uppercaseChars}]{2,}|[${base.ellipsis}])` +
+      `([${base.terminalPunctuation}])` +
+      `([${base.uppercaseChars}])`,
       "g"
     ),
     `$1$2 $3`
@@ -242,13 +246,13 @@ export function addSpaceAfterTerminalPunctuation(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with a space after closing brackets
 */
-export function addSpaceAfterSentencePause(string, locale) {
+export function addSpaceAfterSentencePause(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.lowercaseChars}${locale.uppercaseChars}]{2,}|[${locale.ellipsis}])` +
-      `([${locale.sentencePausePunctuation}])` +
-      `([${locale.lowercaseChars}${locale.uppercaseChars}])`,
+      `([${base.lowercaseChars}${base.uppercaseChars}]{2,}|[${base.ellipsis}])` +
+      `([${base.sentencePausePunctuation}])` +
+      `([${base.lowercaseChars}${base.uppercaseChars}])`,
       "g"
     ),
     `$1$2 $3`
@@ -266,12 +270,12 @@ export function addSpaceAfterSentencePause(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with a space after closing brackets
 */
-export function addSpaceAfterClosingBrackets(string, locale) {
+export function addSpaceAfterClosingBrackets(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.closingBrackets}])` +
-      `([${locale.lowercaseChars}${locale.uppercaseChars}])`,
+      `([${base.closingBrackets}])` +
+      `([${base.lowercaseChars}${base.uppercaseChars}])`,
       "g"
     ),
     `$1 $2`
@@ -280,27 +284,27 @@ export function addSpaceAfterClosingBrackets(string, locale) {
 
 //
 
-export function addSpaceBeforeSymbol(string, symbol, locale) {
+export function addSpaceBeforeSymbol(string, symbol) {
   // prettier-ignore
   return string.replace(
-    new RegExp(`([^${locale.spaces}${locale.openingBrackets}])(${symbol})`, "g"),
-    `$1${locale.space}$2`
+    new RegExp(`([^${base.spaces}${base.openingBrackets}])(${symbol})`, "g"),
+    `$1${base.space}$2`
   );
 }
 
 //
 
 export function fixSpaces(string, locale, configuration) {
-  string = removeMultipleSpaces(string, locale);
-  string = removeSpacesAtParagraphBeginning(string, locale, configuration);
-  string = removeSpacesAtParagraphEnd(string, locale);
-  string = removeSpaceBeforeSentencePausePunctuation(string, locale);
-  string = removeSpaceBeforeTerminalPunctuation(string, locale);
+  string = removeMultipleSpaces(string);
+  string = removeSpacesAtParagraphBeginning(string, configuration);
+  string = removeSpacesAtParagraphEnd(string);
+  string = removeSpaceBeforeSentencePausePunctuation(string);
+  string = removeSpaceBeforeTerminalPunctuation(string);
   string = removeSpaceBeforeOrdinalIndicator(string, locale);
-  string = removeSpaceAfterOpeningBrackets(string, locale);
-  string = addSpaceBeforeOpeningBrackets(string, locale);
-  string = addSpaceAfterTerminalPunctuation(string, locale);
-  string = addSpaceAfterClosingBrackets(string, locale);
-  string = addSpaceAfterSentencePause(string, locale);
+  string = removeSpaceAfterOpeningBrackets(string);
+  string = addSpaceBeforeOpeningBrackets(string);
+  string = addSpaceAfterTerminalPunctuation(string);
+  string = addSpaceAfterClosingBrackets(string);
+  string = addSpaceAfterSentencePause(string);
   return string;
 }

@@ -1,6 +1,5 @@
 import { replaceMark, fixMarks } from "../../src/modules/symbols/marks.js";
 import { describe, it, expect } from "vitest";
-import Locale from "../../src/locale/locale.js";
 
 const locales = ["en-us", "de-de", "sk", "cs", "rue"];
 
@@ -50,13 +49,11 @@ function testMarks(testCase, markPattern, replacementMark) {
   locales.forEach(function (locale) {
     Object.keys(testCase).forEach((key) => {
       it(`unit test, ${replacementMark}, ${locale}`, () => {
-        expect(replaceMark(key, markPattern, replacementMark, new Locale(locale))).toBe(
-          testCase[key]
-        );
+        expect(replaceMark(key, markPattern, replacementMark)).toBe(testCase[key]);
       });
 
       it(`module test, ${replacementMark}, ${locale}`, () => {
-        expect(fixMarks(key, new Locale(locale))).toBe(testCase[key]);
+        expect(fixMarks(key)).toBe(testCase[key]);
       });
     });
   });

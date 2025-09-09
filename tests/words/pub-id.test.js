@@ -6,7 +6,6 @@ import {
   fixISBNnumber,
 } from "../../src/modules/words/pub-id.js";
 import { describe, it, expect } from "vitest";
-import Locale from "../../src/locale/locale.js";
 
 describe("Fix ISSN format\n", () => {
   let testCase = {
@@ -20,10 +19,10 @@ describe("Fix ISSN format\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(fixISSN(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixISSN(key)).toBe(testCase[key]);
     });
     it("module test", () => {
-      expect(fixPubId(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixPubId(key)).toBe(testCase[key]);
     });
   });
 });
@@ -41,10 +40,10 @@ describe("Fix ISBN10 format\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(fixISBN10(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixISBN10(key)).toBe(testCase[key]);
     });
     it("module test", () => {
-      expect(fixPubId(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixPubId(key)).toBe(testCase[key]);
     });
   });
 });
@@ -62,10 +61,10 @@ describe("Fix ISBN13 format\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(fixISBN13(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixISBN13(key)).toBe(testCase[key]);
     });
     it("module test", () => {
-      expect(fixPubId(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixPubId(key)).toBe(testCase[key]);
     });
   });
 });
@@ -92,10 +91,10 @@ describe("Fix ISBN number\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(fixISBNnumber(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixISBNnumber(key)).toBe(testCase[key]);
     });
     it("module test", () => {
-      expect(fixPubId(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixPubId(key)).toBe(testCase[key]);
     });
   });
 });
