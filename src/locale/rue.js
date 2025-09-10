@@ -1,6 +1,17 @@
 import { base } from "../const.js";
 
 export const rue = {
+  quotes: {
+    leftDoubleQuote:  "«",
+    rightDoubleQuote: "»",
+    leftSingleQuote:  "‹",
+    rightSingleQuote: "›",
+  },
+
+  numbers: {
+    ordinalIndicator:      "\\.",
+    romanOrdinalIndicator: "\\.",
+  },
   /* 
     The first and the second space in the ordinal date, e.g. 1. 1. 1993
     1.{firstSpace}1.{secondSpace}1993
@@ -10,16 +21,6 @@ export const rue = {
     secondSpace: base.nbsp,
   },
 
-  quotes: {
-    leftDoubleQuote:  "«",
-    rightDoubleQuote: "»",
-    leftSingleQuote:  "‹",
-    rightSingleQuote: "›",
-  },
-  numbers: {
-    ordinalIndicator:      "\\.",
-    romanOrdinalIndicator: "\\.",
-  },
   /* 
     (n-1) abbreviation space.
     Examples:

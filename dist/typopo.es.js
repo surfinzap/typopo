@@ -61,14 +61,6 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
   /* Filename pattern */
   filenamePattern: "\\b[a-zA-Z0-9_%\\-]+\\.(ai|asm|bat|bmp|c|cpp|cs|css|csv|dart|doc|docx|exe|gif|go|html|ics|java|jpeg|jpg|js|json|key|kt|less|lua|log|md|mp4|odp|ods|odt|pdf|php|pl|png|ppt|pptx|psd|py|r|rar|rb|rs|scala|scss|sh|svg|sql|swift|tar.gz|tar|tex|tiff|ts|txt|vbs|xml|xls|xlsx|yaml|yml|zip)\\b"
 }, he = {
-  /* 
-    The first and the second space in the ordinal date, e.g. 1. 1. 1993
-    1.{firstSpace}1.{secondSpace}1993
-  */
-  ordinalDate: {
-    firstSpace: n.nbsp,
-    secondSpace: n.nbsp
-  },
   quotes: {
     leftDoubleQuote: "„",
     rightDoubleQuote: "“",
@@ -78,6 +70,14 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
   numbers: {
     ordinalIndicator: "\\.",
     romanOrdinalIndicator: "\\."
+  },
+  /* 
+    The first and the second space in the ordinal date, e.g. 1. 1. 1993
+    1.{firstSpace}1.{secondSpace}1993
+  */
+  ordinalDate: {
+    firstSpace: n.nbsp,
+    secondSpace: n.nbsp
   },
   /* 
     (n-1) abbreviation space.
@@ -92,36 +92,13 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     Common single-word abbreviations that are followed by a non-breaking space.
     For coding purposes, they are written here without periods.
   */
-  singleWordAbbreviations: [
-    "č",
-    "s",
-    "fol",
-    "str",
-    "r",
-    "par",
-    "odst",
-    "např",
-    "sv",
-    "tj",
-    "tzv"
-  ],
+  singleWordAbbreviations: ["č", "s", "fol", "str", "r", "par", "odst", "např", "sv", "tj", "tzv"],
   /*
     Common multi-word abbreviations that require proper spacing.
     For coding purposes, they are written here without periods and without correct spacing.
   */
   multipleWordAbbreviations: ["hl m", "n l", "p n l", "př n l"]
 }, fe = {
-  // spacing
-  /* 
-    The first and the second space in the ordinal date, e.g. 1. 1. 1993
-    1.{firstSpace}1.{secondSpace}1993
-    Even though this is not a common date format in the U.S., it serves as a fallback for mixed language content.
-  */
-  ordinalDate: {
-    firstSpace: n.nbsp,
-    secondSpace: n.nbsp
-  },
-  // punctuation
   quotes: {
     leftDoubleQuote: "“",
     rightDoubleQuote: "”",
@@ -132,7 +109,15 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     ordinalIndicator: "st|nd|rd|th",
     romanOrdinalIndicator: ""
   },
-  // symbols
+  /* 
+    The first and the second space in the ordinal date, e.g. 1. 1. 1993
+    1.{firstSpace}1.{secondSpace}1993
+    Even though this is not a common date format in the U.S., it serves as a fallback for mixed language content.
+  */
+  ordinalDate: {
+    firstSpace: n.nbsp,
+    secondSpace: n.nbsp
+  },
   /* 
     (n-1) abbreviation space.
     Examples:
@@ -153,14 +138,6 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
   */
   multipleWordAbbreviations: ["U S", "e g", "i e", "a m", "p m"]
 }, be = {
-  /* 
-    The first and the second space in the ordinal date, e.g. 1. 1. 1993
-    1.{firstSpace}1.{secondSpace}1993
-  */
-  ordinalDate: {
-    firstSpace: n.nbsp,
-    secondSpace: n.nbsp
-  },
   quotes: {
     leftDoubleQuote: "«",
     rightDoubleQuote: "»",
@@ -170,6 +147,14 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
   numbers: {
     ordinalIndicator: "\\.",
     romanOrdinalIndicator: "\\."
+  },
+  /* 
+    The first and the second space in the ordinal date, e.g. 1. 1. 1993
+    1.{firstSpace}1.{secondSpace}1993
+  */
+  ordinalDate: {
+    firstSpace: n.nbsp,
+    secondSpace: n.nbsp
   },
   /* 
     (n-1) abbreviation space.
@@ -191,14 +176,6 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
   */
   multipleWordAbbreviations: ["т зн", "Е Ч", "евід ч", "род ч", "т ч", "т д"]
 }, me = {
-  /* 
-    The first and the second space in the ordinal date, e.g. 1. 1. 1993
-    1.{firstSpace}1.{secondSpace}1993
-  */
-  ordinalDate: {
-    firstSpace: n.nbsp,
-    secondSpace: n.nbsp
-  },
   quotes: {
     leftDoubleQuote: "„",
     rightDoubleQuote: "“",
@@ -208,6 +185,14 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
   numbers: {
     ordinalIndicator: "\\.",
     romanOrdinalIndicator: "\\."
+  },
+  /* 
+    The first and the second space in the ordinal date, e.g. 1. 1. 1993
+    1.{firstSpace}1.{secondSpace}1993
+  */
+  ordinalDate: {
+    firstSpace: n.nbsp,
+    secondSpace: n.nbsp
   },
   /* 
     (n-1) abbreviation space.
@@ -254,14 +239,6 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     "t č"
   ]
 }, ge = {
-  /* 
-    The first and the second space in the ordinal date, e.g. 1. 1. 1993
-    1.{firstSpace}1.{secondSpace}1993
-  */
-  ordinalDate: {
-    firstSpace: n.nbsp,
-    secondSpace: n.space
-  },
   quotes: {
     leftDoubleQuote: "„",
     rightDoubleQuote: "“",
@@ -271,6 +248,14 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
   numbers: {
     ordinalIndicator: "\\.",
     romanOrdinalIndicator: "\\."
+  },
+  /* 
+    The first and the second space in the ordinal date, e.g. 1. 1. 1993
+    1.{firstSpace}1.{secondSpace}1993
+  */
+  ordinalDate: {
+    firstSpace: n.nbsp,
+    secondSpace: n.space
   },
   /* 
     (n-1) abbreviation space.
@@ -345,7 +330,7 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
 }, m = "en-us";
 class xe {
   constructor(a) {
-    l[a] || (console.warn(`Locale '${a}' not found, falling back to '${m}'`), a = m), this.ID = a, this.ordinalDate = l[a].ordinalDate, this.leftSingleQuote = l[a].quotes.leftSingleQuote, this.rightSingleQuote = l[a].quotes.rightSingleQuote, this.leftDoubleQuote = l[a].quotes.leftDoubleQuote, this.rightDoubleQuote = l[a].quotes.rightDoubleQuote, this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote, this.ordinalIndicator = l[a].numbers.ordinalIndicator, this.romanOrdinalIndicator = l[a].numbers.romanOrdinalIndicator, this.abbreviationSpace = l[a].abbreviationSpace, this.singleWordAbbreviations = [];
+    l[a] || (console.warn(`Locale '${a}' not found, falling back to '${m}'`), a = m), this.ID = a, this.leftSingleQuote = l[a].quotes.leftSingleQuote, this.rightSingleQuote = l[a].quotes.rightSingleQuote, this.leftDoubleQuote = l[a].quotes.leftDoubleQuote, this.rightDoubleQuote = l[a].quotes.rightDoubleQuote, this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote, this.ordinalIndicator = l[a].numbers.ordinalIndicator, this.romanOrdinalIndicator = l[a].numbers.romanOrdinalIndicator, this.ordinalDate = l[a].ordinalDate, this.abbreviationSpace = l[a].abbreviationSpace, this.singleWordAbbreviations = [];
     for (const t in l)
       this.singleWordAbbreviations = this.singleWordAbbreviations.concat(
         l[t].singleWordAbbreviations
