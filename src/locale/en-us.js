@@ -1,5 +1,16 @@
+import { base } from "../const.js";
+
 export const enUS = {
   // spacing
+  /* 
+    The first and the second space in the ordinal date, e.g. 1. 1. 1993
+    1.{firstSpace}1.{secondSpace}1993
+    Even though this is not a common date format in the U.S., it serves as a fallback for mixed language content.
+  */
+  ordinalDate: {
+    firstSpace:  base.nbsp,
+    secondSpace: base.nbsp,
+  },
 
   // punctuation
 
@@ -13,6 +24,7 @@ export const enUS = {
     ordinalIndicator:      "st|nd|rd|th",
     romanOrdinalIndicator: "",
   },
+
   // symbols
 
   // abbreviations

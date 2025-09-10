@@ -25,6 +25,8 @@ export default class Locale {
 
     this.ID = localeID;
 
+    this.ordinalDate = SUPPORTED_LOCALES[localeID].ordinalDate;
+
     this.leftSingleQuote = SUPPORTED_LOCALES[localeID].quotes.leftSingleQuote;
     this.rightSingleQuote = SUPPORTED_LOCALES[localeID].quotes.rightSingleQuote;
     this.leftDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.leftDoubleQuote;

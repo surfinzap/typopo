@@ -163,32 +163,18 @@ export function addNbspAfterOrdinalNumber(string, locale) {
 */
 export function addNbspWithinOrdinalDate(string, locale) {
   // prettier-ignore
-  let replacement = "";
-
-  switch (locale.ID) {
-    case "en-us":
-    case "rue":
-    case "sk":
-    case "cs":
-      replacement = `$1$2${base.nbsp}$4$5${base.nbsp}$7`;
-      break;
-    case "de-de":
-      replacement = `$1$2${base.nbsp}$4$5${base.space}$7`;
-      break;
-  }
-
   return string.replace(
     new RegExp(
       `(${base.cardinalNumber})` +
-        `(${locale.ordinalIndicator})` +
+        `(\\.)` +
         `([${base.spaces}]?)` +
         `(${base.cardinalNumber})` +
-        `(${locale.ordinalIndicator})` +
+        `(\\.)` +
         `([${base.spaces}]?)` +
         `(${base.cardinalNumber})`,
       "g"
     ),
-    replacement
+    `$1$2${locale.ordinalDate.firstSpace}$4$5${locale.ordinalDate.secondSpace}$7`
   );
 }
 

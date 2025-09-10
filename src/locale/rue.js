@@ -1,4 +1,15 @@
+import { base } from "../const.js";
+
 export const rue = {
+  /* 
+    The first and the second space in the ordinal date, e.g. 1. 1. 1993
+    1.{firstSpace}1.{secondSpace}1993
+  */
+  ordinalDate: {
+    firstSpace:  base.nbsp,
+    secondSpace: base.nbsp,
+  },
+
   quotes: {
     leftDoubleQuote:  "«",
     rightDoubleQuote: "»",

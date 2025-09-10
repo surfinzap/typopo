@@ -269,11 +269,13 @@ describe("Add non-breaking space within ordinal date (sk, cs, rue)\n", () => {
       expect(addNbspWithinOrdinalDate(key, new Locale("sk"))).toBe(testCase[key]);
       expect(addNbspWithinOrdinalDate(key, new Locale("cs"))).toBe(testCase[key]);
       expect(addNbspWithinOrdinalDate(key, new Locale("rue"))).toBe(testCase[key]);
+      expect(addNbspWithinOrdinalDate(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixNbsp(key, new Locale("sk"))).toBe(testCase[key]);
       expect(fixNbsp(key, new Locale("cs"))).toBe(testCase[key]);
       expect(fixNbsp(key, new Locale("rue"))).toBe(testCase[key]);
+      expect(fixNbsp(key, new Locale("en-us"))).toBe(testCase[key]);
     });
   });
 });
