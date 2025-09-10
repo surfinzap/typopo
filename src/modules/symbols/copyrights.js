@@ -12,7 +12,6 @@ import { addNbspAfterSymbol, replaceSpacesWithNbspAfterSymbol } from "../whitesp
  * @param {string} string - The input string where marks will be replaced.
  * @param {string} copyrightLetter - The pattern for the copyright (e.g., “p” for sound recording copyright).
  * @param {string} copyrightSign - The symbol to replace the pattern with (e.g., “©” for copyright).
- * @param {Object} locale - An object w/ locale-specific symbols.
  * @returns {string} - The string with the specified copyrights replaced.
  */
 export function replaceCopyright(string, copyrightLetter, copyrightSign) {
@@ -35,7 +34,6 @@ export function replaceCopyright(string, copyrightLetter, copyrightSign) {
  *
  * @param {string} string - The input string where marks will be replaced.
  * @param {string} copyrightSign - The sign of choice, either © or ℗
- * @param {Object} locale - An object w/ locale-specific symbols.
  * @returns {string} - The string with the consolidated spaces around the copyright sign
  */
 export function consolidateSpaces(string, copyrightSign) {
@@ -51,13 +49,12 @@ export function consolidateSpaces(string, copyrightSign) {
  * Fixes occurrences of copyright (©), and sound recording copyright (℗) in a given string.
  *
  * @param {string} string - The input string to be fixed.
- * @param {Object} locale - An object w/ locale-specific symbols
  * @returns {string} - The string with marks replaced.
  */
-export function fixCopyrights(string, locale) {
-  string = replaceCopyright(string, "c", base.copyright, locale);
-  string = consolidateSpaces(string, base.copyright, locale);
-  string = replaceCopyright(string, "p", base.soundRecordingCopyright, locale);
-  string = consolidateSpaces(string, base.soundRecordingCopyright, locale);
+export function fixCopyrights(string) {
+  string = replaceCopyright(string, "c", base.copyright);
+  string = consolidateSpaces(string, base.copyright);
+  string = replaceCopyright(string, "p", base.soundRecordingCopyright);
+  string = consolidateSpaces(string, base.soundRecordingCopyright);
   return string;
 }

@@ -14,13 +14,19 @@ const B = {
     ordinalIndicator: "\\.",
     romanOrdinalIndicator: "\\."
   },
+  /* 
+    Common single-word abbreviations that are followed by a non-breaking space.
+    For coding purposes, they are written here without periods.
+  */
   singleWordAbbreviations: ["č", "s", "fol", "str", "r", "par", "odst", "např", "sv", "tj", "tzv"],
   /*
-    The list of common multi-word abbrevations that are
-    stripped down of its micro-typography treatment.
+    Common multi-word abbreviations that require proper spacing.
+    For coding purposes, they are written here without periods and without correct spacing.
   */
   multipleWordAbbreviations: ["hl m", "n l", "p n l", "př n l"]
 }, W = {
+  // spacing
+  // punctuation
   quotes: {
     leftDoubleQuote: "“",
     rightDoubleQuote: "”",
@@ -31,10 +37,16 @@ const B = {
     ordinalIndicator: "st|nd|rd|th",
     romanOrdinalIndicator: ""
   },
+  // symbols
+  // abbreviations
+  /* 
+    Common single-word abbreviations that are followed by a non-breaking space.
+    For coding purposes, they are written here without periods.
+  */
   singleWordAbbreviations: ["p", "pp", "no", "vol"],
   /*
-    The list of common multi-word abbrevations that are
-    stripped down of its micro-typography treatment.
+    Common multi-word abbreviations that require proper spacing.
+    For coding purposes, they are written here without periods and without correct spacing.
   */
   multipleWordAbbreviations: ["U S", "e g", "i e", "a m", "p m"]
 }, q = {
@@ -48,10 +60,14 @@ const B = {
     ordinalIndicator: "\\.",
     romanOrdinalIndicator: "\\."
   },
+  /* 
+    Common single-word abbreviations that are followed by a non-breaking space.
+    For coding purposes, they are written here without periods.
+  */
   singleWordAbbreviations: ["ціт", "ст", "канц", "абз", "тзв", "Зб", "ч", "напр"],
   /*
-    The list of common multi-word abbrevations that are
-    stripped down of its micro-typography treatment.
+    Common multi-word abbreviations that require proper spacing.
+    For coding purposes, they are written here without periods and without correct spacing.
   */
   multipleWordAbbreviations: ["т зн", "Е Ч", "евід ч", "род ч", "т ч", "т д"]
 }, I = {
@@ -65,6 +81,10 @@ const B = {
     ordinalIndicator: "\\.",
     romanOrdinalIndicator: "\\."
   },
+  /* 
+    Common single-word abbreviations that are followed by a non-breaking space.
+    For coding purposes, they are written here without periods.
+  */
   singleWordAbbreviations: [
     "č",
     "s",
@@ -82,8 +102,8 @@ const B = {
     "vyd"
   ],
   /*
-    The list of common multi-word abbrevations that are
-    stripped down of its micro-typography treatment.
+    Common multi-word abbreviations that require proper spacing.
+    For coding purposes, they are written here without periods and without correct spacing.
   */
   multipleWordAbbreviations: [
     "hl m",
@@ -107,6 +127,10 @@ const B = {
     ordinalIndicator: "\\.",
     romanOrdinalIndicator: "\\."
   },
+  /* 
+    Common single-word abbreviations that are followed by a non-breaking space.
+    For coding purposes, they are written here without periods.
+  */
   singleWordAbbreviations: [
     "S",
     "z",
@@ -129,8 +153,8 @@ const B = {
     "u"
   ],
   /*
-    The list of common multi-word abbrevations that are
-    stripped down of its micro-typography treatment.
+    Common multi-word abbreviations that require proper spacing.
+    For coding purposes, they are written here without periods and without correct spacing.
   */
   multipleWordAbbreviations: [
     "b w",
@@ -1142,7 +1166,7 @@ function x(e, a, t) {
 function w(e, a) {
   return e = Ue(e, a), e = ke(e, a), e = ve(e, a), e;
 }
-function ra(e, a) {
+function ra(e) {
   return e = x(e, "c", n.copyright), e = w(e, n.copyright), e = x(e, "p", n.soundRecordingCopyright), e = w(e, n.soundRecordingCopyright), e;
 }
 function sa(e) {
