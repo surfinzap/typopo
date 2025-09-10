@@ -17,6 +17,11 @@ export const enUS = {
     spaceAfter:  "",
   },
 
+  /*
+    A space between a digit and a percent sign 
+  */
+  spaceBeforePercent: "",
+
   numbers: {
     ordinalIndicator:      "st|nd|rd|th",
     romanOrdinalIndicator: "",

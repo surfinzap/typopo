@@ -17,6 +17,11 @@ export const sk = {
     spaceAfter:  base.hairSpace,
   },
 
+  /*
+    A space between a digit and a percent sign 
+  */
+  spaceBeforePercent: base.nbsp,
+
   numbers: {
     ordinalIndicator:      "\\.",
     romanOrdinalIndicator: "\\.",

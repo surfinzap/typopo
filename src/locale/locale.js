@@ -32,6 +32,8 @@ export default class Locale {
     this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote;
     this.dashWords = SUPPORTED_LOCALES[localeID].dashWords;
 
+    this.spaceBeforePercent = SUPPORTED_LOCALES[localeID].spaceBeforePercent;
+
     this.ordinalIndicator = SUPPORTED_LOCALES[localeID].numbers.ordinalIndicator;
     this.romanOrdinalIndicator = SUPPORTED_LOCALES[localeID].numbers.romanOrdinalIndicator;
     this.ordinalDate = SUPPORTED_LOCALES[localeID].ordinalDate;

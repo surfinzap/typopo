@@ -269,14 +269,6 @@ export function fixNbspForNameWithRegnalNumber(string, locale) {
   @returns {string} — output with correctly added non-breaking space
 */
 export function fixSpaceBeforePercent(string, locale) {
-  const SPACE_REPLACEMENT = {
-    "en-us": ``,
-    "sk":    `${base.nbsp}`,
-    "cs":    `${base.nbsp}`,
-    "rue":   `${base.nbsp}`,
-    "de-de": `${base.narrowNbsp}`,
-  };
-
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -285,7 +277,7 @@ export function fixSpaceBeforePercent(string, locale) {
       `([${base.percent}${base.permille}${base.permyriad}])`,
       "g"
     ),
-    `$1${SPACE_REPLACEMENT[locale.ID]}$3`
+    `$1${locale.spaceBeforePercent}$3`
   );
 }
 

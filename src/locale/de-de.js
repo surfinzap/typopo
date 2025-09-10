@@ -17,6 +17,11 @@ export const deDE = {
     spaceAfter:  base.hairSpace,
   },
 
+  /*
+    A space between a digit and a percent sign 
+  */
+  spaceBeforePercent: base.narrowNbsp,
+
   numbers: {
     ordinalIndicator:      "\\.",
     romanOrdinalIndicator: "\\.",
