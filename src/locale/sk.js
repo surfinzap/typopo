@@ -43,7 +43,7 @@ const multipleWordAbbreviations = [
   "t č",
 ];
 
-export default {
+export const sk = {
   quotes,
   numbers,
   singleWordAbbreviations,

@@ -30,7 +30,7 @@ const singleWordAbbreviations = [
 */
 const multipleWordAbbreviations = ["hl m", "n l", "p n l", "př n l"];
 
-export default {
+export const cs = {
   quotes,
   numbers,
   singleWordAbbreviations,

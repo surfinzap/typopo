@@ -63,7 +63,7 @@ const multipleWordAbbreviations = [
   "Ges m b H",
 ];
 
-export default {
+export const deDE = {
   quotes,
   numbers,
   singleWordAbbreviations,

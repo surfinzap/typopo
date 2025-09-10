@@ -1,17 +1,17 @@
 // import loc from "../locale/locale.js";
 
-import localeCS from "./cs.js";
-import localeEN_US from "./en-us.js";
-import localeRUE from "./rue.js";
-import localeSK from "./sk.js";
-import localeDE_DE from "./de-de.js";
+import { cs } from "./cs.js";
+import { enUS } from "./en-us.js";
+import { rue } from "./rue.js";
+import { sk } from "./sk.js";
+import { deDE } from "./de-de.js";
 
 const SUPPORTED_LOCALES = {
-  "cs":    localeCS,
-  "en-us": localeEN_US,
-  "rue":   localeRUE,
-  "sk":    localeSK,
-  "de-de": localeDE_DE,
+  "cs":    cs,
+  "en-us": enUS,
+  "rue":   rue,
+  "sk":    sk,
+  "de-de": deDE,
 };
 
 const DEFAULT_LOCALE = "en-us";

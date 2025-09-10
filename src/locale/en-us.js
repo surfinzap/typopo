@@ -18,7 +18,7 @@ const singleWordAbbreviations = ["p", "pp", "no", "vol"];
 */
 const multipleWordAbbreviations = ["U S", "e g", "i e", "a m", "p m"];
 
-export default {
+export const enUS = {
   quotes,
   numbers,
   singleWordAbbreviations,

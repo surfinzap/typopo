@@ -18,7 +18,7 @@ const singleWordAbbreviations = ["ціт", "ст", "канц", "абз", "тзв
 */
 const multipleWordAbbreviations = ["т зн", "Е Ч", "евід ч", "род ч", "т ч", "т д"];
 
-export default {
+export const rue = {
   quotes,
   numbers,
   singleWordAbbreviations,
