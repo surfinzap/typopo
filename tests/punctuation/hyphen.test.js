@@ -1,6 +1,5 @@
 import { fixHyphen, fixSpaceAroundHyphen } from "../../src/modules/punctuation/hyphen.js";
 import { describe, it, expect } from "vitest";
-import Locale from "../../src/locale/locale.js";
 
 describe("Fix spaces around hyphen\n", () => {
   let testCase = {
@@ -14,10 +13,10 @@ describe("Fix spaces around hyphen\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit tests", () => {
-      expect(fixSpaceAroundHyphen(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixSpaceAroundHyphen(key)).toBe(testCase[key]);
     });
     it("module tests", () => {
-      expect(fixHyphen(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixHyphen(key)).toBe(testCase[key]);
     });
   });
 });

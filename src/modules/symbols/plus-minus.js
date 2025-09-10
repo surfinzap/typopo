@@ -1,9 +1,11 @@
-export function fixPlusMinus(string, locale) {
+import { base } from "../../const.js";
+
+export function fixPlusMinus(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
       `(\\+\\-)|(\\-\\+)`, 
       "g"), 
-    locale.plusMinus
+    base.plusMinus
   );
 }

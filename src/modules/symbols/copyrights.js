@@ -1,3 +1,4 @@
+import { base } from "../../const.js";
 import { addSpaceBeforeSymbol } from "../whitespace/spaces.js";
 import { addNbspAfterSymbol, replaceSpacesWithNbspAfterSymbol } from "../whitespace/nbsp.js";
 
@@ -11,16 +12,15 @@ import { addNbspAfterSymbol, replaceSpacesWithNbspAfterSymbol } from "../whitesp
  * @param {string} string - The input string where marks will be replaced.
  * @param {string} copyrightLetter - The pattern for the copyright (e.g., “p” for sound recording copyright).
  * @param {string} copyrightSign - The symbol to replace the pattern with (e.g., “©” for copyright).
- * @param {Object} locale - An object w/ locale-specific symbols.
  * @returns {string} - The string with the specified copyrights replaced.
  */
-export function replaceCopyright(string, copyrightLetter, copyrightSign, locale) {
+export function replaceCopyright(string, copyrightLetter, copyrightSign) {
   // prettier-ignore
   return string.replace(
     new RegExp(
       `(\\(${copyrightLetter}\\))` +
-      `([${locale.spaces}]*)` +
-      `(${locale.cardinalNumber})`,
+      `([${base.spaces}]*)` +
+      `(\\d)`,
       "gi"
     ),
     `${copyrightSign}$2$3`
@@ -34,13 +34,12 @@ export function replaceCopyright(string, copyrightLetter, copyrightSign, locale)
  *
  * @param {string} string - The input string where marks will be replaced.
  * @param {string} copyrightSign - The sign of choice, either © or ℗
- * @param {Object} locale - An object w/ locale-specific symbols.
  * @returns {string} - The string with the consolidated spaces around the copyright sign
  */
-export function consolidateSpaces(string, copyrightSign, locale) {
-  string = addSpaceBeforeSymbol(string, copyrightSign, locale);
-  string = addNbspAfterSymbol(string, copyrightSign, locale);
-  string = replaceSpacesWithNbspAfterSymbol(string, copyrightSign, locale);
+export function consolidateSpaces(string, copyrightSign) {
+  string = addSpaceBeforeSymbol(string, copyrightSign);
+  string = addNbspAfterSymbol(string, copyrightSign);
+  string = replaceSpacesWithNbspAfterSymbol(string, copyrightSign);
   return string;
 }
 
@@ -50,13 +49,12 @@ export function consolidateSpaces(string, copyrightSign, locale) {
  * Fixes occurrences of copyright (©), and sound recording copyright (℗) in a given string.
  *
  * @param {string} string - The input string to be fixed.
- * @param {Object} locale - An object w/ locale-specific symbols
  * @returns {string} - The string with marks replaced.
  */
-export function fixCopyrights(string, locale) {
-  string = replaceCopyright(string, "c", locale.copyright, locale);
-  string = consolidateSpaces(string, locale.copyright, locale);
-  string = replaceCopyright(string, "p", locale.soundRecordingCopyright, locale);
-  string = consolidateSpaces(string, locale.soundRecordingCopyright, locale);
+export function fixCopyrights(string) {
+  string = replaceCopyright(string, "c", base.copyright);
+  string = consolidateSpaces(string, base.copyright);
+  string = replaceCopyright(string, "p", base.soundRecordingCopyright);
+  string = consolidateSpaces(string, base.soundRecordingCopyright);
   return string;
 }

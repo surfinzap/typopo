@@ -1,12 +1,14 @@
-export function fixSpaceAroundHyphen(string, locale) {
+import { base } from "../../const.js";
+
+export function fixSpaceAroundHyphen(string) {
   // Fix hyphen with space after: "word- word" → "word-word"
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([${locale.allChars}])` + 
+      `([${base.allChars}])` + 
       `(-)` + 
-      `([${locale.spaces}])` + 
-      `([${locale.allChars}])`,
+      `([${base.spaces}])` + 
+      `([${base.allChars}])`,
       "g"
     ), 
     `$1-$4`
@@ -16,10 +18,10 @@ export function fixSpaceAroundHyphen(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([${locale.allChars}])` + 
-      `([${locale.spaces}])` + 
+      `([${base.allChars}])` + 
+      `([${base.spaces}])` + 
       `(-)` + 
-      `([${locale.allChars}])`,
+      `([${base.allChars}])`,
       "g"
     ), 
     `$1-$4`
@@ -30,7 +32,7 @@ export function fixSpaceAroundHyphen(string, locale) {
 
 //
 
-export function fixHyphen(string, locale) {
-  string = fixSpaceAroundHyphen(string, locale);
+export function fixHyphen(string) {
+  string = fixSpaceAroundHyphen(string);
   return string;
 }

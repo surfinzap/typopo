@@ -1,71 +1,103 @@
-const quotes = {
-  leftDoubleQuote:  "„",
-  rightDoubleQuote: "“",
-  leftSingleQuote:  "‚",
-  rightSingleQuote: "‘",
-};
+import { base } from "../const.js";
 
-const numbers = {
-  ordinalIndicator:      "\\.",
-  romanOrdinalIndicator: "\\.",
-};
+export const deDE = {
+  quotes: {
+    leftDoubleQuote:  "„",
+    rightDoubleQuote: "“",
+    leftSingleQuote:  "‚",
+    rightSingleQuote: "‘",
+  },
 
-const singleWordAbbreviations = [
-  "S",
-  "z",
-  "St",
-  "Stk",
-  "Mo",
-  "Di",
-  "Mi",
-  "Do",
-  "Fr",
-  "Sa",
-  "So",
-  "Bhf",
-  "Hbf",
-  "Nr",
-  "ca",
-  "usw",
-  "geb",
-  "gest",
-  "u",
-];
+  /*
+    Dash and spacing between words 
+  */
+  dashWords: {
+    spaceBefore: base.hairSpace,
+    dash:        base.enDash,
+    spaceAfter:  base.hairSpace,
+  },
 
-/*
-  The list of common multi-word abbrevations that are
-  stripped down of its micro-typography treatment.
-*/
-const multipleWordAbbreviations = [
-  "b w",
-  "d h",
-  "d i",
-  "e V",
-  "n Chr",
-  "s a",
-  "s o",
-  "s u",
-  "u a",
-  "u ä",
-  "u Ä",
-  "u dgl",
-  "u U",
-  "u z",
-  "u zw",
-  "v a",
-  "v Chr",
-  "z B",
-  "z T",
-  "z Zt",
-  "n u Z",
-  "u a m",
-  "v u Z",
-  "Ges m b H",
-];
+  /*
+    A space between a digit and a percent sign 
+  */
+  spaceBeforePercent: base.narrowNbsp,
 
-export default {
-  quotes,
-  numbers,
-  singleWordAbbreviations,
-  multipleWordAbbreviations,
+  numbers: {
+    ordinalIndicator:      "\\.",
+    romanOrdinalIndicator: "\\.",
+  },
+
+  /* 
+    The first and the second space in the ordinal date, e.g. 1. 1. 1993
+    1.{firstSpace}1.{secondSpace}1993
+  */
+  ordinalDate: {
+    firstSpace:  base.nbsp,
+    secondSpace: base.space,
+  },
+
+  /* 
+    (n-1) abbreviation space.
+    Examples:
+    J.{abbreviationSpace}Novak
+    F.{abbreviationSpace}X.{nbsp}Šalda
+    Ch.{abbreviationSpace}G.{abbreviationSpace}D.{nbsp}Lambert
+    e.{abbreviationSpace}g.
+  */
+  abbreviationSpace:       base.nbsp,
+  /* 
+    Common single-word abbreviations that are followed by a non-breaking space.
+    For coding purposes, they are written here without periods.
+  */
+  singleWordAbbreviations: [
+    "S",
+    "z",
+    "St",
+    "Stk",
+    "Mo",
+    "Di",
+    "Mi",
+    "Do",
+    "Fr",
+    "Sa",
+    "So",
+    "Bhf",
+    "Hbf",
+    "Nr",
+    "ca",
+    "usw",
+    "geb",
+    "gest",
+    "u",
+  ],
+  /*
+    Common multi-word abbreviations that require proper spacing.
+    For coding purposes, they are written here without periods and without correct spacing.
+  */
+  multipleWordAbbreviations: [
+    "b w",
+    "d h",
+    "d i",
+    "e V",
+    "n Chr",
+    "s a",
+    "s o",
+    "s u",
+    "u a",
+    "u ä",
+    "u Ä",
+    "u dgl",
+    "u U",
+    "u z",
+    "u zw",
+    "v a",
+    "v Chr",
+    "z B",
+    "z T",
+    "z Zt",
+    "n u Z",
+    "u a m",
+    "v u Z",
+    "Ges m b H",
+  ],
 };

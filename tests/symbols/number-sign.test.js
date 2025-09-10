@@ -3,7 +3,6 @@ import {
   fixNumberSign,
 } from "../../src/modules/symbols/number-sign.js";
 import { describe, it, expect } from "vitest";
-import Locale from "../../src/locale/locale.js";
 
 describe("Remove extra space before number sign\n", () => {
   let testCase = {
@@ -28,10 +27,10 @@ describe("Remove extra space before number sign\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(removeExtraSpacesAfterNumberSign(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(removeExtraSpacesAfterNumberSign(key)).toBe(testCase[key]);
     });
     it("module test", () => {
-      expect(fixNumberSign(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixNumberSign(key)).toBe(testCase[key]);
     });
   });
 });

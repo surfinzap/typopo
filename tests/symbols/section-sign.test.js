@@ -1,6 +1,5 @@
 import { fixSectionSign } from "../../src/modules/symbols/section-sign.js";
 import { describe, it, expect } from "vitest";
-import Locale from "../../src/locale/locale.js";
 
 describe("Fix section sign (§)\n", () => {
   let testCase = {
@@ -18,7 +17,7 @@ describe("Fix section sign (§)\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("", () => {
-      expect(fixSectionSign(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixSectionSign(key)).toBe(testCase[key]);
     });
   });
 });

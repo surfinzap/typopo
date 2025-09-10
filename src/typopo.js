@@ -48,7 +48,7 @@ export function fixTypos(string, locale, configuration) {
       : configuration;
 
   // exclude exceptions from fixing
-  const { processedText, exceptions } = excludeExceptions(string, currentLocale);
+  const { processedText, exceptions } = excludeExceptions(string);
   string = processedText;
 
   if (configuration.removeLines) {
@@ -64,23 +64,23 @@ export function fixTypos(string, locale, configuration) {
   // punctuation
   string = fixPeriod(string);
   string = fixDash(string, currentLocale);
-  string = fixHyphen(string, currentLocale);
+  string = fixHyphen(string);
   string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale, configuration);
   string = fixDoubleQuotesAndPrimes(string, currentLocale, configuration);
 
   // symbols
-  string = fixMultiplicationSign(string, currentLocale);
+  string = fixMultiplicationSign(string);
   string = fixSectionSign(string, currentLocale);
   string = fixCopyrights(string, currentLocale);
-  string = fixPlusMinus(string, currentLocale);
-  string = fixMarks(string, currentLocale);
-  string = fixExponents(string, currentLocale);
-  string = fixNumberSign(string, currentLocale);
+  string = fixPlusMinus(string);
+  string = fixMarks(string);
+  string = fixExponents(string);
+  string = fixNumberSign(string);
 
   // words
-  string = fixCase(string, currentLocale);
+  string = fixCase(string);
   string = fixAbbreviations(string, currentLocale);
-  string = fixPubId(string, currentLocale);
+  string = fixPubId(string);
 
   // spaces
   string = fixNbsp(string, currentLocale);

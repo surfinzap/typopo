@@ -35,7 +35,7 @@ describe("Replace periods/ellipses with a single ellipsis:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(replaceThreeCharsWithEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(replaceThreeCharsWithEllipsis(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -53,7 +53,7 @@ describe("Replace combination of period/ellipsis with an ellipsis:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(replaceTwoCharsWithEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(replaceTwoCharsWithEllipsis(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -68,7 +68,7 @@ describe("Replace two periods between words (spaces) with an ellipsis:\n", () =>
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(replaceTwoPeriodsWithEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(replaceTwoPeriodsWithEllipsis(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -89,7 +89,7 @@ describe("Fix spacing, when ellipsis is used around commas:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(fixEllipsisSpacingAroundCommas(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixEllipsisSpacingAroundCommas(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -130,7 +130,7 @@ describe("Fix spacing, when ellipsis is used as a list item int the list:\n", ()
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(fixEllipsisAsLastItem(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixEllipsisAsLastItem(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -147,7 +147,7 @@ describe("Fix spacing, when aposiopesis is starting a paragraph:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(fixAposiopesisStartingParagraph(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixAposiopesisStartingParagraph(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -189,7 +189,7 @@ describe("Fix spacing, when aposiopesis is between sentences:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(fixAposiopesisBetweenSentences(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixAposiopesisBetweenSentences(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -205,7 +205,7 @@ describe("Fix spacing, when aposiopesis is between words:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(fixAposiopesisBetweenWords(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixAposiopesisBetweenWords(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(fixEllipsis(key, new Locale("en-us"))).toBe(testCase[key]);

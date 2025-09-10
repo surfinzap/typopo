@@ -1,3 +1,5 @@
+import { base } from "../../const.js";
+
 /**
   Corrects accidental uppercase
 
@@ -12,14 +14,14 @@
   @param {string} string — input text for identification
   @returns {string} — output with corrected accidental uppercase
 */
-export function fixCase(string, locale) {
+export function fixCase(string) {
   /* [1] two first uppercase letters (i.e. UPpercase) */
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([^${locale.allChars}]|^)` + 
-      `([${locale.uppercaseChars}]{2})` + 
-      `([${locale.lowercaseChars}]{2,})`, 
+      `([^${base.allChars}]|^)` + 
+      `([${base.uppercaseChars}]{2})` + 
+      `([${base.lowercaseChars}]{2,})`, 
       "g"
     ), 
     function ($0, $1, $2, $3) {
@@ -36,8 +38,8 @@ export function fixCase(string, locale) {
     new RegExp(
       `(\\b)` + 
       `(?!iOS)` + 
-      `([${locale.lowercaseChars}])` + 
-      `([${locale.uppercaseChars}]{2,})`, 
+      `([${base.lowercaseChars}])` + 
+      `([${base.uppercaseChars}]{2,})`, 
       "g"
     ), 
     function ($0, $1, $2, $3) {

@@ -1,6 +1,14 @@
 # Changelog for Typopo
 
 
+## 2.6.1 //
+
+### 🔨 Maintenance
+
+- Update NPM packages to their latest versions 
+- Isolate base constants from locale file
+- Move locale-specific typography treatments to a locale file
+
 ## 2.6.0 // 2025-08-09
 This release brings significant improvements to the build system and typography handling, along with important bug fixes for percentage formatting across different languages. The modernized build pipeline delivers better performance and smaller bundle sizes while maintaining compatibility across all supported environments.
 

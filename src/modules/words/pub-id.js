@@ -1,3 +1,5 @@
+import { base } from "../../const.js";
+
 /**
   Identifies wrongly formatted ISSN and corrects it
   Wiki: https://en.wikipedia.org/wiki/International_Standard_Serial_Number
@@ -14,19 +16,19 @@
   @param {string} string — input text for identification
   @returns {string} — output with correct ISSN format
 */
-export function fixISSN(string, locale) {
+export function fixISSN(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
       `(issn)` +
       `(:?)` +
-      `([${locale.spaces}]?)` +
+      `([${base.spaces}]?)` +
       `(\\d{4})` +
-      `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)` +
+      `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}][${base.spaces}]?)` +
       `(\\d{4})`,
       "gi"
     ),
-    `ISSN$2${locale.nbsp}$4-$6`
+    `ISSN$2${base.nbsp}$4-$6`
   );
 }
 
@@ -47,15 +49,15 @@ export function fixISSN(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with correct ISBN format
 */
-export function fixISBN10(string, locale) {
+export function fixISBN10(string) {
   // prettier-ignore
-  let dashedSpace = `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)`;
+  let dashedSpace = `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}][${base.spaces}]?)`;
   // prettier-ignore
   return string.replace(
     new RegExp(
       `(isbn)` +
       `(:?)` +
-      `([${locale.spaces}]?)` +
+      `([${base.spaces}]?)` +
       `(\\d+)` +
       dashedSpace +
       `(\\d+)` +
@@ -65,13 +67,13 @@ export function fixISBN10(string, locale) {
       `(X|\\d+)`,
       "gi"
     ),
-    `ISBN$2${locale.nbsp}$4-$6-$8-$10`
+    `ISBN$2${base.nbsp}$4-$6-$8-$10`
   );
 }
 
 //
 
-/*
+/**
   Identifies wrongly formatted ISBN13 and corrects it
   Wiki: https://en.wikipedia.org/wiki/International_Standard_Book_Numbe
 
@@ -86,15 +88,15 @@ export function fixISBN10(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with correct ISBN format
 */
-export function fixISBN13(string, locale) {
+export function fixISBN13(string) {
   // prettier-ignore
-  let dashedSpace = `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)`;
+  let dashedSpace = `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}][${base.spaces}]?)`;
   // prettier-ignore
   return string.replace(
     new RegExp(
       `(isbn)` +
       `(:?)` +
-      `([${locale.spaces}]?)` +
+      `([${base.spaces}]?)` +
       `(\\d+)` +
       dashedSpace +
       `(\\d+)` +
@@ -106,7 +108,7 @@ export function fixISBN13(string, locale) {
       `(X|\\d+)`,
       "gi"
     ),
-    `ISBN$2${locale.nbsp}$4-$6-$8-$10-$12`
+    `ISBN$2${base.nbsp}$4-$6-$8-$10-$12`
   );
 }
 
@@ -126,9 +128,9 @@ export function fixISBN13(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with correct ISBN format
 */
-export function fixISBNnumber(string, locale) {
+export function fixISBNnumber(string) {
   // prettier-ignore
-  let dashedSpace = `([${locale.spaces}]?[${locale.hyphen}${locale.enDash}${locale.emDash}][${locale.spaces}]?)`;
+  let dashedSpace = `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}][${base.spaces}]?)`;
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -155,11 +157,11 @@ export function fixISBNnumber(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with fixed publication identifiers
 */
-export function fixPubId(string, locale) {
-  string = fixISSN(string, locale);
-  string = fixISBN10(string, locale);
-  string = fixISBN13(string, locale);
-  string = fixISBNnumber(string, locale);
+export function fixPubId(string) {
+  string = fixISSN(string);
+  string = fixISBN10(string);
+  string = fixISBN13(string);
+  string = fixISBNnumber(string);
 
   return string;
 }

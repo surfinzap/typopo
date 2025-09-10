@@ -1,49 +1,51 @@
-function addSpaceBeforeSectionSign(string, locale) {
+import { base } from "../../const.js";
+
+function addSpaceBeforeSectionSign(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([^${locale.spaces}${locale.sectionSign}${locale.openingBrackets}])` + 
-      `(${locale.sectionSign})`,
+      `([^${base.spaces}${base.sectionSign}${base.openingBrackets}])` + 
+      `(${base.sectionSign})`,
       "g"
     ),
-    `$1${locale.space}$2`
+    `$1${base.space}$2`
   );
 }
 
 //
 
-function addNbspAfterSectionSign(string, locale) {
+function addNbspAfterSectionSign(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${locale.sectionSign})` + 
-      `([^${locale.spaces}${locale.sectionSign}])`,
+      `(${base.sectionSign})` + 
+      `([^${base.spaces}${base.sectionSign}])`,
       "g"
     ),
-    `$1${locale.nbsp}$2`
+    `$1${base.nbsp}$2`
   );
 }
 
 //
 
-function replaceSpacesAfterSectionSign(string, locale) {
+function replaceSpacesAfterSectionSign(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${locale.sectionSign})` + 
-      `([${locale.spaces}])`,
+      `(${base.sectionSign})` + 
+      `([${base.spaces}])`,
       "g"
     ),
-    `$1${locale.nbsp}`
+    `$1${base.nbsp}`
   );
 }
 
 //
 
-export function fixSectionSign(string, locale) {
-  string = addSpaceBeforeSectionSign(string, locale);
-  string = addNbspAfterSectionSign(string, locale);
-  string = replaceSpacesAfterSectionSign(string, locale);
+export function fixSectionSign(string) {
+  string = addSpaceBeforeSectionSign(string);
+  string = addNbspAfterSectionSign(string);
+  string = replaceSpacesAfterSectionSign(string);
 
   return string;
 }

@@ -1,3 +1,5 @@
+import { base } from "../../const.js";
+
 /*
   Remove extra space, nbsp, hairSpace, narrowNbsp
   after number sign (octothorpe) and before number
@@ -8,14 +10,14 @@
   @param {string} string — input text for identification
   @returns {string} — output without extra spaces
 */
-export function removeExtraSpacesAfterNumberSign(string, locale) {
+export function removeExtraSpacesAfterNumberSign(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        `([${locale.spaces}]+)` +
-        `(${locale.numberSign})` +
-        `([${locale.spaces}]+)` +
-        `(${locale.cardinalNumber})`, 
+        `([${base.spaces}]+)` +
+        `(${base.numberSign})` +
+        `([${base.spaces}]+)` +
+        `(\\d)`, 
         "g"
     ),
     `$1$2$4`
@@ -30,7 +32,7 @@ export function removeExtraSpacesAfterNumberSign(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with properly used number sign
 */
-export function fixNumberSign(string, locale) {
-  string = removeExtraSpacesAfterNumberSign(string, locale);
+export function fixNumberSign(string) {
+  string = removeExtraSpacesAfterNumberSign(string);
   return string;
 }

@@ -1,3 +1,5 @@
+import { base } from "../../const.js";
+
 /*
   Ellipsis (as a character) is used for 2 different purposes:
   1. as an ellipsis to ommit a piece of information deliberately
@@ -19,11 +21,10 @@
   Sentence ending…..... → Sentence ending…
 
   @param {string} string — input text for identification
-  @param {string} locale — locale option
   @returns {string} — output with fixed ellipsis
 */
-export function replaceThreeCharsWithEllipsis(string, locale) {
-  return string.replace(new RegExp(`[${locale.ellipsis}\\.]{3,}`, "g"), locale.ellipsis);
+export function replaceThreeCharsWithEllipsis(string) {
+  return string.replace(new RegExp(`[${base.ellipsis}\\.]{3,}`, "g"), base.ellipsis);
 }
 
 //
@@ -37,16 +38,16 @@ export function replaceThreeCharsWithEllipsis(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with fixed ellipsis
 */
-export function replaceTwoCharsWithEllipsis(string, locale) {
+export function replaceTwoCharsWithEllipsis(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `\\.${locale.ellipsis}|` +
-      `${locale.ellipsis}{2,}|` +
-      `${locale.ellipsis}\\.`,
+      `\\.${base.ellipsis}|` +
+      `${base.ellipsis}{2,}|` +
+      `${base.ellipsis}\\.`,
       "g"
     ),
-    locale.ellipsis
+    base.ellipsis
   );
 }
 
@@ -61,10 +62,10 @@ export function replaceTwoCharsWithEllipsis(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with fixed ellipsis
 */
-export function replaceTwoPeriodsWithEllipsis(string, locale) {
+export function replaceTwoPeriodsWithEllipsis(string) {
   return string.replace(
-    new RegExp(`[${locale.spaces}]\\.{2}[${locale.spaces}]`, "g"),
-    `${locale.space}${locale.ellipsis}${locale.space}`
+    new RegExp(`[${base.spaces}]\\.{2}[${base.spaces}]`, "g"),
+    `${base.space}${base.ellipsis}${base.space}`
   );
 }
 
@@ -80,18 +81,18 @@ export function replaceTwoPeriodsWithEllipsis(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with fixed spacing around ellipsis
 */
-export function fixEllipsisSpacingAroundCommas(string, locale) {
+export function fixEllipsisSpacingAroundCommas(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
       `(,)` +
-      `([${locale.spaces}]?)` +
-      `(${locale.ellipsis})` +
-      `([${locale.spaces}]?)` +
+      `([${base.spaces}]?)` +
+      `(${base.ellipsis})` +
+      `([${base.spaces}]?)` +
       `(,)`,
       "g"
     ),
-    `$1 ${locale.ellipsis}$5`
+    `$1 ${base.ellipsis}$5`
   );
 }
 
@@ -107,15 +108,15 @@ export function fixEllipsisSpacingAroundCommas(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with fixed spacing around ellipsis
 */
-export function fixEllipsisAsLastItem(string, locale) {
+export function fixEllipsisAsLastItem(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
       `(,)` +
-      `([${locale.spaces}]?)` +
-      `(${locale.ellipsis})` +
-      `([${locale.spaces}]?)` +
-      `(\\B|[${locale.closingBrackets}])` +
+      `([${base.spaces}]?)` +
+      `(${base.ellipsis})` +
+      `([${base.spaces}]?)` +
+      `(\\B|[${base.closingBrackets}])` +
       `([^,]|$)`,
       "g"
     ),
@@ -134,13 +135,13 @@ export function fixEllipsisAsLastItem(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with fixed spacing
 */
-export function fixAposiopesisStartingParagraph(string, locale) {
+export function fixAposiopesisStartingParagraph(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(^${locale.ellipsis})` +
-      `([${locale.spaces}])` +
-      `([${locale.lowercaseChars}${locale.uppercaseChars}])`,
+      `(^${base.ellipsis})` +
+      `([${base.spaces}])` +
+      `([${base.lowercaseChars}${base.uppercaseChars}])`,
       "gm"
     ),
     "$1$3"
@@ -163,11 +164,11 @@ export function fixAposiopesisStartingSentence(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.sentencePunctuation}${locale.terminalQuotes}])` +
-      `([${locale.spaces}]?)` +
-      `([${locale.ellipsis}])` +
-      `([${locale.spaces}]?)` +
-      `([${locale.lowercaseChars}])`,
+      `([${base.sentencePunctuation}${locale.terminalQuotes}])` +
+      `([${base.spaces}]?)` +
+      `([${base.ellipsis}])` +
+      `([${base.spaces}]?)` +
+      `([${base.lowercaseChars}])`,
       "g"
     ),
     "$1 $3$5"
@@ -187,15 +188,15 @@ export function fixAposiopesisStartingSentence(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with fixed spacing
 */
-export function fixAposiopesisBetweenSentences(string, locale) {
+export function fixAposiopesisBetweenSentences(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.lowercaseChars}])` +
-      `([${locale.spaces}])` +
-      `([${locale.ellipsis}])` +
-      `([${locale.spaces}]?)` +
-      `([${locale.uppercaseChars}])`,
+      `([${base.lowercaseChars}])` +
+      `([${base.spaces}])` +
+      `([${base.ellipsis}])` +
+      `([${base.spaces}]?)` +
+      `([${base.uppercaseChars}])`,
       "g"
     ),
     "$1$3 $5"
@@ -214,13 +215,13 @@ export function fixAposiopesisBetweenSentences(string, locale) {
   @param {string} string — input text for identification
   @returns {string} — output with fixed spacing
 */
-export function fixAposiopesisBetweenWords(string, locale) {
+export function fixAposiopesisBetweenWords(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.allChars}])` +
-      `([${locale.ellipsis}])` +
-      `([${locale.allChars}])`,
+      `([${base.allChars}])` +
+      `([${base.ellipsis}])` +
+      `([${base.allChars}])`,
       "g"
     ),
     "$1$2 $3"
@@ -238,6 +239,7 @@ export function fixAposiopesisBetweenWords(string, locale) {
   What are you saying. … She did not answer.
 
   @param {string} string — input text for identification
+  @param {string} locale — locale option
   @returns {string} — output with fixed spacing
 */
 export function fixEllipsisBetweenSentences(string, locale) {
@@ -246,11 +248,11 @@ export function fixEllipsisBetweenSentences(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.sentencePunctuation}${locale.terminalQuotes}])` +
-      `([${locale.spaces}]?)` +
-      `(${locale.ellipsis})` +
-      `([${locale.spaces}]?)` +
-      `([${locale.uppercaseChars}])`,
+      `([${base.sentencePunctuation}${locale.terminalQuotes}])` +
+      `([${base.spaces}]?)` +
+      `(${base.ellipsis})` +
+      `([${base.spaces}]?)` +
+      `([${base.uppercaseChars}])`,
       "g"
     ),
     "$1 $3 $5"
@@ -266,15 +268,16 @@ export function fixEllipsisBetweenSentences(string, locale) {
   Sentence ending … → Sentence ending…
 
   @param {string} string — input text for identification
+  @param {string} locale: locale option
   @returns {string} — output with fixed spacing
 */
 export function fixAposiopesisEndingParagraph(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.lowercaseChars}])` +
-      `([${locale.spaces}])+` +
-      `([${locale.ellipsis}][${locale.rightDoubleQuote}${locale.rightSingleQuote}]?$)`,
+      `([${base.lowercaseChars}])` +
+      `([${base.spaces}])+` +
+      `([${base.ellipsis}][${locale.rightDoubleQuote}${locale.rightSingleQuote}]?$)`,
       "gm"
     ),
     "$1$3"
@@ -283,17 +286,22 @@ export function fixAposiopesisEndingParagraph(string, locale) {
 
 //
 
+/**
+  @param {string} string — input text for identification
+  @param {string} locale: locale option
+  @returns {string} — output with fixed ellipsis
+*/
 export function fixEllipsis(string, locale) {
-  string = replaceThreeCharsWithEllipsis(string, locale);
-  string = fixEllipsisSpacingAroundCommas(string, locale);
-  string = fixEllipsisAsLastItem(string, locale);
-  string = fixAposiopesisStartingParagraph(string, locale);
+  string = replaceThreeCharsWithEllipsis(string);
+  string = fixEllipsisSpacingAroundCommas(string);
+  string = fixEllipsisAsLastItem(string);
+  string = fixAposiopesisStartingParagraph(string);
   string = fixAposiopesisStartingSentence(string, locale);
-  string = fixAposiopesisBetweenSentences(string, locale);
-  string = fixAposiopesisBetweenWords(string, locale);
+  string = fixAposiopesisBetweenSentences(string);
+  string = fixAposiopesisBetweenWords(string);
   string = fixEllipsisBetweenSentences(string, locale);
   string = fixAposiopesisEndingParagraph(string, locale);
-  string = replaceTwoCharsWithEllipsis(string, locale);
-  string = replaceTwoPeriodsWithEllipsis(string, locale);
+  string = replaceTwoCharsWithEllipsis(string);
+  string = replaceTwoPeriodsWithEllipsis(string);
   return string;
 }

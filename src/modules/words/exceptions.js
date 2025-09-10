@@ -1,3 +1,5 @@
+import { base } from "../../const.js";
+
 /**
  * Identifies and excludes following patterns
  * - email addresses
@@ -5,15 +7,14 @@
  * - filenames
  *
  * @param {string} text - The input text to process.
- * @param {Object} locale - An object containing the patterns to identify exceptions.
  * @returns {Object} - Contains the processed text and the exceptions array.
  */
-export function excludeExceptions(text, locale) {
+export function excludeExceptions(text) {
   let exceptions = [];
 
-  collectExceptions(text, locale.emailPattern, exceptions);
-  collectExceptions(text, locale.urlPattern, exceptions);
-  collectExceptions(text, locale.filenamePattern, exceptions);
+  collectExceptions(text, base.emailPattern, exceptions);
+  collectExceptions(text, base.urlPattern, exceptions);
+  collectExceptions(text, base.filenamePattern, exceptions);
 
   const processedText = replaceExceptionsWithPlaceholders(text, exceptions);
 

@@ -1,9 +1,5 @@
 import { describe, it, expect } from "vitest";
 import { excludeExceptions, placeExceptions } from "../../src/modules/words/exceptions.js";
-import Locale from "../../src/locale/locale.js";
-
-// Mock locale for URL pattern
-const locale = new Locale("en-us");
 
 const emails = [
   "john.doe@example.com",
@@ -307,7 +303,7 @@ function testExcludeExceptions(testCase, label) {
   const { modifiedTestCase, testItemsString, testString } = prepareTestItems(testCase);
 
   // Act
-  const { processedText } = excludeExceptions(testItemsString, locale);
+  const { processedText } = excludeExceptions(testItemsString);
 
   // Assert
   it(`shouldn’t exclude test string “${testString}”`, () => {
@@ -347,7 +343,7 @@ function testPlaceExceptions(testCase, label) {
   const { testItemsString } = prepareTestItems(testCase);
 
   // Act
-  const { processedText, exceptions } = excludeExceptions(testItemsString, locale);
+  const { processedText, exceptions } = excludeExceptions(testItemsString);
   const replacedText = placeExceptions(processedText, exceptions);
 
   // Assert

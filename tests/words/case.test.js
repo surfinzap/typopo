@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
 import { fixCase } from "../../src/modules/words/case.js";
-import Locale from "../../src/locale/locale.js";
 
 describe("Fix accidental uPPERCASE\n", () => {
   let testCase = {
@@ -37,7 +36,7 @@ describe("Fix accidental uPPERCASE\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("module test", () => {
-      expect(fixCase(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixCase(key)).toBe(testCase[key]);
     });
   });
 });

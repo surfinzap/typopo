@@ -1,3 +1,5 @@
+import { base } from "../../const.js";
+
 /**
  * Replaces occurrences of a specific mark in a string.
  *
@@ -6,15 +8,14 @@
  * @param {string} string - The input string where marks will be replaced.
  * @param {string} markPattern - The pattern for the mark (e.g., “tm” for trademark).
  * @param {string} replacementMark - The symbol to replace the pattern with (e.g., “™” for trademark).
- * @param {Object} locale - An object w/ locale-specific symbols.
  * @returns {string} - The string with the specified marks replaced.
  */
-export function replaceMark(string, markPattern, replacementMark, locale) {
+export function replaceMark(string, markPattern, replacementMark) {
   // prettier-ignore
   return string.replace(
     new RegExp(
       `([^0-9]|^)` +
-      `([${locale.spaces}]*)` +
+      `([${base.spaces}]*)` +
       `(\\(${markPattern}\\)|${replacementMark})`,
       "gi"
     ),
@@ -28,13 +29,12 @@ export function replaceMark(string, markPattern, replacementMark, locale) {
  * Fixes occurrences of registered trademark (®), service mark (℠) and trademark (™) in a given string.
  *
  * @param {string} string - The input string to be fixed.
- * @param {Object} locale - An object w/ locale-specific symbols
  * @returns {string} - The string with marks replaced.
  */
-export function fixMarks(string, locale) {
-  string = replaceMark(string, "r", locale.registeredTrademark, locale);
-  string = replaceMark(string, "sm", locale.serviceMark, locale);
-  string = replaceMark(string, "tm", locale.trademark, locale);
+export function fixMarks(string) {
+  string = replaceMark(string, "r", base.registeredTrademark);
+  string = replaceMark(string, "sm", base.serviceMark);
+  string = replaceMark(string, "tm", base.trademark);
 
   return string;
 }

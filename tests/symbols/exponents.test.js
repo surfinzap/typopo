@@ -1,6 +1,5 @@
 import { fixExponents, fixSquares, fixCubes } from "../../src/modules/symbols/exponents.js";
 import { describe, it, expect } from "vitest";
-import Locale from "../../src/locale/locale.js";
 
 describe("Fix squares\n", () => {
   let testCase = {
@@ -31,12 +30,12 @@ describe("Fix squares\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit tests", () => {
-      expect(fixSquares(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixSquares(key)).toBe(testCase[key]);
     });
   });
   Object.keys(testCase).forEach((key) => {
     it("module tests", () => {
-      expect(fixExponents(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixExponents(key)).toBe(testCase[key]);
     });
   });
 });
@@ -70,12 +69,12 @@ describe("Fix cubes\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit tests", () => {
-      expect(fixCubes(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixCubes(key)).toBe(testCase[key]);
     });
   });
   Object.keys(testCase).forEach((key) => {
     it("module tests", () => {
-      expect(fixExponents(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(fixExponents(key)).toBe(testCase[key]);
     });
   });
 });

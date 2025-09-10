@@ -113,7 +113,7 @@ describe("Remove punctuation before double quotes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(removeExtraPunctuationBeforeQuotes(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(removeExtraPunctuationBeforeQuotes(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(
@@ -133,7 +133,7 @@ describe("Remove punctuation after double quotes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(removeExtraPunctuationAfterQuotes(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(removeExtraPunctuationAfterQuotes(key)).toBe(testCase[key]);
     });
     it("module test", () => {
       expect(
@@ -201,9 +201,9 @@ describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        placeLocaleDoubleQuotes(identifyDoublePrimes(key, new Locale("en-us")), new Locale("en-us"))
-      ).toBe(unitTestCase[key]);
+      expect(placeLocaleDoubleQuotes(identifyDoublePrimes(key), new Locale("en-us"))).toBe(
+        unitTestCase[key]
+      );
     });
   });
 
@@ -273,12 +273,9 @@ describe("Identify double quote pairs (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        placeLocaleDoubleQuotes(
-          identifyDoubleQuotePairs(key, new Locale("en-us")),
-          new Locale("en-us")
-        )
-      ).toBe(unitTestCase[key]);
+      expect(placeLocaleDoubleQuotes(identifyDoubleQuotePairs(key), new Locale("en-us"))).toBe(
+        unitTestCase[key]
+      );
     });
   });
 
@@ -315,10 +312,7 @@ describe("Identify standalone left double quote (en-us):\n", () => {
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
       expect(
-        placeLocaleDoubleQuotes(
-          identifyStandaloneLeftDoubleQuote(key, new Locale("en-us")),
-          new Locale("en-us")
-        )
+        placeLocaleDoubleQuotes(identifyStandaloneLeftDoubleQuote(key), new Locale("en-us"))
       ).toBe(testCase[key]);
     });
 
@@ -356,10 +350,7 @@ describe("Identify standalone right double quote (en-us):\n", () => {
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
       expect(
-        placeLocaleDoubleQuotes(
-          identifyStandaloneRightDoubleQuote(key, new Locale("en-us")),
-          new Locale("en-us")
-        )
+        placeLocaleDoubleQuotes(identifyStandaloneRightDoubleQuote(key), new Locale("en-us"))
       ).toBe(testCase[key]);
     });
 
@@ -390,12 +381,9 @@ describe("Remove unidentified double quotes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        placeLocaleDoubleQuotes(
-          removeUnidentifiedDoubleQuote(key, new Locale("en-us")),
-          new Locale("en-us")
-        )
-      ).toBe(testCase[key]);
+      expect(placeLocaleDoubleQuotes(removeUnidentifiedDoubleQuote(key), new Locale("en-us"))).toBe(
+        testCase[key]
+      );
     });
 
     it("module test", () => {

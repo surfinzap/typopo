@@ -82,12 +82,9 @@ describe("Identify contracted and (’n’) as apostrophes (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        placeLocaleSingleQuotes(
-          identifyContractedAnd(key, new Locale("en-us")),
-          new Locale("en-us")
-        )
-      ).toBe(unitTestCase[key]);
+      expect(placeLocaleSingleQuotes(identifyContractedAnd(key), new Locale("en-us"))).toBe(
+        unitTestCase[key]
+      );
     });
   });
 
@@ -135,12 +132,9 @@ describe("Identify common contractions at the beginning of the word as apostroph
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        placeLocaleSingleQuotes(
-          identifyContractedBeginnings(key, new Locale("en-us")),
-          new Locale("en-us")
-        )
-      ).toBe(testCase[key]);
+      expect(placeLocaleSingleQuotes(identifyContractedBeginnings(key), new Locale("en-us"))).toBe(
+        testCase[key]
+      );
     });
   });
 
@@ -177,12 +171,9 @@ describe("Identify common contractions at the end of the word as apostrophes (en
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        placeLocaleSingleQuotes(
-          identifyContractedEnds(key, new Locale("en-us")),
-          new Locale("en-us")
-        )
-      ).toBe(unitTestCase[key]);
+      expect(placeLocaleSingleQuotes(identifyContractedEnds(key), new Locale("en-us"))).toBe(
+        unitTestCase[key]
+      );
     });
   });
 
@@ -218,12 +209,9 @@ describe("Identify in-word contractions as apostrophes (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        placeLocaleSingleQuotes(
-          identifyInWordContractions(key, new Locale("en-us")),
-          new Locale("en-us")
-        )
-      ).toBe(testCase[key]);
+      expect(placeLocaleSingleQuotes(identifyInWordContractions(key), new Locale("en-us"))).toBe(
+        testCase[key]
+      );
     });
   });
 
@@ -256,12 +244,9 @@ describe("Identify contracted years as apostrophes (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        placeLocaleSingleQuotes(
-          identifyContractedYears(key, new Locale("en-us")),
-          new Locale("en-us")
-        )
-      ).toBe(unitTestCase[key]);
+      expect(placeLocaleSingleQuotes(identifyContractedYears(key), new Locale("en-us"))).toBe(
+        unitTestCase[key]
+      );
     });
   });
 
@@ -316,9 +301,9 @@ describe("Identify feet and arcminutes following a 1–3 numbers (en-us):\n", ()
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        placeLocaleSingleQuotes(identifySinglePrimes(key, new Locale("en-us")), new Locale("en-us"))
-      ).toBe(unitTestCase[key]);
+      expect(placeLocaleSingleQuotes(identifySinglePrimes(key), new Locale("en-us"))).toBe(
+        unitTestCase[key]
+      );
     });
   });
 
@@ -388,7 +373,7 @@ describe("Identify standalone left single quote (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(identifyStandaloneLeftSingleQuote(key, new Locale("en-us"))).toBe(unitTestCase[key]);
+      expect(identifyStandaloneLeftSingleQuote(key)).toBe(unitTestCase[key]);
     });
   });
 
@@ -472,7 +457,7 @@ describe("Identify standalone right single quote (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(identifyStandaloneRightSingleQuote(key, new Locale("en-us"))).toBe(unitTestCase[key]);
+      expect(identifyStandaloneRightSingleQuote(key)).toBe(unitTestCase[key]);
     });
   });
 
@@ -516,7 +501,7 @@ describe("Identify single quote pairs (en-us):\n", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(identifySingleQuotePairs(key, new Locale("en-us"))).toBe(unitTestCase[key]);
+      expect(identifySingleQuotePairs(key)).toBe(unitTestCase[key]);
     });
   });
 
@@ -561,10 +546,7 @@ describe("Identify single quote pairs around single word (en-us):\n", () => {
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
       expect(
-        placeLocaleSingleQuotes(
-          identifySingleQuotePairAroundSingleWord(key, new Locale("en-us")),
-          new Locale("en-us")
-        )
+        placeLocaleSingleQuotes(identifySingleQuotePairAroundSingleWord(key), new Locale("en-us"))
       ).toBe(unitTestCase[key]);
     });
   });
@@ -600,7 +582,7 @@ describe("Replace a single qoute & a single prime with a single quote pair (en-u
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(replaceSinglePrimeWSingleQuote(key, new Locale("en-us"))).toBe(unitTestCase[key]);
+      expect(replaceSinglePrimeWSingleQuote(key)).toBe(unitTestCase[key]);
     });
   });
 
@@ -624,12 +606,9 @@ describe("Identify residual apostrophes  (en-us):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(
-        placeLocaleSingleQuotes(
-          identifyResidualApostrophes(key, new Locale("en-us")),
-          new Locale("en-us")
-        )
-      ).toBe(testCase[key]);
+      expect(placeLocaleSingleQuotes(identifyResidualApostrophes(key), new Locale("en-us"))).toBe(
+        testCase[key]
+      );
     });
   });
 
@@ -655,7 +634,7 @@ describe("Remove extra space around a single prime:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
-      expect(removeExtraSpaceAroundSinglePrime(key, new Locale("en-us"))).toBe(testCase[key]);
+      expect(removeExtraSpaceAroundSinglePrime(key)).toBe(testCase[key]);
     });
   });
 
