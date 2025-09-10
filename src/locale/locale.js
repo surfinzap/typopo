@@ -36,6 +36,8 @@ export default class Locale {
     this.ordinalIndicator = SUPPORTED_LOCALES[localeID].numbers.ordinalIndicator;
     this.romanOrdinalIndicator = SUPPORTED_LOCALES[localeID].numbers.romanOrdinalIndicator;
 
+    this.abbreviationSpace = SUPPORTED_LOCALES[localeID].abbreviationSpace;
+
     /* Single-word abbreviations from all locales
 
        Make a list of Single-word abbreviations from all locales

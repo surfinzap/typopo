@@ -1,22 +1,6 @@
 import { base } from "../../const.js";
 
 /**
-  @param {string} locale: locale option
-  @returns {string} appropriate spacing for abbreviations based on locale
-*/
-function getAbbreviationSpace(locale) {
-  const ABBR_SPACE = {
-    "en-us": "",
-    "rue":   base.nbsp,
-    "sk":    base.nbsp,
-    "cs":    base.nbsp,
-    "de-de": base.nbsp,
-  };
-
-  return ABBR_SPACE[locale.ID];
-}
-
-/**
  Fixes spaces around initials for First and up to two Middle names
  It won’t fix any other abbreviation.
  
@@ -29,7 +13,6 @@ function getAbbreviationSpace(locale) {
   @returns {string} corrected output
   */
 export function fixInitials(string, locale) {
-  const abbrSpace = getAbbreviationSpace(locale);
   const initialPattern = `([${base.uppercaseChars}][${base.allChars}]?\\.)([${base.spaces}]?)`;
   const fullNamePattern = `([${base.allChars}]{2,}[^\\.])`;
 
@@ -42,12 +25,12 @@ export function fixInitials(string, locale) {
     {
       // "I. I. FullName"
       pattern:     `${initialPattern}${initialPattern}${fullNamePattern}`,
-      replacement: `$1${abbrSpace}$3${base.space}$5`,
+      replacement: `$1${locale.abbreviationSpace}$3${base.space}$5`,
     },
     {
       // "I. I. I. FullName"
       pattern:     `${initialPattern}${initialPattern}${initialPattern}${fullNamePattern}`,
-      replacement: `$1${abbrSpace}$3${abbrSpace}$5${base.space}$7`,
+      replacement: `$1${locale.abbreviationSpace}$3${locale.abbreviationSpace}$5${base.space}$7`,
     },
   ];
 
@@ -66,10 +49,9 @@ export function fixInitials(string, locale) {
   please refer to the test suites.
 
   Algorithm
-  [1] Set locale-specific space between abbreviations
-  [2] Change multiple-word abbreviations from all locales abbr. patterns
-  [3] Identify and fix multiple-word abbreviations before the word
-  [4] Identify and fix multiple-word abbreviations after the word or on their own
+  [1] Change multiple-word abbreviations from all locales abbr. patterns
+  [2] Identify and fix multiple-word abbreviations before the word
+  [3] Identify and fix multiple-word abbreviations after the word or on their own
 
   @param {string} input text for identification
   @returns {string} corrected output
@@ -80,10 +62,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
   let followingWord = `([${base.allChars}]|\\D)`;
   let followingNonLatinBoundary = `([^${base.allChars}${locale.leftDoubleQuote}${locale.leftSingleQuote}${base.backtick}\\p{Emoji}]|$)`;
 
-  /* [1] Set locale-specific space between abbreviations */
-  const abbrSpace = getAbbreviationSpace(locale);
-
-  /* [2] Change multiple-word abbreviations from all locales to abbr. patterns */
+  /* [1] Change multiple-word abbreviations from all locales to abbr. patterns */
   let abbreviationPatterns = [];
   for (let i = 0; i < locale.multipleWordAbbreviations.length; i++) {
     let splitAbbreviation = locale.multipleWordAbbreviations[i].split(" ");
@@ -94,7 +73,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
     abbreviationPatterns[i] = abbrevationPattern;
   }
 
-  /* [3] Identify multiple-word abbreviations before the word
+  /* [2] Identify multiple-word abbreviations before the word
 
      Algorithm as follows:
      * build up pattern by setting preceding and following boundaries
@@ -110,14 +89,14 @@ export function fixMultipleWordAbbreviations(string, locale) {
     let replacement = "$1";
     let abbrCount = (abbreviationPatterns[i].match(/\(/g) || []).length / 3;
     for (let j = 0; j < abbrCount - 1; j++) {
-      replacement += `$${j * 3 + 2}.${abbrSpace}`;
+      replacement += `$${j * 3 + 2}.${locale.abbreviationSpace}`;
     }
     replacement += `$${(abbrCount - 1) * 3 + 2}. $${abbrCount * 3 + 2}`;
 
     string = string.replace(new RegExp(pattern, "gi"), replacement);
   }
 
-  /* [4] Identify multiple-word abbreviations after the word
+  /* [3] Identify multiple-word abbreviations after the word
 
      Algorithm follows:
      * build up pattern by setting preceding and following boundaries
@@ -133,7 +112,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
     let replacement = "$1";
     let abbrCount = (abbreviationPatterns[i].match(/\(/g) || []).length / 3;
     for (let j = 0; j < abbrCount - 1; j++) {
-      replacement += `$${j * 3 + 2}.${abbrSpace}`;
+      replacement += `$${j * 3 + 2}.${locale.abbreviationSpace}`;
     }
     replacement += `$${(abbrCount - 1) * 3 + 2}.$${abbrCount * 3 + 2}`;
 

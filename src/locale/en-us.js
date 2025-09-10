@@ -27,7 +27,15 @@ export const enUS = {
 
   // symbols
 
-  // abbreviations
+  /* 
+    (n-1) abbreviation space.
+    Examples:
+    J.{abbreviationSpace}Novak
+    F.{abbreviationSpace}X.{nbsp}Šalda
+    Ch.{abbreviationSpace}G.{abbreviationSpace}D.{nbsp}Lambert
+    e.{abbreviationSpace}g.
+  */
+  abbreviationSpace:         "",
   /* 
     Common single-word abbreviations that are followed by a non-breaking space.
     For coding purposes, they are written here without periods.
