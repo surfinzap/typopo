@@ -8,10 +8,20 @@ export const enUS = {
     rightSingleQuote: "’",
   },
 
+  /*
+    Dash and spacing between words 
+  */
+  dashWords: {
+    spaceBefore: "",
+    dash:        base.emDash,
+    spaceAfter:  "",
+  },
+
   numbers: {
     ordinalIndicator:      "st|nd|rd|th",
     romanOrdinalIndicator: "",
   },
+
   /* 
     The first and the second space in the ordinal date, e.g. 1. 1. 1993
     1.{firstSpace}1.{secondSpace}1993

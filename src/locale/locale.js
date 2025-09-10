@@ -30,6 +30,7 @@ export default class Locale {
     this.leftDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.leftDoubleQuote;
     this.rightDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.rightDoubleQuote;
     this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote;
+    this.dashWords = SUPPORTED_LOCALES[localeID].dashWords;
 
     this.ordinalIndicator = SUPPORTED_LOCALES[localeID].numbers.ordinalIndicator;
     this.romanOrdinalIndicator = SUPPORTED_LOCALES[localeID].numbers.romanOrdinalIndicator;

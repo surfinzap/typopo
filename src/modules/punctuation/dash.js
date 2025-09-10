@@ -34,14 +34,6 @@ export function replaceTwoHyphensWithEnDash(string) {
   @returns {string} output with fixed dashes and spaces between words
 */
 export function fixDashesBetweenWords(string, locale) {
-  const DASH_REPLACEMENT = {
-    "en-us": `${base.emDash}`,
-    "rue":   `${base.hairSpace}${base.emDash}${base.hairSpace}`,
-    "sk":    `${base.hairSpace}${base.emDash}${base.hairSpace}`,
-    "cs":    `${base.nbsp}${base.enDash}${base.space}`,
-    "de-de": `${base.hairSpace}${base.enDash}${base.hairSpace}`,
-  };
-
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -54,7 +46,7 @@ export function fixDashesBetweenWords(string, locale) {
       `([${base.allChars}\\d])`, 
       "g"
     ), 
-    `$1${DASH_REPLACEMENT[locale.ID]}$3`
+    `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}${locale.dashWords.spaceAfter}$3`
   );
 }
 
@@ -75,14 +67,6 @@ export function fixDashesBetweenWords(string, locale) {
   @returns {string} — output with locale-specific dash and spacing between a word and a punctuation.
 */
 export function fixHyphenBetweenWordAndPunctuation(string, locale) {
-  const HYPHEN_PUNCTUATION_REPLACEMENT = {
-    "en-us": `${base.emDash}`,
-    "rue":   `${base.hairSpace}${base.emDash}`,
-    "sk":    `${base.hairSpace}${base.emDash}`,
-    "cs":    `${base.nbsp}${base.enDash}`,
-    "de-de": `${base.hairSpace}${base.enDash}`,
-  };
-
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -93,7 +77,7 @@ export function fixHyphenBetweenWordAndPunctuation(string, locale) {
       `([${base.sentencePunctuation}\\n\\r])`, 
       "g"
     ),
-    `$1${HYPHEN_PUNCTUATION_REPLACEMENT[locale.ID]}$5`
+    `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}$5`
   );
 }
 
