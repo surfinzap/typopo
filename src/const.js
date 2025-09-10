@@ -66,7 +66,6 @@ const permyriad = "‱";
 const numberSign = "#";
 
 /* Numbers */
-const cardinalNumber = "\\d";
 const romanNumerals = "IVXLCDM";
 
 export const base = {
@@ -123,7 +122,6 @@ export const base = {
   numberSign,
 
   /* Numbers */
-  cardinalNumber,
   romanNumerals,
 
   /*

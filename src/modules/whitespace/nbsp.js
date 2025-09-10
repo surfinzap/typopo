@@ -46,7 +46,7 @@ export function addNbspAfterPreposition(string, locale) {
   string = replaceWithOverlapHandling(
     string,
     new RegExp(
-      `(^|[${base.space}]|[^${base.allChars}${base.cardinalNumber}${base.apostrophe}${base.plus}${base.minus}${base.hyphen}])` +
+      `(^|[${base.space}]|[^${base.allChars}\\d${base.apostrophe}${base.plus}${base.minus}${base.hyphen}])` +
       `([${base.lowercaseChars}])` +
       `([${base.space}])`,
       "g"
@@ -114,8 +114,8 @@ export function addNbspAfterCardinalNumber(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        `([^${base.nbsp}${base.cardinalNumber}]|^)` +
-        `(${base.cardinalNumber}{1,2})` +
+        `([^${base.nbsp}\\d]|^)` +
+        `(\\d{1,2})` +
         `([${base.spaces}])` +
         `([${base.allChars}])`, 
       "g"
@@ -143,8 +143,8 @@ export function addNbspAfterOrdinalNumber(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([^${base.nbsp}${base.cardinalNumber}_%\\-]|^)` +
-      `(${base.cardinalNumber}{1,2})` +
+      `([^${base.nbsp}\\d_%\\-]|^)` +
+      `(\\d{1,2})` +
       `(${locale.ordinalIndicator})` +
       `([${base.spaces}]?)` +
       `([${base.allChars}])`,
@@ -165,13 +165,13 @@ export function addNbspWithinOrdinalDate(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${base.cardinalNumber})` +
+      `(\\d)` +
         `(\\.)` +
         `([${base.spaces}]?)` +
-        `(${base.cardinalNumber})` +
+        `(\\d)` +
         `(\\.)` +
         `([${base.spaces}]?)` +
-        `(${base.cardinalNumber})`,
+        `(\\d)`,
       "g"
     ),
     `$1$2${locale.ordinalDate.firstSpace}$4$5${locale.ordinalDate.secondSpace}$7`
@@ -201,7 +201,7 @@ export function addNbspAfterRomanNumeral(string, locale) {
         `([${base.romanNumerals}]+)` +
         `(${locale.romanOrdinalIndicator})` +
         `([${base.spaces}]?)` +
-        `([${base.allChars}${base.cardinalNumber}])`,
+        `([${base.allChars}\\d])`,
         "g"
       ),
       `$1$2$3${base.nbsp}$5`

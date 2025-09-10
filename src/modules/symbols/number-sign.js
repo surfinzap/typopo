@@ -17,7 +17,7 @@ export function removeExtraSpacesAfterNumberSign(string) {
         `([${base.spaces}]+)` +
         `(${base.numberSign})` +
         `([${base.spaces}]+)` +
-        `(${base.cardinalNumber})`, 
+        `(\\d)`, 
         "g"
     ),
     `$1$2$4`

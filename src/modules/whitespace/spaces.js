@@ -143,7 +143,7 @@ export function removeSpaceBeforeOrdinalIndicator(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${base.cardinalNumber})` +
+      `(\\d)` +
       `([${base.spaces}]?)` +
       `(${locale.ordinalIndicator})` +
       `([${base.spaces}]|\\b)`, //to avoid cathing "4 th" in "4 there"

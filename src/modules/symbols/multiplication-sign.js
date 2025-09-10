@@ -20,10 +20,10 @@ export function fixMultiplicationSignBetweenNumbers(string) {
   return replaceWithOverlapHandling(
     string,
     new RegExp(
-      `([${base.cardinalNumber}]+)` +
+      `([\\d]+)` +
       `([${base.spaces}]?[${base.lowercaseChars}${base.singlePrime}${base.doublePrime}]*)` +
       `([${base.spaces}][x][${base.spaces}])` +
-      `([${base.cardinalNumber}]+)` +
+      `([\\d]+)` +
       `([${base.spaces}]?[${base.lowercaseChars}${base.singlePrime}${base.doublePrime}]*)`,
       "gi"
     ),
@@ -74,7 +74,7 @@ export function fixMultiplicationSignBetweenNumberAndWord(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.cardinalNumber}])` +
+      `([\\d])` +
       `([${base.spaces}]?)` +
       `([x|×])` +
       `([${base.spaces}])` +
@@ -105,10 +105,10 @@ export function fixNbspAroundMultiplicationSign(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.cardinalNumber}]+)` +
+      `([\\d]+)` +
       `([${base.singlePrime}${base.doublePrime}])?` +
       `([x|×])` +
-      `([${base.cardinalNumber}]+)` +
+      `([\\d]+)` +
       `([${base.singlePrime}${base.doublePrime}])?`,
       "gi"
     ),

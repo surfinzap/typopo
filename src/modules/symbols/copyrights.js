@@ -20,7 +20,7 @@ export function replaceCopyright(string, copyrightLetter, copyrightSign) {
     new RegExp(
       `(\\(${copyrightLetter}\\))` +
       `([${base.spaces}]*)` +
-      `(${base.cardinalNumber})`,
+      `(\\d)`,
       "gi"
     ),
     `${copyrightSign}$2$3`

@@ -118,7 +118,7 @@ export function identifyInWordContractions(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        `([${base.cardinalNumber}${base.allChars}])` +
+        `([\\d${base.allChars}])` +
         `(${base.singleQuoteAdepts})+` +
         `([${base.allChars}])`, 
       "g"
@@ -148,7 +148,7 @@ export function identifyContractedYears(string) {
       `([^0-9]|[A-Z][0-9])` +
       `([${base.spaces}])` +
       `(${base.singleQuoteAdepts})` +
-      `([${base.cardinalNumber}]{2})`, 
+      `([\\d]{2})`, 
       "g"
     ),
       `$1$2{{typopo__apostrophe}}$4`

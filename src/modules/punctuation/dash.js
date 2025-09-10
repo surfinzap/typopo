@@ -101,11 +101,11 @@ export function fixDashBetweenCardinalNumbers(string) {
   string = replaceWithOverlapHandling(
     string, 
     new RegExp(
-      `(${base.cardinalNumber})` +
+      `(\\d)` +
       `([${base.spaces}]?` +
       `[${base.hyphen}${base.enDash}${base.emDash}]` +
       `[${base.spaces}]?)` +
-      `(${base.cardinalNumber})`, 
+      `(\\d)`, 
       "g"
     ), 
     `$1{{typopo__endash}}$3`
@@ -137,7 +137,7 @@ export function fixDashBetweenPercentageRange(string) {
     new RegExp(
       `([${base.percent}${base.permille}${base.permyriad}])` + 
       `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}][${base.spaces}]?)` + 
-      `(${base.cardinalNumber})`, 
+      `(\\d)`, 
       "g"
     ), 
     `$1${base.enDash}$3`
@@ -160,10 +160,10 @@ export function fixDashBetweenOrdinalNumbers(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${base.cardinalNumber})` + 
+      `(\\d)` + 
       `(${locale.ordinalIndicator})` + 
       `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}][${base.spaces}]?)` + 
-      `(${base.cardinalNumber})` + 
+      `(\\d)` + 
       `(${locale.ordinalIndicator})`, 
       "gi"
     ), 
