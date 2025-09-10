@@ -1,40 +1,47 @@
 // import loc from "../locale/locale.js";
 
-import localeCs from "./cs.js";
-import localeEnUs from "./en-us.js";
-import localeRue from "./rue.js";
-import localeSk from "./sk.js";
-import localeDeDe from "./de-de.js";
+import localeCS from "./cs.js";
+import localeEN_US from "./en-us.js";
+import localeRUE from "./rue.js";
+import localeSK from "./sk.js";
+import localeDE_DE from "./de-de.js";
 
-const typopoLocale = {
-  "cs":    localeCs,
-  "en-us": localeEnUs,
-  "rue":   localeRue,
-  "sk":    localeSk,
-  "de-de": localeDeDe,
+const SUPPORTED_LOCALES = {
+  "cs":    localeCS,
+  "en-us": localeEN_US,
+  "rue":   localeRUE,
+  "sk":    localeSK,
+  "de-de": localeDE_DE,
 };
 
-export default class Locale {
-  constructor(locale) {
-    this.locale = locale;
+const DEFAULT_LOCALE = "en-us";
 
-    this.leftSingleQuote = typopoLocale[locale].quotes.leftSingleQuote;
-    this.rightSingleQuote = typopoLocale[locale].quotes.rightSingleQuote;
-    this.leftDoubleQuote = typopoLocale[locale].quotes.leftDoubleQuote;
-    this.rightDoubleQuote = typopoLocale[locale].quotes.rightDoubleQuote;
+export default class Locale {
+  constructor(localeID) {
+    if (!SUPPORTED_LOCALES[localeID]) {
+      console.warn(`Locale '${localeID}' not found, falling back to '${DEFAULT_LOCALE}'`);
+      localeID = DEFAULT_LOCALE;
+    }
+
+    this.ID = localeID;
+
+    this.leftSingleQuote = SUPPORTED_LOCALES[localeID].quotes.leftSingleQuote;
+    this.rightSingleQuote = SUPPORTED_LOCALES[localeID].quotes.rightSingleQuote;
+    this.leftDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.leftDoubleQuote;
+    this.rightDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.rightDoubleQuote;
     this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote;
 
-    this.ordinalIndicator = typopoLocale[locale].numbers.ordinalIndicator;
-    this.romanOrdinalIndicator = typopoLocale[locale].numbers.romanOrdinalIndicator;
+    this.ordinalIndicator = SUPPORTED_LOCALES[localeID].numbers.ordinalIndicator;
+    this.romanOrdinalIndicator = SUPPORTED_LOCALES[localeID].numbers.romanOrdinalIndicator;
 
     /* Single-word abbreviations from all locales
 
        Make a list of Single-word abbreviations from all locales
     */
     this.singleWordAbbreviations = [];
-    for (locale in typopoLocale) {
+    for (const locale in SUPPORTED_LOCALES) {
       this.singleWordAbbreviations = this.singleWordAbbreviations.concat(
-        typopoLocale[locale].singleWordAbbreviations
+        SUPPORTED_LOCALES[locale].singleWordAbbreviations
       );
     }
 
@@ -43,9 +50,9 @@ export default class Locale {
        Make a list of multiple-word abbreviations from all locales
     */
     this.multipleWordAbbreviations = [];
-    for (locale in typopoLocale) {
+    for (const locale in SUPPORTED_LOCALES) {
       this.multipleWordAbbreviations = this.multipleWordAbbreviations.concat(
-        typopoLocale[locale].multipleWordAbbreviations
+        SUPPORTED_LOCALES[locale].multipleWordAbbreviations
       );
     }
   }

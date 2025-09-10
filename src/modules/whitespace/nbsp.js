@@ -73,7 +73,7 @@ export function addNbspAfterPreposition(string, locale) {
   );
 
   // c) "I" in English
-  if (locale.locale == "en-us") {
+  if (locale.ID == "en-us") {
     // prettier-ignore
     string = string.replace(
       new RegExp(
@@ -165,7 +165,7 @@ export function addNbspWithinOrdinalDate(string, locale) {
   // prettier-ignore
   let replacement = "";
 
-  switch (locale.locale) {
+  switch (locale.ID) {
     case "en-us":
     case "rue":
     case "sk":
@@ -299,7 +299,7 @@ export function fixSpaceBeforePercent(string, locale) {
       `([${base.percent}${base.permille}${base.permyriad}])`,
       "g"
     ),
-    `$1${SPACE_REPLACEMENT[locale.locale]}$3`
+    `$1${SPACE_REPLACEMENT[locale.ID]}$3`
   );
 }
 
@@ -335,7 +335,7 @@ export function fixSpaceBeforePercent(string, locale) {
 export function addNbspBeforeSingleLetter(string, locale) {
   let uppercaseChars = base.uppercaseChars;
 
-  if (locale.locale == "en-us") {
+  if (locale.ID == "en-us") {
     // remove “I” from the list to avoid placing nbsp before “something I do”
     uppercaseChars = uppercaseChars.replace(/A-Z/g, "A-HJ-Z");
   }
@@ -350,7 +350,7 @@ export function addNbspBeforeSingleLetter(string, locale) {
   let re = new RegExp(pattern, "g");
 
   return string.replace(re, function ($0, $1, $2, $3, $4, $5) {
-    if (locale.locale == "en-us") {
+    if (locale.ID == "en-us") {
       // don't make changes after "I" in en-us
       return $1 + base.nbsp + $3 + $4;
     } else if ($3 == "I" && ($5 == base.nbsp || $5 == base.hairSpace || $5 == base.narrowNbsp)) {

@@ -13,7 +13,7 @@ function getAbbreviationSpace(locale) {
     "de-de": base.nbsp,
   };
 
-  return ABBR_SPACE[locale.locale];
+  return ABBR_SPACE[locale.ID];
 }
 
 /**

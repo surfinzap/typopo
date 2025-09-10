@@ -54,7 +54,7 @@ export function fixDashesBetweenWords(string, locale) {
       `([${base.allChars}\\d])`, 
       "g"
     ), 
-    `$1${DASH_REPLACEMENT[locale.locale]}$3`
+    `$1${DASH_REPLACEMENT[locale.ID]}$3`
   );
 }
 
@@ -93,7 +93,7 @@ export function fixHyphenBetweenWordAndPunctuation(string, locale) {
       `([${base.sentencePunctuation}\\n\\r])`, 
       "g"
     ),
-    `$1${HYPHEN_PUNCTUATION_REPLACEMENT[locale.locale]}$5`
+    `$1${HYPHEN_PUNCTUATION_REPLACEMENT[locale.ID]}$5`
   );
 }
 
