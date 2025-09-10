@@ -9,6 +9,10 @@ export const sk = {
     ordinalIndicator:      "\\.",
     romanOrdinalIndicator: "\\.",
   },
+  /* 
+    Common single-word abbreviations that are followed by a non-breaking space.
+    For coding purposes, they are written here without periods.
+  */
   singleWordAbbreviations: [
     "č",
     "s",
@@ -26,8 +30,8 @@ export const sk = {
     "vyd",
   ],
   /*
-    The list of common multi-word abbrevations that are
-    stripped down of its micro-typography treatment.
+    Common multi-word abbreviations that require proper spacing.
+    For coding purposes, they are written here without periods and without correct spacing.
   */
   multipleWordAbbreviations: [
     "hl m",
