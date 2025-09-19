@@ -86,7 +86,7 @@ Typopo fixes words:
 
 Typopo fixes symbols:
 - multiplication sign (2 x 3 → 2 × 3)
-- section sign (§)
+- section sign (§), paragraph sign (¶)
 - copyright ((c)2020 → © 2020)
 - sound recording copyright ((p)2020 → ℗ 2020)
 - registered trademark (Brand(r) → Brand®)

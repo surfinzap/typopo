@@ -1,7 +1,10 @@
 # Changelog for Typopo
 
 
-## 2.6.1 //
+## 2.7.0 //
+
+### ✨ New features
+- Fix spacing around paragraph sign (¶)
 
 ### 🔨 Maintenance
 

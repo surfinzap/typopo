@@ -287,7 +287,7 @@ export function addSpaceAfterClosingBrackets(string) {
 export function addSpaceBeforeSymbol(string, symbol) {
   // prettier-ignore
   return string.replace(
-    new RegExp(`([^${base.spaces}${base.openingBrackets}])(${symbol})`, "g"),
+    new RegExp(`([^${base.spaces}${base.openingBrackets}${symbol}])(${symbol})`, "g"),
     `$1${base.space}$2`
   );
 }

@@ -353,7 +353,7 @@ export function addNbspBeforeSingleLetter(string, locale) {
 export function addNbspAfterSymbol(string, symbol) {
   // prettier-ignore
   return string.replace(
-    new RegExp(`(${symbol})([^${base.spaces}])`, "g"),
+    new RegExp(`(${symbol})([^${base.spaces}${symbol}])`, "g"),
     `$1${base.nbsp}$2`
   );
 }

@@ -52,6 +52,7 @@ const degree = "°";
 const multiplicationSign = "×";
 const ampersand = "&";
 const sectionSign = "§";
+const paragraphSign = "¶";
 const copyright = "©";
 const soundRecordingCopyright = "℗";
 const registeredTrademark = "®";
@@ -108,6 +109,7 @@ export const base = {
   multiplicationSign,
   ampersand,
   sectionSign,
+  paragraphSign,
   copyright,
   soundRecordingCopyright,
   registeredTrademark,
