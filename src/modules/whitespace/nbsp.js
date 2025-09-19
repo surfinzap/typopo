@@ -370,7 +370,7 @@ export function addNbspAfterSymbol(string, symbol) {
 export function replaceSpacesWithNbspAfterSymbol(string, symbol) {
   // prettier-ignore
   return string.replace(
-    new RegExp(`(${symbol})([${base.spaces}])`, "g"),
+    new RegExp(`(${symbol})([${base.spaces}]+)`, "g"),
     `$1${base.nbsp}`
   );
 }

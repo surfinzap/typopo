@@ -600,9 +600,11 @@ describe("Add space after symbol, e.g. ©\n", () => {
 
 describe("Replaces various spaces with non-breaking space after symbol, e.g. ©\n", () => {
   let testCase = {
-    "Company © 2017": "Company © 2017",
-    "Company © 2017": "Company © 2017", // hairSpace
-    "Company © 2017": "Company © 2017", // narrowNbsp
+    "Company © 2017":   "Company © 2017",
+    "Company © 2017":   "Company © 2017", // hairSpace
+    "Company © 2017":   "Company © 2017", // narrowNbsp
+    "Company ©  2017":  "Company © 2017",
+    "Company ©   2017": "Company © 2017",
   };
 
   Object.keys(testCase).forEach((key) => {

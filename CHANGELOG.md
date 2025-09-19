@@ -5,6 +5,7 @@
 
 ### ✨ New features
 - Fix spacing around paragraph sign (¶)
+- Fix spacing around numero sign (№)
 
 ### 🔨 Maintenance
 

@@ -65,6 +65,7 @@ const percent = "%";
 const permille = "‰";
 const permyriad = "‱";
 const numberSign = "#";
+const numeroSign = "№";
 
 /* Numbers */
 const romanNumerals = "IVXLCDM";
@@ -122,6 +123,7 @@ export const base = {
   permille,
   permyriad,
   numberSign,
+  numeroSign,
 
   /* Numbers */
   romanNumerals,

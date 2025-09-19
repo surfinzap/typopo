@@ -69,8 +69,8 @@ Typopo fixes whitespace characters:
 	- removes a nbsp between multi-letter words
 	- replaces a space with a nbsp
 		- after one-word prepositions
-		- around “×”
-		- after “&”
+		- around “×”, 
+		- after “&”, “§”, “¶”, “©”, “℗”,  “№”
 		- after cardinal numbers
 		- after ordinal numbers
 		- after ordinal Roman numerals
@@ -86,7 +86,6 @@ Typopo fixes words:
 
 Typopo fixes symbols:
 - multiplication sign (2 x 3 → 2 × 3)
-- section sign (§), paragraph sign (¶)
 - copyright ((c)2020 → © 2020)
 - sound recording copyright ((p)2020 → ℗ 2020)
 - registered trademark (Brand(r) → Brand®)

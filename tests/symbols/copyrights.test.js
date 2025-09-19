@@ -15,6 +15,8 @@ const copyright = {
   //multiple spaces around (c) are already sanitizaed, when fixCopyrights() is being called
   "Company© 2017":    "Company © 2017",
   "Company © 2017":   "Company © 2017",
+  "Company ©  2017":  "Company © 2017",
+  "Company ©   2017": "Company © 2017",
   "Company ©2017":    "Company © 2017",
   "Sec­tion 7(c)":    "Sec­tion 7(c)", // false positive
 };
@@ -31,6 +33,8 @@ const soundRecordingCopyright = {
   //multiple spaces around (p) are already sanitizaed, when fixCopyrights() is being called
   "Company℗ 2017":    "Company ℗ 2017",
   "Company ℗ 2017":   "Company ℗ 2017",
+  "Company ℗  2017":  "Company ℗ 2017",
+  "Company ℗   2017": "Company ℗ 2017",
   "Company ℗2017":    "Company ℗ 2017",
   "Sec­tion 7(p)":    "Sec­tion 7(p)", // false positive
 };
