@@ -19,6 +19,36 @@ const copyright = {
   "Company ©   2017": "Company © 2017",
   "Company ©2017":    "Company © 2017",
   "Sec­tion 7(c)":    "Sec­tion 7(c)", // false positive
+
+  // Punctuation contexts
+  "text.©1": "text. © 1",
+  "text,©1": "text, © 1",
+  "text;©1": "text; © 1",
+  "text:©1": "text: © 1",
+  "text!©1": "text! © 1",
+  "text?©1": "text? © 1",
+
+  // Special character contexts
+  "#©1":       "# © 1",
+  "@©section": "@ © section",
+  "*©note":    "* © note",
+  "&©clause":  "& © clause",
+  "%©rate":    "% © rate",
+  "$©cost":    "$ © cost",
+
+  // Quote contexts
+  '"text"©1': '"text" © 1',
+  "'text'©1": "'text' © 1",
+  "`code`©1": "`code` © 1",
+
+  // Bracket edge cases
+  "(©1)": "(© 1)",
+  "[©1]": "[© 1]",
+  "{©1}": "{© 1}",
+
+  // Start/end of string
+  "©1 text": "© 1 text",
+  "text ©1": "text © 1",
 };
 
 const soundRecordingCopyright = {
@@ -37,6 +67,36 @@ const soundRecordingCopyright = {
   "Company ℗   2017": "Company ℗ 2017",
   "Company ℗2017":    "Company ℗ 2017",
   "Sec­tion 7(p)":    "Sec­tion 7(p)", // false positive
+
+  // Punctuation contexts
+  "text.℗1": "text. ℗ 1",
+  "text,℗1": "text, ℗ 1",
+  "text;℗1": "text; ℗ 1",
+  "text:℗1": "text: ℗ 1",
+  "text!℗1": "text! ℗ 1",
+  "text?℗1": "text? ℗ 1",
+
+  // Special character contexts
+  "#℗1":       "# ℗ 1",
+  "@℗section": "@ ℗ section",
+  "*℗note":    "* ℗ note",
+  "&℗clause":  "& ℗ clause",
+  "%℗rate":    "% ℗ rate",
+  "$℗cost":    "$ ℗ cost",
+
+  // Quote contexts
+  '"text"℗1': '"text" ℗ 1',
+  "'text'℗1": "'text' ℗ 1",
+  "`code`℗1": "`code` ℗ 1",
+
+  // Bracket edge cases
+  "(℗1)": "(℗ 1)",
+  "[℗1]": "[℗ 1]",
+  "{℗1}": "{℗ 1}",
+
+  // Start/end of string
+  "℗1 text": "℗ 1 text",
+  "text ℗1": "text ℗ 1",
 };
 
 function testCopyrights(testCase, copyrightSign) {

@@ -398,6 +398,36 @@ describe("Add space before a symbol, e.g. ©\n", () => {
     "© 2017":        "© 2017",
     "(© 2017)":      "(© 2017)",
     "Company© 2017": "Company © 2017",
+
+    // Punctuation contexts
+    "text.©1": "text. ©1",
+    "text,©1": "text, ©1",
+    "text;©1": "text; ©1",
+    "text:©1": "text: ©1",
+    "text!©1": "text! ©1",
+    "text?©1": "text? ©1",
+
+    // Special character contexts
+    "#©1":       "# ©1",
+    "@©section": "@ ©section",
+    "*©note":    "* ©note",
+    "&©clause":  "& ©clause",
+    "%©rate":    "% ©rate",
+    "$©cost":    "$ ©cost",
+
+    // Quote contexts
+    '"text"©1': '"text" ©1',
+    "'text'©1": "'text' ©1",
+    "`code`©1": "`code` ©1",
+
+    // Bracket edge cases
+    "(©1)": "(©1)",
+    "[©1]": "[©1]",
+    "{©1}": "{©1}",
+
+    // Start/end of string
+    "©1 text":    "©1 text",
+    "text ©1111": "text ©1111",
   };
 
   Object.keys(testCase).forEach((key) => {

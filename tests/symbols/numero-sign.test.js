@@ -17,11 +17,40 @@ describe("Fix section sign (§)\n", () => {
     "Document №   123":  "Document № 123",
     "Document №    123": "Document № 123", // mix
 
-    "(№1)":            "(№ 1)",
     "[№123]":          "[№ 123]",
     "№1 is important": "№ 1 is important",
     "Order№12345":     "Order № 12345",
     "Files№1 and№2":   "Files № 1 and № 2",
+
+    // Punctuation contexts
+    "text.№1": "text. № 1",
+    "text,№1": "text, № 1",
+    "text;№1": "text; № 1",
+    "text:№1": "text: № 1",
+    "text!№1": "text! № 1",
+    "text?№1": "text? № 1",
+
+    // Special character contexts
+    "#№1":       "# № 1",
+    "@№section": "@ № section",
+    "*№note":    "* № note",
+    "&№clause":  "& № clause",
+    "%№rate":    "% № rate",
+    "$№cost":    "$ № cost",
+
+    // Quote contexts
+    '"text"№1': '"text" № 1',
+    "'text'№1": "'text' № 1",
+    "`code`№1": "`code` № 1",
+
+    // Bracket edge cases
+    "(№1)": "(№ 1)",
+    "[№1]": "[№ 1]",
+    "{№1}": "{№ 1}",
+
+    // Start/end of string
+    "№1 text": "№ 1 text",
+    "text №1": "text № 1",
 
     // Already correct
     "Article № 1":    "Article № 1",
