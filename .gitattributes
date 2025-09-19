@@ -1,19 +1,99 @@
-# Auto detect text files and perform LF normalization
+# Auto detect text files and preserve current line endings
 * text=auto
-* -crlf
 
-# Custom for Visual Studio
-*.cs     diff=csharp
+# Source code files - keep current CRLF convention
+*.js text
+*.mjs text
+*.ts text
+*.jsx text
+*.tsx text
+*.json text
+*.md text
+*.yml text
+*.yaml text
+*.html text
+*.css text
+*.scss text
+*.less text
 
-# Standard to msysgit
-*.doc	 diff=astextplain
-*.DOC	 diff=astextplain
-*.docx diff=astextplain
-*.DOCX diff=astextplain
-*.dot  diff=astextplain
-*.DOT  diff=astextplain
-*.pdf  diff=astextplain
-*.PDF	 diff=astextplain
-*.rtf	 diff=astextplain
-*.RTF	 diff=astextplain
+# Configuration files
+*.toml text
+*.ini text
+*.cfg text
+.gitignore text
+.gitattributes text
+.editorconfig text
+.npmrc text
+package.json text
+package-lock.json text -diff
+pnpm-lock.yaml text -diff
+yarn.lock text -diff
+
+# Documentation
+*.txt text
+README* text
+LICENSE* text
+CHANGELOG* text
+
+# Shell scripts (these should be LF for cross-platform compatibility)
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Windows scripts
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg text eol=lf
+*.webp binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+*.tgz binary
+
+# Font files
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary
+
+# Audio/Video
+*.mp3 binary
+*.mp4 binary
+*.mov binary
+*.avi binary
+*.wav binary
+
+# Archives
+*.7z binary
+*.dmg binary
+*.gz binary
+*.iso binary
+*.jar binary
+*.rar binary
+*.tar binary
+*.zip binary
+
+# Exclude from exports/archives
+.github/ export-ignore
+.vscode/ export-ignore
+.idea/ export-ignore
+*.log export-ignore
+*.tmp export-ignore
+coverage/ export-ignore
+node_modules/ export-ignore
+.nyc_output/ export-ignore
+
+# Large/generated files - no diff
+dist/* -diff
+build/* -diff
+*.min.js -diff
+*.bundle.js -diff
 
