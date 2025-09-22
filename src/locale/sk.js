@@ -17,6 +17,14 @@ export const sk = {
     spaceAfter:  base.hairSpace,
   },
 
+  spaceAfterSymbol: {
+    copyright:               base.nbsp, // ©⎵2025
+    soundRecordingCopyright: base.nbsp, // ℗⎵2025
+    numeroSign:              base.nbsp, // №⎵1234
+    sectionSign:             base.narrowNbsp, // §⎵38
+    paragraphSign:           base.narrowNbsp, // ¶⎵38
+  },
+
   /*
     A space between a digit and a percent sign 
   */

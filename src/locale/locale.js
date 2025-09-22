@@ -30,8 +30,10 @@ export default class Locale {
     this.leftDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.leftDoubleQuote;
     this.rightDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.rightDoubleQuote;
     this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote;
+
     this.dashWords = SUPPORTED_LOCALES[localeID].dashWords;
 
+    this.spaceAfterSymbol = SUPPORTED_LOCALES[localeID].spaceAfterSymmbol;
     this.spaceBeforePercent = SUPPORTED_LOCALES[localeID].spaceBeforePercent;
 
     this.ordinalIndicator = SUPPORTED_LOCALES[localeID].numbers.ordinalIndicator;
