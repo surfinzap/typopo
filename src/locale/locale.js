@@ -33,8 +33,8 @@ export default class Locale {
 
     this.dashWords = SUPPORTED_LOCALES[localeID].dashWords;
 
-    this.spaceAfterSymbol = SUPPORTED_LOCALES[localeID].spaceAfterSymmbol;
-    this.spaceBeforePercent = SUPPORTED_LOCALES[localeID].spaceBeforePercent;
+    this.spaceAfter = SUPPORTED_LOCALES[localeID].spaceAfter;
+    this.spaceBefore = SUPPORTED_LOCALES[localeID].spaceBefore;
 
     this.ordinalIndicator = SUPPORTED_LOCALES[localeID].numbers.ordinalIndicator;
     this.romanOrdinalIndicator = SUPPORTED_LOCALES[localeID].numbers.romanOrdinalIndicator;

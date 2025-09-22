@@ -277,7 +277,7 @@ export function fixSpaceBeforePercent(string, locale) {
       `([${base.percent}${base.permille}${base.permyriad}])`,
       "g"
     ),
-    `$1${locale.spaceBeforePercent}$3`
+    `$1${locale.spaceBefore.percent}$3`
   );
 }
 

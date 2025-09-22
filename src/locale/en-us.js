@@ -17,7 +17,7 @@ export const enUS = {
     spaceAfter:  "",
   },
 
-  spaceAfterSymbol: {
+  spaceAfter: {
     copyright:               base.nbsp, // ©⎵2025
     soundRecordingCopyright: base.nbsp, // ℗⎵2025
     numeroSign:              base.nbsp, // №⎵1234
@@ -25,10 +25,9 @@ export const enUS = {
     paragraphSign:           base.nbsp, // ¶⎵38
   },
 
-  /*
-    A space between a digit and a percent sign 
-  */
-  spaceBeforePercent: "",
+  spaceBefore: {
+    percent: "", // 12%
+  },
 
   numbers: {
     ordinalIndicator:      "st|nd|rd|th",
