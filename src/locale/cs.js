@@ -44,24 +44,12 @@ export const cs = {
     Ch.{abbreviationSpace}G.{abbreviationSpace}D.{nbsp}Lambert
     e.{abbreviationSpace}g.
   */
-  abbreviationSpace:         base.nbsp,
+  abbreviationSpace:       base.nbsp,
   /* 
     Common single-word abbreviations that are followed by a non-breaking space.
     For coding purposes, they are written here without periods.
   */
-  singleWordAbbreviations:   [
-    "č",
-    "s",
-    "fol",
-    "str",
-    "r",
-    "par",
-    "odst",
-    "např",
-    "sv",
-    "tj",
-    "tzv",
-  ],
+  singleWordAbbreviations: ["č", "fol", "např", "odst", "par", "r", "s", "str", "sv", "tj", "tzv"],
   /*
     Common multi-word abbreviations that require proper spacing.
     For coding purposes, they are written here without periods and without correct spacing.

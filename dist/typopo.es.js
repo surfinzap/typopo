@@ -104,19 +104,7 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     Common single-word abbreviations that are followed by a non-breaking space.
     For coding purposes, they are written here without periods.
   */
-  singleWordAbbreviations: [
-    "č",
-    "s",
-    "fol",
-    "str",
-    "r",
-    "par",
-    "odst",
-    "např",
-    "sv",
-    "tj",
-    "tzv"
-  ],
+  singleWordAbbreviations: ["č", "fol", "např", "odst", "par", "r", "s", "str", "sv", "tj", "tzv"],
   /*
     Common multi-word abbreviations that require proper spacing.
     For coding purposes, they are written here without periods and without correct spacing.
@@ -269,18 +257,18 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
   */
   singleWordAbbreviations: [
     "č",
-    "s",
+    "cit",
+    "čl",
     "fol",
-    "str",
-    "r",
-    "par",
-    "odst",
     "napr",
+    "odst",
+    "par",
+    "r",
+    "roč",
+    "s",
+    "str",
     "sv",
     "tzv",
-    "čl",
-    "cit",
-    "roč",
     "vyd"
   ],
   /*
@@ -294,9 +282,9 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     "pr n l",
     "s a",
     "s l",
+    "t č",
     "t j",
-    "zodp red",
-    "t č"
+    "zodp red"
   ]
 }, xe = {
   quotes: {
@@ -343,25 +331,25 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     For coding purposes, they are written here without periods.
   */
   singleWordAbbreviations: [
-    "S",
-    "z",
-    "St",
-    "Stk",
-    "Mo",
+    "Bhf",
+    "ca",
     "Di",
-    "Mi",
     "Do",
     "Fr",
-    "Sa",
-    "So",
-    "Bhf",
-    "Hbf",
-    "Nr",
-    "ca",
-    "usw",
     "geb",
     "gest",
-    "u"
+    "Hbf",
+    "Mi",
+    "Mo",
+    "Nr",
+    "S",
+    "Sa",
+    "So",
+    "St",
+    "Stk",
+    "u",
+    "usw",
+    "z"
   ],
   /*
     Common multi-word abbreviations that require proper spacing.
@@ -372,10 +360,13 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     "d h",
     "d i",
     "e V",
+    "Ges m b H",
     "n Chr",
+    "n u Z",
     "s a",
     "s o",
     "s u",
+    "u a m",
     "u a",
     "u ä",
     "u Ä",
@@ -385,13 +376,10 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     "u zw",
     "v a",
     "v Chr",
+    "v u Z",
     "z B",
     "z T",
-    "z Zt",
-    "n u Z",
-    "u a m",
-    "v u Z",
-    "Ges m b H"
+    "z Zt"
   ]
 }, l = {
   cs: he,
