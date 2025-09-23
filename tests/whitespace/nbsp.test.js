@@ -587,6 +587,8 @@ describe("Add nbsp before single capital letter in a sentence\n", () => {
 
 describe("Add space after symbol, e.g. ©\n", () => {
   let testCase = {
+    // in-depth tests are in the respective test files for symbols,
+    // e.g. copyrights, numero-sign, section-sign
     "©2017":         "© 2017",
     "Company ©2017": "Company © 2017",
   };
@@ -600,6 +602,8 @@ describe("Add space after symbol, e.g. ©\n", () => {
 
 describe("Replaces various spaces with non-breaking space after symbol, e.g. ©\n", () => {
   let testCase = {
+    // in-depth tests are in the respective test files for symbols,
+    // e.g. copyrights, numero-sign, section-sign
     "Company © 2017":   "Company © 2017",
     "Company © 2017":   "Company © 2017", // hairSpace
     "Company © 2017":   "Company © 2017", // narrowNbsp

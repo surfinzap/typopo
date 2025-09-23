@@ -1,118 +1,81 @@
-import { fixCopyrights } from "../../src/modules/symbols/copyrights.js";
+import { base } from "../../src/const.js";
+import Locale, { supportedLocales } from "../../src/locale/locale.js";
+import { fixCopyrights, replaceCopyright } from "../../src/modules/symbols/copyrights.js";
+import { symbolSet, transformSymbolSet } from "./symbol-utils.test.js";
 import { describe, it, expect } from "vitest";
 
-const locales = ["en-us", "de-de", "sk", "cs", "rue"];
-
-const copyright = {
-  "(c)2017":          "© 2017",
-  "(C)2017":          "© 2017",
-  "Company (c)2017":  "Company © 2017",
-  "Company (C)2017":  "Company © 2017",
-  "Company(c) 2017":  "Company © 2017",
-  "Company(C) 2017":  "Company © 2017",
-  "Company (c) 2017": "Company © 2017",
-  "Company (C) 2017": "Company © 2017",
-  //multiple spaces around (c) are already sanitizaed, when fixCopyrights() is being called
-  "Company© 2017":    "Company © 2017",
-  "Company © 2017":   "Company © 2017",
-  "Company ©  2017":  "Company © 2017",
-  "Company ©   2017": "Company © 2017",
-  "Company ©2017":    "Company © 2017",
+const replaceCopyrightSet = {
+  "(c)2017":          "©2017",
+  "(C)2017":          "©2017",
+  "Company (c)2017":  "Company ©2017",
+  "Company (C)2017":  "Company ©2017",
+  "Company(c) 2017":  "Company© 2017",
+  "Company(C) 2017":  "Company© 2017",
+  "Company (c) 2017": "Company © 2017",
+  "Company (C) 2017": "Company © 2017",
   "Sec­tion 7(c)":    "Sec­tion 7(c)", // false positive
-
-  // Punctuation contexts
-  "text.©1": "text. © 1",
-  "text,©1": "text, © 1",
-  "text;©1": "text; © 1",
-  "text:©1": "text: © 1",
-  "text!©1": "text! © 1",
-  "text?©1": "text? © 1",
-
-  // Special character contexts
-  "#©1":       "# © 1",
-  "@©section": "@ © section",
-  "*©note":    "* © note",
-  "&©clause":  "& © clause",
-  "%©rate":    "% © rate",
-  "$©cost":    "$ © cost",
-
-  // Quote contexts
-  '"text"©1': '"text" © 1',
-  "'text'©1": "'text' © 1",
-  "`code`©1": "`code` © 1",
-
-  // Bracket edge cases
-  "(©1)": "(© 1)",
-  "[©1]": "[© 1]",
-  "{©1}": "{© 1}",
-
-  // Start/end of string
-  "©1 text": "© 1 text",
-  "text ©1": "text © 1",
+  "Sec­tion 7(C)":    "Sec­tion 7(C)", // false positive
 };
 
-const soundRecordingCopyright = {
-  "(p)2017":          "℗ 2017",
-  "(P)2017":          "℗ 2017",
-  "Company (p)2017":  "Company ℗ 2017",
-  "Company (P)2017":  "Company ℗ 2017",
-  "Company(p) 2017":  "Company ℗ 2017",
-  "Company(P) 2017":  "Company ℗ 2017",
-  "Company (p) 2017": "Company ℗ 2017",
-  "Company (P) 2017": "Company ℗ 2017",
-  //multiple spaces around (p) are already sanitizaed, when fixCopyrights() is being called
-  "Company℗ 2017":    "Company ℗ 2017",
-  "Company ℗ 2017":   "Company ℗ 2017",
-  "Company ℗  2017":  "Company ℗ 2017",
-  "Company ℗   2017": "Company ℗ 2017",
-  "Company ℗2017":    "Company ℗ 2017",
+const replaceSoundRecordingCopyrightSet = {
+  "(p)2017":          "℗2017",
+  "(P)2017":          "℗2017",
+  "Company (p)2017":  "Company ℗2017",
+  "Company (P)2017":  "Company ℗2017",
+  "Company(p) 2017":  "Company℗ 2017",
+  "Company(P) 2017":  "Company℗ 2017",
+  "Company (p) 2017": "Company ℗ 2017",
+  "Company (P) 2017": "Company ℗ 2017",
   "Sec­tion 7(p)":    "Sec­tion 7(p)", // false positive
-
-  // Punctuation contexts
-  "text.℗1": "text. ℗ 1",
-  "text,℗1": "text, ℗ 1",
-  "text;℗1": "text; ℗ 1",
-  "text:℗1": "text: ℗ 1",
-  "text!℗1": "text! ℗ 1",
-  "text?℗1": "text? ℗ 1",
-
-  // Special character contexts
-  "#℗1":       "# ℗ 1",
-  "@℗section": "@ ℗ section",
-  "*℗note":    "* ℗ note",
-  "&℗clause":  "& ℗ clause",
-  "%℗rate":    "% ℗ rate",
-  "$℗cost":    "$ ℗ cost",
-
-  // Quote contexts
-  '"text"℗1': '"text" ℗ 1',
-  "'text'℗1": "'text' ℗ 1",
-  "`code`℗1": "`code` ℗ 1",
-
-  // Bracket edge cases
-  "(℗1)": "(℗ 1)",
-  "[℗1]": "[℗ 1]",
-  "{℗1}": "{℗ 1}",
-
-  // Start/end of string
-  "℗1 text": "℗ 1 text",
-  "text ℗1": "text ℗ 1",
+  "Sec­tion 7(P)":    "Sec­tion 7(P)", // false positive
 };
 
-function testCopyrights(testCase, copyrightSign) {
-  locales.forEach(function (locale) {
+function testCopyrightReplacement(testCase, copyrightLetter, copyrightSign) {
+  supportedLocales.forEach(function (locale) {
     Object.keys(testCase).forEach((key) => {
-      it(`module test, ${copyrightSign}, ${locale}`, () => {
-        expect(fixCopyrights(key)).toBe(testCase[key]);
+      it(`unit test, ${copyrightSign}, ${locale}`, () => {
+        expect(replaceCopyright(key, copyrightLetter, copyrightSign)).toBe(testCase[key]);
       });
     });
   });
 }
 
-describe("Fix copyright (©):\n", () => {
-  testCopyrights(copyright, "©");
+describe("Replace (c) with copyright ©:\n", () => {
+  testCopyrightReplacement(replaceCopyrightSet, "c", base.copyright);
 });
 
-describe("Fix sound recording copyright (℗):\n", () => {
-  testCopyrights(soundRecordingCopyright, "℗");
+describe("Replace (p) with copyright ℗:\n", () => {
+  testCopyrightReplacement(replaceSoundRecordingCopyrightSet, "p", base.soundRecordingCopyright);
+});
+
+describe("Fix copyrights (©):\n", () => {
+  supportedLocales.forEach((localeName) => {
+    const locale = new Locale(localeName);
+    const symbolValue = base.copyright;
+    const spaceValue = locale.spaceAfter.copyright;
+
+    const transformedSymbolSet = transformSymbolSet(symbolSet, symbolValue, spaceValue);
+
+    Object.keys(transformedSymbolSet).forEach((key) => {
+      it(`Fix copyrights, ${symbolValue}, ${localeName}`, () => {
+        expect(fixCopyrights(key, locale)).toBe(transformedSymbolSet[key]);
+      });
+    });
+  });
+});
+
+describe("Fix sound recording copyrights (℗):\n", () => {
+  supportedLocales.forEach((localeName) => {
+    const locale = new Locale(localeName);
+    const symbolValue = base.soundRecordingCopyright;
+    const spaceValue = locale.spaceAfter.soundRecordingCopyright;
+
+    const transformedSymbolSet = transformSymbolSet(symbolSet, symbolValue, spaceValue);
+
+    Object.keys(transformedSymbolSet).forEach((key) => {
+      it(`module test, ${symbolValue}, ${localeName}`, () => {
+        expect(fixCopyrights(key, locale)).toBe(transformedSymbolSet[key]);
+      });
+    });
+  });
 });

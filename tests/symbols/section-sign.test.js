@@ -1,75 +1,38 @@
+import { base } from "../../src/const.js";
+import Locale, { supportedLocales } from "../../src/locale/locale.js";
+import { symbolSet, transformSymbolSet } from "./symbol-utils.test.js";
 import { fixSectionSign } from "../../src/modules/symbols/section-sign.js";
+
 import { describe, it, expect } from "vitest";
 
-describe("Fix section sign (§)\n", () => {
-  let testCase = {
-    "under Law§1782":    "under Law § 1782",
-    "(e.g.§§13–21)":     "(e.g. §§ 13–21)",
-    "(§§13–21)":         "(§§ 13–21)",
-    "(§13–21)":          "(§ 13–21)",
-    "under Law §1782":   "under Law § 1782",
-    "(e.g. §§13–21)":    "(e.g. §§ 13–21)",
-    "under Law § 1782":  "under Law § 1782",
-    "(e.g. §§ 13–21)":   "(e.g. §§ 13–21)",
-    "(e.g. §§ 13–21)":   "(e.g. §§ 13–21)", // hairSpace
-    "(e.g. §§ 13–21)":   "(e.g. §§ 13–21)", // narrowNbsp
-    "(e.g. §§   13–21)": "(e.g. §§ 13–21)",
-    "(e.g. §§  13–21)":  "(e.g. §§ 13–21)",
+describe("Fix section sign (§):\n", () => {
+  supportedLocales.forEach((localeName) => {
+    const locale = new Locale(localeName);
+    const symbolValue = base.sectionSign;
+    const spaceValue = locale.spaceAfter.sectionSign;
 
-    "under Law¶1782":    "under Law ¶ 1782",
-    "(e.g.¶¶13–21)":     "(e.g. ¶¶ 13–21)",
-    "(¶¶13–21)":         "(¶¶ 13–21)",
-    "(¶13–21)":          "(¶ 13–21)",
-    "under Law ¶1782":   "under Law ¶ 1782",
-    "(e.g. ¶¶13–21)":    "(e.g. ¶¶ 13–21)",
-    "under Law ¶ 1782":  "under Law ¶ 1782",
-    "(e.g. ¶¶ 13–21)":   "(e.g. ¶¶ 13–21)",
-    "(e.g. ¶¶ 13–21)":   "(e.g. ¶¶ 13–21)", // hairSpace
-    "(e.g. ¶¶ 13–21)":   "(e.g. ¶¶ 13–21)", // narrowNbsp
-    "(e.g. ¶¶   13–21)": "(e.g. ¶¶ 13–21)",
-    "(e.g. ¶¶  13–21)":  "(e.g. ¶¶ 13–21)",
+    const transformedSymbolSet = transformSymbolSet(symbolSet, symbolValue, spaceValue);
 
-    // Punctuation contexts
-    "text.§1": "text. § 1",
-    "text,§1": "text, § 1",
-    "text;§1": "text; § 1",
-    "text:§1": "text: § 1",
-    "text!§1": "text! § 1",
-    "text?§1": "text? § 1",
+    Object.keys(transformedSymbolSet).forEach((key) => {
+      it(`module test, ${symbolValue}, ${localeName}`, () => {
+        expect(fixSectionSign(key, locale)).toBe(transformedSymbolSet[key]);
+      });
+    });
+  });
+});
 
-    // Special character contexts
-    "#§1":       "# § 1",
-    "@§section": "@ § section",
-    "*§note":    "* § note",
-    "&§clause":  "& § clause",
-    "%§rate":    "% § rate",
-    "$§cost":    "$ § cost",
+describe("Fix paragraph sign (¶):\n", () => {
+  supportedLocales.forEach((localeName) => {
+    const locale = new Locale(localeName);
+    const symbolValue = base.paragraphSign;
+    const spaceValue = locale.spaceAfter.paragraphSign;
 
-    // Quote contexts
-    '"text"§1': '"text" § 1',
-    "'text'§1": "'text' § 1",
-    "`code`§1": "`code` § 1",
+    const transformedSymbolSet = transformSymbolSet(symbolSet, symbolValue, spaceValue);
 
-    // Bracket edge cases
-    "(§1)": "(§ 1)",
-    "[§1]": "[§ 1]",
-    "{§1}": "{§ 1}",
-
-    // Start/end of string
-    "§1 text": "§ 1 text",
-    "text §1": "text § 1",
-
-    // Complex legal reference patterns
-    "Title42§1983": "Title42 § 1983", // US legal style
-    "Art.5§3":      "Art.5 § 3", // article reference
-    "Ch.1§2(a)":    "Ch.1 § 2(a)", // complex reference
-    "USC§1001":     "USC § 1001", // code reference
-    "CFR§123.45":   "CFR § 123.45", // regulation reference
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("", () => {
-      expect(fixSectionSign(key)).toBe(testCase[key]);
+    Object.keys(transformedSymbolSet).forEach((key) => {
+      it(`module test, ${symbolValue}, ${localeName}`, () => {
+        expect(fixSectionSign(key, locale)).toBe(transformedSymbolSet[key]);
+      });
     });
   });
 });

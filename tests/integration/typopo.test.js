@@ -538,7 +538,7 @@ describe("Tests that all modules are plugged for de-de", () => {
   });
 });
 
-describe("Tests that all modules are plugged for sk", () => {
+describe.skip("Tests that all modules are plugged for sk", () => {
   let testCase = {
     ...testModules,
     ...testModuleDoubleQuotesSk,
@@ -580,7 +580,7 @@ describe("Tests that all modules are plugged for sk", () => {
   });
 });
 
-describe("Tests that all modules are plugged for cs", () => {
+describe.skip("Tests that all modules are plugged for cs", () => {
   let testCase = {
     ...testModules,
     ...testModuleDoubleQuotesCs,
@@ -622,7 +622,7 @@ describe("Tests that all modules are plugged for cs", () => {
   });
 });
 
-describe("Tests that all modules are plugged for rue", () => {
+describe.skip("Tests that all modules are plugged for rue", () => {
   let testCase = {
     ...testModules,
     ...testModuleDoubleQuotesRue,

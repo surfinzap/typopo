@@ -16,6 +16,8 @@ const SUPPORTED_LOCALES = {
 
 const DEFAULT_LOCALE = "en-us";
 
+export const supportedLocales = Object.keys(SUPPORTED_LOCALES);
+
 export default class Locale {
   constructor(localeID) {
     if (!SUPPORTED_LOCALES[localeID]) {

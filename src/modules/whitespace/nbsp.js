@@ -344,17 +344,18 @@ export function addNbspBeforeSingleLetter(string, locale) {
 //
 
 /**
-  Helper function that adds nbsp after symbols
-  in their respective *.js files
+  Helper function that adds a nbsp (or a locale-specific space) after symbols in their respective *.js files
 
   @param {string} string — input text for identification
   @returns {string} — output with correctly added non-breaking space
 */
-export function addNbspAfterSymbol(string, symbol) {
+export function addNbspAfterSymbol(string, symbol, space) {
+  space = space !== undefined ? space : base.nbsp;
+
   // prettier-ignore
   return string.replace(
     new RegExp(`(${symbol})([^${base.spaces}${symbol}])`, "g"),
-    `$1${base.nbsp}$2`
+    `$1${space}$2`
   );
 }
 
@@ -367,11 +368,13 @@ export function addNbspAfterSymbol(string, symbol) {
   @param {string} string — input text for identification
   @returns {string} — output with correctly placed non-breaking space
 */
-export function replaceSpacesWithNbspAfterSymbol(string, symbol) {
+export function replaceSpacesWithNbspAfterSymbol(string, symbol, space) {
+  space = space !== undefined ? space : base.nbsp;
+
   // prettier-ignore
   return string.replace(
     new RegExp(`(${symbol})([${base.spaces}]+)`, "g"),
-    `$1${base.nbsp}`
+    `$1${space}`
   );
 }
 

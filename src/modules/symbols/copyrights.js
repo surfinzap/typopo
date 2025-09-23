@@ -34,10 +34,10 @@ export function replaceCopyright(string, copyrightLetter, copyrightSign) {
  * @param {string} string - The input string to be fixed.
  * @returns {string} - The string with marks replaced.
  */
-export function fixCopyrights(string) {
+export function fixCopyrights(string, locale) {
   string = replaceCopyright(string, "c", base.copyright);
-  string = fixSpacingAroundSymbol(string, base.copyright);
+  string = fixSpacingAroundSymbol(string, base.copyright, locale.spaceAfter.copyright);
   string = replaceCopyright(string, "p", base.soundRecordingCopyright);
-  string = fixSpacingAroundSymbol(string, base.soundRecordingCopyright);
+  string = fixSpacingAroundSymbol(string, base.soundRecordingCopyright, locale.spaceAfter.soundRecordingCopyright);
   return string;
 }

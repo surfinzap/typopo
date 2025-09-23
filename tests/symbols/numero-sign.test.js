@@ -1,65 +1,21 @@
+import { base } from "../../src/const.js";
+import Locale, { supportedLocales } from "../../src/locale/locale.js";
+import { symbolSet, transformSymbolSet } from "./symbol-utils.test.js";
 import { fixNumeroSign } from "../../src/modules/symbols/numero-sign.js";
 import { describe, it, expect } from "vitest";
 
-describe("Fix section sign (§)\n", () => {
-  let testCase = {
-    // Basic spacing fixes
-    "Article№1":         "Article № 1",
-    "Document№123":      "Document № 123",
-    "Law№2023":          "Law № 2023",
-    "Article №1":        "Article № 1",
-    "Document №123":     "Document № 123",
-    "Article № 1":       "Article № 1",
-    "Article № 1":       "Article № 1", // hairSpace
-    "Article № 1":       "Article № 1", // narrowNbsp
-    "Document № 123":    "Document № 123",
-    "Article №  1":      "Article № 1",
-    "Document №   123":  "Document № 123",
-    "Document №    123": "Document № 123", // mix
+describe("Fix paragraph sign (¶):\n", () => {
+  supportedLocales.forEach((localeName) => {
+    const locale = new Locale(localeName);
+    const symbolValue = base.numeroSign;
+    const spaceValue = locale.spaceAfter.numeroSign;
 
-    "[№123]":          "[№ 123]",
-    "№1 is important": "№ 1 is important",
-    "Order№12345":     "Order № 12345",
-    "Files№1 and№2":   "Files № 1 and № 2",
+    const transformedSymbolSet = transformSymbolSet(symbolSet, symbolValue, spaceValue);
 
-    // Punctuation contexts
-    "text.№1": "text. № 1",
-    "text,№1": "text, № 1",
-    "text;№1": "text; № 1",
-    "text:№1": "text: № 1",
-    "text!№1": "text! № 1",
-    "text?№1": "text? № 1",
-
-    // Special character contexts
-    "#№1":       "# № 1",
-    "@№section": "@ № section",
-    "*№note":    "* № note",
-    "&№clause":  "& № clause",
-    "%№rate":    "% № rate",
-    "$№cost":    "$ № cost",
-
-    // Quote contexts
-    '"text"№1': '"text" № 1',
-    "'text'№1": "'text' № 1",
-    "`code`№1": "`code` № 1",
-
-    // Bracket edge cases
-    "(№1)": "(№ 1)",
-    "[№1]": "[№ 1]",
-    "{№1}": "{№ 1}",
-
-    // Start/end of string
-    "№1 text": "№ 1 text",
-    "text №1": "text № 1",
-
-    // Already correct
-    "Article № 1":    "Article № 1",
-    "Document № 123": "Document № 123",
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("", () => {
-      expect(fixNumeroSign(key)).toBe(testCase[key]);
+    Object.keys(transformedSymbolSet).forEach((key) => {
+      it(`module test, ${symbolValue}, ${localeName}`, () => {
+        expect(fixNumeroSign(key, locale)).toBe(transformedSymbolSet[key]);
+      });
     });
   });
 });

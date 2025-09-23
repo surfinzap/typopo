@@ -8,9 +8,9 @@ import { addNbspAfterSymbol, replaceSpacesWithNbspAfterSymbol } from "../whitesp
  * @param {string} symbol - The symbol around which to fix spacing
  * @returns {string} - The string with consolidated spacing around the symbol
  */
-export function fixSpacingAroundSymbol(string, symbol) {
+export function fixSpacingAroundSymbol(string, symbol, spaceAfter) {
   string = addSpaceBeforeSymbol(string, symbol);
-  string = addNbspAfterSymbol(string, symbol);
-  string = replaceSpacesWithNbspAfterSymbol(string, symbol);
+  string = addNbspAfterSymbol(string, symbol, spaceAfter);
+  string = replaceSpacesWithNbspAfterSymbol(string, symbol, spaceAfter);
   return string;
 }

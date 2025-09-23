@@ -1,7 +1,6 @@
 import { replaceMark, fixMarks } from "../../src/modules/symbols/marks.js";
+import { supportedLocales } from "../../src/locale/locale.js";
 import { describe, it, expect } from "vitest";
-
-const locales = ["en-us", "de-de", "sk", "cs", "rue"];
 
 const registeredTrademark = {
   "(r)":           "®",
@@ -46,7 +45,7 @@ const trademark = {
 };
 
 function testMarks(testCase, markPattern, replacementMark) {
-  locales.forEach(function (locale) {
+  supportedLocales.forEach(function (locale) {
     Object.keys(testCase).forEach((key) => {
       it(`unit test, ${replacementMark}, ${locale}`, () => {
         expect(replaceMark(key, markPattern, replacementMark)).toBe(testCase[key]);
