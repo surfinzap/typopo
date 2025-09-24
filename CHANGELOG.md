@@ -3,6 +3,33 @@
 
 ## 2.7.0 //
 
+Integration tests
+- punctuation
+ - dash
+ - double-quotes
+ - ellipsis
+ - hyphen
+ - period
+ - single-quotes
+- symbols
+  - ~~copyrights~~
+  - ~~exponents~~
+  - ~~marks~~
+  - ~~multiplication-sign~~
+  - ~~number-sign~~
+  - ~~numero-sign~~
+  - ~~plus-minus~~
+  - ~~section-sign~~
+- whitespace
+  - lines
+  - nbsp
+  - spaces
+- words
+  - abbreviations
+  - case
+  - exceptions
+  - pub-id
+
 
 ### ✨ New features
 - Fix spacing around paragraph sign (¶)
@@ -12,6 +39,7 @@
 ### 💪 Improvements
 - Isolate base constants from locale file
 - Move locale-specific typography treatments to a locale file
+- Extend test cases for integration tests 
 
 ### 🔨 Maintenance
 - Update NPM packages to their latest versions 

@@ -1,9 +1,14 @@
-import { fixTypos } from "../../src/typopo.js";
-import { symbolSet, transformSymbolSet } from "../symbols/symbol-utils.test.js";
-import { describe, it, expect } from "vitest";
-import { createRequire } from "module";
 import { readFileSync } from "fs";
 import { JSDOM } from "jsdom";
+import { createRequire } from "module";
+import { describe, expect, it } from "vitest";
+import { fixTypos } from "../../src/typopo.js";
+import { exponentSet } from "../symbols/exponents.test.js";
+import { multiplicationSignSet } from "../symbols/multiplication-sign.test.js";
+import { numberSignSet } from "../symbols/number-sign.test.js";
+import { plusMinusSet } from "../symbols/plus-minus.test.js";
+import { symbolSet, transformSymbolSet } from "../symbols/symbol-utils.test.js";
+import { marksSet } from "../symbols/marks.test.js";
 
 let fixTyposMinified = null;
 let fixTyposUmd = null;
@@ -104,7 +109,9 @@ describe("Test that exceptions remain intact", () => {
   runAllVersions(testCase, "en-us");
 });
 
-/* typopo configurations */
+/* 
+  typopo configurations 
+*/
 let configDefault = {
   removeLines:                         true,
   removeWhitespacesBeforeMarkdownList: true,
@@ -125,7 +132,9 @@ let configKeepMarkdownCodeBlocks = {
   removeLines:            false,
 };
 
-/* test cases */
+/* 
+  Test cases 
+*/
 function getTestModules(localeName) {
   return {
     // ellipsis
@@ -135,28 +144,17 @@ function getTestModules(localeName) {
     // hyphen
     "e- shop": "e-shop",
 
-    // symbol modules are locale-specific
+    // Symbols
     ...transformSymbolSet(symbolSet, "copyright", localeName),
     ...transformSymbolSet(symbolSet, "soundRecordingCopyright", localeName),
     ...transformSymbolSet(symbolSet, "paragraphSign", localeName),
     ...transformSymbolSet(symbolSet, "sectionSign", localeName),
     ...transformSymbolSet(symbolSet, "numeroSign", localeName),
-
-    // exponents
-    "100 km3":        "100 km³",
-    // plus-minus
-    "+-":             "±",
-    //registered trademark
-    "Company (r)":    "Company®",
-    "Company ( r )":  "Company®",
-    //service trademark
-    "Company (sm)":   "Company℠",
-    "Company ( sm )": "Company℠",
-    // trademark
-    "Company (tm)":   "Company™",
-    "Company ( tm )": "Company™",
-    // number sign
-    "word # 9":       "word #9",
+    ...numberSignSet,
+    ...plusMinusSet,
+    ...exponentSet,
+    ...multiplicationSignSet,
+    ...marksSet,
 
     // spaces
     "Sentence and… ?":                         "Sentence and…?",
@@ -440,6 +438,9 @@ let testModuleCombinations = {
   "20 ‱ – 30 ‱": "20‱–30‱",
 };
 
+/* 
+  Tests 
+*/
 describe("Tests that all modules are plugged for en-us", () => {
   let testCase = {
     ...getTestModules("en-us"),

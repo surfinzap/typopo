@@ -69,3 +69,9 @@ describe("Fix service mark (℠):\n", () => {
 describe("Fix trademark (™):\n", () => {
   testMarks(trademark, "tm", "™");
 });
+
+export const marksSet = {
+  ...registeredTrademark,
+  ...serviceMark,
+  ...trademark,
+};
