@@ -9,7 +9,7 @@ Integration tests
  - double-quotes
  - ellipsis
  - ~~hyphen~~
- - period
+ - ~~period~~
  - single-quotes
 - ~~symbols~~
   - ~~copyrights~~
@@ -21,7 +21,7 @@ Integration tests
   - ~~plus-minus~~
   - ~~section-sign~~
 - whitespace
-  - lines
+  - ~~lines~~
   - nbsp
   - spaces
 - words

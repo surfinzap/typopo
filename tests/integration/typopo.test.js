@@ -14,6 +14,7 @@ import { pubIdSet } from "../words/pub-id.test.js";
 import { exceptionsSet } from "../words/exceptions.test.js";
 import { hyphenSet } from "../punctuation/hyphen.test.js";
 import { periodSet } from "../punctuation/period.test.js";
+import { linesSet } from "../whitespace/lines.test.js";
 hyphenSet;
 
 let fixTyposMinified = null;
@@ -147,6 +148,7 @@ function getTestModules(localeName) {
     ...marksSet,
 
     // whitespace
+    // lines are in keepLines and removeLines
 
     // words
     ...caseSet,
@@ -186,11 +188,11 @@ function getTestModules(localeName) {
 }
 
 let testRemoveLines = {
-  "remove\n\nlines": "remove\nlines",
+  ...linesSet,
 };
 
 let testKeepLines = {
-  "keep\n\nlines": "keep\n\nlines",
+  ...Object.fromEntries(Object.keys(linesSet).map((key) => [key, key])),
 };
 
 let testRemoveWhitespacesBeforeMarkdownList = {
