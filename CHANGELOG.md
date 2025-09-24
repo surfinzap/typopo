@@ -8,7 +8,7 @@ Integration tests
  - dash
  - double-quotes
  - ellipsis
- - hyphen
+ - ~~hyphen~~
  - period
  - single-quotes
 - ~~symbols~~
@@ -27,7 +27,7 @@ Integration tests
 - words
   - abbreviations
   - ~~case~~
-  - exceptions
+  - ~~exceptions~~
   - ~~pub-id~~
 
 

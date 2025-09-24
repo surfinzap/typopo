@@ -12,6 +12,8 @@ import { symbolSet, transformSymbolSet } from "../symbols/symbol-utils.test.js";
 import { caseSet } from "../words/case.test.js";
 import { pubIdSet } from "../words/pub-id.test.js";
 import { exceptionsSet } from "../words/exceptions.test.js";
+import { hyphenSet } from "../punctuation/hyphen.test.js";
+hyphenSet;
 
 let fixTyposMinified = null;
 let fixTyposUmd = null;
@@ -123,12 +125,12 @@ let configKeepMarkdownCodeBlocks = {
 */
 function getTestModules(localeName) {
   return {
+    // punctuation
+    ...hyphenSet,
+
     // ellipsis
     "Sentence ..….. another sentence":      "Sentence … another sentence",
     "Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
-
-    // hyphen
-    "e- shop": "e-shop",
 
     // symbols
     ...transformSymbolSet(symbolSet, "copyright", localeName),
