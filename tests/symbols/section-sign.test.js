@@ -8,13 +8,11 @@ import { describe, it, expect } from "vitest";
 describe("Fix section sign (§):\n", () => {
   supportedLocales.forEach((localeName) => {
     const locale = new Locale(localeName);
-    const symbolValue = base.sectionSign;
-    const spaceValue = locale.spaceAfter.sectionSign;
 
-    const transformedSymbolSet = transformSymbolSet(symbolSet, symbolValue, spaceValue);
+    const transformedSymbolSet = transformSymbolSet(symbolSet, "sectionSign", localeName);
 
     Object.keys(transformedSymbolSet).forEach((key) => {
-      it(`module test, ${symbolValue}, ${localeName}`, () => {
+      it(`module test, ${base["sectionSign"]}, ${localeName}`, () => {
         expect(fixSectionSign(key, locale)).toBe(transformedSymbolSet[key]);
       });
     });
@@ -24,13 +22,11 @@ describe("Fix section sign (§):\n", () => {
 describe("Fix paragraph sign (¶):\n", () => {
   supportedLocales.forEach((localeName) => {
     const locale = new Locale(localeName);
-    const symbolValue = base.paragraphSign;
-    const spaceValue = locale.spaceAfter.paragraphSign;
 
-    const transformedSymbolSet = transformSymbolSet(symbolSet, symbolValue, spaceValue);
+    const transformedSymbolSet = transformSymbolSet(symbolSet, "paragraphSign", localeName);
 
     Object.keys(transformedSymbolSet).forEach((key) => {
-      it(`module test, ${symbolValue}, ${localeName}`, () => {
+      it(`module test, ${base["paragraphSign"]}, ${localeName}`, () => {
         expect(fixSectionSign(key, locale)).toBe(transformedSymbolSet[key]);
       });
     });

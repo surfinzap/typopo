@@ -7,13 +7,11 @@ import { describe, it, expect } from "vitest";
 describe("Fix paragraph sign (¶):\n", () => {
   supportedLocales.forEach((localeName) => {
     const locale = new Locale(localeName);
-    const symbolValue = base.numeroSign;
-    const spaceValue = locale.spaceAfter.numeroSign;
 
-    const transformedSymbolSet = transformSymbolSet(symbolSet, symbolValue, spaceValue);
+    const transformedSymbolSet = transformSymbolSet(symbolSet, "numeroSign", localeName);
 
     Object.keys(transformedSymbolSet).forEach((key) => {
-      it(`module test, ${symbolValue}, ${localeName}`, () => {
+      it(`module test, ${base["numeroSign"]}, ${localeName}`, () => {
         expect(fixNumeroSign(key, locale)).toBe(transformedSymbolSet[key]);
       });
     });

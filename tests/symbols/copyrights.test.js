@@ -51,29 +51,29 @@ describe("Replace (p) with copyright ℗:\n", () => {
 describe("Fix copyrights (©):\n", () => {
   supportedLocales.forEach((localeName) => {
     const locale = new Locale(localeName);
-    const symbolValue = base.copyright;
-    const spaceValue = locale.spaceAfter.copyright;
 
-    const transformedSymbolSet = transformSymbolSet(symbolSet, symbolValue, spaceValue);
+    const transformedSymbolSet = transformSymbolSet(symbolSet, "copyright", localeName);
 
     Object.keys(transformedSymbolSet).forEach((key) => {
-      it(`Fix copyrights, ${symbolValue}, ${localeName}`, () => {
+      it(`Fix copyrights, ${base["copyright"]}, ${localeName}`, () => {
         expect(fixCopyrights(key, locale)).toBe(transformedSymbolSet[key]);
       });
     });
   });
 });
 
-describe("Fix sound recording copyrights (℗):\n", () => {
+describe.only("Fix sound recording copyrights (℗):\n", () => {
   supportedLocales.forEach((localeName) => {
     const locale = new Locale(localeName);
-    const symbolValue = base.soundRecordingCopyright;
-    const spaceValue = locale.spaceAfter.soundRecordingCopyright;
 
-    const transformedSymbolSet = transformSymbolSet(symbolSet, symbolValue, spaceValue);
+    const transformedSymbolSet = transformSymbolSet(
+      symbolSet,
+      "soundRecordingCopyright",
+      localeName
+    );
 
     Object.keys(transformedSymbolSet).forEach((key) => {
-      it(`module test, ${symbolValue}, ${localeName}`, () => {
+      it(`module test, ${base["soundRecordingCopyright"]}, ${localeName}`, () => {
         expect(fixCopyrights(key, locale)).toBe(transformedSymbolSet[key]);
       });
     });

@@ -59,7 +59,10 @@ const symbols = [
   "numeroSign",
 ];
 
-export function transformSymbolSet(testSet, symbolValue, spaceValue) {
+export function transformSymbolSet(testSet, symbolName, localeName) {
+  const locale = new Locale(localeName);
+  const symbolValue = base[symbolName];
+  const spaceValue = locale.spaceAfter[symbolName];
   const transformed = {};
   Object.keys(testSet).forEach((key) => {
     const transformedKey = key
@@ -75,17 +78,14 @@ export function transformSymbolSet(testSet, symbolValue, spaceValue) {
 
 describe("Fix symbol spacing:\n", () => {
   supportedLocales.forEach((localeName) => {
-    const locale = new Locale(localeName);
-
     symbols.forEach((symbolName) => {
-      const symbolValue = base[symbolName];
-      const spaceValue = locale.spaceAfter[symbolName];
+      const locale = new Locale(localeName);
 
-      const transformedSymbolSet = transformSymbolSet(symbolSet, symbolValue, spaceValue);
+      const transformedSymbolSet = transformSymbolSet(symbolSet, symbolName, localeName);
 
       Object.keys(transformedSymbolSet).forEach((key) => {
-        it(`module test, ${symbolValue}, ${localeName}`, () => {
-          expect(fixSpacingAroundSymbol(key, symbolValue, spaceValue)).toBe(
+        it(`module test, ${base[symbolName]}, ${localeName}`, () => {
+          expect(fixSpacingAroundSymbol(key, base[symbolName], locale.spaceAfter[symbolName])).toBe(
             transformedSymbolSet[key]
           );
         });
