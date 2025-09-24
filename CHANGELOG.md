@@ -28,7 +28,7 @@ Integration tests
   - abbreviations
   - case
   - exceptions
-  - pub-id
+  - ~~pub-id~~
 
 
 ### ✨ New features

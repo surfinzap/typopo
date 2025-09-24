@@ -9,6 +9,7 @@ import { numberSignSet } from "../symbols/number-sign.test.js";
 import { plusMinusSet } from "../symbols/plus-minus.test.js";
 import { symbolSet, transformSymbolSet } from "../symbols/symbol-utils.test.js";
 import { marksSet } from "../symbols/marks.test.js";
+import { pubIdSet } from "../words/pub-id.test.js";
 
 let fixTyposMinified = null;
 let fixTyposUmd = null;
@@ -189,9 +190,8 @@ function getTestModules(localeName) {
     CMSko:    "CMSko",
     cAPSLOCK: "Capslock",
 
-    // publication identifiers
-    "ISSN 0000-0000":          "ISSN 0000-0000",
-    "ISBN: 978-80-86102-81-8": "ISBN: 978-80-86102-81-8",
+    // words
+    ...pubIdSet,
 
     // double primes
     'It’s 12" x 12".': "It’s 12″ × 12″.",
