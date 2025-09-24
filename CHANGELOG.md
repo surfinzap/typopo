@@ -26,7 +26,7 @@ Integration tests
   - spaces
 - words
   - abbreviations
-  - case
+  - ~~case~~
   - exceptions
   - ~~pub-id~~
 

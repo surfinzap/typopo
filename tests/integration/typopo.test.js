@@ -4,11 +4,12 @@ import { createRequire } from "module";
 import { describe, expect, it } from "vitest";
 import { fixTypos } from "../../src/typopo.js";
 import { exponentSet } from "../symbols/exponents.test.js";
+import { marksSet } from "../symbols/marks.test.js";
 import { multiplicationSignSet } from "../symbols/multiplication-sign.test.js";
 import { numberSignSet } from "../symbols/number-sign.test.js";
 import { plusMinusSet } from "../symbols/plus-minus.test.js";
 import { symbolSet, transformSymbolSet } from "../symbols/symbol-utils.test.js";
-import { marksSet } from "../symbols/marks.test.js";
+import { caseSet } from "../words/case.test.js";
 import { pubIdSet } from "../words/pub-id.test.js";
 
 let fixTyposMinified = null;
@@ -145,7 +146,7 @@ function getTestModules(localeName) {
     // hyphen
     "e- shop": "e-shop",
 
-    // Symbols
+    // symbols
     ...transformSymbolSet(symbolSet, "copyright", localeName),
     ...transformSymbolSet(symbolSet, "soundRecordingCopyright", localeName),
     ...transformSymbolSet(symbolSet, "paragraphSign", localeName),
@@ -156,6 +157,10 @@ function getTestModules(localeName) {
     ...exponentSet,
     ...multiplicationSignSet,
     ...marksSet,
+
+    // words
+    ...caseSet,
+    ...pubIdSet,
 
     // spaces
     "Sentence and… ?":                         "Sentence and…?",
@@ -183,15 +188,6 @@ function getTestModules(localeName) {
     "sentence [brackets] A-player":    "sentence [brackets] A-player",
     "sentence {brackets} A-player":    "sentence {brackets} A-player",
     "A × A":                           "A × A",
-
-    // "the U.S. and" : "the U.S. and", not yet supported
-
-    //case
-    CMSko:    "CMSko",
-    cAPSLOCK: "Capslock",
-
-    // words
-    ...pubIdSet,
 
     // double primes
     'It’s 12" x 12".': "It’s 12″ × 12″.",
