@@ -13,6 +13,7 @@ import { caseSet } from "../words/case.test.js";
 import { pubIdSet } from "../words/pub-id.test.js";
 import { exceptionsSet } from "../words/exceptions.test.js";
 import { hyphenSet } from "../punctuation/hyphen.test.js";
+import { periodSet } from "../punctuation/period.test.js";
 hyphenSet;
 
 let fixTyposMinified = null;
@@ -127,6 +128,7 @@ function getTestModules(localeName) {
   return {
     // punctuation
     ...hyphenSet,
+    ...periodSet,
 
     // ellipsis
     "Sentence ..….. another sentence":      "Sentence … another sentence",
@@ -144,10 +146,13 @@ function getTestModules(localeName) {
     ...multiplicationSignSet,
     ...marksSet,
 
+    // whitespace
+
     // words
     ...caseSet,
     ...pubIdSet,
 
+    //tbd
     // spaces
     "Sentence and… ?":                         "Sentence and…?",
     "🥳 word 🥳 word 🥳":                      "🥳 word 🥳 word 🥳",
