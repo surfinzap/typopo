@@ -16,6 +16,7 @@ import { fixSingleQuotesPrimesAndApostrophes } from "./modules/punctuation/singl
 import { fixMultiplicationSign } from "./modules/symbols/multiplication-sign.js";
 import { fixSectionSign } from "./modules/symbols/section-sign.js";
 import { fixCopyrights } from "./modules/symbols/copyrights.js";
+import { fixNumeroSign } from "./modules/symbols/numero-sign.js";
 import { fixPlusMinus } from "./modules/symbols/plus-minus.js";
 import { fixMarks } from "./modules/symbols/marks.js";
 import { fixExponents } from "./modules/symbols/exponents.js";
@@ -72,6 +73,7 @@ export function fixTypos(string, locale, configuration) {
   string = fixMultiplicationSign(string);
   string = fixSectionSign(string, currentLocale);
   string = fixCopyrights(string, currentLocale);
+  string = fixNumeroSign(string, currentLocale);
   string = fixPlusMinus(string);
   string = fixMarks(string);
   string = fixExponents(string);

@@ -31,11 +31,6 @@ export const symbolSet = {
   "%${symbol}rate":    "% ${symbol}${space}rate",
   "$${symbol}cost":    "$ ${symbol}${space}cost",
 
-  // Quote contexts
-  '"text"${symbol}1': '"text" ${symbol}${space}1',
-  "'text'${symbol}1": "'text' ${symbol}${space}1",
-  "`code`${symbol}1": "`code` ${symbol}${space}1",
-
   // Bracket edge cases
   "(${symbol}1)":          "(${symbol}${space}1)",
   "[${symbol}1]":          "[${symbol}${space}1]",
@@ -43,12 +38,19 @@ export const symbolSet = {
   "(${symbol}${symbol}1)": "(${symbol}${symbol}${space}1)",
 
   // Start/end of string
-  "${symbol}1 text": "${symbol}${space}1 text",
+  "${symbol}text":   "${symbol}${space}text",
   "text ${symbol}1": "text ${symbol}${space}1",
 
   // Already correct
   "Article ${symbol}${space}1":    "Article ${symbol}${space}1",
   "Document ${symbol}${space}123": "Document ${symbol}${space}123",
+};
+
+const symbolSetInclQuotes = {
+  // Quote contexts
+  '"text"${symbol}1': '"text" ${symbol}${space}1',
+  "'text'${symbol}1": "'text' ${symbol}${space}1",
+  "`code`${symbol}1": "`code` ${symbol}${space}1",
 };
 
 const symbols = [
@@ -81,7 +83,11 @@ describe("Fix symbol spacing:\n", () => {
     symbols.forEach((symbolName) => {
       const locale = new Locale(localeName);
 
-      const transformedSymbolSet = transformSymbolSet(symbolSet, symbolName, localeName);
+      const transformedSymbolSet = transformSymbolSet(
+        { ...symbolSet, ...symbolSetInclQuotes },
+        symbolName,
+        localeName
+      );
 
       Object.keys(transformedSymbolSet).forEach((key) => {
         it(`module test, ${base[symbolName]}, ${localeName}`, () => {

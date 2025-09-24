@@ -3,11 +3,6 @@
 
 ## 2.7.0 //
 
-TBD
-- plugin locale fixing of symbols at integration level
-- locale-specific integration tests
-- add integration tests for numero
-- add Numero to pipeline
 
 ### ✨ New features
 - Fix spacing around paragraph sign (¶)

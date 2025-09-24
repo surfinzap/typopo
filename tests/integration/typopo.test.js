@@ -1,4 +1,5 @@
 import { fixTypos } from "../../src/typopo.js";
+import { symbolSet, transformSymbolSet } from "../symbols/symbol-utils.test.js";
 import { describe, it, expect } from "vitest";
 import { createRequire } from "module";
 import { readFileSync } from "fs";
@@ -133,44 +134,23 @@ let testModules = {
   // hyphen
   "e- shop": "e-shop",
 
-  // section sign
-  "under Law §1782":    "under Law § 1782",
-  // copyright
-  "Company (c)2017":    "Company © 2017",
-  "( c ) 2017":         "© 2017",
-  "( c     ) 2017":     "© 2017",
-  "( c )2017":          "© 2017",
-  "Company (c)  2017":  "Company © 2017",
-  "Company (c)   2017": "Company © 2017",
-  "Company  (c) 2017":  "Company © 2017",
-  "Company   (c) 2017": "Company © 2017",
-  "Company ©    2017":  "Company © 2017",
+  // symbol modules (copyrights, sectionSign, numeroSign) are locale-specific
 
   // exponents
-  "100 km3":            "100 km³",
+  "100 km3":        "100 km³",
   // plus-minus
-  "+-":                 "±",
-  // sound recording copyright
-  "Company (p)2017":    "Company ℗ 2017",
-  "( p ) 2017":         "℗ 2017",
-  "( p     ) 2017":     "℗ 2017",
-  "( p )2017":          "℗ 2017",
-  "Company (p)  2017":  "Company ℗ 2017",
-  "Company (p)   2017": "Company ℗ 2017",
-  "Company  (p) 2017":  "Company ℗ 2017",
-  "Company   (p) 2017": "Company ℗ 2017",
-  "Company ℗    2017":  "Company ℗ 2017",
+  "+-":             "±",
   //registered trademark
-  "Company (r)":        "Company®",
-  "Company ( r )":      "Company®",
+  "Company (r)":    "Company®",
+  "Company ( r )":  "Company®",
   //service trademark
-  "Company (sm)":       "Company℠",
-  "Company ( sm )":     "Company℠",
+  "Company (sm)":   "Company℠",
+  "Company ( sm )": "Company℠",
   // trademark
-  "Company (tm)":       "Company™",
-  "Company ( tm )":     "Company™",
+  "Company (tm)":   "Company™",
+  "Company ( tm )": "Company™",
   // number sign
-  "word # 9":           "word #9",
+  "word # 9":       "word #9",
 
   // spaces
   "Sentence and… ?":                         "Sentence and…?",
@@ -456,6 +436,11 @@ let testModuleCombinations = {
 describe("Tests that all modules are plugged for en-us", () => {
   let testCase = {
     ...testModules,
+    ...transformSymbolSet(symbolSet, "copyright", "en-us"),
+    ...transformSymbolSet(symbolSet, "soundRecordingCopyright", "en-us"),
+    ...transformSymbolSet(symbolSet, "paragraphSign", "en-us"),
+    ...transformSymbolSet(symbolSet, "sectionSign", "en-us"),
+    ...transformSymbolSet(symbolSet, "numeroSign", "en-us"),
     ...testModuleCombinations,
     ...testModuleDoubleQuotesEnUs,
     ...testModuleSingleQuotesEnUs,
@@ -499,6 +484,11 @@ describe("Tests that all modules are plugged for en-us", () => {
 describe("Tests that all modules are plugged for de-de", () => {
   let testCase = {
     ...testModules,
+    ...transformSymbolSet(symbolSet, "copyright", "de-de"),
+    ...transformSymbolSet(symbolSet, "soundRecordingCopyright", "de-de"),
+    ...transformSymbolSet(symbolSet, "paragraphSign", "de-de"),
+    ...transformSymbolSet(symbolSet, "sectionSign", "de-de"),
+    ...transformSymbolSet(symbolSet, "numeroSign", "de-de"),
     ...testModuleDoubleQuotesDeDe,
     ...testModuleSingleQuotesDeDe,
     ...testModuleAbbreviationsDeDe,
@@ -538,9 +528,14 @@ describe("Tests that all modules are plugged for de-de", () => {
   });
 });
 
-describe.skip("Tests that all modules are plugged for sk", () => {
+describe("Tests that all modules are plugged for sk", () => {
   let testCase = {
     ...testModules,
+    ...transformSymbolSet(symbolSet, "copyright", "sk"),
+    ...transformSymbolSet(symbolSet, "soundRecordingCopyright", "sk"),
+    ...transformSymbolSet(symbolSet, "paragraphSign", "sk"),
+    ...transformSymbolSet(symbolSet, "sectionSign", "sk"),
+    ...transformSymbolSet(symbolSet, "numeroSign", "sk"),
     ...testModuleDoubleQuotesSk,
     ...testModuleSingleQuotesSk,
     ...testModuleAbbreviationsSk,
@@ -580,9 +575,14 @@ describe.skip("Tests that all modules are plugged for sk", () => {
   });
 });
 
-describe.skip("Tests that all modules are plugged for cs", () => {
+describe("Tests that all modules are plugged for cs", () => {
   let testCase = {
     ...testModules,
+    ...transformSymbolSet(symbolSet, "copyright", "cs"),
+    ...transformSymbolSet(symbolSet, "soundRecordingCopyright", "cs"),
+    ...transformSymbolSet(symbolSet, "paragraphSign", "cs"),
+    ...transformSymbolSet(symbolSet, "sectionSign", "cs"),
+    ...transformSymbolSet(symbolSet, "numeroSign", "cs"),
     ...testModuleDoubleQuotesCs,
     ...testModuleSingleQuotesCs,
     ...testModuleAbbreviationsCs,
@@ -622,9 +622,14 @@ describe.skip("Tests that all modules are plugged for cs", () => {
   });
 });
 
-describe.skip("Tests that all modules are plugged for rue", () => {
+describe("Tests that all modules are plugged for rue", () => {
   let testCase = {
     ...testModules,
+    ...transformSymbolSet(symbolSet, "copyright", "rue"),
+    ...transformSymbolSet(symbolSet, "soundRecordingCopyright", "rue"),
+    ...transformSymbolSet(symbolSet, "paragraphSign", "rue"),
+    ...transformSymbolSet(symbolSet, "sectionSign", "rue"),
+    ...transformSymbolSet(symbolSet, "numeroSign", "rue"),
     ...testModuleDoubleQuotesRue,
     ...testModuleSingleQuotesRue,
     ...testModuleAbbreviationsRue,
