@@ -11,7 +11,7 @@ Integration tests
  - hyphen
  - period
  - single-quotes
-- symbols
+- ~~symbols~~
   - ~~copyrights~~
   - ~~exponents~~
   - ~~marks~~
