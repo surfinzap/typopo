@@ -126,72 +126,79 @@ let configKeepMarkdownCodeBlocks = {
 };
 
 /* test cases */
-let testModules = {
-  // ellipsis
-  "Sentence ..….. another sentence":      "Sentence … another sentence",
-  "Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
+function getTestModules(localeName) {
+  return {
+    // ellipsis
+    "Sentence ..….. another sentence":      "Sentence … another sentence",
+    "Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
 
-  // hyphen
-  "e- shop": "e-shop",
+    // hyphen
+    "e- shop": "e-shop",
 
-  // symbol modules (copyrights, sectionSign, numeroSign) are locale-specific
+    // symbol modules are locale-specific
+    ...transformSymbolSet(symbolSet, "copyright", localeName),
+    ...transformSymbolSet(symbolSet, "soundRecordingCopyright", localeName),
+    ...transformSymbolSet(symbolSet, "paragraphSign", localeName),
+    ...transformSymbolSet(symbolSet, "sectionSign", localeName),
+    ...transformSymbolSet(symbolSet, "numeroSign", localeName),
 
-  // exponents
-  "100 km3":        "100 km³",
-  // plus-minus
-  "+-":             "±",
-  //registered trademark
-  "Company (r)":    "Company®",
-  "Company ( r )":  "Company®",
-  //service trademark
-  "Company (sm)":   "Company℠",
-  "Company ( sm )": "Company℠",
-  // trademark
-  "Company (tm)":   "Company™",
-  "Company ( tm )": "Company™",
-  // number sign
-  "word # 9":       "word #9",
+    // exponents
+    "100 km3":        "100 km³",
+    // plus-minus
+    "+-":             "±",
+    //registered trademark
+    "Company (r)":    "Company®",
+    "Company ( r )":  "Company®",
+    //service trademark
+    "Company (sm)":   "Company℠",
+    "Company ( sm )": "Company℠",
+    // trademark
+    "Company (tm)":   "Company™",
+    "Company ( tm )": "Company™",
+    // number sign
+    "word # 9":       "word #9",
 
-  // spaces
-  "Sentence and… ?":                         "Sentence and…?",
-  "🥳 word 🥳 word 🥳":                      "🥳 word 🥳 word 🥳",
-  "🥳 word 🥳 word 🥳":                      "🥳 word 🥳 word 🥳",
-  // nbsp
-  "v a v a v":                               "v a v a v",
-  "The product X is missing the feature Y.": "The product X is missing the feature Y.",
+    // spaces
+    "Sentence and… ?":                         "Sentence and…?",
+    "🥳 word 🥳 word 🥳":                      "🥳 word 🥳 word 🥳",
+    "🥳 word 🥳 word 🥳":                      "🥳 word 🥳 word 🥳",
+    // nbsp
+    "v a v a v":                               "v a v a v",
+    "The product X is missing the feature Y.": "The product X is missing the feature Y.",
 
-  "Sputnik V":                       "Sputnik V",
-  "Človek Č":                        "Človek Č",
-  "© V Inc.":                        "© V Inc.",
-  "bola to I. kapitola":             "bola to I. kapitola",
-  "url_to_image_5.jpg":              "url_to_image_5.jpg",
-  "pán Šťastný":                     "pán Šťastný",
-  "pán ŠŤASTNÝ":                     "pán ŠŤASTNÝ",
-  "One sentence ends. A bad apple.": "One sentence ends. A bad apple.",
-  "One sentence ends? A bad apple.": "One sentence ends? A bad apple.",
-  "One sentence ends! A bad apple.": "One sentence ends! A bad apple.",
-  "sentence; C-level executive":     "sentence; C-level executive",
-  "sentence: C-level executive":     "sentence: C-level executive",
-  "sentence, C-level executive":     "sentence, C-level executive",
-  "I’d say… A-player":               "I’d say… A-player",
-  "sentence (brackets) A-player":    "sentence (brackets) A-player",
-  "sentence [brackets] A-player":    "sentence [brackets] A-player",
-  "sentence {brackets} A-player":    "sentence {brackets} A-player",
-  "A × A":                           "A × A",
+    "Sputnik V":                       "Sputnik V",
+    "Človek Č":                        "Človek Č",
+    "© V Inc.":                        "© V Inc.",
+    "bola to I. kapitola":             "bola to I. kapitola",
+    "url_to_image_5.jpg":              "url_to_image_5.jpg",
+    "pán Šťastný":                     "pán Šťastný",
+    "pán ŠŤASTNÝ":                     "pán ŠŤASTNÝ",
+    "One sentence ends. A bad apple.": "One sentence ends. A bad apple.",
+    "One sentence ends? A bad apple.": "One sentence ends? A bad apple.",
+    "One sentence ends! A bad apple.": "One sentence ends! A bad apple.",
+    "sentence; C-level executive":     "sentence; C-level executive",
+    "sentence: C-level executive":     "sentence: C-level executive",
+    "sentence, C-level executive":     "sentence, C-level executive",
+    "I’d say… A-player":               "I’d say… A-player",
+    "sentence (brackets) A-player":    "sentence (brackets) A-player",
+    "sentence [brackets] A-player":    "sentence [brackets] A-player",
+    "sentence {brackets} A-player":    "sentence {brackets} A-player",
+    "A × A":                           "A × A",
 
-  // "the U.S. and" : "the U.S. and", not yet supported
+    // "the U.S. and" : "the U.S. and", not yet supported
 
-  //case
-  CMSko:    "CMSko",
-  cAPSLOCK: "Capslock",
+    //case
+    CMSko:    "CMSko",
+    cAPSLOCK: "Capslock",
 
-  // publication identifiers
-  "ISSN 0000-0000":          "ISSN 0000-0000",
-  "ISBN: 978-80-86102-81-8": "ISBN: 978-80-86102-81-8",
+    // publication identifiers
+    "ISSN 0000-0000":          "ISSN 0000-0000",
+    "ISBN: 978-80-86102-81-8": "ISBN: 978-80-86102-81-8",
 
-  // double primes
-  'It’s 12" x 12".': "It’s 12″ × 12″.",
-};
+    // double primes
+    'It’s 12" x 12".': "It’s 12″ × 12″.",
+  };
+}
 
 let testRemoveLines = {
   "remove\n\nlines": "remove\nlines",
@@ -435,12 +442,7 @@ let testModuleCombinations = {
 
 describe("Tests that all modules are plugged for en-us", () => {
   let testCase = {
-    ...testModules,
-    ...transformSymbolSet(symbolSet, "copyright", "en-us"),
-    ...transformSymbolSet(symbolSet, "soundRecordingCopyright", "en-us"),
-    ...transformSymbolSet(symbolSet, "paragraphSign", "en-us"),
-    ...transformSymbolSet(symbolSet, "sectionSign", "en-us"),
-    ...transformSymbolSet(symbolSet, "numeroSign", "en-us"),
+    ...getTestModules("en-us"),
     ...testModuleCombinations,
     ...testModuleDoubleQuotesEnUs,
     ...testModuleSingleQuotesEnUs,
@@ -483,12 +485,7 @@ describe("Tests that all modules are plugged for en-us", () => {
 
 describe("Tests that all modules are plugged for de-de", () => {
   let testCase = {
-    ...testModules,
-    ...transformSymbolSet(symbolSet, "copyright", "de-de"),
-    ...transformSymbolSet(symbolSet, "soundRecordingCopyright", "de-de"),
-    ...transformSymbolSet(symbolSet, "paragraphSign", "de-de"),
-    ...transformSymbolSet(symbolSet, "sectionSign", "de-de"),
-    ...transformSymbolSet(symbolSet, "numeroSign", "de-de"),
+    ...getTestModules("de-de"),
     ...testModuleDoubleQuotesDeDe,
     ...testModuleSingleQuotesDeDe,
     ...testModuleAbbreviationsDeDe,
@@ -530,12 +527,7 @@ describe("Tests that all modules are plugged for de-de", () => {
 
 describe("Tests that all modules are plugged for sk", () => {
   let testCase = {
-    ...testModules,
-    ...transformSymbolSet(symbolSet, "copyright", "sk"),
-    ...transformSymbolSet(symbolSet, "soundRecordingCopyright", "sk"),
-    ...transformSymbolSet(symbolSet, "paragraphSign", "sk"),
-    ...transformSymbolSet(symbolSet, "sectionSign", "sk"),
-    ...transformSymbolSet(symbolSet, "numeroSign", "sk"),
+    ...getTestModules("sk"),
     ...testModuleDoubleQuotesSk,
     ...testModuleSingleQuotesSk,
     ...testModuleAbbreviationsSk,
@@ -577,12 +569,7 @@ describe("Tests that all modules are plugged for sk", () => {
 
 describe("Tests that all modules are plugged for cs", () => {
   let testCase = {
-    ...testModules,
-    ...transformSymbolSet(symbolSet, "copyright", "cs"),
-    ...transformSymbolSet(symbolSet, "soundRecordingCopyright", "cs"),
-    ...transformSymbolSet(symbolSet, "paragraphSign", "cs"),
-    ...transformSymbolSet(symbolSet, "sectionSign", "cs"),
-    ...transformSymbolSet(symbolSet, "numeroSign", "cs"),
+    ...getTestModules("cs"),
     ...testModuleDoubleQuotesCs,
     ...testModuleSingleQuotesCs,
     ...testModuleAbbreviationsCs,
@@ -624,12 +611,7 @@ describe("Tests that all modules are plugged for cs", () => {
 
 describe("Tests that all modules are plugged for rue", () => {
   let testCase = {
-    ...testModules,
-    ...transformSymbolSet(symbolSet, "copyright", "rue"),
-    ...transformSymbolSet(symbolSet, "soundRecordingCopyright", "rue"),
-    ...transformSymbolSet(symbolSet, "paragraphSign", "rue"),
-    ...transformSymbolSet(symbolSet, "sectionSign", "rue"),
-    ...transformSymbolSet(symbolSet, "numeroSign", "rue"),
+    ...getTestModules("rue"),
     ...testModuleDoubleQuotesRue,
     ...testModuleSingleQuotesRue,
     ...testModuleAbbreviationsRue,
