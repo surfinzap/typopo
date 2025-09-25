@@ -62,7 +62,7 @@ describe("Fix copyrights (©):\n", () => {
   });
 });
 
-describe.only("Fix sound recording copyrights (℗):\n", () => {
+describe("Fix sound recording copyrights (℗):\n", () => {
   supportedLocales.forEach((localeName) => {
     const locale = new Locale(localeName);
 

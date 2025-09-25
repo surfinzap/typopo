@@ -34,15 +34,15 @@ jobs:
       - name: Run tests and extract count
         id: test_count
         run: |
-          # Run tests with JSON reporter and extract the passing test count
-          pnpm test --reporter=json --outputFile=./vitest-output.json
+          # Run tests with basic reporter and extract the passing test count
+          TEST_OUTPUT=$(pnpm test --reporter=basic --run 2>&1)
           if [ $? -eq 0 ]; then
-            PASSING_TESTS=$(grep -o '"numPassedTests":[0-9]*' vitest-output.json | grep -o '[0-9]*')
+            PASSING_TESTS=$(echo "$TEST_OUTPUT" | grep "Tests" | grep -o '[0-9]\+ passed' | grep -o '[0-9]\+')
             echo "Passing tests: $PASSING_TESTS"
             echo "{ \"schemaVersion\": 1, \"label\": \"tests\", \"message\": \"$PASSING_TESTS tests passing\", \"color\": \"#007f50\" }" > tests-status.json
           else
             echo "Test command failed. Output:"
-            cat vitest-output.json
+            echo "$TEST_OUTPUT"
             exit 1
           fi
         env:
