@@ -25,14 +25,19 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: npm ci
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - run: pnpm install --frozen-lockfile
 
       # Run tests with JSON reporter for clean parsing
       - name: Run tests and extract count
         id: test_count
         run: |
           # Run tests with JSON reporter and extract the passing test count
-          JSON_OUTPUT=$(npm test -- --reporter=json 2>&1)
+          JSON_OUTPUT=$(pnpm test --reporter=json 2>&1)
 
           # Check if tests ran successfully
           if [ $? -eq 0 ]; then
