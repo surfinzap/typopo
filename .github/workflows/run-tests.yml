@@ -35,7 +35,7 @@ jobs:
         id: test_count
         run: |
           # Run tests with JSON reporter and extract the passing test count
-          pnpm test --reporter=json > vitest-output.json
+          pnpm test --reporter=json --outputFile=./vitest-output.json
           if [ $? -eq 0 ]; then
             PASSING_TESTS=$(grep -o '"numPassedTests":[0-9]*' vitest-output.json | grep -o '[0-9]*')
             echo "Passing tests: $PASSING_TESTS"
