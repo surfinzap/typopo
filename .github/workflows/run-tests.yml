@@ -35,11 +35,17 @@ jobs:
         id: test_count
         run: |
           # Run tests with JSON reporter and extract the passing test count
-          JSON_OUTPUT=$(pnpm test --reporter=json 2>/dev/null)
-          PASSING_TESTS=$(echo "$JSON_OUTPUT" | grep -o '"numPassedTests":[0-9]*' | grep -o '[0-9]*')
-          echo "Passing tests: $PASSING_TESTS"
-          # Create JSON file with the test count
-          echo "{ \"schemaVersion\": 1, \"label\": \"tests\", \"message\": \"$PASSING_TESTS tests passing\", \"color\": \"#007f50\" }" > tests-status.json
+          JSON_OUTPUT=$(pnpm test --reporter=json 2>&1)
+          if [ $? -eq 0 ]; then
+            PASSING_TESTS=$(echo "$JSON_OUTPUT" | grep -o '"numPassedTests":[0-9]*' | grep -o '[0-9]*')
+            echo "Passing tests: $PASSING_TESTS"
+            # Create JSON file with the test count
+            echo "{ \"schemaVersion\": 1, \"label\": \"tests\", \"message\": \"$PASSING_TESTS tests passing\", \"color\": \"#007f50\" }" > tests-status.json
+          else
+            echo "Test command failed with output:"
+            echo "$JSON_OUTPUT"
+            exit 1
+          fi
         env:
           CI: true
 
