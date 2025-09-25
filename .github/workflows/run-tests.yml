@@ -25,21 +25,32 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - run: pnpm install
+      - run: npm ci
 
       # Run tests with JSON reporter for clean parsing
       - name: Run tests and extract count
         id: test_count
         run: |
           # Run tests with JSON reporter and extract the passing test count
-          JSON_OUTPUT=$(pnpm test --reporter=json 2>/dev/null)
-          PASSING_TESTS=$(echo "$JSON_OUTPUT" | grep -o '"numPassedTests":[0-9]*' | grep -o '[0-9]*')
-          echo "Passing tests: $PASSING_TESTS"
-          # Create JSON file with the test count
-          echo "{ \"schemaVersion\": 1, \"label\": \"tests\", \"message\": \"$PASSING_TESTS tests passing\", \"color\": \"#007f50\" }" > tests-status.json
+          JSON_OUTPUT=$(npm test -- --reporter=json 2>&1)
+
+          # Check if tests ran successfully
+          if [ $? -eq 0 ]; then
+            PASSING_TESTS=$(echo "$JSON_OUTPUT" | grep -o '"numPassedTests":[0-9]*' | grep -o '[0-9]*')
+            if [ -n "$PASSING_TESTS" ]; then
+              echo "Passing tests: $PASSING_TESTS"
+              # Create JSON file with the test count
+              echo "{ \"schemaVersion\": 1, \"label\": \"tests\", \"message\": \"$PASSING_TESTS tests passing\", \"color\": \"#007f50\" }" > tests-status.json
+            else
+              echo "Error: Could not extract test count from JSON output"
+              echo "$JSON_OUTPUT"
+              exit 1
+            fi
+          else
+            echo "Tests failed, output:"
+            echo "$JSON_OUTPUT"
+            exit 1
+          fi
         env:
           CI: true
 
