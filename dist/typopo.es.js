@@ -88,10 +88,8 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     paragraphSign: n.nbsp,
     // ¶⎵38
     /* 
-      a space after (n-1) abbreviation
-      the last space is always {nbsp}
-      F.⎵X.{nbsp}Šalda, Ch.⎵G.⎵D.{nbsp}Lambert, 
-      e.⎵g., v.⎵u.⎵Z.
+      a space after "n-1" abbreviation in abbr. sequence
+      F.⎵X. Šalda, Ch.⎵G.⎵D. Lambert, e.⎵g., v.⎵u.⎵Z.
     */
     abbreviation: n.nbsp
   },
@@ -148,10 +146,8 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     paragraphSign: n.nbsp,
     // ¶⎵38
     /* 
-      a space after (n-1) abbreviation
-      the last space is always {nbsp}
-      F.⎵X.{nbsp}Šalda, Ch.⎵G.⎵D.{nbsp}Lambert, 
-      e.⎵g., v.⎵u.⎵Z.
+      a space after "n-1" abbreviation in abbr. sequence
+      F.⎵X. Šalda, Ch.⎵G.⎵D. Lambert, e.⎵g., v.⎵u.⎵Z.
     */
     abbreviation: ""
   },
@@ -209,10 +205,8 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     paragraphSign: n.narrowNbsp,
     // ¶⎵38
     /* 
-      a space after (n-1) abbreviation
-      the last space is always {nbsp}
-      F.⎵X.{nbsp}Šalda, Ch.⎵G.⎵D.{nbsp}Lambert, 
-      e.⎵g., v.⎵u.⎵Z.
+      a space after "n-1" abbreviation in abbr. sequence
+      F.⎵X. Šalda, Ch.⎵G.⎵D. Lambert, e.⎵g., v.⎵u.⎵Z.
     */
     abbreviation: n.nbsp
   },
@@ -269,10 +263,8 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     paragraphSign: n.narrowNbsp,
     // ¶⎵38
     /* 
-      a space after (n-1) abbreviation
-      the last space is always {nbsp}
-      F.⎵X.{nbsp}Šalda, Ch.⎵G.⎵D.{nbsp}Lambert, 
-      e.⎵g., v.⎵u.⎵Z.
+      a space after "n-1" abbreviation in abbr. sequence
+      F.⎵X. Šalda, Ch.⎵G.⎵D. Lambert, e.⎵g., v.⎵u.⎵Z.
     */
     abbreviation: n.nbsp
   },
@@ -354,10 +346,8 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     paragraphSign: n.nbsp,
     // ¶⎵38
     /* 
-      a space after (n-1) abbreviation
-      the last space is always {nbsp}
-      F.⎵X.{nbsp}Šalda, Ch.⎵G.⎵D.{nbsp}Lambert, 
-      e.⎵g., v.⎵u.⎵Z.
+      a space after "n-1" abbreviation in abbr. sequence
+      F.⎵X. Šalda, Ch.⎵G.⎵D. Lambert, e.⎵g., v.⎵u.⎵Z.
     */
     abbreviation: n.nbsp
   },

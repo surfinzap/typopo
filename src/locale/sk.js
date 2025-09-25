@@ -24,10 +24,8 @@ export const sk = {
     sectionSign:             base.narrowNbsp, // §⎵38
     paragraphSign:           base.narrowNbsp, // ¶⎵38
     /* 
-      a space after (n-1) abbreviation
-      the last space is always {nbsp}
-      F.⎵X.{nbsp}Šalda, Ch.⎵G.⎵D.{nbsp}Lambert, 
-      e.⎵g., v.⎵u.⎵Z.
+      a space after "n-1" abbreviation in abbr. sequence
+      F.⎵X. Šalda, Ch.⎵G.⎵D. Lambert, e.⎵g., v.⎵u.⎵Z.
     */
     abbreviation:            base.nbsp,
   },
