@@ -17,6 +17,7 @@ import {
 } from "../../src/modules/punctuation/double-quotes.js";
 import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
+import { base } from "../../src/const.js";
 
 let configIgnoreMarkdownCodeBlocks = {
   keepMarkdownCodeBlocks: false,
@@ -26,26 +27,26 @@ let configKeepMarkdownCodeBlocks = {
   keepMarkdownCodeBlocks: true,
 };
 
-let testFalsePositives = {
+const testFalsePositives = {
   "č., s., fol., str.,": "č., s., fol., str.,",
 
-  "Byl to “Karel IV.”, ktery": "Byl to “Karel IV.”, ktery",
+  "Byl to “Karel IV.”, ktery": "Byl to “Karel IV.”, ktery",
 
   "Hey.”": "Hey.”",
 
-  "Because of this, it’s common to have “namespace pollution”, where completely unrelated code shares global variables.":
-    "Because of this, it’s common to have “namespace pollution”, where completely unrelated code shares global variables.",
+  "common to have “namespace pollution”, where completely unrelated code shares global variables.":
+    "common to have “namespace pollution”, where completely unrelated code shares global variables.",
 };
 
-let testModule = {
-  'He said: "Here’s a 12" record."': "He said: “Here’s a 12″ record.”",
+const doubleQuotesSet = {
+  'He said: "Here${apostrophe}s a 12" record."': "He said: “Here${apostrophe}s a 12″ record.”",
 
   'He said: "He was 12."': "He said: “He was 12.”",
 
   'He said: "He was 12". And then he added: "Maybe he was 13".':
     "He said: “He was 12.” And then he added: “Maybe he was 13.”",
 
-  'So it’s 12" × 12", right?': "So it’s 12″ × 12″, right?",
+  'So it${apostrophe}s 12" × 12", right?': "So it${apostrophe}s 12″ × 12″, right?",
 
   "An unquoted sentence.“And a quoted one.”": "An unquoted sentence. “And a quoted one.”",
 
@@ -86,22 +87,6 @@ let testModule = {
 
   "abc “…example”": "abc “…example”",
 };
-
-function localizeDoubleQuotes(string, leftDoubleQuote, rightDoubleQuote) {
-  string = string.replace(/“/g, leftDoubleQuote);
-  string = string.replace(/”/g, rightDoubleQuote);
-  return string;
-}
-
-let testModuleSk = {};
-Object.keys(testModule).forEach(function (key) {
-  testModuleSk[key] = localizeDoubleQuotes(testModule[key], "„", "“");
-});
-
-let testModuleRue = {};
-Object.keys(testModule).forEach(function (key) {
-  testModuleRue[key] = localizeDoubleQuotes(testModule[key], "«", "»");
-});
 
 describe("Remove punctuation before double quotes (en-us):\n", () => {
   let testCase = {
@@ -627,7 +612,7 @@ describe("Add a missing space after a left double quote (en-us):\n", () => {
 
 describe("Double quotes in default language (en-us)\n", () => {
   let testCase = {
-    ...testModule,
+    ...getDoubleQuoteSet("en-us"),
     ...testFalsePositives,
   };
 
@@ -642,7 +627,7 @@ describe("Double quotes in default language (en-us)\n", () => {
 
 describe("Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n", () => {
   let testCase = {
-    ...testModuleSk,
+    ...getDoubleQuoteSet("sk"),
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -668,7 +653,7 @@ describe("Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n",
 
 describe("Double quotes in Rusyn language (rue)\n", () => {
   let testCase = {
-    ...testModuleRue,
+    ...getDoubleQuoteSet("rue"),
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -713,3 +698,26 @@ describe("Test if markdown ticks are kept (double quotes) (en-us):\n", () => {
     });
   });
 });
+
+export function getDoubleQuoteSet(localeName) {
+  const locale = new Locale(localeName);
+
+  const transformed = {};
+  const testSet = { ...doubleQuotesSet, ...testFalsePositives };
+
+  Object.keys(testSet).forEach((key) => {
+    const transformedKey = key
+      .replace(/‘/g, locale.leftSingleQuote)
+      .replace(/’/g, locale.rightSingleQuote)
+      .replace(/\$\{apostrophe\}/g, base.apostrophe);
+    const transformedValue = testSet[key]
+      .replace(/“/g, locale.leftDoubleQuote)
+      .replace(/”/g, locale.rightDoubleQuote)
+      .replace(/‘/g, locale.leftSingleQuote)
+      .replace(/’/g, locale.rightSingleQuote)
+      .replace(/\$\{apostrophe\}/g, base.apostrophe);
+    transformed[transformedKey] = transformedValue;
+  });
+
+  return transformed;
+}

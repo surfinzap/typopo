@@ -6,7 +6,7 @@
 Integration tests
 - punctuation
  - dash
- - double-quotes
+ - ~~double-quotes~~
  - ellipsis
  - ~~hyphen~~
  - ~~period~~

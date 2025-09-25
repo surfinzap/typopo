@@ -15,7 +15,7 @@ import { exceptionsSet } from "../words/exceptions.test.js";
 import { hyphenSet } from "../punctuation/hyphen.test.js";
 import { periodSet } from "../punctuation/period.test.js";
 import { linesSet } from "../whitespace/lines.test.js";
-hyphenSet;
+import { getDoubleQuoteSet } from "../punctuation/double-quotes.test.js";
 
 let fixTyposMinified = null;
 let fixTyposUmd = null;
@@ -130,6 +130,7 @@ function getTestModules(localeName) {
     // punctuation
     ...hyphenSet,
     ...periodSet,
+    ...getDoubleQuoteSet(localeName),
 
     // ellipsis
     "Sentence ..….. another sentence":      "Sentence … another sentence",
@@ -207,45 +208,6 @@ let testKeepWhitespacesBeforeMarkdownList = {
   "  * list item":   "  * list item",
   "\t\t- list item": "\t\t- list item",
   "\t\t* list item": "\t\t* list item",
-};
-
-let testModuleDoubleQuotesEnUs = {
-  // double quotes
-  "English „English„ „English„ English": "English “English” “English” English",
-  'He said: "Here’s a 12" record."':     "He said: “Here’s a 12″ record.”",
-  '12′ 45"':                             "12′ 45″",
-  '3° 5′ 30"':                           "3° 5′ 30″",
-  "12\"3'00°":                           "12″3′00°",
-
-  'He was ok. "He was ok ".': "He was ok. “He was ok.”",
-
-  "Ask “what if (the thing)…”": "Ask “what if (the thing)…”",
-};
-
-let testModuleDoubleQuotesDeDe = {
-  // double quotes
-  "English „English„ „English„ English": "English „English“ „English“ English",
-  'He said: "Here’s a 12" record."':     "He said: „Here’s a 12″ record.“",
-  '12′ 45"':                             "12′ 45″",
-  '3° 5′ 30"':                           "3° 5′ 30″",
-  "12\"3'00°":                           "12″3′00°",
-};
-
-let testModuleDoubleQuotesSk = {
-  ...testModuleDoubleQuotesDeDe,
-};
-
-let testModuleDoubleQuotesCs = {
-  ...testModuleDoubleQuotesDeDe,
-};
-
-let testModuleDoubleQuotesRue = {
-  // double quotes
-  "English „English„ „English„ English": "English «English» «English» English",
-  'He said: "Here’s a 12" record."':     "He said: «Here’s a 12″ record.»",
-  '12′ 45"':                             "12′ 45″",
-  '3° 5′ 30"':                           "3° 5′ 30″",
-  "12\"3'00°":                           "12″3′00°",
 };
 
 let testModuleSingleQuotesEnUs = {
@@ -425,6 +387,8 @@ let testModuleCombinations = {
 
   // combination of dash.js and nbsp.js for percent, permille, permyriad
   "20 ‱ – 30 ‱": "20‱–30‱",
+
+  "Because of this, it’s common": "Because of this, it’s common",
 };
 
 /* 
@@ -434,7 +398,6 @@ describe("Tests that all modules are plugged for en-us", () => {
   let testCase = {
     ...getTestModules("en-us"),
     ...testModuleCombinations,
-    ...testModuleDoubleQuotesEnUs,
     ...testModuleSingleQuotesEnUs,
     ...testModuleAbbreviationsEnUs,
     ...testModuleNbspEnUs,
@@ -476,7 +439,6 @@ describe("Tests that all modules are plugged for en-us", () => {
 describe("Tests that all modules are plugged for de-de", () => {
   let testCase = {
     ...getTestModules("de-de"),
-    ...testModuleDoubleQuotesDeDe,
     ...testModuleSingleQuotesDeDe,
     ...testModuleAbbreviationsDeDe,
     ...testModuleNbspDeDe,
@@ -518,7 +480,6 @@ describe("Tests that all modules are plugged for de-de", () => {
 describe("Tests that all modules are plugged for sk", () => {
   let testCase = {
     ...getTestModules("sk"),
-    ...testModuleDoubleQuotesSk,
     ...testModuleSingleQuotesSk,
     ...testModuleAbbreviationsSk,
     ...testModuleNbspSk,
@@ -560,7 +521,6 @@ describe("Tests that all modules are plugged for sk", () => {
 describe("Tests that all modules are plugged for cs", () => {
   let testCase = {
     ...getTestModules("cs"),
-    ...testModuleDoubleQuotesCs,
     ...testModuleSingleQuotesCs,
     ...testModuleAbbreviationsCs,
     ...testModuleNbspCs,
@@ -602,7 +562,6 @@ describe("Tests that all modules are plugged for cs", () => {
 describe("Tests that all modules are plugged for rue", () => {
   let testCase = {
     ...getTestModules("rue"),
-    ...testModuleDoubleQuotesRue,
     ...testModuleSingleQuotesRue,
     ...testModuleAbbreviationsRue,
     ...testModuleNbspRue,
