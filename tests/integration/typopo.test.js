@@ -330,8 +330,8 @@ let testModuleNbspEnUs = {
   ...testModuleNbsp,
   // false positives
   "When I talk":                    "When I talk", // do not add nbsp before I
-  "“qouted part” A capital letter": "“qouted part” A capital letter",
-  "qouted part’ A capital letter":  "qouted part’ A capital letter",
+  "“quoted part” A capital letter": "“quoted part” A capital letter",
+  "quoted part’ A capital letter":  "quoted part’ A capital letter",
 };
 
 let testModuleNbspDeDe = {
@@ -342,7 +342,7 @@ let testModuleNbspDeDe = {
   "Vzorka I je fajn": "Vzorka I je fajn", // remove narrowNbsp after I
 
   // false positives
-  "„qouted part“ A capital letter": "„qouted part“ A capital letter",
+  "„quoted part“ A capital letter": "„quoted part“ A capital letter",
   "apostrophe’ A capital letter":   "apostrophe’ A capital letter",
 };
 
@@ -366,7 +366,7 @@ let testModuleNbspRue = {
   "apostrophe’ A capital letter":   "apostrophe’ A capital letter",
 };
 
-let testModuleCombinations = {
+let testModuleCombinationsEnUs = {
   /*
    Selected combination of rules processed within modules that may clash.
    */
@@ -397,7 +397,7 @@ let testModuleCombinations = {
 describe("Tests that all modules are plugged for en-us", () => {
   let testCase = {
     ...getTestModules("en-us"),
-    ...testModuleCombinations,
+    ...testModuleCombinationsEnUs,
     ...testModuleSingleQuotesEnUs,
     ...testModuleAbbreviationsEnUs,
     ...testModuleNbspEnUs,

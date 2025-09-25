@@ -25,12 +25,12 @@ export function fixInitials(string, locale) {
     {
       // "I. I. FullName"
       pattern:     `${initialPattern}${initialPattern}${fullNamePattern}`,
-      replacement: `$1${locale.abbreviationSpace}$3${base.space}$5`,
+      replacement: `$1${locale.spaceAfter.abbreviation}$3${base.space}$5`,
     },
     {
       // "I. I. I. FullName"
       pattern:     `${initialPattern}${initialPattern}${initialPattern}${fullNamePattern}`,
-      replacement: `$1${locale.abbreviationSpace}$3${locale.abbreviationSpace}$5${base.space}$7`,
+      replacement: `$1${locale.spaceAfter.abbreviation}$3${locale.spaceAfter.abbreviation}$5${base.space}$7`,
     },
   ];
 
@@ -89,7 +89,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
     let replacement = "$1";
     let abbrCount = (abbreviationPatterns[i].match(/\(/g) || []).length / 3;
     for (let j = 0; j < abbrCount - 1; j++) {
-      replacement += `$${j * 3 + 2}.${locale.abbreviationSpace}`;
+      replacement += `$${j * 3 + 2}.${locale.spaceAfter.abbreviation}`;
     }
     replacement += `$${(abbrCount - 1) * 3 + 2}. $${abbrCount * 3 + 2}`;
 
@@ -112,7 +112,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
     let replacement = "$1";
     let abbrCount = (abbreviationPatterns[i].match(/\(/g) || []).length / 3;
     for (let j = 0; j < abbrCount - 1; j++) {
-      replacement += `$${j * 3 + 2}.${locale.abbreviationSpace}`;
+      replacement += `$${j * 3 + 2}.${locale.spaceAfter.abbreviation}`;
     }
     replacement += `$${(abbrCount - 1) * 3 + 2}.$${abbrCount * 3 + 2}`;
 

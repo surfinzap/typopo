@@ -23,6 +23,13 @@ export const sk = {
     numeroSign:              base.nbsp, // №⎵1234
     sectionSign:             base.narrowNbsp, // §⎵38
     paragraphSign:           base.narrowNbsp, // ¶⎵38
+    /* 
+      a space after (n-1) abbreviation
+      the last space is always {nbsp}
+      F.⎵X.{nbsp}Šalda, Ch.⎵G.⎵D.{nbsp}Lambert, 
+      e.⎵g., v.⎵u.⎵Z.
+    */
+    abbreviation:            base.nbsp,
   },
 
   spaceBefore: {
@@ -35,23 +42,14 @@ export const sk = {
   },
 
   /* 
-    The first and the second space in the ordinal date, e.g. 1. 1. 1993
-    1.{firstSpace}1.{secondSpace}1993
+    The first and the second space in the ordinal date, 
+    e.g. 1. 1. 1993 → 1.{firstSpace}1.{secondSpace}1993
   */
   ordinalDate: {
     firstSpace:  base.nbsp,
     secondSpace: base.nbsp,
   },
 
-  /* 
-    (n-1) abbreviation space.
-    Examples:
-    J.{abbreviationSpace}Novak
-    F.{abbreviationSpace}X.{nbsp}Šalda
-    Ch.{abbreviationSpace}G.{abbreviationSpace}D.{nbsp}Lambert
-    e.{abbreviationSpace}g.
-  */
-  abbreviationSpace:       base.nbsp,
   /* 
     Common single-word abbreviations that are followed by a non-breaking space.
     For coding purposes, they are written here without periods.

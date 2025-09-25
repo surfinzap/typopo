@@ -23,6 +23,13 @@ export const enUS = {
     numeroSign:              base.nbsp, // №⎵1234
     sectionSign:             base.nbsp, // §⎵38
     paragraphSign:           base.nbsp, // ¶⎵38
+    /* 
+      a space after (n-1) abbreviation
+      the last space is always {nbsp}
+      F.⎵X.{nbsp}Šalda, Ch.⎵G.⎵D.{nbsp}Lambert, 
+      e.⎵g., v.⎵u.⎵Z.
+    */
+    abbreviation:            "",
   },
 
   spaceBefore: {
@@ -35,8 +42,8 @@ export const enUS = {
   },
 
   /* 
-    The first and the second space in the ordinal date, e.g. 1. 1. 1993
-    1.{firstSpace}1.{secondSpace}1993
+    The first and the second space in the ordinal date, 
+    e.g. 1. 1. 1993 → 1.{firstSpace}1.{secondSpace}1993
     Even though this is not a common date format in the U.S., it serves as a fallback for mixed language content.
   */
   ordinalDate: {
@@ -44,15 +51,6 @@ export const enUS = {
     secondSpace: base.nbsp,
   },
 
-  /* 
-    (n-1) abbreviation space.
-    Examples:
-    J.{abbreviationSpace}Novak
-    F.{abbreviationSpace}X.{nbsp}Šalda
-    Ch.{abbreviationSpace}G.{abbreviationSpace}D.{nbsp}Lambert
-    e.{abbreviationSpace}g.
-  */
-  abbreviationSpace:         "",
   /* 
     Common single-word abbreviations that are followed by a non-breaking space.
     For coding purposes, they are written here without periods.

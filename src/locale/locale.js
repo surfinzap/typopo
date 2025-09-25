@@ -42,7 +42,7 @@ export default class Locale {
     this.romanOrdinalIndicator = SUPPORTED_LOCALES[localeID].numbers.romanOrdinalIndicator;
     this.ordinalDate = SUPPORTED_LOCALES[localeID].ordinalDate;
 
-    this.abbreviationSpace = SUPPORTED_LOCALES[localeID].abbreviationSpace;
+    this.spaceAfter.abbreviation = SUPPORTED_LOCALES[localeID].spaceAfter.abbreviation;
 
     /* Single-word abbreviations from all locales
 
