@@ -627,3 +627,60 @@ describe("Replaces various spaces with non-breaking space after symbol, e.g. ©\
     });
   });
 });
+
+export const nbspSet = {
+  "v a v a v":                               "v a v a v",
+  "The product X is missing the feature Y.": "The product X is missing the feature Y.",
+  "Sputnik V":                               "Sputnik V",
+  "Človek Č":                                "Človek Č",
+  "© V Inc.":                                "© V Inc.",
+  "bola to I. kapitola":                     "bola to I. kapitola",
+  "pán Šťastný":                             "pán Šťastný",
+  "pán ŠŤASTNÝ":                             "pán ŠŤASTNÝ",
+  "One sentence ends. A bad apple.":         "One sentence ends. A bad apple.",
+  "One sentence ends? A bad apple.":         "One sentence ends? A bad apple.",
+  "One sentence ends! A bad apple.":         "One sentence ends! A bad apple.",
+  "sentence; C-level executive":             "sentence; C-level executive",
+  "sentence: C-level executive":             "sentence: C-level executive",
+  "sentence, C-level executive":             "sentence, C-level executive",
+  "I’d say… A-player":                       "I’d say… A-player",
+  "sentence (brackets) A-player":            "sentence (brackets) A-player",
+  "sentence [brackets] A-player":            "sentence [brackets] A-player",
+  "sentence {brackets} A-player":            "sentence {brackets} A-player",
+  "A × A":                                   "A × A",
+  "© V Inc.":                                "© V Inc.",
+
+  // false positives
+  "bola to I. kapitola":             "bola to I. kapitola",
+  "One sentence ends. A bad apple.": "One sentence ends. A bad apple.",
+  "One sentence ends? A bad apple.": "One sentence ends? A bad apple.",
+  "One sentence ends! A bad apple.": "One sentence ends! A bad apple.",
+  "A × A":                           "A × A",
+
+  // false positive for filenames
+  "url-to-image-5.jpg": "url-to-image-5.jpg",
+  "url_to_image_5.jpg": "url_to_image_5.jpg",
+  "url%to%image%5.jpg": "url%to%image%5.jpg",
+  "url to image 5.jpg": "url to image 5.jpg",
+  "URL-TO-IMAGE-5.JPG": "URL-TO-IMAGE-5.JPG",
+  "URL_TO_IMAGE_5.JPG": "URL_TO_IMAGE_5.JPG",
+  "URL%TO%IMAGE%5.JPG": "URL%TO%IMAGE%5.JPG",
+  "URL TO IMAGE 5.JPG": "URL TO IMAGE 5.JPG",
+};
+
+export function getNbspSet(localeName) {
+  let transformed = { ...nbspSet };
+
+  if (localeName === "en-us") {
+    transformed = {
+      ...transformed,
+      "When I talk": "When I talk", // do not add nbsp before I
+    };
+  } else {
+    transformed = {
+      ...transformed,
+      "Vzorka I je fajn": "Vzorka I je fajn", // remove 2nd nbsp
+    };
+  }
+  return transformed;
+}

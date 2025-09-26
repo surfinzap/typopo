@@ -22,7 +22,7 @@ Integration tests
   - ~~section-sign~~
 - whitespace
   - ~~lines~~
-  - nbsp
+  - ~~nbsp~~
   - spaces
 - ~~words~~
   - ~~abbreviations~~

@@ -19,6 +19,7 @@ import { getDoubleQuoteSet } from "../punctuation/double-quotes.test.js";
 import { abbreviationsSet, transformAbbrSet } from "../words/abbreviations.test.js";
 import { getSingleQuoteSet } from "../punctuation/single-quotes.test.js";
 import { ellipsisSet } from "../punctuation/ellipsis.test.js";
+import { getNbspSet } from "../whitespace/nbsp.test.js";
 
 let fixTyposMinified = null;
 let fixTyposUmd = null;
@@ -174,6 +175,11 @@ function getTestModules(localeName) {
 
     // whitespace
     // lines are in keepLines and removeLines
+    ...getNbspSet(localeName),
+    // spaces
+    "Sentence and… ?":    "Sentence and…?",
+    "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
+    "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
 
     // words
     ...transformAbbrSet(abbreviationsSet, localeName),
@@ -182,35 +188,6 @@ function getTestModules(localeName) {
 
     // module combinations
     ...transformAbbrSet(moduleCombinations, localeName),
-
-    //tbd
-    // spaces
-    "Sentence and… ?":    "Sentence and…?",
-    "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
-    "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
-
-    // nbsp
-    "v a v a v":                               "v a v a v",
-    "The product X is missing the feature Y.": "The product X is missing the feature Y.",
-
-    "Sputnik V":                       "Sputnik V",
-    "Človek Č":                        "Človek Č",
-    "© V Inc.":                        "© V Inc.",
-    "bola to I. kapitola":             "bola to I. kapitola",
-    "url_to_image_5.jpg":              "url_to_image_5.jpg",
-    "pán Šťastný":                     "pán Šťastný",
-    "pán ŠŤASTNÝ":                     "pán ŠŤASTNÝ",
-    "One sentence ends. A bad apple.": "One sentence ends. A bad apple.",
-    "One sentence ends? A bad apple.": "One sentence ends? A bad apple.",
-    "One sentence ends! A bad apple.": "One sentence ends! A bad apple.",
-    "sentence; C-level executive":     "sentence; C-level executive",
-    "sentence: C-level executive":     "sentence: C-level executive",
-    "sentence, C-level executive":     "sentence, C-level executive",
-    "I’d say… A-player":               "I’d say… A-player",
-    "sentence (brackets) A-player":    "sentence (brackets) A-player",
-    "sentence [brackets] A-player":    "sentence [brackets] A-player",
-    "sentence {brackets} A-player":    "sentence {brackets} A-player",
-    "A × A":                           "A × A",
   };
 }
 
@@ -236,87 +213,12 @@ let testKeepWhitespacesBeforeMarkdownList = {
   "\t\t* list item": "\t\t* list item",
 };
 
-let testModuleNbsp = {
-  "The product X is missing the feature Y.": "The product X is missing the feature Y.",
-
-  "Sputnik V": "Sputnik V",
-  "Človek Č":  "Človek Č",
-  "© V Inc.":  "© V Inc.",
-
-  // false positives
-  "bola to I. kapitola":             "bola to I. kapitola",
-  "pán Šťastný":                     "pán Šťastný",
-  "pán ŠŤASTNÝ":                     "pán ŠŤASTNÝ",
-  "One sentence ends. A bad apple.": "One sentence ends. A bad apple.",
-  "One sentence ends? A bad apple.": "One sentence ends? A bad apple.",
-  "One sentence ends! A bad apple.": "One sentence ends! A bad apple.",
-  "sentence; C-level executive":     "sentence; C-level executive",
-  "sentence: C-level executive":     "sentence: C-level executive",
-  "sentence, C-level executive":     "sentence, C-level executive",
-  "I’d say… A-player":               "I’d say… A-player",
-  "sentence (brackets) A-player":    "sentence (brackets) A-player",
-  "sentence [brackets] A-player":    "sentence [brackets] A-player",
-  "sentence {brackets} A-player":    "sentence {brackets} A-player",
-  "A × A":                           "A × A",
-
-  // false positive for filenames
-  "url-to-image-5.jpg": "url-to-image-5.jpg",
-  "url_to_image_5.jpg": "url_to_image_5.jpg",
-  "url%to%image%5.jpg": "url%to%image%5.jpg",
-  "url to image 5.jpg": "url to image 5.jpg",
-  "URL-TO-IMAGE-5.JPG": "URL-TO-IMAGE-5.JPG",
-  "URL_TO_IMAGE_5.JPG": "URL_TO_IMAGE_5.JPG",
-  "URL%TO%IMAGE%5.JPG": "URL%TO%IMAGE%5.JPG",
-  "URL TO IMAGE 5.JPG": "URL TO IMAGE 5.JPG",
-};
-
-let testModuleNbspEnUs = {
-  ...testModuleNbsp,
-  // false positives
-  "When I talk":                    "When I talk", // do not add nbsp before I
-  "“quoted part” A capital letter": "“quoted part” A capital letter",
-  "quoted part’ A capital letter":  "quoted part’ A capital letter",
-};
-
-let testModuleNbspDeDe = {
-  ...testModuleNbsp,
-  "Vzorka I":         "Vzorka I",
-  "Vzorka I je fajn": "Vzorka I je fajn", // remove nbsp after I
-  "Vzorka I je fajn": "Vzorka I je fajn", // remove hairSpace after I
-  "Vzorka I je fajn": "Vzorka I je fajn", // remove narrowNbsp after I
-
-  // false positives
-  "„quoted part“ A capital letter": "„quoted part“ A capital letter",
-  "apostrophe’ A capital letter":   "apostrophe’ A capital letter",
-};
-
-let testModuleNbspSk = {
-  ...testModuleNbspDeDe,
-};
-
-let testModuleNbspCs = {
-  ...testModuleNbspDeDe,
-};
-
-let testModuleNbspRue = {
-  ...testModuleNbsp,
-  "Vzorka I":         "Vzorka I",
-  "Vzorka I je fajn": "Vzorka I je fajn", // remove nbsp after I
-  "Vzorka I je fajn": "Vzorka I je fajn", // remove hairSpace after I
-  "Vzorka I je fajn": "Vzorka I je fajn", // remove narrowNbsp after I
-
-  // false positives
-  "«qouted part» A capital letter": "«qouted part» A capital letter",
-  "apostrophe’ A capital letter":   "apostrophe’ A capital letter",
-};
-
 /* 
   Tests 
 */
 describe("Tests that all modules are plugged for en-us", () => {
   let testCase = {
     ...getTestModules("en-us"),
-    ...testModuleNbspEnUs,
   };
 
   describe("with default config", () => {
@@ -355,7 +257,6 @@ describe("Tests that all modules are plugged for en-us", () => {
 describe("Tests that all modules are plugged for de-de", () => {
   let testCase = {
     ...getTestModules("de-de"),
-    ...testModuleNbspDeDe,
   };
 
   describe("with default config", () => {
@@ -394,7 +295,6 @@ describe("Tests that all modules are plugged for de-de", () => {
 describe("Tests that all modules are plugged for sk", () => {
   let testCase = {
     ...getTestModules("sk"),
-    ...testModuleNbspSk,
   };
 
   describe("with default config", () => {
@@ -433,7 +333,6 @@ describe("Tests that all modules are plugged for sk", () => {
 describe("Tests that all modules are plugged for cs", () => {
   let testCase = {
     ...getTestModules("cs"),
-    ...testModuleNbspCs,
   };
 
   describe("with default config", () => {
@@ -472,7 +371,6 @@ describe("Tests that all modules are plugged for cs", () => {
 describe("Tests that all modules are plugged for rue", () => {
   let testCase = {
     ...getTestModules("rue"),
-    ...testModuleNbspRue,
   };
 
   describe("with default config", () => {
