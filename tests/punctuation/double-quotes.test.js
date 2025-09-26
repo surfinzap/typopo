@@ -88,6 +88,29 @@ const doubleQuotesSet = {
   "abc “…example”": "abc “…example”",
 };
 
+export function getDoubleQuoteSet(localeName) {
+  const locale = new Locale(localeName);
+
+  const transformed = {};
+  const testSet = { ...doubleQuotesSet, ...testFalsePositives };
+
+  Object.keys(testSet).forEach((key) => {
+    const transformedKey = key
+      .replace(/‘/g, locale.leftSingleQuote)
+      .replace(/’/g, locale.rightSingleQuote)
+      .replace(/\$\{apostrophe\}/g, base.apostrophe);
+    const transformedValue = testSet[key]
+      .replace(/“/g, locale.leftDoubleQuote)
+      .replace(/”/g, locale.rightDoubleQuote)
+      .replace(/‘/g, locale.leftSingleQuote)
+      .replace(/’/g, locale.rightSingleQuote)
+      .replace(/\$\{apostrophe\}/g, base.apostrophe);
+    transformed[transformedKey] = transformedValue;
+  });
+
+  return transformed;
+}
+
 describe("Remove punctuation before double quotes (en-us):\n", () => {
   let testCase = {
     /* extra comma after terminal punctuation, 
@@ -698,26 +721,3 @@ describe("Test if markdown ticks are kept (double quotes) (en-us):\n", () => {
     });
   });
 });
-
-export function getDoubleQuoteSet(localeName) {
-  const locale = new Locale(localeName);
-
-  const transformed = {};
-  const testSet = { ...doubleQuotesSet, ...testFalsePositives };
-
-  Object.keys(testSet).forEach((key) => {
-    const transformedKey = key
-      .replace(/‘/g, locale.leftSingleQuote)
-      .replace(/’/g, locale.rightSingleQuote)
-      .replace(/\$\{apostrophe\}/g, base.apostrophe);
-    const transformedValue = testSet[key]
-      .replace(/“/g, locale.leftDoubleQuote)
-      .replace(/”/g, locale.rightDoubleQuote)
-      .replace(/‘/g, locale.leftSingleQuote)
-      .replace(/’/g, locale.rightSingleQuote)
-      .replace(/\$\{apostrophe\}/g, base.apostrophe);
-    transformed[transformedKey] = transformedValue;
-  });
-
-  return transformed;
-}

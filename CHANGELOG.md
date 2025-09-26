@@ -10,7 +10,7 @@ Integration tests
  - ellipsis
  - ~~hyphen~~
  - ~~period~~
- - single-quotes
+ - ~~single-quotes~~
 - ~~symbols~~
   - ~~copyrights~~
   - ~~exponents~~

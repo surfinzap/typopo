@@ -17,6 +17,7 @@ import { periodSet } from "../punctuation/period.test.js";
 import { linesSet } from "../whitespace/lines.test.js";
 import { getDoubleQuoteSet } from "../punctuation/double-quotes.test.js";
 import { abbreviationsSet, transformAbbrSet } from "../words/abbreviations.test.js";
+import { getSingleQuoteSet } from "../punctuation/single-quotes.test.js";
 
 let fixTyposMinified = null;
 let fixTyposUmd = null;
@@ -103,22 +104,22 @@ describe("Test that exceptions remain intact", () => {
 /* 
   typopo configurations 
 */
-let configDefault = {
+const configDefault = {
   removeLines:                         true,
   removeWhitespacesBeforeMarkdownList: true,
 };
 
-let configKeepLines = {
+const configKeepLines = {
   removeLines:                         false,
   removeWhitespacesBeforeMarkdownList: true,
 };
 
-let configKeepWhitespacesBeforeMarkdownList = {
+const configKeepWhitespacesBeforeMarkdownList = {
   removeLines:                         true,
   removeWhitespacesBeforeMarkdownList: false,
 };
 
-let configKeepMarkdownCodeBlocks = {
+const configKeepMarkdownCodeBlocks = {
   keepMarkdownCodeBlocks: true,
   removeLines:            false,
 };
@@ -132,6 +133,7 @@ function getTestModules(localeName) {
     ...hyphenSet,
     ...periodSet,
     ...getDoubleQuoteSet(localeName),
+    ...getSingleQuoteSet(localeName),
 
     // ellipsis
     "Sentence ..….. another sentence":      "Sentence … another sentence",
@@ -184,9 +186,6 @@ function getTestModules(localeName) {
     "sentence [brackets] A-player":    "sentence [brackets] A-player",
     "sentence {brackets} A-player":    "sentence {brackets} A-player",
     "A × A":                           "A × A",
-
-    // double primes
-    'It’s 12" x 12".': "It’s 12″ × 12″.",
   };
 }
 
@@ -210,45 +209,6 @@ let testKeepWhitespacesBeforeMarkdownList = {
   "  * list item":   "  * list item",
   "\t\t- list item": "\t\t- list item",
   "\t\t* list item": "\t\t* list item",
-};
-
-let testModuleSingleQuotesEnUs = {
-  // single quotes
-  "Let's test this: “however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said”":
-    "Let’s test this: “however, ‘quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,’ he said”",
-  "I'''m":  "I’m",
-  "I''''m": "I’m",
-  "He said: “What about 'name' and 'other name'?”":
-    "He said: “What about ‘name’ and ‘other name’?”",
-  "Q1 '23 ": "Q1 ’23", // false positive
-};
-
-let testModuleSingleQuotesDeDe = {
-  // single quotes
-  "Let's test this: “however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said”":
-    "Let’s test this: „however, ‚quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,‘ he said“",
-  "I'''m":  "I’m",
-  "I''''m": "I’m",
-  "He said: “What about 'name' and 'other name'?”":
-    "He said: „What about ‚name‘ and ‚other name‘?“",
-};
-
-let testModuleSingleQuotesSk = {
-  ...testModuleSingleQuotesDeDe,
-};
-
-let testModuleSingleQuotesCs = {
-  ...testModuleSingleQuotesDeDe,
-};
-
-let testModuleSingleQuotesRue = {
-  // single quotes
-  "Let's test this: “however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said”":
-    "Let’s test this: «however, ‹quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,› he said»",
-  "I'''m":  "I’m",
-  "I''''m": "I’m",
-  "He said: “What about 'name' and 'other name'?”":
-    "He said: «What about ‹name› and ‹other name›?»",
 };
 
 let testModuleNbsp = {
@@ -276,19 +236,12 @@ let testModuleNbsp = {
 
   // false positive for filenames
   "url-to-image-5.jpg": "url-to-image-5.jpg",
-
   "url_to_image_5.jpg": "url_to_image_5.jpg",
-
   "url%to%image%5.jpg": "url%to%image%5.jpg",
-
   "url to image 5.jpg": "url to image 5.jpg",
-
   "URL-TO-IMAGE-5.JPG": "URL-TO-IMAGE-5.JPG",
-
   "URL_TO_IMAGE_5.JPG": "URL_TO_IMAGE_5.JPG",
-
   "URL%TO%IMAGE%5.JPG": "URL%TO%IMAGE%5.JPG",
-
   "URL TO IMAGE 5.JPG": "URL TO IMAGE 5.JPG",
 };
 
@@ -364,7 +317,6 @@ describe("Tests that all modules are plugged for en-us", () => {
   let testCase = {
     ...getTestModules("en-us"),
     ...testModuleCombinationsEnUs,
-    ...testModuleSingleQuotesEnUs,
     ...testModuleNbspEnUs,
   };
 
@@ -404,7 +356,6 @@ describe("Tests that all modules are plugged for en-us", () => {
 describe("Tests that all modules are plugged for de-de", () => {
   let testCase = {
     ...getTestModules("de-de"),
-    ...testModuleSingleQuotesDeDe,
     ...testModuleNbspDeDe,
   };
 
@@ -444,7 +395,6 @@ describe("Tests that all modules are plugged for de-de", () => {
 describe("Tests that all modules are plugged for sk", () => {
   let testCase = {
     ...getTestModules("sk"),
-    ...testModuleSingleQuotesSk,
     ...testModuleNbspSk,
   };
 
@@ -484,7 +434,6 @@ describe("Tests that all modules are plugged for sk", () => {
 describe("Tests that all modules are plugged for cs", () => {
   let testCase = {
     ...getTestModules("cs"),
-    ...testModuleSingleQuotesCs,
     ...testModuleNbspCs,
   };
 
@@ -524,7 +473,6 @@ describe("Tests that all modules are plugged for cs", () => {
 describe("Tests that all modules are plugged for rue", () => {
   let testCase = {
     ...getTestModules("rue"),
-    ...testModuleSingleQuotesRue,
     ...testModuleNbspRue,
   };
 
