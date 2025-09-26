@@ -153,30 +153,18 @@ describe("Identify contracted and (’n’) as apostrophes (en-us):\n", () => {
 
 describe("Identify common contractions at the beginning of the word as apostrophes (en-us):\n", () => {
   let testCase = {
-    "Just 'cause I wanna.": "Just ’cause I wanna.",
-
-    "'Tis the season": "’Tis the season",
-
-    "'sblood": "’sblood",
-
-    "'mongst": "’mongst",
-
-    "'prentice": "’prentice",
-
-    "'slight": "’slight",
-
-    "'Strewth": "’Strewth",
-
-    "'Twixt": "’Twixt",
-
-    "'shun": "’shun",
-
-    "'slid": "’slid",
-
-    "Find 'em!": "Find ’em!",
-
-    "'Twas the Night Before Christmas": "’Twas the Night Before Christmas",
-
+    "Just 'cause I wanna.":               "Just ’cause I wanna.",
+    "'Tis the season":                    "’Tis the season",
+    "'sblood":                            "’sblood",
+    "'mongst":                            "’mongst",
+    "'prentice":                          "’prentice",
+    "'slight":                            "’slight",
+    "'Strewth":                           "’Strewth",
+    "'Twixt":                             "’Twixt",
+    "'shun":                              "’shun",
+    "'slid":                              "’slid",
+    "Find 'em!":                          "Find ’em!",
+    "'Twas the Night Before Christmas":   "’Twas the Night Before Christmas",
     "'Til The Season Comes 'Round Again": "’Til The Season Comes ’Round Again",
   };
 

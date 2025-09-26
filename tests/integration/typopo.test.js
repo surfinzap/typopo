@@ -18,6 +18,7 @@ import { linesSet } from "../whitespace/lines.test.js";
 import { getDoubleQuoteSet } from "../punctuation/double-quotes.test.js";
 import { abbreviationsSet, transformAbbrSet } from "../words/abbreviations.test.js";
 import { getSingleQuoteSet } from "../punctuation/single-quotes.test.js";
+import { ellipsisSet } from "../punctuation/ellipsis.test.js";
 
 let fixTyposMinified = null;
 let fixTyposUmd = null;
@@ -155,12 +156,9 @@ function getTestModules(localeName) {
     // punctuation
     ...hyphenSet,
     ...periodSet,
+    ...ellipsisSet,
     ...getDoubleQuoteSet(localeName),
     ...getSingleQuoteSet(localeName),
-
-    // ellipsis
-    "Sentence ..….. another sentence":      "Sentence … another sentence",
-    "Sentence ended. … and we were there.": "Sentence ended. …and we were there.",
 
     // symbols
     ...transformSymbolSet(symbolSet, "copyright", localeName),
@@ -182,6 +180,7 @@ function getTestModules(localeName) {
     ...caseSet,
     ...pubIdSet,
 
+    // module combinations
     ...transformAbbrSet(moduleCombinations, localeName),
 
     //tbd
@@ -511,21 +510,14 @@ describe("Tests that all modules are plugged for rue", () => {
 
 describe("Test if markdown ticks are kept (integration test) (en-us):\n", () => {
   let testCase = {
-    "```\ncode\n```": "```\ncode\n```",
-
-    "``code``": "``code``",
-
-    "``code code``": "``code code``",
-
+    "```\ncode\n```":    "```\ncode\n```",
+    "``code``":          "``code``",
+    "``code code``":     "``code code``",
     "``code`` ``code``": "``code`` ``code``",
-
-    "`code`": "`code`",
-
-    "`code code`": "`code code`",
-
-    "`code` `code`": "`code` `code`",
-
-    "e.g. `something`": "e.g. `something`",
+    "`code`":            "`code`",
+    "`code code`":       "`code code`",
+    "`code` `code`":     "`code` `code`",
+    "e.g. `something`":  "e.g. `something`",
   };
 
   runAllVersions(testCase, "en-us", configKeepMarkdownCodeBlocks);
