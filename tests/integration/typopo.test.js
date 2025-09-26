@@ -3,6 +3,7 @@ import { JSDOM } from "jsdom";
 import { createRequire } from "module";
 import { describe, expect, it } from "vitest";
 import { fixTypos } from "../../src/typopo.js";
+import { supportedLocales } from "../../src/locale/locale.js";
 import { exponentSet } from "../symbols/exponents.test.js";
 import { marksSet } from "../symbols/marks.test.js";
 import { multiplicationSignSet } from "../symbols/multiplication-sign.test.js";
@@ -131,18 +132,10 @@ const configKeepMarkdownCodeBlocks = {
 */
 
 const moduleCombinations = {
-  /*
-   Selected combination of rules processed within modules that may clash.
-   */
-
-  // Will it remove extra punctuation or will it keep the abbreviation as expected?
   "We will continue tomorrow at 8:00 a.m.!": "We will continue tomorrow at 8:00 a.${abbrSpace}m.!",
-  // Will it remove extra dot?
   "We will continue tomorrow at 8:00 a.m..": "We will continue tomorrow at 8:00 a.${abbrSpace}m.",
 
-  /*	Combination of resolving issues with ellipsis and brackets together.
-      In scientific discourse, […] is used to signify deliberately omitted
-      parts (e.g. of a quotation) */
+  /*	Combination of resolving issues with ellipsis and brackets together. */
   "quote [...]with parts left out":    "quote […] with parts left out",
   "quote[…] with parts left out":      "quote […] with parts left out",
   "quote [ ...] with parts left out":  "quote […] with parts left out",
@@ -216,193 +209,44 @@ let testKeepWhitespacesBeforeMarkdownList = {
 /* 
   Tests 
 */
-describe("Tests that all modules are plugged for en-us", () => {
-  let testCase = {
-    ...getTestModules("en-us"),
-  };
-
-  describe("with default config", () => {
-    let testCaseDefault = {
-      ...testCase,
-      ...testRemoveLines,
-      ...testRemoveWhitespacesBeforeMarkdownList,
+// DRY: Generate tests for all supported locales using a loop
+supportedLocales.forEach((locale) => {
+  describe(`Tests that all modules are plugged for ${locale}`, () => {
+    let testCase = {
+      ...getTestModules(locale),
     };
 
-    runAllVersions(testCaseDefault, "en-us", configDefault);
-  });
+    describe("with default config", () => {
+      let testCaseDefault = {
+        ...testCase,
+        ...testRemoveLines,
+        ...testRemoveWhitespacesBeforeMarkdownList,
+      };
 
-  describe("with removeLines=false", () => {
-    let testCaseKeepLines = {
-      ...testCase,
-      ...testKeepLines,
-    };
+      runAllVersions(testCaseDefault, locale, configDefault);
+    });
 
-    runAllVersions(testCaseKeepLines, "en-us", configKeepLines);
-  });
+    describe("with removeLines=false", () => {
+      let testCaseKeepLines = {
+        ...testCase,
+        ...testKeepLines,
+      };
 
-  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
-    let testCaseKeepWhitespacesBeforeMarkdownList = {
-      ...testCase,
-      ...testKeepWhitespacesBeforeMarkdownList,
-    };
+      runAllVersions(testCaseKeepLines, locale, configKeepLines);
+    });
 
-    runAllVersions(
-      testCaseKeepWhitespacesBeforeMarkdownList,
-      "en-us",
-      configKeepWhitespacesBeforeMarkdownList
-    );
-  });
-});
+    describe("with removeWhitespacesBeforeMarkdownList=false", () => {
+      let testCaseKeepWhitespacesBeforeMarkdownList = {
+        ...testCase,
+        ...testKeepWhitespacesBeforeMarkdownList,
+      };
 
-describe("Tests that all modules are plugged for de-de", () => {
-  let testCase = {
-    ...getTestModules("de-de"),
-  };
-
-  describe("with default config", () => {
-    let testCaseDefault = {
-      ...testCase,
-      ...testRemoveLines,
-      ...testRemoveWhitespacesBeforeMarkdownList,
-    };
-
-    runAllVersions(testCaseDefault, "de-de", configDefault);
-  });
-
-  describe("with removeLines=false", () => {
-    let testCaseKeepLines = {
-      ...testCase,
-      ...testKeepLines,
-    };
-
-    runAllVersions(testCaseKeepLines, "de-de", configKeepLines);
-  });
-
-  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
-    let testCaseKeepWhitespacesBeforeMarkdownList = {
-      ...testCase,
-      ...testKeepWhitespacesBeforeMarkdownList,
-    };
-
-    runAllVersions(
-      testCaseKeepWhitespacesBeforeMarkdownList,
-      "de-de",
-      configKeepWhitespacesBeforeMarkdownList
-    );
-  });
-});
-
-describe("Tests that all modules are plugged for sk", () => {
-  let testCase = {
-    ...getTestModules("sk"),
-  };
-
-  describe("with default config", () => {
-    let testCaseDefault = {
-      ...testCase,
-      ...testRemoveLines,
-      ...testRemoveWhitespacesBeforeMarkdownList,
-    };
-
-    runAllVersions(testCaseDefault, "sk", configDefault);
-  });
-
-  describe("with removeLines=false", () => {
-    let testCaseKeepLines = {
-      ...testCase,
-      ...testKeepLines,
-    };
-
-    runAllVersions(testCaseKeepLines, "sk", configKeepLines);
-  });
-
-  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
-    let testCaseKeepWhitespacesBeforeMarkdownList = {
-      ...testCase,
-      ...testKeepWhitespacesBeforeMarkdownList,
-    };
-
-    runAllVersions(
-      testCaseKeepWhitespacesBeforeMarkdownList,
-      "sk",
-      configKeepWhitespacesBeforeMarkdownList
-    );
-  });
-});
-
-describe("Tests that all modules are plugged for cs", () => {
-  let testCase = {
-    ...getTestModules("cs"),
-  };
-
-  describe("with default config", () => {
-    let testCaseDefault = {
-      ...testCase,
-      ...testRemoveLines,
-      ...testRemoveWhitespacesBeforeMarkdownList,
-    };
-
-    runAllVersions(testCaseDefault, "cs", configDefault);
-  });
-
-  describe("with removeLines=false", () => {
-    let testCaseKeepLines = {
-      ...testCase,
-      ...testKeepLines,
-    };
-
-    runAllVersions(testCaseKeepLines, "cs", configKeepLines);
-  });
-
-  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
-    let testCaseKeepWhitespacesBeforeMarkdownList = {
-      ...testCase,
-      ...testKeepWhitespacesBeforeMarkdownList,
-    };
-
-    runAllVersions(
-      testCaseKeepWhitespacesBeforeMarkdownList,
-      "cs",
-      configKeepWhitespacesBeforeMarkdownList
-    );
-  });
-});
-
-describe("Tests that all modules are plugged for rue", () => {
-  let testCase = {
-    ...getTestModules("rue"),
-  };
-
-  describe("with default config", () => {
-    let testCaseDefault = {
-      ...testCase,
-      ...testRemoveLines,
-      ...testRemoveWhitespacesBeforeMarkdownList,
-    };
-
-    runAllVersions(testCaseDefault, "rue", configDefault);
-  });
-
-  describe("with removeLines=false", () => {
-    let testCaseKeepLines = {
-      ...testCase,
-      ...testKeepLines,
-    };
-
-    runAllVersions(testCaseKeepLines, "rue", configKeepLines);
-  });
-
-  describe("with removeWhitespacesBeforeMarkdownList=false", () => {
-    let testCaseKeepWhitespacesBeforeMarkdownList = {
-      ...testCase,
-      ...testKeepWhitespacesBeforeMarkdownList,
-    };
-
-    runAllVersions(
-      testCaseKeepWhitespacesBeforeMarkdownList,
-      "rue",
-      configKeepWhitespacesBeforeMarkdownList
-    );
+      runAllVersions(
+        testCaseKeepWhitespacesBeforeMarkdownList,
+        locale,
+        configKeepWhitespacesBeforeMarkdownList
+      );
+    });
   });
 });
 
