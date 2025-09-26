@@ -15,6 +15,35 @@ import {
 import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
+// Helper function to DRY up repetitive test patterns
+function createTestSuite(description, testSets, unitFunction, moduleFunction = null, locale = "en-us") {
+  describe(description, () => {
+    // If testSets is an array, treat it as [mainSet, unitOnlySet]
+    const isMultipleTestSets = Array.isArray(testSets);
+    const mainTestSet = isMultipleTestSets ? testSets[0] : testSets;
+    const unitTestSet = isMultipleTestSets ? { ...mainTestSet, ...testSets[1] } : mainTestSet;
+
+    // Unit tests (run on all test cases including unit-only ones)
+    Object.keys(unitTestSet).forEach((key) => {
+      it("unit test", () => {
+        const result = unitFunction.length === 1
+          ? unitFunction(key)
+          : unitFunction(key, new Locale(locale));
+        expect(result).toBe(unitTestSet[key]);
+      });
+    });
+
+    // Module tests (run only on main test set, skip unit-only tests)
+    if (moduleFunction) {
+      Object.keys(mainTestSet).forEach((key) => {
+        it("module test", () => {
+          expect(moduleFunction(key, new Locale(locale))).toBe(mainTestSet[key]);
+        });
+      });
+    }
+  });
+}
+
 const singleEllipsisSet = {
   /* [1] replace 3 and more dots/ellipses with an ellipsis */
   "Sentence ... another sentence":   "Sentence … another sentence",
@@ -34,19 +63,12 @@ const singleEllipsisUnitSet = {
   "Sentence ending..": "Sentence ending..",
 };
 
-describe("Replace periods/ellipses with a single ellipsis:\n", () => {
-  const unitTest = { ...singleEllipsisSet, ...singleEllipsisUnitSet };
-  Object.keys(unitTest).forEach((key) => {
-    it("unit test", () => {
-      expect(replaceThreeCharsWithEllipsis(key)).toBe(unitTest[key]);
-    });
-  });
-  Object.keys(singleEllipsisSet).forEach((key) => {
-    it("module test", () => {
-      expect(fixEllipsis(key, new Locale("en-us"))).toBe(singleEllipsisSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Replace periods/ellipses with a single ellipsis:\n",
+  [singleEllipsisSet, singleEllipsisUnitSet],
+  replaceThreeCharsWithEllipsis,
+  fixEllipsis
+);
 
 const periodEllipsisComboSet = {
   "Sentence ending…":  "Sentence ending…",
@@ -55,31 +77,23 @@ const periodEllipsisComboSet = {
   "Sentence ending.…": "Sentence ending…",
 };
 
-describe("Replace combination of period/ellipsis with an ellipsis:\n", () => {
-  Object.keys(periodEllipsisComboSet).forEach((key) => {
-    it("unit test", () => {
-      expect(replaceTwoCharsWithEllipsis(key)).toBe(periodEllipsisComboSet[key]);
-    });
-    it("module test", () => {
-      expect(fixEllipsis(key, new Locale("en-us"))).toBe(periodEllipsisComboSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Replace combination of period/ellipsis with an ellipsis:\n",
+  periodEllipsisComboSet,
+  replaceTwoCharsWithEllipsis,
+  fixEllipsis
+);
 
 const twoPeriodsBetweenWordsSet = {
   "Sentence .. another sentence": "Sentence … another sentence",
 };
 
-describe("Replace two periods between words (spaces) with an ellipsis:\n", () => {
-  Object.keys(twoPeriodsBetweenWordsSet).forEach((key) => {
-    it("unit test", () => {
-      expect(replaceTwoPeriodsWithEllipsis(key)).toBe(twoPeriodsBetweenWordsSet[key]);
-    });
-    it("module test", () => {
-      expect(fixEllipsis(key, new Locale("en-us"))).toBe(twoPeriodsBetweenWordsSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Replace two periods between words (spaces) with an ellipsis:\n",
+  twoPeriodsBetweenWordsSet,
+  replaceTwoPeriodsWithEllipsis,
+  fixEllipsis
+);
 
 const ellipsisAroundCommasSet = {
   "We sell apples, oranges, …, pens.":  "We sell apples, oranges, …, pens.", // neutral
@@ -91,16 +105,12 @@ const ellipsisAroundCommasSet = {
   "We sell apples, oranges, … , pens.": "We sell apples, oranges, …, pens.", // narrow_nbsp
 };
 
-describe("Fix spacing, when ellipsis is used around commas:\n", () => {
-  Object.keys(ellipsisAroundCommasSet).forEach((key) => {
-    it("unit test", () => {
-      expect(fixEllipsisSpacingAroundCommas(key)).toBe(ellipsisAroundCommasSet[key]);
-    });
-    it("module test", () => {
-      expect(fixEllipsis(key, new Locale("en-us"))).toBe(ellipsisAroundCommasSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix spacing, when ellipsis is used around commas:\n",
+  ellipsisAroundCommasSet,
+  fixEllipsisSpacingAroundCommas,
+  fixEllipsis
+);
 
 const ellipsisListItemSet = {
   "We sell apples, oranges,…":   "We sell apples, oranges,…",
@@ -122,19 +132,12 @@ const ellipsisListItemUnitSet = {
   "We sell apples, oranges, …, pens.": "We sell apples, oranges, …, pens.",
 };
 
-describe("Fix spacing, when ellipsis is used as a list item in the list:\n", () => {
-  const unitTest = { ...ellipsisListItemSet, ...ellipsisListItemUnitSet };
-  Object.keys(unitTest).forEach((key) => {
-    it("unit test", () => {
-      expect(fixEllipsisAsLastItem(key)).toBe(unitTest[key]);
-    });
-  });
-  Object.keys(ellipsisListItemSet).forEach((key) => {
-    it("module test", () => {
-      expect(fixEllipsis(key, new Locale("en-us"))).toBe(ellipsisListItemSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix spacing, when ellipsis is used as a list item in the list:\n",
+  [ellipsisListItemSet, ellipsisListItemUnitSet],
+  fixEllipsisAsLastItem,
+  fixEllipsis
+);
 
 const aposiopesisParagraphStartSet = {
   "…да святить ся":                    "…да святить ся", // correct
@@ -142,16 +145,12 @@ const aposiopesisParagraphStartSet = {
   "… да святить ся\n… multiline test": "…да святить ся\n…multiline test",
 };
 
-describe("Fix spacing, when aposiopesis is starting a paragraph:\n", () => {
-  Object.keys(aposiopesisParagraphStartSet).forEach((key) => {
-    it("unit test", () => {
-      expect(fixAposiopesisStartingParagraph(key)).toBe(aposiopesisParagraphStartSet[key]);
-    });
-    it("module test", () => {
-      expect(fixEllipsis(key, new Locale("en-us"))).toBe(aposiopesisParagraphStartSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix spacing, when aposiopesis is starting a paragraph:\n",
+  aposiopesisParagraphStartSet,
+  fixAposiopesisStartingParagraph,
+  fixEllipsis
+);
 
 const aposiopesisSentenceStartSet = {
   "Sentence ended. …and we were there.":  "Sentence ended. …and we were there.", // neutral
@@ -170,19 +169,12 @@ const aposiopesisSentenceStartUnitSet = {
   "“Sentence ended?”… and we were there.": "“Sentence ended?” …and we were there.",
 };
 
-describe("Fix spacing, when aposiopesis is starting a sentence:\n", () => {
-  const unitTest = { ...aposiopesisSentenceStartSet, ...aposiopesisSentenceStartUnitSet };
-  Object.keys(unitTest).forEach((key) => {
-    it("unit test", () => {
-      expect(fixAposiopesisStartingSentence(key, new Locale("en-us"))).toBe(unitTest[key]);
-    });
-  });
-  Object.keys(aposiopesisSentenceStartSet).forEach((key) => {
-    it("module test", () => {
-      expect(fixEllipsis(key, new Locale("en-us"))).toBe(aposiopesisSentenceStartSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix spacing, when aposiopesis is starting a sentence:\n",
+  [aposiopesisSentenceStartSet, aposiopesisSentenceStartUnitSet],
+  fixAposiopesisStartingSentence,
+  fixEllipsis
+);
 
 const aposiopesisBetweenSentencesSet = {
   "Sentence ending… And another starting":  "Sentence ending… And another starting",
@@ -190,16 +182,12 @@ const aposiopesisBetweenSentencesSet = {
   "Sentence ending …And another starting":  "Sentence ending… And another starting",
 };
 
-describe("Fix spacing, when aposiopesis is between sentences:\n", () => {
-  Object.keys(aposiopesisBetweenSentencesSet).forEach((key) => {
-    it("unit test", () => {
-      expect(fixAposiopesisBetweenSentences(key)).toBe(aposiopesisBetweenSentencesSet[key]);
-    });
-    it("module test", () => {
-      expect(fixEllipsis(key, new Locale("en-us"))).toBe(aposiopesisBetweenSentencesSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix spacing, when aposiopesis is between sentences:\n",
+  aposiopesisBetweenSentencesSet,
+  fixAposiopesisBetweenSentences,
+  fixEllipsis
+);
 
 const aposiopesisBetweenWordsSet = {
   "word… word": "word… word",
@@ -208,16 +196,12 @@ const aposiopesisBetweenWordsSet = {
   "WORD…WORD":  "WORD… WORD",
 };
 
-describe("Fix spacing, when aposiopesis is between words:\n", () => {
-  Object.keys(aposiopesisBetweenWordsSet).forEach((key) => {
-    it("unit test", () => {
-      expect(fixAposiopesisBetweenWords(key)).toBe(aposiopesisBetweenWordsSet[key]);
-    });
-    it("module test", () => {
-      expect(fixEllipsis(key, new Locale("en-us"))).toBe(aposiopesisBetweenWordsSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix spacing, when aposiopesis is between words:\n",
+  aposiopesisBetweenWordsSet,
+  fixAposiopesisBetweenWords,
+  fixEllipsis
+);
 
 const ellipsisBetweenSentencesSet = {
   "What are you saying. … She did not answer.": "What are you saying. … She did not answer.",
@@ -244,20 +228,12 @@ const ellipsisBetweenSentencesUnitSet = {
   "“What are you saying?”…She did not answer.":   "“What are you saying?” … She did not answer.",
 };
 
-describe("Fix spacing, when ellipsis is between sentences:\n", () => {
-  const unitTest = { ...ellipsisBetweenSentencesSet, ...ellipsisBetweenSentencesUnitSet };
-
-  Object.keys(unitTest).forEach((key) => {
-    it("unit test", () => {
-      expect(fixEllipsisBetweenSentences(key, new Locale("en-us"))).toBe(unitTest[key]);
-    });
-  });
-  Object.keys(ellipsisBetweenSentencesSet).forEach((key) => {
-    it("module test", () => {
-      expect(fixEllipsis(key, new Locale("en-us"))).toBe(ellipsisBetweenSentencesSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix spacing, when ellipsis is between sentences:\n",
+  [ellipsisBetweenSentencesSet, ellipsisBetweenSentencesUnitSet],
+  fixEllipsisBetweenSentences,
+  fixEllipsis
+);
 
 const aposiopesisEndingParagraphSet = {
   "Sentence ending…":                     "Sentence ending…",
@@ -271,20 +247,12 @@ const aposiopesisEndingParagraphUnitSet = {
   "‘Sentence ending …’": "‘Sentence ending…’",
 };
 
-describe("Fix spacing, when aposiopesis is ending a paragraph:\n", () => {
-  const unitTest = { ...aposiopesisEndingParagraphSet, ...aposiopesisEndingParagraphUnitSet };
-
-  Object.keys(unitTest).forEach((key) => {
-    it("unit test", () => {
-      expect(fixAposiopesisEndingParagraph(key, new Locale("en-us"))).toBe(unitTest[key]);
-    });
-  });
-  Object.keys(aposiopesisEndingParagraphSet).forEach((key) => {
-    it("module test", () => {
-      expect(fixEllipsis(key, new Locale("en-us"))).toBe(aposiopesisEndingParagraphSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix spacing, when aposiopesis is ending a paragraph:\n",
+  [aposiopesisEndingParagraphSet, aposiopesisEndingParagraphUnitSet],
+  fixAposiopesisEndingParagraph,
+  fixEllipsis
+);
 
 export const ellipsisSet = {
   ...singleEllipsisSet,
