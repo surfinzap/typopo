@@ -5,7 +5,7 @@ import {
   fixNbspAroundMultiplicationSign,
   fixMultiplicationSign,
 } from "../../src/modules/symbols/multiplication-sign.js";
-import { describe, it, expect } from "vitest";
+import { createTestSuite } from "../test-helpers.js";
 
 const multiBetweenNumbers = {
   "5 x 4":   "5 × 4",
@@ -25,16 +25,12 @@ const multiBetweenNumbers = {
   "0xd":         "0xd", //false positive, hex number
 };
 
-describe("Fix multiplication sign between numbers\n", () => {
-  Object.keys(multiBetweenNumbers).forEach((key) => {
-    it("unit test", () => {
-      expect(fixMultiplicationSignBetweenNumbers(key)).toBe(multiBetweenNumbers[key]);
-    });
-    it("module test", () => {
-      expect(fixMultiplicationSign(key)).toBe(multiBetweenNumbers[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix multiplication sign between numbers\n",
+  multiBetweenNumbers,
+  fixMultiplicationSignBetweenNumbers,
+  fixMultiplicationSign
+);
 
 const multiBetweenWords = {
   "š x v x h":       "š × v × h",
@@ -46,16 +42,12 @@ const multiBetweenWords = {
   "František X Šalda": "František X Šalda", // false positive; noun abbr. in en-us
 };
 
-describe("Fix multiplication sign between words\n", () => {
-  Object.keys(multiBetweenWords).forEach((key) => {
-    it("unit test", () => {
-      expect(fixMultiplicationSignBetweenWords(key)).toBe(multiBetweenWords[key]);
-    });
-    it("module test", () => {
-      expect(fixMultiplicationSign(key)).toBe(multiBetweenWords[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix multiplication sign between words\n",
+  multiBetweenWords,
+  fixMultiplicationSignBetweenWords,
+  fixMultiplicationSign
+);
 
 const multiBetweenNumberWord = {
   "4 x object":   "4 × object",
@@ -67,16 +59,12 @@ const multiBetweenNumberWord = {
   "0xd":          "0xd", //false positive, hex number
 };
 
-describe("Fix multiplication sign between a number and a word\n", () => {
-  Object.keys(multiBetweenNumberWord).forEach((key) => {
-    it("unit test", () => {
-      expect(fixMultiplicationSignBetweenNumberAndWord(key)).toBe(multiBetweenNumberWord[key]);
-    });
-    it("module test", () => {
-      expect(fixMultiplicationSign(key)).toBe(multiBetweenNumberWord[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix multiplication sign between a number and a word\n",
+  multiBetweenNumberWord,
+  fixMultiplicationSignBetweenNumberAndWord,
+  fixMultiplicationSign
+);
 
 const spaceAroundMulti = {
   "12x3":   "12 × 3",
@@ -84,16 +72,12 @@ const spaceAroundMulti = {
   "12″×3″": "12″ × 3″",
   "12′×3′": "12′ × 3′",
 };
-describe("Fix nbsp around multiplication sign\n", () => {
-  Object.keys(spaceAroundMulti).forEach((key) => {
-    it("unit test", () => {
-      expect(fixNbspAroundMultiplicationSign(key)).toBe(spaceAroundMulti[key]);
-    });
-    it("module test", () => {
-      expect(fixMultiplicationSign(key)).toBe(spaceAroundMulti[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix nbsp around multiplication sign\n",
+  spaceAroundMulti,
+  fixNbspAroundMultiplicationSign,
+  fixMultiplicationSign
+);
 
 export const multiplicationSignSet = {
   ...multiBetweenNumbers,

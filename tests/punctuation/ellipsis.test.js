@@ -12,37 +12,7 @@ import {
   fixEllipsis,
   fixEllipsisAsLastItem,
 } from "../../src/modules/punctuation/ellipsis.js";
-import { describe, it, expect } from "vitest";
-import Locale from "../../src/locale/locale.js";
-
-// Helper function to DRY up repetitive test patterns
-function createTestSuite(description, testSets, unitFunction, moduleFunction = null, locale = "en-us") {
-  describe(description, () => {
-    // If testSets is an array, treat it as [mainSet, unitOnlySet]
-    const isMultipleTestSets = Array.isArray(testSets);
-    const mainTestSet = isMultipleTestSets ? testSets[0] : testSets;
-    const unitTestSet = isMultipleTestSets ? { ...mainTestSet, ...testSets[1] } : mainTestSet;
-
-    // Unit tests (run on all test cases including unit-only ones)
-    Object.keys(unitTestSet).forEach((key) => {
-      it("unit test", () => {
-        const result = unitFunction.length === 1
-          ? unitFunction(key)
-          : unitFunction(key, new Locale(locale));
-        expect(result).toBe(unitTestSet[key]);
-      });
-    });
-
-    // Module tests (run only on main test set, skip unit-only tests)
-    if (moduleFunction) {
-      Object.keys(mainTestSet).forEach((key) => {
-        it("module test", () => {
-          expect(moduleFunction(key, new Locale(locale))).toBe(mainTestSet[key]);
-        });
-      });
-    }
-  });
-}
+import { createTestSuite } from "../test-helpers.js";
 
 const singleEllipsisSet = {
   /* [1] replace 3 and more dots/ellipses with an ellipsis */
