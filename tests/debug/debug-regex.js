@@ -1,4 +1,4 @@
-import { base } from "../src/const.js";
+import { base } from "../../src/const.js";
 
 // Utility to debug regex patterns
 function debugRegexPattern(patternParts, flags = "g") {
