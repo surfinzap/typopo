@@ -313,6 +313,16 @@ describe("Add non-breaking space after roman numeral (sk, cs, de-de, rue)\n", ()
     "D. ročník":           "D. ročník",
     "8. V. 1945":          "8. V. 1945",
     "8. V.1945":           "8. V. 1945",
+    // false positives
+    "Ch. G. D. Lambert":   "Ch. G. D. Lambert",
+    "Ch. G. D. Lambert":   "Ch. G. D. Lambert",
+    "G. D. Lambert":       "G. D. Lambert",
+    "Ch. Ch. D. Lambert":  "Ch. Ch. D. Lambert",
+    "CH. D. Lambert":      "CH. D. Lambert",
+    "Ch. Ch. Šalda":       "Ch. Ch. Šalda",
+    "CH. CH. Šalda":       "CH. CH. Šalda",
+    "Ch.Ch. Šalda":        "Ch.Ch. Šalda",
+    "CH.CH. Šalda":        "CH.CH. Šalda",
   };
 
   Object.keys(testCase).forEach((key) => {

@@ -81,8 +81,8 @@ export function fixTypos(string, locale, configuration) {
 
   // words
   string = fixCase(string);
-  string = fixAbbreviations(string, currentLocale);
   string = fixPubId(string);
+  string = fixAbbreviations(string, currentLocale);
 
   // spaces
   string = fixNbsp(string, currentLocale);

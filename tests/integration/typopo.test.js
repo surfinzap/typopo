@@ -16,6 +16,7 @@ import { hyphenSet } from "../punctuation/hyphen.test.js";
 import { periodSet } from "../punctuation/period.test.js";
 import { linesSet } from "../whitespace/lines.test.js";
 import { getDoubleQuoteSet } from "../punctuation/double-quotes.test.js";
+import { abbreviationsSet, transformAbbrSet } from "../words/abbreviations.test.js";
 
 let fixTyposMinified = null;
 let fixTyposUmd = null;
@@ -152,6 +153,7 @@ function getTestModules(localeName) {
     // lines are in keepLines and removeLines
 
     // words
+    ...transformAbbrSet(abbreviationsSet, localeName),
     ...caseSet,
     ...pubIdSet,
 
@@ -247,42 +249,6 @@ let testModuleSingleQuotesRue = {
   "I''''m": "I’m",
   "He said: “What about 'name' and 'other name'?”":
     "He said: «What about ‹name› and ‹other name›?»",
-};
-
-let testModuleAbbreviationsEnUs = {
-  // abbreviations
-  "(e.g.)":                          "(e.g.)",
-  "a.m.":                            "a.m.",
-  "5 a.m.":                          "5 a.m.",
-  "CH. CH. CH. Lambert":             "CH.CH.CH. Lambert",
-  "the U.S.":                        "the U.S.",
-  "e.g. 🥳":                         "e.g. 🥳",
-  "i. e. 🥳":                        "i.e. 🥳",
-  // punctuation trimming
-  "č., s., fol., e.g., i.e., str.,": "č., s., fol., e.g., i.e., str.,",
-};
-
-let testModuleAbbreviationsDeDe = {
-  // abbreviations
-  "(e.g.)":                          "(e. g.)",
-  "a.m.":                            "a. m.",
-  "5 a.m.":                          "5 a. m.",
-  "CH. CH. CH. Lambert":             "CH. CH. CH. Lambert",
-  "the U.S.":                        "the U. S.",
-  // punctuation trimming
-  "č., s., fol., e.g., i.e., str.,": "č., s., fol., e. g., i. e., str.,",
-};
-
-let testModuleAbbreviationsSk = {
-  ...testModuleAbbreviationsDeDe,
-};
-
-let testModuleAbbreviationsCs = {
-  ...testModuleAbbreviationsDeDe,
-};
-
-let testModuleAbbreviationsRue = {
-  ...testModuleAbbreviationsDeDe,
 };
 
 let testModuleNbsp = {
@@ -399,7 +365,6 @@ describe("Tests that all modules are plugged for en-us", () => {
     ...getTestModules("en-us"),
     ...testModuleCombinationsEnUs,
     ...testModuleSingleQuotesEnUs,
-    ...testModuleAbbreviationsEnUs,
     ...testModuleNbspEnUs,
   };
 
@@ -440,7 +405,6 @@ describe("Tests that all modules are plugged for de-de", () => {
   let testCase = {
     ...getTestModules("de-de"),
     ...testModuleSingleQuotesDeDe,
-    ...testModuleAbbreviationsDeDe,
     ...testModuleNbspDeDe,
   };
 
@@ -481,7 +445,6 @@ describe("Tests that all modules are plugged for sk", () => {
   let testCase = {
     ...getTestModules("sk"),
     ...testModuleSingleQuotesSk,
-    ...testModuleAbbreviationsSk,
     ...testModuleNbspSk,
   };
 
@@ -522,7 +485,6 @@ describe("Tests that all modules are plugged for cs", () => {
   let testCase = {
     ...getTestModules("cs"),
     ...testModuleSingleQuotesCs,
-    ...testModuleAbbreviationsCs,
     ...testModuleNbspCs,
   };
 
@@ -563,7 +525,6 @@ describe("Tests that all modules are plugged for rue", () => {
   let testCase = {
     ...getTestModules("rue"),
     ...testModuleSingleQuotesRue,
-    ...testModuleAbbreviationsRue,
     ...testModuleNbspRue,
   };
 

@@ -46,7 +46,11 @@ export function fixInitials(string, locale) {
 /**
   Fixes spaces between multiple-word abbreviations.
   Each locale has its own pattern for fixing abbreviations,
-  please refer to the test suites.
+  please refer to the test suites:
+  - dots after each abbreviated word
+  - locale-specific space between abbreviated words
+  - normal space after the last abbreviated word
+
 
   Algorithm
   [1] Change multiple-word abbreviations from all locales abbr. patterns

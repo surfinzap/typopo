@@ -24,8 +24,8 @@ Integration tests
   - ~~lines~~
   - nbsp
   - spaces
-- words
-  - abbreviations
+- ~~words~~
+  - ~~abbreviations~~
   - ~~case~~
   - ~~exceptions~~
   - ~~pub-id~~
@@ -40,6 +40,9 @@ Integration tests
 - Isolate base constants from locale file
 - Move locale-specific typography treatments to a locale file
 - Extend test cases for integration tests 
+
+### 🐛 Fixes
+- Fix false positives when initials were recognized as roman numerals
 
 ### 🔨 Maintenance
 - Update NPM packages to their latest versions 

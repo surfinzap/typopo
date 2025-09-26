@@ -197,14 +197,22 @@ export function addNbspAfterRomanNumeral(string, locale) {
     // prettier-ignore
     return string.replace(
       new RegExp(
-        `(\\b)` +
+        `(\\b[${base.uppercaseChars}][${base.allChars}]?${locale.romanOrdinalIndicator}[${base.spaces}]?)?` + 
+        `(\\b)` + // Ch.⎵
         `([${base.romanNumerals}]+)` +
         `(${locale.romanOrdinalIndicator})` +
         `([${base.spaces}]?)` +
         `([${base.allChars}\\d])`,
         "g"
       ),
-      `$1$2$3${base.nbsp}$5`
+      function($0, $1, $2, $3, $4, $5, $6) {
+        // Only replace if first group doesn't match 
+        // to avoid false positives like G. D. Lambert
+        if (!$1) {
+          return `${$2}${$3}${$4}${base.nbsp}${$6}`;
+        }
+        return $0;
+      }
     );
   }
 
