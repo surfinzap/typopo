@@ -127,6 +127,29 @@ const configKeepMarkdownCodeBlocks = {
 /* 
   Test cases 
 */
+
+const moduleCombinations = {
+  /*
+   Selected combination of rules processed within modules that may clash.
+   */
+
+  // Will it remove extra punctuation or will it keep the abbreviation as expected?
+  "We will continue tomorrow at 8:00 a.m.!": "We will continue tomorrow at 8:00 a.${abbrSpace}m.!",
+  // Will it remove extra dot?
+  "We will continue tomorrow at 8:00 a.m..": "We will continue tomorrow at 8:00 a.${abbrSpace}m.",
+
+  /*	Combination of resolving issues with ellipsis and brackets together.
+      In scientific discourse, […] is used to signify deliberately omitted
+      parts (e.g. of a quotation) */
+  "quote [...]with parts left out":    "quote […] with parts left out",
+  "quote[…] with parts left out":      "quote […] with parts left out",
+  "quote [ ...] with parts left out":  "quote […] with parts left out",
+  "quote [.... ] with parts left out": "quote […] with parts left out",
+  "quote [ ….. ] with parts left out": "quote […] with parts left out",
+
+  "Because of this, it’s common": "Because of this, it’s common",
+};
+
 function getTestModules(localeName) {
   return {
     // punctuation
@@ -159,11 +182,14 @@ function getTestModules(localeName) {
     ...caseSet,
     ...pubIdSet,
 
+    ...transformAbbrSet(moduleCombinations, localeName),
+
     //tbd
     // spaces
-    "Sentence and… ?":                         "Sentence and…?",
-    "🥳 word 🥳 word 🥳":                      "🥳 word 🥳 word 🥳",
-    "🥳 word 🥳 word 🥳":                      "🥳 word 🥳 word 🥳",
+    "Sentence and… ?":    "Sentence and…?",
+    "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
+    "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
+
     // nbsp
     "v a v a v":                               "v a v a v",
     "The product X is missing the feature Y.": "The product X is missing the feature Y.",
@@ -285,38 +311,12 @@ let testModuleNbspRue = {
   "apostrophe’ A capital letter":   "apostrophe’ A capital letter",
 };
 
-let testModuleCombinationsEnUs = {
-  /*
-   Selected combination of rules processed within modules that may clash.
-   */
-
-  // Will it remove extra punctuation or will it keep the abbreviation as expected?
-  "We will continue tomorrow at 8:00 a.m.!": "We will continue tomorrow at 8:00 a.m.!",
-  // Will it remove extra dot?
-  "We will continue tomorrow at 8:00 a.m..": "We will continue tomorrow at 8:00 a.m.",
-
-  /*	Combination of resolving issues with ellipsis and brackets together.
-      In scientific discourse, […] is used to signify deliberately omitted
-      parts (e.g. of a quotation) */
-  "quote [...]with parts left out":    "quote […] with parts left out",
-  "quote[…] with parts left out":      "quote […] with parts left out",
-  "quote [ ...] with parts left out":  "quote […] with parts left out",
-  "quote [.... ] with parts left out": "quote […] with parts left out",
-  "quote [ ….. ] with parts left out": "quote […] with parts left out",
-
-  // combination of dash.js and nbsp.js for percent, permille, permyriad
-  "20 ‱ – 30 ‱": "20‱–30‱",
-
-  "Because of this, it’s common": "Because of this, it’s common",
-};
-
 /* 
   Tests 
 */
 describe("Tests that all modules are plugged for en-us", () => {
   let testCase = {
     ...getTestModules("en-us"),
-    ...testModuleCombinationsEnUs,
     ...testModuleNbspEnUs,
   };
 
