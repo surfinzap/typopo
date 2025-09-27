@@ -1,5 +1,5 @@
 import { removeEmptyLines } from "../../src/modules/whitespace/lines.js";
-import { describe, it, expect } from "vitest";
+import { createTestSuite } from "../test-helpers.js";
 
 export const linesSet = {
   // Remove excessive empty lines between paragraphs
@@ -21,10 +21,9 @@ const moduleSet = {
   ...unitSet,
 };
 
-describe("Remove empty lines\n", () => {
-  Object.keys(moduleSet).forEach((key) => {
-    it("module test", () => {
-      expect(removeEmptyLines(key)).toBe(moduleSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Remove empty lines\n",
+  moduleSet,
+  null,
+  removeEmptyLines
+);

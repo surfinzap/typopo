@@ -1,5 +1,5 @@
 import { fixExponents, fixSquares, fixCubes } from "../../src/modules/symbols/exponents.js";
-import { describe, it, expect } from "vitest";
+import { createTestSuite } from "../test-helpers.js";
 
 const exponentSquareSet = {
   "100 m2":         "100 m²",
@@ -27,18 +27,12 @@ const exponentSquareSet = {
   "Madam2":         "Madam2", //false positive
 };
 
-describe("Fix squares\n", () => {
-  Object.keys(exponentSquareSet).forEach((key) => {
-    it("unit tests", () => {
-      expect(fixSquares(key)).toBe(exponentSquareSet[key]);
-    });
-  });
-  Object.keys(exponentSquareSet).forEach((key) => {
-    it("module tests", () => {
-      expect(fixExponents(key)).toBe(exponentSquareSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix squares\n",
+  exponentSquareSet,
+  fixSquares,
+  fixExponents
+);
 
 const exponentCubeSet = {
   "100 m3":         "100 m³",
@@ -66,18 +60,12 @@ const exponentCubeSet = {
   "Madam3":         "Madam3", //false positive
 };
 
-describe("Fix cubes\n", () => {
-  Object.keys(exponentCubeSet).forEach((key) => {
-    it("unit tests", () => {
-      expect(fixCubes(key)).toBe(exponentCubeSet[key]);
-    });
-  });
-  Object.keys(exponentCubeSet).forEach((key) => {
-    it("module tests", () => {
-      expect(fixExponents(key)).toBe(exponentCubeSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix cubes\n",
+  exponentCubeSet,
+  fixCubes,
+  fixExponents
+);
 
 export const exponentSet = {
   ...exponentSquareSet,

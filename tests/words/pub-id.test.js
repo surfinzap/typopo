@@ -5,7 +5,7 @@ import {
   fixISBN13,
   fixISBNnumber,
 } from "../../src/modules/words/pub-id.js";
-import { describe, it, expect } from "vitest";
+import { createTestSuite } from "../test-helpers.js";
 
 const issnSet = {
   "ISSN 0000 - 0000":  "ISSN 0000-0000",
@@ -55,25 +55,33 @@ const isbnNumberSet = {
   "978 - 0 - 9752298 - 0 - X": "978-0-9752298-0-X",
 };
 
-const testConfigs = [
-  { name: "Fix ISSN format", testSet: issnSet, unitFn: fixISSN },
-  { name: "Fix ISBN10 format", testSet: isbn10Set, unitFn: fixISBN10 },
-  { name: "Fix ISBN13 format", testSet: isbn13Set, unitFn: fixISBN13 },
-  { name: "Fix ISBN number", testSet: isbnNumberSet, unitFn: fixISBNnumber },
-];
+createTestSuite(
+  "Fix ISSN format\n",
+  issnSet,
+  fixISSN,
+  fixPubId
+);
 
-testConfigs.forEach(({ name, testSet, unitFn }) => {
-  describe(`${name}\n`, () => {
-    Object.keys(testSet).forEach((key) => {
-      it("unit test", () => {
-        expect(unitFn(key)).toBe(testSet[key]);
-      });
-      it("module test", () => {
-        expect(fixPubId(key)).toBe(testSet[key]);
-      });
-    });
-  });
-});
+createTestSuite(
+  "Fix ISBN10 format\n",
+  isbn10Set,
+  fixISBN10,
+  fixPubId
+);
+
+createTestSuite(
+  "Fix ISBN13 format\n",
+  isbn13Set,
+  fixISBN13,
+  fixPubId
+);
+
+createTestSuite(
+  "Fix ISBN number\n",
+  isbnNumberSet,
+  fixISBNnumber,
+  fixPubId
+);
 
 export const pubIdSet = {
   ...issnSet,

@@ -3,6 +3,33 @@
 
 ## 2.7.0 //
 
+Helper function
+- punctuation
+ - dash // after integration
+ - double-quotes // needs manual refactoring
+ - single-quotes // needs manula refactoring
+ - ~~ellipsis~~
+ - ~~hyphen~~
+ - ~~period~~
+- symbols
+  - ~~copyrights~~
+  - ~~exponents~~ 
+  - ~~marks~~ 
+  - ~~multiplication-sign~~
+  - ~~number-sign~~
+  - ~~numero-sign ~~
+  - ~~plus-minus~~
+  - ~~section-sign~~
+- whitespace
+  - ~~lines~~
+  - nbsp // needs manual refactoring
+  - spaces // ? after integration
+- words
+  - abbreviations // a bit of refactoring
+  - ~~case~~
+  - ~~exceptions~~
+  - ~~pub-id~~
+
 Integration tests
 - punctuation
  - dash

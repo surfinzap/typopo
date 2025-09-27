@@ -1,34 +1,24 @@
-import { base } from "../../src/const.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { symbolSet, transformSymbolSet } from "./symbol-utils.test.js";
 import { fixSectionSign } from "../../src/modules/symbols/section-sign.js";
+import { createTestSuite } from "../test-helpers.js";
 
-import { describe, it, expect } from "vitest";
-
-describe("Fix section sign (§):\n", () => {
-  supportedLocales.forEach((localeName) => {
-    const locale = new Locale(localeName);
-
-    const transformedSymbolSet = transformSymbolSet(symbolSet, "sectionSign", localeName);
-
-    Object.keys(transformedSymbolSet).forEach((key) => {
-      it(`module test, ${base["sectionSign"]}, ${localeName}`, () => {
-        expect(fixSectionSign(key, locale)).toBe(transformedSymbolSet[key]);
-      });
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    `Fix section sign (§), ${localeName}:\n`,
+    transformSymbolSet(symbolSet, "sectionSign", localeName),
+    null,
+    (text) => fixSectionSign(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Fix paragraph sign (¶):\n", () => {
-  supportedLocales.forEach((localeName) => {
-    const locale = new Locale(localeName);
-
-    const transformedSymbolSet = transformSymbolSet(symbolSet, "paragraphSign", localeName);
-
-    Object.keys(transformedSymbolSet).forEach((key) => {
-      it(`module test, ${base["paragraphSign"]}, ${localeName}`, () => {
-        expect(fixSectionSign(key, locale)).toBe(transformedSymbolSet[key]);
-      });
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    `Fix paragraph sign (¶), ${localeName}:\n`,
+    transformSymbolSet(symbolSet, "paragraphSign", localeName),
+    null,
+    (text) => fixSectionSign(text, new Locale(localeName)),
+    localeName
+  );
 });

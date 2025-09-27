@@ -1,8 +1,8 @@
 import { base } from "../../src/const.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { fixCopyrights, replaceCopyright } from "../../src/modules/symbols/copyrights.js";
+import { createTestSuite } from "../test-helpers.js";
 import { symbolSet, transformSymbolSet } from "./symbol-utils.test.js";
-import { describe, it, expect } from "vitest";
 
 const replaceCopyrightSet = {
   "(c)2017":          "©2017",
@@ -30,52 +30,46 @@ const replaceSoundRecordingCopyrightSet = {
   "Sec­tion 7(P)":    "Sec­tion 7(P)", // false positive
 };
 
-function testCopyrightReplacement(testCase, copyrightLetter, copyrightSign) {
-  supportedLocales.forEach(function (locale) {
-    Object.keys(testCase).forEach((key) => {
-      it(`unit test, ${copyrightSign}, ${locale}`, () => {
-        expect(replaceCopyright(key, copyrightLetter, copyrightSign)).toBe(testCase[key]);
-      });
-    });
-  });
-}
+// unit tests
 
-describe("Replace (c) with copyright ©:\n", () => {
-  testCopyrightReplacement(replaceCopyrightSet, "c", base.copyright);
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    `Fix copyright (©), ${localeName}:\n`,
+    replaceCopyrightSet,
+    (text) => replaceCopyright(text, "c", base.copyright),
+    null,
+    localeName
+  );
 });
 
-describe("Replace (p) with copyright ℗:\n", () => {
-  testCopyrightReplacement(replaceSoundRecordingCopyrightSet, "p", base.soundRecordingCopyright);
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    `Fix sound recording copyright (℗), ${localeName}:\n`,
+    replaceSoundRecordingCopyrightSet,
+    (text) => replaceCopyright(text, "p", base.soundRecordingCopyright),
+    null,
+    localeName
+  );
 });
 
-describe("Fix copyrights (©):\n", () => {
-  supportedLocales.forEach((localeName) => {
-    const locale = new Locale(localeName);
+// module tests
 
-    const transformedSymbolSet = transformSymbolSet(symbolSet, "copyright", localeName);
-
-    Object.keys(transformedSymbolSet).forEach((key) => {
-      it(`Fix copyrights, ${base["copyright"]}, ${localeName}`, () => {
-        expect(fixCopyrights(key, locale)).toBe(transformedSymbolSet[key]);
-      });
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    `Fix copyright (©), ${localeName}:\n`,
+    transformSymbolSet(symbolSet, "copyright", localeName),
+    null,
+    (text) => fixCopyrights(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Fix sound recording copyrights (℗):\n", () => {
-  supportedLocales.forEach((localeName) => {
-    const locale = new Locale(localeName);
-
-    const transformedSymbolSet = transformSymbolSet(
-      symbolSet,
-      "soundRecordingCopyright",
-      localeName
-    );
-
-    Object.keys(transformedSymbolSet).forEach((key) => {
-      it(`module test, ${base["soundRecordingCopyright"]}, ${localeName}`, () => {
-        expect(fixCopyrights(key, locale)).toBe(transformedSymbolSet[key]);
-      });
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    `Fix sound recording copyright (℗), ${localeName}:\n`,
+    transformSymbolSet(symbolSet, "soundRecordingCopyright", localeName),
+    null,
+    (text) => fixCopyrights(text, new Locale(localeName)),
+    localeName
+  );
 });

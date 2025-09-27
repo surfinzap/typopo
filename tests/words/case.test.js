@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
 import { fixCase } from "../../src/modules/words/case.js";
+import { createTestSuite } from "../test-helpers.js";
 
 export const caseSet = {
   // Accidental uPPERCASE at the beginning of sentence
@@ -32,10 +32,9 @@ export const caseSet = {
   "kW":    "kW", // kilowatts
   "mA":    "mA", //milli amperes
 };
-describe("Fix accidental uPPERCASE\n", () => {
-  Object.keys(caseSet).forEach((key) => {
-    it("module test", () => {
-      expect(fixCase(key)).toBe(caseSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Fix accidental uPPERCASE\n",
+  caseSet,
+  null,
+  fixCase
+);

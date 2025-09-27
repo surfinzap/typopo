@@ -2,7 +2,7 @@ import {
   removeExtraSpacesAfterNumberSign,
   fixNumberSign,
 } from "../../src/modules/symbols/number-sign.js";
-import { describe, it, expect } from "vitest";
+import { createTestSuite } from "../test-helpers.js";
 
 export const numberSignSet = {
   "word # 9":    "word #9",
@@ -22,18 +22,12 @@ const numberSignFalsePositive = {
   "## 1. Markdown title": "## 1. Markdown title",
 };
 
-const numberSignTestSet = {
-  ...numberSignSet,
-  ...numberSignFalsePositive,
-};
-
-describe("Remove extra space before number sign\n", () => {
-  Object.keys(numberSignTestSet).forEach((key) => {
-    it("unit test", () => {
-      expect(removeExtraSpacesAfterNumberSign(key)).toBe(numberSignTestSet[key]);
-    });
-    it("module test", () => {
-      expect(fixNumberSign(key)).toBe(numberSignTestSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Remove extra space before number sign\n",
+  {
+    ...numberSignSet,
+    ...numberSignFalsePositive,
+  },
+  removeExtraSpacesAfterNumberSign,
+  fixNumberSign
+);

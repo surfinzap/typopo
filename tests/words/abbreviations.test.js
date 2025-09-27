@@ -131,20 +131,24 @@ const multiWordAbbrSet = {
   "(i.e.)":                   "(i.${abbrSpace}e.)",
 };
 
+const multiWordAbbrUnitModuleSet = {
+  "e.g. “something”":                               "e.${abbrSpace}g. “something”",
+  "e.g. ‘something’":                               "e.${abbrSpace}g. ‘something’",
+  "“We will continue tomorrow at 8:00 a.m.”":       "“We will continue tomorrow at 8:00 a.${abbrSpace}m.”",
+  "e.g. ```something```":                           "e.${abbrSpace}g. ```something```",
+  "e.g. `something`":                               "e.${abbrSpace}g. `something`",
+  "“e. g.”":                                        "“e.${abbrSpace}g.”",
+  "‘e. g.’":                                        "‘e.${abbrSpace}g.’",
+  "Das Tier – d. i. der Fisch – lebte noch lange.": "Das Tier – d.${abbrSpace}i. der Fisch – lebte noch lange.",
+};
+
 describe("Fix multiple-word abbreviations\n", () => {
   supportedLocales.forEach((locale) => {
     let testSet = multiWordAbbrSet;
     if (locale === "en-us") {
       testSet = {
         ...multiWordAbbrSet,
-        "e.g. “something”":                               "e.${abbrSpace}g. “something”",
-        "e.g. ‘something’":                               "e.${abbrSpace}g. ‘something’",
-        "“We will continue tomorrow at 8:00 a.m.”":       "“We will continue tomorrow at 8:00 a.${abbrSpace}m.”",
-        "e.g. ```something```":                           "e.${abbrSpace}g. ```something```",
-        "e.g. `something`":                               "e.${abbrSpace}g. `something`",
-        "“e. g.”":                                        "“e.${abbrSpace}g.”",
-        "‘e. g.’":                                        "‘e.${abbrSpace}g.’",
-        "Das Tier – d. i. der Fisch – lebte noch lange.": "Das Tier – d.${abbrSpace}i. der Fisch – lebte noch lange.",
+        ...multiWordAbbrUnitModuleSet,
       };
     }
     testSet = transformAbbrSet(multiWordAbbrSet, locale);

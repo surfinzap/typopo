@@ -1,6 +1,5 @@
 import { fixPeriod } from "../../src/modules/punctuation/period.js";
-import { describe, it, expect } from "vitest";
-import Locale from "../../src/locale/locale.js";
+import { createTestSuite } from "../test-helpers.js";
 
 export const periodSet = {
   "Sentence ending..":                     "Sentence ending.",
@@ -13,10 +12,9 @@ export const periodSet = {
   "..\\":                   "..\\",
 };
 
-describe("Replace 2 periods at the end of the sentecne with a single period\n", () => {
-  Object.keys(periodSet).forEach((key) => {
-    it("", () => {
-      expect(fixPeriod(key, new Locale("rue"))).toBe(periodSet[key]);
-    });
-  });
-});
+createTestSuite(
+  "Replace 2 periods at the end of the sentecne with a single period\n",
+  periodSet,
+  null,
+  fixPeriod
+);
