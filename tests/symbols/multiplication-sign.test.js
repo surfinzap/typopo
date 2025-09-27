@@ -29,6 +29,7 @@ createTestSuite(
   "Fix multiplication sign between numbers\n",
   multiBetweenNumbers,
   fixMultiplicationSignBetweenNumbers,
+  {},
   fixMultiplicationSign
 );
 
@@ -46,6 +47,7 @@ createTestSuite(
   "Fix multiplication sign between words\n",
   multiBetweenWords,
   fixMultiplicationSignBetweenWords,
+  {},
   fixMultiplicationSign
 );
 
@@ -63,6 +65,7 @@ createTestSuite(
   "Fix multiplication sign between a number and a word\n",
   multiBetweenNumberWord,
   fixMultiplicationSignBetweenNumberAndWord,
+  {},
   fixMultiplicationSign
 );
 
@@ -76,6 +79,7 @@ createTestSuite(
   "Fix nbsp around multiplication sign\n",
   spaceAroundMulti,
   fixNbspAroundMultiplicationSign,
+  {},
   fixMultiplicationSign
 );
 

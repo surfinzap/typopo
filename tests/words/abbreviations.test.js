@@ -4,7 +4,7 @@ import {
   fixMultipleWordAbbreviations,
   fixSingleWordAbbreviations,
 } from "../../src/modules/words/abbreviations.js";
-import { describe, it, expect } from "vitest";
+import { createTestSuite } from "../test-helpers.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 
 export function transformAbbrSet(testSet, localeName) {
@@ -51,19 +51,15 @@ const initialsSet = {
   "F. X. R.": "F. X. R.",
 };
 
-describe("Fix Initials\n", () => {
-  supportedLocales.forEach((locale) => {
-    const testSet = transformAbbrSet(initialsSet, locale);
-
-    Object.keys(testSet).forEach((key) => {
-      it(`unit test (${locale})`, () => {
-        expect(fixInitials(key, new Locale(locale))).toBe(testSet[key]);
-      });
-      it(`module test (${locale})`, () => {
-        expect(fixAbbreviations(key, new Locale(locale))).toBe(testSet[key]);
-      });
-    });
-  });
+supportedLocales.forEach((locale) => {
+  createTestSuite(
+    `Fix Initials, ${locale}:\n`,
+    transformAbbrSet(initialsSet, locale),
+    (text) => fixInitials(text, new Locale(locale)),
+    {},
+    (text) => fixAbbreviations(text, new Locale(locale)),
+    locale
+  );
 });
 
 const multiWordAbbrSet = {
@@ -142,26 +138,23 @@ const multiWordAbbrUnitModuleSet = {
   "Das Tier – d. i. der Fisch – lebte noch lange.": "Das Tier – d.${abbrSpace}i. der Fisch – lebte noch lange.",
 };
 
-describe("Fix multiple-word abbreviations\n", () => {
-  supportedLocales.forEach((locale) => {
-    let testSet = multiWordAbbrSet;
-    if (locale === "en-us") {
-      testSet = {
-        ...multiWordAbbrSet,
-        ...multiWordAbbrUnitModuleSet,
-      };
-    }
-    testSet = transformAbbrSet(multiWordAbbrSet, locale);
+supportedLocales.forEach((locale) => {
+  let unitTestSet = multiWordAbbrSet;
+  if (locale === "en-us") {
+    unitTestSet = {
+      ...multiWordAbbrSet,
+      ...multiWordAbbrUnitModuleSet,
+    };
+  }
 
-    Object.keys(testSet).forEach((key) => {
-      it(`unit test (${locale})`, () => {
-        expect(fixMultipleWordAbbreviations(key, new Locale(locale))).toBe(testSet[key]);
-      });
-      it(`module test (${locale})`, () => {
-        expect(fixAbbreviations(key, new Locale(locale))).toBe(testSet[key]);
-      });
-    });
-  });
+  createTestSuite(
+    `Fix multiple-word abbreviations, ${locale}:\n`,
+    transformAbbrSet(unitTestSet, locale),
+    (text) => fixMultipleWordAbbreviations(text, new Locale(locale)),
+    transformAbbrSet(multiWordAbbrSet, locale),
+    (text) => fixAbbreviations(text, new Locale(locale)),
+    locale
+  );
 });
 
 const singleWordAbbrSet = {
@@ -192,25 +185,15 @@ const singleWordAbbrFalsePositiveSet = {
   "t. č. dačo":        "t. č. dačo", // do not correct single-word abbr. that's part of the multiple-word abbr (word variation)
 };
 
-describe("Fix Single-word abbreviations\n", () => {
-  supportedLocales.forEach((locale) => {
-    const unitSet = transformAbbrSet(
-      { ...singleWordAbbrSet, ...singleWordAbbrFalsePositiveSet },
-      locale
-    );
-    const moduleSet = transformAbbrSet(singleWordAbbrSet, locale);
-
-    Object.keys(unitSet).forEach((key) => {
-      it(`unit test (${locale})`, () => {
-        expect(fixSingleWordAbbreviations(key, new Locale(locale))).toBe(unitSet[key]);
-      });
-    });
-    Object.keys(moduleSet).forEach((key) => {
-      it(`module test (${locale})`, () => {
-        expect(fixAbbreviations(key, new Locale(locale))).toBe(moduleSet[key]);
-      });
-    });
-  });
+supportedLocales.forEach((locale) => {
+  createTestSuite(
+    `Fix Single-word abbreviations, ${locale}:\n`,
+    transformAbbrSet({ ...singleWordAbbrSet, ...singleWordAbbrFalsePositiveSet }, locale),
+    (text) => fixSingleWordAbbreviations(text, new Locale(locale)),
+    transformAbbrSet(singleWordAbbrSet, locale),
+    (text) => fixAbbreviations(text, new Locale(locale)),
+    locale
+  );
 });
 
 export const abbreviationsSet = {

@@ -16,5 +16,6 @@ createTestSuite(
   "Replace 2 periods at the end of the sentecne with a single period\n",
   periodSet,
   null,
+  {},
   fixPeriod
 );

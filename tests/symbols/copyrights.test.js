@@ -30,14 +30,13 @@ const replaceSoundRecordingCopyrightSet = {
   "Sec­tion 7(P)":    "Sec­tion 7(P)", // false positive
 };
 
-// unit tests
-
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     `Fix copyright (©), ${localeName}:\n`,
     replaceCopyrightSet,
     (text) => replaceCopyright(text, "c", base.copyright),
-    null,
+    transformSymbolSet(symbolSet, "copyright", localeName),
+    (text) => fixCopyrights(text, new Locale(localeName)),
     localeName
   );
 });
@@ -47,28 +46,7 @@ supportedLocales.forEach((localeName) => {
     `Fix sound recording copyright (℗), ${localeName}:\n`,
     replaceSoundRecordingCopyrightSet,
     (text) => replaceCopyright(text, "p", base.soundRecordingCopyright),
-    null,
-    localeName
-  );
-});
-
-// module tests
-
-supportedLocales.forEach((localeName) => {
-  createTestSuite(
-    `Fix copyright (©), ${localeName}:\n`,
-    transformSymbolSet(symbolSet, "copyright", localeName),
-    null,
-    (text) => fixCopyrights(text, new Locale(localeName)),
-    localeName
-  );
-});
-
-supportedLocales.forEach((localeName) => {
-  createTestSuite(
-    `Fix sound recording copyright (℗), ${localeName}:\n`,
     transformSymbolSet(symbolSet, "soundRecordingCopyright", localeName),
-    null,
     (text) => fixCopyrights(text, new Locale(localeName)),
     localeName
   );

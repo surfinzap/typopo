@@ -59,6 +59,7 @@ createTestSuite(
   "Fix ISSN format\n",
   issnSet,
   fixISSN,
+  {},
   fixPubId
 );
 
@@ -66,6 +67,7 @@ createTestSuite(
   "Fix ISBN10 format\n",
   isbn10Set,
   fixISBN10,
+  {},
   fixPubId
 );
 
@@ -73,6 +75,7 @@ createTestSuite(
   "Fix ISBN13 format\n",
   isbn13Set,
   fixISBN13,
+  {},
   fixPubId
 );
 
@@ -80,6 +83,7 @@ createTestSuite(
   "Fix ISBN number\n",
   isbnNumberSet,
   fixISBNnumber,
+  {},
   fixPubId
 );
 

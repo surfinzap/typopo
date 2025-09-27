@@ -8,6 +8,7 @@ supportedLocales.forEach((localeName) => {
     `Fix numero sign (№), ${localeName}:\n`,
     transformSymbolSet(symbolSet, "numeroSign", localeName),
     null,
+    {},
     (text) => fixNumeroSign(text, new Locale(localeName)),
     localeName
   );

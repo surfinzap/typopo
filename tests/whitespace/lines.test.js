@@ -25,5 +25,6 @@ createTestSuite(
   "Remove empty lines\n",
   moduleSet,
   null,
+  {},
   removeEmptyLines
 );

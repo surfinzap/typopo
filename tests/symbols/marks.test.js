@@ -48,6 +48,7 @@ createTestSuite(
   "Fix registered trademark (®):\n",
   registeredTrademark,
   (text) => replaceMark(text, "r", "®"),
+  {},
   fixMarks,
   supportedLocales
 );
@@ -56,6 +57,7 @@ createTestSuite(
   "Fix service mark (℠):\n",
   serviceMark,
   (text) => replaceMark(text, "sm", "℠"),
+  {},
   fixMarks,
   supportedLocales
 );
@@ -64,6 +66,7 @@ createTestSuite(
   "Fix trademark (™):\n",
   trademark,
   (text) => replaceMark(text, "tm", "™"),
+  {},
   fixMarks,
   supportedLocales
 );

@@ -8,6 +8,7 @@ supportedLocales.forEach((localeName) => {
     `Fix section sign (§), ${localeName}:\n`,
     transformSymbolSet(symbolSet, "sectionSign", localeName),
     null,
+    {},
     (text) => fixSectionSign(text, new Locale(localeName)),
     localeName
   );
@@ -18,6 +19,7 @@ supportedLocales.forEach((localeName) => {
     `Fix paragraph sign (¶), ${localeName}:\n`,
     transformSymbolSet(symbolSet, "paragraphSign", localeName),
     null,
+    {},
     (text) => fixSectionSign(text, new Locale(localeName)),
     localeName
   );

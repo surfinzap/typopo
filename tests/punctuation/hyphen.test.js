@@ -9,4 +9,4 @@ export const hyphenSet = {
   "e- shop": "e-shop", // narrowNbsp
   "e -shop": "e-shop",
 };
-createTestSuite("Fix spaces around hyphen\n", hyphenSet, fixSpaceAroundHyphen, fixHyphen);
+createTestSuite("Fix spaces around hyphen\n", hyphenSet, fixSpaceAroundHyphen, {}, fixHyphen);

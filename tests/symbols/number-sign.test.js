@@ -29,5 +29,6 @@ createTestSuite(
     ...numberSignFalsePositive,
   },
   removeExtraSpacesAfterNumberSign,
+  {},
   fixNumberSign
 );

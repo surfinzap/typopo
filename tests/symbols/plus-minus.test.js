@@ -10,5 +10,6 @@ createTestSuite(
   "Fix plus-minus symbol ±\n",
   plusMinusSet,
   null,
+  {},
   fixPlusMinus
 );

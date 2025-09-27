@@ -36,5 +36,6 @@ createTestSuite(
   "Fix accidental uPPERCASE\n",
   caseSet,
   null,
+  {},
   fixCase
 );

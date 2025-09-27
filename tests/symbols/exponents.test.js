@@ -31,6 +31,7 @@ createTestSuite(
   "Fix squares\n",
   exponentSquareSet,
   fixSquares,
+  {},
   fixExponents
 );
 
@@ -64,6 +65,7 @@ createTestSuite(
   "Fix cubes\n",
   exponentCubeSet,
   fixCubes,
+  {},
   fixExponents
 );
 
