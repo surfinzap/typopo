@@ -59,6 +59,8 @@ Helper function
   - ~~pub-id~~
 
 
+theme: split locales, refactor tests to better work with multiple locales, preparation to extend typopo with more detailed configuration
+
 ### ✨ New features
 - Fix spacing around paragraph sign (¶)
 - Fix spacing around numero sign (№)
