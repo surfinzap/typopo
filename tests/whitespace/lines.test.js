@@ -21,10 +21,4 @@ const moduleSet = {
   ...unitSet,
 };
 
-createTestSuite(
-  "Remove empty lines\n",
-  moduleSet,
-  null,
-  {},
-  removeEmptyLines
-);
+createTestSuite("Remove empty lines\n", moduleSet, null, {}, removeEmptyLines);

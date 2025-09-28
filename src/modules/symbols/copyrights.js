@@ -38,6 +38,10 @@ export function fixCopyrights(string, locale) {
   string = replaceCopyright(string, "c", base.copyright);
   string = fixSpacingAroundSymbol(string, base.copyright, locale.spaceAfter.copyright);
   string = replaceCopyright(string, "p", base.soundRecordingCopyright);
-  string = fixSpacingAroundSymbol(string, base.soundRecordingCopyright, locale.spaceAfter.soundRecordingCopyright);
+  string = fixSpacingAroundSymbol(
+    string,
+    base.soundRecordingCopyright,
+    locale.spaceAfter.soundRecordingCopyright
+  );
   return string;
 }

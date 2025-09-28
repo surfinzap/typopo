@@ -22,9 +22,8 @@ export function createTestSuite(
 ) {
   describe(description, () => {
     // If moduleTestSet is empty but moduleFunction is defined, use unitTestSet for module tests
-    const effectiveModuleTestSet = Object.keys(moduleTestSet).length === 0 && moduleFunction
-      ? unitTestSet
-      : moduleTestSet;
+    const effectiveModuleTestSet =
+      Object.keys(moduleTestSet).length === 0 && moduleFunction ? unitTestSet : moduleTestSet;
 
     // Normalize locales to array
     const localeArray = Array.isArray(locales) ? locales : [locales];

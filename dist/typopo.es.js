@@ -113,7 +113,19 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     Common single-word abbreviations that are followed by a non-breaking space.
     For coding purposes, they are written here without periods.
   */
-  singleWordAbbreviations: ["č", "fol", "např", "odst", "par", "r", "s", "str", "sv", "tj", "tzv"],
+  singleWordAbbreviations: [
+    "č",
+    "fol",
+    "např",
+    "odst",
+    "par",
+    "r",
+    "s",
+    "str",
+    "sv",
+    "tj",
+    "tzv"
+  ],
   /*
     Common multi-word abbreviations that require proper spacing.
     For coding purposes, they are written here without periods and without correct spacing.
@@ -1291,7 +1303,11 @@ function x(e, o, t) {
   );
 }
 function oo(e, o) {
-  return e = x(e, "c", n.copyright), e = h(e, n.copyright, o.spaceAfter.copyright), e = x(e, "p", n.soundRecordingCopyright), e = h(e, n.soundRecordingCopyright, o.spaceAfter.soundRecordingCopyright), e;
+  return e = x(e, "c", n.copyright), e = h(e, n.copyright, o.spaceAfter.copyright), e = x(e, "p", n.soundRecordingCopyright), e = h(
+    e,
+    n.soundRecordingCopyright,
+    o.spaceAfter.soundRecordingCopyright
+  ), e;
 }
 function to(e, o) {
   return e = h(e, n.numeroSign, o.spaceAfter.numeroSign), e;

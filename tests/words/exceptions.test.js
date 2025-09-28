@@ -370,7 +370,7 @@ describe("Place Exceptions: Emails+URLs+filenames", () => {
 });
 
 export const exceptionsSet = {
-  ...Object.fromEntries(emails.map(item => [item, item])),
-  ...Object.fromEntries(urls.map(item => [item, item])),
-  ...Object.fromEntries(filenames.map(item => [item, item])),
+  ...Object.fromEntries(emails.map((item) => [item, item])),
+  ...Object.fromEntries(urls.map((item) => [item, item])),
+  ...Object.fromEntries(filenames.map((item) => [item, item])),
 };
