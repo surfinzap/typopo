@@ -33,7 +33,7 @@ export function createTestSuite(
       // Unit tests
       if (unitFunction) {
         Object.keys(unitTestSet).forEach((key) => {
-          const testName = localeArray.length > 1 ? `unit test, ${locale}` : "unit test";
+          const testName = `unit test (${locale})`;
           it(testName, () => {
             let result;
             if (unitFunction.length === 1) {
@@ -51,7 +51,7 @@ export function createTestSuite(
       // Module tests
       if (moduleFunction && Object.keys(effectiveModuleTestSet).length > 0) {
         Object.keys(effectiveModuleTestSet).forEach((key) => {
-          const testName = localeArray.length > 1 ? `module test, ${locale}` : "module test";
+          const testName = `module test (${locale})`;
           it(testName, () => {
             let result;
             if (moduleFunction.length === 1) {

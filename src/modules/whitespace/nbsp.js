@@ -157,10 +157,13 @@ export function addNbspAfterOrdinalNumber(string, locale) {
 //
 
 /**
-  @param {string} string: input text for identification
-  @param {string} locale: locale option
-  @returns {string} output with added non-breaking space within ordinal dates
-*/
+ * Locale-specific spaces within a date, usually nbsp
+ *
+ * German standard orthography (Duden) recommends only one nbsp (or narrowNbsp) after the day and a regular interword space following the month*
+ * @param {string} string: input text for identification
+ * @param {string} locale: locale option
+ * @returns {string} output with added non-breaking space within ordinal dates
+ */
 export function addNbspWithinOrdinalDate(string, locale) {
   // prettier-ignore
   return string.replace(

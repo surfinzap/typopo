@@ -443,7 +443,7 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
 }, g = "en-us";
 class we {
   constructor(o) {
-    i[o] || (console.warn(`Locale '${o}' not found, falling back to '${g}'`), o = g), this.ID = o, this.leftSingleQuote = i[o].quotes.leftSingleQuote, this.rightSingleQuote = i[o].quotes.rightSingleQuote, this.leftDoubleQuote = i[o].quotes.leftDoubleQuote, this.rightDoubleQuote = i[o].quotes.rightDoubleQuote, this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote, this.dashWords = i[o].dashWords, this.spaceAfter = i[o].spaceAfter, this.spaceBefore = i[o].spaceBefore, this.ordinalIndicator = i[o].numbers.ordinalIndicator, this.romanOrdinalIndicator = i[o].numbers.romanOrdinalIndicator, this.ordinalDate = i[o].ordinalDate, this.spaceAfter.abbreviation = i[o].spaceAfter.abbreviation, this.singleWordAbbreviations = [];
+    i[o] || (console.warn(`Locale '${o}' not found, falling back to '${g}'`), o = g), this.ID = o, this.leftSingleQuote = i[o].quotes.leftSingleQuote, this.rightSingleQuote = i[o].quotes.rightSingleQuote, this.leftDoubleQuote = i[o].quotes.leftDoubleQuote, this.rightDoubleQuote = i[o].quotes.rightDoubleQuote, this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote, this.dashWords = i[o].dashWords, this.spaceAfter = i[o].spaceAfter, this.spaceBefore = i[o].spaceBefore, this.ordinalIndicator = i[o].numbers.ordinalIndicator, this.romanOrdinalIndicator = i[o].numbers.romanOrdinalIndicator, this.ordinalDate = i[o].ordinalDate, this.singleWordAbbreviations = [];
     for (const t in i)
       this.singleWordAbbreviations = this.singleWordAbbreviations.concat(
         i[t].singleWordAbbreviations

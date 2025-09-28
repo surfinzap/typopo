@@ -17,7 +17,7 @@ import { numberSignSet } from "../symbols/number-sign.test.js";
 import { plusMinusSet } from "../symbols/plus-minus.test.js";
 import { symbolSet, transformSymbolSet } from "../symbols/symbol-utils.test.js";
 import { linesSet } from "../whitespace/lines.test.js";
-import { getNbspSet } from "../whitespace/nbsp.test.js";
+import { nbspSet, transformNbspSet } from "../whitespace/nbsp.test.js";
 import { spacesSet } from "../whitespace/spaces.test.js";
 import { abbreviationsSet, transformAbbrSet } from "../words/abbreviations.test.js";
 import { caseSet } from "../words/case.test.js";
@@ -174,7 +174,7 @@ function getTestModules(localeName) {
 
     // whitespace
     // lines are in keepLines and removeLines
-    ...getNbspSet(localeName),
+    ...transformNbspSet(nbspSet, localeName),
     ...spacesSet,
 
     // words

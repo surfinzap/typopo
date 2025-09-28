@@ -11,7 +11,7 @@ Helper function
  - ~~ellipsis~~
  - ~~hyphen~~
  - ~~period~~
-- symbols
+- ~~symbols~~
   - ~~copyrights~~
   - ~~exponents~~ 
   - ~~marks~~ 
@@ -20,11 +20,11 @@ Helper function
   - ~~numero-sign~~
   - ~~plus-minus~~
   - ~~section-sign~~
-- whitespace
+- ~~whitespace~~
   - ~~lines~~
-  - nbsp // needs manual refactoring
+  - ~~nbsp~~ 
   - ~~spaces~~ 
-- words
+- ~~words~~
   - ~~abbreviations~~ 
   - ~~case~~
   - ~~exceptions~~
