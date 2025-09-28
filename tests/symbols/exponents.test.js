@@ -27,13 +27,7 @@ const exponentSquareSet = {
   "Madam2":         "Madam2", //false positive
 };
 
-createTestSuite(
-  "Fix squares\n",
-  exponentSquareSet,
-  fixSquares,
-  {},
-  fixExponents
-);
+createTestSuite("Fix squares", exponentSquareSet, fixSquares, {}, fixExponents);
 
 const exponentCubeSet = {
   "100 m3":         "100 m³",
@@ -61,13 +55,7 @@ const exponentCubeSet = {
   "Madam3":         "Madam3", //false positive
 };
 
-createTestSuite(
-  "Fix cubes\n",
-  exponentCubeSet,
-  fixCubes,
-  {},
-  fixExponents
-);
+createTestSuite("Fix cubes", exponentCubeSet, fixCubes, {}, fixExponents);
 
 export const exponentSet = {
   ...exponentSquareSet,

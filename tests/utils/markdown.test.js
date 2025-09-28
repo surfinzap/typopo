@@ -10,7 +10,7 @@ let configIgnoreMarkdownCodeBlocks = {
   keepMarkdownCodeBlocks: false,
 };
 
-describe("Identify markdown code ticks:\n", () => {
+describe("Identify markdown code ticks:", () => {
   let testCase = {
     "```\ncode\n```":
       "{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}\ncode\n{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}",
@@ -51,7 +51,7 @@ describe("Identify markdown code ticks:\n", () => {
   });
 });
 
-describe("Place markdown code ticks:\n", () => {
+describe("Place markdown code ticks:", () => {
   let testCase = {
     "{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}\ncode\n{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}":
       "```\ncode\n```",
@@ -92,7 +92,7 @@ describe("Place markdown code ticks:\n", () => {
   });
 });
 
-describe("Ignore markdown code ticks:\n", () => {
+describe("Ignore markdown code ticks:", () => {
   let testCase = {
     "```\ncode\n```": "```\ncode\n```",
 

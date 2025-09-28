@@ -78,7 +78,7 @@ export function transformSymbolSet(testSet, symbolName, localeName) {
   return transformed;
 }
 
-describe("Fix symbol spacing:\n", () => {
+describe("Fix symbol spacing", () => {
   supportedLocales.forEach((localeName) => {
     symbols.forEach((symbolName) => {
       const locale = new Locale(localeName);

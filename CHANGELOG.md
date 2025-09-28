@@ -3,37 +3,9 @@
 
 ## 2.7.0 //
 
-Integration tests
-- punctuation
- - dash
- - ~~double-quotes~~
- - ~~ellipsis~~
- - ~~hyphen~~
- - ~~period~~
- - ~~single-quotes~~
-- ~~symbols~~
-  - ~~copyrights~~
-  - ~~exponents~~
-  - ~~marks~~
-  - ~~multiplication-sign~~
-  - ~~number-sign~~
-  - ~~numero-sign~~
-  - ~~plus-minus~~
-  - ~~section-sign~~
-- ~~whitespace~~
-  - ~~lines~~
-  - ~~nbsp~~
-  - ~~spaces~~
-- ~~words~~
-  - ~~abbreviations~~
-  - ~~case~~
-  - ~~exceptions~~
-  - ~~pub-id~~
-
-
 Helper function
 - punctuation
- - dash // after integration
+ - ~~dash~~ 
  - double-quotes // needs manual refactoring
  - single-quotes // needs manual refactoring
  - ~~ellipsis~~

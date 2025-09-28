@@ -16,7 +16,7 @@ import {
 import { describe, it, expect } from "vitest";
 import Locale from "../../src/locale/locale.js";
 
-describe("Remove non-breaking space between multi-letter words\n", () => {
+describe("Remove non-breaking space between multi-letter words", () => {
   let testCase = {
     "vo dvore":    "vo dvore",
     "Ku komore":   "Ku komore",
@@ -36,7 +36,7 @@ describe("Remove non-breaking space between multi-letter words\n", () => {
   });
 });
 
-describe("Add non-breaking spaces after single-letter prepositions\n", () => {
+describe("Add non-breaking spaces after single-letter prepositions", () => {
   let testAllLang = {
     "V potoku":         "V potoku",
     "Koniec. V potoku": "Koniec. V potoku",
@@ -123,7 +123,7 @@ describe("Add non-breaking spaces after single-letter prepositions\n", () => {
   });
 });
 
-describe("Add non-breaking space after ampersand\n", () => {
+describe("Add non-breaking space after ampersand", () => {
   let testCase = {
     "Bed & Breakfast": "Bed & Breakfast",
   };
@@ -138,7 +138,7 @@ describe("Add non-breaking space after ampersand\n", () => {
   });
 });
 
-describe("Add non-breaking space after cardinal number\n", () => {
+describe("Add non-breaking space after cardinal number", () => {
   let testCase = {
     "5 mm":  "5 mm",
     "5 mm":  "5 mm", // nbsp
@@ -171,7 +171,7 @@ describe("Add non-breaking space after cardinal number\n", () => {
   });
 });
 
-describe("Add non-breaking space after ordinal number (en)\n", () => {
+describe("Add non-breaking space after ordinal number (en)", () => {
   let testCase = {
     "1st amendment":  "1st amendment",
     "2nd amendment":  "2nd amendment",
@@ -198,7 +198,7 @@ describe("Add non-breaking space after ordinal number (en)\n", () => {
   });
 });
 
-describe("Add non-breaking space after ordinal number (sk, cs, rue, de-de)\n", () => {
+describe("Add non-breaking space after ordinal number (sk, cs, rue, de-de)", () => {
   let testCase = {
     "1. dodatok":  "1. dodatok",
     "1.dodatok":   "1. dodatok",
@@ -257,7 +257,7 @@ describe("Add non-breaking space after ordinal number (sk, cs, rue, de-de)\n", (
   });
 });
 
-describe("Add non-breaking space within ordinal date (sk, cs, rue)\n", () => {
+describe("Add non-breaking space within ordinal date (sk, cs, rue)", () => {
   let testCase = {
     "12. 1. 2017": "12. 1. 2017",
     "12.1.2017":   "12. 1. 2017",
@@ -280,7 +280,7 @@ describe("Add non-breaking space within ordinal date (sk, cs, rue)\n", () => {
   });
 });
 
-describe("Add non-breaking space within ordinal date (de-de)\n", () => {
+describe("Add non-breaking space within ordinal date (de-de)", () => {
   let testCase = {
     /*  German standard orthography (Duden) recommends
         only one nbsp (or narrowNbsp) after the day
@@ -300,7 +300,7 @@ describe("Add non-breaking space within ordinal date (de-de)\n", () => {
   });
 });
 
-describe("Add non-breaking space after roman numeral (sk, cs, de-de, rue)\n", () => {
+describe("Add non-breaking space after roman numeral (sk, cs, de-de, rue)", () => {
   let testCase = {
     "I. kapitola":         "I. kapitola",
     "bola to I. kapitola": "bola to I. kapitola",
@@ -375,7 +375,7 @@ describe("Add non-breaking space after roman numeral (sk, cs, de-de, rue)\nExtra
   });
 });
 
-describe("Fix non-breaking space around name with regnal number (sk, cs, de-de, rue)\n", () => {
+describe("Fix non-breaking space around name with regnal number (sk, cs, de-de, rue)", () => {
   let moduleTestCase = {
     // Place non-breaking space between name and roman numeral
     "Karel IV. byl římsko-německý král.": "Karel IV. byl římsko-německý král.",
@@ -409,7 +409,7 @@ describe("Fix non-breaking space around name with regnal number (sk, cs, de-de, 
   });
 });
 
-describe("Fix non-breaking space around name with regnal number (en-us)\n", () => {
+describe("Fix non-breaking space around name with regnal number (en-us)", () => {
   let testCase = {
     // Place non-breaking space between name and roman numeral
     "Charles IV was an emperor.": "Charles IV was an emperor.",
@@ -437,7 +437,7 @@ describe("Fix non-breaking space around name with regnal number (en-us)\n", () =
   });
 });
 
-describe("Add nbsp before percent, permille, permyriad\n", () => {
+describe("Add nbsp before percent, permille, permyriad", () => {
   let testCaseSk = {
     "20 %":      "20 %",
     "20 %–30 %": "20 %–30 %",
@@ -483,7 +483,7 @@ describe("Add nbsp before percent, permille, permyriad\n", () => {
   });
 });
 
-describe("Add nbsp before single capital letter in a sentence\n", () => {
+describe("Add nbsp before single capital letter in a sentence", () => {
   let testAllLang = {
     "The product X is missing the feature Y.": "The product X is missing the feature Y.",
 
@@ -595,7 +595,7 @@ describe("Add nbsp before single capital letter in a sentence\n", () => {
   });
 });
 
-describe("Add space after symbol, e.g. ©\n", () => {
+describe("Add space after symbol, e.g. ©", () => {
   let testCase = {
     // in-depth tests are in the respective test files for symbols,
     // e.g. copyrights, numero-sign, section-sign
@@ -610,7 +610,7 @@ describe("Add space after symbol, e.g. ©\n", () => {
   });
 });
 
-describe("Replaces various spaces with non-breaking space after symbol, e.g. ©\n", () => {
+describe("Replaces various spaces with non-breaking space after symbol, e.g. ©", () => {
   let testCase = {
     // in-depth tests are in the respective test files for symbols,
     // e.g. copyrights, numero-sign, section-sign

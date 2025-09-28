@@ -26,7 +26,7 @@ const multiBetweenNumbers = {
 };
 
 createTestSuite(
-  "Fix multiplication sign between numbers\n",
+  "Fix multiplication sign between numbers",
   multiBetweenNumbers,
   fixMultiplicationSignBetweenNumbers,
   {},
@@ -44,7 +44,7 @@ const multiBetweenWords = {
 };
 
 createTestSuite(
-  "Fix multiplication sign between words\n",
+  "Fix multiplication sign between words",
   multiBetweenWords,
   fixMultiplicationSignBetweenWords,
   {},
@@ -62,7 +62,7 @@ const multiBetweenNumberWord = {
 };
 
 createTestSuite(
-  "Fix multiplication sign between a number and a word\n",
+  "Fix multiplication sign between a number and a word",
   multiBetweenNumberWord,
   fixMultiplicationSignBetweenNumberAndWord,
   {},
@@ -76,7 +76,7 @@ const spaceAroundMulti = {
   "12′×3′": "12′ × 3′",
 };
 createTestSuite(
-  "Fix nbsp around multiplication sign\n",
+  "Fix nbsp around multiplication sign",
   spaceAroundMulti,
   fixNbspAroundMultiplicationSign,
   {},

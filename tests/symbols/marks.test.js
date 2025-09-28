@@ -45,7 +45,7 @@ const trademark = {
 };
 
 createTestSuite(
-  "Fix registered trademark (®):\n",
+  "Fix registered trademark (®):",
   registeredTrademark,
   (text) => replaceMark(text, "r", "®"),
   {},
@@ -54,7 +54,7 @@ createTestSuite(
 );
 
 createTestSuite(
-  "Fix service mark (℠):\n",
+  "Fix service mark (℠):",
   serviceMark,
   (text) => replaceMark(text, "sm", "℠"),
   {},
@@ -63,7 +63,7 @@ createTestSuite(
 );
 
 createTestSuite(
-  "Fix trademark (™):\n",
+  "Fix trademark (™):",
   trademark,
   (text) => replaceMark(text, "tm", "™"),
   {},

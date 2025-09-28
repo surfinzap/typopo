@@ -34,7 +34,7 @@ const singleEllipsisUnitSet = {
 };
 
 createTestSuite(
-  "Replace periods/ellipses with a single ellipsis:\n",
+  "Replace periods/ellipses with a single ellipsis:",
   { ...singleEllipsisSet, ...singleEllipsisUnitSet },
   replaceThreeCharsWithEllipsis,
   singleEllipsisSet,
@@ -49,7 +49,7 @@ const periodEllipsisComboSet = {
 };
 
 createTestSuite(
-  "Replace combination of period/ellipsis with an ellipsis:\n",
+  "Replace combination of period/ellipsis with an ellipsis:",
   periodEllipsisComboSet,
   replaceTwoCharsWithEllipsis,
   {},
@@ -61,7 +61,7 @@ const twoPeriodsBetweenWordsSet = {
 };
 
 createTestSuite(
-  "Replace two periods between words (spaces) with an ellipsis:\n",
+  "Replace two periods between words (spaces) with an ellipsis:",
   twoPeriodsBetweenWordsSet,
   replaceTwoPeriodsWithEllipsis,
   {},
@@ -79,7 +79,7 @@ const ellipsisAroundCommasSet = {
 };
 
 createTestSuite(
-  "Fix spacing, when ellipsis is used around commas:\n",
+  "Fix spacing, when ellipsis is used around commas:",
   ellipsisAroundCommasSet,
   fixEllipsisSpacingAroundCommas,
   {},
@@ -107,7 +107,7 @@ const ellipsisListItemUnitSet = {
 };
 
 createTestSuite(
-  "Fix spacing, when ellipsis is used as a list item in the list:\n",
+  "Fix spacing, when ellipsis is used as a list item in the list:",
   { ...ellipsisListItemSet, ...ellipsisListItemUnitSet },
   fixEllipsisAsLastItem,
   ellipsisListItemSet,
@@ -121,7 +121,7 @@ const aposiopesisParagraphStartSet = {
 };
 
 createTestSuite(
-  "Fix spacing, when aposiopesis is starting a paragraph:\n",
+  "Fix spacing, when aposiopesis is starting a paragraph:",
   aposiopesisParagraphStartSet,
   fixAposiopesisStartingParagraph,
   {},
@@ -146,7 +146,7 @@ const aposiopesisSentenceStartUnitSet = {
 };
 
 createTestSuite(
-  "Fix spacing, when aposiopesis is starting a sentence:\n",
+  "Fix spacing, when aposiopesis is starting a sentence:",
   { ...aposiopesisSentenceStartSet, ...aposiopesisSentenceStartUnitSet },
   fixAposiopesisStartingSentence,
   aposiopesisSentenceStartSet,
@@ -160,7 +160,7 @@ const aposiopesisBetweenSentencesSet = {
 };
 
 createTestSuite(
-  "Fix spacing, when aposiopesis is between sentences:\n",
+  "Fix spacing, when aposiopesis is between sentences:",
   aposiopesisBetweenSentencesSet,
   fixAposiopesisBetweenSentences,
   {},
@@ -175,7 +175,7 @@ const aposiopesisBetweenWordsSet = {
 };
 
 createTestSuite(
-  "Fix spacing, when aposiopesis is between words:\n",
+  "Fix spacing, when aposiopesis is between words:",
   aposiopesisBetweenWordsSet,
   fixAposiopesisBetweenWords,
   {},
@@ -208,7 +208,7 @@ const ellipsisBetweenSentencesUnitSet = {
 };
 
 createTestSuite(
-  "Fix spacing, when ellipsis is between sentences:\n",
+  "Fix spacing, when ellipsis is between sentences:",
   { ...ellipsisBetweenSentencesSet, ...ellipsisBetweenSentencesUnitSet },
   fixEllipsisBetweenSentences,
   ellipsisBetweenSentencesSet,
@@ -228,7 +228,7 @@ const aposiopesisEndingParagraphUnitSet = {
 };
 
 createTestSuite(
-  "Fix spacing, when aposiopesis is ending a paragraph:\n",
+  "Fix spacing, when aposiopesis is ending a paragraph:",
   { ...aposiopesisEndingParagraphSet, ...aposiopesisEndingParagraphUnitSet },
   fixAposiopesisEndingParagraph,
   aposiopesisEndingParagraphSet,

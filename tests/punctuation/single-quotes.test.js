@@ -78,7 +78,7 @@ export function getSingleQuoteSet(localeName) {
   return transformed;
 }
 
-describe("Identify contracted and (’n’) as apostrophes (en-us):\n", () => {
+describe("Identify contracted and (’n’) as apostrophes (en-us):", () => {
   let moduleTestCase = {
     "rock 'n' roll": "rock ’n’ roll",
 
@@ -151,7 +151,7 @@ describe("Identify contracted and (’n’) as apostrophes (en-us):\n", () => {
   });
 });
 
-describe("Identify common contractions at the beginning of the word as apostrophes (en-us):\n", () => {
+describe("Identify common contractions at the beginning of the word as apostrophes (en-us):", () => {
   let testCase = {
     "Just 'cause I wanna.":               "Just ’cause I wanna.",
     "'Tis the season":                    "’Tis the season",
@@ -189,7 +189,7 @@ describe("Identify common contractions at the beginning of the word as apostroph
   });
 });
 
-describe("Identify common contractions at the end of the word as apostrophes (en-us):\n", () => {
+describe("Identify common contractions at the end of the word as apostrophes (en-us):", () => {
   let testCase = {
     "nottin'": "nottin’",
 
@@ -228,7 +228,7 @@ describe("Identify common contractions at the end of the word as apostrophes (en
   });
 });
 
-describe("Identify in-word contractions as apostrophes (en-us):\n", () => {
+describe("Identify in-word contractions as apostrophes (en-us):", () => {
   let testCase = {
     "69'ers":       "69’ers",
     "iPhone6's":    "iPhone6’s",
@@ -266,7 +266,7 @@ describe("Identify in-word contractions as apostrophes (en-us):\n", () => {
   });
 });
 
-describe("Identify contracted years as apostrophes (en-us):\n", () => {
+describe("Identify contracted years as apostrophes (en-us):", () => {
   let testCase = {
     "INCHEBA '89": "INCHEBA ’89",
     "in '70s":     "in ’70s",
@@ -301,7 +301,7 @@ describe("Identify contracted years as apostrophes (en-us):\n", () => {
   });
 });
 
-describe("Identify feet and arcminutes following a 1–3 numbers (en-us):\n", () => {
+describe("Identify feet and arcminutes following a 1–3 numbers (en-us):", () => {
   let moduleTestCase = {
     "12 ' 45″": "12′ 45″",
 
@@ -358,7 +358,7 @@ describe("Identify feet and arcminutes following a 1–3 numbers (en-us):\n", ()
   });
 });
 
-describe("Identify standalone left single quote (en-us):\n", () => {
+describe("Identify standalone left single quote (en-us):", () => {
   let unitTestCase = {
     '" \'word"': '" {{typopo__left-single-quote--standalone}}word"',
 
@@ -428,7 +428,7 @@ describe("Identify standalone left single quote (en-us):\n", () => {
   });
 });
 
-describe("Identify standalone right single quote (en-us):\n", () => {
+describe("Identify standalone right single quote (en-us):", () => {
   let unitTestCase = {
     '"word\'"': '"word{{typopo__right-single-quote--standalone}}"',
 
@@ -512,7 +512,7 @@ describe("Identify standalone right single quote (en-us):\n", () => {
   });
 });
 
-describe("Identify single quote pairs (en-us):\n", () => {
+describe("Identify single quote pairs (en-us):", () => {
   let unitTestCase = {
     "{{typopo__left-single-quote--standalone}}word{{typopo__right-single-quote--standalone}}":
       "{{typopo__left-single-quote}}word{{typopo__right-single-quote}}",
@@ -556,7 +556,7 @@ describe("Identify single quote pairs (en-us):\n", () => {
   });
 });
 
-describe("Identify single quote pairs around single word (en-us):\n", () => {
+describe("Identify single quote pairs around single word (en-us):", () => {
   let moduleTestCase = {
     "'word'": "‘word’",
 
@@ -602,7 +602,7 @@ describe("Identify single quote pairs around single word (en-us):\n", () => {
   });
 });
 
-describe("Replace a single qoute & a single prime with a single quote pair (en-us):\n", () => {
+describe("Replace a single qoute & a single prime with a single quote pair (en-us):", () => {
   let unitTestCase = {
     "{{typopo__left-single-quote--standalone}}word{{typopo__single-prime}}":
       "{{typopo__left-single-quote}}word{{typopo__right-single-quote}}",
@@ -637,7 +637,7 @@ describe("Replace a single qoute & a single prime with a single quote pair (en-u
   });
 });
 
-describe("Identify residual apostrophes  (en-us):\n", () => {
+describe("Identify residual apostrophes  (en-us):", () => {
   let testCase = {
     "Hers'": "Hers’",
   };
@@ -663,7 +663,7 @@ describe("Identify residual apostrophes  (en-us):\n", () => {
   });
 });
 
-describe("Remove extra space around a single prime:\n", () => {
+describe("Remove extra space around a single prime:", () => {
   let testCase = {
     "12 ′ 45″": "12′ 45″",
 
@@ -689,7 +689,7 @@ describe("Remove extra space around a single prime:\n", () => {
   });
 });
 
-describe("Swap single quotes and terminal punctuation for a quoted part (en-us):\n", () => {
+describe("Swap single quotes and terminal punctuation for a quoted part (en-us):", () => {
   let testCase = {
     // quoted part at the
     // end of a sentence
@@ -759,7 +759,7 @@ describe("Swap single quotes and terminal punctuation for a quoted part (en-us):
   });
 });
 
-describe("Single quotes (module test) \n", () => {
+describe("Single quotes (module test) ", () => {
   supportedLocales.forEach((localeName) => {
     const testCase = getSingleQuoteSet(localeName);
 
@@ -777,7 +777,7 @@ describe("Single quotes (module test) \n", () => {
   });
 });
 
-describe("Test if markdown ticks are kept (single quotes) (en-us):\n", () => {
+describe("Test if markdown ticks are kept (single quotes) (en-us):", () => {
   let testCase = {
     "```\ncode\n```": "```\ncode\n```",
 

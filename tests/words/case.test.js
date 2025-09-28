@@ -32,10 +32,4 @@ export const caseSet = {
   "kW":    "kW", // kilowatts
   "mA":    "mA", //milli amperes
 };
-createTestSuite(
-  "Fix accidental uPPERCASE\n",
-  caseSet,
-  null,
-  {},
-  fixCase
-);
+createTestSuite("Fix accidental uPPERCASE", caseSet, null, {}, fixCase);

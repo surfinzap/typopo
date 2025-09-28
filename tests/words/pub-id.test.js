@@ -55,37 +55,13 @@ const isbnNumberSet = {
   "978 - 0 - 9752298 - 0 - X": "978-0-9752298-0-X",
 };
 
-createTestSuite(
-  "Fix ISSN format\n",
-  issnSet,
-  fixISSN,
-  {},
-  fixPubId
-);
+createTestSuite("Fix ISSN format", issnSet, fixISSN, {}, fixPubId);
 
-createTestSuite(
-  "Fix ISBN10 format\n",
-  isbn10Set,
-  fixISBN10,
-  {},
-  fixPubId
-);
+createTestSuite("Fix ISBN10 format", isbn10Set, fixISBN10, {}, fixPubId);
 
-createTestSuite(
-  "Fix ISBN13 format\n",
-  isbn13Set,
-  fixISBN13,
-  {},
-  fixPubId
-);
+createTestSuite("Fix ISBN13 format", isbn13Set, fixISBN13, {}, fixPubId);
 
-createTestSuite(
-  "Fix ISBN number\n",
-  isbnNumberSet,
-  fixISBNnumber,
-  {},
-  fixPubId
-);
+createTestSuite("Fix ISBN number", isbnNumberSet, fixISBNnumber, {}, fixPubId);
 
 export const pubIdSet = {
   ...issnSet,

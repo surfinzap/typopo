@@ -6,10 +6,4 @@ export const plusMinusSet = {
   "-+": "±",
 };
 
-createTestSuite(
-  "Fix plus-minus symbol ±\n",
-  plusMinusSet,
-  null,
-  {},
-  fixPlusMinus
-);
+createTestSuite("Fix plus-minus symbol ±", plusMinusSet, null, {}, fixPlusMinus);

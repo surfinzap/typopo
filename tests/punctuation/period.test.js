@@ -13,7 +13,7 @@ export const periodSet = {
 };
 
 createTestSuite(
-  "Replace 2 periods at the end of the sentecne with a single period\n",
+  "Replace 2 periods at the end of the sentecne with a single period",
   periodSet,
   null,
   {},

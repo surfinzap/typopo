@@ -23,6 +23,7 @@ import { abbreviationsSet, transformAbbrSet } from "../words/abbreviations.test.
 import { caseSet } from "../words/case.test.js";
 import { exceptionsSet } from "../words/exceptions.test.js";
 import { pubIdSet } from "../words/pub-id.test.js";
+import { dashSet, transformDashSet } from "../punctuation/dash.test.js";
 
 let fixTyposMinified = null;
 let fixTyposUmd = null;
@@ -157,6 +158,7 @@ function getTestModules(localeName) {
     ...ellipsisSet,
     ...getDoubleQuoteSet(localeName),
     ...getSingleQuoteSet(localeName),
+    ...transformDashSet(dashSet, localeName),
 
     // symbols
     ...transformSymbolSet(symbolSet, "copyright", localeName),
@@ -250,7 +252,7 @@ supportedLocales.forEach((locale) => {
   });
 });
 
-describe("Markdown ticks are kept (integration test) (en-us):\n", () => {
+describe("Markdown ticks are kept (integration test) (en-us):", () => {
   let testCase = {
     "```\ncode\n```":    "```\ncode\n```",
     "``code``":          "``code``",

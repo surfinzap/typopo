@@ -5,7 +5,7 @@ import { createTestSuite } from "../test-helpers.js";
 
 supportedLocales.forEach((localeName) => {
   createTestSuite(
-    `Fix numero sign (№), ${localeName}:\n`,
+    `Fix numero sign (№), ${localeName}:`,
     transformSymbolSet(symbolSet, "numeroSign", localeName),
     null,
     {},

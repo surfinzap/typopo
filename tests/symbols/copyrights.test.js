@@ -32,7 +32,7 @@ const replaceSoundRecordingCopyrightSet = {
 
 supportedLocales.forEach((localeName) => {
   createTestSuite(
-    `Fix copyright (©), ${localeName}:\n`,
+    `Fix copyright (©), ${localeName}:`,
     replaceCopyrightSet,
     (text) => replaceCopyright(text, "c", base.copyright),
     transformSymbolSet(symbolSet, "copyright", localeName),
@@ -43,7 +43,7 @@ supportedLocales.forEach((localeName) => {
 
 supportedLocales.forEach((localeName) => {
   createTestSuite(
-    `Fix sound recording copyright (℗), ${localeName}:\n`,
+    `Fix sound recording copyright (℗), ${localeName}:`,
     replaceSoundRecordingCopyrightSet,
     (text) => replaceCopyright(text, "p", base.soundRecordingCopyright),
     transformSymbolSet(symbolSet, "soundRecordingCopyright", localeName),

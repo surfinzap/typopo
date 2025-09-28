@@ -5,7 +5,7 @@ import { createTestSuite } from "../test-helpers.js";
 
 supportedLocales.forEach((localeName) => {
   createTestSuite(
-    `Fix section sign (§), ${localeName}:\n`,
+    `Fix section sign (§), ${localeName}:`,
     transformSymbolSet(symbolSet, "sectionSign", localeName),
     null,
     {},
@@ -16,7 +16,7 @@ supportedLocales.forEach((localeName) => {
 
 supportedLocales.forEach((localeName) => {
   createTestSuite(
-    `Fix paragraph sign (¶), ${localeName}:\n`,
+    `Fix paragraph sign (¶), ${localeName}:`,
     transformSymbolSet(symbolSet, "paragraphSign", localeName),
     null,
     {},

@@ -23,7 +23,7 @@ const numberSignFalsePositive = {
 };
 
 createTestSuite(
-  "Remove extra space before number sign\n",
+  "Remove extra space before number sign",
   {
     ...numberSignSet,
     ...numberSignFalsePositive,

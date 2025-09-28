@@ -111,7 +111,7 @@ export function getDoubleQuoteSet(localeName) {
   return transformed;
 }
 
-describe("Remove punctuation before double quotes (en-us):\n", () => {
+describe("Remove punctuation before double quotes (en-us):", () => {
   let testCase = {
     /* extra comma after terminal punctuation, 
      as it it happens in direct speech */
@@ -131,7 +131,7 @@ describe("Remove punctuation before double quotes (en-us):\n", () => {
   });
 });
 
-describe("Remove punctuation after double quotes (en-us):\n", () => {
+describe("Remove punctuation after double quotes (en-us):", () => {
   let testCase = {
     /* dot at the end of a direct speech ending with abbreviation */
     "“We will continue this tomorrow at 8:00 a.m.”.":
@@ -151,7 +151,7 @@ describe("Remove punctuation after double quotes (en-us):\n", () => {
   });
 });
 
-describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us):\n", () => {
+describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us):", () => {
   let testCase = {
     '12′ 45"':  "12′ 45″",
     "12′ 45“":  "12′ 45″",
@@ -224,7 +224,7 @@ describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
   });
 });
 
-describe("Identify double quote pairs (en-us):\n", () => {
+describe("Identify double quote pairs (en-us):", () => {
   let testCase = {
     '"quoted material"': "“quoted material”",
 
@@ -296,7 +296,7 @@ describe("Identify double quote pairs (en-us):\n", () => {
   });
 });
 
-describe("Identify standalone left double quote (en-us):\n", () => {
+describe("Identify standalone left double quote (en-us):", () => {
   let testCase = {
     '"There is a standalone left quote.': "“There is a standalone left quote.",
 
@@ -332,7 +332,7 @@ describe("Identify standalone left double quote (en-us):\n", () => {
   });
 });
 
-describe("Identify standalone right double quote (en-us):\n", () => {
+describe("Identify standalone right double quote (en-us):", () => {
   let testCase = {
     'There is a standalone" right quote.': "There is a standalone” right quote.",
 
@@ -370,7 +370,7 @@ describe("Identify standalone right double quote (en-us):\n", () => {
   });
 });
 
-describe("Remove unidentified double quotes (en-us):\n", () => {
+describe("Remove unidentified double quotes (en-us):", () => {
   let testCase = {
     'word " word': "word word",
 
@@ -402,7 +402,7 @@ describe("Remove unidentified double quotes (en-us):\n", () => {
   });
 });
 
-describe("Replace a double qoute & a double prime with a double quote pair (en-us):\n", () => {
+describe("Replace a double qoute & a double prime with a double quote pair (en-us):", () => {
   let unitTestCase = {
     "{{typopo__left-double-quote--standalone}}word{{typopo__double-prime}}":
       "{{typopo__left-double-quote}}word{{typopo__right-double-quote}}",
@@ -437,7 +437,7 @@ describe("Replace a double qoute & a double prime with a double quote pair (en-u
   });
 });
 
-describe("Swap quotes and terminal punctuation for a quoted part (en-us):\n", () => {
+describe("Swap quotes and terminal punctuation for a quoted part (en-us):", () => {
   let testCase = {
     // quoted part at the
     // end of a sentence
@@ -527,7 +527,7 @@ describe("Swap quotes and terminal punctuation for a quoted part (en-us):\n", ()
   });
 });
 
-describe("Remove extra comma after sentence punctuation in direct speech (en-us):\n", () => {
+describe("Remove extra comma after sentence punctuation in direct speech (en-us):", () => {
   let testCase = {
     "“Hey!,” she said": "“Hey!” she said",
 
@@ -558,7 +558,7 @@ describe("Remove extra comma after sentence punctuation in direct speech (en-us)
   });
 });
 
-describe("Remove extra spaces around quotes and primes (en-us):\n", () => {
+describe("Remove extra spaces around quotes and primes (en-us):", () => {
   let testCase = {
     "“ Ups, an extra space at the beginning”": "“Ups, an extra space at the beginning”",
 
@@ -587,7 +587,7 @@ describe("Remove extra spaces around quotes and primes (en-us):\n", () => {
   });
 });
 
-describe("Add a missing space before a left double quote (en-us):\n", () => {
+describe("Add a missing space before a left double quote (en-us):", () => {
   let testCase = {
     "It’s a very “nice” saying.": "It’s a very “nice” saying.",
 
@@ -610,7 +610,7 @@ describe("Add a missing space before a left double quote (en-us):\n", () => {
   });
 });
 
-describe("Add a missing space after a left double quote (en-us):\n", () => {
+describe("Add a missing space after a left double quote (en-us):", () => {
   let testCase = {
     "It’s a “nice”saying.": "It’s a “nice” saying.",
 
@@ -633,7 +633,7 @@ describe("Add a missing space after a left double quote (en-us):\n", () => {
   });
 });
 
-describe("Double quotes in default language (en-us)\n", () => {
+describe("Double quotes in default language (en-us)", () => {
   let testCase = {
     ...getDoubleQuoteSet("en-us"),
     ...testFalsePositives,
@@ -648,7 +648,7 @@ describe("Double quotes in default language (en-us)\n", () => {
   });
 });
 
-describe("Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n", () => {
+describe("Double quotes in Slovak, Czech and German language (sk, cs, de-de)", () => {
   let testCase = {
     ...getDoubleQuoteSet("sk"),
   };
@@ -674,7 +674,7 @@ describe("Double quotes in Slovak, Czech and German language (sk, cs, de-de)\n",
   });
 });
 
-describe("Double quotes in Rusyn language (rue)\n", () => {
+describe("Double quotes in Rusyn language (rue)", () => {
   let testCase = {
     ...getDoubleQuoteSet("rue"),
   };
@@ -688,7 +688,7 @@ describe("Double quotes in Rusyn language (rue)\n", () => {
   });
 });
 
-describe("Test if markdown ticks are kept (double quotes) (en-us):\n", () => {
+describe("Test if markdown ticks are kept (double quotes) (en-us):", () => {
   let testCase = {
     "```\ncode\n```": "```\ncode\n```",
 

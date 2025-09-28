@@ -38,7 +38,7 @@ const multipleSpacesSet = {
 };
 
 createTestSuite(
-  "Replace multiple spaces with a single one\\n",
+  "Replace multiple spaces with a single one",
   multipleSpacesSet,
   removeMultipleSpaces,
   {},
@@ -118,7 +118,7 @@ const keepSpacesBeforeMarkdownListSet = {
 };
 
 createTestSuite(
-  "Remove spaces and tabs at beginning of the paragraph\\n",
+  "Remove spaces and tabs at beginning of the paragraph",
   { ...removeSpacesBeforeTextSet, ...removeSpacesBeforeMarkdownListSet },
   (text) => removeSpacesAtParagraphBeginning(text, configRemoveWhitespacesBeforeParagraphs),
   {},
@@ -127,7 +127,7 @@ createTestSuite(
 );
 
 createTestSuite(
-  "Remove spaces and tabs at beginning of the paragraph, but keep spaces and tabs at the beginning of markdown lists (indicated as -/*)\\n",
+  "Remove spaces and tabs at beginning of the paragraph, but keep spaces and tabs at the beginning of markdown lists (indicated as -/*)",
   { ...removeSpacesBeforeTextSet, ...keepSpacesBeforeMarkdownListSet },
   (text) => removeSpacesAtParagraphBeginning(text, configKeepWhitespacesBeforeMarkdownList),
   {},
@@ -148,7 +148,7 @@ const spacesBeforeSentencePauseSet = {
 };
 
 createTestSuite(
-  "Remove space before sentence pause-punctuation\\n",
+  "Remove space before sentence pause-punctuation",
   spacesBeforeSentencePauseSet,
   removeSpaceBeforeSentencePausePunctuation,
   {},
@@ -179,7 +179,7 @@ const spacesBeforeTerminalPunctuationSet = {
 };
 
 createTestSuite(
-  "Remove space before a terminal punctuation, closing brackets and a degree symbol\\n",
+  "Remove space before a terminal punctuation, closing brackets and a degree symbol",
   spacesBeforeTerminalPunctuationSet,
   removeSpaceBeforeTerminalPunctuation,
   {},
@@ -198,7 +198,7 @@ const ordinalIndicatorEnUsSet = {
 };
 
 createTestSuite(
-  "Remove space before ordinal indicator (en-us)\\n",
+  "Remove space before ordinal indicator (en-us)",
   ordinalIndicatorEnUsSet,
   (text) => removeSpaceBeforeOrdinalIndicator(text, new Locale("en-us")),
   {},
@@ -212,7 +212,7 @@ const ordinalIndicatorOtherLocalesSet = {
 };
 
 createTestSuite(
-  "Remove space before ordinal indicator (sk, cs, rue, de-de)\\n",
+  "Remove space before ordinal indicator (sk, cs, rue, de-de)",
   ordinalIndicatorOtherLocalesSet,
   (text) => removeSpaceBeforeOrdinalIndicator(text, new Locale("sk")),
   {},
@@ -228,7 +228,7 @@ const spacesAfterOpeningBracketsSet = {
 };
 
 createTestSuite(
-  "Remove space after opening brackets\\n",
+  "Remove space after opening brackets",
   spacesAfterOpeningBracketsSet,
   removeSpaceAfterOpeningBrackets,
   {},
@@ -248,7 +248,7 @@ const spacesBeforeOpeningBracketsSet = {
 };
 
 createTestSuite(
-  "Add space before opening brackets\\n",
+  "Add space before opening brackets",
   spacesBeforeOpeningBracketsSet,
   addSpaceBeforeOpeningBrackets
 );
@@ -268,7 +268,7 @@ const spacesAfterTerminalPunctuationSet = {
 };
 
 createTestSuite(
-  "Add space after terminal punctuation\\n",
+  "Add space after terminal punctuation",
   spacesAfterTerminalPunctuationSet,
   addSpaceAfterTerminalPunctuation,
   {},
@@ -292,7 +292,7 @@ const spacesAfterSentencePauseSet = {
 };
 
 createTestSuite(
-  "Add a space after sentence pause punctuation\\n",
+  "Add a space after sentence pause punctuation",
   spacesAfterSentencePauseSet,
   addSpaceAfterSentencePause,
   {},
@@ -311,7 +311,7 @@ const spacesAfterClosingBracketsSet = {
 };
 
 createTestSuite(
-  "Add a space after closing brackets\\n",
+  "Add a space after closing brackets",
   spacesAfterClosingBracketsSet,
   addSpaceAfterClosingBrackets,
   {},
@@ -333,7 +333,7 @@ const trailingSpacesSet = {
 };
 
 createTestSuite(
-  "Remove trailing spaces\\n",
+  "Remove trailing spaces",
   trailingSpacesSet,
   removeSpacesAtParagraphEnd,
   {},
@@ -377,7 +377,7 @@ const spacesBeforeSymbolSet = {
   "text ©1111": "text ©1111",
 };
 
-createTestSuite("Add space before a symbol, e.g. ©\\n", spacesBeforeSymbolSet, (text) =>
+createTestSuite("Add space before a symbol, e.g. ©", spacesBeforeSymbolSet, (text) =>
   addSpaceBeforeSymbol(text, "©", new Locale("en-us"))
 );
 
