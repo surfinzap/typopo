@@ -84,7 +84,7 @@ const dashesBetweenWordsSet = {
 
 supportedLocales.forEach((locale) => {
   createTestSuite(
-    `Fix a dash, an en dash, an em dash and spacing between words (${locale})`,
+    `Fix a dash, an en dash, an em dash and spacing between words`,
     transformDashSet({ ...dashesBetweenWordsSet, ...dashFalsePositives }, locale),
     fixDashesBetweenWords,
     {},
@@ -106,7 +106,7 @@ const hyphenWordPunctuationSet = {
 
 supportedLocales.forEach((locale) => {
   createTestSuite(
-    `Fix hyphen between word and punctuation (${locale})`,
+    `Fix hyphen between word and punctuation`,
     transformDashSet({ ...hyphenWordPunctuationSet, ...dashFalsePositives }, locale),
     fixHyphenBetweenWordAndPunctuation,
     {},

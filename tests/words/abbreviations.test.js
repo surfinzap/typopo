@@ -53,7 +53,7 @@ const initialsSet = {
 
 supportedLocales.forEach((locale) => {
   createTestSuite(
-    `Fix Initials, ${locale}:`,
+    `Fix Initials`,
     transformAbbrSet(initialsSet, locale),
     (text) => fixInitials(text, new Locale(locale)),
     {},
@@ -148,7 +148,7 @@ supportedLocales.forEach((locale) => {
   }
 
   createTestSuite(
-    `Fix multiple-word abbreviations, ${locale}:`,
+    `Fix multiple-word abbreviations`,
     transformAbbrSet(unitTestSet, locale),
     (text) => fixMultipleWordAbbreviations(text, new Locale(locale)),
     transformAbbrSet(multiWordAbbrSet, locale),
@@ -187,7 +187,7 @@ const singleWordAbbrFalsePositiveSet = {
 
 supportedLocales.forEach((locale) => {
   createTestSuite(
-    `Fix Single-word abbreviations, ${locale}:`,
+    `Fix Single-word abbreviations`,
     transformAbbrSet({ ...singleWordAbbrSet, ...singleWordAbbrFalsePositiveSet }, locale),
     (text) => fixSingleWordAbbreviations(text, new Locale(locale)),
     transformAbbrSet(singleWordAbbrSet, locale),
