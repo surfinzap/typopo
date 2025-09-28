@@ -1,16 +1,16 @@
 import {
+  fixAposiopesisBetweenSentences,
+  fixAposiopesisBetweenWords,
+  fixAposiopesisEndingParagraph,
+  fixAposiopesisStartingParagraph,
+  fixAposiopesisStartingSentence,
+  fixEllipsis,
+  fixEllipsisAsLastItem,
+  fixEllipsisBetweenSentences,
+  fixEllipsisSpacingAroundCommas,
   replaceThreeCharsWithEllipsis,
   replaceTwoCharsWithEllipsis,
   replaceTwoPeriodsWithEllipsis,
-  fixEllipsisSpacingAroundCommas,
-  fixAposiopesisStartingParagraph,
-  fixAposiopesisStartingSentence,
-  fixAposiopesisBetweenSentences,
-  fixAposiopesisBetweenWords,
-  fixEllipsisBetweenSentences,
-  fixAposiopesisEndingParagraph,
-  fixEllipsis,
-  fixEllipsisAsLastItem,
 } from "../../src/modules/punctuation/ellipsis.js";
 import { createTestSuite } from "../test-helpers.js";
 

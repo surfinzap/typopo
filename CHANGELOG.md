@@ -20,10 +20,10 @@ Integration tests
   - ~~numero-sign~~
   - ~~plus-minus~~
   - ~~section-sign~~
-- whitespace
+- ~~whitespace~~
   - ~~lines~~
   - ~~nbsp~~
-  - spaces
+  - ~~spaces~~
 - ~~words~~
   - ~~abbreviations~~
   - ~~case~~
@@ -35,7 +35,7 @@ Helper function
 - punctuation
  - dash // after integration
  - double-quotes // needs manual refactoring
- - single-quotes // needs manula refactoring
+ - single-quotes // needs manual refactoring
  - ~~ellipsis~~
  - ~~hyphen~~
  - ~~period~~
@@ -51,7 +51,7 @@ Helper function
 - whitespace
   - ~~lines~~
   - nbsp // needs manual refactoring
-  - spaces // ? after integration
+  - ~~spaces~~ 
 - words
   - ~~abbreviations~~ 
   - ~~case~~

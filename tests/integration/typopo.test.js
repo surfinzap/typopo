@@ -2,25 +2,27 @@ import { readFileSync } from "fs";
 import { JSDOM } from "jsdom";
 import { createRequire } from "module";
 import { describe, expect, it } from "vitest";
-import { fixTypos } from "../../src/typopo.js";
+
 import { supportedLocales } from "../../src/locale/locale.js";
+import { fixTypos } from "../../src/typopo.js";
+import { getDoubleQuoteSet } from "../punctuation/double-quotes.test.js";
+import { ellipsisSet } from "../punctuation/ellipsis.test.js";
+import { hyphenSet } from "../punctuation/hyphen.test.js";
+import { periodSet } from "../punctuation/period.test.js";
+import { getSingleQuoteSet } from "../punctuation/single-quotes.test.js";
 import { exponentSet } from "../symbols/exponents.test.js";
 import { marksSet } from "../symbols/marks.test.js";
 import { multiplicationSignSet } from "../symbols/multiplication-sign.test.js";
 import { numberSignSet } from "../symbols/number-sign.test.js";
 import { plusMinusSet } from "../symbols/plus-minus.test.js";
 import { symbolSet, transformSymbolSet } from "../symbols/symbol-utils.test.js";
-import { caseSet } from "../words/case.test.js";
-import { pubIdSet } from "../words/pub-id.test.js";
-import { exceptionsSet } from "../words/exceptions.test.js";
-import { hyphenSet } from "../punctuation/hyphen.test.js";
-import { periodSet } from "../punctuation/period.test.js";
 import { linesSet } from "../whitespace/lines.test.js";
-import { getDoubleQuoteSet } from "../punctuation/double-quotes.test.js";
-import { abbreviationsSet, transformAbbrSet } from "../words/abbreviations.test.js";
-import { getSingleQuoteSet } from "../punctuation/single-quotes.test.js";
-import { ellipsisSet } from "../punctuation/ellipsis.test.js";
 import { getNbspSet } from "../whitespace/nbsp.test.js";
+import { spacesSet } from "../whitespace/spaces.test.js";
+import { abbreviationsSet, transformAbbrSet } from "../words/abbreviations.test.js";
+import { caseSet } from "../words/case.test.js";
+import { exceptionsSet } from "../words/exceptions.test.js";
+import { pubIdSet } from "../words/pub-id.test.js";
 
 let fixTyposMinified = null;
 let fixTyposUmd = null;
@@ -79,9 +81,11 @@ describe("Test consistency of internal variables", () => {
      in some functions. Make sure that variables in curly brackets do not change
      in course of running algorithm.
      */
-    "{{test-variable}}":                                    "{{test-variable}}",
-    "{{test-variable}} at the beginning of the sentence.":  "{{test-variable}} at the beginning of the sentence.",
-    "And {{test-variable}} in the middle of the sentence.": "And {{test-variable}} in the middle of the sentence.",
+    "{{test-variable}}": "{{test-variable}}",
+    "{{test-variable}} at the beginning of the sentence.":
+      "{{test-variable}} at the beginning of the sentence.",
+    "And {{test-variable}} in the middle of the sentence.":
+      "And {{test-variable}} in the middle of the sentence.",
   };
 
   runAllVersions(testCase, "en-us");
@@ -169,10 +173,7 @@ function getTestModules(localeName) {
     // whitespace
     // lines are in keepLines and removeLines
     ...getNbspSet(localeName),
-    // spaces
-    "Sentence and… ?":    "Sentence and…?",
-    "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
-    "🥳 word 🥳 word 🥳": "🥳 word 🥳 word 🥳",
+    ...spacesSet,
 
     // words
     ...transformAbbrSet(abbreviationsSet, localeName),
@@ -209,9 +210,8 @@ let testKeepWhitespacesBeforeMarkdownList = {
 /* 
   Tests 
 */
-// DRY: Generate tests for all supported locales using a loop
 supportedLocales.forEach((locale) => {
-  describe(`Tests that all modules are plugged for ${locale}`, () => {
+  describe(`Tests all modules for ${locale}`, () => {
     let testCase = {
       ...getTestModules(locale),
     };
@@ -250,7 +250,7 @@ supportedLocales.forEach((locale) => {
   });
 });
 
-describe("Test if markdown ticks are kept (integration test) (en-us):\n", () => {
+describe("Markdown ticks are kept (integration test) (en-us):\n", () => {
   let testCase = {
     "```\ncode\n```":    "```\ncode\n```",
     "``code``":          "``code``",

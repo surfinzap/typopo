@@ -14,7 +14,7 @@ import {
   fixSpaces,
 } from "../../src/modules/whitespace/spaces.js";
 import { createTestSuite } from "../test-helpers.js";
-import Locale from "../../src/locale/locale.js";
+import Locale, { supportedLocales } from "../../src/locale/locale.js";
 
 const configRemoveWhitespacesBeforeParagraphs = {
   removeWhitespacesBeforeMarkdownList: true,
@@ -40,7 +40,10 @@ const multipleSpacesSet = {
 createTestSuite(
   "Replace multiple spaces with a single one\\n",
   multipleSpacesSet,
-  removeMultipleSpaces
+  removeMultipleSpaces,
+  {},
+  fixSpaces,
+  supportedLocales
 );
 
 const removeSpacesBeforeTextSet = {
@@ -120,7 +123,7 @@ createTestSuite(
   (text) => removeSpacesAtParagraphBeginning(text, configRemoveWhitespacesBeforeParagraphs),
   {},
   (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
-  "en-us"
+  supportedLocales
 );
 
 createTestSuite(
@@ -129,7 +132,7 @@ createTestSuite(
   (text) => removeSpacesAtParagraphBeginning(text, configKeepWhitespacesBeforeMarkdownList),
   {},
   (text, locale) => fixSpaces(text, locale, configKeepWhitespacesBeforeMarkdownList),
-  "en-us"
+  supportedLocales
 );
 
 const spacesBeforeSentencePauseSet = {
@@ -147,7 +150,10 @@ const spacesBeforeSentencePauseSet = {
 createTestSuite(
   "Remove space before sentence pause-punctuation\\n",
   spacesBeforeSentencePauseSet,
-  removeSpaceBeforeSentencePausePunctuation
+  removeSpaceBeforeSentencePausePunctuation,
+  {},
+  fixSpaces,
+  supportedLocales
 );
 
 const spacesBeforeTerminalPunctuationSet = {
@@ -175,7 +181,10 @@ const spacesBeforeTerminalPunctuationSet = {
 createTestSuite(
   "Remove space before a terminal punctuation, closing brackets and a degree symbol\\n",
   spacesBeforeTerminalPunctuationSet,
-  removeSpaceBeforeTerminalPunctuation
+  removeSpaceBeforeTerminalPunctuation,
+  {},
+  fixSpaces,
+  supportedLocales
 );
 
 const ordinalIndicatorEnUsSet = {
@@ -193,7 +202,7 @@ createTestSuite(
   ordinalIndicatorEnUsSet,
   (text) => removeSpaceBeforeOrdinalIndicator(text, new Locale("en-us")),
   {},
-  (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
+  (text, locale) => fixSpaces(text, locale),
   "en-us"
 );
 
@@ -207,7 +216,7 @@ createTestSuite(
   ordinalIndicatorOtherLocalesSet,
   (text) => removeSpaceBeforeOrdinalIndicator(text, new Locale("sk")),
   {},
-  null,
+  (text, locale) => fixSpaces(text, locale),
   ["sk", "cs", "rue", "de-de"]
 );
 
@@ -221,7 +230,10 @@ const spacesAfterOpeningBracketsSet = {
 createTestSuite(
   "Remove space after opening brackets\\n",
   spacesAfterOpeningBracketsSet,
-  removeSpaceAfterOpeningBrackets
+  removeSpaceAfterOpeningBrackets,
+  {},
+  fixSpaces,
+  supportedLocales
 );
 
 const spacesBeforeOpeningBracketsSet = {
@@ -260,8 +272,8 @@ createTestSuite(
   spacesAfterTerminalPunctuationSet,
   addSpaceAfterTerminalPunctuation,
   {},
-  (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
-  "en-us"
+  (text, locale) => fixSpaces(text, locale),
+  supportedLocales
 );
 
 const spacesAfterSentencePauseSet = {
@@ -284,8 +296,8 @@ createTestSuite(
   spacesAfterSentencePauseSet,
   addSpaceAfterSentencePause,
   {},
-  (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
-  "en-us"
+  (text, locale) => fixSpaces(text, locale),
+  supportedLocales
 );
 
 const spacesAfterClosingBracketsSet = {
@@ -303,8 +315,8 @@ createTestSuite(
   spacesAfterClosingBracketsSet,
   addSpaceAfterClosingBrackets,
   {},
-  (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
-  "en-us"
+  (text, locale) => fixSpaces(text, locale),
+  supportedLocales
 );
 
 const trailingSpacesSet = {
@@ -325,8 +337,8 @@ createTestSuite(
   trailingSpacesSet,
   removeSpacesAtParagraphEnd,
   {},
-  (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
-  "en-us"
+  (text, locale) => fixSpaces(text, locale),
+  supportedLocales
 );
 
 const spacesBeforeSymbolSet = {
@@ -368,3 +380,17 @@ const spacesBeforeSymbolSet = {
 createTestSuite("Add space before a symbol, e.g. ©\\n", spacesBeforeSymbolSet, (text) =>
   addSpaceBeforeSymbol(text, "©", new Locale("en-us"))
 );
+
+export const spacesSet = {
+  ...multipleSpacesSet,
+  ...removeSpacesBeforeTextSet,
+  ...spacesBeforeSentencePauseSet,
+  ...spacesBeforeTerminalPunctuationSet,
+  // ...ordinalIndicator has unit tests only
+  ...spacesAfterOpeningBracketsSet,
+  ...spacesAfterTerminalPunctuationSet,
+  ...spacesAfterSentencePauseSet,
+  ...spacesAfterClosingBracketsSet,
+  ...trailingSpacesSet,
+  // spacesBeforeSymbol tested extensively with specific symbols
+};
