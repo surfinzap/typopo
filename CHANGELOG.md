@@ -1,35 +1,7 @@
 # Changelog for Typopo
 
 
-## 2.7.0 //
-
-Helper function
-- punctuation
- - ~~dash~~ 
- - double-quotes // needs manual refactoring
- - single-quotes // needs manual refactoring
- - ~~ellipsis~~
- - ~~hyphen~~
- - ~~period~~
-- ~~symbols~~
-  - ~~copyrights~~
-  - ~~exponents~~ 
-  - ~~marks~~ 
-  - ~~multiplication-sign~~ 
-  - ~~number-sign~~
-  - ~~numero-sign~~
-  - ~~plus-minus~~
-  - ~~section-sign~~
-- ~~whitespace~~
-  - ~~lines~~
-  - ~~nbsp~~ 
-  - ~~spaces~~ 
-- ~~words~~
-  - ~~abbreviations~~ 
-  - ~~case~~
-  - ~~exceptions~~
-  - ~~pub-id~~
-
+## 2.7.0 // 2025-09-28
 
 theme: split locales, refactor tests to better work with multiple locales, preparation to extend typopo with more detailed configuration
 
@@ -48,6 +20,8 @@ theme: split locales, refactor tests to better work with multiple locales, prepa
 
 ### 🔨 Maintenance
 - Update NPM packages to their latest versions 
+
+
 
 ## 2.6.0 // 2025-08-09
 This release brings significant improvements to the build system and typography handling, along with important bug fixes for percentage formatting across different languages. The modernized build pipeline delivers better performance and smaller bundle sizes while maintaining compatibility across all supported environments.
