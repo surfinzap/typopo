@@ -1,5 +1,5 @@
 import { fixCase } from "../../src/modules/words/case.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 
 export const caseSet = {
   // Accidental uPPERCASE at the beginning of sentence

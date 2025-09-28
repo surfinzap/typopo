@@ -1,5 +1,5 @@
 import { fixPlusMinus } from "../../src/modules/symbols/plus-minus.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 
 export const plusMinusSet = {
   "+-": "±",

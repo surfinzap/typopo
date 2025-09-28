@@ -1,6 +1,6 @@
 import { replaceMark, fixMarks } from "../../src/modules/symbols/marks.js";
 import { supportedLocales } from "../../src/locale/locale.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 
 const registeredTrademark = {
   "(r)":           "®",

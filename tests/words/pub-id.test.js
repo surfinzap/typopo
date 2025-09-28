@@ -5,7 +5,7 @@ import {
   fixISBN13,
   fixISBNnumber,
 } from "../../src/modules/words/pub-id.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 
 const issnSet = {
   "ISSN 0000 - 0000":  "ISSN 0000-0000",

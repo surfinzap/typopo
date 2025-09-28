@@ -1,5 +1,5 @@
 import { fixExponents, fixSquares, fixCubes } from "../../src/modules/symbols/exponents.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 
 const exponentSquareSet = {
   "100 m2":         "100 m²",

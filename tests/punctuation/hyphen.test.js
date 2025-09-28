@@ -1,5 +1,5 @@
 import { fixHyphen, fixSpaceAroundHyphen } from "../../src/modules/punctuation/hyphen.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 
 export const hyphenSet = {
   "e-shop":  "e-shop", // correct

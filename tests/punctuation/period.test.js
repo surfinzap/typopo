@@ -1,5 +1,5 @@
 import { fixPeriod } from "../../src/modules/punctuation/period.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 
 export const periodSet = {
   "Sentence ending..":                     "Sentence ending.",

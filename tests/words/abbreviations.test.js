@@ -4,7 +4,7 @@ import {
   fixMultipleWordAbbreviations,
   fixSingleWordAbbreviations,
 } from "../../src/modules/words/abbreviations.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 
 export function transformAbbrSet(testSet, localeName) {

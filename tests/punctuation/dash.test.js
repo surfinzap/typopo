@@ -8,7 +8,7 @@ import {
   fixDashBetweenOrdinalNumbers,
   fixDash,
 } from "../../src/modules/punctuation/dash.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 
 const threeHyphensSet = {

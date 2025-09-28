@@ -12,7 +12,7 @@ import {
   replaceTwoCharsWithEllipsis,
   replaceTwoPeriodsWithEllipsis,
 } from "../../src/modules/punctuation/ellipsis.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 
 const singleEllipsisSet = {
   /* [1] replace 3 and more dots/ellipses with an ellipsis */

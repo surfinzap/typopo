@@ -1,7 +1,7 @@
 import { base } from "../../src/const.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { fixCopyrights, replaceCopyright } from "../../src/modules/symbols/copyrights.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 import { symbolSet, transformSymbolSet } from "./symbol-utils.test.js";
 
 const replaceCopyrightSet = {

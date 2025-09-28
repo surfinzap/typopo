@@ -1,5 +1,5 @@
 import { removeEmptyLines } from "../../src/modules/whitespace/lines.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 
 export const linesSet = {
   // Remove excessive empty lines between paragraphs

@@ -2,7 +2,7 @@ import {
   removeExtraSpacesAfterNumberSign,
   fixNumberSign,
 } from "../../src/modules/symbols/number-sign.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 
 export const numberSignSet = {
   "word # 9":    "word #9",

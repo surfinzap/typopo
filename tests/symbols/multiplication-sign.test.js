@@ -5,7 +5,7 @@ import {
   fixNbspAroundMultiplicationSign,
   fixMultiplicationSign,
 } from "../../src/modules/symbols/multiplication-sign.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 
 const multiBetweenNumbers = {
   "5 x 4":   "5 × 4",

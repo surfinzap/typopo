@@ -15,7 +15,7 @@ import {
 } from "../../src/modules/whitespace/nbsp.js";
 import { describe, it, expect } from "vitest";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
-import { createTestSuite } from "../test-helpers.js";
+import { createTestSuite } from "../test-utils.js";
 import { base } from "../../src/const.js";
 
 const nbspBetweenMultiCharWordsSet = {
