@@ -13,39 +13,37 @@ import {
   addSpaceBeforeSymbol,
   fixSpaces,
 } from "../../src/modules/whitespace/spaces.js";
-import { describe, it, expect } from "vitest";
+import { createTestSuite } from "../test-helpers.js";
 import Locale from "../../src/locale/locale.js";
 
-let configRemoveWhitespacesBeforeParagraphs = {
+const configRemoveWhitespacesBeforeParagraphs = {
   removeWhitespacesBeforeMarkdownList: true,
 };
 
-let configKeepWhitespacesBeforeMarkdownList = {
+const configKeepWhitespacesBeforeMarkdownList = {
   removeWhitespacesBeforeMarkdownList: false,
 };
 
-describe("Replace multiple spaces with a single one\n", () => {
-  let testCase = {
-    /* Remove multiple spaces with a single one,
-       even non-breaking spaces and others */
-    "How  many spaces": "How many spaces",
-    "How   many":       "How many",
-    "How    many":      "How many",
-    "How     many":     "How many",
-    "How      many":    "How many", // test includes nbsp
-    "How      many":    "How many", // test includes hairSpace
-    "How      many":    "How many", // test includes narrowNbsp
-    "Howč     čmany":   "Howč čmany", // non-latin character
-  };
+const multipleSpacesSet = {
+  /* Remove multiple spaces with a single one,
+     even non-breaking spaces and others */
+  "How  many spaces": "How many spaces",
+  "How   many":       "How many",
+  "How    many":      "How many",
+  "How     many":     "How many",
+  "How       many":   "How many", // test includes nbsp
+  "How      many":    "How many", // test includes hairSpace
+  "How       many":   "How many", // test includes narrowNbsp
+  "Howč     čmany":   "Howč čmany", // non-latin character
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeMultipleSpaces(key)).toBe(testCase[key]);
-    });
-  });
-});
+createTestSuite(
+  "Replace multiple spaces with a single one\\n",
+  multipleSpacesSet,
+  removeMultipleSpaces
+);
 
-let testRemoveSpacesBeforeText = {
+const removeSpacesBeforeTextSet = {
   " What if paragraph starts with extra space at the beginning?":
     "What if paragraph starts with extra space at the beginning?",
 
@@ -55,28 +53,28 @@ let testRemoveSpacesBeforeText = {
   "   What if paragraph starts with extra space at the beginning?":
     "What if paragraph starts with extra space at the beginning?",
 
-  "    What if paragraph starts with extra space at the beginning?":
+  "    What if paragraph starts with extra space at the beginning?":
     "What if paragraph starts with extra space at the beginning?", // including nbsp
 
-  "    What if paragraph starts with extra space at the beginning?":
+  "\t\t\tWhat if paragraph starts with extra space at the beginning?":
     "What if paragraph starts with extra space at the beginning?", // including hairSpace
 
-  "    What if paragraph starts with extra space at the beginning?":
+  "\t\tWhat if paragraph starts with extra space at the beginning?":
     "What if paragraph starts with extra space at the beginning?", // including narrowNbsp
 
   "One sentence ends. And next one continues as it should":
     "One sentence ends. And next one continues as it should",
 
   /* removing tabs as well*/
-  "\t\t\tWhat if sentence starts with tabs?": "What if sentence starts with tabs?",
-  "\t\tWhat if sentence starts with tabs?":   "What if sentence starts with tabs?",
-  "	What if sentence starts with tabs?":      "What if sentence starts with tabs?",
+  "			What if sentence starts with tabs?": "What if sentence starts with tabs?",
+  "		What if sentence starts with tabs?":  "What if sentence starts with tabs?",
+  "	What if sentence starts with tabs?":   "What if sentence starts with tabs?",
 
   // double-check, that single new lines are not removed
   "If there is one line\nand another": "If there is one line\nand another",
 };
 
-let testRemoveSpacesBeforeMarkdownList = {
+const removeSpacesBeforeMarkdownListSet = {
   " - list":    "- list",
   "  - list":   "- list",
   "\t- list":   "- list",
@@ -86,7 +84,7 @@ let testRemoveSpacesBeforeMarkdownList = {
   "\t\t* list": "* list",
   "\t* list":   "* list",
   " * list":    "* list", //nbsp
-  " * list":    "* list", //narrowNbsp
+  "* list":     "* list", //narrowNbsp
   " + list":    "+ list",
   "  + list":   "+ list",
   "\t+ list":   "+ list",
@@ -97,7 +95,7 @@ let testRemoveSpacesBeforeMarkdownList = {
   "\t\t> list": "> list",
 };
 
-let testKeepSpacesBeforeMarkdownList = {
+const keepSpacesBeforeMarkdownListSet = {
   " - list":    " - list",
   "   - list":  "   - list",
   "\t- list":   "\t- list",
@@ -116,323 +114,257 @@ let testKeepSpacesBeforeMarkdownList = {
   " > list":    " > list", //narrowNbsp
 };
 
-describe("Remove spaces and tabs at beginning of the paragraph\n", () => {
-  let testCase = {
-    ...testRemoveSpacesBeforeText,
-    ...testRemoveSpacesBeforeMarkdownList,
-  };
+createTestSuite(
+  "Remove spaces and tabs at beginning of the paragraph\\n",
+  { ...removeSpacesBeforeTextSet, ...removeSpacesBeforeMarkdownListSet },
+  (text) => removeSpacesAtParagraphBeginning(text, configRemoveWhitespacesBeforeParagraphs),
+  {},
+  (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
+  "en-us"
+);
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeSpacesAtParagraphBeginning(key, configRemoveWhitespacesBeforeParagraphs)).toBe(
-        testCase[key]
-      );
-    });
-    it("module test", () => {
-      expect(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs)).toBe(
-        testCase[key]
-      );
-    });
-  });
-});
+createTestSuite(
+  "Remove spaces and tabs at beginning of the paragraph, but keep spaces and tabs at the beginning of markdown lists (indicated as -/*)\\n",
+  { ...removeSpacesBeforeTextSet, ...keepSpacesBeforeMarkdownListSet },
+  (text) => removeSpacesAtParagraphBeginning(text, configKeepWhitespacesBeforeMarkdownList),
+  {},
+  (text, locale) => fixSpaces(text, locale, configKeepWhitespacesBeforeMarkdownList),
+  "en-us"
+);
 
-describe("Remove spaces and tabs at beginning of the paragraph, but keep spaces and tabs at the beginning of markdown lists (indicated as -/*)\n", () => {
-  let testCase = {
-    ...testRemoveSpacesBeforeText,
-    ...testKeepSpacesBeforeMarkdownList,
-  };
+const spacesBeforeSentencePauseSet = {
+  "Hey , man.":                     "Hey, man.",
+  "Hey , man.":                     "Hey, man.", // nbsp
+  "Hey , man.":                     "Hey, man.", // hairSpace
+  "Hey , man.":                     "Hey, man.", // narrowNbsp
+  "Sentence and… :":                "Sentence and…:",
+  "Sentence and… , else":           "Sentence and…, else",
+  "Sentence and… ; else":           "Sentence and…; else",
+  "Keep space before emoticon :)":  "Keep space before emoticon :)", // false positive
+  "Keep space before emoticon :-)": "Keep space before emoticon :-)", // false positive
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeSpacesAtParagraphBeginning(key, configKeepWhitespacesBeforeMarkdownList)).toBe(
-        testCase[key]
-      );
-    });
-    it("module test", () => {
-      expect(fixSpaces(key, new Locale("en-us"), configKeepWhitespacesBeforeMarkdownList)).toBe(
-        testCase[key]
-      );
-    });
-  });
-});
+createTestSuite(
+  "Remove space before sentence pause-punctuation\\n",
+  spacesBeforeSentencePauseSet,
+  removeSpaceBeforeSentencePausePunctuation
+);
 
-describe("Remove space before sentence pause-punctuation\n", () => {
-  let testCase = {
-    "Hey , man.":                     "Hey, man.",
-    "Hey , man.":                     "Hey, man.", // nbsp
-    "Hey , man.":                     "Hey, man.", // hair_space
-    "Hey , man.":                     "Hey, man.", // narrow_nbsp
-    "Sentence and… :":                "Sentence and…:",
-    "Sentence and… , else":           "Sentence and…, else",
-    "Sentence and… ; else":           "Sentence and…; else",
-    "Keep space before emoticon :)":  "Keep space before emoticon :)", // false positive
-    "Keep space before emoticon :-)": "Keep space before emoticon :-)", // false positive
-  };
+const spacesBeforeTerminalPunctuationSet = {
+  "Hey.":                                "Hey.", // correct
+  "Hey .":                               "Hey.",
+  "Hey .":                               "Hey.", // nbsp
+  "Hey .":                               "Hey.", // hairSpace
+  "Hey .":                               "Hey.", // narrownbsp
+  "Sentence and…!":                      "Sentence and…!", // correct
+  "Sentence and… !":                     "Sentence and…!",
+  "Sentence and…?":                      "Sentence and…?", // correct
+  "Sentence and… ?":                     "Sentence and…?",
+  "Something (…) something else":        "Something (…) something else", //correct
+  "Something (… ) something else":       "Something (…) something else",
+  "Something [… ] something else":       "Something […] something else",
+  "(? )":                                "(?)",
+  "(! )":                                "(!)",
+  "It was good (It was bad !).":         "It was good (It was bad!).",
+  "5°":                                  "5°", //correct
+  "5 °":                                 "5°",
+  // false positives
+  "Sentence ended. …and we were there.": "Sentence ended. …and we were there.",
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit tests", () => {
-      expect(removeSpaceBeforeSentencePausePunctuation(key)).toBe(testCase[key]);
-    });
-  });
-});
+createTestSuite(
+  "Remove space before a terminal punctuation, closing brackets and a degree symbol\\n",
+  spacesBeforeTerminalPunctuationSet,
+  removeSpaceBeforeTerminalPunctuation
+);
 
-describe("Remove space before a terminal punctuation, closing brackets and a degree symbol\n", () => {
-  let testCase = {
-    "Hey.":                                "Hey.", // correct
-    "Hey .":                               "Hey.",
-    "Hey .":                               "Hey.", // nbsp
-    "Hey .":                               "Hey.", // hair_space
-    "Hey .":                               "Hey.", // narrow_nbsp
-    "Sentence and…!":                      "Sentence and…!", // correct
-    "Sentence and… !":                     "Sentence and…!",
-    "Sentence and…?":                      "Sentence and…?", // correct
-    "Sentence and… ?":                     "Sentence and…?",
-    "Something (…) something else":        "Something (…) something else", //correct
-    "Something (… ) something else":       "Something (…) something else",
-    "Something [… ] something else":       "Something […] something else",
-    "(? )":                                "(?)",
-    "(! )":                                "(!)",
-    "It was good (It was bad !).":         "It was good (It was bad!).",
-    "5°":                                  "5°", //correct
-    "5 °":                                 "5°",
-    // false positives
-    "Sentence ended. …and we were there.": "Sentence ended. …and we were there.",
-  };
+const ordinalIndicatorEnUsSet = {
+  "1 st":                  "1st",
+  "2 nd":                  "2nd",
+  "3 rd":                  "3rd",
+  "4 th attempt":          "4th attempt",
+  "104 th":                "104th",
+  // false positives
+  "Number 4 there you go": "Number 4 there you go",
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit tests", () => {
-      expect(removeSpaceBeforeTerminalPunctuation(key)).toBe(testCase[key]);
-    });
-  });
-});
+createTestSuite(
+  "Remove space before ordinal indicator (en-us)\\n",
+  ordinalIndicatorEnUsSet,
+  (text) => removeSpaceBeforeOrdinalIndicator(text, new Locale("en-us")),
+  {},
+  (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
+  "en-us"
+);
 
-describe("Remove space before ordinal indicator (en-us)\n", () => {
-  let testCase = {
-    "1 st":                  "1st",
-    "2 nd":                  "2nd",
-    "3 rd":                  "3rd",
-    "4 th attempt":          "4th attempt",
-    "104 th":                "104th",
-    // false positives
-    "Number 4 there you go": "Number 4 there you go",
-  };
+const ordinalIndicatorOtherLocalesSet = {
+  "1 . spoj":   "1. spoj",
+  "154 . spoj": "154. spoj",
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit tests", () => {
-      expect(removeSpaceBeforeOrdinalIndicator(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
+createTestSuite(
+  "Remove space before ordinal indicator (sk, cs, rue, de-de)\\n",
+  ordinalIndicatorOtherLocalesSet,
+  (text) => removeSpaceBeforeOrdinalIndicator(text, new Locale("sk")),
+  {},
+  null,
+  ["sk", "cs", "rue", "de-de"]
+);
 
-    it("module tests", () => {
-      expect(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs)).toBe(
-        testCase[key]
-      );
-    });
-  });
-});
+const spacesAfterOpeningBracketsSet = {
+  "Something ( …) something else": "Something (…) something else",
+  "Something [ …] something else": "Something […] something else",
+  "( ?)":                          "(?)",
+  "( !)":                          "(!)",
+};
 
-describe("Remove space before ordinal indicator (sk, cs, rue, de-de)\n", () => {
-  let testCase = {
-    "1 . spoj":   "1. spoj",
-    "154 . spoj": "154. spoj",
-  };
+createTestSuite(
+  "Remove space after opening brackets\\n",
+  spacesAfterOpeningBracketsSet,
+  removeSpaceAfterOpeningBrackets
+);
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit tests", () => {
-      expect(removeSpaceBeforeOrdinalIndicator(key, new Locale("sk"))).toBe(testCase[key]);
-      expect(removeSpaceBeforeOrdinalIndicator(key, new Locale("cs"))).toBe(testCase[key]);
-      expect(removeSpaceBeforeOrdinalIndicator(key, new Locale("rue"))).toBe(testCase[key]);
-      expect(removeSpaceBeforeOrdinalIndicator(key, new Locale("de-de"))).toBe(testCase[key]);
-    });
-  });
-});
+const spacesBeforeOpeningBracketsSet = {
+  "Enclosed(in) the brackets.":   "Enclosed (in) the brackets.",
+  "Enclosed[in] the brackets.":   "Enclosed [in] the brackets.",
+  "quote[…] with parts left out": "quote […] with parts left out",
+  "Enclosed{in} the brackets.":   "Enclosed {in} the brackets.",
+  "name(s)":                      "name(s)", // false positive
+  "NAME(S)":                      "NAME(S)", // false positive
+  "mass(es)":                     "mass(es)", // false positive
+  "MASS(ES)":                     "MASS(ES)", // false positive
+};
 
-describe("Remove space after opening brackets\n", () => {
-  let testCase = {
-    "Something ( …) something else": "Something (…) something else",
-    "Something [ …] something else": "Something […] something else",
-    "( ?)":                          "(?)",
-    "( !)":                          "(!)",
-  };
+createTestSuite(
+  "Add space before opening brackets\\n",
+  spacesBeforeOpeningBracketsSet,
+  addSpaceBeforeOpeningBrackets
+);
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeSpaceAfterOpeningBrackets(key)).toBe(testCase[key]);
-    });
-  });
-});
+const spacesAfterTerminalPunctuationSet = {
+  "One sentence ended. Another started.": "One sentence ended. Another started.", // correct
+  "One sentence ended.Another started.":  "One sentence ended. Another started.",
+  "One sentence ended!Another started.":  "One sentence ended! Another started.",
+  "One sentence ended…!Another started.": "One sentence ended…! Another started.",
+  "One sentence ended?Another started.":  "One sentence ended? Another started.",
 
-describe("Add space before opening brackets\n", () => {
-  let testCase = {
-    "Enclosed(in) the brackets.":   "Enclosed (in) the brackets.",
-    "Enclosed[in] the brackets.":   "Enclosed [in] the brackets.",
-    "quote[…] with parts left out": "quote […] with parts left out",
-    "Enclosed{in} the brackets.":   "Enclosed {in} the brackets.",
-    "name(s)":                      "name(s)", // false positive
-    "NAME(S)":                      "NAME(S)", // false positive
-    "mass(es)":                     "mass(es)", // false positive
-    "MASS(ES)":                     "MASS(ES)", // false positive
-  };
+  // false positives
+  "R-N.D.":            "R-N.D.",
+  "the U.S.":          "the U.S.",
+  "John Thune (S.D.)": "John Thune (S.D.)",
+  "filename.js":       "filename.js",
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(addSpaceBeforeOpeningBrackets(key)).toBe(testCase[key]);
-    });
-  });
-});
+createTestSuite(
+  "Add space after terminal punctuation\\n",
+  spacesAfterTerminalPunctuationSet,
+  addSpaceAfterTerminalPunctuation,
+  {},
+  (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
+  "en-us"
+);
 
-describe("Add space after terminal punctuation\n", () => {
-  let testCase = {
-    "One sentence ended. Another started.": "One sentence ended. Another started.", // correct
-    "One sentence ended.Another started.":  "One sentence ended. Another started.",
-    "One sentence ended!Another started.":  "One sentence ended! Another started.",
-    "One sentence ended…!Another started.": "One sentence ended…! Another started.",
-    "One sentence ended?Another started.":  "One sentence ended? Another started.",
+const spacesAfterSentencePauseSet = {
+  "One sentence ended, another started.": "One sentence ended, another started.", //correct
+  "One sentence ended,another started.":  "One sentence ended, another started.",
+  "One sentence ended,John started.":     "One sentence ended, John started.",
+  "One sentence ended…,John started.":    "One sentence ended…, John started.",
+  "One sentence ended:another started.":  "One sentence ended: another started.",
+  "One sentence ended;another started.":  "One sentence ended; another started.",
 
-    // false positives
-    "R-N.D.":            "R-N.D.",
-    "the U.S.":          "the U.S.",
-    "John Thune (S.D.)": "John Thune (S.D.)",
-    "filename.js":       "filename.js",
-  };
+  //false positives
+  "R-N.D.":            "R-N.D.",
+  "the U.S.":          "the U.S.",
+  "John Thune (S.D.)": "John Thune (S.D.)",
+  "filename.js":       "filename.js",
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(addSpaceAfterTerminalPunctuation(key)).toBe(testCase[key]);
-    });
-  });
+createTestSuite(
+  "Add a space after sentence pause punctuation\\n",
+  spacesAfterSentencePauseSet,
+  addSpaceAfterSentencePause,
+  {},
+  (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
+  "en-us"
+);
 
-  Object.keys(testCase).forEach((key) => {
-    it("module test", () => {
-      expect(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs)).toBe(
-        testCase[key]
-      );
-    });
-  });
-});
+const spacesAfterClosingBracketsSet = {
+  "Enclosed (in) the brackets.":  "Enclosed (in) the brackets.", // correct
+  "Enclosed (in)the brackets.":   "Enclosed (in) the brackets.",
+  "Enclosed [in] the brackets.":  "Enclosed [in] the brackets.", // correct
+  "Enclosed [in]the brackets.":   "Enclosed [in] the brackets.",
+  "Enclosed {in} the brackets.":  "Enclosed {in} the brackets.", // correct
+  "Enclosed {in}the brackets.":   "Enclosed {in} the brackets.",
+  "quote […]with parts left out": "quote […] with parts left out",
+};
 
-describe("Add a space after sentence pause punctuation\n", () => {
-  let testCase = {
-    "One sentence ended, another started.": "One sentence ended, another started.", //correct
-    "One sentence ended,another started.":  "One sentence ended, another started.",
-    "One sentence ended,John started.":     "One sentence ended, John started.",
-    "One sentence ended…,John started.":    "One sentence ended…, John started.",
-    "One sentence ended:another started.":  "One sentence ended: another started.",
-    "One sentence ended;another started.":  "One sentence ended; another started.",
+createTestSuite(
+  "Add a space after closing brackets\\n",
+  spacesAfterClosingBracketsSet,
+  addSpaceAfterClosingBrackets,
+  {},
+  (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
+  "en-us"
+);
 
-    //false positives
-    "R-N.D.":            "R-N.D.",
-    "the U.S.":          "the U.S.",
-    "John Thune (S.D.)": "John Thune (S.D.)",
-    "filename.js":       "filename.js",
-  };
+const trailingSpacesSet = {
+  "trailing spaces    ":                          "trailing spaces",
+  "trailing spaces    ":                          "trailing spaces", // nbsp
+  "trailing spaces ":                             "trailing spaces", // hairSpace
+  "trailing spaces  ":                            "trailing spaces", // narrowNbsp
+  "trailing spaces\t\t":                          "trailing spaces", // narrowNbsp
+  "trailing spaces.    ":                         "trailing spaces.",
+  "trailing spaces;    ":                         "trailing spaces;",
+  "first line    \nsecond line  ":                "first line\nsecond line",
+  "first line    \nsecond line  \nthird line   ": "first line\nsecond line\nthird line",
+  "Радостна комната —  ":                         "Радостна комната —",
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(addSpaceAfterSentencePause(key)).toBe(testCase[key]);
-    });
-  });
+createTestSuite(
+  "Remove trailing spaces\\n",
+  trailingSpacesSet,
+  removeSpacesAtParagraphEnd,
+  {},
+  (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
+  "en-us"
+);
 
-  Object.keys(testCase).forEach((key) => {
-    it("module test", () => {
-      expect(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs)).toBe(
-        testCase[key]
-      );
-    });
-  });
-});
+const spacesBeforeSymbolSet = {
+  "© 2017":        "© 2017",
+  "(© 2017)":      "(© 2017)",
+  "Company© 2017": "Company © 2017",
 
-describe("Add a space after closing brackets\n", () => {
-  let testCase = {
-    "Enclosed (in) the brackets.":  "Enclosed (in) the brackets.", // correct
-    "Enclosed (in)the brackets.":   "Enclosed (in) the brackets.",
-    "Enclosed [in] the brackets.":  "Enclosed [in] the brackets.", // correct
-    "Enclosed [in]the brackets.":   "Enclosed [in] the brackets.",
-    "Enclosed {in} the brackets.":  "Enclosed {in} the brackets.", // correct
-    "Enclosed {in}the brackets.":   "Enclosed {in} the brackets.",
-    "quote […]with parts left out": "quote […] with parts left out",
-  };
+  // Punctuation contexts
+  "text.©1": "text. ©1",
+  "text,©1": "text, ©1",
+  "text;©1": "text; ©1",
+  "text:©1": "text: ©1",
+  "text!©1": "text! ©1",
+  "text?©1": "text? ©1",
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(addSpaceAfterClosingBrackets(key)).toBe(testCase[key]);
-    });
-  });
+  // Special character contexts
+  "#©1":       "# ©1",
+  "@©section": "@ ©section",
+  "*©note":    "* ©note",
+  "&©clause":  "& ©clause",
+  "%©rate":    "% ©rate",
+  "$©cost":    "$ ©cost",
 
-  Object.keys(testCase).forEach((key) => {
-    it("module test", () => {
-      expect(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs)).toBe(
-        testCase[key]
-      );
-    });
-  });
-});
+  // Quote contexts
+  '"text"©1': '"text" ©1',
+  "'text'©1": "'text' ©1",
+  "`code`©1": "`code` ©1",
 
-describe("Remove trailing spaces\n", () => {
-  let testCase = {
-    "trailing spaces    ":                          "trailing spaces",
-    "trailing spaces    ":                          "trailing spaces", // nbsp
-    "trailing spaces    ":                          "trailing spaces", // hair_space
-    "trailing spaces    ":                          "trailing spaces", // narrow_nbsp
-    "trailing spaces\t\t":                          "trailing spaces", // narrow_nbsp
-    "trailing spaces.    ":                         "trailing spaces.",
-    "trailing spaces;    ":                         "trailing spaces;",
-    "first line    \nsecond line  ":                "first line\nsecond line",
-    "first line    \nsecond line  \nthird line   ": "first line\nsecond line\nthird line",
-    "Радостна комната —  ":                         "Радостна комната —",
-  };
+  // Bracket edge cases
+  "(©1)": "(©1)",
+  "[©1]": "[©1]",
+  "{©1}": "{©1}",
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeSpacesAtParagraphEnd(key)).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(fixSpaces(key, new Locale("en-us"), configRemoveWhitespacesBeforeParagraphs)).toBe(
-        testCase[key]
-      );
-    });
-  });
-});
+  // Start/end of string
+  "©1 text":    "©1 text",
+  "text ©1111": "text ©1111",
+};
 
-describe("Add space before a symbol, e.g. ©\n", () => {
-  let testCase = {
-    "© 2017":        "© 2017",
-    "(© 2017)":      "(© 2017)",
-    "Company© 2017": "Company © 2017",
-
-    // Punctuation contexts
-    "text.©1": "text. ©1",
-    "text,©1": "text, ©1",
-    "text;©1": "text; ©1",
-    "text:©1": "text: ©1",
-    "text!©1": "text! ©1",
-    "text?©1": "text? ©1",
-
-    // Special character contexts
-    "#©1":       "# ©1",
-    "@©section": "@ ©section",
-    "*©note":    "* ©note",
-    "&©clause":  "& ©clause",
-    "%©rate":    "% ©rate",
-    "$©cost":    "$ ©cost",
-
-    // Quote contexts
-    '"text"©1': '"text" ©1',
-    "'text'©1": "'text' ©1",
-    "`code`©1": "`code` ©1",
-
-    // Bracket edge cases
-    "(©1)": "(©1)",
-    "[©1]": "[©1]",
-    "{©1}": "{©1}",
-
-    // Start/end of string
-    "©1 text":    "©1 text",
-    "text ©1111": "text ©1111",
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(addSpaceBeforeSymbol(key, "©", new Locale("en-us"))).toBe(testCase[key]);
-    });
-  });
-});
+createTestSuite("Add space before a symbol, e.g. ©\\n", spacesBeforeSymbolSet, (text) =>
+  addSpaceBeforeSymbol(text, "©", new Locale("en-us"))
+);
