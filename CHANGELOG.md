@@ -2,23 +2,17 @@
 
 
 ## 2.7.0 // 2025-09-28
-
-theme: split locales, refactor tests to better work with multiple locales, preparation to extend typopo with more detailed configuration
+This release introduces locale-specific spacing for symbols (§, ¶, №, ©, and ℗) while laying crucial groundwork for future internationalization. The major infrastructure improvements include a complete separation of locale-specific and generic typography constants, enabling easier addition of new locales and custom locale configurations. Testing coverage has been dramatically expanded with a comprehensive rewrite that increased test cases from ~10k to ~52k, ensuring robust validation across all supported languages. These foundational changes prepare Typopo for exciting upcoming features. 
 
 ### ✨ New features
-- Fix spacing around paragraph sign (¶)
-- Fix spacing around numero sign (№)
-- Locale-specific spacing after §, ¶, №, ©, ℗
-
-### 💪 Improvements
-- Isolate base constants from locale file
-- Move locale-specific typography treatments to a locale file
-- Extend test cases for integration tests 
+- Add locale-specific spacing following §, ¶, №, ©, and ℗ symbols
 
 ### 🐛 Fixes
-- Fix false positives when initials were recognized as roman numerals
+- Fix false positives when initials are recognized as roman numerals
 
 ### 🔨 Maintenance
+- Reuse module tests as integration tests
+- Split locale-specific and generic constants into separate objects
 - Update NPM packages to their latest versions 
 
 
