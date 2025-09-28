@@ -16,19 +16,69 @@ import {
   removeExtraSpaceAroundSinglePrime,
   fixSingleQuotesPrimesAndApostrophes,
 } from "../../src/modules/punctuation/single-quotes.js";
-import Locale from "../../src/locale/locale.js";
-
+import Locale, { supportedLocales, enUS } from "../../src/locale/locale.js";
 import { describe, it, expect } from "vitest";
 
-let configIgnoreMarkdownCodeBlocks = {
+const configIgnoreMarkdownCodeBlocks = {
   keepMarkdownCodeBlocks: false,
 };
 
-let configKeepMarkdownCodeBlocks = {
+const configKeepMarkdownCodeBlocks = {
   keepMarkdownCodeBlocks: true,
 };
 
-describe("Identify contracted and (’n’) as apostrophes (en-us):\n", () => {
+const singleQuotesSet = {
+  "Let's test this: ${leftDoubleQuote}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${rightDoubleQuote}":
+    "Let’s test this: ${leftDoubleQuote}however, ${leftSingleQuote}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${rightSingleQuote} he said${rightDoubleQuote}",
+
+  "Within double quotes ${leftDoubleQuote}there are single 'quotes with mix’d punctuation', you see${rightDoubleQuote}.":
+    "Within double quotes ${leftDoubleQuote}there are single ${leftSingleQuote}quotes with mix’d punctuation${rightSingleQuote}, you see${rightDoubleQuote}.",
+
+  "Hej: ${leftDoubleQuote}Vin mu povil, 'ta de jes' take vidil' i neviril${rightDoubleQuote}":
+    "Hej: ${leftDoubleQuote}Vin mu povil, ${leftSingleQuote}ta de jes’ take vidil${rightSingleQuote} i neviril${rightDoubleQuote}",
+
+  "${leftDoubleQuote}double quotes 'and single quotes' within${rightDoubleQuote}":
+    "${leftDoubleQuote}double quotes ${leftSingleQuote}and single quotes${rightSingleQuote} within${rightDoubleQuote}",
+
+  "${leftDoubleQuote}double quotes 'and single quotes’ within${rightDoubleQuote}":
+    "${leftDoubleQuote}double quotes ${leftSingleQuote}and single quotes${rightSingleQuote} within${rightDoubleQuote}",
+
+  "${leftDoubleQuote}double quotes ‚and single quotes' within${rightDoubleQuote}":
+    "${leftDoubleQuote}double quotes ${leftSingleQuote}and single quotes${rightSingleQuote} within${rightDoubleQuote}",
+
+  "He said: ${leftDoubleQuote}What about 'name' and 'other name'?${rightDoubleQuote}":
+    "He said: ${leftDoubleQuote}What about ${leftSingleQuote}name${rightSingleQuote} and ${leftSingleQuote}other name${rightSingleQuote}?${rightDoubleQuote}",
+
+  "Press 'N' to get started": "Press ${leftSingleQuote}N${rightSingleQuote} to get started",
+
+  "12 ′45″": "12′45″",
+
+  "Q1 '23": "Q1 ’23",
+
+  "I''''m": "I’m",
+};
+
+export function getSingleQuoteSet(localeName) {
+  const locale = new Locale(localeName);
+
+  const transformed = {};
+  Object.keys(singleQuotesSet).forEach((key) => {
+    const transformedKey = key
+      .replace(/\$\{leftDoubleQuote\}/g, locale.leftDoubleQuote)
+      .replace(/\$\{rightDoubleQuote\}/g, locale.rightDoubleQuote);
+    const transformedValue = singleQuotesSet[key]
+      .replace(/\$\{leftSingleQuote\}/g, locale.leftSingleQuote)
+      .replace(/\$\{rightSingleQuote\}/g, locale.rightSingleQuote)
+      .replace(/\$\{leftDoubleQuote\}/g, locale.leftDoubleQuote)
+      .replace(/\$\{rightDoubleQuote\}/g, locale.rightDoubleQuote);
+
+    transformed[transformedKey] = transformedValue;
+  });
+
+  return transformed;
+}
+
+describe("Identify contracted and (’n’) as apostrophes (en-us):", () => {
   let moduleTestCase = {
     "rock 'n' roll": "rock ’n’ roll",
 
@@ -101,32 +151,20 @@ describe("Identify contracted and (’n’) as apostrophes (en-us):\n", () => {
   });
 });
 
-describe("Identify common contractions at the beginning of the word as apostrophes (en-us):\n", () => {
+describe("Identify common contractions at the beginning of the word as apostrophes (en-us):", () => {
   let testCase = {
-    "Just 'cause I wanna.": "Just ’cause I wanna.",
-
-    "'Tis the season": "’Tis the season",
-
-    "'sblood": "’sblood",
-
-    "'mongst": "’mongst",
-
-    "'prentice": "’prentice",
-
-    "'slight": "’slight",
-
-    "'Strewth": "’Strewth",
-
-    "'Twixt": "’Twixt",
-
-    "'shun": "’shun",
-
-    "'slid": "’slid",
-
-    "Find 'em!": "Find ’em!",
-
-    "'Twas the Night Before Christmas": "’Twas the Night Before Christmas",
-
+    "Just 'cause I wanna.":               "Just ’cause I wanna.",
+    "'Tis the season":                    "’Tis the season",
+    "'sblood":                            "’sblood",
+    "'mongst":                            "’mongst",
+    "'prentice":                          "’prentice",
+    "'slight":                            "’slight",
+    "'Strewth":                           "’Strewth",
+    "'Twixt":                             "’Twixt",
+    "'shun":                              "’shun",
+    "'slid":                              "’slid",
+    "Find 'em!":                          "Find ’em!",
+    "'Twas the Night Before Christmas":   "’Twas the Night Before Christmas",
     "'Til The Season Comes 'Round Again": "’Til The Season Comes ’Round Again",
   };
 
@@ -151,7 +189,7 @@ describe("Identify common contractions at the beginning of the word as apostroph
   });
 });
 
-describe("Identify common contractions at the end of the word as apostrophes (en-us):\n", () => {
+describe("Identify common contractions at the end of the word as apostrophes (en-us):", () => {
   let testCase = {
     "nottin'": "nottin’",
 
@@ -190,7 +228,7 @@ describe("Identify common contractions at the end of the word as apostrophes (en
   });
 });
 
-describe("Identify in-word contractions as apostrophes (en-us):\n", () => {
+describe("Identify in-word contractions as apostrophes (en-us):", () => {
   let testCase = {
     "69'ers":       "69’ers",
     "iPhone6's":    "iPhone6’s",
@@ -228,7 +266,7 @@ describe("Identify in-word contractions as apostrophes (en-us):\n", () => {
   });
 });
 
-describe("Identify contracted years as apostrophes (en-us):\n", () => {
+describe("Identify contracted years as apostrophes (en-us):", () => {
   let testCase = {
     "INCHEBA '89": "INCHEBA ’89",
     "in '70s":     "in ’70s",
@@ -263,7 +301,7 @@ describe("Identify contracted years as apostrophes (en-us):\n", () => {
   });
 });
 
-describe("Identify feet and arcminutes following a 1–3 numbers (en-us):\n", () => {
+describe("Identify feet and arcminutes following a 1–3 numbers (en-us):", () => {
   let moduleTestCase = {
     "12 ' 45″": "12′ 45″",
 
@@ -320,7 +358,7 @@ describe("Identify feet and arcminutes following a 1–3 numbers (en-us):\n", ()
   });
 });
 
-describe("Identify standalone left single quote (en-us):\n", () => {
+describe("Identify standalone left single quote (en-us):", () => {
   let unitTestCase = {
     '" \'word"': '" {{typopo__left-single-quote--standalone}}word"',
 
@@ -390,7 +428,7 @@ describe("Identify standalone left single quote (en-us):\n", () => {
   });
 });
 
-describe("Identify standalone right single quote (en-us):\n", () => {
+describe("Identify standalone right single quote (en-us):", () => {
   let unitTestCase = {
     '"word\'"': '"word{{typopo__right-single-quote--standalone}}"',
 
@@ -474,7 +512,7 @@ describe("Identify standalone right single quote (en-us):\n", () => {
   });
 });
 
-describe("Identify single quote pairs (en-us):\n", () => {
+describe("Identify single quote pairs (en-us):", () => {
   let unitTestCase = {
     "{{typopo__left-single-quote--standalone}}word{{typopo__right-single-quote--standalone}}":
       "{{typopo__left-single-quote}}word{{typopo__right-single-quote}}",
@@ -518,7 +556,7 @@ describe("Identify single quote pairs (en-us):\n", () => {
   });
 });
 
-describe("Identify single quote pairs around single word (en-us):\n", () => {
+describe("Identify single quote pairs around single word (en-us):", () => {
   let moduleTestCase = {
     "'word'": "‘word’",
 
@@ -564,7 +602,7 @@ describe("Identify single quote pairs around single word (en-us):\n", () => {
   });
 });
 
-describe("Replace a single qoute & a single prime with a single quote pair (en-us):\n", () => {
+describe("Replace a single qoute & a single prime with a single quote pair (en-us):", () => {
   let unitTestCase = {
     "{{typopo__left-single-quote--standalone}}word{{typopo__single-prime}}":
       "{{typopo__left-single-quote}}word{{typopo__right-single-quote}}",
@@ -599,7 +637,7 @@ describe("Replace a single qoute & a single prime with a single quote pair (en-u
   });
 });
 
-describe("Identify residual apostrophes  (en-us):\n", () => {
+describe("Identify residual apostrophes  (en-us):", () => {
   let testCase = {
     "Hers'": "Hers’",
   };
@@ -625,7 +663,7 @@ describe("Identify residual apostrophes  (en-us):\n", () => {
   });
 });
 
-describe("Remove extra space around a single prime:\n", () => {
+describe("Remove extra space around a single prime:", () => {
   let testCase = {
     "12 ′ 45″": "12′ 45″",
 
@@ -651,7 +689,7 @@ describe("Remove extra space around a single prime:\n", () => {
   });
 });
 
-describe("Swap single quotes and terminal punctuation for a quoted part (en-us):\n", () => {
+describe("Swap single quotes and terminal punctuation for a quoted part (en-us):", () => {
   let testCase = {
     // quoted part at the
     // end of a sentence
@@ -708,7 +746,7 @@ describe("Swap single quotes and terminal punctuation for a quoted part (en-us):
       expect(swapSingleQuotesAndTerminalPunctuation(key, new Locale("en-us"))).toBe(testCase[key]);
     });
     // This would need to support standalone single quotes. There is a conflict how apostrophes are identified earlier
-    // also it would a different handling of Rusyn constractions
+    // also it would need a different handling of Rusyn constractions
     // it("module test", () => {
     //   expect(
     //     fixSingleQuotesPrimesAndApostrophes(
@@ -721,109 +759,25 @@ describe("Swap single quotes and terminal punctuation for a quoted part (en-us):
   });
 });
 
-describe("Single quotes in default language (en-us)\n", () => {
-  let testCase = {
-    "Let's test this: “however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said”":
-      "Let’s test this: “however, ‘quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,’ he said”",
+describe("Single quotes (module test) ", () => {
+  supportedLocales.forEach((localeName) => {
+    const testCase = getSingleQuoteSet(localeName);
 
-    "Within double quotes “there are single 'quotes with mix’d punctuation', you see”.":
-      "Within double quotes “there are single ‘quotes with mix’d punctuation’, you see”.",
-
-    "And I ask you: “What’s the idea behind this—how do you call it—'one size fits all' approach?”":
-      "And I ask you: “What’s the idea behind this—how do you call it—‘one size fits all’ approach?”",
-
-    "Hej: “Vin mu povil, 'ta de jes' take vidil' i neviril”":
-      "Hej: “Vin mu povil, ‘ta de jes’ take vidil’ i neviril”",
-
-    "“double quotes 'and single quotes' within”": "“double quotes ‘and single quotes’ within”",
-
-    "“double quotes 'and single quotes’ within”": "“double quotes ‘and single quotes’ within”",
-
-    "“double quotes ‚and single quotes' within”": "“double quotes ‘and single quotes’ within”",
-
-    "He said: “What about 'name' and 'other name'?”":
-      "He said: “What about ‘name’ and ‘other name’?”",
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("module test (en)", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(testCase[key]);
+    Object.keys(testCase).forEach((key) => {
+      it(`module test, locale: (${localeName})`, () => {
+        expect(
+          fixSingleQuotesPrimesAndApostrophes(
+            key,
+            new Locale(localeName),
+            configIgnoreMarkdownCodeBlocks
+          )
+        ).toBe(testCase[key]);
+      });
     });
   });
 });
 
-describe("Single quotes in (sk, cs, de-de)\n", () => {
-  let testCase = {
-    "Let's test this: „however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said“":
-      "Let’s test this: „however, ‚quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,‘ he said“",
-
-    "Within double quotes „there are single 'quotes with mix’d punctuation', you see“.":
-      "Within double quotes „there are single ‚quotes with mix’d punctuation‘, you see“.",
-
-    "And I ask you: „What’s the idea behind this—how do you call it—'one size fits all' approach?“":
-      "And I ask you: „What’s the idea behind this—how do you call it—‚one size fits all‘ approach?“",
-
-    "Hej: „Vin mu povil, 'ta de jes' take vidil' i neviril“":
-      "Hej: „Vin mu povil, ‚ta de jes’ take vidil‘ i neviril“",
-
-    "„double quotes 'and single quotes' within“": "„double quotes ‚and single quotes‘ within“",
-
-    "He said: „What about 'name' and 'other name'?“":
-      "He said: „What about ‚name‘ and ‚other name‘?“",
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("should fix single quotes, primes and apostrophes in (sk, cs, de-de)", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(key, new Locale("sk"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(key, new Locale("cs"), configIgnoreMarkdownCodeBlocks),
-        testCase[key]
-      );
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("de-de"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(testCase[key]);
-    });
-  });
-});
-
-describe("Single quotes in (rue)\n", () => {
-  let testCase = {
-    "Let's test this: «however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said»":
-      "Let’s test this: «however, ‹quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,› he said»",
-
-    "Within double quotes «there are single 'quotes with mix’d punctuation', you see».":
-      "Within double quotes «there are single ‹quotes with mix’d punctuation›, you see».",
-
-    "And I ask you: «What’s the idea behind this—how do you call it—'one size fits all' approach?»":
-      "And I ask you: «What’s the idea behind this—how do you call it—‹one size fits all› approach?»",
-
-    "Hej: «Vin mu povil, 'ta de jes' take vidil' i neviril»":
-      "Hej: «Vin mu povil, ‹ta de jes’ take vidil› i neviril»",
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("should fix single quotes, primes and apostrophes in Rusyn", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(key, new Locale("rue"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
-});
-
-describe("Test if markdown ticks are kept (single quotes) (en-us):\n", () => {
+describe("Test if markdown ticks are kept (single quotes) (en-us):", () => {
   let testCase = {
     "```\ncode\n```": "```\ncode\n```",
 

@@ -157,10 +157,13 @@ export function addNbspAfterOrdinalNumber(string, locale) {
 //
 
 /**
-  @param {string} string: input text for identification
-  @param {string} locale: locale option
-  @returns {string} output with added non-breaking space within ordinal dates
-*/
+ * Locale-specific spaces within a date, usually nbsp
+ *
+ * German standard orthography (Duden) recommends only one nbsp (or narrowNbsp) after the day and a regular interword space following the month*
+ * @param {string} string: input text for identification
+ * @param {string} locale: locale option
+ * @returns {string} output with added non-breaking space within ordinal dates
+ */
 export function addNbspWithinOrdinalDate(string, locale) {
   // prettier-ignore
   return string.replace(
@@ -197,14 +200,22 @@ export function addNbspAfterRomanNumeral(string, locale) {
     // prettier-ignore
     return string.replace(
       new RegExp(
-        `(\\b)` +
+        `(\\b[${base.uppercaseChars}][${base.allChars}]?${locale.romanOrdinalIndicator}[${base.spaces}]?)?` + 
+        `(\\b)` + // Ch.⎵
         `([${base.romanNumerals}]+)` +
         `(${locale.romanOrdinalIndicator})` +
         `([${base.spaces}]?)` +
         `([${base.allChars}\\d])`,
         "g"
       ),
-      `$1$2$3${base.nbsp}$5`
+      function($0, $1, $2, $3, $4, $5, $6) {
+        // Only replace if first group doesn't match 
+        // to avoid false positives like G. D. Lambert
+        if (!$1) {
+          return `${$2}${$3}${$4}${base.nbsp}${$6}`;
+        }
+        return $0;
+      }
     );
   }
 
@@ -277,7 +288,7 @@ export function fixSpaceBeforePercent(string, locale) {
       `([${base.percent}${base.permille}${base.permyriad}])`,
       "g"
     ),
-    `$1${locale.spaceBeforePercent}$3`
+    `$1${locale.spaceBefore.percent}$3`
   );
 }
 
@@ -344,17 +355,18 @@ export function addNbspBeforeSingleLetter(string, locale) {
 //
 
 /**
-  Helper function that adds nbsp after symbols
-  in their respective *.js files
+  Helper function that adds a nbsp (or a locale-specific space) after symbols in their respective *.js files
 
   @param {string} string — input text for identification
   @returns {string} — output with correctly added non-breaking space
 */
-export function addNbspAfterSymbol(string, symbol) {
+export function addNbspAfterSymbol(string, symbol, space) {
+  space = space !== undefined ? space : base.nbsp;
+
   // prettier-ignore
   return string.replace(
-    new RegExp(`(${symbol})([^${base.spaces}])`, "g"),
-    `$1${base.nbsp}$2`
+    new RegExp(`(${symbol})([^${base.spaces}${symbol}])`, "g"),
+    `$1${space}$2`
   );
 }
 
@@ -367,11 +379,13 @@ export function addNbspAfterSymbol(string, symbol) {
   @param {string} string — input text for identification
   @returns {string} — output with correctly placed non-breaking space
 */
-export function replaceSpacesWithNbspAfterSymbol(string, symbol) {
+export function replaceSpacesWithNbspAfterSymbol(string, symbol, space) {
+  space = space !== undefined ? space : base.nbsp;
+
   // prettier-ignore
   return string.replace(
-    new RegExp(`(${symbol})([${base.spaces}])`, "g"),
-    `$1${base.nbsp}`
+    new RegExp(`(${symbol})([${base.spaces}]+)`, "g"),
+    `$1${space}`
   );
 }
 

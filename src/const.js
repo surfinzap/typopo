@@ -52,6 +52,7 @@ const degree = "°";
 const multiplicationSign = "×";
 const ampersand = "&";
 const sectionSign = "§";
+const paragraphSign = "¶";
 const copyright = "©";
 const soundRecordingCopyright = "℗";
 const registeredTrademark = "®";
@@ -64,6 +65,7 @@ const percent = "%";
 const permille = "‰";
 const permyriad = "‱";
 const numberSign = "#";
+const numeroSign = "№";
 
 /* Numbers */
 const romanNumerals = "IVXLCDM";
@@ -108,6 +110,7 @@ export const base = {
   multiplicationSign,
   ampersand,
   sectionSign,
+  paragraphSign,
   copyright,
   soundRecordingCopyright,
   registeredTrademark,
@@ -120,6 +123,7 @@ export const base = {
   permille,
   permyriad,
   numberSign,
+  numeroSign,
 
   /* Numbers */
   romanNumerals,

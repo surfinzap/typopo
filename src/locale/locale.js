@@ -16,6 +16,8 @@ const SUPPORTED_LOCALES = {
 
 const DEFAULT_LOCALE = "en-us";
 
+export const supportedLocales = Object.keys(SUPPORTED_LOCALES);
+
 export default class Locale {
   constructor(localeID) {
     if (!SUPPORTED_LOCALES[localeID]) {
@@ -30,15 +32,15 @@ export default class Locale {
     this.leftDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.leftDoubleQuote;
     this.rightDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.rightDoubleQuote;
     this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote;
+
     this.dashWords = SUPPORTED_LOCALES[localeID].dashWords;
 
-    this.spaceBeforePercent = SUPPORTED_LOCALES[localeID].spaceBeforePercent;
+    this.spaceAfter = SUPPORTED_LOCALES[localeID].spaceAfter;
+    this.spaceBefore = SUPPORTED_LOCALES[localeID].spaceBefore;
 
     this.ordinalIndicator = SUPPORTED_LOCALES[localeID].numbers.ordinalIndicator;
     this.romanOrdinalIndicator = SUPPORTED_LOCALES[localeID].numbers.romanOrdinalIndicator;
     this.ordinalDate = SUPPORTED_LOCALES[localeID].ordinalDate;
-
-    this.abbreviationSpace = SUPPORTED_LOCALES[localeID].abbreviationSpace;
 
     /* Single-word abbreviations from all locales
 

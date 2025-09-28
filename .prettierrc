@@ -5,5 +5,16 @@
   "printWidth": 100,
   "trailingComma": "es5",
   "alignInGroups": "always",
-  "plugins": ["@huggingface/prettier-plugin-vertical-align"]
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports",
+    "@huggingface/prettier-plugin-vertical-align"
+  ],
+  "importOrder": [
+    "^@core/(.*)$",
+    "^@server/(.*)$",
+    "^@ui/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

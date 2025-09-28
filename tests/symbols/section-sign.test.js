@@ -1,23 +1,26 @@
+import Locale, { supportedLocales } from "../../src/locale/locale.js";
+import { symbolSet, transformSymbolSet } from "./symbol-utils.test.js";
 import { fixSectionSign } from "../../src/modules/symbols/section-sign.js";
-import { describe, it, expect } from "vitest";
+import { createTestSuite } from "../test-utils.js";
 
-describe("Fix section sign (§)\n", () => {
-  let testCase = {
-    "under Law§1782":   "under Law § 1782",
-    "(e.g.§§13–21)":    "(e.g. §§ 13–21)",
-    "(§§13–21)":        "(§§ 13–21)",
-    "(§13–21)":         "(§ 13–21)",
-    "under Law §1782":  "under Law § 1782",
-    "(e.g. §§13–21)":   "(e.g. §§ 13–21)",
-    "under Law § 1782": "under Law § 1782",
-    "(e.g. §§ 13–21)":  "(e.g. §§ 13–21)",
-    "(e.g. §§ 13–21)":  "(e.g. §§ 13–21)", // hairSpace
-    "(e.g. §§ 13–21)":  "(e.g. §§ 13–21)", // narrowNbsp
-  };
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    `Fix section sign (§), ${localeName}:`,
+    transformSymbolSet(symbolSet, "sectionSign", localeName),
+    null,
+    {},
+    (text) => fixSectionSign(text, new Locale(localeName)),
+    localeName
+  );
+});
 
-  Object.keys(testCase).forEach((key) => {
-    it("", () => {
-      expect(fixSectionSign(key)).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    `Fix paragraph sign (¶), ${localeName}:`,
+    transformSymbolSet(symbolSet, "paragraphSign", localeName),
+    null,
+    {},
+    (text) => fixSectionSign(text, new Locale(localeName)),
+    localeName
+  );
 });

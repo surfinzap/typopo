@@ -1,7 +1,6 @@
 import { replaceMark, fixMarks } from "../../src/modules/symbols/marks.js";
-import { describe, it, expect } from "vitest";
-
-const locales = ["en-us", "de-de", "sk", "cs", "rue"];
+import { supportedLocales } from "../../src/locale/locale.js";
+import { createTestSuite } from "../test-utils.js";
 
 const registeredTrademark = {
   "(r)":           "®",
@@ -45,28 +44,35 @@ const trademark = {
   "Section 7(t)":   "Section 7(t)",
 };
 
-function testMarks(testCase, markPattern, replacementMark) {
-  locales.forEach(function (locale) {
-    Object.keys(testCase).forEach((key) => {
-      it(`unit test, ${replacementMark}, ${locale}`, () => {
-        expect(replaceMark(key, markPattern, replacementMark)).toBe(testCase[key]);
-      });
+createTestSuite(
+  "Fix registered trademark (®):",
+  registeredTrademark,
+  (text) => replaceMark(text, "r", "®"),
+  {},
+  fixMarks,
+  supportedLocales
+);
 
-      it(`module test, ${replacementMark}, ${locale}`, () => {
-        expect(fixMarks(key)).toBe(testCase[key]);
-      });
-    });
-  });
-}
+createTestSuite(
+  "Fix service mark (℠):",
+  serviceMark,
+  (text) => replaceMark(text, "sm", "℠"),
+  {},
+  fixMarks,
+  supportedLocales
+);
 
-describe("Fix registered trademark (®):\n", () => {
-  testMarks(registeredTrademark, "r", "®");
-});
+createTestSuite(
+  "Fix trademark (™):",
+  trademark,
+  (text) => replaceMark(text, "tm", "™"),
+  {},
+  fixMarks,
+  supportedLocales
+);
 
-describe("Fix service mark (℠):\n", () => {
-  testMarks(serviceMark, "sm", "℠");
-});
-
-describe("Fix trademark (™):\n", () => {
-  testMarks(trademark, "tm", "™");
-});
+export const marksSet = {
+  ...registeredTrademark,
+  ...serviceMark,
+  ...trademark,
+};

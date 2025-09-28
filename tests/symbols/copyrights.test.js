@@ -1,54 +1,53 @@
-import { fixCopyrights } from "../../src/modules/symbols/copyrights.js";
-import { describe, it, expect } from "vitest";
+import { base } from "../../src/const.js";
+import Locale, { supportedLocales } from "../../src/locale/locale.js";
+import { fixCopyrights, replaceCopyright } from "../../src/modules/symbols/copyrights.js";
+import { createTestSuite } from "../test-utils.js";
+import { symbolSet, transformSymbolSet } from "./symbol-utils.test.js";
 
-const locales = ["en-us", "de-de", "sk", "cs", "rue"];
-
-const copyright = {
-  "(c)2017":          "© 2017",
-  "(C)2017":          "© 2017",
-  "Company (c)2017":  "Company © 2017",
-  "Company (C)2017":  "Company © 2017",
-  "Company(c) 2017":  "Company © 2017",
-  "Company(C) 2017":  "Company © 2017",
-  "Company (c) 2017": "Company © 2017",
-  "Company (C) 2017": "Company © 2017",
-  //multiple spaces around (c) are already sanitizaed, when fixCopyrights() is being called
-  "Company© 2017":    "Company © 2017",
-  "Company © 2017":   "Company © 2017",
-  "Company ©2017":    "Company © 2017",
+const replaceCopyrightSet = {
+  "(c)2017":          "©2017",
+  "(C)2017":          "©2017",
+  "Company (c)2017":  "Company ©2017",
+  "Company (C)2017":  "Company ©2017",
+  "Company(c) 2017":  "Company© 2017",
+  "Company(C) 2017":  "Company© 2017",
+  "Company (c) 2017": "Company © 2017",
+  "Company (C) 2017": "Company © 2017",
   "Sec­tion 7(c)":    "Sec­tion 7(c)", // false positive
+  "Sec­tion 7(C)":    "Sec­tion 7(C)", // false positive
 };
 
-const soundRecordingCopyright = {
-  "(p)2017":          "℗ 2017",
-  "(P)2017":          "℗ 2017",
-  "Company (p)2017":  "Company ℗ 2017",
-  "Company (P)2017":  "Company ℗ 2017",
-  "Company(p) 2017":  "Company ℗ 2017",
-  "Company(P) 2017":  "Company ℗ 2017",
-  "Company (p) 2017": "Company ℗ 2017",
-  "Company (P) 2017": "Company ℗ 2017",
-  //multiple spaces around (p) are already sanitizaed, when fixCopyrights() is being called
-  "Company℗ 2017":    "Company ℗ 2017",
-  "Company ℗ 2017":   "Company ℗ 2017",
-  "Company ℗2017":    "Company ℗ 2017",
+const replaceSoundRecordingCopyrightSet = {
+  "(p)2017":          "℗2017",
+  "(P)2017":          "℗2017",
+  "Company (p)2017":  "Company ℗2017",
+  "Company (P)2017":  "Company ℗2017",
+  "Company(p) 2017":  "Company℗ 2017",
+  "Company(P) 2017":  "Company℗ 2017",
+  "Company (p) 2017": "Company ℗ 2017",
+  "Company (P) 2017": "Company ℗ 2017",
   "Sec­tion 7(p)":    "Sec­tion 7(p)", // false positive
+  "Sec­tion 7(P)":    "Sec­tion 7(P)", // false positive
 };
 
-function testCopyrights(testCase, copyrightSign) {
-  locales.forEach(function (locale) {
-    Object.keys(testCase).forEach((key) => {
-      it(`module test, ${copyrightSign}, ${locale}`, () => {
-        expect(fixCopyrights(key)).toBe(testCase[key]);
-      });
-    });
-  });
-}
-
-describe("Fix copyright (©):\n", () => {
-  testCopyrights(copyright, "©");
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    `Fix copyright (©), ${localeName}:`,
+    replaceCopyrightSet,
+    (text) => replaceCopyright(text, "c", base.copyright),
+    transformSymbolSet(symbolSet, "copyright", localeName),
+    (text) => fixCopyrights(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Fix sound recording copyright (℗):\n", () => {
-  testCopyrights(soundRecordingCopyright, "℗");
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    `Fix sound recording copyright (℗), ${localeName}:`,
+    replaceSoundRecordingCopyrightSet,
+    (text) => replaceCopyright(text, "p", base.soundRecordingCopyright),
+    transformSymbolSet(symbolSet, "soundRecordingCopyright", localeName),
+    (text) => fixCopyrights(text, new Locale(localeName)),
+    localeName
+  );
 });

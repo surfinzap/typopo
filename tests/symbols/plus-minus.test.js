@@ -1,15 +1,9 @@
 import { fixPlusMinus } from "../../src/modules/symbols/plus-minus.js";
-import { describe, it, expect } from "vitest";
+import { createTestSuite } from "../test-utils.js";
 
-describe("Fix plus-minus symbol ±\n", () => {
-  let testCase = {
-    "+-": "±",
-    "-+": "±",
-  };
+export const plusMinusSet = {
+  "+-": "±",
+  "-+": "±",
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("", () => {
-      expect(fixPlusMinus(key)).toBe(testCase[key]);
-    });
-  });
-});
+createTestSuite("Fix plus-minus symbol ±", plusMinusSet, null, {}, fixPlusMinus);

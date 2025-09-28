@@ -17,10 +17,22 @@ export const enUS = {
     spaceAfter:  "",
   },
 
-  /*
-    A space between a digit and a percent sign 
-  */
-  spaceBeforePercent: "",
+  spaceAfter: {
+    copyright:               base.nbsp, // ©⎵2025
+    soundRecordingCopyright: base.nbsp, // ℗⎵2025
+    numeroSign:              base.nbsp, // №⎵1234
+    sectionSign:             base.nbsp, // §⎵38
+    paragraphSign:           base.nbsp, // ¶⎵38
+    /* 
+      a space after "n-1" abbreviation in abbr. sequence
+      F.⎵X. Šalda, Ch.⎵G.⎵D. Lambert, e.⎵g., v.⎵u.⎵Z.
+    */
+    abbreviation:            "",
+  },
+
+  spaceBefore: {
+    percent: "", // 12%
+  },
 
   numbers: {
     ordinalIndicator:      "st|nd|rd|th",
@@ -28,8 +40,8 @@ export const enUS = {
   },
 
   /* 
-    The first and the second space in the ordinal date, e.g. 1. 1. 1993
-    1.{firstSpace}1.{secondSpace}1993
+    The first and the second space in the ordinal date, 
+    e.g. 1. 1. 1993 → 1.{firstSpace}1.{secondSpace}1993
     Even though this is not a common date format in the U.S., it serves as a fallback for mixed language content.
   */
   ordinalDate: {
@@ -37,15 +49,6 @@ export const enUS = {
     secondSpace: base.nbsp,
   },
 
-  /* 
-    (n-1) abbreviation space.
-    Examples:
-    J.{abbreviationSpace}Novak
-    F.{abbreviationSpace}X.{nbsp}Šalda
-    Ch.{abbreviationSpace}G.{abbreviationSpace}D.{nbsp}Lambert
-    e.{abbreviationSpace}g.
-  */
-  abbreviationSpace:         "",
   /* 
     Common single-word abbreviations that are followed by a non-breaking space.
     For coding purposes, they are written here without periods.
