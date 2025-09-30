@@ -1,5 +1,11 @@
 # Changelog for Typopo
 
+## 2.7.1
+
+### 🔨 Maintenance
+- Update NPM packages to their latest versions 
+
+
 
 ## 2.7.0 // 2025-09-28
 This release introduces locale-specific spacing for symbols (§, ¶, №, ©, and ℗) while laying crucial groundwork for future internationalization. The major infrastructure improvements include a complete separation of locale-specific and generic typography constants, enabling easier addition of new locales and custom locale configurations. Testing coverage has been dramatically expanded with a comprehensive rewrite that increased test cases from ~10k to ~52k, ensuring robust validation across all supported languages. These foundational changes prepare Typopo for exciting upcoming features. 

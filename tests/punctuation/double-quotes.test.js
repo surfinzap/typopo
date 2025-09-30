@@ -20,96 +20,20 @@ import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { base } from "../../src/const.js";
 import { createTestSuite } from "../test-utils.js";
 
-const testFalsePositives = {
-  "č., s., fol., str.,": "č., s., fol., str.,",
-
+const doubleQuotesFalsePositives = {
+  "č., s., fol., str.,":       "č., s., fol., str.,",
   "Byl to “Karel IV.”, ktery": "Byl to “Karel IV.”, ktery",
-
-  "Hey.”": "Hey.”",
-
+  "Hey.”":                     "Hey.”",
   "common to have “namespace pollution”, where completely unrelated code shares global variables.":
     "common to have “namespace pollution”, where completely unrelated code shares global variables.",
 };
-
-const doubleQuotesSet = {
-  'He said: "Here${apostrophe}s a 12" record."': "He said: “Here${apostrophe}s a 12″ record.”",
-
-  'He said: "He was 12."': "He said: “He was 12.”",
-
-  'He said: "He was 12". And then he added: "Maybe he was 13".':
-    "He said: “He was 12.” And then he added: “Maybe he was 13.”",
-
-  'So it${apostrophe}s 12" × 12", right?': "So it${apostrophe}s 12″ × 12″, right?",
-
-  "An unquoted sentence.“And a quoted one.”": "An unquoted sentence. “And a quoted one.”",
-
-  '"quoted material" and "extra': "“quoted material” and “extra",
-
-  "It was like “namespace pollution”.": "It was like “namespace pollution”.",
-
-  "English „English„ „English„ English": "English “English” “English” English",
-
-  "“English double quotation marks“": "“English double quotation marks”",
-
-  "”English double quotation marks”": "“English double quotation marks”",
-
-  '"English double quotation marks"': "“English double quotation marks”",
-
-  '"Conference 2020" and "something in quotes".': "“Conference 2020” and “something in quotes”.",
-
-  'Here are 30 "bucks"': "Here are 30 “bucks”",
-
-  "Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”":
-    "Within double quotes “there are single ‘quotes with mixed punctuation’, you see”.",
-
-  "He was like “Georgia”.": "He was like “Georgia”.",
-
-  "He was ok. “He was ok”.": "He was ok. “He was ok.”",
-
-  '"…"': "“…”",
-
-  '"Ctrl+I and…"': "“Ctrl+I and…”",
-
-  'Hela skríkla: "Tu je 12" platňa "!': "Hela skríkla: “Tu je 12″ platňa!”",
-
-  "He was ok. “He was ok ”.": "He was ok. “He was ok.”",
-
-  "Before you ask the “How often…” question": "Before you ask the “How often…” question",
-
-  "“…example”": "“…example”",
-
-  "abc “…example”": "abc “…example”",
-};
-
-export function getDoubleQuoteSet(localeName) {
-  const locale = new Locale(localeName);
-
-  const transformed = {};
-  const testSet = { ...doubleQuotesSet, ...testFalsePositives };
-
-  Object.keys(testSet).forEach((key) => {
-    const transformedKey = key
-      .replace(/‘/g, locale.leftSingleQuote)
-      .replace(/’/g, locale.rightSingleQuote)
-      .replace(/\$\{apostrophe\}/g, base.apostrophe);
-    const transformedValue = testSet[key]
-      .replace(/“/g, locale.leftDoubleQuote)
-      .replace(/”/g, locale.rightDoubleQuote)
-      .replace(/‘/g, locale.leftSingleQuote)
-      .replace(/’/g, locale.rightSingleQuote)
-      .replace(/\$\{apostrophe\}/g, base.apostrophe);
-    transformed[transformedKey] = transformedValue;
-  });
-
-  return transformed;
-}
 
 describe("Remove punctuation before double quotes (en-us):", () => {
   let testCase = {
     /* extra comma after terminal punctuation, 
      as it it happens in direct speech */
     "“Hey!,” she said": "“Hey!” she said",
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -127,7 +51,7 @@ describe("Remove punctuation after double quotes (en-us):", () => {
     /* dot at the end of a direct speech ending with abbreviation */
     "“We will continue this tomorrow at 8:00 a.m.”.":
       "“We will continue this tomorrow at 8:00 a.m.”",
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -166,7 +90,7 @@ describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 
     'He was 12".': "He was 12″.",
 
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   let unitTestCase = {
@@ -253,7 +177,7 @@ describe("Identify double quote pairs (en-us):", () => {
     //jibberish inside quotes
     ",,idjsa ;frilj ;'f0d, if9,,": "“idjsa ;frilj ;'f0d, if9”",
 
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   let unitTestCase = {
@@ -299,7 +223,7 @@ describe("Identify standalone left double quote (en-us):", () => {
 
     "There is ‘‘1 standalone left quote.": "There is “1 standalone left quote.",
 
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -335,7 +259,7 @@ describe("Identify standalone right double quote (en-us):", () => {
 
     'There is a standalone right quote…"': "There is a standalone right quote…”",
 
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -365,7 +289,7 @@ describe("Remove unidentified double quotes (en-us):", () => {
 
     "word ‘‘ word": "word word",
 
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -389,7 +313,7 @@ describe("Replace a double qoute & a double prime with a double quote pair (en-u
     "{{typopo__double-prime}}word{{typopo__right-double-quote--standalone}}":
       "{{typopo__left-double-quote}}word{{typopo__right-double-quote}}",
 
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   let moduleTestCase = {
@@ -398,7 +322,7 @@ describe("Replace a double qoute & a double prime with a double quote pair (en-u
 
     'Here are 30 "bucks"': "Here are 30 “bucks”",
 
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   Object.keys(unitTestCase).forEach((key) => {
@@ -489,7 +413,7 @@ describe("Swap quotes and terminal punctuation for a quoted part (en-us):", () =
 
     "“Types of”…\n“Types of”…": "“Types of…”\n“Types of…”",
 
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -516,7 +440,7 @@ describe("Remove extra comma after sentence punctuation in direct speech (en-us)
 
     "“Hey;,” she said": "“Hey;” she said",
 
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -545,7 +469,7 @@ describe("Remove extra spaces around quotes and primes (en-us):", () => {
 
     "3° 5′ 30 ″ and": "3° 5′ 30″ and",
 
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -566,7 +490,7 @@ describe("Add a missing space before a left double quote (en-us):", () => {
 
     "An unquoted sentence.“And a quoted one.”": "An unquoted sentence. “And a quoted one.”",
 
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -587,7 +511,7 @@ describe("Add a missing space after a left double quote (en-us):", () => {
 
     "“A quoted sentence!”And an unquoted one.": "“A quoted sentence!” And an unquoted one.",
 
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -603,7 +527,7 @@ describe("Add a missing space after a left double quote (en-us):", () => {
 describe("Double quotes in default language (en-us)", () => {
   let testCase = {
     ...getDoubleQuoteSet("en-us"),
-    ...testFalsePositives,
+    ...doubleQuotesFalsePositives,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -666,3 +590,57 @@ createTestSuite(
     }),
   supportedLocales
 );
+
+const doubleQuotesSet = {
+  'He said: "Here${apos}s a 12" record."': "He said: ${ldq}Here${apos}s a 12″ record.${rdq}",
+  'He said: "He was 12."':                 "He said: ${ldq}He was 12.${rdq}",
+  'He said: "He was 12". And then he added: "Maybe he was 13".':
+    "He said: ${ldq}He was 12.${rdq} And then he added: ${ldq}Maybe he was 13.${rdq}",
+  'So it${apos}s 12" × 12", right?':              "So it${apos}s 12″ × 12″, right?",
+  "An unquoted sentence.“And a quoted one.”":     "An unquoted sentence. ${ldq}And a quoted one.${rdq}",
+  '"quoted material" and "extra':                 "${ldq}quoted material${rdq} and ${ldq}extra",
+  "It was like “namespace pollution”.":           "It was like ${ldq}namespace pollution${rdq}.",
+  "English „English„ „English„ English":          "English ${ldq}English${rdq} ${ldq}English${rdq} English",
+  "“English double quotation marks“":             "${ldq}English double quotation marks${rdq}",
+  "”English double quotation marks”":             "${ldq}English double quotation marks${rdq}",
+  '"English double quotation marks"':             "${ldq}English double quotation marks${rdq}",
+  '"Conference 2020" and "something in quotes".': "${ldq}Conference 2020${rdq} and ${ldq}something in quotes${rdq}.",
+  'Here are 30 "bucks"':                          "Here are 30 ${ldq}bucks${rdq}",
+
+  "Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”":
+    "Within double quotes ${ldq}there are single ‘quotes with mixed punctuation’, you see${rdq}.",
+  "Before you ask the “How often…” question": "Before you ask the ${ldq}How often…${rdq} question",
+
+  "He was like “Georgia”.":             "He was like ${ldq}Georgia${rdq}.",
+  "He was ok. “He was ok”.":            "He was ok. ${ldq}He was ok.${rdq}",
+  '"…"':                                "${ldq}…${rdq}",
+  '"Ctrl+I and…"':                      "${ldq}Ctrl+I and…${rdq}",
+  'Hela skríkla: "Tu je 12" platňa "!': "Hela skríkla: ${ldq}Tu je 12″ platňa!${rdq}",
+  "He was ok. “He was ok ”.":           "He was ok. ${ldq}He was ok.${rdq}",
+  "“…example”":                         "${ldq}…example${rdq}",
+  "abc “…example”":                     "abc ${ldq}…example${rdq}",
+};
+
+export function getDoubleQuoteSet(localeName) {
+  const locale = new Locale(localeName);
+
+  const transformed = {};
+  const testSet = { ...doubleQuotesSet };
+  // const testSet = { ...doubleQuotesSet, ...doubleQuotesFalsePositives };
+
+  Object.keys(testSet).forEach((key) => {
+    const transformedKey = key
+      .replace(/‘/g, locale.leftSingleQuote)
+      .replace(/’/g, locale.rightSingleQuote)
+      .replace(/\$\{apos\}/g, base.apostrophe);
+    const transformedValue = testSet[key]
+      .replace(/\$\{ldq\}/g, locale.leftDoubleQuote)
+      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote)
+      .replace(/‘/g, locale.leftSingleQuote)
+      .replace(/’/g, locale.rightSingleQuote)
+      .replace(/\$\{apos\}/g, base.apostrophe);
+    transformed[transformedKey] = transformedValue;
+  });
+
+  return transformed;
+}
