@@ -876,7 +876,7 @@ function D(e, o) {
 function gn(e) {
   return e.replace(
     new RegExp(
-      `([^${n.romanNumerals}])([${n.sentencePunctuation}])([${n.sentencePunctuation}])(${n.doubleQuoteAdepts})`,
+      `([^${n.romanNumerals}])([${n.sentencePunctuation}])([${n.sentencePausePunctuation}])(${n.doubleQuoteAdepts})`,
       "g"
     ),
     "$1$2$4"

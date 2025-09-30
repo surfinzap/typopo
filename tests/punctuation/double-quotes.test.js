@@ -28,22 +28,64 @@ const doubleQuotesFalsePositives = {
     "common to have “namespace pollution”, where completely unrelated code shares global variables.",
 };
 
-describe("Remove punctuation before double quotes (en-us):", () => {
-  let testCase = {
-    /* extra comma after terminal punctuation, 
+const removePunctuationBeforeQuotesSet = {
+  /* extra comma after terminal punctuation, 
      as it it happens in direct speech */
-    "“Hey!,” she said": "“Hey!” she said",
-    ...doubleQuotesFalsePositives,
-  };
+  "${ldq}Hey!,${rdq} she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?,${rdq} she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.,${rdq} she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:,${rdq} she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;,${rdq} she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,,${rdq} she said": "${ldq}Hey,${rdq} she said",
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeExtraPunctuationBeforeQuotes(key)).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(fixDoubleQuotesAndPrimes(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-  });
+  "${ldq}Hey!:${rdq} she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?:${rdq} she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.:${rdq} she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey::${rdq} she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;:${rdq} she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,:${rdq} she said": "${ldq}Hey,${rdq} she said",
+
+  "${ldq}Hey!;${rdq} she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?;${rdq} she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.;${rdq} she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:;${rdq} she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;;${rdq} she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,;${rdq} she said": "${ldq}Hey,${rdq} she said",
+
+  //false positive
+  "${ldq}Hey!!${rdq} she said": "${ldq}Hey!!${rdq} she said",
+  "${ldq}Hey?!${rdq} she said": "${ldq}Hey?!${rdq} she said",
+  "${ldq}Hey.!${rdq} she said": "${ldq}Hey.!${rdq} she said",
+  "${ldq}Hey:!${rdq} she said": "${ldq}Hey:!${rdq} she said",
+  "${ldq}Hey;!${rdq} she said": "${ldq}Hey;!${rdq} she said",
+  "${ldq}Hey,!${rdq} she said": "${ldq}Hey,!${rdq} she said",
+
+  "${ldq}Hey!?${rdq} she said": "${ldq}Hey!?${rdq} she said",
+  "${ldq}Hey??${rdq} she said": "${ldq}Hey??${rdq} she said",
+  "${ldq}Hey.?${rdq} she said": "${ldq}Hey.?${rdq} she said",
+  "${ldq}Hey:?${rdq} she said": "${ldq}Hey:?${rdq} she said",
+  "${ldq}Hey;?${rdq} she said": "${ldq}Hey;?${rdq} she said",
+  "${ldq}Hey,?${rdq} she said": "${ldq}Hey,?${rdq} she said",
+
+  "${ldq}Hey!.${rdq} she said": "${ldq}Hey!.${rdq} she said",
+  "${ldq}Hey?.${rdq} she said": "${ldq}Hey?.${rdq} she said",
+  "${ldq}Hey:.${rdq} she said": "${ldq}Hey:.${rdq} she said",
+  "${ldq}Hey;.${rdq} she said": "${ldq}Hey;.${rdq} she said",
+  "${ldq}Hey,.${rdq} she said": "${ldq}Hey,.${rdq} she said",
+};
+
+// finished here, this seems like a duplicate function:
+// removeExtraCommaAfterSentencePunctuation
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Remove punctuation before double quotes",
+    transformDoubleQuoteSet(removePunctuationBeforeQuotesSet, localeName),
+    removeExtraPunctuationBeforeQuotes,
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
 describe("Remove punctuation after double quotes (en-us):", () => {
@@ -426,6 +468,7 @@ describe("Swap quotes and terminal punctuation for a quoted part (en-us):", () =
   });
 });
 
+/* this is extra? */
 describe("Remove extra comma after sentence punctuation in direct speech (en-us):", () => {
   let testCase = {
     "“Hey!,” she said": "“Hey!” she said",
@@ -526,7 +569,7 @@ describe("Add a missing space after a left double quote (en-us):", () => {
 
 describe("Double quotes in default language (en-us)", () => {
   let testCase = {
-    ...getDoubleQuoteSet("en-us"),
+    ...transformDoubleQuoteSet(doubleQuotesSet, "en-us"),
     ...doubleQuotesFalsePositives,
   };
 
@@ -539,7 +582,7 @@ describe("Double quotes in default language (en-us)", () => {
 
 describe("Double quotes in Slovak, Czech and German language (sk, cs, de-de)", () => {
   let testCase = {
-    ...getDoubleQuoteSet("sk"),
+    ...transformDoubleQuoteSet(doubleQuotesSet, "sk"),
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -559,7 +602,7 @@ describe("Double quotes in Slovak, Czech and German language (sk, cs, de-de)", (
 
 describe("Double quotes in Rusyn language (rue)", () => {
   let testCase = {
-    ...getDoubleQuoteSet("rue"),
+    ...transformDoubleQuoteSet(doubleQuotesSet, "rue"),
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -591,7 +634,9 @@ createTestSuite(
   supportedLocales
 );
 
-const doubleQuotesSet = {
+export const doubleQuotesSet = {
+  ...removePunctuationBeforeQuotesSet,
+
   'He said: "Here${apos}s a 12" record."': "He said: ${ldq}Here${apos}s a 12″ record.${rdq}",
   'He said: "He was 12."':                 "He said: ${ldq}He was 12.${rdq}",
   'He said: "He was 12". And then he added: "Maybe he was 13".':
@@ -621,15 +666,16 @@ const doubleQuotesSet = {
   "abc “…example”":                     "abc ${ldq}…example${rdq}",
 };
 
-export function getDoubleQuoteSet(localeName) {
+export function transformDoubleQuoteSet(testSet, localeName) {
   const locale = new Locale(localeName);
 
   const transformed = {};
-  const testSet = { ...doubleQuotesSet };
   // const testSet = { ...doubleQuotesSet, ...doubleQuotesFalsePositives };
 
   Object.keys(testSet).forEach((key) => {
     const transformedKey = key
+      .replace(/\$\{ldq\}/g, locale.leftDoubleQuote)
+      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote)
       .replace(/‘/g, locale.leftSingleQuote)
       .replace(/’/g, locale.rightSingleQuote)
       .replace(/\$\{apos\}/g, base.apostrophe);

@@ -5,7 +5,11 @@ import { describe, expect, it } from "vitest";
 
 import { supportedLocales } from "../../src/locale/locale.js";
 import { fixTypos } from "../../src/typopo.js";
-import { getDoubleQuoteSet, keepMarkdownCodeBlocksSet } from "../punctuation/double-quotes.test.js";
+import {
+  transformDoubleQuoteSet,
+  keepMarkdownCodeBlocksSet,
+  doubleQuotesSet,
+} from "../punctuation/double-quotes.test.js";
 import { ellipsisSet } from "../punctuation/ellipsis.test.js";
 import { hyphenSet } from "../punctuation/hyphen.test.js";
 import { periodSet } from "../punctuation/period.test.js";
@@ -156,7 +160,7 @@ function getTestModules(localeName) {
     ...hyphenSet,
     ...periodSet,
     ...ellipsisSet,
-    ...getDoubleQuoteSet(localeName),
+    ...transformDoubleQuoteSet(doubleQuotesSet, localeName),
     ...getSingleQuoteSet(localeName),
     ...transformDashSet(dashSet, localeName),
 

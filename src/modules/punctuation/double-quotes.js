@@ -23,7 +23,7 @@ export function removeExtraPunctuationBeforeQuotes(string) {
     new RegExp(
        `([^${base.romanNumerals}])` +
        `([${base.sentencePunctuation}])` +
-       `([${base.sentencePunctuation}])` +
+       `([${base.sentencePausePunctuation}])` +
        `(${base.doubleQuoteAdepts})`, 
        "g"
     ), 
