@@ -16,12 +16,9 @@ import {
   fixDoubleQuotesAndPrimes,
 } from "../../src/modules/punctuation/double-quotes.js";
 import { describe, it, expect } from "vitest";
-import Locale from "../../src/locale/locale.js";
+import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { base } from "../../src/const.js";
-
-let configKeepMarkdownCodeBlocks = {
-  keepMarkdownCodeBlocks: true,
-};
+import { createTestSuite } from "../test-utils.js";
 
 const testFalsePositives = {
   "č., s., fol., str.,": "č., s., fol., str.,",
@@ -648,27 +645,24 @@ describe("Double quotes in Rusyn language (rue)", () => {
   });
 });
 
-describe("Test if markdown ticks are kept (double quotes) (en-us):", () => {
-  let testCase = {
-    "```\ncode\n```":     "```\ncode\n```",
-    "\t```\ncode\n```":   "\t```\ncode\n```",
-    "\t\t```\ncode\n```": "\t\t```\ncode\n```",
-    " ```\ncode\n```":    " ```\ncode\n```",
-    "  ```\ncode\n```":   "  ```\ncode\n```",
-    "``code``":           "``code``",
-    "``code code``":      "``code code``",
-    "``code`` ``code``":  "``code`` ``code``",
-    "`code`":             "`code`",
-    "`code code`":        "`code code`",
-    "`code` `code`":      "`code` `code`",
-    "e.g. `something`":   "e.g. `something`",
-  };
+export const keepMarkdownCodeBlocksSet = {
+  "```\ncode\n```":    "```\ncode\n```",
+  "``code``":          "``code``",
+  "``code code``":     "``code code``",
+  "``code`` ``code``": "``code`` ``code``",
+  "`code`":            "`code`",
+  "`code code`":       "`code code`",
+  "`code` `code`":     "`code` `code`",
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("keepMarkdownCodeBlocks: true” configuration", () => {
-      expect(fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configKeepMarkdownCodeBlocks)).toBe(
-        testCase[key]
-      );
-    });
-  });
-});
+createTestSuite(
+  "Test if markdown ticks are kept (double quotes) ",
+  {},
+  undefined,
+  keepMarkdownCodeBlocksSet,
+  (text, locale) =>
+    fixDoubleQuotesAndPrimes(text, locale, {
+      keepMarkdownCodeBlocks: true,
+    }),
+  supportedLocales
+);

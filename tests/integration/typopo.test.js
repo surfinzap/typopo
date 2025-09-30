@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import { supportedLocales } from "../../src/locale/locale.js";
 import { fixTypos } from "../../src/typopo.js";
-import { getDoubleQuoteSet } from "../punctuation/double-quotes.test.js";
+import { getDoubleQuoteSet, keepMarkdownCodeBlocksSet } from "../punctuation/double-quotes.test.js";
 import { ellipsisSet } from "../punctuation/ellipsis.test.js";
 import { hyphenSet } from "../punctuation/hyphen.test.js";
 import { periodSet } from "../punctuation/period.test.js";
@@ -252,17 +252,8 @@ supportedLocales.forEach((locale) => {
   });
 });
 
-describe("Markdown ticks are kept (integration test) (en-us):", () => {
-  let testCase = {
-    "```\ncode\n```":    "```\ncode\n```",
-    "``code``":          "``code``",
-    "``code code``":     "``code code``",
-    "``code`` ``code``": "``code`` ``code``",
-    "`code`":            "`code`",
-    "`code code`":       "`code code`",
-    "`code` `code`":     "`code` `code`",
-    "e.g. `something`":  "e.g. `something`",
-  };
-
-  runAllVersions(testCase, "en-us", configKeepMarkdownCodeBlocks);
+supportedLocales.forEach((locale) => {
+  describe(`Markdown ticks are kept (integration) ${locale}`, () => {
+    runAllVersions(keepMarkdownCodeBlocksSet, locale, configKeepMarkdownCodeBlocks);
+  });
 });
