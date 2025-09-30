@@ -633,6 +633,8 @@ export function addSpaceAfterRightDoubleQuote(string, locale) {
   @returns {string} output with properly replaces double qoutes and double primes
 */
 export function fixDoubleQuotesAndPrimes(string, locale, configuration) {
+  configuration = configuration || {};
+
   /* [0] Identify markdown code ticks */
   string = identifyMarkdownCodeTicks(string, configuration);
 
