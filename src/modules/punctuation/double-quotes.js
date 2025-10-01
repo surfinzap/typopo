@@ -480,32 +480,6 @@ export function placeLocaleDoubleQuotes(string, locale) {
 //
 
 /**
-  Remove an extra comma after sentence punctuation in direct speech
-
-  Example
-  “Hey!,” she said →
-  “Hey!” she said
-
-  @param {string} string: input text for identification
-  @param {string} locale: locale option
-  @returns {string} output with ...
-*/
-export function removeExtraCommaAfterSentencePunctuation(string, locale) {
-  // prettier-ignore
-  return string.replace(
-    new RegExp(
-       `([${base.sentencePunctuation}])` +
-       `([,])` +
-       `(${locale.rightDoubleQuote})`, 
-       "g"
-    ), 
-    "$1$3"
-  );
-}
-
-//
-
-/**
   Remove extra spaces around quotes and primes
 
   Example
@@ -514,7 +488,6 @@ export function removeExtraCommaAfterSentencePunctuation(string, locale) {
 
   12′ 45 ″ →
   12′ 45″
-
 
   Assumptions and Limitations
   The functions runs after all double quotes and double primes have been identified. 
@@ -626,7 +599,6 @@ export function addSpaceAfterRightDoubleQuote(string, locale) {
   [6] Replace all identified punctuation with appropriate punctuation in given language
   [7] Consolidate spaces around double quotes and primes
   [8] Swap quotes and terminal punctuation for a quoted part
-  [9] Remove extra comma after punctuation in direct speech
 
   @param {string} string: input text for identification
   @param {string} locale: locale option
@@ -654,7 +626,7 @@ export function fixDoubleQuotesAndPrimes(string, locale, configuration) {
   string = removeUnidentifiedDoubleQuote(string);
 
   /* [5] Replace a double qoute & a double prime with a double quote pair */
-  string = replaceDoublePrimeWDoubleQuote(string, locale);
+  string = replaceDoublePrimeWDoubleQuote(string);
 
   /* [6] Replace all identified punctuation with appropriate punctuation in given language */
   string = placeLocaleDoubleQuotes(string, locale);
@@ -667,9 +639,6 @@ export function fixDoubleQuotesAndPrimes(string, locale, configuration) {
 
   /* [8] Swap quotes and terminal punctuation */
   string = swapQuotesAndTerminalPunctuation(string, locale);
-
-  /* [9] Remove an extra comma after sentence punctuation in direct speech */
-  string = removeExtraCommaAfterSentencePunctuation(string, locale);
 
   return string;
 }

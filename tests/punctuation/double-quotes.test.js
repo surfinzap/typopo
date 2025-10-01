@@ -9,7 +9,6 @@ import {
   removeUnidentifiedDoubleQuote,
   replaceDoublePrimeWDoubleQuote,
   placeLocaleDoubleQuotes,
-  removeExtraCommaAfterSentencePunctuation,
   removeExtraSpacesAroundQuotes,
   addSpaceBeforeLeftDoubleQuote,
   addSpaceAfterRightDoubleQuote,
@@ -26,6 +25,14 @@ const doubleQuotesFalsePositives = {
   "Hey.”":                     "Hey.”",
   "common to have “namespace pollution”, where completely unrelated code shares global variables.":
     "common to have “namespace pollution”, where completely unrelated code shares global variables.",
+};
+
+const doubleQuotesFalsePositivesNew = {
+  "č., s., fol., str.,":                 "č., s., fol., str.,",
+  "Byl to ${ldq}Karel IV.${rdq}, ktery": "Byl to ${ldq}Karel IV.${rdq}, ktery",
+  "Hey.${rdq}":                          "Hey.${rdq}",
+  "common to have ${ldq}namespace pollution${rdq}, where completely unrelated code shares global variables.":
+    "common to have ${ldq}namespace pollution${rdq}, where completely unrelated code shares global variables.",
 };
 
 const removePunctuationBeforeQuotesSet = {
@@ -74,12 +81,9 @@ const removePunctuationBeforeQuotesSet = {
   "${ldq}Hey,.${rdq} she said": "${ldq}Hey,.${rdq} she said",
 };
 
-// finished here, this seems like a duplicate function:
-// removeExtraCommaAfterSentencePunctuation
-
 supportedLocales.forEach((localeName) => {
   createTestSuite(
-    "Remove punctuation before double quotes",
+    "Remove an extra punctuation before double quotes",
     transformDoubleQuoteSet(removePunctuationBeforeQuotesSet, localeName),
     removeExtraPunctuationBeforeQuotes,
     {},
@@ -88,22 +92,62 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-describe("Remove punctuation after double quotes (en-us):", () => {
-  let testCase = {
-    /* dot at the end of a direct speech ending with abbreviation */
-    "“We will continue this tomorrow at 8:00 a.m.”.":
-      "“We will continue this tomorrow at 8:00 a.m.”",
-    ...doubleQuotesFalsePositives,
-  };
+const removePunctuationAfterQuotesSet = {
+  "${ldq}Hey!${rdq}, she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}, she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}, she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:${rdq}, she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;${rdq}, she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,${rdq}, she said": "${ldq}Hey,${rdq} she said",
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeExtraPunctuationAfterQuotes(key)).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(fixDoubleQuotesAndPrimes(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-  });
+  "${ldq}Hey!${rdq}: she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}: she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}: she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:${rdq}: she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;${rdq}: she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,${rdq}: she said": "${ldq}Hey,${rdq} she said",
+
+  "${ldq}Hey!${rdq}; she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}; she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}; she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:${rdq}; she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;${rdq}; she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,${rdq}; she said": "${ldq}Hey,${rdq} she said",
+
+  "${ldq}Hey!${rdq}. she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}. she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}. she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:${rdq}. she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;${rdq}. she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,${rdq}. she said": "${ldq}Hey,${rdq} she said",
+
+  "${ldq}Hey!${rdq}? she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}? she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}? she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:${rdq}? she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;${rdq}? she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,${rdq}? she said": "${ldq}Hey,${rdq} she said",
+
+  "${ldq}Hey!${rdq}! she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}! she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}! she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:${rdq}! she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;${rdq}! she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,${rdq}! she said": "${ldq}Hey,${rdq} she said",
+
+  // false positive
+  "Byl to ${ldq}Karel IV.${rdq}, ktery": "Byl to ${ldq}Karel IV.${rdq}, ktery",
+};
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Remove an punctuation after double quotes",
+    transformDoubleQuoteSet(removePunctuationAfterQuotesSet, localeName),
+    removeExtraPunctuationAfterQuotes,
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
 describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us):", () => {
@@ -121,16 +165,13 @@ describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
     '3° 5′ 30"': "3° 5′ 30″",
     '12"3′00°':  "12″3′00°",
 
-    'So it’s 12" × 12", right?': "So it’s 12″ × 12″, right?",
-
+    'So it’s 12" × 12", right?':    "So it’s 12″ × 12″, right?",
     'She said: “It’s a 12" inch!”': "She said: “It’s a 12″ inch!”",
-
-    'It’s 12" × 12".': "It’s 12″ × 12″.",
+    'It’s 12" × 12".':              "It’s 12″ × 12″.",
 
     // identify swapped inches with terminal punctuation
     '"He was 12".': "“He was 12.”",
-
-    'He was 12".': "He was 12″.",
+    'He was 12".':  "He was 12″.",
 
     ...doubleQuotesFalsePositives,
   };
@@ -153,12 +194,9 @@ describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
     '"He was 12".': '"He was 12."',
 
     // false positive
-    'He was 12".': "He was 12″.",
-
-    '"He was 12."': '"He was 12."',
-
+    'He was 12".':     "He was 12″.",
+    '"He was 12."':    '"He was 12."',
     'It’s 12" x 12".': "It’s 12″ x 12″.",
-
     'It’s 12" × 12".': "It’s 12″ × 12″.",
   };
 
@@ -179,38 +217,26 @@ describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us)
 
 describe("Identify double quote pairs (en-us):", () => {
   let testCase = {
-    '"quoted material"': "“quoted material”",
-
-    '„quoted material"': "“quoted material”",
-
-    "«quoted material«": "“quoted material”",
-
-    "’’quoted material''": "“quoted material”",
-
-    "‹‹quoted material››": "“quoted material”",
-
-    ",,quoted material,,": "“quoted material”",
-
-    "‘‘quoted material‘‘": "“quoted material”",
-
+    '"quoted material"':     "“quoted material”",
+    '„quoted material"':     "“quoted material”",
+    "«quoted material«":     "“quoted material”",
+    "’’quoted material''":   "“quoted material”",
+    "‹‹quoted material››":   "“quoted material”",
+    ",,quoted material,,":   "“quoted material”",
+    "‘‘quoted material‘‘":   "“quoted material”",
     "‘‘‘quoted material‘‘‘": "“quoted material”",
+    "´´quoted material´´":   "“quoted material”",
+    "``quoted material``":   "“quoted material”",
 
-    "´´quoted material´´": "“quoted material”",
-
-    "``quoted material``": "“quoted material”",
-
-    'unquoted "quoted material" material': "unquoted “quoted material” material",
-
+    'unquoted "quoted material" material':     "unquoted “quoted material” material",
     '"quoted material" and "quoted material"': "“quoted material” and “quoted material”",
 
     // primes × double quotes
     '"Conference 2020" and "something in quotes".': "“Conference 2020” and “something in quotes”.",
-
-    '"Gone in 60{{typopo__double-prime}}"': "“Gone in 60″”",
+    '"Gone in 60{{typopo__double-prime}}"':         "“Gone in 60″”",
 
     '"2020"': "“2020”",
-
-    '"202"': "“202”",
+    '"202"':  "“202”",
 
     // false positive
     '"starting quotes, primes 90{{typopo__double-prime}}, ending quotes"':
@@ -224,10 +250,8 @@ describe("Identify double quote pairs (en-us):", () => {
 
   let unitTestCase = {
     '" quoted material "': "“ quoted material ”",
-
-    '"quoted material "': "“quoted material ”",
-
-    '" quoted material"': "“ quoted material”",
+    '"quoted material "':  "“quoted material ”",
+    '" quoted material"':  "“ quoted material”",
 
     ...testCase,
   };
@@ -249,20 +273,13 @@ describe("Identify double quote pairs (en-us):", () => {
 
 describe("Identify standalone left double quote (en-us):", () => {
   let testCase = {
-    '"There is a standalone left quote.': "“There is a standalone left quote.",
-
-    'There is a "standalone left quote.': "There is a “standalone left quote.",
-
-    "There is a «standalone left quote.": "There is a “standalone left quote.",
-
-    "There is a „standalone left quote.": "There is a “standalone left quote.",
-
+    '"There is a standalone left quote.':  "“There is a standalone left quote.",
+    'There is a "standalone left quote.':  "There is a “standalone left quote.",
+    "There is a «standalone left quote.":  "There is a “standalone left quote.",
+    "There is a „standalone left quote.":  "There is a “standalone left quote.",
     "There is a ,,standalone left quote.": "There is a “standalone left quote.",
-
     "There is a ‹‹standalone left quote.": "There is a “standalone left quote.",
-
     "There is a ‘‘standalone left quote.": "There is a “standalone left quote.",
-
     "There is ‘‘1 standalone left quote.": "There is “1 standalone left quote.",
 
     ...doubleQuotesFalsePositives,
@@ -283,23 +300,15 @@ describe("Identify standalone left double quote (en-us):", () => {
 
 describe("Identify standalone right double quote (en-us):", () => {
   let testCase = {
-    'There is a standalone" right quote.': "There is a standalone” right quote.",
-
-    "There is a standalone« right quote.": "There is a standalone” right quote.",
-
-    "There is a standalone„ right quote.": "There is a standalone” right quote.",
-
+    'There is a standalone" right quote.':  "There is a standalone” right quote.",
+    "There is a standalone« right quote.":  "There is a standalone” right quote.",
+    "There is a standalone„ right quote.":  "There is a standalone” right quote.",
     "There is a standalone,, right quote.": "There is a standalone” right quote.",
-
     "There is a standalone›› right quote.": "There is a standalone” right quote.",
-
     "There is a standalone‘‘ right quote.": "There is a standalone” right quote.",
-
-    'There is a STANDALONE" right quote.': "There is a STANDALONE” right quote.",
-
-    'There is a standalone right quote."': "There is a standalone right quote.”",
-
-    'There is a standalone right quote…"': "There is a standalone right quote…”",
+    'There is a STANDALONE" right quote.':  "There is a STANDALONE” right quote.",
+    'There is a standalone right quote."':  "There is a standalone right quote.”",
+    'There is a standalone right quote…"':  "There is a standalone right quote…”",
 
     ...doubleQuotesFalsePositives,
   };
@@ -317,34 +326,35 @@ describe("Identify standalone right double quote (en-us):", () => {
   });
 });
 
-describe("Remove unidentified double quotes (en-us):", () => {
-  let testCase = {
-    'word " word': "word word",
+const removeUnidentifiedDoubleQuoteSet = {
+  "word „ word":  "word word",
+  "word “ word":  "word word",
+  "word ” word":  "word word",
+  'word " word':  "word word",
+  "word « word":  "word word",
+  "word » word":  "word word",
+  "word ″ word":  "word word",
+  "word ,, word": "word word",
+  "word ‘‘ word": "word word",
+  "word ‚‚ word": "word word",
+  "word ’’ word": "word word",
+  "word '' word": "word word",
+  "word ‹‹ word": "word word",
+  "word ›› word": "word word",
+  "word ′′ word": "word word",
+  "word ´´ word": "word word",
+  "word `` word": "word word",
+};
 
-    "word « word": "word word",
-
-    "word „ word": "word word",
-
-    "word ,, word": "word word",
-
-    "word ›› word": "word word",
-
-    "word ‘‘ word": "word word",
-
-    ...doubleQuotesFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(placeLocaleDoubleQuotes(removeUnidentifiedDoubleQuote(key), new Locale("en-us"))).toBe(
-        testCase[key]
-      );
-    });
-
-    it("module test", () => {
-      expect(fixDoubleQuotesAndPrimes(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Remove unidentified double quotes",
+    transformDoubleQuoteSet(removeUnidentifiedDoubleQuoteSet, localeName),
+    removeUnidentifiedDoubleQuote,
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
 describe("Replace a double qoute & a double prime with a double quote pair (en-us):", () => {
@@ -461,36 +471,6 @@ describe("Swap quotes and terminal punctuation for a quoted part (en-us):", () =
   Object.keys(testCase).forEach((key) => {
     it("unit test", () => {
       expect(swapQuotesAndTerminalPunctuation(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(fixDoubleQuotesAndPrimes(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-  });
-});
-
-/* this is extra? */
-describe("Remove extra comma after sentence punctuation in direct speech (en-us):", () => {
-  let testCase = {
-    "“Hey!,” she said": "“Hey!” she said",
-
-    "“Hey?,” she said": "“Hey?” she said",
-
-    "“Hey.,” she said": "“Hey.” she said",
-
-    "“Hey,,” she said": "“Hey,” she said",
-
-    "“Hey:,” she said": "“Hey:” she said",
-
-    "“Hey;,” she said": "“Hey;” she said",
-
-    ...doubleQuotesFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeExtraCommaAfterSentencePunctuation(key, new Locale("en-us"))).toBe(
-        testCase[key]
-      );
     });
     it("module test", () => {
       expect(fixDoubleQuotesAndPrimes(key, new Locale("en-us"))).toBe(testCase[key]);
@@ -636,6 +616,9 @@ createTestSuite(
 
 export const doubleQuotesSet = {
   ...removePunctuationBeforeQuotesSet,
+  ...removePunctuationAfterQuotesSet,
+
+  ...removeUnidentifiedDoubleQuoteSet,
 
   'He said: "Here${apos}s a 12" record."': "He said: ${ldq}Here${apos}s a 12″ record.${rdq}",
   'He said: "He was 12."':                 "He said: ${ldq}He was 12.${rdq}",
@@ -670,7 +653,7 @@ export function transformDoubleQuoteSet(testSet, localeName) {
   const locale = new Locale(localeName);
 
   const transformed = {};
-  // const testSet = { ...doubleQuotesSet, ...doubleQuotesFalsePositives };
+  testSet = { ...testSet, ...doubleQuotesFalsePositivesNew };
 
   Object.keys(testSet).forEach((key) => {
     const transformedKey = key

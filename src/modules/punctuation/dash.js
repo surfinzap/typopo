@@ -181,8 +181,8 @@ export function fixDashBetweenOrdinalNumbers(string, locale) {
   @returns {string} — output with fixed dashes
 */
 export function fixDash(string, locale) {
-  string = replaceThreeHyphensWithEmDash(string, locale);
-  string = replaceTwoHyphensWithEnDash(string, locale);
+  string = replaceThreeHyphensWithEmDash(string);
+  string = replaceTwoHyphensWithEnDash(string);
   string = fixDashesBetweenWords(string, locale);
   string = fixHyphenBetweenWordAndPunctuation(string, locale);
   string = fixDashBetweenCardinalNumbers(string);
