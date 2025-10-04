@@ -66,14 +66,11 @@ export function transformSymbolSet(testSet, symbolName, localeName) {
   const symbolValue = base[symbolName];
   const spaceValue = locale.spaceAfter[symbolName];
   const transformed = {};
+  const replaceTokens = (str) =>
+    str.replace(/\$\{symbol\}/g, symbolValue).replace(/\$\{space\}/g, spaceValue);
+
   Object.keys(testSet).forEach((key) => {
-    const transformedKey = key
-      .replace(/\$\{symbol\}/g, symbolValue)
-      .replace(/\$\{space\}/g, spaceValue);
-    const transformedValue = testSet[key]
-      .replace(/\$\{symbol\}/g, symbolValue)
-      .replace(/\$\{space\}/g, spaceValue);
-    transformed[transformedKey] = transformedValue;
+    transformed[replaceTokens(key)] = replaceTokens(testSet[key]);
   });
   return transformed;
 }

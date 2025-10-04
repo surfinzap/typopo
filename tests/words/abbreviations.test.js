@@ -9,14 +9,11 @@ import Locale, { supportedLocales } from "../../src/locale/locale.js";
 
 export function transformAbbrSet(testSet, localeName) {
   const locale = new Locale(localeName);
+  const replaceTokens = (str) => str.replace(/\$\{abbrSpace\}/g, locale.spaceAfter.abbreviation);
 
   const transformed = {};
   Object.keys(testSet).forEach((key) => {
-    const transformedValue = testSet[key].replace(
-      /\$\{abbrSpace\}/g,
-      locale.spaceAfter.abbreviation
-    );
-    transformed[key] = transformedValue;
+    transformed[replaceTokens(key)] = replaceTokens(testSet[key]);
   });
 
   return transformed;

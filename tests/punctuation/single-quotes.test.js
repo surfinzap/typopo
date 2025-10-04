@@ -528,7 +528,6 @@ export function transformSingleQuoteSet(testSet, localeName) {
       .replace(/\$\{rdq\}/g, locale.rightDoubleQuote)
       .replace(/\$\{lsq\}/g, locale.leftSingleQuote)
       .replace(/\$\{rsq\}/g, locale.rightSingleQuote);
-  // .replace(/\$\{apos\}/g, base.apostrophe);
 
   const transformed = {};
 

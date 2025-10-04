@@ -18,7 +18,7 @@ import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { base } from "../../src/const.js";
 import { createTestSuite } from "../test-utils.js";
 
-const doubleQuotesFalsePositivesNew = {
+const doubleQuotesFalsePositives = {
   "č., s., fol., str.,":                 "č., s., fol., str.,",
   "Byl to ${ldq}Karel IV.${rdq}, ktery": "Byl to ${ldq}Karel IV.${rdq}, ktery",
   "Hey.${rdq}":                          "Hey.${rdq}",
@@ -536,7 +536,7 @@ export function transformDoubleQuoteSet(testSet, localeName) {
       .replace(/\$\{apos\}/g, base.apostrophe);
 
   const transformed = {};
-  testSet = { ...testSet, ...doubleQuotesFalsePositivesNew };
+  testSet = { ...testSet, ...doubleQuotesFalsePositives };
 
   Object.keys(testSet).forEach((key) => {
     transformed[replaceTokens(key)] = replaceTokens(testSet[key]);

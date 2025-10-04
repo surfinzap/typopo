@@ -53,33 +53,33 @@ const dashFalsePositives = {
 };
 
 const dashesBetweenWordsSet = {
-  "and - she said":   "and${spaceBefore}${dash}${spaceAfter}she said",
-  "and – she said":   "and${spaceBefore}${dash}${spaceAfter}she said",
-  "and  –  she said": "and${spaceBefore}${dash}${spaceAfter}she said",
-  "and — she said":   "and${spaceBefore}${dash}${spaceAfter}she said",
-  "and  —  she said": "and${spaceBefore}${dash}${spaceAfter}she said",
-  "and — she said":   "and${spaceBefore}${dash}${spaceAfter}she said", //mixed spaces
-  "and— she said":    "and${spaceBefore}${dash}${spaceAfter}she said", //mixed spaces
-  "and —she said":    "and${spaceBefore}${dash}${spaceAfter}she said",
-  "and—she said":     "and${spaceBefore}${dash}${spaceAfter}she said",
+  "and - she said":   "and${spaceBeforeDash}${dash}${spaceAfterDash}she said",
+  "and – she said":   "and${spaceBeforeDash}${dash}${spaceAfterDash}she said",
+  "and  –  she said": "and${spaceBeforeDash}${dash}${spaceAfterDash}she said",
+  "and — she said":   "and${spaceBeforeDash}${dash}${spaceAfterDash}she said",
+  "and  —  she said": "and${spaceBeforeDash}${dash}${spaceAfterDash}she said",
+  "and — she said":   "and${spaceBeforeDash}${dash}${spaceAfterDash}she said", //mixed spaces
+  "and— she said":    "and${spaceBeforeDash}${dash}${spaceAfterDash}she said", //mixed spaces
+  "and —she said":    "and${spaceBeforeDash}${dash}${spaceAfterDash}she said",
+  "and—she said":     "and${spaceBeforeDash}${dash}${spaceAfterDash}she said",
 
-  "word - word":     "word${spaceBefore}${dash}${spaceAfter}word", //nbsp
-  "word - word":     "word${spaceBefore}${dash}${spaceAfter}word", //hairSpace
-  "word - word":     "word${spaceBefore}${dash}${spaceAfter}word", //narrowNbsp
-  "ptaškŷ -  čadič": "ptaškŷ${spaceBefore}${dash}${spaceAfter}čadič", // non-latin chars
-  "хотїв - нияке":   "хотїв${spaceBefore}${dash}${spaceAfter}нияке", // non-latin chars
+  "word - word":     "word${spaceBeforeDash}${dash}${spaceAfterDash}word", //nbsp
+  "word - word":     "word${spaceBeforeDash}${dash}${spaceAfterDash}word", //hairSpace
+  "word - word":     "word${spaceBeforeDash}${dash}${spaceAfterDash}word", //narrowNbsp
+  "ptaškŷ -  čadič": "ptaškŷ${spaceBeforeDash}${dash}${spaceAfterDash}čadič", // non-latin chars
+  "хотїв - нияке":   "хотїв${spaceBeforeDash}${dash}${spaceAfterDash}нияке", // non-latin chars
 
-  "…the top 10 - and explore…":  "…the top 10${spaceBefore}${dash}${spaceAfter}and explore…",
-  "…the top 10 – and explore…":  "…the top 10${spaceBefore}${dash}${spaceAfter}and explore…",
-  "…the top 10 –  and explore…": "…the top 10${spaceBefore}${dash}${spaceAfter}and explore…",
-  "…the top 10–and explore…":    "…the top 10${spaceBefore}${dash}${spaceAfter}and explore…",
-  "…the top 10 — and explore…":  "…the top 10${spaceBefore}${dash}${spaceAfter}and explore…",
+  "…the top 10 - and explore…":  "…the top 10${spaceBeforeDash}${dash}${spaceAfterDash}and explore…",
+  "…the top 10 – and explore…":  "…the top 10${spaceBeforeDash}${dash}${spaceAfterDash}and explore…",
+  "…the top 10 –  and explore…": "…the top 10${spaceBeforeDash}${dash}${spaceAfterDash}and explore…",
+  "…the top 10–and explore…":    "…the top 10${spaceBeforeDash}${dash}${spaceAfterDash}and explore…",
+  "…the top 10 — and explore…":  "…the top 10${spaceBeforeDash}${dash}${spaceAfterDash}and explore…",
 
-  "…like to see - 7 wonders…":  "…like to see${spaceBefore}${dash}${spaceAfter}7 wonders…",
-  "…like to see – 7 wonders…":  "…like to see${spaceBefore}${dash}${spaceAfter}7 wonders…",
-  "…like to see –  7 wonders…": "…like to see${spaceBefore}${dash}${spaceAfter}7 wonders…",
-  "…like to see–7 wonders…":    "…like to see${spaceBefore}${dash}${spaceAfter}7 wonders…",
-  "…like to see — 7 wonders…":  "…like to see${spaceBefore}${dash}${spaceAfter}7 wonders…",
+  "…like to see - 7 wonders…":  "…like to see${spaceBeforeDash}${dash}${spaceAfterDash}7 wonders…",
+  "…like to see – 7 wonders…":  "…like to see${spaceBeforeDash}${dash}${spaceAfterDash}7 wonders…",
+  "…like to see –  7 wonders…": "…like to see${spaceBeforeDash}${dash}${spaceAfterDash}7 wonders…",
+  "…like to see–7 wonders…":    "…like to see${spaceBeforeDash}${dash}${spaceAfterDash}7 wonders…",
+  "…like to see — 7 wonders…":  "…like to see${spaceBeforeDash}${dash}${spaceAfterDash}7 wonders…",
 };
 
 supportedLocales.forEach((locale) => {
@@ -94,14 +94,14 @@ supportedLocales.forEach((locale) => {
 });
 
 const hyphenWordPunctuationSet = {
-  "so there is a dash -,":  "so there is a dash${spaceBefore}${dash},",
-  "so there is a dash-,":   "so there is a dash${spaceBefore}${dash},",
-  "so there is a dash -:":  "so there is a dash${spaceBefore}${dash}:",
-  "so there is a dash -;":  "so there is a dash${spaceBefore}${dash};",
-  "so there is a dash -.":  "so there is a dash${spaceBefore}${dash}.",
-  "so there is a dash -?":  "so there is a dash${spaceBefore}${dash}?",
-  "so there is a dash -!":  "so there is a dash${spaceBefore}${dash}!",
-  "so there is a dash -\n": "so there is a dash${spaceBefore}${dash}\n",
+  "so there is a dash -,":  "so there is a dash${spaceBeforeDash}${dash},",
+  "so there is a dash-,":   "so there is a dash${spaceBeforeDash}${dash},",
+  "so there is a dash -:":  "so there is a dash${spaceBeforeDash}${dash}:",
+  "so there is a dash -;":  "so there is a dash${spaceBeforeDash}${dash};",
+  "so there is a dash -.":  "so there is a dash${spaceBeforeDash}${dash}.",
+  "so there is a dash -?":  "so there is a dash${spaceBeforeDash}${dash}?",
+  "so there is a dash -!":  "so there is a dash${spaceBeforeDash}${dash}!",
+  "so there is a dash -\n": "so there is a dash${spaceBeforeDash}${dash}\n",
 };
 
 supportedLocales.forEach((locale) => {
@@ -237,15 +237,16 @@ export const dashSet = {
 
 export function transformDashSet(testSet, localeName) {
   const locale = new Locale(localeName);
+  const replaceTokens = (str) =>
+    str
+      .replace(/\$\{spaceBeforeDash\}/g, locale.dashWords.spaceBefore)
+      .replace(/\$\{dash\}/g, locale.dashWords.dash)
+      .replace(/\$\{spaceAfterDash\}/g, locale.dashWords.spaceAfter);
 
   const transformed = {};
 
   Object.keys(testSet).forEach((key) => {
-    const transformedValue = testSet[key]
-      .replace(/\$\{spaceBefore\}/g, locale.dashWords.spaceBefore)
-      .replace(/\$\{dash\}/g, locale.dashWords.dash)
-      .replace(/\$\{spaceAfter\}/g, locale.dashWords.spaceAfter);
-    transformed[key] = transformedValue;
+    transformed[replaceTokens(key)] = replaceTokens(testSet[key]);
   });
 
   return transformed;

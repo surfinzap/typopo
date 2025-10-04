@@ -13,7 +13,6 @@ import {
   replaceSpacesWithNbspAfterSymbol,
   fixNbsp,
 } from "../../src/modules/whitespace/nbsp.js";
-import { describe, it, expect } from "vitest";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { createTestSuite } from "../test-utils.js";
 import { base } from "../../src/const.js";
@@ -323,10 +322,10 @@ const nbspBeforeSingleLetterSet = {
 };
 
 const nbspBeforeSingleLetterUnitSet = {
-  "famous company — A Inc.":                         "famous company — A Inc.",
-  "quoted part${rightDoubleQuote} A capital letter": "quoted part${rightDoubleQuote} A capital letter",
-  "quoted part${rightSingleQuote} A capital letter": "quoted part${rightSingleQuote} A capital letter",
-  "apostrophe${apostrophe} A capital letter":        "apostrophe${apostrophe} A capital letter",
+  "famous company — A Inc.":            "famous company — A Inc.",
+  "quoted part${rdq} A capital letter": "quoted part${rdq} A capital letter",
+  "quoted part${rsq} A capital letter": "quoted part${rsq} A capital letter",
+  "apostrophe${apos} A capital letter": "apostrophe${apos} A capital letter",
 };
 
 const nbspBeforeSingleLetterEnUsSet = {
@@ -404,26 +403,21 @@ export const nbspSet = {
 
 export function transformNbspSet(testSet, localeName) {
   const locale = new Locale(localeName);
-
-  let transformed = {};
-
-  Object.keys(testSet).forEach((key) => {
-    const transformedKey = key
-      .replace(/\$\{romanOrdinalIndicator\}/g, locale.romanOrdinalIndicator)
-      .replace(/\\./g, ".")
-      .replace(/\$\{rightDoubleQuote\}/g, locale.rightDoubleQuote)
-      .replace(/\$\{rightSingleQuote\}/g, locale.rightSingleQuote)
-      .replace(/\$\{apostrophe\}/g, base.apostrophe);
-    const transformedValue = testSet[key]
+  const replaceTokens = (str) =>
+    str
       .replace(/\$\{ordinalDateFirstSpace\}/g, locale.ordinalDate.firstSpace)
       .replace(/\$\{ordinalDateSecondSpace\}/g, locale.ordinalDate.secondSpace)
       .replace(/\$\{romanOrdinalIndicator\}/g, locale.romanOrdinalIndicator)
       .replace(/\\./g, ".")
       .replace(/\$\{spaceBeforePercent\}/g, locale.spaceBefore.percent)
-      .replace(/\$\{rightDoubleQuote\}/g, locale.rightDoubleQuote)
-      .replace(/\$\{rightSingleQuote\}/g, locale.rightSingleQuote)
-      .replace(/\$\{apostrophe\}/g, base.apostrophe);
-    transformed[transformedKey] = transformedValue;
+      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote)
+      .replace(/\$\{rsq\}/g, locale.rightSingleQuote)
+      .replace(/\$\{apos\}/g, base.apostrophe);
+
+  let transformed = {};
+
+  Object.keys(testSet).forEach((key) => {
+    transformed[replaceTokens(key)] = replaceTokens(testSet[key]);
   });
 
   return transformed;
