@@ -736,10 +736,10 @@ function en(e) {
 function nn(e, o) {
   return e.replace(
     new RegExp(
-      `([${n.sentencePunctuation}${o.terminalQuotes}])([${n.spaces}]?)([${n.ellipsis}])([${n.spaces}]?)([${n.lowercaseChars}])`,
+      `([^${o.terminalQuotes}])([${n.sentencePunctuation}])([${n.spaces}]?)([${n.ellipsis}])([${n.spaces}]?)([${n.lowercaseChars}])`,
       "g"
     ),
-    "$1 $3$5"
+    "$1$2 $4$6"
   );
 }
 function on(e) {

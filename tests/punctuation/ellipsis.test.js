@@ -140,9 +140,10 @@ const aposiopesisSentenceStartSet = {
 };
 
 const aposiopesisSentenceStartUnitSet = {
-  "Sentence ended?’ … and we were there.": "Sentence ended?’ …and we were there.",
-  "Sentence ended?’… and we were there.":  "Sentence ended?’ …and we were there.",
-  "“Sentence ended?”… and we were there.": "“Sentence ended?” …and we were there.",
+  // false positives (not fixing space before quotes)
+  "‘quote’ … and we were there.": "‘quote’ … and we were there.",
+  "‘quote’… and we were there.":  "‘quote’… and we were there.",
+  "“quote”… and we were there.":  "“quote”… and we were there.",
 };
 
 createTestSuite(
