@@ -131,6 +131,7 @@ const identifyInWordContractionsSet = {
   "Paul`s Diner": "Paul’s Diner",
   "Paul‚s Diner": "Paul’s Diner",
   "Paul´s Diner": "Paul’s Diner",
+  "I''''m":       "I’m",
 };
 
 supportedLocales.forEach((localeName) => {
@@ -240,332 +241,251 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-describe("Identify unpaired right single quote (en-us):", () => {
-  const unitTestCase = {
-    '"word\'"': '"word{{typopo__rsq--unpaired}}"',
+const identifyUnpairedRightSingleQuoteModuleSet = {
+  // heads up! since it’s a unpaired quote it’s fixed as apostrophe within a module
+  "${ldq}word'${rdq}":  "${ldq}word’${rdq}",
+  "${ldq}word‚${rdq}":  "${ldq}word’${rdq}",
+  "${ldq}word‘${rdq}":  "${ldq}word’${rdq}",
+  "${ldq}wordʼ${rdq}":  "${ldq}word’${rdq}",
+  "${ldq}word‛${rdq}":  "${ldq}word’${rdq}",
+  "${ldq}word´${rdq}":  "${ldq}word’${rdq}",
+  "${ldq}word`${rdq}":  "${ldq}word’${rdq}",
+  "${ldq}word′${rdq}":  "${ldq}word’${rdq}",
+  "${ldq}word‹${rdq}":  "${ldq}word’${rdq}",
+  "${ldq}word›${rdq}":  "${ldq}word’${rdq}",
+  "${ldq}word.'${rdq}": "${ldq}word.’${rdq}",
+  "${ldq}word!'${rdq}": "${ldq}word!’${rdq}",
+  "${ldq}word':${rdq}": "${ldq}word’:${rdq}",
+  "${ldq}word',${rdq}": "${ldq}word’,${rdq}",
+};
 
-    '"word‚"': '"word{{typopo__rsq--unpaired}}"',
+const identifyUnpairedRightSingleQuoteUnitSet = {
+  '"word\'"': '"word{{typopo__rsq--unpaired}}"',
+  '"word‚"':  '"word{{typopo__rsq--unpaired}}"',
+  "word‘":    "word{{typopo__rsq--unpaired}}",
+  wordʼ:      "word{{typopo__rsq--unpaired}}",
+  "word‛":    "word{{typopo__rsq--unpaired}}",
+  "word´":    "word{{typopo__rsq--unpaired}}",
+  "word`":    "word{{typopo__rsq--unpaired}}",
+  "word′":    "word{{typopo__rsq--unpaired}}",
+  "word‹":    "word{{typopo__rsq--unpaired}}",
+  "word›":    "word{{typopo__rsq--unpaired}}",
+  "word.'":   "word.{{typopo__rsq--unpaired}}",
+  "word!'":   "word!{{typopo__rsq--unpaired}}",
+  "word':":   "word{{typopo__rsq--unpaired}}:",
+  "word',":   "word{{typopo__rsq--unpaired}},",
+  "word' ":   "word{{typopo__rsq--unpaired}} ",
+};
 
-    "word‘": "word{{typopo__rsq--unpaired}}",
-
-    wordʼ: "word{{typopo__rsq--unpaired}}",
-
-    "word‛": "word{{typopo__rsq--unpaired}}",
-
-    "word´": "word{{typopo__rsq--unpaired}}",
-
-    "word`": "word{{typopo__rsq--unpaired}}",
-
-    "word′": "word{{typopo__rsq--unpaired}}",
-
-    "word‹": "word{{typopo__rsq--unpaired}}",
-
-    "word›": "word{{typopo__rsq--unpaired}}",
-
-    "word.'": "word.{{typopo__rsq--unpaired}}",
-
-    "word!'": "word!{{typopo__rsq--unpaired}}",
-
-    "word':": "word{{typopo__rsq--unpaired}}:",
-
-    "word',": "word{{typopo__rsq--unpaired}},",
-
-    "word' ": "word{{typopo__rsq--unpaired}} ",
-  };
-
-  const moduleTestCase = {
-    // heads up! since it’s a unpaired quote it’s fixed as apostrophe within a module
-
-    "“word'”": "“word’”",
-
-    "“word‚”": "“word’”",
-
-    "“word‘”": "“word’”",
-
-    "“wordʼ”": "“word’”",
-
-    "“word‛”": "“word’”",
-
-    "“word´”": "“word’”",
-
-    "“word`”": "“word’”",
-
-    "“word′”": "“word’”",
-
-    "“word‹”": "“word’”",
-
-    "“word›”": "“word’”",
-
-    "“word.'”": "“word.’”",
-
-    "“word!'”": "“word!’”",
-
-    "“word':”": "“word’:”",
-
-    "“word',”": "“word’,”",
-  };
-
-  Object.keys(unitTestCase).forEach((key) => {
-    it("unit test", () => {
-      expect(identifyUnpairedRightSingleQuote(key)).toBe(unitTestCase[key]);
-    });
-  });
-
-  Object.keys(moduleTestCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(moduleTestCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify unpaired right single quote",
+    transformSingleQuoteSet(identifyUnpairedRightSingleQuoteUnitSet, localeName),
+    (text) => identifyUnpairedRightSingleQuote(text),
+    transformSingleQuoteSet(identifyUnpairedRightSingleQuoteModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify single quote pairs (en-us):", () => {
-  const unitTestCase = {
-    "{{typopo__lsq--unpaired}}word{{typopo__rsq--unpaired}}": "{{typopo__lsq}}word{{typopo__rsq}}",
+const identifySingleQuotePairsModuleSet = {
+  "He said: ${ldq}What about 'word', is that good?${rdq}":
+    "He said: ${ldq}What about ${lsq}word${rsq}, is that good?${rdq}",
 
-    "{{typopo__lsq--unpaired}}word word{{typopo__rsq--unpaired}}":
-      "{{typopo__lsq}}word word{{typopo__rsq}}",
-  };
+  "He said: ${ldq}What about 'word' 'word', is that good?${rdq}":
+    "He said: ${ldq}What about ${lsq}word${rsq} ${lsq}word${rsq}, is that good?${rdq}",
 
-  const moduleTestCase = {
-    "He said: “What about 'word', is that good?”": "He said: “What about ‘word’, is that good?”",
+  "He said: ${ldq}What about 'word word', is that good?${rdq}":
+    "He said: ${ldq}What about ${lsq}word word${rsq}, is that good?${rdq}",
 
-    "He said: “What about 'word' 'word', is that good?”":
-      "He said: “What about ‘word’ ‘word’, is that good?”",
+  "${ldq}double quotes 'and single quotes' within${rdq}":
+    "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
 
-    "He said: “What about 'word word', is that good?”":
-      "He said: “What about ‘word word’, is that good?”",
+  "${ldq}double quotes 'and single quotes’ within${rdq}":
+    "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
 
-    // this case is not covered, the value is false
-    // the first right single quote is falsely an apostrophe
-    // the second left single quote is falsely an apostrophe
-    "He said: “What about 'word word' 'word word', is that good?”":
-      "He said: “What about ‘word word’ ’word word’, is that good?”",
-  };
+  "${ldq}double quotes ‚and single quotes' within${rdq}":
+    "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
 
-  Object.keys(unitTestCase).forEach((key) => {
-    it("unit test", () => {
-      expect(identifySingleQuotePairs(key)).toBe(unitTestCase[key]);
-    });
-  });
+  "He said: ${ldq}What about 'name' and 'other name'?${rdq}":
+    "He said: ${ldq}What about ${lsq}name${rsq} and ${lsq}other name${rsq}?${rdq}",
 
-  Object.keys(moduleTestCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(moduleTestCase[key]);
-    });
-  });
+  "Within double quotes ${ldq}there are single 'quotes with mix’d punctuation', you see${rdq}.":
+    "Within double quotes ${ldq}there are single ${lsq}quotes with mix’d punctuation${rsq}, you see${rdq}.",
+
+  "Let's test this: ${ldq}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${rdq}":
+    "Let’s test this: ${ldq}however, ${lsq}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${rsq} he said${rdq}",
+
+  // this case is not covered, the value is false
+  // the first right single quote is falsely an apostrophe
+  // the second left single quote is falsely an apostrophe
+  // tbd-single-quotes-matching
+  // "He said: “What about 'word word' 'word word', is that good?”":
+  //   "He said: “What about ‘word word’ ’word word’, is that good?”",
+};
+
+const identifySingleQuotePairsUnitSet = {
+  "{{typopo__lsq--unpaired}}word{{typopo__rsq--unpaired}}": "{{typopo__lsq}}word{{typopo__rsq}}",
+
+  "{{typopo__lsq--unpaired}}word word{{typopo__rsq--unpaired}}":
+    "{{typopo__lsq}}word word{{typopo__rsq}}",
+};
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify single quote pairs",
+    transformSingleQuoteSet(identifySingleQuotePairsUnitSet, localeName),
+    (text) => identifySingleQuotePairs(text),
+    transformSingleQuoteSet(identifySingleQuotePairsModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify single quote pairs around single word (en-us):", () => {
-  const moduleTestCase = {
-    "'word'": "‘word’",
+const identifySingleQuotePairAroundSingleWordModuleSet = {
+  "'word'":                                                "${lsq}word${rsq}",
+  "'word' 'word'":                                         "${lsq}word${rsq} ${lsq}word${rsq}",
+  "He said: ${ldq}What about 'word', is that good?${rdq}": "He said: ${ldq}What about ${lsq}word${rsq}, is that good?${rdq}",
+  "Press 'N' to get started":                              "Press ${lsq}N${rsq} to get started",
+};
 
-    "'word' 'word'": "‘word’ ‘word’",
+const identifySingleQuotePairAroundSingleWordUnitSet = {
+  ...identifySingleQuotePairAroundSingleWordModuleSet,
 
-    "He said: “What about 'word', is that good?”": "He said: “What about ‘word’, is that good?”",
+  // false positives
+  "... don't'": "... don't'",
+  "'don't ...": "'don't ...",
 
-    "Press 'N' to get started": "Press ‘N’ to get started",
-  };
+  // false positive
+  // this function does fix multiple words within single quotes
+  // limitation: contractions at the end of the word, e.g. jes'
+  // tbd-single-quotes-matching
+  "'word word'": "'word word'",
+};
 
-  const unitTestCase = {
-    ...moduleTestCase,
-
-    // false positives
-    "... don't'": "... don't'",
-
-    "'don't ...": "'don't ...",
-
-    // false positive
-    // this function does fix multiple words within single quotes
-    // limitation: contractions at the end of the word, e.g. jes'
-    "'word word'": "'word word'",
-  };
-
-  Object.keys(unitTestCase).forEach((key) => {
-    it("unit test", () => {
-      expect(
-        placeLocaleSingleQuotes(identifySingleQuotePairAroundSingleWord(key), new Locale("en-us"))
-      ).toBe(unitTestCase[key]);
-    });
-  });
-
-  Object.keys(moduleTestCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(moduleTestCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify single quote pairs around single word",
+    transformSingleQuoteSet(identifySingleQuotePairAroundSingleWordUnitSet, localeName),
+    (text) =>
+      placeLocaleSingleQuotes(
+        identifySingleQuotePairAroundSingleWord(text),
+        new Locale(localeName)
+      ),
+    transformSingleQuoteSet(identifySingleQuotePairAroundSingleWordModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Replace a single qoute & a single prime with a single quote pair (en-us):", () => {
-  const unitTestCase = {
-    "{{typopo__lsq--unpaired}}word{{typopo__single-prime}}": "{{typopo__lsq}}word{{typopo__rsq}}",
+const replaceSinglePrimeWSingleQuoteModuleSet = {
+  "He said: ${ldq}What about 'Localhost 3000', is that good?${rdq}":
+    "He said: ${ldq}What about ${lsq}Localhost 3000${rsq}, is that good?${rdq}",
 
-    "{{typopo__single-prime}}word{{typopo__rsq--unpaired}}": "{{typopo__lsq}}word{{typopo__rsq}}",
-  };
+  "He said: ${ldq}Here are 30 'bucks'${rdq}": "He said: ${ldq}Here are 30 ${lsq}bucks${rsq}${rdq}",
+};
 
-  const moduleTestCase = {
-    "He said: “What about 'Localhost 3000', is that good?”":
-      "He said: “What about ‘Localhost 3000’, is that good?”",
+const replaceSinglePrimeWSingleQuoteUnitSet = {
+  "{{typopo__lsq--unpaired}}word{{typopo__single-prime}}": "{{typopo__lsq}}word{{typopo__rsq}}",
 
-    "He said: “Here are 30 'bucks'”": "He said: “Here are 30 ‘bucks’”",
-  };
+  "{{typopo__single-prime}}word{{typopo__rsq--unpaired}}": "{{typopo__lsq}}word{{typopo__rsq}}",
+};
 
-  Object.keys(unitTestCase).forEach((key) => {
-    it("unit test", () => {
-      expect(replaceSinglePrimeWSingleQuote(key)).toBe(unitTestCase[key]);
-    });
-  });
-
-  Object.keys(moduleTestCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(moduleTestCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Replace a single qoute & a single prime with a single quote pair",
+    transformSingleQuoteSet(replaceSinglePrimeWSingleQuoteUnitSet, localeName),
+    (text) => replaceSinglePrimeWSingleQuote(text),
+    transformSingleQuoteSet(replaceSinglePrimeWSingleQuoteModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify residual apostrophes  (en-us):", () => {
-  const testCase = {
-    "Hers'": "Hers’",
-  };
+const identifyResidualApostrophesSet = {
+  "Hers'": "Hers’",
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(placeLocaleSingleQuotes(identifyResidualApostrophes(key), new Locale("en-us"))).toBe(
-        testCase[key]
-      );
-    });
-  });
-
-  Object.keys(testCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify residual apostrophes",
+    transformSingleQuoteSet(identifyResidualApostrophesSet, localeName),
+    (text) => placeLocaleSingleQuotes(identifyResidualApostrophes(text), localeName),
+    {},
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Remove extra space around a single prime:", () => {
-  const testCase = {
-    "12 ′ 45″": "12′ 45″",
+const removeExtraSpaceAroundSinglePrimeSet = {
+  "12 ′ 45″": "12′ 45″",
+  "12 ′45″":  "12′45″",
+};
 
-    "12 ′45″": "12′45″",
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeExtraSpaceAroundSinglePrime(key)).toBe(testCase[key]);
-    });
-  });
-
-  Object.keys(testCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Remove extra space around a single prime",
+    transformSingleQuoteSet(removeExtraSpaceAroundSinglePrimeSet, localeName),
+    (text) => removeExtraSpaceAroundSinglePrime(text),
+    {},
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Swap single quotes and terminal punctuation for a quoted part (en-us):", () => {
-  const testCase = {
-    // quoted part at the
-    // end of a sentence
-    // end of a paragraph
-    "Sometimes it can be only a ‘quoted part.’": "Sometimes it can be only a ‘quoted part’.",
+const swapSingleQuotesAndTerminalPunctuationSet = {
+  // quoted part at the
+  // end of a sentence
+  // end of a paragraph
+  "Sometimes it can be only a ${lsq}quoted part.${rsq}":             "Sometimes it can be only a ${lsq}quoted part${rsq}.",
+  "Sometimes it can be only a ${lsq}quoted${rsq} ${lsq}part.${rsq}": "Sometimes it can be only a ${lsq}quoted${rsq} ${lsq}part${rsq}.",
+  "${lsq}A whole sentence.${rsq} Only a ${lsq}quoted part.${rsq}":   "${lsq}A whole sentence.${rsq} Only a ${lsq}quoted part${rsq}.",
 
-    "Sometimes it can be only a ‘quoted’ ‘part.’": "Sometimes it can be only a ‘quoted’ ‘part’.",
+  "Is it ${lsq}Amores Perros${rsq}?": "Is it ${lsq}Amores Perros${rsq}?",
+  "Look for ${lsq}Anguanga${rsq}.":   "Look for ${lsq}Anguanga${rsq}.",
 
-    "Is it ‘Amores Perros’?": "Is it ‘Amores Perros’?",
+  // quoted part at the
+  // end of a sentence
+  // middle of a paragraph
+  "a ${lsq}quoted part.${rsq} A ${lsq}quoted part.${rsq}":         "a ${lsq}quoted part${rsq}. A ${lsq}quoted part${rsq}.",
+  "Only a ${lsq}quoted part.${rsq} ${lsq}A whole sentence.${rsq}": "Only a ${lsq}quoted part${rsq}. ${lsq}A whole sentence.${rsq}",
 
-    "Look for ‘Anguanga’.": "Look for ‘Anguanga’.",
+  // quoted part in the middle of a sentence
+  // toto tu je asi zbytocny test
+  "Only a ${lsq}quoted part${rsq} in a sentence. ${lsq}A whole sentence.${rsq}":
+    "Only a ${lsq}quoted part${rsq} in a sentence. ${lsq}A whole sentence.${rsq}",
 
-    "‘A whole sentence.’ Only a ‘quoted part.’": "‘A whole sentence.’ Only a ‘quoted part’.",
+  // place punctuation within a quoted sentence that’s in the middle of the sentence.
+  "Ask ${lsq}What’s going on in here${rsq}? so you can dig deeper.":
+    "Ask ${lsq}What’s going on in here?${rsq} so you can dig deeper.",
 
-    // quoted part at the
-    // end of a sentence
-    // middle of a paragraph
-    "a ‘quoted part.’ A ‘quoted part.’": "a ‘quoted part’. A ‘quoted part’.",
+  "Before you ask the ${lsq}How often…${rsq} question":
+    "Before you ask the ${lsq}How often…${rsq} question",
 
-    "Only a ‘quoted part.’ ‘A whole sentence.’": "Only a ‘quoted part’. ‘A whole sentence.’",
+  "${lsq}…example${rsq}":     "${lsq}…example${rsq}",
+  "abc ${lsq}…example${rsq}": "abc ${lsq}…example${rsq}",
 
-    // quoted part in the middle of a sentence
-    // toto tu je asi zbytocny test
-    "Only a ‘quoted part’ in a sentence. ‘A whole sentence.’":
-      "Only a ‘quoted part’ in a sentence. ‘A whole sentence.’",
+  // place punctuation within a quoted sentence
+  "He was ok. ${lsq}He was ok${rsq}.":            "He was ok. ${lsq}He was ok.${rsq}",
+  "He was ok. ${lsq}He was ok${rsq}. He was ok.": "He was ok. ${lsq}He was ok.${rsq} He was ok.",
+  "He was ok? ${lsq}He was ok${rsq}.":            "He was ok? ${lsq}He was ok.${rsq}",
 
-    // place punctuation within a quoted sentence that’s in the middle of the sentence.
-    "Ask ‘What’s going on in here’? so you can dig deeper.":
-      "Ask ‘What’s going on in here?’ so you can dig deeper.",
+  // swap a right quote and terminal punctuation for the whole sentence
+  "${lsq}He was ok${rsq}.":            "${lsq}He was ok.${rsq}",
+  "${lsq}He was ok${rsq}?":            "${lsq}He was ok?${rsq}",
+  "${lsq}He was ok${rsq}. He was ok.": "${lsq}He was ok.${rsq} He was ok.",
+};
 
-    "Before you ask the ‘How often…’ question": "Before you ask the ‘How often…’ question",
-
-    "‘…example’": "‘…example’",
-
-    "abc ‘…example’": "abc ‘…example’",
-
-    // place punctuation within a quoted sentence
-    "He was ok. ‘He was ok’.": "He was ok. ‘He was ok.’",
-
-    "He was ok. ‘He was ok’. He was ok.": "He was ok. ‘He was ok.’ He was ok.",
-
-    "He was ok? ‘He was ok’.": "He was ok? ‘He was ok.’",
-
-    // swap a right quote and terminal punctuation for the whole sentence
-    "‘He was ok’.": "‘He was ok.’",
-
-    "‘He was ok’?": "‘He was ok?’",
-
-    "‘He was ok’. He was ok.": "‘He was ok.’ He was ok.",
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(swapSingleQuotesAndTerminalPunctuation(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-    // This would need to support unpaired single quotes. There is a conflict how apostrophes are identified earlier
-    // also it would need a different handling of Rusyn constractions
-    // it("module test", () => {
-    //   expect(
-    //     fixSingleQuotesPrimesAndApostrophes(
-    //       key,
-    //       new Locale("en-us"),
-    //       configIgnoreMarkdownCodeBlocks
-    //     )
-    //   ).toBe(testCase[key]);
-    // });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Swap single quotes and terminal punctuation for a quoted part",
+    transformSingleQuoteSet(swapSingleQuotesAndTerminalPunctuationSet, localeName),
+    (text) => swapSingleQuotesAndTerminalPunctuation(text, new Locale(localeName)),
+    {},
+    null,
+    // (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)), // tbd-swapping-quotes
+    localeName
+  );
 });
 
 createTestSuite(
@@ -588,35 +508,16 @@ export const singleQuotesSet = {
   ...identifyContractedYearsModuleSet,
   ...identifySinglePrimesModuleSet,
   ...identifyUnpairedLeftSingleQuoteModuleSet,
-
-  "Let's test this: ${ldq}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${rdq}":
-    "Let’s test this: ${ldq}however, ${lsq}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${rsq} he said${rdq}",
-
-  "Within double quotes ${ldq}there are single 'quotes with mix’d punctuation', you see${rdq}.":
-    "Within double quotes ${ldq}there are single ${lsq}quotes with mix’d punctuation${rsq}, you see${rdq}.",
+  ...identifyUnpairedRightSingleQuoteModuleSet,
+  ...identifySingleQuotePairsModuleSet,
+  ...identifySingleQuotePairAroundSingleWordModuleSet,
+  ...replaceSinglePrimeWSingleQuoteModuleSet,
+  ...identifyResidualApostrophes,
+  ...removeExtraSpaceAroundSinglePrimeSet,
+  // ...swapSingleQuotesAndTerminalPunctuationSet, tbd-swapping-quotes
 
   "Hej: ${ldq}Vin mu povil, 'ta de jes' take vidil' i neviril${rdq}":
-    "Hej: ${ldq}Vin mu povil, ${lsq}ta de jes’ take vidil${rsq} i neviril${rdq}",
-
-  "${ldq}double quotes 'and single quotes' within${rdq}":
-    "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
-
-  "${ldq}double quotes 'and single quotes’ within${rdq}":
-    "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
-
-  "${ldq}double quotes ‚and single quotes' within${rdq}":
-    "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
-
-  "He said: ${ldq}What about 'name' and 'other name'?${rdq}":
-    "He said: ${ldq}What about ${lsq}name${rsq} and ${lsq}other name${rsq}?${rdq}",
-
-  "Press 'N' to get started": "Press ${lsq}N${rsq} to get started",
-
-  "12 ′45″": "12′45″",
-
-  "Q1 '23": "Q1 ’23",
-
-  "I''''m": "I’m",
+    "Hej: ${ldq}Vin mu povil, ${lsq}ta de jes’ take vidil${rsq} i neviril${rdq}", // tbd-single-quotes-matching
 };
 
 export function transformSingleQuoteSet(testSet, localeName) {
