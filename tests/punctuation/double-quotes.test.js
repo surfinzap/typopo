@@ -349,11 +349,9 @@ supportedLocales.forEach((localeName) => {
 });
 
 const replaceDoublePrimeWDoubleQuoteUnitSet = {
-  "{{typopo__left-double-quote--standalone}}word{{typopo__double-prime}}":
-    "{{typopo__left-double-quote}}word{{typopo__right-double-quote}}",
+  "{{typopo__ldq--standalone}}word{{typopo__double-prime}}": "{{typopo__ldq}}word{{typopo__rdq}}",
 
-  "{{typopo__double-prime}}word{{typopo__right-double-quote--standalone}}":
-    "{{typopo__left-double-quote}}word{{typopo__right-double-quote}}",
+  "{{typopo__double-prime}}word{{typopo__rdq--standalone}}": "{{typopo__ldq}}word{{typopo__rdq}}",
 };
 
 const replaceDoublePrimeWDoubleQuoteModuleSet = {

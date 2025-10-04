@@ -360,29 +360,29 @@ describe("Identify feet and arcminutes following a 1–3 numbers (en-us):", () =
 
 describe("Identify standalone left single quote (en-us):", () => {
   let unitTestCase = {
-    '" \'word"': '" {{typopo__left-single-quote--standalone}}word"',
+    '" \'word"': '" {{typopo__lsq--standalone}}word"',
 
-    '" ‚word"': '" {{typopo__left-single-quote--standalone}}word"',
+    '" ‚word"': '" {{typopo__lsq--standalone}}word"',
 
-    " ‘word": " {{typopo__left-single-quote--standalone}}word",
+    " ‘word": " {{typopo__lsq--standalone}}word",
 
-    "–‘word": "–{{typopo__left-single-quote--standalone}}word",
+    "–‘word": "–{{typopo__lsq--standalone}}word",
 
-    "—‘word": "—{{typopo__left-single-quote--standalone}}word",
+    "—‘word": "—{{typopo__lsq--standalone}}word",
 
-    " ʼword": " {{typopo__left-single-quote--standalone}}word",
+    " ʼword": " {{typopo__lsq--standalone}}word",
 
-    " ‛word": " {{typopo__left-single-quote--standalone}}word",
+    " ‛word": " {{typopo__lsq--standalone}}word",
 
-    " ´word": " {{typopo__left-single-quote--standalone}}word",
+    " ´word": " {{typopo__lsq--standalone}}word",
 
-    " `word": " {{typopo__left-single-quote--standalone}}word",
+    " `word": " {{typopo__lsq--standalone}}word",
 
-    " ′word": " {{typopo__left-single-quote--standalone}}word",
+    " ′word": " {{typopo__lsq--standalone}}word",
 
-    " ‹word": " {{typopo__left-single-quote--standalone}}word",
+    " ‹word": " {{typopo__lsq--standalone}}word",
 
-    " ›word": " {{typopo__left-single-quote--standalone}}word",
+    " ›word": " {{typopo__lsq--standalone}}word",
   };
 
   let moduleTestCase = {
@@ -430,35 +430,35 @@ describe("Identify standalone left single quote (en-us):", () => {
 
 describe("Identify standalone right single quote (en-us):", () => {
   let unitTestCase = {
-    '"word\'"': '"word{{typopo__right-single-quote--standalone}}"',
+    '"word\'"': '"word{{typopo__rsq--standalone}}"',
 
-    '"word‚"': '"word{{typopo__right-single-quote--standalone}}"',
+    '"word‚"': '"word{{typopo__rsq--standalone}}"',
 
-    "word‘": "word{{typopo__right-single-quote--standalone}}",
+    "word‘": "word{{typopo__rsq--standalone}}",
 
-    wordʼ: "word{{typopo__right-single-quote--standalone}}",
+    wordʼ: "word{{typopo__rsq--standalone}}",
 
-    "word‛": "word{{typopo__right-single-quote--standalone}}",
+    "word‛": "word{{typopo__rsq--standalone}}",
 
-    "word´": "word{{typopo__right-single-quote--standalone}}",
+    "word´": "word{{typopo__rsq--standalone}}",
 
-    "word`": "word{{typopo__right-single-quote--standalone}}",
+    "word`": "word{{typopo__rsq--standalone}}",
 
-    "word′": "word{{typopo__right-single-quote--standalone}}",
+    "word′": "word{{typopo__rsq--standalone}}",
 
-    "word‹": "word{{typopo__right-single-quote--standalone}}",
+    "word‹": "word{{typopo__rsq--standalone}}",
 
-    "word›": "word{{typopo__right-single-quote--standalone}}",
+    "word›": "word{{typopo__rsq--standalone}}",
 
-    "word.'": "word.{{typopo__right-single-quote--standalone}}",
+    "word.'": "word.{{typopo__rsq--standalone}}",
 
-    "word!'": "word!{{typopo__right-single-quote--standalone}}",
+    "word!'": "word!{{typopo__rsq--standalone}}",
 
-    "word':": "word{{typopo__right-single-quote--standalone}}:",
+    "word':": "word{{typopo__rsq--standalone}}:",
 
-    "word',": "word{{typopo__right-single-quote--standalone}},",
+    "word',": "word{{typopo__rsq--standalone}},",
 
-    "word' ": "word{{typopo__right-single-quote--standalone}} ",
+    "word' ": "word{{typopo__rsq--standalone}} ",
   };
 
   let moduleTestCase = {
@@ -514,11 +514,11 @@ describe("Identify standalone right single quote (en-us):", () => {
 
 describe("Identify single quote pairs (en-us):", () => {
   let unitTestCase = {
-    "{{typopo__left-single-quote--standalone}}word{{typopo__right-single-quote--standalone}}":
-      "{{typopo__left-single-quote}}word{{typopo__right-single-quote}}",
+    "{{typopo__lsq--standalone}}word{{typopo__rsq--standalone}}":
+      "{{typopo__lsq}}word{{typopo__rsq}}",
 
-    "{{typopo__left-single-quote--standalone}}word word{{typopo__right-single-quote--standalone}}":
-      "{{typopo__left-single-quote}}word word{{typopo__right-single-quote}}",
+    "{{typopo__lsq--standalone}}word word{{typopo__rsq--standalone}}":
+      "{{typopo__lsq}}word word{{typopo__rsq}}",
   };
 
   let moduleTestCase = {
@@ -604,11 +604,9 @@ describe("Identify single quote pairs around single word (en-us):", () => {
 
 describe("Replace a single qoute & a single prime with a single quote pair (en-us):", () => {
   let unitTestCase = {
-    "{{typopo__left-single-quote--standalone}}word{{typopo__single-prime}}":
-      "{{typopo__left-single-quote}}word{{typopo__right-single-quote}}",
+    "{{typopo__lsq--standalone}}word{{typopo__single-prime}}": "{{typopo__lsq}}word{{typopo__rsq}}",
 
-    "{{typopo__single-prime}}word{{typopo__right-single-quote--standalone}}":
-      "{{typopo__left-single-quote}}word{{typopo__right-single-quote}}",
+    "{{typopo__single-prime}}word{{typopo__rsq--standalone}}": "{{typopo__lsq}}word{{typopo__rsq}}",
   };
 
   let moduleTestCase = {

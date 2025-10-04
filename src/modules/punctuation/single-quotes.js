@@ -174,7 +174,7 @@ export function identifyContractedYears(string) {
   We’re not using base.singleQuoteAdepts variable as commas and low-positioned quotes are ommited
 
   @param {string} string: input text for identification
-  @returns {string} output with identified single primes as a temporary variable string, e.g. {{typopo__sinlge-prime}}
+  @returns {string} output with identified single primes as a temporary variable string, e.g. {{typopo__single-prime}}
 */
 export function identifySinglePrimes(string) {
   return string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1$2{{typopo__single-prime}}");
@@ -202,7 +202,7 @@ export function identifyStandaloneLeftSingleQuote(string) {
         `([${base.allChars}${base.ellipsis}])`,
       "g"
     ),
-      `$1{{typopo__left-single-quote--standalone}}$3`
+      `$1{{typopo__lsq--standalone}}$3`
   );
 }
 
@@ -230,7 +230,7 @@ export function identifyStandaloneRightSingleQuote(string) {
       `([ ${base.sentencePunctuation}])?`,
       "g"
     ),
-      `$1$2{{typopo__right-single-quote--standalone}}$4`
+      `$1$2{{typopo__rsq--standalone}}$4`
   );
 }
 
@@ -290,12 +290,12 @@ export function identifySingleQuotePairs(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `({{typopo__left-single-quote--standalone}})` +
+      `({{typopo__lsq--standalone}})` +
       `(.*)` +
-      `({{typopo__right-single-quote--standalone}})`,
+      `({{typopo__rsq--standalone}})`,
       "g"
     ),
-      `{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}`
+      `{{typopo__lsq}}$2{{typopo__rsq}}`
   );
 }
 
@@ -321,7 +321,7 @@ export function identifySingleQuotePairAroundSingleWord(string) {
         `(\\B)`,
       "g"
     ),
-      `$1{{typopo__left-single-quote}}$3{{typopo__right-single-quote}}$5`
+      `$1{{typopo__lsq}}$3{{typopo__rsq}}$5`
   );
 }
 
@@ -371,12 +371,12 @@ export function replaceSinglePrimeWSingleQuote(string) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `({{typopo__left-single-quote--standalone}})` +
+      `({{typopo__lsq--standalone}})` +
       `(.*?)` +
       `({{typopo__single-prime}})`,
       "g"
     ),
-      `{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}`
+      `{{typopo__lsq}}$2{{typopo__rsq}}`
   );
 
   // prettier-ignore
@@ -384,10 +384,10 @@ export function replaceSinglePrimeWSingleQuote(string) {
     new RegExp(
       `({{typopo__single-prime}})` +
       `(.*?)` +
-      `({{typopo__right-single-quote--standalone}})`,
+      `({{typopo__rsq--standalone}})`,
       "g"
     ),
-      `{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}`
+      `{{typopo__lsq}}$2{{typopo__rsq}}`
   );
 
   return string;
@@ -534,12 +534,12 @@ export function placeLocaleSingleQuotes(string, locale) {
   string = string.replace(/({{typopo__single-prime}})/g, base.singlePrime);
 
   string = string.replace(
-    /{{typopo__apostrophe}}|{{typopo__left-single-quote--standalone}}|{{typopo__right-single-quote--standalone}}/g,
+    /{{typopo__apostrophe}}|{{typopo__lsq--standalone}}|{{typopo__rsq--standalone}}/g,
     base.apostrophe
   );
 
-  string = string.replace(/{{typopo__left-single-quote}}/g, locale.leftSingleQuote);
-  string = string.replace(/{{typopo__right-single-quote}}/g, locale.rightSingleQuote);
+  string = string.replace(/{{typopo__lsq}}/g, locale.leftSingleQuote);
+  string = string.replace(/{{typopo__rsq}}/g, locale.rightSingleQuote);
 
   string = string.replace(/{{typopo__markdown_syntax_highlight}}/g, "```");
 

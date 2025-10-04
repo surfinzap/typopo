@@ -146,9 +146,9 @@ export function identifyDoubleQuotePairs(string) {
       `({{typopo__double-prime}})`,
       "g"
     ),
-      `{{typopo__left-double-quote}}` +
+      `{{typopo__ldq}}` +
       `$2` +
-      `{{typopo__right-double-quote}}`
+      `{{typopo__rdq}}`
   );
 
   // generic rule
@@ -160,9 +160,9 @@ export function identifyDoubleQuotePairs(string) {
       `(${base.doubleQuoteAdepts})`,
       "g"
     ),
-      `{{typopo__left-double-quote}}` +
+      `{{typopo__ldq}}` +
       `$2` +
-      `{{typopo__right-double-quote}}`
+      `{{typopo__rdq}}`
   );
 
   return string;
@@ -191,7 +191,7 @@ export function identifyStandaloneLeftDoubleQuote(string) {
        `([0-9${base.lowercaseChars}${base.uppercaseChars}])`, 
        "g"
     ), 
-    "{{typopo__left-double-quote--standalone}}$2"
+    "{{typopo__ldq--standalone}}$2"
   );
 }
 
@@ -218,7 +218,7 @@ export function identifyStandaloneRightDoubleQuote(string) {
        `(${base.doubleQuoteAdepts})`, 
        "g"
     ), 
-    "$1{{typopo__right-double-quote--standalone}}"
+    "$1{{typopo__rdq--standalone}}"
   );
 }
 
@@ -270,25 +270,25 @@ export function replaceDoublePrimeWDoubleQuote(string) {
   return string
     .replace(
       new RegExp(
-        `({{typopo__left-double-quote--standalone}})` +
+        `({{typopo__ldq--standalone}})` +
         `(.*?)` +
         `({{typopo__double-prime}})`,
         "g"
       ),
-      `{{typopo__left-double-quote}}` +
+      `{{typopo__ldq}}` +
       `$2` +
-      `{{typopo__right-double-quote}}`
+      `{{typopo__rdq}}`
     )
     .replace(
       new RegExp(
         `({{typopo__double-prime}})` +
         `(.*?)` +
-        `({{typopo__right-double-quote--standalone}})`,
+        `({{typopo__rdq--standalone}})`,
         "g"
       ),
-      `{{typopo__left-double-quote}}` +
+      `{{typopo__ldq}}` +
       `$2` +
-      `{{typopo__right-double-quote}}`
+      `{{typopo__rdq}}`
     );
 }
 
@@ -467,14 +467,8 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 export function placeLocaleDoubleQuotes(string, locale) {
   return string
     .replace(/{{typopo__double-prime}}/g, base.doublePrime)
-    .replace(
-      /({{typopo__left-double-quote}}|{{typopo__left-double-quote--standalone}})/g,
-      locale.leftDoubleQuote
-    )
-    .replace(
-      /({{typopo__right-double-quote}}|{{typopo__right-double-quote--standalone}})/g,
-      locale.rightDoubleQuote
-    );
+    .replace(/({{typopo__ldq}}|{{typopo__ldq--standalone}})/g, locale.leftDoubleQuote)
+    .replace(/({{typopo__rdq}}|{{typopo__rdq--standalone}})/g, locale.rightDoubleQuote);
 }
 
 //
