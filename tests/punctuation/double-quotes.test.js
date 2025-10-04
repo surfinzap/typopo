@@ -4,8 +4,8 @@ import {
   swapQuotesAndTerminalPunctuation,
   identifyDoublePrimes,
   identifyDoubleQuotePairs,
-  identifyStandaloneLeftDoubleQuote,
-  identifyStandaloneRightDoubleQuote,
+  identifyUnpairedLeftDoubleQuote,
+  identifyUnpairedRightDoubleQuote,
   removeUnidentifiedDoubleQuote,
   replaceDoublePrimeWDoubleQuote,
   placeLocaleDoubleQuotes,
@@ -254,55 +254,55 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-const identifyStandaloneLeftDoubleQuoteSet = {
-  '"standalone left quote.':    "${ldq}standalone left quote.",
-  "«standalone left quote.":    "${ldq}standalone left quote.",
-  "„standalone left quote.":    "${ldq}standalone left quote.",
-  ",,standalone left quote.":   "${ldq}standalone left quote.",
-  "‹‹standalone left quote.":   "${ldq}standalone left quote.",
-  "‘‘standalone left quote.":   "${ldq}standalone left quote.",
-  '"Standalone left quote.':    "${ldq}Standalone left quote.",
-  "“Standalone left quote.":    "${ldq}Standalone left quote.",
-  "«Standalone left quote.":    "${ldq}Standalone left quote.",
-  "„Standalone left quote.":    "${ldq}Standalone left quote.",
-  ",,Standalone left quote.":   "${ldq}Standalone left quote.",
-  "‹‹Standalone left quote.":   "${ldq}Standalone left quote.",
-  "‘‘Standalone left quote.":   "${ldq}Standalone left quote.",
-  "‘‘1 standalone left quote.": "${ldq}1 standalone left quote.",
+const identifyUnpairedLeftDoubleQuoteSet = {
+  '"unpaired left quote.':    "${ldq}unpaired left quote.",
+  "«unpaired left quote.":    "${ldq}unpaired left quote.",
+  "„unpaired left quote.":    "${ldq}unpaired left quote.",
+  ",,unpaired left quote.":   "${ldq}unpaired left quote.",
+  "‹‹unpaired left quote.":   "${ldq}unpaired left quote.",
+  "‘‘unpaired left quote.":   "${ldq}unpaired left quote.",
+  '"Unpaired left quote.':    "${ldq}Unpaired left quote.",
+  "“Unpaired left quote.":    "${ldq}Unpaired left quote.",
+  "«Unpaired left quote.":    "${ldq}Unpaired left quote.",
+  "„Unpaired left quote.":    "${ldq}Unpaired left quote.",
+  ",,Unpaired left quote.":   "${ldq}Unpaired left quote.",
+  "‹‹Unpaired left quote.":   "${ldq}Unpaired left quote.",
+  "‘‘Unpaired left quote.":   "${ldq}Unpaired left quote.",
+  "‘‘1 unpaired left quote.": "${ldq}1 unpaired left quote.",
 };
 
 supportedLocales.forEach((localeName) => {
   createTestSuite(
-    "Identify standalone left double quote",
-    transformDoubleQuoteSet(identifyStandaloneLeftDoubleQuoteSet, localeName),
+    "Identify unpaired left double quote",
+    transformDoubleQuoteSet(identifyUnpairedLeftDoubleQuoteSet, localeName),
     (text) =>
-      placeLocaleDoubleQuotes(identifyStandaloneLeftDoubleQuote(text), new Locale(localeName)),
+      placeLocaleDoubleQuotes(identifyUnpairedLeftDoubleQuote(text), new Locale(localeName)),
     {},
     (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
     localeName
   );
 });
 
-const identifyStandaloneRightDoubleQuoteSet = {
-  'standalone" right quote.':  "standalone${rdq} right quote.",
-  "standalone« right quote.":  "standalone${rdq} right quote.",
-  "standalone„ right quote.":  "standalone${rdq} right quote.",
-  "standalone” right quote.":  "standalone${rdq} right quote.",
-  "standalone“ right quote.":  "standalone${rdq} right quote.",
-  "standalone,, right quote.": "standalone${rdq} right quote.",
-  "standalone›› right quote.": "standalone${rdq} right quote.",
-  "standalone‘‘ right quote.": "standalone${rdq} right quote.",
-  'STANDALONE" right quote.':  "STANDALONE${rdq} right quote.",
-  'standalone right quote."':  "standalone right quote.${rdq}",
-  'standalone right quote…"':  "standalone right quote…${rdq}",
+const identifyUnpairedRightDoubleQuoteSet = {
+  'unpaired" right quote.':  "unpaired${rdq} right quote.",
+  "unpaired« right quote.":  "unpaired${rdq} right quote.",
+  "unpaired„ right quote.":  "unpaired${rdq} right quote.",
+  "unpaired” right quote.":  "unpaired${rdq} right quote.",
+  "unpaired“ right quote.":  "unpaired${rdq} right quote.",
+  "unpaired,, right quote.": "unpaired${rdq} right quote.",
+  "unpaired›› right quote.": "unpaired${rdq} right quote.",
+  "unpaired‘‘ right quote.": "unpaired${rdq} right quote.",
+  'UNPAIRED" right quote.':  "UNPAIRED${rdq} right quote.",
+  'unpaired right quote."':  "unpaired right quote.${rdq}",
+  'unpaired right quote…"':  "unpaired right quote…${rdq}",
 };
 
 supportedLocales.forEach((localeName) => {
   createTestSuite(
-    "Identify standalone right double quote",
-    transformDoubleQuoteSet(identifyStandaloneRightDoubleQuoteSet, localeName),
+    "Identify unpaired right double quote",
+    transformDoubleQuoteSet(identifyUnpairedRightDoubleQuoteSet, localeName),
     (text) =>
-      placeLocaleDoubleQuotes(identifyStandaloneRightDoubleQuote(text), new Locale(localeName)),
+      placeLocaleDoubleQuotes(identifyUnpairedRightDoubleQuote(text), new Locale(localeName)),
     {},
     (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
     localeName
@@ -340,9 +340,9 @@ supportedLocales.forEach((localeName) => {
 });
 
 const replaceDoublePrimeWDoubleQuoteUnitSet = {
-  "{{typopo__ldq--standalone}}word{{typopo__double-prime}}": "{{typopo__ldq}}word{{typopo__rdq}}",
+  "{{typopo__ldq--unpaired}}word{{typopo__double-prime}}": "{{typopo__ldq}}word{{typopo__rdq}}",
 
-  "{{typopo__double-prime}}word{{typopo__rdq--standalone}}": "{{typopo__ldq}}word{{typopo__rdq}}",
+  "{{typopo__double-prime}}word{{typopo__rdq--unpaired}}": "{{typopo__ldq}}word{{typopo__rdq}}",
 };
 
 const replaceDoublePrimeWDoubleQuoteModuleSet = {
@@ -515,8 +515,8 @@ export const doubleQuotesSet = {
   ...removePunctuationAfterQuotesSet,
   ...identifyDoublePrimesModuleSet,
   ...identifyDoubleQuotePairsModuleSet,
-  ...identifyStandaloneLeftDoubleQuoteSet,
-  ...identifyStandaloneRightDoubleQuoteSet,
+  ...identifyUnpairedLeftDoubleQuoteSet,
+  ...identifyUnpairedRightDoubleQuoteSet,
   ...removeUnidentifiedDoubleQuoteSet,
   ...replaceDoublePrimeWDoubleQuoteModuleSet,
   ...swapQuotesAndTerminalPunctuationSet,
@@ -527,24 +527,19 @@ export const doubleQuotesSet = {
 
 export function transformDoubleQuoteSet(testSet, localeName) {
   const locale = new Locale(localeName);
+  const replaceTokens = (str) =>
+    str
+      .replace(/\$\{ldq\}/g, locale.leftDoubleQuote)
+      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote)
+      .replace(/\$\{lsq\}/g, locale.leftSingleQuote)
+      .replace(/\$\{rsq\}/g, locale.rightSingleQuote)
+      .replace(/\$\{apos\}/g, base.apostrophe);
 
   const transformed = {};
   testSet = { ...testSet, ...doubleQuotesFalsePositivesNew };
 
   Object.keys(testSet).forEach((key) => {
-    const transformedKey = key
-      .replace(/\$\{ldq\}/g, locale.leftDoubleQuote)
-      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote)
-      .replace(/\$\{lsq\}/g, locale.leftSingleQuote)
-      .replace(/\$\{rsq\}/g, locale.rightSingleQuote)
-      .replace(/\$\{apos\}/g, base.apostrophe);
-    const transformedValue = testSet[key]
-      .replace(/\$\{ldq\}/g, locale.leftDoubleQuote)
-      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote)
-      .replace(/\$\{lsq\}/g, locale.leftSingleQuote)
-      .replace(/\$\{rsq\}/g, locale.rightSingleQuote)
-      .replace(/\$\{apos\}/g, base.apostrophe);
-    transformed[transformedKey] = transformedValue;
+    transformed[replaceTokens(key)] = replaceTokens(testSet[key]);
   });
 
   return transformed;

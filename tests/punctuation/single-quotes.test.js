@@ -5,8 +5,8 @@ import {
   identifyInWordContractions,
   identifyContractedYears,
   identifySinglePrimes,
-  identifyStandaloneLeftSingleQuote,
-  identifyStandaloneRightSingleQuote,
+  identifyUnpairedLeftSingleQuote,
+  identifyUnpairedRightSingleQuote,
   identifySingleQuotePairAroundSingleWord,
   identifySingleQuotePairs,
   replaceSinglePrimeWSingleQuote,
@@ -25,391 +25,256 @@ const configIgnoreMarkdownCodeBlocks = {
   keepMarkdownCodeBlocks: false,
 };
 
-describe("Identify contracted and (’n’) as apostrophes (en-us):", () => {
-  let moduleTestCase = {
-    "rock 'n' roll": "rock ’n’ roll",
+const identifyContractedAndModuleSet = {
+  "rock 'n' roll":   "rock ’n’ roll",
+  "rock'n'roll":     "rock ’n’ roll",
+  "rock 'n'roll":    "rock ’n’ roll",
+  "rock'n' roll":    "rock ’n’ roll",
+  "rock ‚n‘ roll":   "rock ’n’ roll",
+  "rock ’nʼ roll":   "rock ’n’ roll",
+  "rock ‛n′ roll":   "rock ’n’ roll",
+  "rock ‹n› roll":   "rock ’n’ roll",
+  "rock ´n` roll":   "rock ’n’ roll",
+  "ROCK 'N' ROLL":   "ROCK ’N’ ROLL",
+  "dead 'n' buried": "dead ’n’ buried",
+  "drill 'n' bass":  "drill ’n’ bass",
+  "drum 'n' bass":   "drum ’n’ bass",
+  "pick 'n' mix":    "pick ’n’ mix",
+  "fish 'n' chips":  "fish ’n’ chips",
+  "salt 'n' shake":  "salt ’n’ shake",
+  "mac 'n' cheese":  "mac ’n’ cheese",
+  "pork 'n' beans":  "pork ’n’ beans",
+  "drag 'n' drop":   "drag ’n’ drop",
+  "rake 'n' scrape": "rake ’n’ scrape",
+  "hook 'n' kill":   "hook ’n’ kill",
+};
 
-    "rock'n'roll": "rock ’n’ roll",
+const identifyContractedAndUnitSet = {
+  ...identifyContractedAndModuleSet,
+  //false positives
+  "Press ‘n’ button": "Press ‘n’ button",
+};
 
-    "rock 'n'roll": "rock ’n’ roll",
-
-    "rock'n' roll": "rock ’n’ roll",
-
-    "rock ‚n‘ roll": "rock ’n’ roll",
-
-    "rock ’nʼ roll": "rock ’n’ roll",
-
-    "rock ‛n′ roll": "rock ’n’ roll",
-
-    "rock ‹n› roll": "rock ’n’ roll",
-
-    "rock ´n` roll": "rock ’n’ roll",
-
-    "ROCK 'N' ROLL": "ROCK ’N’ ROLL",
-
-    "dead 'n' buried": "dead ’n’ buried",
-
-    "drill 'n' bass": "drill ’n’ bass",
-
-    "drum 'n' bass": "drum ’n’ bass",
-
-    "pick 'n' mix": "pick ’n’ mix",
-
-    "fish 'n' chips": "fish ’n’ chips",
-
-    "salt 'n' shake": "salt ’n’ shake",
-
-    "mac 'n' cheese": "mac ’n’ cheese",
-
-    "pork 'n' beans": "pork ’n’ beans",
-
-    "drag 'n' drop": "drag ’n’ drop",
-
-    "rake 'n' scrape": "rake ’n’ scrape",
-
-    "hook 'n' kill": "hook ’n’ kill",
-  };
-
-  let unitTestCase = {
-    ...moduleTestCase,
-
-    //false positives
-    "Press ‘n’ button": "Press ‘n’ button",
-  };
-
-  Object.keys(unitTestCase).forEach((key) => {
-    it("unit test", () => {
-      expect(placeLocaleSingleQuotes(identifyContractedAnd(key), new Locale("en-us"))).toBe(
-        unitTestCase[key]
-      );
-    });
-  });
-
-  Object.keys(moduleTestCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(moduleTestCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify contracted and (’n’) as apostrophes",
+    transformSingleQuoteSet(identifyContractedAndUnitSet, localeName),
+    (text) => placeLocaleSingleQuotes(identifyContractedAnd(text), new Locale(localeName)),
+    transformSingleQuoteSet(identifyContractedAndModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify common contractions at the beginning of the word as apostrophes (en-us):", () => {
-  let testCase = {
-    "Just 'cause I wanna.":               "Just ’cause I wanna.",
-    "'Tis the season":                    "’Tis the season",
-    "'sblood":                            "’sblood",
-    "'mongst":                            "’mongst",
-    "'prentice":                          "’prentice",
-    "'slight":                            "’slight",
-    "'Strewth":                           "’Strewth",
-    "'Twixt":                             "’Twixt",
-    "'shun":                              "’shun",
-    "'slid":                              "’slid",
-    "Find 'em!":                          "Find ’em!",
-    "'Twas the Night Before Christmas":   "’Twas the Night Before Christmas",
-    "'Til The Season Comes 'Round Again": "’Til The Season Comes ’Round Again",
-  };
+const identifyContractedBeginningsSet = {
+  "Just 'cause we wanna.":              "Just ’cause we wanna.",
+  "'Tis the season":                    "’Tis the season",
+  "'sblood":                            "’sblood",
+  "'mongst":                            "’mongst",
+  "'prentice":                          "’prentice",
+  "'slight":                            "’slight",
+  "'Strewth":                           "’Strewth",
+  "'Twixt":                             "’Twixt",
+  "'shun":                              "’shun",
+  "'slid":                              "’slid",
+  "Find 'em!":                          "Find ’em!",
+  "'Twas the Night Before Christmas":   "’Twas the Night Before Christmas",
+  "'Til The Season Comes 'Round Again": "’Til The Season Comes ’Round Again",
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(placeLocaleSingleQuotes(identifyContractedBeginnings(key), new Locale("en-us"))).toBe(
-        testCase[key]
-      );
-    });
-  });
-
-  Object.keys(testCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify common contractions at the beginning of the word as apostrophes",
+    transformSingleQuoteSet(identifyContractedBeginningsSet, localeName),
+    (text) => placeLocaleSingleQuotes(identifyContractedBeginnings(text), new Locale(localeName)),
+    {},
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify common contractions at the end of the word as apostrophes (en-us):", () => {
-  let testCase = {
-    "nottin'": "nottin’",
+const identifyContractedEndsModuleSet = {
+  "nottin'": "nottin’",
+  "gettin'": "gettin’",
+  "NOTTIN'": "NOTTIN’",
+  "GETTIN'": "GETTIN’",
+};
 
-    "gettin'": "gettin’",
+const identifyContractedEndsUnitSet = {
+  ...identifyContractedEndsModuleSet,
+  // false positive, when it’s not a contracted word
+  "'something in'": "'something in'",
+};
 
-    "NOTTIN'": "NOTTIN’",
-
-    "GETTIN'": "GETTIN’",
-  };
-
-  let unitTestCase = {
-    ...testCase,
-
-    // false positive, when it’s not a contracted word
-    "'something in'": "'something in'",
-  };
-
-  Object.keys(unitTestCase).forEach((key) => {
-    it("unit test", () => {
-      expect(placeLocaleSingleQuotes(identifyContractedEnds(key), new Locale("en-us"))).toBe(
-        unitTestCase[key]
-      );
-    });
-  });
-
-  Object.keys(testCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify common contractions at the end of the word as apostrophes",
+    transformSingleQuoteSet(identifyContractedEndsUnitSet, localeName),
+    (text) => placeLocaleSingleQuotes(identifyContractedEnds(text), new Locale(localeName)),
+    transformSingleQuoteSet(identifyContractedEndsModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify in-word contractions as apostrophes (en-us):", () => {
-  let testCase = {
-    "69'ers":       "69’ers",
-    "iPhone6's":    "iPhone6’s",
-    "1990's":       "1990’s",
-    "don't":        "don’t",
-    "don''t":       "don’t",
-    "don''’t":      "don’t",
-    "Paul‘s Diner": "Paul’s Diner",
-    "Paul’s Diner": "Paul’s Diner",
-    "Paulʼs Diner": "Paul’s Diner",
-    "Paul‛s Diner": "Paul’s Diner",
-    "Paul`s Diner": "Paul’s Diner",
-    "Paul‚s Diner": "Paul’s Diner",
-    "Paul´s Diner": "Paul’s Diner",
-  };
+const identifyInWordContractionsSet = {
+  "69'ers":       "69’ers",
+  "iPhone6's":    "iPhone6’s",
+  "1990's":       "1990’s",
+  "don't":        "don’t",
+  "don''t":       "don’t",
+  "don''’t":      "don’t",
+  "Paul‘s Diner": "Paul’s Diner",
+  "Paul’s Diner": "Paul’s Diner",
+  "Paulʼs Diner": "Paul’s Diner",
+  "Paul‛s Diner": "Paul’s Diner",
+  "Paul`s Diner": "Paul’s Diner",
+  "Paul‚s Diner": "Paul’s Diner",
+  "Paul´s Diner": "Paul’s Diner",
+};
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(placeLocaleSingleQuotes(identifyInWordContractions(key), new Locale("en-us"))).toBe(
-        testCase[key]
-      );
-    });
-  });
-
-  Object.keys(testCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify in-word contractions as apostrophes",
+    transformSingleQuoteSet(identifyInWordContractionsSet, localeName),
+    (text) => placeLocaleSingleQuotes(identifyInWordContractions(text), new Locale(localeName)),
+    {},
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify contracted years as apostrophes (en-us):", () => {
-  let testCase = {
-    "INCHEBA '89": "INCHEBA ’89",
-    "in '70s":     "in ’70s",
-    "Q1 '23":      "Q1 ’23",
-  };
+const identifyContractedYearsModuleSet = {
+  "INCHEBA '89": "INCHEBA ’89",
+  "in '70s":     "in ’70s",
+  "Q1 '23":      "Q1 ’23",
+};
 
-  let unitTestCase = {
-    ...testCase,
+const identifyContractedYearsUnitSet = {
+  ...identifyContractedYearsModuleSet,
+  // false positive, when there is a wrongly spaced feet
+  "12 '45″": "12 '45″",
+};
 
-    // false positive, when there is a wrongly spaced feet
-    "12 '45″": "12 '45″",
-  };
-
-  Object.keys(unitTestCase).forEach((key) => {
-    it("unit test", () => {
-      expect(placeLocaleSingleQuotes(identifyContractedYears(key), new Locale("en-us"))).toBe(
-        unitTestCase[key]
-      );
-    });
-  });
-
-  Object.keys(testCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify contracted years as apostrophes",
+    transformSingleQuoteSet(identifyContractedYearsUnitSet, localeName),
+    (text) => placeLocaleSingleQuotes(identifyContractedYears(text), new Locale(localeName)),
+    transformSingleQuoteSet(identifyContractedYearsModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify feet and arcminutes following a 1–3 numbers (en-us):", () => {
-  let moduleTestCase = {
-    "12 ' 45″": "12′ 45″",
+const identifySinglePrimesModuleSet = {
+  "12 ' 45″": "12′ 45″",
+  "12 ‘ 45″": "12′ 45″",
+  "12 ’ 45″": "12′ 45″",
+  "12 ‛ 45″": "12′ 45″",
+  "12 ′ 45″": "12′ 45″",
+  "12 ‛45″":  "12′45″",
+  //this is identified wrongly as 8217, right quotation mark in module tests
+  "12 '45″":  "12′45″",
+};
 
-    "12 ‘ 45″": "12′ 45″",
+const identifySinglePrimesUnitSet = {
+  "12' 45″":  "12′ 45″",
+  "12‘ 45″":  "12′ 45″",
+  "12’ 45″":  "12′ 45″",
+  "12‛ 45″":  "12′ 45″",
+  "12′ 45″":  "12′ 45″",
+  "12 ′ 45″": "12 ′ 45″",
+  "12'45″":   "12′45″",
+  "12 '45″":  "12 ′45″",
+};
 
-    "12 ’ 45″": "12′ 45″",
-
-    "12 ‛ 45″": "12′ 45″",
-
-    "12 ′ 45″": "12′ 45″",
-
-    "12 ‛45″": "12′45″",
-
-    //this is identified wrongly as 8217, right quotation mark in module tests
-    "12 '45″": "12′45″",
-  };
-
-  let unitTestCase = {
-    "12' 45″": "12′ 45″",
-
-    "12‘ 45″": "12′ 45″",
-
-    "12’ 45″": "12′ 45″",
-
-    "12‛ 45″": "12′ 45″",
-
-    "12′ 45″": "12′ 45″",
-
-    "12 ′ 45″": "12 ′ 45″",
-
-    "12'45″": "12′45″",
-
-    "12 '45″": "12 ′45″",
-  };
-
-  Object.keys(unitTestCase).forEach((key) => {
-    it("unit test", () => {
-      expect(placeLocaleSingleQuotes(identifySinglePrimes(key), new Locale("en-us"))).toBe(
-        unitTestCase[key]
-      );
-    });
-  });
-
-  Object.keys(moduleTestCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(moduleTestCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify feet and arcminutes following a 1–3 numbers",
+    transformSingleQuoteSet(identifySinglePrimesUnitSet, localeName),
+    (text) => placeLocaleSingleQuotes(identifySinglePrimes(text), new Locale(localeName)),
+    transformSingleQuoteSet(identifySinglePrimesModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify standalone left single quote (en-us):", () => {
-  let unitTestCase = {
-    '" \'word"': '" {{typopo__lsq--standalone}}word"',
+const identifyUnpairedLeftSingleQuoteModuleSet = {
+  // heads up! since it’s a unpaired quote it’s fixed as apostrophe within a module
+  "${ldq}‘word${rdq}":  "${ldq}’word${rdq}",
+  "${ldq}–‘word${rdq}": "${ldq}–’word${rdq}",
+  "${ldq}—‘word${rdq}": "${ldq}—’word${rdq}",
+  "${ldq}ʼword${rdq}":  "${ldq}’word${rdq}",
+  "${ldq}‛word${rdq}":  "${ldq}’word${rdq}",
+  "${ldq}´word${rdq}":  "${ldq}’word${rdq}",
+  "${ldq}`word${rdq}":  "${ldq}’word${rdq}",
+  "${ldq}′word${rdq}":  "${ldq}’word${rdq}",
+  "${ldq}‹word${rdq}":  "${ldq}’word${rdq}",
+  "${ldq}›word${rdq}":  "${ldq}’word${rdq}",
+};
 
-    '" ‚word"': '" {{typopo__lsq--standalone}}word"',
+const identifyUnpairedLeftSingleQuoteUnitSet = {
+  '" \'word"': '" {{typopo__lsq--unpaired}}word"',
+  '" ‚word"':  '" {{typopo__lsq--unpaired}}word"',
+  " ‘word":    " {{typopo__lsq--unpaired}}word",
+  "–‘word":    "–{{typopo__lsq--unpaired}}word",
+  "—‘word":    "—{{typopo__lsq--unpaired}}word",
+  " ʼword":    " {{typopo__lsq--unpaired}}word",
+  " ‛word":    " {{typopo__lsq--unpaired}}word",
+  " ´word":    " {{typopo__lsq--unpaired}}word",
+  " `word":    " {{typopo__lsq--unpaired}}word",
+  " ′word":    " {{typopo__lsq--unpaired}}word",
+  " ‹word":    " {{typopo__lsq--unpaired}}word",
+  " ›word":    " {{typopo__lsq--unpaired}}word",
+};
 
-    " ‘word": " {{typopo__lsq--standalone}}word",
-
-    "–‘word": "–{{typopo__lsq--standalone}}word",
-
-    "—‘word": "—{{typopo__lsq--standalone}}word",
-
-    " ʼword": " {{typopo__lsq--standalone}}word",
-
-    " ‛word": " {{typopo__lsq--standalone}}word",
-
-    " ´word": " {{typopo__lsq--standalone}}word",
-
-    " `word": " {{typopo__lsq--standalone}}word",
-
-    " ′word": " {{typopo__lsq--standalone}}word",
-
-    " ‹word": " {{typopo__lsq--standalone}}word",
-
-    " ›word": " {{typopo__lsq--standalone}}word",
-  };
-
-  let moduleTestCase = {
-    // heads up! since it’s a standalone quote it’s fixed as apostrophe within a module
-
-    "“ ‘word”": "“ ’word”",
-
-    "“–‘word”": "“–’word”",
-
-    "“—‘word”": "“—’word”",
-
-    "“ ʼword”": "“ ’word”",
-
-    "“ ‛word”": "“ ’word”",
-
-    "“ ´word”": "“ ’word”",
-
-    "“ `word”": "“ ’word”",
-
-    "“ ′word”": "“ ’word”",
-
-    "“ ‹word”": "“ ’word”",
-
-    "“ ›word”": "“ ’word”",
-  };
-
-  Object.keys(unitTestCase).forEach((key) => {
-    it("unit test", () => {
-      expect(identifyStandaloneLeftSingleQuote(key)).toBe(unitTestCase[key]);
-    });
-  });
-
-  Object.keys(moduleTestCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(
-          key,
-          new Locale("en-us"),
-          configIgnoreMarkdownCodeBlocks
-        )
-      ).toBe(moduleTestCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify unpaired left single quote",
+    transformSingleQuoteSet(identifyUnpairedLeftSingleQuoteUnitSet, localeName),
+    (text) => identifyUnpairedLeftSingleQuote(text),
+    transformSingleQuoteSet(identifyUnpairedLeftSingleQuoteModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify standalone right single quote (en-us):", () => {
-  let unitTestCase = {
-    '"word\'"': '"word{{typopo__rsq--standalone}}"',
+describe("Identify unpaired right single quote (en-us):", () => {
+  const unitTestCase = {
+    '"word\'"': '"word{{typopo__rsq--unpaired}}"',
 
-    '"word‚"': '"word{{typopo__rsq--standalone}}"',
+    '"word‚"': '"word{{typopo__rsq--unpaired}}"',
 
-    "word‘": "word{{typopo__rsq--standalone}}",
+    "word‘": "word{{typopo__rsq--unpaired}}",
 
-    wordʼ: "word{{typopo__rsq--standalone}}",
+    wordʼ: "word{{typopo__rsq--unpaired}}",
 
-    "word‛": "word{{typopo__rsq--standalone}}",
+    "word‛": "word{{typopo__rsq--unpaired}}",
 
-    "word´": "word{{typopo__rsq--standalone}}",
+    "word´": "word{{typopo__rsq--unpaired}}",
 
-    "word`": "word{{typopo__rsq--standalone}}",
+    "word`": "word{{typopo__rsq--unpaired}}",
 
-    "word′": "word{{typopo__rsq--standalone}}",
+    "word′": "word{{typopo__rsq--unpaired}}",
 
-    "word‹": "word{{typopo__rsq--standalone}}",
+    "word‹": "word{{typopo__rsq--unpaired}}",
 
-    "word›": "word{{typopo__rsq--standalone}}",
+    "word›": "word{{typopo__rsq--unpaired}}",
 
-    "word.'": "word.{{typopo__rsq--standalone}}",
+    "word.'": "word.{{typopo__rsq--unpaired}}",
 
-    "word!'": "word!{{typopo__rsq--standalone}}",
+    "word!'": "word!{{typopo__rsq--unpaired}}",
 
-    "word':": "word{{typopo__rsq--standalone}}:",
+    "word':": "word{{typopo__rsq--unpaired}}:",
 
-    "word',": "word{{typopo__rsq--standalone}},",
+    "word',": "word{{typopo__rsq--unpaired}},",
 
-    "word' ": "word{{typopo__rsq--standalone}} ",
+    "word' ": "word{{typopo__rsq--unpaired}} ",
   };
 
-  let moduleTestCase = {
-    // heads up! since it’s a standalone quote it’s fixed as apostrophe within a module
+  const moduleTestCase = {
+    // heads up! since it’s a unpaired quote it’s fixed as apostrophe within a module
 
     "“word'”": "“word’”",
 
@@ -442,7 +307,7 @@ describe("Identify standalone right single quote (en-us):", () => {
 
   Object.keys(unitTestCase).forEach((key) => {
     it("unit test", () => {
-      expect(identifyStandaloneRightSingleQuote(key)).toBe(unitTestCase[key]);
+      expect(identifyUnpairedRightSingleQuote(key)).toBe(unitTestCase[key]);
     });
   });
 
@@ -460,15 +325,14 @@ describe("Identify standalone right single quote (en-us):", () => {
 });
 
 describe("Identify single quote pairs (en-us):", () => {
-  let unitTestCase = {
-    "{{typopo__lsq--standalone}}word{{typopo__rsq--standalone}}":
-      "{{typopo__lsq}}word{{typopo__rsq}}",
+  const unitTestCase = {
+    "{{typopo__lsq--unpaired}}word{{typopo__rsq--unpaired}}": "{{typopo__lsq}}word{{typopo__rsq}}",
 
-    "{{typopo__lsq--standalone}}word word{{typopo__rsq--standalone}}":
+    "{{typopo__lsq--unpaired}}word word{{typopo__rsq--unpaired}}":
       "{{typopo__lsq}}word word{{typopo__rsq}}",
   };
 
-  let moduleTestCase = {
+  const moduleTestCase = {
     "He said: “What about 'word', is that good?”": "He said: “What about ‘word’, is that good?”",
 
     "He said: “What about 'word' 'word', is that good?”":
@@ -504,7 +368,7 @@ describe("Identify single quote pairs (en-us):", () => {
 });
 
 describe("Identify single quote pairs around single word (en-us):", () => {
-  let moduleTestCase = {
+  const moduleTestCase = {
     "'word'": "‘word’",
 
     "'word' 'word'": "‘word’ ‘word’",
@@ -514,7 +378,7 @@ describe("Identify single quote pairs around single word (en-us):", () => {
     "Press 'N' to get started": "Press ‘N’ to get started",
   };
 
-  let unitTestCase = {
+  const unitTestCase = {
     ...moduleTestCase,
 
     // false positives
@@ -550,13 +414,13 @@ describe("Identify single quote pairs around single word (en-us):", () => {
 });
 
 describe("Replace a single qoute & a single prime with a single quote pair (en-us):", () => {
-  let unitTestCase = {
-    "{{typopo__lsq--standalone}}word{{typopo__single-prime}}": "{{typopo__lsq}}word{{typopo__rsq}}",
+  const unitTestCase = {
+    "{{typopo__lsq--unpaired}}word{{typopo__single-prime}}": "{{typopo__lsq}}word{{typopo__rsq}}",
 
-    "{{typopo__single-prime}}word{{typopo__rsq--standalone}}": "{{typopo__lsq}}word{{typopo__rsq}}",
+    "{{typopo__single-prime}}word{{typopo__rsq--unpaired}}": "{{typopo__lsq}}word{{typopo__rsq}}",
   };
 
-  let moduleTestCase = {
+  const moduleTestCase = {
     "He said: “What about 'Localhost 3000', is that good?”":
       "He said: “What about ‘Localhost 3000’, is that good?”",
 
@@ -583,7 +447,7 @@ describe("Replace a single qoute & a single prime with a single quote pair (en-u
 });
 
 describe("Identify residual apostrophes  (en-us):", () => {
-  let testCase = {
+  const testCase = {
     "Hers'": "Hers’",
   };
 
@@ -609,7 +473,7 @@ describe("Identify residual apostrophes  (en-us):", () => {
 });
 
 describe("Remove extra space around a single prime:", () => {
-  let testCase = {
+  const testCase = {
     "12 ′ 45″": "12′ 45″",
 
     "12 ′45″": "12′45″",
@@ -635,7 +499,7 @@ describe("Remove extra space around a single prime:", () => {
 });
 
 describe("Swap single quotes and terminal punctuation for a quoted part (en-us):", () => {
-  let testCase = {
+  const testCase = {
     // quoted part at the
     // end of a sentence
     // end of a paragraph
@@ -690,7 +554,7 @@ describe("Swap single quotes and terminal punctuation for a quoted part (en-us):
     it("unit test", () => {
       expect(swapSingleQuotesAndTerminalPunctuation(key, new Locale("en-us"))).toBe(testCase[key]);
     });
-    // This would need to support standalone single quotes. There is a conflict how apostrophes are identified earlier
+    // This would need to support unpaired single quotes. There is a conflict how apostrophes are identified earlier
     // also it would need a different handling of Rusyn constractions
     // it("module test", () => {
     //   expect(
@@ -717,6 +581,14 @@ createTestSuite(
 );
 
 export const singleQuotesSet = {
+  ...identifyContractedAndModuleSet,
+  ...identifyContractedBeginningsSet,
+  ...identifyContractedEndsModuleSet,
+  ...identifyInWordContractionsSet,
+  ...identifyContractedYearsModuleSet,
+  ...identifySinglePrimesModuleSet,
+  ...identifyUnpairedLeftSingleQuoteModuleSet,
+
   "Let's test this: ${ldq}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${rdq}":
     "Let’s test this: ${ldq}however, ${lsq}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${rsq} he said${rdq}",
 
@@ -749,19 +621,18 @@ export const singleQuotesSet = {
 
 export function transformSingleQuoteSet(testSet, localeName) {
   const locale = new Locale(localeName);
+  const replaceTokens = (str) =>
+    str
+      .replace(/\$\{ldq\}/g, locale.leftDoubleQuote)
+      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote)
+      .replace(/\$\{lsq\}/g, locale.leftSingleQuote)
+      .replace(/\$\{rsq\}/g, locale.rightSingleQuote);
+  // .replace(/\$\{apos\}/g, base.apostrophe);
 
   const transformed = {};
-  Object.keys(testSet).forEach((key) => {
-    const transformedKey = key
-      .replace(/\$\{ldq\}/g, locale.leftDoubleQuote)
-      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote);
-    const transformedValue = testSet[key]
-      .replace(/\$\{lsq\}/g, locale.leftSingleQuote)
-      .replace(/\$\{rsq\}/g, locale.rightSingleQuote)
-      .replace(/\$\{ldq\}/g, locale.leftDoubleQuote)
-      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote);
 
-    transformed[transformedKey] = transformedValue;
+  Object.keys(testSet).forEach((key) => {
+    transformed[replaceTokens(key)] = replaceTokens(testSet[key]);
   });
 
   return transformed;

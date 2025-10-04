@@ -171,19 +171,19 @@ export function identifyDoubleQuotePairs(string) {
 //
 
 /** 
-  After identifying double quote pairs, identify standalone left double quotes.
+  After identifying double quote pairs, identify unpaired left double quotes.
 
   Example
-  There is a "standalone left quote. →
-  There is a “standalone left quote.
+  There is a "unpaired left quote. →
+  There is a “unpaired left quote.
 
   Assumptions and Limitations
   Double quote pairs have been identified in the analysed text already
 
   @param {string} string: input text for identification
-  @returns {string} output with identified standalone left double quotes
+  @returns {string} output with identified unpaired left double quotes
 */
-export function identifyStandaloneLeftDoubleQuote(string) {
+export function identifyUnpairedLeftDoubleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -191,26 +191,26 @@ export function identifyStandaloneLeftDoubleQuote(string) {
        `([0-9${base.lowercaseChars}${base.uppercaseChars}])`, 
        "g"
     ), 
-    "{{typopo__ldq--standalone}}$2"
+    "{{typopo__ldq--unpaired}}$2"
   );
 }
 
 //
 
 /**
-  After identifying double quote pairs, identify standalone right double quotes.
+  After identifying double quote pairs, identify unpaired right double quotes.
 
   Example
-  There is a standalone" right quote. →
-  There is a standalone” right quote.
+  There is a unpaired" right quote. →
+  There is a unpaired” right quote.
 
   Assumptions and Limitations
   Double quote pairs have been identified in the analysed text already
 
   @param {string} string: input text for identification
-  @returns {string} output with identified standalone right double quotes
+  @returns {string} output with identified unpaired right double quotes
 */
-export function identifyStandaloneRightDoubleQuote(string) {
+export function identifyUnpairedRightDoubleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -218,7 +218,7 @@ export function identifyStandaloneRightDoubleQuote(string) {
        `(${base.doubleQuoteAdepts})`, 
        "g"
     ), 
-    "$1{{typopo__rdq--standalone}}"
+    "$1{{typopo__rdq--unpaired}}"
   );
 }
 
@@ -252,13 +252,13 @@ export function removeUnidentifiedDoubleQuote(string) {
   Replace a double qoute & a double prime with a double quote pair
 
   Assumptions and Limitations
-  This function follows previous functions that identify double primes or standalone double quotes.
+  This function follows previous functions that identify double primes or unpaired double quotes.
   So it may happen that previous functions falsely identify a double quote pair around situations such as:
   - It’s called “Localhost 3000” and it’s pretty fast.
 
 
   Algorithm 
-  Find standalone double quote and double prime in pair and change them to a double quote pair
+  Find unpaired double quote and double prime in pair and change them to a double quote pair
 
 
   @param {string} string: input text for identification
@@ -270,7 +270,7 @@ export function replaceDoublePrimeWDoubleQuote(string) {
   return string
     .replace(
       new RegExp(
-        `({{typopo__ldq--standalone}})` +
+        `({{typopo__ldq--unpaired}})` +
         `(.*?)` +
         `({{typopo__double-prime}})`,
         "g"
@@ -283,7 +283,7 @@ export function replaceDoublePrimeWDoubleQuote(string) {
       new RegExp(
         `({{typopo__double-prime}})` +
         `(.*?)` +
-        `({{typopo__rdq--standalone}})`,
+        `({{typopo__rdq--unpaired}})`,
         "g"
       ),
       `{{typopo__ldq}}` +
@@ -467,8 +467,8 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 export function placeLocaleDoubleQuotes(string, locale) {
   return string
     .replace(/{{typopo__double-prime}}/g, base.doublePrime)
-    .replace(/({{typopo__ldq}}|{{typopo__ldq--standalone}})/g, locale.leftDoubleQuote)
-    .replace(/({{typopo__rdq}}|{{typopo__rdq--standalone}})/g, locale.rightDoubleQuote);
+    .replace(/({{typopo__ldq}}|{{typopo__ldq--unpaired}})/g, locale.leftDoubleQuote)
+    .replace(/({{typopo__rdq}}|{{typopo__rdq--unpaired}})/g, locale.rightDoubleQuote);
 }
 
 //
@@ -588,7 +588,7 @@ export function addSpaceAfterRightDoubleQuote(string, locale) {
   [1] Remove extra terminal punctuation around double quotes
   [2] Identify inches, arcseconds, seconds
   [3] Identify double quote pairs
-  [4] Identify standalone double quotes
+  [4] Identify unpaired double quotes
   [5] Replace a double qoute & a double prime with a double quote pair
   [6] Replace all identified punctuation with appropriate punctuation in given language
   [7] Consolidate spaces around double quotes and primes
@@ -614,9 +614,9 @@ export function fixDoubleQuotesAndPrimes(string, locale, configuration) {
   /* [3] Identify double quote pairs */
   string = identifyDoubleQuotePairs(string);
 
-  /* [4] Identify standalone double quotes */
-  string = identifyStandaloneLeftDoubleQuote(string);
-  string = identifyStandaloneRightDoubleQuote(string);
+  /* [4] Identify unpaired double quotes */
+  string = identifyUnpairedLeftDoubleQuote(string);
+  string = identifyUnpairedRightDoubleQuote(string);
   string = removeUnidentifiedDoubleQuote(string);
 
   /* [5] Replace a double qoute & a double prime with a double quote pair */
