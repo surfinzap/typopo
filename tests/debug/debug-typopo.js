@@ -27,8 +27,8 @@ import { excludeExceptions, placeExceptions } from "../../src/modules/words/exce
 
 //
 
-const testString = "“Sentence ended?”… and we were there.";
-const testLocale = "en-us";
+const testString = "12''";
+const testLocale = "rue";
 
 //
 

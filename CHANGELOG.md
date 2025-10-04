@@ -2,6 +2,9 @@
 
 ## 2.7.1
 
+### 🐛 Fixes
+- Fix identification of primes and double primes
+
 ### 🔨 Maintenance
 - Update NPM packages to their latest versions 
 

@@ -25,8 +25,7 @@ const singleQuoteAdepts = "‚|'|‘|’|ʼ|‛|´|`|′|‹|›";
 const apostrophe = "’"; // (8217) [1]
 const singlePrime = "′";
 const backtick = "`";
-const doubleQuoteAdepts =
-  "„|“|”|\"|«|»|″|,{2,}|‚{2,}|‘{2,}|’{2,}|'{2,}|‹{2,}|›{2,}|′{2,}|´{2,}|`{2,}";
+const doubleQuoteAdepts = "„|“|”|\"|«|»|″|,{2,}|‚{2,}|[‘’'‹›′´`]{2,}";
 const doublePrime = "″";
 
 /* Spaces */
