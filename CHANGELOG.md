@@ -1,11 +1,12 @@
 # Changelog for Typopo
 
-## 2.7.1
+## 2.7.1 // 2025-10-04
 
 ### 🐛 Fixes
-- Fix identification of primes and double primes, double quotes
+- Fix edge cases in the identification of primes, double primes, and double quotes
 
 ### 🔨 Maintenance
+- Refactor single quote and double quote tests
 - Update NPM packages to their latest versions 
 
 
