@@ -5,15 +5,16 @@ import { describe, expect, it } from "vitest";
 
 import { supportedLocales } from "../../src/locale/locale.js";
 import { fixTypos } from "../../src/typopo.js";
+import { dashSet, transformDashSet } from "../punctuation/dash.test.js";
 import {
-  transformDoubleQuoteSet,
-  keepMarkdownCodeBlocksSet,
   doubleQuotesSet,
+  keepMarkdownCodeBlocksSet,
+  transformDoubleQuoteSet,
 } from "../punctuation/double-quotes.test.js";
 import { ellipsisSet } from "../punctuation/ellipsis.test.js";
 import { hyphenSet } from "../punctuation/hyphen.test.js";
 import { periodSet } from "../punctuation/period.test.js";
-import { getSingleQuoteSet } from "../punctuation/single-quotes.test.js";
+import { singleQuotesSet, transformSingleQuoteSet } from "../punctuation/single-quotes.test.js";
 import { exponentSet } from "../symbols/exponents.test.js";
 import { marksSet } from "../symbols/marks.test.js";
 import { multiplicationSignSet } from "../symbols/multiplication-sign.test.js";
@@ -27,7 +28,6 @@ import { abbreviationsSet, transformAbbrSet } from "../words/abbreviations.test.
 import { caseSet } from "../words/case.test.js";
 import { exceptionsSet } from "../words/exceptions.test.js";
 import { pubIdSet } from "../words/pub-id.test.js";
-import { dashSet, transformDashSet } from "../punctuation/dash.test.js";
 
 let fixTyposMinified = null;
 let fixTyposUmd = null;
@@ -161,7 +161,7 @@ function getTestModules(localeName) {
     ...periodSet,
     ...ellipsisSet,
     ...transformDoubleQuoteSet(doubleQuotesSet, localeName),
-    ...getSingleQuoteSet(localeName),
+    ...transformSingleQuoteSet(singleQuotesSet, localeName),
     ...transformDashSet(dashSet, localeName),
 
     // symbols

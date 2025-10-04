@@ -16,67 +16,14 @@ import {
   removeExtraSpaceAroundSinglePrime,
   fixSingleQuotesPrimesAndApostrophes,
 } from "../../src/modules/punctuation/single-quotes.js";
-import Locale, { supportedLocales, enUS } from "../../src/locale/locale.js";
+import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { describe, it, expect } from "vitest";
+import { createTestSuite } from "../test-utils.js";
+import { keepMarkdownCodeBlocksSet } from "./double-quotes.test.js";
 
 const configIgnoreMarkdownCodeBlocks = {
   keepMarkdownCodeBlocks: false,
 };
-
-const configKeepMarkdownCodeBlocks = {
-  keepMarkdownCodeBlocks: true,
-};
-
-const singleQuotesSet = {
-  "Let's test this: ${leftDoubleQuote}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${rightDoubleQuote}":
-    "Let’s test this: ${leftDoubleQuote}however, ${leftSingleQuote}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${rightSingleQuote} he said${rightDoubleQuote}",
-
-  "Within double quotes ${leftDoubleQuote}there are single 'quotes with mix’d punctuation', you see${rightDoubleQuote}.":
-    "Within double quotes ${leftDoubleQuote}there are single ${leftSingleQuote}quotes with mix’d punctuation${rightSingleQuote}, you see${rightDoubleQuote}.",
-
-  "Hej: ${leftDoubleQuote}Vin mu povil, 'ta de jes' take vidil' i neviril${rightDoubleQuote}":
-    "Hej: ${leftDoubleQuote}Vin mu povil, ${leftSingleQuote}ta de jes’ take vidil${rightSingleQuote} i neviril${rightDoubleQuote}",
-
-  "${leftDoubleQuote}double quotes 'and single quotes' within${rightDoubleQuote}":
-    "${leftDoubleQuote}double quotes ${leftSingleQuote}and single quotes${rightSingleQuote} within${rightDoubleQuote}",
-
-  "${leftDoubleQuote}double quotes 'and single quotes’ within${rightDoubleQuote}":
-    "${leftDoubleQuote}double quotes ${leftSingleQuote}and single quotes${rightSingleQuote} within${rightDoubleQuote}",
-
-  "${leftDoubleQuote}double quotes ‚and single quotes' within${rightDoubleQuote}":
-    "${leftDoubleQuote}double quotes ${leftSingleQuote}and single quotes${rightSingleQuote} within${rightDoubleQuote}",
-
-  "He said: ${leftDoubleQuote}What about 'name' and 'other name'?${rightDoubleQuote}":
-    "He said: ${leftDoubleQuote}What about ${leftSingleQuote}name${rightSingleQuote} and ${leftSingleQuote}other name${rightSingleQuote}?${rightDoubleQuote}",
-
-  "Press 'N' to get started": "Press ${leftSingleQuote}N${rightSingleQuote} to get started",
-
-  "12 ′45″": "12′45″",
-
-  "Q1 '23": "Q1 ’23",
-
-  "I''''m": "I’m",
-};
-
-export function getSingleQuoteSet(localeName) {
-  const locale = new Locale(localeName);
-
-  const transformed = {};
-  Object.keys(singleQuotesSet).forEach((key) => {
-    const transformedKey = key
-      .replace(/\$\{leftDoubleQuote\}/g, locale.leftDoubleQuote)
-      .replace(/\$\{rightDoubleQuote\}/g, locale.rightDoubleQuote);
-    const transformedValue = singleQuotesSet[key]
-      .replace(/\$\{leftSingleQuote\}/g, locale.leftSingleQuote)
-      .replace(/\$\{rightSingleQuote\}/g, locale.rightSingleQuote)
-      .replace(/\$\{leftDoubleQuote\}/g, locale.leftDoubleQuote)
-      .replace(/\$\{rightDoubleQuote\}/g, locale.rightDoubleQuote);
-
-    transformed[transformedKey] = transformedValue;
-  });
-
-  return transformed;
-}
 
 describe("Identify contracted and (’n’) as apostrophes (en-us):", () => {
   let moduleTestCase = {
@@ -757,9 +704,72 @@ describe("Swap single quotes and terminal punctuation for a quoted part (en-us):
   });
 });
 
+createTestSuite(
+  "Test if markdown ticks are kept (single quotes) ",
+  {},
+  undefined,
+  keepMarkdownCodeBlocksSet,
+  (text, locale) =>
+    fixSingleQuotesPrimesAndApostrophes(text, locale, {
+      keepMarkdownCodeBlocks: true,
+    }),
+  supportedLocales
+);
+
+export const singleQuotesSet = {
+  "Let's test this: ${ldq}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${rdq}":
+    "Let’s test this: ${ldq}however, ${lsq}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${rsq} he said${rdq}",
+
+  "Within double quotes ${ldq}there are single 'quotes with mix’d punctuation', you see${rdq}.":
+    "Within double quotes ${ldq}there are single ${lsq}quotes with mix’d punctuation${rsq}, you see${rdq}.",
+
+  "Hej: ${ldq}Vin mu povil, 'ta de jes' take vidil' i neviril${rdq}":
+    "Hej: ${ldq}Vin mu povil, ${lsq}ta de jes’ take vidil${rsq} i neviril${rdq}",
+
+  "${ldq}double quotes 'and single quotes' within${rdq}":
+    "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
+
+  "${ldq}double quotes 'and single quotes’ within${rdq}":
+    "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
+
+  "${ldq}double quotes ‚and single quotes' within${rdq}":
+    "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
+
+  "He said: ${ldq}What about 'name' and 'other name'?${rdq}":
+    "He said: ${ldq}What about ${lsq}name${rsq} and ${lsq}other name${rsq}?${rdq}",
+
+  "Press 'N' to get started": "Press ${lsq}N${rsq} to get started",
+
+  "12 ′45″": "12′45″",
+
+  "Q1 '23": "Q1 ’23",
+
+  "I''''m": "I’m",
+};
+
+export function transformSingleQuoteSet(testSet, localeName) {
+  const locale = new Locale(localeName);
+
+  const transformed = {};
+  Object.keys(testSet).forEach((key) => {
+    const transformedKey = key
+      .replace(/\$\{ldq\}/g, locale.leftDoubleQuote)
+      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote);
+    const transformedValue = testSet[key]
+      .replace(/\$\{lsq\}/g, locale.leftSingleQuote)
+      .replace(/\$\{rsq\}/g, locale.rightSingleQuote)
+      .replace(/\$\{ldq\}/g, locale.leftDoubleQuote)
+      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote);
+
+    transformed[transformedKey] = transformedValue;
+  });
+
+  return transformed;
+}
+
 describe("Single quotes (module test) ", () => {
   supportedLocales.forEach((localeName) => {
-    const testCase = getSingleQuoteSet(localeName);
+    const testCase = transformSingleQuoteSet(singleQuotesSet, localeName);
 
     Object.keys(testCase).forEach((key) => {
       it(`module test, locale: (${localeName})`, () => {
@@ -771,40 +781,6 @@ describe("Single quotes (module test) ", () => {
           )
         ).toBe(testCase[key]);
       });
-    });
-  });
-});
-
-describe("Test if markdown ticks are kept (single quotes) (en-us):", () => {
-  let testCase = {
-    "```\ncode\n```": "```\ncode\n```",
-
-    "\t```\ncode\n```": "\t```\ncode\n```",
-
-    "\t\t```\ncode\n```": "\t\t```\ncode\n```",
-
-    " ```\ncode\n```": " ```\ncode\n```",
-
-    "  ```\ncode\n```": "  ```\ncode\n```",
-
-    "``code``": "``code``",
-
-    "``code code``": "``code code``",
-
-    "``code`` ``code``": "``code`` ``code``",
-
-    "`code`": "`code`",
-
-    "`code code`": "`code code`",
-
-    "`code` `code`": "`code` `code`",
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("keepMarkdownCodeBlocks: true” configuration", () => {
-      expect(
-        fixSingleQuotesPrimesAndApostrophes(key, new Locale("en-us"), configKeepMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
     });
   });
 });

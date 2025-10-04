@@ -14,18 +14,9 @@ import {
   addSpaceAfterRightDoubleQuote,
   fixDoubleQuotesAndPrimes,
 } from "../../src/modules/punctuation/double-quotes.js";
-import { describe, it, expect } from "vitest";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { base } from "../../src/const.js";
 import { createTestSuite } from "../test-utils.js";
-
-const doubleQuotesFalsePositives = {
-  "č., s., fol., str.,":       "č., s., fol., str.,",
-  "Byl to “Karel IV.”, ktery": "Byl to “Karel IV.”, ktery",
-  "Hey.”":                     "Hey.”",
-  "common to have “namespace pollution”, where completely unrelated code shares global variables.":
-    "common to have “namespace pollution”, where completely unrelated code shares global variables.",
-};
 
 const doubleQuotesFalsePositivesNew = {
   "č., s., fol., str.,":                 "č., s., fol., str.,",
