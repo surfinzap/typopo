@@ -1,6 +1,6 @@
 {
 	"name": "typopo",
-	"version": "2.7.0",
+	"version": "2.7.1",
 	"description": "Fix frequent microtypography errors in multiple languages. Write neat texts without bothering about typography rules. Typopo works for English, German, Slovak, Czech and Rusyn language.",
 	"type": "module",
 	"license": "MIT",
@@ -60,16 +60,16 @@
 		"node": ">=6.9.4"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.36.0",
+		"@eslint/js": "^9.37.0",
 		"@huggingface/prettier-plugin-vertical-align": "^0.2.3",
 		"@trivago/prettier-plugin-sort-imports": "^5.2.2",
 		"cross-env": "^10.1.0",
-		"eslint": "^9.36.0",
+		"eslint": "^9.37.0",
 		"husky": "^9.1.7",
 		"jsdom": "^27.0.0",
 		"lint-staged": "^16.2.3",
 		"prettier": "^3.6.2",
-		"vite": "^7.1.7",
+		"vite": "^7.1.9",
 		"vitest": "^3.2.4"
 	}
 }
