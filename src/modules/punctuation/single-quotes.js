@@ -174,7 +174,7 @@ export function identifyContractedYears(string) {
   We’re not using base.singleQuoteAdepts variable as commas and low-positioned quotes are ommited
 
   @param {string} string: input text for identification
-  @returns {string} output with identified single primes as a temporary variable string, e.g. {{typopo__sinlge-prime}}
+  @returns {string} output with identified single primes as a temporary variable string, e.g. {{typopo__single-prime}}
 */
 export function identifySinglePrimes(string) {
   return string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1$2{{typopo__single-prime}}");
@@ -183,7 +183,7 @@ export function identifySinglePrimes(string) {
 //
 
 /**
-  Identify standalone left single quote
+  Identify unpaired left single quote
 
   Algorithm
   Find left single quotes:
@@ -191,9 +191,9 @@ export function identifySinglePrimes(string) {
   - preceding a word
 
   @param {string} string: input text for identification
-  @returns {string} output with identified standalone left single quote
+  @returns {string} output with identified unpaired left single quote
 */
-export function identifyStandaloneLeftSingleQuote(string) {
+export function identifyUnpairedLeftSingleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -202,14 +202,14 @@ export function identifyStandaloneLeftSingleQuote(string) {
         `([${base.allChars}${base.ellipsis}])`,
       "g"
     ),
-      `$1{{typopo__left-single-quote--standalone}}$3`
+      `$1{{typopo__lsq--unpaired}}$3`
   );
 }
 
 //
 
 /**
-  Identify standalone right single quote
+  Identify unpaired right single quote
 
   Algorithm
   Find right single quotes:
@@ -218,9 +218,9 @@ export function identifyStandaloneLeftSingleQuote(string) {
   - optionally, preceding a space or a sentence punctuation
 
   @param {string} string: input text for identification
-  @returns {string} output with identified standalone right single quote
+  @returns {string} output with identified unpaired right single quote
 */
-export function identifyStandaloneRightSingleQuote(string) {
+export function identifyUnpairedRightSingleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -230,7 +230,7 @@ export function identifyStandaloneRightSingleQuote(string) {
       `([ ${base.sentencePunctuation}])?`,
       "g"
     ),
-      `$1$2{{typopo__right-single-quote--standalone}}$4`
+      `$1$2{{typopo__rsq--unpaired}}$4`
   );
 }
 
@@ -243,12 +243,12 @@ export function identifyStandaloneRightSingleQuote(string) {
   Algorithm
   - find text in double quotes
   - in quoted text find
-    - standalone left single quote
-    - standalone right single quote
+    - unpaired left single quote
+    - unpaired right single quote
     - single quote pairs
 
   @param {string} string: input text for identification
-  @returns {string} output with identified standalone left single quote
+  @returns {string} output with identified unpaired left single quote
 */
 export function identifySingleQuotesWithinDoubleQuotes(string) {
   return string.replace(
@@ -260,8 +260,8 @@ export function identifySingleQuotesWithinDoubleQuotes(string) {
       "g"
     ),
     function ($0, $1, $2, $3) {
-      $2 = identifyStandaloneLeftSingleQuote($2);
-      $2 = identifyStandaloneRightSingleQuote($2);
+      $2 = identifyUnpairedLeftSingleQuote($2);
+      $2 = identifyUnpairedRightSingleQuote($2);
       $2 = identifySingleQuotePairs($2);
 
       return $1 + $2 + $3;
@@ -278,7 +278,7 @@ export function identifySingleQuotesWithinDoubleQuotes(string) {
   "a 'quoted material' here" → “a ‘quoted material’ here”
 
   Assumptions and Limitations
-  - This function assumes apostrophes and standalone single quotes were identified. The function itself is part of the identifySingleQuotesWithinDoubleQuotes.
+  - This function assumes apostrophes and unpaired single quotes were identified. The function itself is part of the identifySingleQuotesWithinDoubleQuotes.
   - It is difficult to identify all contractions at the end of the word, and thus it is difficult to identify single quote pairs. This function therefore only identifies one single quote pair with a double quote pair
 
   @param {string} string: input text for identification
@@ -290,12 +290,12 @@ export function identifySingleQuotePairs(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `({{typopo__left-single-quote--standalone}})` +
+      `({{typopo__lsq--unpaired}})` +
       `(.*)` +
-      `({{typopo__right-single-quote--standalone}})`,
+      `({{typopo__rsq--unpaired}})`,
       "g"
     ),
-      `{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}`
+      `{{typopo__lsq}}$2{{typopo__rsq}}`
   );
 }
 
@@ -321,7 +321,7 @@ export function identifySingleQuotePairAroundSingleWord(string) {
         `(\\B)`,
       "g"
     ),
-      `$1{{typopo__left-single-quote}}$3{{typopo__right-single-quote}}$5`
+      `$1{{typopo__lsq}}$3{{typopo__rsq}}$5`
   );
 }
 
@@ -356,12 +356,12 @@ export function identifyResidualApostrophes(string) {
   Replace a single qoute & a single prime with a single quote pair
 
   Assumptions and Limitations
-  This function follows previous functions that identify single primes or standalone single quotes.
+  This function follows previous functions that identify single primes or unpaired single quotes.
   So it may happen that previous functions falsely identify a single quote pair around situations such as:
   - He said: “What about 'Localhost 3000', is that good?”
 
   Algorithm 
-  Find standalone single quote and single prime in pair and change them to a single quote pair
+  Find unpaired single quote and single prime in pair and change them to a single quote pair
 
 
   @param {string} string: input text for identification
@@ -371,12 +371,12 @@ export function replaceSinglePrimeWSingleQuote(string) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `({{typopo__left-single-quote--standalone}})` +
+      `({{typopo__lsq--unpaired}})` +
       `(.*?)` +
       `({{typopo__single-prime}})`,
       "g"
     ),
-      `{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}`
+      `{{typopo__lsq}}$2{{typopo__rsq}}`
   );
 
   // prettier-ignore
@@ -384,10 +384,10 @@ export function replaceSinglePrimeWSingleQuote(string) {
     new RegExp(
       `({{typopo__single-prime}})` +
       `(.*?)` +
-      `({{typopo__right-single-quote--standalone}})`,
+      `({{typopo__rsq--unpaired}})`,
       "g"
     ),
-      `{{typopo__left-single-quote}}$2{{typopo__right-single-quote}}`
+      `{{typopo__lsq}}$2{{typopo__rsq}}`
   );
 
   return string;
@@ -534,12 +534,12 @@ export function placeLocaleSingleQuotes(string, locale) {
   string = string.replace(/({{typopo__single-prime}})/g, base.singlePrime);
 
   string = string.replace(
-    /{{typopo__apostrophe}}|{{typopo__left-single-quote--standalone}}|{{typopo__right-single-quote--standalone}}/g,
+    /{{typopo__apostrophe}}|{{typopo__lsq--unpaired}}|{{typopo__rsq--unpaired}}/g,
     base.apostrophe
   );
 
-  string = string.replace(/{{typopo__left-single-quote}}/g, locale.leftSingleQuote);
-  string = string.replace(/{{typopo__right-single-quote}}/g, locale.rightSingleQuote);
+  string = string.replace(/{{typopo__lsq}}/g, locale.leftSingleQuote);
+  string = string.replace(/{{typopo__rsq}}/g, locale.rightSingleQuote);
 
   string = string.replace(/{{typopo__markdown_syntax_highlight}}/g, "```");
 
@@ -574,6 +574,8 @@ export function placeLocaleSingleQuotes(string, locale) {
   @returns {string} — corrected output
 */
 export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuration) {
+  configuration = configuration || {};
+
   /* [0] Identify markdown code ticks */
   string = identifyMarkdownCodeTicks(string, configuration);
 

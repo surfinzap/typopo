@@ -26,14 +26,17 @@ import { fixCase } from "./modules/words/case.js";
 import { fixPubId } from "./modules/words/pub-id.js";
 import { excludeExceptions, placeExceptions } from "./modules/words/exceptions.js";
 
-/*
-  Correct typos
-
-  @param {string} string — input text for correction
-  @param {locale} string — (optional, default: en) supported languages: en, sk, cs, rue.
-  @param {configuration} object — (optional) configuration
-  @returns {string} corrected output
-*/
+/**
+ * Fixes microtypography errors in text across multiple languages
+ *
+ * @param {string} string - Input text for correction
+ * @param {string} [locale="en-us"] - Language locale. Supported: "en-us", "de-de", "sk", "cs", "rue"
+ * @param {Object} [configuration] - Configuration options
+ * @param {boolean} [configuration.removeLines=true] - Remove empty lines between paragraphs
+ * @param {boolean} [configuration.removeWhitespacesBeforeMarkdownList=true] - Remove whitespaces before Markdown lists
+ * @param {boolean} [configuration.keepMarkdownCodeBlocks=false] - Preserve Markdown code blocks from quote processing
+ * @returns {string} Text with typography corrections applied
+ */
 export function fixTypos(string, locale, configuration) {
   locale = typeof locale === "undefined" ? "en-us" : locale;
 

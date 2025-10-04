@@ -5,25 +5,30 @@ import { describe, expect, it } from "vitest";
 
 import { supportedLocales } from "../../src/locale/locale.js";
 import { fixTypos } from "../../src/typopo.js";
-import { getDoubleQuoteSet } from "../punctuation/double-quotes.test.js";
+import { dashSet } from "../punctuation/dash.test.js";
+import {
+  doubleQuotesSet,
+  keepMarkdownCodeBlocksSet,
+  transformDoubleQuoteSet,
+} from "../punctuation/double-quotes.test.js";
 import { ellipsisSet } from "../punctuation/ellipsis.test.js";
 import { hyphenSet } from "../punctuation/hyphen.test.js";
 import { periodSet } from "../punctuation/period.test.js";
-import { getSingleQuoteSet } from "../punctuation/single-quotes.test.js";
+import { singleQuotesSet } from "../punctuation/single-quotes.test.js";
 import { exponentSet } from "../symbols/exponents.test.js";
 import { marksSet } from "../symbols/marks.test.js";
 import { multiplicationSignSet } from "../symbols/multiplication-sign.test.js";
 import { numberSignSet } from "../symbols/number-sign.test.js";
 import { plusMinusSet } from "../symbols/plus-minus.test.js";
 import { symbolSet, transformSymbolSet } from "../symbols/symbol-utils.test.js";
+import { transformTestSet } from "../test-utils.js";
 import { linesSet } from "../whitespace/lines.test.js";
-import { nbspSet, transformNbspSet } from "../whitespace/nbsp.test.js";
+import { nbspSet } from "../whitespace/nbsp.test.js";
 import { spacesSet } from "../whitespace/spaces.test.js";
-import { abbreviationsSet, transformAbbrSet } from "../words/abbreviations.test.js";
+import { abbreviationsSet } from "../words/abbreviations.test.js";
 import { caseSet } from "../words/case.test.js";
 import { exceptionsSet } from "../words/exceptions.test.js";
 import { pubIdSet } from "../words/pub-id.test.js";
-import { dashSet, transformDashSet } from "../punctuation/dash.test.js";
 
 let fixTyposMinified = null;
 let fixTyposUmd = null;
@@ -156,9 +161,9 @@ function getTestModules(localeName) {
     ...hyphenSet,
     ...periodSet,
     ...ellipsisSet,
-    ...getDoubleQuoteSet(localeName),
-    ...getSingleQuoteSet(localeName),
-    ...transformDashSet(dashSet, localeName),
+    ...transformDoubleQuoteSet(doubleQuotesSet, localeName),
+    ...transformTestSet(singleQuotesSet, localeName),
+    ...transformTestSet(dashSet, localeName),
 
     // symbols
     ...transformSymbolSet(symbolSet, "copyright", localeName),
@@ -174,16 +179,16 @@ function getTestModules(localeName) {
 
     // whitespace
     // lines are in keepLines and removeLines
-    ...transformNbspSet(nbspSet, localeName),
+    ...transformTestSet(nbspSet, localeName),
     ...spacesSet,
 
     // words
-    ...transformAbbrSet(abbreviationsSet, localeName),
+    ...transformTestSet(abbreviationsSet, localeName),
     ...caseSet,
     ...pubIdSet,
 
     // module combinations
-    ...transformAbbrSet(moduleCombinations, localeName),
+    ...transformTestSet(moduleCombinations, localeName),
   };
 }
 
@@ -252,17 +257,8 @@ supportedLocales.forEach((locale) => {
   });
 });
 
-describe("Markdown ticks are kept (integration test) (en-us):", () => {
-  let testCase = {
-    "```\ncode\n```":    "```\ncode\n```",
-    "``code``":          "``code``",
-    "``code code``":     "``code code``",
-    "``code`` ``code``": "``code`` ``code``",
-    "`code`":            "`code`",
-    "`code code`":       "`code code`",
-    "`code` `code`":     "`code` `code`",
-    "e.g. `something`":  "e.g. `something`",
-  };
-
-  runAllVersions(testCase, "en-us", configKeepMarkdownCodeBlocks);
+supportedLocales.forEach((locale) => {
+  describe(`Markdown ticks are kept (integration) ${locale}`, () => {
+    runAllVersions(keepMarkdownCodeBlocksSet, locale, configKeepMarkdownCodeBlocks);
+  });
 });

@@ -164,14 +164,15 @@ export function fixAposiopesisStartingSentence(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.sentencePunctuation}${locale.terminalQuotes}])` +
+      `([^${locale.terminalQuotes}])` +
+      `([${base.sentencePunctuation}])` +
       `([${base.spaces}]?)` +
       `([${base.ellipsis}])` +
       `([${base.spaces}]?)` +
       `([${base.lowercaseChars}])`,
       "g"
     ),
-    "$1 $3$5"
+    "$1$2 $4$6"
   );
 }
 

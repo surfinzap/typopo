@@ -4,720 +4,528 @@ import {
   swapQuotesAndTerminalPunctuation,
   identifyDoublePrimes,
   identifyDoubleQuotePairs,
-  identifyStandaloneLeftDoubleQuote,
-  identifyStandaloneRightDoubleQuote,
+  identifyUnpairedLeftDoubleQuote,
+  identifyUnpairedRightDoubleQuote,
   removeUnidentifiedDoubleQuote,
   replaceDoublePrimeWDoubleQuote,
   placeLocaleDoubleQuotes,
-  removeExtraCommaAfterSentencePunctuation,
   removeExtraSpacesAroundQuotes,
   addSpaceBeforeLeftDoubleQuote,
   addSpaceAfterRightDoubleQuote,
   fixDoubleQuotesAndPrimes,
 } from "../../src/modules/punctuation/double-quotes.js";
-import { describe, it, expect } from "vitest";
-import Locale from "../../src/locale/locale.js";
-import { base } from "../../src/const.js";
+import Locale, { supportedLocales } from "../../src/locale/locale.js";
+import { createTestSuite, transformTestSet } from "../test-utils.js";
 
-let configIgnoreMarkdownCodeBlocks = {
-  keepMarkdownCodeBlocks: false,
+const doubleQuotesFalsePositives = {
+  "č., s., fol., str.,":                 "č., s., fol., str.,",
+  "Byl to ${ldq}Karel IV.${rdq}, ktery": "Byl to ${ldq}Karel IV.${rdq}, ktery",
+  "Hey.${rdq}":                          "Hey.${rdq}",
+  "common to have ${ldq}namespace pollution${rdq}, where completely unrelated code shares global variables.":
+    "common to have ${ldq}namespace pollution${rdq}, where completely unrelated code shares global variables.",
 };
 
-let configKeepMarkdownCodeBlocks = {
-  keepMarkdownCodeBlocks: true,
-};
-
-const testFalsePositives = {
-  "č., s., fol., str.,": "č., s., fol., str.,",
-
-  "Byl to “Karel IV.”, ktery": "Byl to “Karel IV.”, ktery",
-
-  "Hey.”": "Hey.”",
-
-  "common to have “namespace pollution”, where completely unrelated code shares global variables.":
-    "common to have “namespace pollution”, where completely unrelated code shares global variables.",
-};
-
-const doubleQuotesSet = {
-  'He said: "Here${apostrophe}s a 12" record."': "He said: “Here${apostrophe}s a 12″ record.”",
-
-  'He said: "He was 12."': "He said: “He was 12.”",
-
-  'He said: "He was 12". And then he added: "Maybe he was 13".':
-    "He said: “He was 12.” And then he added: “Maybe he was 13.”",
-
-  'So it${apostrophe}s 12" × 12", right?': "So it${apostrophe}s 12″ × 12″, right?",
-
-  "An unquoted sentence.“And a quoted one.”": "An unquoted sentence. “And a quoted one.”",
-
-  '"quoted material" and "extra': "“quoted material” and “extra",
-
-  "It was like “namespace pollution”.": "It was like “namespace pollution”.",
-
-  "English „English„ „English„ English": "English “English” “English” English",
-
-  "“English double quotation marks“": "“English double quotation marks”",
-
-  "”English double quotation marks”": "“English double quotation marks”",
-
-  '"English double quotation marks"': "“English double quotation marks”",
-
-  '"Conference 2020" and "something in quotes".': "“Conference 2020” and “something in quotes”.",
-
-  'Here are 30 "bucks"': "Here are 30 “bucks”",
-
-  "Within double quotes “there are single ‘quotes with mixed punctuation’, you see.”":
-    "Within double quotes “there are single ‘quotes with mixed punctuation’, you see”.",
-
-  "He was like “Georgia”.": "He was like “Georgia”.",
-
-  "He was ok. “He was ok”.": "He was ok. “He was ok.”",
-
-  '"…"': "“…”",
-
-  '"Ctrl+I and…"': "“Ctrl+I and…”",
-
-  'Hela skríkla: "Tu je 12" platňa "!': "Hela skríkla: “Tu je 12″ platňa!”",
-
-  "He was ok. “He was ok ”.": "He was ok. “He was ok.”",
-
-  "Before you ask the “How often…” question": "Before you ask the “How often…” question",
-
-  "“…example”": "“…example”",
-
-  "abc “…example”": "abc “…example”",
-};
-
-export function getDoubleQuoteSet(localeName) {
-  const locale = new Locale(localeName);
-
-  const transformed = {};
-  const testSet = { ...doubleQuotesSet, ...testFalsePositives };
-
-  Object.keys(testSet).forEach((key) => {
-    const transformedKey = key
-      .replace(/‘/g, locale.leftSingleQuote)
-      .replace(/’/g, locale.rightSingleQuote)
-      .replace(/\$\{apostrophe\}/g, base.apostrophe);
-    const transformedValue = testSet[key]
-      .replace(/“/g, locale.leftDoubleQuote)
-      .replace(/”/g, locale.rightDoubleQuote)
-      .replace(/‘/g, locale.leftSingleQuote)
-      .replace(/’/g, locale.rightSingleQuote)
-      .replace(/\$\{apostrophe\}/g, base.apostrophe);
-    transformed[transformedKey] = transformedValue;
-  });
-
-  return transformed;
-}
-
-describe("Remove punctuation before double quotes (en-us):", () => {
-  let testCase = {
-    /* extra comma after terminal punctuation, 
+const removePunctuationBeforeQuotesSet = {
+  /* extra comma after terminal punctuation, 
      as it it happens in direct speech */
-    "“Hey!,” she said": "“Hey!” she said",
-    ...testFalsePositives,
-  };
+  "${ldq}Hey!,${rdq} she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?,${rdq} she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.,${rdq} she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:,${rdq} she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;,${rdq} she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,,${rdq} she said": "${ldq}Hey,${rdq} she said",
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeExtraPunctuationBeforeQuotes(key)).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
+  "${ldq}Hey!:${rdq} she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?:${rdq} she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.:${rdq} she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey::${rdq} she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;:${rdq} she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,:${rdq} she said": "${ldq}Hey,${rdq} she said",
+
+  "${ldq}Hey!;${rdq} she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?;${rdq} she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.;${rdq} she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:;${rdq} she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;;${rdq} she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,;${rdq} she said": "${ldq}Hey,${rdq} she said",
+
+  //false positive
+  "${ldq}Hey!!${rdq} she said": "${ldq}Hey!!${rdq} she said",
+  "${ldq}Hey?!${rdq} she said": "${ldq}Hey?!${rdq} she said",
+  "${ldq}Hey.!${rdq} she said": "${ldq}Hey.!${rdq} she said",
+  "${ldq}Hey:!${rdq} she said": "${ldq}Hey:!${rdq} she said",
+  "${ldq}Hey;!${rdq} she said": "${ldq}Hey;!${rdq} she said",
+  "${ldq}Hey,!${rdq} she said": "${ldq}Hey,!${rdq} she said",
+
+  "${ldq}Hey!?${rdq} she said": "${ldq}Hey!?${rdq} she said",
+  "${ldq}Hey??${rdq} she said": "${ldq}Hey??${rdq} she said",
+  "${ldq}Hey.?${rdq} she said": "${ldq}Hey.?${rdq} she said",
+  "${ldq}Hey:?${rdq} she said": "${ldq}Hey:?${rdq} she said",
+  "${ldq}Hey;?${rdq} she said": "${ldq}Hey;?${rdq} she said",
+  "${ldq}Hey,?${rdq} she said": "${ldq}Hey,?${rdq} she said",
+
+  "${ldq}Hey!.${rdq} she said": "${ldq}Hey!.${rdq} she said",
+  "${ldq}Hey?.${rdq} she said": "${ldq}Hey?.${rdq} she said",
+  "${ldq}Hey:.${rdq} she said": "${ldq}Hey:.${rdq} she said",
+  "${ldq}Hey;.${rdq} she said": "${ldq}Hey;.${rdq} she said",
+  "${ldq}Hey,.${rdq} she said": "${ldq}Hey,.${rdq} she said",
+};
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Remove an extra punctuation before double quotes",
+    transformDoubleQuoteSet(removePunctuationBeforeQuotesSet, localeName),
+    removeExtraPunctuationBeforeQuotes,
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Remove punctuation after double quotes (en-us):", () => {
-  let testCase = {
-    /* dot at the end of a direct speech ending with abbreviation */
-    "“We will continue this tomorrow at 8:00 a.m.”.":
-      "“We will continue this tomorrow at 8:00 a.m.”",
-    ...testFalsePositives,
-  };
+const removePunctuationAfterQuotesSet = {
+  "${ldq}Hey!${rdq}, she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}, she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}, she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:${rdq}, she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;${rdq}, she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,${rdq}, she said": "${ldq}Hey,${rdq} she said",
 
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeExtraPunctuationAfterQuotes(key)).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
+  "${ldq}Hey!${rdq}: she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}: she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}: she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:${rdq}: she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;${rdq}: she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,${rdq}: she said": "${ldq}Hey,${rdq} she said",
+
+  "${ldq}Hey!${rdq}; she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}; she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}; she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:${rdq}; she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;${rdq}; she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,${rdq}; she said": "${ldq}Hey,${rdq} she said",
+
+  "${ldq}Hey!${rdq}. she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}. she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}. she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:${rdq}. she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;${rdq}. she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,${rdq}. she said": "${ldq}Hey,${rdq} she said",
+
+  "${ldq}Hey!${rdq}? she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}? she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}? she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:${rdq}? she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;${rdq}? she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,${rdq}? she said": "${ldq}Hey,${rdq} she said",
+
+  "${ldq}Hey!${rdq}! she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}! she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}! she said": "${ldq}Hey.${rdq} she said",
+  "${ldq}Hey:${rdq}! she said": "${ldq}Hey:${rdq} she said",
+  "${ldq}Hey;${rdq}! she said": "${ldq}Hey;${rdq} she said",
+  "${ldq}Hey,${rdq}! she said": "${ldq}Hey,${rdq} she said",
+
+  // false positive
+  "Byl to ${ldq}Karel IV.${rdq}, ktery": "Byl to ${ldq}Karel IV.${rdq}, ktery",
+};
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Remove an punctuation after double quotes",
+    transformDoubleQuoteSet(removePunctuationAfterQuotesSet, localeName),
+    removeExtraPunctuationAfterQuotes,
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify inches, arcseconds, seconds following a 1–3 numbers (en-us):", () => {
-  let testCase = {
-    '12′ 45"':  "12′ 45″",
-    "12′ 45“":  "12′ 45″",
-    "12′ 45”":  "12′ 45″",
-    "12′ 45″":  "12′ 45″",
-    "12′ 45‘‘": "12′ 45″",
-    "12′ 45’’": "12′ 45″",
-    "12′ 45''": "12′ 45″",
-    "12′ 45′′": "12′ 45″",
-    "12''":     "12″",
+const identifyDoublePrimesUnitSet = {
+  '12′ 45 "':  "12′ 45 ″",
+  "12′ 45 “":  "12′ 45 ″",
+  "12′ 45 ”":  "12′ 45 ″",
+  "12′ 45 ″":  "12′ 45 ″",
+  "12′ 45 ‘‘": "12′ 45 ″",
+  "12′ 45 ’’": "12′ 45 ″",
+  "12′ 45 ''": "12′ 45 ″",
+  "12′ 45 ′′": "12′ 45 ″",
+  "12 ''":     "12 ″",
 
-    '3° 5′ 30"': "3° 5′ 30″",
-    '12"3′00°':  "12″3′00°",
+  // false positive to exclude long numbers (temporary)
+  '“Conference 2020" and “something in quotes”.': '“Conference 2020" and “something in quotes”.',
 
-    'So it’s 12" × 12", right?': "So it’s 12″ × 12″, right?",
+  // identify swapped inches with terminal punctuation
+  '"He was 12".': '"He was 12."',
 
-    'She said: “It’s a 12" inch!”': "She said: “It’s a 12″ inch!”",
+  // false positive
+  'He was 12".':     "He was 12″.",
+  '"He was 12."':    '"He was 12."',
+  'It’s 12" x 12".': "It’s 12″ x 12″.",
+  'It’s 12" × 12".': "It’s 12″ × 12″.",
+};
 
-    'It’s 12" × 12".': "It’s 12″ × 12″.",
+const identifyDoublePrimesModuleSet = {
+  '12′ 45"':  "12′ 45″",
+  "12′ 45“":  "12′ 45″",
+  "12′ 45”":  "12′ 45″",
+  "12′ 45″":  "12′ 45″",
+  "12′ 45‘‘": "12′ 45″",
+  "12′ 45’’": "12′ 45″",
+  "12′ 45''": "12′ 45″",
+  "12′ 45′′": "12′ 45″",
+  "12′ 45′’": "12′ 45″",
+  "12''":     "12″",
+  "12′′":     "12″",
 
-    // identify swapped inches with terminal punctuation
-    '"He was 12".': "“He was 12.”",
+  '3° 5′ 30"': "3° 5′ 30″",
+  '12"3′00°':  "12″3′00°",
 
-    'He was 12".': "He was 12″.",
+  'So it${apos}s 12" × 12", right?':    "So it${apos}s 12″ × 12″, right?",
+  'She said: “It${apos}s a 12" inch!”': "She said: ${ldq}It${apos}s a 12″ inch!${rdq}",
+  'It${apos}s 12" × 12".':              "It${apos}s 12″ × 12″.",
 
-    ...testFalsePositives,
-  };
+  // identify swapped inches with terminal punctuation
+  '"He was 12".': "${ldq}He was 12.${rdq}",
+  'He was 12".':  "He was 12″.", // failing on singleQuotes
+};
 
-  let unitTestCase = {
-    '12′ 45 "':  "12′ 45 ″",
-    "12′ 45 “":  "12′ 45 ″",
-    "12′ 45 ”":  "12′ 45 ″",
-    "12′ 45 ″":  "12′ 45 ″",
-    "12′ 45 ‘‘": "12′ 45 ″",
-    "12′ 45 ’’": "12′ 45 ″",
-    "12′ 45 ''": "12′ 45 ″",
-    "12′ 45 ′′": "12′ 45 ″",
-    "12 ''":     "12 ″",
-
-    // false positive to exclude long numbers (temporary)
-    '“Conference 2020" and “something in quotes”.': '“Conference 2020" and “something in quotes”.',
-
-    // identify swapped inches with terminal punctuation
-    '"He was 12".': '"He was 12."',
-
-    // false positive
-    'He was 12".': "He was 12″.",
-
-    '"He was 12."': '"He was 12."',
-
-    'It’s 12" x 12".': "It’s 12″ x 12″.",
-
-    'It’s 12" × 12".': "It’s 12″ × 12″.",
-  };
-
-  Object.keys(unitTestCase).forEach((key) => {
-    it("unit test", () => {
-      expect(placeLocaleDoubleQuotes(identifyDoublePrimes(key), new Locale("en-us"))).toBe(
-        unitTestCase[key]
-      );
-    });
-  });
-
-  Object.keys(testCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify inches, arcseconds, seconds following a 1–3 numbers",
+    transformDoubleQuoteSet(identifyDoublePrimesUnitSet, localeName),
+    (text) => placeLocaleDoubleQuotes(identifyDoublePrimes(text), new Locale(localeName)),
+    transformDoubleQuoteSet(identifyDoublePrimesModuleSet, localeName),
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify double quote pairs (en-us):", () => {
-  let testCase = {
-    '"quoted material"': "“quoted material”",
+const identifyDoubleQuotePairsUnitSet = {
+  '" quoted material "': "${ldq} quoted material ${rdq}",
+  '"quoted material "':  "${ldq}quoted material ${rdq}",
+  '" quoted material"':  "${ldq} quoted material${rdq}",
+};
 
-    '„quoted material"': "“quoted material”",
+const identifyDoubleQuotePairsModuleSet = {
+  '"quoted material"':     "${ldq}quoted material${rdq}",
+  '„quoted material"':     "${ldq}quoted material${rdq}",
+  "«quoted material«":     "${ldq}quoted material${rdq}",
+  "’’quoted material''":   "${ldq}quoted material${rdq}",
+  "‹‹quoted material››":   "${ldq}quoted material${rdq}",
+  ",,quoted material,,":   "${ldq}quoted material${rdq}",
+  "‘‘quoted material‘‘":   "${ldq}quoted material${rdq}",
+  "‘‘‘quoted material‘‘‘": "${ldq}quoted material${rdq}",
+  "´´quoted material´´":   "${ldq}quoted material${rdq}",
+  "``quoted material``":   "${ldq}quoted material${rdq}",
+  "“quoted material”":     "${ldq}quoted material${rdq}",
+  "„quoted material“":     "${ldq}quoted material${rdq}",
+  "«quoted material»":     "${ldq}quoted material${rdq}",
 
-    "«quoted material«": "“quoted material”",
+  'unquoted "quoted material" material':     "unquoted ${ldq}quoted material${rdq} material",
+  '"quoted material" and "quoted material"': "${ldq}quoted material${rdq} and ${ldq}quoted material${rdq}",
 
-    "’’quoted material''": "“quoted material”",
+  // primes × double quotes
+  '"Conference 2020" and "something in quotes".': "${ldq}Conference 2020${rdq} and ${ldq}something in quotes${rdq}.",
+  '"Gone in 60{{typopo__double-prime}}"':         "${ldq}Gone in 60″${rdq}",
 
-    "‹‹quoted material››": "“quoted material”",
+  '"2020"': "${ldq}2020${rdq}",
+  '"202"':  "${ldq}202${rdq}",
 
-    ",,quoted material,,": "“quoted material”",
+  // false positive
+  '"starting quotes, primes 90{{typopo__double-prime}}, ending quotes"':
+    "${ldq}starting quotes, primes 90″, ending quotes${rdq}",
 
-    "‘‘quoted material‘‘": "“quoted material”",
+  //jibberish inside quotes
+  ",,idjsa; frilj f0d, if9,,": "${ldq}idjsa; frilj f0d, if9${rdq}",
+};
 
-    "‘‘‘quoted material‘‘‘": "“quoted material”",
-
-    "´´quoted material´´": "“quoted material”",
-
-    "``quoted material``": "“quoted material”",
-
-    'unquoted "quoted material" material': "unquoted “quoted material” material",
-
-    '"quoted material" and "quoted material"': "“quoted material” and “quoted material”",
-
-    // primes × double quotes
-    '"Conference 2020" and "something in quotes".': "“Conference 2020” and “something in quotes”.",
-
-    '"Gone in 60{{typopo__double-prime}}"': "“Gone in 60″”",
-
-    '"2020"': "“2020”",
-
-    '"202"': "“202”",
-
-    // false positive
-    '"starting quotes, primes 90{{typopo__double-prime}}, ending quotes"':
-      "“starting quotes, primes 90″, ending quotes”",
-
-    //jibberish inside quotes
-    ",,idjsa ;frilj ;'f0d, if9,,": "“idjsa ;frilj ;'f0d, if9”",
-
-    ...testFalsePositives,
-  };
-
-  let unitTestCase = {
-    '" quoted material "': "“ quoted material ”",
-
-    '"quoted material "': "“quoted material ”",
-
-    '" quoted material"': "“ quoted material”",
-
-    ...testCase,
-  };
-
-  Object.keys(unitTestCase).forEach((key) => {
-    it("unit test", () => {
-      expect(placeLocaleDoubleQuotes(identifyDoubleQuotePairs(key), new Locale("en-us"))).toBe(
-        unitTestCase[key]
-      );
-    });
-  });
-
-  Object.keys(testCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify double quote pairs",
+    transformDoubleQuoteSet(
+      { ...identifyDoubleQuotePairsUnitSet, ...identifyDoubleQuotePairsModuleSet },
+      localeName
+    ),
+    (text) => placeLocaleDoubleQuotes(identifyDoubleQuotePairs(text), new Locale(localeName)),
+    transformDoubleQuoteSet(identifyDoubleQuotePairsModuleSet, localeName),
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify standalone left double quote (en-us):", () => {
-  let testCase = {
-    '"There is a standalone left quote.': "“There is a standalone left quote.",
+const identifyUnpairedLeftDoubleQuoteSet = {
+  '"unpaired left quote.':    "${ldq}unpaired left quote.",
+  "«unpaired left quote.":    "${ldq}unpaired left quote.",
+  "„unpaired left quote.":    "${ldq}unpaired left quote.",
+  ",,unpaired left quote.":   "${ldq}unpaired left quote.",
+  "‹‹unpaired left quote.":   "${ldq}unpaired left quote.",
+  "‘‘unpaired left quote.":   "${ldq}unpaired left quote.",
+  '"Unpaired left quote.':    "${ldq}Unpaired left quote.",
+  "“Unpaired left quote.":    "${ldq}Unpaired left quote.",
+  "«Unpaired left quote.":    "${ldq}Unpaired left quote.",
+  "„Unpaired left quote.":    "${ldq}Unpaired left quote.",
+  ",,Unpaired left quote.":   "${ldq}Unpaired left quote.",
+  "‹‹Unpaired left quote.":   "${ldq}Unpaired left quote.",
+  "‘‘Unpaired left quote.":   "${ldq}Unpaired left quote.",
+  "‘‘1 unpaired left quote.": "${ldq}1 unpaired left quote.",
+};
 
-    'There is a "standalone left quote.': "There is a “standalone left quote.",
-
-    "There is a «standalone left quote.": "There is a “standalone left quote.",
-
-    "There is a „standalone left quote.": "There is a “standalone left quote.",
-
-    "There is a ,,standalone left quote.": "There is a “standalone left quote.",
-
-    "There is a ‹‹standalone left quote.": "There is a “standalone left quote.",
-
-    "There is a ‘‘standalone left quote.": "There is a “standalone left quote.",
-
-    "There is ‘‘1 standalone left quote.": "There is “1 standalone left quote.",
-
-    ...testFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(
-        placeLocaleDoubleQuotes(identifyStandaloneLeftDoubleQuote(key), new Locale("en-us"))
-      ).toBe(testCase[key]);
-    });
-
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify unpaired left double quote",
+    transformDoubleQuoteSet(identifyUnpairedLeftDoubleQuoteSet, localeName),
+    (text) =>
+      placeLocaleDoubleQuotes(identifyUnpairedLeftDoubleQuote(text), new Locale(localeName)),
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Identify standalone right double quote (en-us):", () => {
-  let testCase = {
-    'There is a standalone" right quote.': "There is a standalone” right quote.",
+const identifyUnpairedRightDoubleQuoteSet = {
+  'unpaired" right quote.':  "unpaired${rdq} right quote.",
+  "unpaired« right quote.":  "unpaired${rdq} right quote.",
+  "unpaired„ right quote.":  "unpaired${rdq} right quote.",
+  "unpaired” right quote.":  "unpaired${rdq} right quote.",
+  "unpaired“ right quote.":  "unpaired${rdq} right quote.",
+  "unpaired,, right quote.": "unpaired${rdq} right quote.",
+  "unpaired›› right quote.": "unpaired${rdq} right quote.",
+  "unpaired‘‘ right quote.": "unpaired${rdq} right quote.",
+  'UNPAIRED" right quote.':  "UNPAIRED${rdq} right quote.",
+  'unpaired right quote."':  "unpaired right quote.${rdq}",
+  'unpaired right quote…"':  "unpaired right quote…${rdq}",
+};
 
-    "There is a standalone« right quote.": "There is a standalone” right quote.",
-
-    "There is a standalone„ right quote.": "There is a standalone” right quote.",
-
-    "There is a standalone,, right quote.": "There is a standalone” right quote.",
-
-    "There is a standalone›› right quote.": "There is a standalone” right quote.",
-
-    "There is a standalone‘‘ right quote.": "There is a standalone” right quote.",
-
-    'There is a STANDALONE" right quote.': "There is a STANDALONE” right quote.",
-
-    'There is a standalone right quote."': "There is a standalone right quote.”",
-
-    'There is a standalone right quote…"': "There is a standalone right quote…”",
-
-    ...testFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(
-        placeLocaleDoubleQuotes(identifyStandaloneRightDoubleQuote(key), new Locale("en-us"))
-      ).toBe(testCase[key]);
-    });
-
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify unpaired right double quote",
+    transformDoubleQuoteSet(identifyUnpairedRightDoubleQuoteSet, localeName),
+    (text) =>
+      placeLocaleDoubleQuotes(identifyUnpairedRightDoubleQuote(text), new Locale(localeName)),
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Remove unidentified double quotes (en-us):", () => {
-  let testCase = {
-    'word " word': "word word",
+const removeUnidentifiedDoubleQuoteSet = {
+  "word „ word":  "word word",
+  "word “ word":  "word word",
+  "word ” word":  "word word",
+  'word " word':  "word word",
+  "word « word":  "word word",
+  "word » word":  "word word",
+  "word ″ word":  "word word",
+  "word ‘‘ word": "word word",
+  "word ‚‚ word": "word word",
+  "word ’’ word": "word word",
+  "word '' word": "word word",
+  "word ‹‹ word": "word word",
+  "word ›› word": "word word",
+  "word ′′ word": "word word",
+  "word ´´ word": "word word",
+  "word `` word": "word word",
+};
 
-    "word « word": "word word",
-
-    "word „ word": "word word",
-
-    "word ,, word": "word word",
-
-    "word ›› word": "word word",
-
-    "word ‘‘ word": "word word",
-
-    ...testFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(placeLocaleDoubleQuotes(removeUnidentifiedDoubleQuote(key), new Locale("en-us"))).toBe(
-        testCase[key]
-      );
-    });
-
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Remove unidentified double quotes",
+    transformDoubleQuoteSet(removeUnidentifiedDoubleQuoteSet, localeName),
+    removeUnidentifiedDoubleQuote,
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Replace a double qoute & a double prime with a double quote pair (en-us):", () => {
-  let unitTestCase = {
-    "{{typopo__left-double-quote--standalone}}word{{typopo__double-prime}}":
-      "{{typopo__left-double-quote}}word{{typopo__right-double-quote}}",
+const replaceDoublePrimeWDoubleQuoteUnitSet = {
+  "{{typopo__ldq--unpaired}}word{{typopo__double-prime}}": "{{typopo__ldq}}word{{typopo__rdq}}",
 
-    "{{typopo__double-prime}}word{{typopo__right-double-quote--standalone}}":
-      "{{typopo__left-double-quote}}word{{typopo__right-double-quote}}",
+  "{{typopo__double-prime}}word{{typopo__rdq--unpaired}}": "{{typopo__ldq}}word{{typopo__rdq}}",
+};
 
-    ...testFalsePositives,
-  };
+const replaceDoublePrimeWDoubleQuoteModuleSet = {
+  'It’s called "Localhost 3000" and it’s pretty fast.':
+    "It’s called ${ldq}Localhost 3000${rdq} and it’s pretty fast.",
+  'Here are 30 "bucks"': "Here are 30 ${ldq}bucks${rdq}",
+};
 
-  let moduleTestCase = {
-    'It’s called "Localhost 3000" and it’s pretty fast.':
-      "It’s called “Localhost 3000” and it’s pretty fast.",
-
-    'Here are 30 "bucks"': "Here are 30 “bucks”",
-
-    ...testFalsePositives,
-  };
-
-  Object.keys(unitTestCase).forEach((key) => {
-    it("unit test", () => {
-      expect(replaceDoublePrimeWDoubleQuote(key, new Locale("en-us"))).toBe(unitTestCase[key]);
-    });
-  });
-
-  Object.keys(moduleTestCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(moduleTestCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Replace a double quote & a double prime with a double quote pair",
+    transformDoubleQuoteSet(replaceDoublePrimeWDoubleQuoteUnitSet, localeName),
+    (text) => replaceDoublePrimeWDoubleQuote(text, new Locale(localeName)),
+    transformDoubleQuoteSet(replaceDoublePrimeWDoubleQuoteModuleSet, localeName),
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Swap quotes and terminal punctuation for a quoted part (en-us):", () => {
-  let testCase = {
-    // quoted part at the
-    // end of a sentence
-    // end of a paragraph
-    "Sometimes it can be only a “quoted part.”": "Sometimes it can be only a “quoted part”.",
+const swapQuotesAndTerminalPunctuationSet = {
+  // quoted part at the
+  // end of a sentence
+  // end of a paragraph
+  "Sometimes it can be only a ${ldq}quoted part.${rdq}":             "Sometimes it can be only a ${ldq}quoted part${rdq}.",
+  "Sometimes it can be only a ${ldq}quoted${rdq} ${ldq}part.${rdq}": "Sometimes it can be only a ${ldq}quoted${rdq} ${ldq}part${rdq}.",
 
-    "Sometimes it can be only a “quoted” “part.”": "Sometimes it can be only a “quoted” “part”.",
+  "Is it ${ldq}Amores Perros${rdq}?": "Is it ${ldq}Amores Perros${rdq}?",
+  "Look for ${ldq}Anguanga${rdq}.":   "Look for ${ldq}Anguanga${rdq}.",
 
-    "Is it “Amores Perros”?": "Is it “Amores Perros”?",
+  "${ldq}A whole sentence.${rdq} Only a ${ldq}quoted part.${rdq}":
+    "${ldq}A whole sentence.${rdq} Only a ${ldq}quoted part${rdq}.",
 
-    "Look for “Anguanga”.": "Look for “Anguanga”.",
+  // quoted part at the
+  // end of a sentence
+  // middle of a paragraph
+  "a ${ldq}quoted part.${rdq} A ${ldq}quoted part.${rdq}":         "a ${ldq}quoted part${rdq}. A ${ldq}quoted part${rdq}.",
+  "Only a ${ldq}quoted part.${rdq} ${ldq}A whole sentence.${rdq}": "Only a ${ldq}quoted part${rdq}. ${ldq}A whole sentence.${rdq}",
 
-    "“A whole sentence.” Only a “quoted part.”": "“A whole sentence.” Only a “quoted part”.",
+  // quoted part in the middle of a sentence
+  // toto tu je asi zbytocny test
+  "Only a ${ldq}quoted part${rdq} in a sentence. ${ldq}A whole sentence.${rdq}":
+    "Only a ${ldq}quoted part${rdq} in a sentence. ${ldq}A whole sentence.${rdq}",
 
-    // quoted part at the
-    // end of a sentence
-    // middle of a paragraph
-    "a “quoted part.” A “quoted part.”": "a “quoted part”. A “quoted part”.",
+  // place punctuation within a quoted sentence that’s in the middle of the sentence.
+  "Ask ${ldq}What’s going on in here${rdq}? so you can dig deeper.":
+    "Ask ${ldq}What’s going on in here?${rdq} so you can dig deeper.",
+  "Ask ${ldq}Question${rdq}? and ${ldq}Question${rdq}? and done.":
+    "Ask ${ldq}Question?${rdq} and ${ldq}Question?${rdq} and done.",
+  "Ask ${ldq}Question${rdq}? and done.\nAsk ${ldq}Question${rdq}? and done.":
+    "Ask ${ldq}Question?${rdq} and done.\nAsk ${ldq}Question?${rdq} and done.",
+  "Before you ask the ${ldq}How often…${rdq} question": "Before you ask the ${ldq}How often…${rdq} question",
+  "Before you ask the ${ldq}How often${rdq}… question": "Before you ask the ${ldq}How often…${rdq} question",
 
-    "Only a “quoted part.” “A whole sentence.”": "Only a “quoted part”. “A whole sentence.”",
+  "${ldq}…example${rdq}":     "${ldq}…example${rdq}",
+  "abc ${ldq}…example${rdq}": "abc ${ldq}…example${rdq}",
 
-    // quoted part in the middle of a sentence
-    // toto tu je asi zbytocny test
-    "Only a “quoted part” in a sentence. “A whole sentence.”":
-      "Only a “quoted part” in a sentence. “A whole sentence.”",
+  // Bracket before the ellipsis, false positive
+  "Ask ${ldq}what if (the thing)…${rdq}": "Ask ${ldq}what if (the thing)…${rdq}",
 
-    // place punctuation within a quoted sentence that’s in the middle of the sentence.
-    "Ask “What’s going on in here”? so you can dig deeper.":
-      "Ask “What’s going on in here?” so you can dig deeper.",
+  // place punctuation within a quoted sentence
+  "He was ok. ${ldq}He was ok${rdq}.":            "He was ok. ${ldq}He was ok.${rdq}",
+  "He was ok. ${ldq}He was ok${rdq}. He was ok.": "He was ok. ${ldq}He was ok.${rdq} He was ok.",
+  "He was ok? ${ldq}He was ok${rdq}.":            "He was ok? ${ldq}He was ok.${rdq}",
 
-    "Ask “Question”? and “Question”? and done.": "Ask “Question?” and “Question?” and done.",
+  // swap a right quote and terminal punctuation for the whole sentence
+  "${ldq}He was ok${rdq}.":                                               "${ldq}He was ok.${rdq}",
+  "${ldq}He was ok${rdq}.\n${ldq}He was ok${rdq}.":                       "${ldq}He was ok.${rdq}\n${ldq}He was ok.${rdq}",
+  "${ldq}He was ok${rdq}. ${ldq}He was ok${rdq}.":                        "${ldq}He was ok.${rdq} ${ldq}He was ok.${rdq}",
+  "${ldq}He was ok${rdq}. ${ldq}He was ok${rdq}. ${ldq}He was ok${rdq}.": "${ldq}He was ok.${rdq} ${ldq}He was ok.${rdq} ${ldq}He was ok.${rdq}",
+  "${ldq}He was ok${rdq}. ${ldq}He was ok${rdq}. ${ldq}He was ok${rdq}. ${ldq}He was ok${rdq}.":
+    "${ldq}He was ok.${rdq} ${ldq}He was ok.${rdq} ${ldq}He was ok.${rdq} ${ldq}He was ok.${rdq}",
+  "${ldq}He was ok${rdq}?":            "${ldq}He was ok?${rdq}",
+  "${ldq}He was ok${rdq}. He was ok.": "${ldq}He was ok.${rdq} He was ok.",
 
-    "Ask “Question”? and done.\nAsk “Question”? and done.":
-      "Ask “Question?” and done.\nAsk “Question?” and done.",
+  // ellipsis
+  "${ldq}Types of${rdq}…":                        "${ldq}Types of…${rdq}",
+  "${ldq}Types of${rdq}…\n${ldq}Types of${rdq}…": "${ldq}Types of…${rdq}\n${ldq}Types of…${rdq}",
+};
 
-    "Before you ask the “How often…” question": "Before you ask the “How often…” question",
-
-    "Before you ask the “How often”… question": "Before you ask the “How often…” question",
-
-    "“…example”": "“…example”",
-
-    "abc “…example”": "abc “…example”",
-
-    // Bracket before the ellipsis, false positive
-    "Ask “what if (the thing)…”": "Ask “what if (the thing)…”",
-
-    // place punctuation within a quoted sentence
-    "He was ok. “He was ok”.": "He was ok. “He was ok.”",
-
-    "He was ok. “He was ok”. He was ok.": "He was ok. “He was ok.” He was ok.",
-
-    "He was ok? “He was ok”.": "He was ok? “He was ok.”",
-
-    // swap a right quote and terminal punctuation for the whole sentence
-    "“He was ok”.": "“He was ok.”",
-
-    "“He was ok”.\n“He was ok”.": "“He was ok.”\n“He was ok.”",
-
-    "“He was ok”. “He was ok”.": "“He was ok.” “He was ok.”",
-
-    "“He was ok”. “He was ok”. “He was ok”.": "“He was ok.” “He was ok.” “He was ok.”",
-
-    "“He was ok”. “He was ok”. “He was ok”. “He was ok”.":
-      "“He was ok.” “He was ok.” “He was ok.” “He was ok.”",
-
-    "“He was ok”?": "“He was ok?”",
-
-    "“He was ok”. He was ok.": "“He was ok.” He was ok.",
-
-    // ellipsis
-    "“Types of”…": "“Types of…”",
-
-    "“Types of”…\n“Types of”…": "“Types of…”\n“Types of…”",
-
-    ...testFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(swapQuotesAndTerminalPunctuation(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Swap quotes and terminal punctuation for a quoted part",
+    transformDoubleQuoteSet(swapQuotesAndTerminalPunctuationSet, localeName),
+    (text) => swapQuotesAndTerminalPunctuation(text, new Locale(localeName)),
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Remove extra comma after sentence punctuation in direct speech (en-us):", () => {
-  let testCase = {
-    "“Hey!,” she said": "“Hey!” she said",
+const removeExtraSpacesAroundQuotesSet = {
+  "${ldq} extra space at the beginning${rdq}": "${ldq}extra space at the beginning${rdq}",
+  "${ldq}extra space at the end ${rdq}":       "${ldq}extra space at the end${rdq}",
+  "${ldq}Sentence and… ${rdq}":                "${ldq}Sentence and…${rdq}",
 
-    "“Hey?,” she said": "“Hey?” she said",
+  "12′ 45 ″":       "12′ 45″",
+  "3° 5′ 30 ″":     "3° 5′ 30″",
+  "3° 5′ 30 ″ and": "3° 5′ 30″ and",
+};
 
-    "“Hey.,” she said": "“Hey.” she said",
-
-    "“Hey,,” she said": "“Hey,” she said",
-
-    "“Hey:,” she said": "“Hey:” she said",
-
-    "“Hey;,” she said": "“Hey;” she said",
-
-    ...testFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeExtraCommaAfterSentencePunctuation(key, new Locale("en-us"))).toBe(
-        testCase[key]
-      );
-    });
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Remove extra spaces around quotes and primes",
+    transformDoubleQuoteSet(removeExtraSpacesAroundQuotesSet, localeName),
+    (text) => removeExtraSpacesAroundQuotes(text, new Locale(localeName)),
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Remove extra spaces around quotes and primes (en-us):", () => {
-  let testCase = {
-    "“ Ups, an extra space at the beginning”": "“Ups, an extra space at the beginning”",
+const addSpaceBeforeLeftDoubleQuoteSet = {
+  "It’s a very ${ldq}nice${rdq} saying.":               "It’s a very ${ldq}nice${rdq} saying.",
+  "It’s a${ldq}nice${rdq} saying.":                     "It’s a ${ldq}nice${rdq} saying.", //add nbsp;
+  "An unquoted sentence.${ldq}And a quoted one.${rdq}": "An unquoted sentence. ${ldq}And a quoted one.${rdq}",
+};
 
-    "“Ups, an extra space at the end ”": "“Ups, an extra space at the end”",
-
-    "“Sentence and… ”": "“Sentence and…”",
-
-    "12′ 45 ″": "12′ 45″",
-
-    "3° 5′ 30 ″": "3° 5′ 30″",
-
-    "3° 5′ 30 ″ and": "3° 5′ 30″ and",
-
-    ...testFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeExtraSpacesAroundQuotes(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Add a missing space before a left double quote",
+    transformDoubleQuoteSet(addSpaceBeforeLeftDoubleQuoteSet, localeName),
+    (text) => addSpaceBeforeLeftDoubleQuote(text, new Locale(localeName)),
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Add a missing space before a left double quote (en-us):", () => {
-  let testCase = {
-    "It’s a very “nice” saying.": "It’s a very “nice” saying.",
+let addSpaceAfterRightDoubleQuoteSet = {
+  "It’s a ${ldq}nice${rdq}saying.":                     "It’s a ${ldq}nice${rdq} saying.",
+  "${ldq}A quoted sentence.${rdq}And an unquoted one.": "${ldq}A quoted sentence.${rdq} And an unquoted one.",
+  "${ldq}A quoted sentence!${rdq}And an unquoted one.": "${ldq}A quoted sentence!${rdq} And an unquoted one.",
+};
 
-    "It’s a“nice” saying.": "It’s a “nice” saying.", //add nbsp;
-
-    "An unquoted sentence.“And a quoted one.”": "An unquoted sentence. “And a quoted one.”",
-
-    ...testFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(addSpaceBeforeLeftDoubleQuote(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Add a missing space after a right double quote",
+    transformDoubleQuoteSet(addSpaceAfterRightDoubleQuoteSet, localeName),
+    (text) => addSpaceAfterRightDoubleQuote(text, new Locale(localeName)),
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Add a missing space after a left double quote (en-us):", () => {
-  let testCase = {
-    "It’s a “nice”saying.": "It’s a “nice” saying.",
+export const keepMarkdownCodeBlocksSet = {
+  "```\ncode\n```":    "```\ncode\n```",
+  "``code``":          "``code``",
+  "``code code``":     "``code code``",
+  "``code`` ``code``": "``code`` ``code``",
+  "`code`":            "`code`",
+  "`code code`":       "`code code`",
+  "`code` `code`":     "`code` `code`",
+};
 
-    "“A quoted sentence.”And an unquoted one.": "“A quoted sentence.” And an unquoted one.",
+createTestSuite(
+  "Test if markdown ticks are kept (double quotes) ",
+  {},
+  undefined,
+  keepMarkdownCodeBlocksSet,
+  (text, locale) =>
+    fixDoubleQuotesAndPrimes(text, locale, {
+      keepMarkdownCodeBlocks: true,
+    }),
+  supportedLocales
+);
 
-    "“A quoted sentence!”And an unquoted one.": "“A quoted sentence!” And an unquoted one.",
+export const doubleQuotesSet = {
+  ...removePunctuationBeforeQuotesSet,
+  ...removePunctuationAfterQuotesSet,
+  ...identifyDoublePrimesModuleSet,
+  ...identifyDoubleQuotePairsModuleSet,
+  ...identifyUnpairedLeftDoubleQuoteSet,
+  ...identifyUnpairedRightDoubleQuoteSet,
+  ...removeUnidentifiedDoubleQuoteSet,
+  ...replaceDoublePrimeWDoubleQuoteModuleSet,
+  ...swapQuotesAndTerminalPunctuationSet,
+  ...removeExtraSpacesAroundQuotesSet,
+  ...addSpaceBeforeLeftDoubleQuoteSet,
+  ...addSpaceAfterRightDoubleQuoteSet,
+};
 
-    ...testFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(addSpaceAfterRightDoubleQuote(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
+export function transformDoubleQuoteSet(testSet, localeName) {
+  return transformTestSet(testSet, localeName, {
+    additionalSets: [doubleQuotesFalsePositives],
   });
-});
-
-describe("Double quotes in default language (en-us)", () => {
-  let testCase = {
-    ...getDoubleQuoteSet("en-us"),
-    ...testFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("module test", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
-});
-
-describe("Double quotes in Slovak, Czech and German language (sk, cs, de-de)", () => {
-  let testCase = {
-    ...getDoubleQuoteSet("sk"),
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("module test (sk)", () => {
-      expect(fixDoubleQuotesAndPrimes(key, new Locale("sk"), configIgnoreMarkdownCodeBlocks)).toBe(
-        testCase[key]
-      );
-    });
-
-    it("module test (cs)", () => {
-      expect(fixDoubleQuotesAndPrimes(key, new Locale("cs"), configIgnoreMarkdownCodeBlocks)).toBe(
-        testCase[key]
-      );
-    });
-
-    it("module test (de-de)", () => {
-      expect(
-        fixDoubleQuotesAndPrimes(key, new Locale("de-de"), configIgnoreMarkdownCodeBlocks)
-      ).toBe(testCase[key]);
-    });
-  });
-});
-
-describe("Double quotes in Rusyn language (rue)", () => {
-  let testCase = {
-    ...getDoubleQuoteSet("rue"),
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("module test (rue)", () => {
-      expect(fixDoubleQuotesAndPrimes(key, new Locale("rue"), configIgnoreMarkdownCodeBlocks)).toBe(
-        testCase[key]
-      );
-    });
-  });
-});
-
-describe("Test if markdown ticks are kept (double quotes) (en-us):", () => {
-  let testCase = {
-    "```\ncode\n```": "```\ncode\n```",
-
-    "\t```\ncode\n```": "\t```\ncode\n```",
-
-    "\t\t```\ncode\n```": "\t\t```\ncode\n```",
-
-    " ```\ncode\n```": " ```\ncode\n```",
-
-    "  ```\ncode\n```": "  ```\ncode\n```",
-
-    "``code``": "``code``",
-
-    "``code code``": "``code code``",
-
-    "``code`` ``code``": "``code`` ``code``",
-
-    "`code`": "`code`",
-
-    "`code code`": "`code code`",
-
-    "`code` `code`": "`code` `code`",
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("keepMarkdownCodeBlocks: true” configuration", () => {
-      expect(fixDoubleQuotesAndPrimes(key, new Locale("en-us"), configKeepMarkdownCodeBlocks)).toBe(
-        testCase[key]
-      );
-    });
-  });
-});
+}
