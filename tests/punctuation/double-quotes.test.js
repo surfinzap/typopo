@@ -444,73 +444,59 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-describe("Remove extra spaces around quotes and primes (en-us):", () => {
-  let testCase = {
-    "“ Ups, an extra space at the beginning”": "“Ups, an extra space at the beginning”",
+const removeExtraSpacesAroundQuotesSet = {
+  "${ldq} extra space at the beginning${rdq}": "${ldq}extra space at the beginning${rdq}",
+  "${ldq}extra space at the end ${rdq}":       "${ldq}extra space at the end${rdq}",
+  "${ldq}Sentence and… ${rdq}":                "${ldq}Sentence and…${rdq}",
 
-    "“Ups, an extra space at the end ”": "“Ups, an extra space at the end”",
+  "12′ 45 ″":       "12′ 45″",
+  "3° 5′ 30 ″":     "3° 5′ 30″",
+  "3° 5′ 30 ″ and": "3° 5′ 30″ and",
+};
 
-    "“Sentence and… ”": "“Sentence and…”",
-
-    "12′ 45 ″": "12′ 45″",
-
-    "3° 5′ 30 ″": "3° 5′ 30″",
-
-    "3° 5′ 30 ″ and": "3° 5′ 30″ and",
-
-    ...doubleQuotesFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(removeExtraSpacesAroundQuotes(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(fixDoubleQuotesAndPrimes(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Remove extra spaces around quotes and primes",
+    transformDoubleQuoteSet(removeExtraSpacesAroundQuotesSet, localeName),
+    (text) => removeExtraSpacesAroundQuotes(text, new Locale(localeName)),
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Add a missing space before a left double quote (en-us):", () => {
-  let testCase = {
-    "It’s a very “nice” saying.": "It’s a very “nice” saying.",
+const addSpaceBeforeLeftDoubleQuoteSet = {
+  "It’s a very ${ldq}nice${rdq} saying.":               "It’s a very ${ldq}nice${rdq} saying.",
+  "It’s a${ldq}nice${rdq} saying.":                     "It’s a ${ldq}nice${rdq} saying.", //add nbsp;
+  "An unquoted sentence.${ldq}And a quoted one.${rdq}": "An unquoted sentence. ${ldq}And a quoted one.${rdq}",
+};
 
-    "It’s a“nice” saying.": "It’s a “nice” saying.", //add nbsp;
-
-    "An unquoted sentence.“And a quoted one.”": "An unquoted sentence. “And a quoted one.”",
-
-    ...doubleQuotesFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(addSpaceBeforeLeftDoubleQuote(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(fixDoubleQuotesAndPrimes(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Add a missing space before a left double quote",
+    transformDoubleQuoteSet(addSpaceBeforeLeftDoubleQuoteSet, localeName),
+    (text) => addSpaceBeforeLeftDoubleQuote(text, new Locale(localeName)),
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
-describe("Add a missing space after a left double quote (en-us):", () => {
-  let testCase = {
-    "It’s a “nice”saying.": "It’s a “nice” saying.",
+let addSpaceAfterRightDoubleQuoteSet = {
+  "It’s a ${ldq}nice${rdq}saying.":                     "It’s a ${ldq}nice${rdq} saying.",
+  "${ldq}A quoted sentence.${rdq}And an unquoted one.": "${ldq}A quoted sentence.${rdq} And an unquoted one.",
+  "${ldq}A quoted sentence!${rdq}And an unquoted one.": "${ldq}A quoted sentence!${rdq} And an unquoted one.",
+};
 
-    "“A quoted sentence.”And an unquoted one.": "“A quoted sentence.” And an unquoted one.",
-
-    "“A quoted sentence!”And an unquoted one.": "“A quoted sentence!” And an unquoted one.",
-
-    ...doubleQuotesFalsePositives,
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("unit test", () => {
-      expect(addSpaceAfterRightDoubleQuote(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-    it("module test", () => {
-      expect(fixDoubleQuotesAndPrimes(key, new Locale("en-us"))).toBe(testCase[key]);
-    });
-  });
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Add a missing space after a right double quote",
+    transformDoubleQuoteSet(addSpaceAfterRightDoubleQuoteSet, localeName),
+    (text) => addSpaceAfterRightDoubleQuote(text, new Locale(localeName)),
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
 });
 
 export const keepMarkdownCodeBlocksSet = {
@@ -545,34 +531,9 @@ export const doubleQuotesSet = {
   ...removeUnidentifiedDoubleQuoteSet,
   ...replaceDoublePrimeWDoubleQuoteModuleSet,
   ...swapQuotesAndTerminalPunctuationSet,
-
-  'He said: "Here${apos}s a 12" record."': "He said: ${ldq}Here${apos}s a 12″ record.${rdq}",
-  'He said: "He was 12."':                 "He said: ${ldq}He was 12.${rdq}",
-  'He said: "He was 12". And then he added: "Maybe he was 13".':
-    "He said: ${ldq}He was 12.${rdq} And then he added: ${ldq}Maybe he was 13.${rdq}",
-  'So it${apos}s 12" × 12", right?':              "So it${apos}s 12″ × 12″, right?",
-  "An unquoted sentence.“And a quoted one.”":     "An unquoted sentence. ${ldq}And a quoted one.${rdq}",
-  '"quoted material" and "extra':                 "${ldq}quoted material${rdq} and ${ldq}extra",
-  "It was like “namespace pollution”.":           "It was like ${ldq}namespace pollution${rdq}.",
-  "English „English„ „English„ English":          "English ${ldq}English${rdq} ${ldq}English${rdq} English",
-  "“English double quotation marks“":             "${ldq}English double quotation marks${rdq}",
-  "”English double quotation marks”":             "${ldq}English double quotation marks${rdq}",
-  '"English double quotation marks"':             "${ldq}English double quotation marks${rdq}",
-  '"Conference 2020" and "something in quotes".': "${ldq}Conference 2020${rdq} and ${ldq}something in quotes${rdq}.",
-  'Here are 30 "bucks"':                          "Here are 30 ${ldq}bucks${rdq}",
-
-  "Within double quotes “there are single ${lsq}quotes with mixed punctuation${rsq}, you see.”":
-    "Within double quotes ${ldq}there are single ${lsq}quotes with mixed punctuation${rsq}, you see${rdq}.",
-  "Before you ask the “How often…” question": "Before you ask the ${ldq}How often…${rdq} question",
-
-  "He was like “Georgia”.":             "He was like ${ldq}Georgia${rdq}.",
-  "He was ok. “He was ok”.":            "He was ok. ${ldq}He was ok.${rdq}",
-  '"…"':                                "${ldq}…${rdq}",
-  '"Ctrl+I and…"':                      "${ldq}Ctrl+I and…${rdq}",
-  'Hela skríkla: "Tu je 12" platňa "!': "Hela skríkla: ${ldq}Tu je 12″ platňa!${rdq}",
-  "He was ok. “He was ok ”.":           "He was ok. ${ldq}He was ok.${rdq}",
-  "“…example”":                         "${ldq}…example${rdq}",
-  "abc “…example”":                     "abc ${ldq}…example${rdq}",
+  ...removeExtraSpacesAroundQuotesSet,
+  ...addSpaceBeforeLeftDoubleQuoteSet,
+  ...addSpaceAfterRightDoubleQuoteSet,
 };
 
 export function transformDoubleQuoteSet(testSet, localeName) {
