@@ -4,20 +4,8 @@ import {
   fixMultipleWordAbbreviations,
   fixSingleWordAbbreviations,
 } from "../../src/modules/words/abbreviations.js";
-import { createTestSuite } from "../test-utils.js";
+import { createTestSuite, transformTestSet } from "../test-utils.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
-
-export function transformAbbrSet(testSet, localeName) {
-  const locale = new Locale(localeName);
-  const replaceTokens = (str) => str.replace(/\$\{abbrSpace\}/g, locale.spaceAfter.abbreviation);
-
-  const transformed = {};
-  Object.keys(testSet).forEach((key) => {
-    transformed[replaceTokens(key)] = replaceTokens(testSet[key]);
-  });
-
-  return transformed;
-}
 
 const initialsSet = {
   "J. Novak":       "J. Novak", // essential case, nbsp missing
@@ -51,7 +39,7 @@ const initialsSet = {
 supportedLocales.forEach((locale) => {
   createTestSuite(
     `Fix Initials`,
-    transformAbbrSet(initialsSet, locale),
+    transformTestSet(initialsSet, locale),
     (text) => fixInitials(text, new Locale(locale)),
     {},
     (text) => fixAbbreviations(text, new Locale(locale)),
@@ -146,9 +134,9 @@ supportedLocales.forEach((locale) => {
 
   createTestSuite(
     `Fix multiple-word abbreviations`,
-    transformAbbrSet(unitTestSet, locale),
+    transformTestSet(unitTestSet, locale),
     (text) => fixMultipleWordAbbreviations(text, new Locale(locale)),
-    transformAbbrSet(multiWordAbbrSet, locale),
+    transformTestSet(multiWordAbbrSet, locale),
     (text) => fixAbbreviations(text, new Locale(locale)),
     locale
   );
@@ -185,9 +173,9 @@ const singleWordAbbrFalsePositiveSet = {
 supportedLocales.forEach((locale) => {
   createTestSuite(
     `Fix Single-word abbreviations`,
-    transformAbbrSet({ ...singleWordAbbrSet, ...singleWordAbbrFalsePositiveSet }, locale),
+    transformTestSet({ ...singleWordAbbrSet, ...singleWordAbbrFalsePositiveSet }, locale),
     (text) => fixSingleWordAbbreviations(text, new Locale(locale)),
-    transformAbbrSet(singleWordAbbrSet, locale),
+    transformTestSet(singleWordAbbrSet, locale),
     (text) => fixAbbreviations(text, new Locale(locale)),
     locale
   );

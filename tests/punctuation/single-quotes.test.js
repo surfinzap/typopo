@@ -18,7 +18,7 @@ import {
 } from "../../src/modules/punctuation/single-quotes.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { describe, it, expect } from "vitest";
-import { createTestSuite } from "../test-utils.js";
+import { createTestSuite, transformTestSet } from "../test-utils.js";
 import { keepMarkdownCodeBlocksSet } from "./double-quotes.test.js";
 
 const configIgnoreMarkdownCodeBlocks = {
@@ -58,9 +58,9 @@ const identifyContractedAndUnitSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify contracted and (’n’) as apostrophes",
-    transformSingleQuoteSet(identifyContractedAndUnitSet, localeName),
+    transformTestSet(identifyContractedAndUnitSet, localeName),
     (text) => placeLocaleSingleQuotes(identifyContractedAnd(text), new Locale(localeName)),
-    transformSingleQuoteSet(identifyContractedAndModuleSet, localeName),
+    transformTestSet(identifyContractedAndModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
   );
@@ -85,7 +85,7 @@ const identifyContractedBeginningsSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify common contractions at the beginning of the word as apostrophes",
-    transformSingleQuoteSet(identifyContractedBeginningsSet, localeName),
+    transformTestSet(identifyContractedBeginningsSet, localeName),
     (text) => placeLocaleSingleQuotes(identifyContractedBeginnings(text), new Locale(localeName)),
     {},
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
@@ -109,9 +109,9 @@ const identifyContractedEndsUnitSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify common contractions at the end of the word as apostrophes",
-    transformSingleQuoteSet(identifyContractedEndsUnitSet, localeName),
+    transformTestSet(identifyContractedEndsUnitSet, localeName),
     (text) => placeLocaleSingleQuotes(identifyContractedEnds(text), new Locale(localeName)),
-    transformSingleQuoteSet(identifyContractedEndsModuleSet, localeName),
+    transformTestSet(identifyContractedEndsModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
   );
@@ -137,7 +137,7 @@ const identifyInWordContractionsSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify in-word contractions as apostrophes",
-    transformSingleQuoteSet(identifyInWordContractionsSet, localeName),
+    transformTestSet(identifyInWordContractionsSet, localeName),
     (text) => placeLocaleSingleQuotes(identifyInWordContractions(text), new Locale(localeName)),
     {},
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
@@ -160,9 +160,9 @@ const identifyContractedYearsUnitSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify contracted years as apostrophes",
-    transformSingleQuoteSet(identifyContractedYearsUnitSet, localeName),
+    transformTestSet(identifyContractedYearsUnitSet, localeName),
     (text) => placeLocaleSingleQuotes(identifyContractedYears(text), new Locale(localeName)),
-    transformSingleQuoteSet(identifyContractedYearsModuleSet, localeName),
+    transformTestSet(identifyContractedYearsModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
   );
@@ -193,9 +193,9 @@ const identifySinglePrimesUnitSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify feet and arcminutes following a 1–3 numbers",
-    transformSingleQuoteSet(identifySinglePrimesUnitSet, localeName),
+    transformTestSet(identifySinglePrimesUnitSet, localeName),
     (text) => placeLocaleSingleQuotes(identifySinglePrimes(text), new Locale(localeName)),
-    transformSingleQuoteSet(identifySinglePrimesModuleSet, localeName),
+    transformTestSet(identifySinglePrimesModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
   );
@@ -233,9 +233,9 @@ const identifyUnpairedLeftSingleQuoteUnitSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify unpaired left single quote",
-    transformSingleQuoteSet(identifyUnpairedLeftSingleQuoteUnitSet, localeName),
+    transformTestSet(identifyUnpairedLeftSingleQuoteUnitSet, localeName),
     (text) => identifyUnpairedLeftSingleQuote(text),
-    transformSingleQuoteSet(identifyUnpairedLeftSingleQuoteModuleSet, localeName),
+    transformTestSet(identifyUnpairedLeftSingleQuoteModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
   );
@@ -280,9 +280,9 @@ const identifyUnpairedRightSingleQuoteUnitSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify unpaired right single quote",
-    transformSingleQuoteSet(identifyUnpairedRightSingleQuoteUnitSet, localeName),
+    transformTestSet(identifyUnpairedRightSingleQuoteUnitSet, localeName),
     (text) => identifyUnpairedRightSingleQuote(text),
-    transformSingleQuoteSet(identifyUnpairedRightSingleQuoteModuleSet, localeName),
+    transformTestSet(identifyUnpairedRightSingleQuoteModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
   );
@@ -334,9 +334,9 @@ const identifySingleQuotePairsUnitSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify single quote pairs",
-    transformSingleQuoteSet(identifySingleQuotePairsUnitSet, localeName),
+    transformTestSet(identifySingleQuotePairsUnitSet, localeName),
     (text) => identifySingleQuotePairs(text),
-    transformSingleQuoteSet(identifySingleQuotePairsModuleSet, localeName),
+    transformTestSet(identifySingleQuotePairsModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
   );
@@ -366,13 +366,13 @@ const identifySingleQuotePairAroundSingleWordUnitSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify single quote pairs around single word",
-    transformSingleQuoteSet(identifySingleQuotePairAroundSingleWordUnitSet, localeName),
+    transformTestSet(identifySingleQuotePairAroundSingleWordUnitSet, localeName),
     (text) =>
       placeLocaleSingleQuotes(
         identifySingleQuotePairAroundSingleWord(text),
         new Locale(localeName)
       ),
-    transformSingleQuoteSet(identifySingleQuotePairAroundSingleWordModuleSet, localeName),
+    transformTestSet(identifySingleQuotePairAroundSingleWordModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
   );
@@ -394,9 +394,9 @@ const replaceSinglePrimeWSingleQuoteUnitSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Replace a single qoute & a single prime with a single quote pair",
-    transformSingleQuoteSet(replaceSinglePrimeWSingleQuoteUnitSet, localeName),
+    transformTestSet(replaceSinglePrimeWSingleQuoteUnitSet, localeName),
     (text) => replaceSinglePrimeWSingleQuote(text),
-    transformSingleQuoteSet(replaceSinglePrimeWSingleQuoteModuleSet, localeName),
+    transformTestSet(replaceSinglePrimeWSingleQuoteModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
   );
@@ -409,7 +409,7 @@ const identifyResidualApostrophesSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify residual apostrophes",
-    transformSingleQuoteSet(identifyResidualApostrophesSet, localeName),
+    transformTestSet(identifyResidualApostrophesSet, localeName),
     (text) => placeLocaleSingleQuotes(identifyResidualApostrophes(text), localeName),
     {},
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
@@ -425,7 +425,7 @@ const removeExtraSpaceAroundSinglePrimeSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Remove extra space around a single prime",
-    transformSingleQuoteSet(removeExtraSpaceAroundSinglePrimeSet, localeName),
+    transformTestSet(removeExtraSpaceAroundSinglePrimeSet, localeName),
     (text) => removeExtraSpaceAroundSinglePrime(text),
     {},
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
@@ -479,7 +479,7 @@ const swapSingleQuotesAndTerminalPunctuationSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Swap single quotes and terminal punctuation for a quoted part",
-    transformSingleQuoteSet(swapSingleQuotesAndTerminalPunctuationSet, localeName),
+    transformTestSet(swapSingleQuotesAndTerminalPunctuationSet, localeName),
     (text) => swapSingleQuotesAndTerminalPunctuation(text, new Locale(localeName)),
     {},
     null,
@@ -520,27 +520,9 @@ export const singleQuotesSet = {
     "Hej: ${ldq}Vin mu povil, ${lsq}ta de jes’ take vidil${rsq} i neviril${rdq}", // tbd-single-quotes-matching
 };
 
-export function transformSingleQuoteSet(testSet, localeName) {
-  const locale = new Locale(localeName);
-  const replaceTokens = (str) =>
-    str
-      .replace(/\$\{ldq\}/g, locale.leftDoubleQuote)
-      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote)
-      .replace(/\$\{lsq\}/g, locale.leftSingleQuote)
-      .replace(/\$\{rsq\}/g, locale.rightSingleQuote);
-
-  const transformed = {};
-
-  Object.keys(testSet).forEach((key) => {
-    transformed[replaceTokens(key)] = replaceTokens(testSet[key]);
-  });
-
-  return transformed;
-}
-
 describe("Single quotes (module test) ", () => {
   supportedLocales.forEach((localeName) => {
-    const testCase = transformSingleQuoteSet(singleQuotesSet, localeName);
+    const testCase = transformTestSet(singleQuotesSet, localeName);
 
     Object.keys(testCase).forEach((key) => {
       it(`module test, locale: (${localeName})`, () => {

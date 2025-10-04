@@ -8,8 +8,8 @@ import {
   fixDashBetweenOrdinalNumbers,
   fixDash,
 } from "../../src/modules/punctuation/dash.js";
-import { createTestSuite } from "../test-utils.js";
-import Locale, { supportedLocales } from "../../src/locale/locale.js";
+import { createTestSuite, transformTestSet } from "../test-utils.js";
+import { supportedLocales } from "../../src/locale/locale.js";
 
 const threeHyphensSet = {
   "and --- she said": "and — she said",
@@ -85,7 +85,7 @@ const dashesBetweenWordsSet = {
 supportedLocales.forEach((locale) => {
   createTestSuite(
     `Fix a dash, an en dash, an em dash and spacing between words`,
-    transformDashSet({ ...dashesBetweenWordsSet, ...dashFalsePositives }, locale),
+    transformTestSet({ ...dashesBetweenWordsSet, ...dashFalsePositives }, locale),
     fixDashesBetweenWords,
     {},
     fixDash,
@@ -107,7 +107,7 @@ const hyphenWordPunctuationSet = {
 supportedLocales.forEach((locale) => {
   createTestSuite(
     `Fix hyphen between word and punctuation`,
-    transformDashSet({ ...hyphenWordPunctuationSet, ...dashFalsePositives }, locale),
+    transformTestSet({ ...hyphenWordPunctuationSet, ...dashFalsePositives }, locale),
     fixHyphenBetweenWordAndPunctuation,
     {},
     fixDash,
@@ -234,20 +234,3 @@ export const dashSet = {
   ...hyphenWordPunctuationSet,
   ...dashCardinalNumbersSet,
 };
-
-export function transformDashSet(testSet, localeName) {
-  const locale = new Locale(localeName);
-  const replaceTokens = (str) =>
-    str
-      .replace(/\$\{spaceBeforeDash\}/g, locale.dashWords.spaceBefore)
-      .replace(/\$\{dash\}/g, locale.dashWords.dash)
-      .replace(/\$\{spaceAfterDash\}/g, locale.dashWords.spaceAfter);
-
-  const transformed = {};
-
-  Object.keys(testSet).forEach((key) => {
-    transformed[replaceTokens(key)] = replaceTokens(testSet[key]);
-  });
-
-  return transformed;
-}

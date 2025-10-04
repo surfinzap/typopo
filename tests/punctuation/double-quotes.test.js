@@ -15,8 +15,7 @@ import {
   fixDoubleQuotesAndPrimes,
 } from "../../src/modules/punctuation/double-quotes.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
-import { base } from "../../src/const.js";
-import { createTestSuite } from "../test-utils.js";
+import { createTestSuite, transformTestSet } from "../test-utils.js";
 
 const doubleQuotesFalsePositives = {
   "č., s., fol., str.,":                 "č., s., fol., str.,",
@@ -526,21 +525,7 @@ export const doubleQuotesSet = {
 };
 
 export function transformDoubleQuoteSet(testSet, localeName) {
-  const locale = new Locale(localeName);
-  const replaceTokens = (str) =>
-    str
-      .replace(/\$\{ldq\}/g, locale.leftDoubleQuote)
-      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote)
-      .replace(/\$\{lsq\}/g, locale.leftSingleQuote)
-      .replace(/\$\{rsq\}/g, locale.rightSingleQuote)
-      .replace(/\$\{apos\}/g, base.apostrophe);
-
-  const transformed = {};
-  testSet = { ...testSet, ...doubleQuotesFalsePositives };
-
-  Object.keys(testSet).forEach((key) => {
-    transformed[replaceTokens(key)] = replaceTokens(testSet[key]);
+  return transformTestSet(testSet, localeName, {
+    additionalSets: [doubleQuotesFalsePositives],
   });
-
-  return transformed;
 }

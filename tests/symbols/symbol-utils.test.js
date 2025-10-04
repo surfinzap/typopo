@@ -3,6 +3,7 @@ import Locale from "../../src/locale/locale.js";
 import { supportedLocales } from "../../src/locale/locale.js";
 import { fixSpacingAroundSymbol } from "../../src/modules/symbols/symbol-utils.js";
 import { describe, it, expect } from "vitest";
+import { transformTestSet } from "../test-utils.js";
 
 export const symbolSet = {
   // Spaces around the symbol
@@ -62,17 +63,7 @@ const symbols = [
 ];
 
 export function transformSymbolSet(testSet, symbolName, localeName) {
-  const locale = new Locale(localeName);
-  const symbolValue = base[symbolName];
-  const spaceValue = locale.spaceAfter[symbolName];
-  const transformed = {};
-  const replaceTokens = (str) =>
-    str.replace(/\$\{symbol\}/g, symbolValue).replace(/\$\{space\}/g, spaceValue);
-
-  Object.keys(testSet).forEach((key) => {
-    transformed[replaceTokens(key)] = replaceTokens(testSet[key]);
-  });
-  return transformed;
+  return transformTestSet(testSet, localeName, { symbolName });
 }
 
 describe("Fix symbol spacing", () => {

@@ -13,9 +13,8 @@ import {
   replaceSpacesWithNbspAfterSymbol,
   fixNbsp,
 } from "../../src/modules/whitespace/nbsp.js";
-import Locale, { supportedLocales } from "../../src/locale/locale.js";
-import { createTestSuite } from "../test-utils.js";
-import { base } from "../../src/const.js";
+import { supportedLocales } from "../../src/locale/locale.js";
+import { createTestSuite, transformTestSet } from "../test-utils.js";
 
 const nbspBetweenMultiCharWordsSet = {
   "vo dvore":    "vo dvore",
@@ -204,7 +203,7 @@ const nbspOrdinalDate = {
 supportedLocales.forEach((locale) => {
   createTestSuite(
     "Fix spaces with an ordinal date",
-    transformNbspSet(nbspOrdinalDate, locale),
+    transformTestSet(nbspOrdinalDate, locale),
     addNbspWithinOrdinalDate,
     {},
     fixNbsp,
@@ -269,9 +268,9 @@ const nbspNameRegnalNumberUnitSet = {
 supportedLocales.forEach((locale) => {
   createTestSuite(
     "Fix non-breaking space around a name with a regnal number",
-    { ...transformNbspSet(nbspNameRegnalNumberSet, locale), ...nbspNameRegnalNumberUnitSet },
+    { ...transformTestSet(nbspNameRegnalNumberSet, locale), ...nbspNameRegnalNumberUnitSet },
     fixNbspForNameWithRegnalNumber,
-    transformNbspSet(nbspNameRegnalNumberSet, locale),
+    transformTestSet(nbspNameRegnalNumberSet, locale),
     fixNbsp,
     locale
   );
@@ -289,7 +288,7 @@ const spaceBeforePercentSet = {
 supportedLocales.forEach((locale) => {
   createTestSuite(
     "Add a locale-specific space before %, ‰, ‱",
-    transformNbspSet(spaceBeforePercentSet, locale),
+    transformTestSet(spaceBeforePercentSet, locale),
     fixSpaceBeforePercent,
     {},
     fixNbsp,
@@ -344,7 +343,7 @@ supportedLocales.forEach((locale) => {
     "Add a non-breaking space before a single capital letter in a sentence",
     {
       ...nbspBeforeSingleLetterSet,
-      ...transformNbspSet(nbspBeforeSingleLetterUnitSet, locale),
+      ...transformTestSet(nbspBeforeSingleLetterUnitSet, locale),
       ...(locale === "en-us" ? nbspBeforeSingleLetterEnUsSet : nbspBeforeSingleLetterOtherSet),
     },
     addNbspBeforeSingleLetter,
@@ -400,25 +399,3 @@ export const nbspSet = {
   ...nbspBeforeSingleLetterSet,
   ...filenameFalsePositiveSet,
 };
-
-export function transformNbspSet(testSet, localeName) {
-  const locale = new Locale(localeName);
-  const replaceTokens = (str) =>
-    str
-      .replace(/\$\{ordinalDateFirstSpace\}/g, locale.ordinalDate.firstSpace)
-      .replace(/\$\{ordinalDateSecondSpace\}/g, locale.ordinalDate.secondSpace)
-      .replace(/\$\{romanOrdinalIndicator\}/g, locale.romanOrdinalIndicator)
-      .replace(/\\./g, ".")
-      .replace(/\$\{spaceBeforePercent\}/g, locale.spaceBefore.percent)
-      .replace(/\$\{rdq\}/g, locale.rightDoubleQuote)
-      .replace(/\$\{rsq\}/g, locale.rightSingleQuote)
-      .replace(/\$\{apos\}/g, base.apostrophe);
-
-  let transformed = {};
-
-  Object.keys(testSet).forEach((key) => {
-    transformed[replaceTokens(key)] = replaceTokens(testSet[key]);
-  });
-
-  return transformed;
-}
