@@ -1,5 +1,12 @@
 # Changelog for Typopo
 
+## 2.8.0 // 2025-
+
+### 🐛 Fixes
+- Improve dash fixing between a word and punctuation, e.g. `word - ,` → `word–,` (example in `en-us` locale; dash replacement is locale-specific)
+
+
+
 ## 2.7.1 // 2025-10-04
 
 ### 🐛 Fixes

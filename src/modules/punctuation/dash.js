@@ -53,7 +53,7 @@ export function fixDashesBetweenWords(string, locale) {
 //
 
 /**
-  Replace hyphen placed between a word and punctuation,
+  Replace hyphen or dash placed between a word and punctuation,
   or placed at the end of a paragaph.
 
   Examples (en-us):
@@ -66,13 +66,13 @@ export function fixDashesBetweenWords(string, locale) {
   @param {string} locale: locale option
   @returns {string} — output with locale-specific dash and spacing between a word and a punctuation.
 */
-export function fixHyphenBetweenWordAndPunctuation(string, locale) {
+export function fixDashBetweenWordAndPunctuation(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
       `([${base.allChars}])` + 
       `([${base.spaces}]?)` + 
-      `(${base.hyphen})` +
+      `([${base.hyphen}${base.enDash}${base.emDash}])` +
       `([${base.spaces}]?)` + 
       `([${base.sentencePunctuation}\\n\\r])`, 
       "g"
@@ -184,7 +184,7 @@ export function fixDash(string, locale) {
   string = replaceThreeHyphensWithEmDash(string);
   string = replaceTwoHyphensWithEnDash(string);
   string = fixDashesBetweenWords(string, locale);
-  string = fixHyphenBetweenWordAndPunctuation(string, locale);
+  string = fixDashBetweenWordAndPunctuation(string, locale);
   string = fixDashBetweenCardinalNumbers(string);
   string = fixDashBetweenPercentageRange(string);
   string = fixDashBetweenOrdinalNumbers(string, locale);

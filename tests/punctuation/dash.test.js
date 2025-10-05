@@ -2,7 +2,7 @@ import {
   replaceThreeHyphensWithEmDash,
   replaceTwoHyphensWithEnDash,
   fixDashesBetweenWords,
-  fixHyphenBetweenWordAndPunctuation,
+  fixDashBetweenWordAndPunctuation,
   fixDashBetweenCardinalNumbers,
   fixDashBetweenPercentageRange,
   fixDashBetweenOrdinalNumbers,
@@ -93,7 +93,8 @@ supportedLocales.forEach((locale) => {
   );
 });
 
-const hyphenWordPunctuationSet = {
+const dashBetweenWordAndPunctuation = {
+  "so there is a dash - ,": "so there is a dash${spaceBeforeDash}${dash},",
   "so there is a dash -,":  "so there is a dash${spaceBeforeDash}${dash},",
   "so there is a dash-,":   "so there is a dash${spaceBeforeDash}${dash},",
   "so there is a dash -:":  "so there is a dash${spaceBeforeDash}${dash}:",
@@ -102,13 +103,31 @@ const hyphenWordPunctuationSet = {
   "so there is a dash -?":  "so there is a dash${spaceBeforeDash}${dash}?",
   "so there is a dash -!":  "so there is a dash${spaceBeforeDash}${dash}!",
   "so there is a dash -\n": "so there is a dash${spaceBeforeDash}${dash}\n",
+  "so there is a dash – ,": "so there is a dash${spaceBeforeDash}${dash},",
+  "so there is a dash –,":  "so there is a dash${spaceBeforeDash}${dash},",
+  "so there is a dash–,":   "so there is a dash${spaceBeforeDash}${dash},",
+  "so there is a dash –:":  "so there is a dash${spaceBeforeDash}${dash}:",
+  "so there is a dash –;":  "so there is a dash${spaceBeforeDash}${dash};",
+  "so there is a dash –.":  "so there is a dash${spaceBeforeDash}${dash}.",
+  "so there is a dash –?":  "so there is a dash${spaceBeforeDash}${dash}?",
+  "so there is a dash –!":  "so there is a dash${spaceBeforeDash}${dash}!",
+  "so there is a dash –\n": "so there is a dash${spaceBeforeDash}${dash}\n",
+  "so there is a dash — ,": "so there is a dash${spaceBeforeDash}${dash},",
+  "so there is a dash —,":  "so there is a dash${spaceBeforeDash}${dash},",
+  "so there is a dash—,":   "so there is a dash${spaceBeforeDash}${dash},",
+  "so there is a dash —:":  "so there is a dash${spaceBeforeDash}${dash}:",
+  "so there is a dash —;":  "so there is a dash${spaceBeforeDash}${dash};",
+  "so there is a dash —.":  "so there is a dash${spaceBeforeDash}${dash}.",
+  "so there is a dash —?":  "so there is a dash${spaceBeforeDash}${dash}?",
+  "so there is a dash —!":  "so there is a dash${spaceBeforeDash}${dash}!",
+  "so there is a dash —\n": "so there is a dash${spaceBeforeDash}${dash}\n",
 };
 
 supportedLocales.forEach((locale) => {
   createTestSuite(
     `Fix hyphen between word and punctuation`,
-    transformTestSet({ ...hyphenWordPunctuationSet, ...dashFalsePositives }, locale),
-    fixHyphenBetweenWordAndPunctuation,
+    transformTestSet({ ...dashBetweenWordAndPunctuation, ...dashFalsePositives }, locale),
+    fixDashBetweenWordAndPunctuation,
     {},
     fixDash,
     locale
@@ -231,6 +250,6 @@ createTestSuite(
 
 export const dashSet = {
   ...dashesBetweenWordsSet,
-  ...hyphenWordPunctuationSet,
+  ...dashBetweenWordAndPunctuation,
   ...dashCardinalNumbersSet,
 };

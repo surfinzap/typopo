@@ -535,7 +535,7 @@ function Qe(e, a) {
     return u == "" && c == "I" ? t + n.space + c + $ : u == "" && c != "I" ? t + n.nbsp + c + $ : u == n.nbsp && c == "I" ? t + n.space + c + $ + u : t + n.nbsp + c + $ + n.space;
   });
 }
-function Pe(e, a) {
+function De(e, a) {
   return e.replace(
     new RegExp(
       `(\\d)([${n.spaces}])([${n.percent}${n.permille}${n.permyriad}])`,
@@ -544,7 +544,7 @@ function Pe(e, a) {
     `$1${a.spaceBefore.percent}$3`
   );
 }
-function De(e, a) {
+function Pe(e, a) {
   let p = n.uppercaseChars;
   a.ID == "en-us" && (p = p.replace(/A-Z/g, "A-HJ-Z"));
   let o = `([^${n.sentencePunctuation}${n.ellipsis}${n.closingBrackets}${a.rightDoubleQuote}${a.rightSingleQuote}${n.apostrophe}${n.multiplicationSign}${n.emDash}${n.enDash}])([${n.spaces}])([${p}])(([${n.spaces}])|(\\.$|$))`, r = new RegExp(o, "g");
@@ -565,7 +565,7 @@ function Be(e, a, p) {
   );
 }
 function ke(e, a) {
-  return e = Ee(e), e = Q(e, a), e = ye(e), e = Ae(e), e = Re(e, a), e = Ce(e, a), e = _e(e, a), e = De(e, a), e = Qe(e, a), e = Pe(e, a), e;
+  return e = Ee(e), e = Q(e, a), e = ye(e), e = Ae(e), e = Re(e, a), e = Ce(e, a), e = _e(e, a), e = Pe(e, a), e = Qe(e, a), e = De(e, a), e;
 }
 function We(e) {
   return e.replace(
@@ -817,7 +817,7 @@ function ln(e, a) {
 function dn(e, a) {
   return e.replace(
     new RegExp(
-      `([${n.allChars}])([${n.spaces}]?)(${n.hyphen})([${n.spaces}]?)([${n.sentencePunctuation}\\n\\r])`,
+      `([${n.allChars}])([${n.spaces}]?)([${n.hyphen}${n.enDash}${n.emDash}])([${n.spaces}]?)([${n.sentencePunctuation}\\n\\r])`,
       "g"
     ),
     `$1${a.dashWords.spaceBefore}${a.dashWords.dash}$5`
@@ -861,10 +861,10 @@ function mn(e, a) {
   return e = $n(e), e = un(e), e = ln(e, a), e = dn(e, a), e = hn(e), e = fn(e), e = bn(e, a), e;
 }
 const d = "{{typopo__markdown_tick}}";
-function P(e, a) {
+function D(e, a) {
   return a.keepMarkdownCodeBlocks ? e.replace(/(\s*)(```)/g, `$1${d}${d}${d}`).replace(/(``)(.*?)(``)/g, `${d}${d}$2${d}${d}`).replace(/(`)(.*?)(`)/g, `${d}$2${d}`) : e;
 }
-function D(e, a) {
+function P(e, a) {
   return a.keepMarkdownCodeBlocks ? e.replace(
     new RegExp(
       `${d}`,
@@ -1021,7 +1021,7 @@ function Qn(e, a) {
     "$2"
   ), e;
 }
-function Pn(e, a) {
+function Dn(e, a) {
   return e = e.replace(
     new RegExp(
       `([${n.sentencePunctuation}${n.allChars}])([${a.leftDoubleQuote}])`,
@@ -1030,7 +1030,7 @@ function Pn(e, a) {
     "$1 $2"
   ), e = Q(e, a), e;
 }
-function Dn(e, a) {
+function Pn(e, a) {
   return e.replace(
     new RegExp(
       `([${a.rightDoubleQuote}])([${n.allChars}])`,
@@ -1040,7 +1040,7 @@ function Dn(e, a) {
   );
 }
 function vn(e, a, p) {
-  return p = p || {}, e = P(e, p), e = gn(e), e = wn(e), e = xn(e), e = Sn(e), e = En(e), e = yn(e), e = An(e), e = Rn(e), e = _n(e, a), e = D(e, p), e = Qn(e, a), e = Pn(e, a), e = Dn(e, a), e = Cn(e, a), e;
+  return p = p || {}, e = D(e, p), e = gn(e), e = wn(e), e = xn(e), e = Sn(e), e = En(e), e = yn(e), e = An(e), e = Rn(e), e = _n(e, a), e = P(e, p), e = Qn(e, a), e = Dn(e, a), e = Pn(e, a), e = Cn(e, a), e;
 }
 function Bn(e) {
   return [
@@ -1215,7 +1215,7 @@ function Fn(e, a) {
   ), e = e.replace(/{{typopo__lsq}}/g, a.leftSingleQuote), e = e.replace(/{{typopo__rsq}}/g, a.rightSingleQuote), e = e.replace(/{{typopo__markdown_syntax_highlight}}/g, "```"), e;
 }
 function Xn(e, a, p) {
-  return p = p || {}, e = P(e, p), e = Bn(e), e = kn(e), e = Nn(e), e = qn(e), e = Wn(e), e = zn(e), e = On(e), e = Mn(e), e = Zn(e), e = jn(e), e = Fn(e, a), e = D(e, p), e = Un(e, a), e = Hn(e), e;
+  return p = p || {}, e = D(e, p), e = Bn(e), e = kn(e), e = Nn(e), e = qn(e), e = Wn(e), e = zn(e), e = On(e), e = Mn(e), e = Zn(e), e = jn(e), e = Fn(e, a), e = P(e, p), e = Un(e, a), e = Hn(e), e;
 }
 function Gn(e) {
   return f(
