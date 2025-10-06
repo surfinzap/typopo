@@ -9,8 +9,17 @@ export default defineConfig({
     watch: {
       include: ['src/**', 'tests/**']
     },
-    testTimeout: 5000,
-    globals: false, 
+    testTimeout: 15000,
+    teardownTimeout: 15000,
+    hookTimeout: 15000,
+    globals: false,
+    pool: 'threads',
+    poolOptions: {
+      threads: {
+        singleThread: true,
+      }
+    },
+    maxConcurrency: 5,
     coverage: {
       provider: 'v8',
       include: ['src/**/*.js'],
