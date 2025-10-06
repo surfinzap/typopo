@@ -1,37 +1,14 @@
 import {
-  replaceThreeHyphensWithEmDash,
-  replaceTwoHyphensWithEnDash,
   fixDashesBetweenWords,
   fixDashBetweenWordAndPunctuation,
   fixDashBetweenCardinalNumbers,
   fixDashBetweenPercentageRange,
   fixDashBetweenOrdinalNumbers,
   fixDash,
+  fixDashBetweenWordAndBrackets,
 } from "../../src/modules/punctuation/dash.js";
 import { createTestSuite, transformTestSet } from "../test-utils.js";
 import { supportedLocales } from "../../src/locale/locale.js";
-
-const threeHyphensSet = {
-  "and --- she said": "and — she said",
-};
-
-createTestSuite(
-  "Replace 3 hyphens with an em dash",
-  threeHyphensSet,
-  replaceThreeHyphensWithEmDash,
-  {}
-);
-
-const twoHyphensSet = {
-  "and -- she said": "and – she said",
-};
-
-createTestSuite(
-  "Replace 2 hyphens with an en dash",
-  twoHyphensSet,
-  replaceTwoHyphensWithEnDash,
-  {}
-);
 
 const dashFalsePositives = {
   // False positive: compound words
@@ -80,6 +57,26 @@ const dashesBetweenWordsSet = {
   "…like to see –  7 wonders…": "…like to see${spaceBeforeDash}${dash}${spaceAfterDash}7 wonders…",
   "…like to see–7 wonders…":    "…like to see${spaceBeforeDash}${dash}${spaceAfterDash}7 wonders…",
   "…like to see — 7 wonders…":  "…like to see${spaceBeforeDash}${dash}${spaceAfterDash}7 wonders…",
+
+  "word -- word":  "word${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "word --- word": "word${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "word –– word":  "word${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "word ––word":   "word${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "word–– word":   "word${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "word––word":    "word${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "word ––– word": "word${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "word —— word":  "word${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "word ——word":   "word${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "word—— word":   "word${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "word——word":    "word${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "word ——— word": "word${spaceBeforeDash}${dash}${spaceAfterDash}word",
+
+  // false positive
+  // leave four and more dashes as they are, maybe that's intentional
+  "word ---- word":  "word ---- word",
+  "word ----- word": "word ----- word",
+  "word –––– word":  "word –––– word",
+  "word ———— word":  "word ———— word",
 };
 
 supportedLocales.forEach((locale) => {
@@ -121,13 +118,357 @@ const dashBetweenWordAndPunctuation = {
   "so there is a dash —?":  "so there is a dash${spaceBeforeDash}${dash}?",
   "so there is a dash —!":  "so there is a dash${spaceBeforeDash}${dash}!",
   "so there is a dash —\n": "so there is a dash${spaceBeforeDash}${dash}\n",
+
+  "word -- !":  "word${spaceBeforeDash}${dash}!",
+  "word --- !": "word${spaceBeforeDash}${dash}!",
+  "word –– !":  "word${spaceBeforeDash}${dash}!",
+  "word ––!":   "word${spaceBeforeDash}${dash}!",
+  "word–– !":   "word${spaceBeforeDash}${dash}!",
+  "word––!":    "word${spaceBeforeDash}${dash}!",
+  "word ––– !": "word${spaceBeforeDash}${dash}!",
+  "word —— !":  "word${spaceBeforeDash}${dash}!",
+  "word ——!":   "word${spaceBeforeDash}${dash}!",
+  "word—— !":   "word${spaceBeforeDash}${dash}!",
+  "word——!":    "word${spaceBeforeDash}${dash}!",
+  "word ——— !": "word${spaceBeforeDash}${dash}!",
+
+  // false positive
+  // leave four and more dashes as they are, maybe that's intentional
+  "word ----!":  "word ----!",
+  "word -----!": "word -----!",
+  "word ––––!":  "word ––––!",
+  "word ————!":  "word ————!",
 };
 
 supportedLocales.forEach((locale) => {
   createTestSuite(
-    `Fix hyphen between word and punctuation`,
+    `Fix dash between word and punctuation`,
     transformTestSet({ ...dashBetweenWordAndPunctuation, ...dashFalsePositives }, locale),
     fixDashBetweenWordAndPunctuation,
+    {},
+    fixDash,
+    locale
+  );
+});
+
+const dashBetweenWordAndBrackets = {
+  "word - (bracket": "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word -(bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word- (bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word-(bracket":   "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word - [bracket": "word${spaceBeforeDash}${dash}${spaceAfterDash}[bracket",
+  "word -[bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}[bracket",
+  "word- [bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}[bracket",
+  "word-[bracket":   "word${spaceBeforeDash}${dash}${spaceAfterDash}[bracket",
+  "word - {bracket": "word${spaceBeforeDash}${dash}${spaceAfterDash}{bracket",
+  "word -{bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}{bracket",
+  "word- {bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}{bracket",
+  "word-{bracket":   "word${spaceBeforeDash}${dash}${spaceAfterDash}{bracket",
+
+  "word – (bracket": "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word –(bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word– (bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word–(bracket":   "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word – [bracket": "word${spaceBeforeDash}${dash}${spaceAfterDash}[bracket",
+  "word –[bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}[bracket",
+  "word– [bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}[bracket",
+  "word–[bracket":   "word${spaceBeforeDash}${dash}${spaceAfterDash}[bracket",
+  "word – {bracket": "word${spaceBeforeDash}${dash}${spaceAfterDash}{bracket",
+  "word –{bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}{bracket",
+  "word– {bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}{bracket",
+  "word–{bracket":   "word${spaceBeforeDash}${dash}${spaceAfterDash}{bracket",
+
+  "word — (bracket": "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word —(bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word— (bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word—(bracket":   "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word — [bracket": "word${spaceBeforeDash}${dash}${spaceAfterDash}[bracket",
+  "word —[bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}[bracket",
+  "word— [bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}[bracket",
+  "word—[bracket":   "word${spaceBeforeDash}${dash}${spaceAfterDash}[bracket",
+  "word — {bracket": "word${spaceBeforeDash}${dash}${spaceAfterDash}{bracket",
+  "word —{bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}{bracket",
+  "word— {bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}{bracket",
+  "word—{bracket":   "word${spaceBeforeDash}${dash}${spaceAfterDash}{bracket",
+
+  "word —   (bracket": "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word -- (bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word --- (bracket": "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word –– (bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word —— (bracket":  "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+  "word ——— (bracket": "word${spaceBeforeDash}${dash}${spaceAfterDash}(bracket",
+
+  // false positives
+  // leave four and more dashes as they are, maybe that's intentional
+  "word ---- (bracket": "word ---- (bracket",
+  "word –––– (bracket": "word –––– (bracket",
+  "word ———— (bracket": "word ———— (bracket",
+
+  //
+
+  "bracket) - word": "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket) -word":  "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket)- word":  "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket)-word":   "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket] - word": "bracket]${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket] -word":  "bracket]${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket]- word":  "bracket]${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket]-word":   "bracket]${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket} - word": "bracket}${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket} -word":  "bracket}${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket}- word":  "bracket}${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket}-word":   "bracket}${spaceBeforeDash}${dash}${spaceAfterDash}word",
+
+  "bracket) – word": "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket) –word":  "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket)– word":  "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket)–word":   "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket] – word": "bracket]${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket] –word":  "bracket]${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket]– word":  "bracket]${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket]–word":   "bracket]${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket} – word": "bracket}${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket} –word":  "bracket}${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket}– word":  "bracket}${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket}–word":   "bracket}${spaceBeforeDash}${dash}${spaceAfterDash}word",
+
+  "bracket) — word": "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket) —word":  "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket)— word":  "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket)—word":   "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket] — word": "bracket]${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket] —word":  "bracket]${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket]— word":  "bracket]${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket]—word":   "bracket]${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket} — word": "bracket}${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket} —word":  "bracket}${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket}— word":  "bracket}${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket}—word":   "bracket}${spaceBeforeDash}${dash}${spaceAfterDash}word",
+
+  "bracket) —   word": "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket) -- word":  "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket) --- word": "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket) –– word":  "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket) —— word":  "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "bracket) ——— word": "bracket)${spaceBeforeDash}${dash}${spaceAfterDash}word",
+
+  // false positives
+  // leave four and more dashes as they are, maybe that's intentional
+  "bracket) ---- word": "bracket) ---- word",
+  "bracket) –––– word": "bracket) –––– word",
+  "bracket) ———— word": "bracket) ———— word",
+
+  //
+
+  "word - )": "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word -)":  "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word- )":  "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word-)":   "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word - ]": "word${spaceBeforeDash}${dash}${spaceAfterDash}]",
+  "word -]":  "word${spaceBeforeDash}${dash}${spaceAfterDash}]",
+  "word- ]":  "word${spaceBeforeDash}${dash}${spaceAfterDash}]",
+  "word-]":   "word${spaceBeforeDash}${dash}${spaceAfterDash}]",
+  "word - }": "word${spaceBeforeDash}${dash}${spaceAfterDash}}",
+  "word -}":  "word${spaceBeforeDash}${dash}${spaceAfterDash}}",
+  "word- }":  "word${spaceBeforeDash}${dash}${spaceAfterDash}}",
+  "word-}":   "word${spaceBeforeDash}${dash}${spaceAfterDash}}",
+
+  "word – )": "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word –)":  "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word– )":  "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word–)":   "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word – ]": "word${spaceBeforeDash}${dash}${spaceAfterDash}]",
+  "word –]":  "word${spaceBeforeDash}${dash}${spaceAfterDash}]",
+  "word– ]":  "word${spaceBeforeDash}${dash}${spaceAfterDash}]",
+  "word–]":   "word${spaceBeforeDash}${dash}${spaceAfterDash}]",
+  "word – }": "word${spaceBeforeDash}${dash}${spaceAfterDash}}",
+  "word –}":  "word${spaceBeforeDash}${dash}${spaceAfterDash}}",
+  "word– }":  "word${spaceBeforeDash}${dash}${spaceAfterDash}}",
+  "word–}":   "word${spaceBeforeDash}${dash}${spaceAfterDash}}",
+
+  "word — )": "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word —)":  "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word— )":  "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word—)":   "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word — ]": "word${spaceBeforeDash}${dash}${spaceAfterDash}]",
+  "word —]":  "word${spaceBeforeDash}${dash}${spaceAfterDash}]",
+  "word— ]":  "word${spaceBeforeDash}${dash}${spaceAfterDash}]",
+  "word—]":   "word${spaceBeforeDash}${dash}${spaceAfterDash}]",
+  "word — }": "word${spaceBeforeDash}${dash}${spaceAfterDash}}",
+  "word —}":  "word${spaceBeforeDash}${dash}${spaceAfterDash}}",
+  "word— }":  "word${spaceBeforeDash}${dash}${spaceAfterDash}}",
+  "word—}":   "word${spaceBeforeDash}${dash}${spaceAfterDash}}",
+
+  "word —   )": "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word -- )":  "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word --- )": "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word –– )":  "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word —— )":  "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+  "word ——— )": "word${spaceBeforeDash}${dash}${spaceAfterDash})",
+
+  // false positives
+  // leave four and more dashes as they are, maybe that's intentional
+  "word ----)": "word ----)",
+  "word ––––)": "word ––––)",
+  "word ————)": "word ————)",
+
+  //
+
+  "( - word": "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "( -word":  "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "(- word":  "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "(-word":   "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "[ - word": "[${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "[ -word":  "[${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "[- word":  "[${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "[-word":   "[${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "{ - word": "{${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "{ -word":  "{${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "{- word":  "{${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "{-word":   "{${spaceBeforeDash}${dash}${spaceAfterDash}word",
+
+  "( – word": "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "( –word":  "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "(– word":  "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "(–word":   "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "[ – word": "[${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "[ –word":  "[${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "[– word":  "[${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "[–word":   "[${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "{ – word": "{${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "{ –word":  "{${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "{– word":  "{${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "{–word":   "{${spaceBeforeDash}${dash}${spaceAfterDash}word",
+
+  "( — word": "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "( —word":  "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "(— word":  "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "(—word":   "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "[ — word": "[${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "[ —word":  "[${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "[— word":  "[${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "[—word":   "[${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "{ — word": "{${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "{ —word":  "{${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "{— word":  "{${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "{—word":   "{${spaceBeforeDash}${dash}${spaceAfterDash}word",
+
+  "( —   word": "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "( -- word":  "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "( --- word": "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "( –– word":  "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "( —— word":  "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+  "( ——— word": "(${spaceBeforeDash}${dash}${spaceAfterDash}word",
+
+  // false positives
+  // leave four and more dashes as they are, maybe that's intentional
+  "(---- word": "(---- word",
+  "(–––– word": "(–––– word",
+  "(———— word": "(———— word",
+
+  //
+
+  "word) - (word": "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word",
+  "word) -(word":  "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word",
+  "word)- (word":  "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word",
+  "word)-(word":   "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word",
+  "word] - [word": "word]${spaceBeforeDash}${dash}${spaceAfterDash}[word",
+  "word] -[word":  "word]${spaceBeforeDash}${dash}${spaceAfterDash}[word",
+  "word]- [word":  "word]${spaceBeforeDash}${dash}${spaceAfterDash}[word",
+  "word]-[word":   "word]${spaceBeforeDash}${dash}${spaceAfterDash}[word",
+  "word} - {word": "word}${spaceBeforeDash}${dash}${spaceAfterDash}{word",
+  "word} -{word":  "word}${spaceBeforeDash}${dash}${spaceAfterDash}{word",
+  "word}- {word":  "word}${spaceBeforeDash}${dash}${spaceAfterDash}{word",
+  "word}-{word":   "word}${spaceBeforeDash}${dash}${spaceAfterDash}{word",
+
+  "word) – (word": "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word",
+  "word) –(word":  "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word",
+  "word)– (word":  "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word",
+  "word)–(word":   "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word",
+  "word] – [word": "word]${spaceBeforeDash}${dash}${spaceAfterDash}[word",
+  "word] –[word":  "word]${spaceBeforeDash}${dash}${spaceAfterDash}[word",
+  "word]– [word":  "word]${spaceBeforeDash}${dash}${spaceAfterDash}[word",
+  "word]–[word":   "word]${spaceBeforeDash}${dash}${spaceAfterDash}[word",
+  "word} – {word": "word}${spaceBeforeDash}${dash}${spaceAfterDash}{word",
+  "word}– {word":  "word}${spaceBeforeDash}${dash}${spaceAfterDash}{word",
+  "word}–{word":   "word}${spaceBeforeDash}${dash}${spaceAfterDash}{word",
+
+  "word) — (word": "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word",
+  "word) —(word":  "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word",
+  "word)— (word":  "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word",
+  "word)—(word":   "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word",
+  "word] — [word": "word]${spaceBeforeDash}${dash}${spaceAfterDash}[word",
+  "word] —[word":  "word]${spaceBeforeDash}${dash}${spaceAfterDash}[word",
+  "word]— [word":  "word]${spaceBeforeDash}${dash}${spaceAfterDash}[word",
+  "word]—[word":   "word]${spaceBeforeDash}${dash}${spaceAfterDash}[word",
+  "word} — {word": "word}${spaceBeforeDash}${dash}${spaceAfterDash}{word",
+  "word} —{word":  "word}${spaceBeforeDash}${dash}${spaceAfterDash}{word",
+  "word}— {word":  "word}${spaceBeforeDash}${dash}${spaceAfterDash}{word",
+  "word}—{word":   "word}${spaceBeforeDash}${dash}${spaceAfterDash}{word",
+
+  //
+
+  // different spacing
+  "word) – (word": "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word", // nbsp
+  "word) – (word": "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word", // hairSpace
+  "word) – (word": "word)${spaceBeforeDash}${dash}${spaceAfterDash}(word", // hairSpace
+
+  // only fix spaces, but not hyphens, en dash or em dash
+  "( - )":      "(-)",
+  "[ - ]":      "[-]",
+  "{ - }":      "{-}",
+  "( – )":      "(–)",
+  "[ – ]":      "[–]",
+  "{ – }":      "{–}",
+  "( — )":      "(—)",
+  "[ — ]":      "[—]",
+  "{ — }":      "{—}",
+  "( -)":       "(-)",
+  "[ -]":       "[-]",
+  "{ -}":       "{-}",
+  "( –)":       "(–)",
+  "[ –]":       "[–]",
+  "{ –}":       "{–}",
+  "( —)":       "(—)",
+  "[ —]":       "[—]",
+  "{ —}":       "{—}",
+  "(- )":       "(-)",
+  "[- ]":       "[-]",
+  "{- }":       "{-}",
+  "(– )":       "(–)",
+  "[– ]":       "[–]",
+  "{– }":       "{–}",
+  "(— )":       "(—)",
+  "[— ]":       "[—]",
+  "{— }":       "{—}",
+  "( -- )":     "(--)",
+  "( ----- )":  "(-----)",
+  "( --     )": "(--)",
+  "(    --  )": "(--)",
+  "( --)":      "(--)",
+  "(-- )":      "(--)",
+
+  // false positives, don't fix
+  "(-)":   "(-)",
+  "[-]":   "[-]",
+  "{-}":   "{-}",
+  "(–)":   "(–)",
+  "[–]":   "[–]",
+  "{–}":   "{–}",
+  "(—)":   "(—)",
+  "[—]":   "[—]",
+  "{—}":   "{—}",
+  "(--)":  "(--)",
+  "(––)":  "(––)",
+  "(——)":  "(——)",
+  "(-–—)": "(-–—)",
+};
+
+supportedLocales.forEach((locale) => {
+  createTestSuite(
+    `Fix dash between word and brackets`,
+    transformTestSet({ ...dashBetweenWordAndBrackets, ...dashFalsePositives }, locale),
+    fixDashBetweenWordAndBrackets,
     {},
     fixDash,
     locale
@@ -178,6 +519,14 @@ const dashCardinalNumbersSet = {
   "1— 2 —3":   "1–2–3",
 
   "154-123-4567": "154–123–4567",
+
+  // multiple dashes
+  "2 -- 3":  "2–3",
+  "2 --- 3": "2–3",
+  "2 –– 3":  "2–3",
+  "2 ––– 3": "2–3",
+  "2 —— 3":  "2–3",
+  "2 ——— 3": "2–3",
 };
 
 createTestSuite(
@@ -205,6 +554,13 @@ const dashPercentageRangeSet = {
 
   "20 ‰ - 30 ‰": "20 ‰–30 ‰",
   "20 ‱ - 30 ‱": "20 ‱–30 ‱",
+
+  "2 % -- 3 %":  "2 %–3 %",
+  "2 % --- 3 %": "2 %–3 %",
+  "2 % –– 3 %":  "2 %–3 %",
+  "2 % ––– 3 %": "2 %–3 %",
+  "2 % —— 3 %":  "2 %–3 %",
+  "2 % ——— 3 %": "2 %–3 %",
 };
 
 createTestSuite(
@@ -217,14 +573,16 @@ createTestSuite(
 );
 
 const dashOrdinalNumbersEnUsSet = {
-  "1st-5th August":   "1st–5th August",
-  "1st -5th August":  "1st–5th August",
-  "1st- 5th August":  "1st–5th August",
-  "1st - 5th August": "1st–5th August",
+  "1st-5th August":     "1st–5th August",
+  "1st -5th August":    "1st–5th August",
+  "1st- 5th August":    "1st–5th August",
+  "1st - 5th August":   "1st–5th August",
+  "1st -- 5th August":  "1st–5th August",
+  "1st --- 5th August": "1st–5th August",
 };
 
 createTestSuite(
-  "Fix dash between ordinal numbers (en-us)",
+  "Fix dash between ordinal numbers",
   dashOrdinalNumbersEnUsSet,
   fixDashBetweenOrdinalNumbers,
   {},
@@ -233,23 +591,26 @@ createTestSuite(
 );
 
 const dashOrdinalNumbersOtherLocalesSet = {
-  "1.-5. augusta":   "1.–5. augusta",
-  "1. -5. augusta":  "1.–5. augusta",
-  "1.- 5. augusta":  "1.–5. augusta",
-  "1. - 5. augusta": "1.–5. augusta",
+  "1.-5. augusta":     "1.–5. augusta",
+  "1. -5. augusta":    "1.–5. augusta",
+  "1.- 5. augusta":    "1.–5. augusta",
+  "1. - 5. augusta":   "1.–5. augusta",
+  "1. -- 5. augusta":  "1.–5. augusta",
+  "1. --- 5. augusta": "1.–5. augusta",
 };
 
 createTestSuite(
-  "Fix dash between ordinal numbers (rue, sk, cs, de)",
+  "Fix dash between ordinal numbers",
   dashOrdinalNumbersOtherLocalesSet,
   fixDashBetweenOrdinalNumbers,
   {},
   fixDash,
-  ["rue", "sk", "cs", "de-de"]
+  supportedLocales.filter((locale) => locale !== "en-us")
 );
 
 export const dashSet = {
   ...dashesBetweenWordsSet,
   ...dashBetweenWordAndPunctuation,
+  ...dashBetweenWordAndBrackets,
   ...dashCardinalNumbersSet,
 };

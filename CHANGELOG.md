@@ -2,6 +2,15 @@
 
 ## 2.8.0 // 2025-
 
+### ✨ New features
+- Fix dashes between words and brackets with locale-specific dash and spacing:
+  - `word-(bracket` → `word—(bracket` (en-us)
+  - `bracket)-word` → `bracket)—word` (en-us)
+  - `word-)`        → `word—)` (en-us)
+  - `(-word`        → `(—word` (en-us)
+  - `word)-(word`   → `word)—(word` (en-us)
+  - Special case: dashes within brackets preserve dash type, only remove spaces: `( - )` → `(-)`
+
 ### 🐛 Fixes
 - Improve dash fixing between a word and punctuation, e.g. `word - ,` → `word–,` (example in `en-us` locale; dash replacement is locale-specific)
 

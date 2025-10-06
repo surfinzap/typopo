@@ -17,6 +17,7 @@
 		"lint:fix": "eslint src/ --fix",
 		"format": "prettier --write src/ tests/",
 		"debug": "node tests/debug/debug-typopo.js",
+		"debug:regex": "node tests/debug/debug-regex.js",
 		"prepare": "husky"
 	},
 	"lint-staged": {
