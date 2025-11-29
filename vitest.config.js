@@ -14,11 +14,7 @@ export default defineConfig({
     hookTimeout: 15000,
     globals: false,
     pool: 'threads',
-    poolOptions: {
-      threads: {
-        singleThread: true,
-      }
-    },
+    maxWorkers: 1,
     maxConcurrency: 5,
     coverage: {
       provider: 'v8',
