@@ -64,7 +64,7 @@
 	"devDependencies": {
 		"@eslint/js": "^9.39.1",
 		"@huggingface/prettier-plugin-vertical-align": "^0.2.3",
-		"@trivago/prettier-plugin-sort-imports": "^5.2.2",
+		"@trivago/prettier-plugin-sort-imports": "^6.0.0",
 		"cross-env": "^10.1.0",
 		"eslint": "^9.39.1",
 		"husky": "^9.1.7",

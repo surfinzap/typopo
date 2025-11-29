@@ -22,6 +22,9 @@
 ### 🐛 Fixes
 - Improve dash fixing between a word and punctuation, e.g. `word - ,` → `word–,` (example in `en-us` locale; dash replacement is locale-specific)
 
+### 🔨 Maintenance
+- Update NPM packages to their latest versions 
+
 
 
 ## 2.7.1 // 2025-10-04
