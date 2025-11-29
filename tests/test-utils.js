@@ -103,6 +103,9 @@ export function transformTestSet(testSet, localeName, options = {}) {
     "${rsq}":  locale.rightSingleQuote,
     "${apos}": base.apostrophe,
 
+    // Direct Speech
+    "${directSpeechIntro}": locale.directSpeechIntro,
+
     // Dashes
     "${spaceBeforeDash}": locale.dashWords.spaceBefore,
     "${dash}":            locale.dashWords.dash,

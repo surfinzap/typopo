@@ -10,6 +10,14 @@
   - `(-word`        → `(—word` (en-us)
   - `word)-(word`   → `word)—(word` (en-us)
   - Special case: dashes within brackets preserve dash type, only remove spaces: `( - )` → `(-)`
+- Fix direct speech introduction by replacing dashes with locale-specific punctuation:
+  - Consolidate the use of dashes (hyphen, en dash, em dash) and direct speech intro (`:` or `,`)
+  - Fix extra spacing between direct speech intro and opening double quotes
+  - Remove trailing dashes after closing quotes
+  - Remove dashes starting before opening double quotes 
+  - Examples:
+    - `She said: - “Hello” - and left.` → `She said, “Hello” and left.` (en-us)
+    - `She said: - „Hello“ - and left.` → `She said: „Hello“ and left.` (cs/sk/de-de)
 
 ### 🐛 Fixes
 - Improve dash fixing between a word and punctuation, e.g. `word - ,` → `word–,` (example in `en-us` locale; dash replacement is locale-specific)

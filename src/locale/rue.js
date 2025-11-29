@@ -8,6 +8,11 @@ export const rue = {
     rightSingleQuote: "›",
   },
 
+  /* 
+    …sentence: «Direct speech…»
+  */
+  directSpeechIntro: ":",
+
   /*
     Dash and spacing between words 
   */

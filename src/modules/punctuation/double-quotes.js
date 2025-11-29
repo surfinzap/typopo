@@ -577,6 +577,100 @@ export function addSpaceAfterRightDoubleQuote(string, locale) {
 //
 
 /**
+  Fix direct speech introduction
+
+  Example
+  She said - “Hello” - and left. →
+  She said: “Hello” and left. (cs/sk/de-de)
+  She said, “Hello” and left. (en-us)
+
+  1. Consolidate the use of dashes (hyphen, en dash, em dash) and direct speech introduction
+  2. Fix extra spacing between direct speech intro and opening double quotes
+  3. Remove trailing dashes after closing quotes
+  4. Remove dashes starting before opening double quotes 
+
+  @param {string} string: input text for identification
+  @param {string} locale: locale option
+  @returns {string} output with fixed direct speech introduction
+*/
+export function fixDirectSpeechIntro(string, locale) {
+  const dashes = `${base.hyphen}${base.enDash}${base.emDash}`;
+
+  // 1. Consolidate the use of dashes (hyphen, en dash, em dash) and direct speech introduction
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.allChars}])` +
+      `[${locale.directSpeechIntroAdepts}]?` +
+      `[${base.spaces}]*` +
+      `[${dashes}]` +
+      `[${base.spaces}]*` +
+      `([${locale.leftDoubleQuote}].+?[${locale.rightDoubleQuote}])`,
+      "g"
+    ),
+    `$1${locale.directSpeechIntro} $2`
+  );
+
+  // 2. Fix extra spacing between direct speech intro and opening double quotes
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.allChars}])` +
+      `[${locale.directSpeechIntroAdepts}]` +
+      `[${base.spaces}]*` +
+      `([${locale.leftDoubleQuote}].+?[${locale.rightDoubleQuote}])`,
+      "g"
+    ),
+    `$1${locale.directSpeechIntro} $2`
+  );
+
+  // 3. Remove trailing dashes after closing quotes
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${locale.leftDoubleQuote}].+?[${locale.rightDoubleQuote}])` +
+      `[${base.spaces}]*` +
+      `[${dashes}]` +
+      `[${base.spaces}]*` +
+      `([${base.allChars}])`,
+      "g"
+    ),
+    `$1 $2`
+  );
+
+  // 4. At the beginning of the paragraph, remove dashes before opening double quotes
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `^` +
+      `[${base.spaces}]*` +
+      `[${dashes}]` +
+      `[${base.spaces}]*` +
+      `([${locale.leftDoubleQuote}].+?[${locale.rightDoubleQuote}])`,
+      "g"
+    ),
+    `$1`
+  );
+
+  // 5. Following the terminal punctuation, remove dashes before opening double quotes
+  // . - “word” → . “word”
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.terminalPunctuation}${base.ellipsis}])` +
+      `[${base.spaces}]+` +
+      `[${dashes}]` +
+      `[${base.spaces}]*` +
+      `([${locale.leftDoubleQuote}].+?[${locale.rightDoubleQuote}])`,
+      "g"
+    ),
+    `$1 $2`
+  );
+
+  return string;
+}
+
+/**
   Correct improper use of double quotes and double primes
 
   Assumptions and Limitations
@@ -592,7 +686,8 @@ export function addSpaceAfterRightDoubleQuote(string, locale) {
   [5] Replace a double qoute & a double prime with a double quote pair
   [6] Replace all identified punctuation with appropriate punctuation in given language
   [7] Consolidate spaces around double quotes and primes
-  [8] Swap quotes and terminal punctuation for a quoted part
+  [8] Fix direct speech introduction
+  [9] Swap quotes and terminal punctuation for a quoted part
 
   @param {string} string: input text for identification
   @param {string} locale: locale option
@@ -631,7 +726,10 @@ export function fixDoubleQuotesAndPrimes(string, locale, configuration) {
   string = addSpaceBeforeLeftDoubleQuote(string, locale);
   string = addSpaceAfterRightDoubleQuote(string, locale);
 
-  /* [8] Swap quotes and terminal punctuation */
+  /* [8] Fix direct speech introduction */
+  string = fixDirectSpeechIntro(string, locale);
+
+  /* [9] Swap quotes and terminal punctuation */
   string = swapQuotesAndTerminalPunctuation(string, locale);
 
   return string;

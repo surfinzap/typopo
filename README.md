@@ -45,6 +45,7 @@ Typopo fixes microtypography hiccups in five languages:
 
 Typopo fixes punctuation:
 - double quotes (and accidentally typed punctuation related to the use of double quotes)
+- direct speech introduction (colon/comma before opening double quotes)
 - double primes
 - single quotes (with an assumption they are used as [secondary](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table_for_various_languages) and in pairs)
 - single primes

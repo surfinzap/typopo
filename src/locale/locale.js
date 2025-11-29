@@ -32,6 +32,7 @@ export default class Locale {
     this.leftDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.leftDoubleQuote;
     this.rightDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.rightDoubleQuote;
     this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote;
+    this.directSpeechIntro = SUPPORTED_LOCALES[localeID].directSpeechIntro;
 
     this.dashWords = SUPPORTED_LOCALES[localeID].dashWords;
 
@@ -53,7 +54,7 @@ export default class Locale {
       );
     }
 
-    /* multiple-word abbreviations from all locales
+    /* Multiple-word abbreviations from all locales
 
        Make a list of multiple-word abbreviations from all locales
     */
@@ -63,5 +64,18 @@ export default class Locale {
         SUPPORTED_LOCALES[locale].multipleWordAbbreviations
       );
     }
+
+    /* Direct speech intro adepts from all locales
+
+       Collect all unique direct speech intro characters from all locales and create a string to be used in regex.
+    */
+    const directSpeechIntros = [];
+    for (const locale in SUPPORTED_LOCALES) {
+      const intro = SUPPORTED_LOCALES[locale].directSpeechIntro;
+      if (intro && !directSpeechIntros.includes(intro)) {
+        directSpeechIntros.push(intro);
+      }
+    }
+    this.directSpeechIntroAdepts = directSpeechIntros.join("");
   }
 }
