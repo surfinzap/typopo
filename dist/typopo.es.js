@@ -1592,11 +1592,6 @@ function Ep(e, p) {
     return a.replace(t, r);
   }, e);
 }
-/*!
- * Typopo v2.5.8 (https://typopo.org)
- * Copyright 2015–2025 Braňo Šandala (https://brano.me)
- * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
- */
 function yp(e, p, a) {
   p = typeof p > "u" ? "en-us" : p;
   let r = new we(p);
