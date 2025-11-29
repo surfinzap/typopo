@@ -35,7 +35,7 @@ jobs:
         id: test_count
         run: |
           # Run tests with basic reporter and extract the passing test count
-          TEST_OUTPUT=$(pnpm test --reporter=basic --run 2>&1)
+          TEST_OUTPUT=$(pnpm test --reporter=default --run 2>&1)
           if [ $? -eq 0 ]; then
             PASSING_TESTS=$(echo "$TEST_OUTPUT" | grep "Tests" | grep -o '[0-9]\+ passed' | grep -o '[0-9]\+')
             echo "Passing tests: $PASSING_TESTS"

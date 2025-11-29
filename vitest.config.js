@@ -12,7 +12,7 @@ export default defineConfig({
     testTimeout: 15000,
     teardownTimeout: 15000,
     hookTimeout: 15000,
-    globals: false,
+    globals: true,
     pool: 'threads',
     maxWorkers: 1,
     isolate: true,
