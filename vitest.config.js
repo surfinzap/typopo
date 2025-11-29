@@ -15,6 +15,7 @@ export default defineConfig({
     globals: false,
     pool: 'threads',
     maxWorkers: 1,
+    isolate: true,
     maxConcurrency: 5,
     coverage: {
       provider: 'v8',
