@@ -642,10 +642,10 @@ function Ie(e) {
 function ze(e) {
   return e.replace(
     new RegExp(
-      `([${n.spaces}])([${n.terminalPunctuation}${n.closingBrackets}${n.degree}])`,
+      `([^${n.openingBrackets}])([${n.spaces}])([${n.terminalPunctuation}${n.closingBrackets}${n.degree}])`,
       "g"
     ),
-    "$2"
+    "$1$3"
   );
 }
 function Le(e, p) {
@@ -661,10 +661,10 @@ function Le(e, p) {
 function Me(e) {
   return e.replace(
     new RegExp(
-      `([${n.openingBrackets}])([${n.spaces}])`,
+      `([${n.openingBrackets}])([${n.spaces}])([^${n.closingBrackets}])`,
       "g"
     ),
-    "$1"
+    "$1$3"
   );
 }
 function Te(e) {
@@ -707,7 +707,10 @@ function Ze(e) {
 }
 function Ue(e, p) {
   return e.replace(
-    new RegExp(`([^${n.spaces}${n.openingBrackets}${p}])(${p})`, "g"),
+    new RegExp(
+      `([^${n.spaces}${n.openingBrackets}${p}])(${p})`,
+      "g"
+    ),
     `$1${n.space}$2`
   );
 }

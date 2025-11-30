@@ -176,6 +176,12 @@ const spacesBeforeTerminalPunctuationSet = {
   "5 °":                                 "5°",
   // false positives
   "Sentence ended. …and we were there.": "Sentence ended. …and we were there.",
+
+  // false positives, keep space in empty bracket set
+  "[ ]": "[ ]",
+  "[ ]": "[ ]",
+  "( )": "( )",
+  "{ }": "{ }",
 };
 
 createTestSuite(
@@ -223,8 +229,16 @@ createTestSuite(
 const spacesAfterOpeningBracketsSet = {
   "Something ( …) something else": "Something (…) something else",
   "Something [ …] something else": "Something […] something else",
+  "word ( word) word":             "word (word) word",
   "( ?)":                          "(?)",
   "( !)":                          "(!)",
+  "{ !}":                          "{!}",
+
+  // false positives, keep space in empty bracket set
+  "[ ]": "[ ]",
+  "[ ]": "[ ]",
+  "( )": "( )",
+  "{ }": "{ }",
 };
 
 createTestSuite(

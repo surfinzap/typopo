@@ -22,7 +22,8 @@
 ### 🐛 Fixes
 - Improve dash fixing between a word and punctuation, e.g. `word - ,` → `word–,` (example in `en-us` locale; dash replacement is locale-specific)
 - Fix false positives in hyphen spacing for German compound words ([#92](https://github.com/surfinzap/typopo/issues/92))
-- Keep three standalone hyphens `---` as Markdown `<hr>` indicators. Previously, these were incorrectly converted to em dash `—`.
+- Preserve three consecutive hyphens `---` as Markdown `<hr>` indicators. Previously, these were incorrectly converted to an em dash `—`.
+- Preserve a space between square brackets `[ ]` as a Markdown checkbox indicator. Previously, spaces were incorrectly removed: `[ ]` → `[]`.
 
 ### 🔥 Removed
 - Remove function to fix spaces around hyphens (e.g. `e-shop` → `e-shop`). This function incorrectly modified valid suspended hyphen constructions such as “A-or B-test” (English), “Ein-und Ausgang” (German), and similar patterns in Slovak and Czech.
