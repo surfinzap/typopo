@@ -822,13 +822,13 @@ function tn(e, p) {
 function sn(e) {
   return e = e.replace(
     new RegExp(
-      `([${n.allChars}])(-)([${n.spaces}])([${n.allChars}])`,
+      `\\b([${n.allChars}])(-)([${n.spaces}])([${n.allChars}]{2,})`,
       "g"
     ),
     "$1-$4"
   ), e = e.replace(
     new RegExp(
-      `([${n.allChars}])([${n.spaces}])(-)([${n.allChars}])`,
+      `\\b([${n.allChars}])([${n.spaces}])(-)([${n.allChars}])`,
       "g"
     ),
     "$1-$4"
