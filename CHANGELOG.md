@@ -21,7 +21,10 @@
 
 ### 🐛 Fixes
 - Improve dash fixing between a word and punctuation, e.g. `word - ,` → `word–,` (example in `en-us` locale; dash replacement is locale-specific)
-- Fix false positives in hyphen spacing for German compound words ([#92](https://github.com/surfinzap/typopo/issues/92)): `fixSpaceAroundHyphen` now correctly preserves spaces in Ergänzungsstriche (hanging hyphens) like “Ein-und Ausgang” by restricting fixes to single-character prefixes only (e.g., `e-shop` → `e-shop`)
+- Fix false positives in hyphen spacing for German compound words ([#92](https://github.com/surfinzap/typopo/issues/92))
+
+### Removed
+- Remove function to fix spaces around hyphens (e.g. `e-shop` → `e-shop`). This function incorrectly modified valid suspended hyphen constructions such as “A-or B-test” (English), “Ein-und Ausgang” (German), and similar patterns in Slovak and Czech.
 
 ### 🔨 Maintenance
 - Update NPM packages to their latest versions 
