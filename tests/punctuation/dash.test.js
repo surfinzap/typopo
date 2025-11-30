@@ -27,6 +27,7 @@ const dashFalsePositives = {
 
   "+-":                "+-",
   "{{test-variable}}": "{{test-variable}}",
+  "---":               "---", // standalone hyphens for <hr> in markdown
 };
 
 const dashesBetweenWordsSet = {
