@@ -8,6 +8,11 @@ export const sk = {
     rightSingleQuote: "‘",
   },
 
+  /* 
+    …sentence: „Direct speech…“
+  */
+  directSpeechIntro: ":",
+
   /*
     Dash and spacing between words 
   */

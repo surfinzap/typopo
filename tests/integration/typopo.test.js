@@ -12,7 +12,6 @@ import {
   transformDoubleQuoteSet,
 } from "../punctuation/double-quotes.test.js";
 import { ellipsisSet } from "../punctuation/ellipsis.test.js";
-import { hyphenSet } from "../punctuation/hyphen.test.js";
 import { periodSet } from "../punctuation/period.test.js";
 import { singleQuotesSet } from "../punctuation/single-quotes.test.js";
 import { exponentSet } from "../symbols/exponents.test.js";
@@ -155,10 +154,19 @@ const moduleCombinations = {
   "Because of this, it’s common": "Because of this, it’s common",
 };
 
+const falsePositives = {
+  "Ein- und Ausgang":         "Ein- und Ausgang",
+  "ein- und ausschalten":     "ein- und ausschalten",
+  "S- oder U-Bahn":           "S- oder U-Bahn",
+  "dvou- a třípokojové byty": "dvou- a třípokojové byty",
+  "R- and X-rated films":     "R- and X-rated films",
+
+  "Softwareentwicklung, -verkauf und -wartung": "Softwareentwicklung, -verkauf und -wartung",
+};
+
 function getTestModules(localeName) {
   return {
     // punctuation
-    ...hyphenSet,
     ...periodSet,
     ...ellipsisSet,
     ...transformDoubleQuoteSet(doubleQuotesSet, localeName),
@@ -189,6 +197,7 @@ function getTestModules(localeName) {
 
     // module combinations
     ...transformTestSet(moduleCombinations, localeName),
+    ...falsePositives,
   };
 }
 

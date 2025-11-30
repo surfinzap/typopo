@@ -9,7 +9,6 @@ import { fixNbsp } from "./modules/whitespace/nbsp.js";
 import { fixSpaces } from "./modules/whitespace/spaces.js";
 import { fixPeriod } from "./modules/punctuation/period.js";
 import { fixEllipsis } from "./modules/punctuation/ellipsis.js";
-import { fixHyphen } from "./modules/punctuation/hyphen.js";
 import { fixDash } from "./modules/punctuation/dash.js";
 import { fixDoubleQuotesAndPrimes } from "./modules/punctuation/double-quotes.js";
 import { fixSingleQuotesPrimesAndApostrophes } from "./modules/punctuation/single-quotes.js";
@@ -68,7 +67,6 @@ export function fixTypos(string, locale, configuration) {
   // punctuation
   string = fixPeriod(string);
   string = fixDash(string, currentLocale);
-  string = fixHyphen(string);
   string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale, configuration);
   string = fixDoubleQuotesAndPrimes(string, currentLocale, configuration);
 

@@ -1,5 +1,40 @@
 # Changelog for Typopo
 
+## 2.8.0 // 2025-11-30
+
+This release brings major improvements to dash and hyphen handling, including fix for German compound words (#92) and better Markdown compatibility. The update adds *direct speech introduction* formatting.
+
+### ✨ New features
+- Fix dashes between words and brackets with locale-specific dash and spacing:
+  - `word-(bracket` → `word—(bracket` (en-us)
+  - `bracket)-word` → `bracket)—word` (en-us)
+  - `word-)`        → `word—)` (en-us)
+  - `(-word`        → `(—word` (en-us)
+  - `word)-(word`   → `word)—(word` (en-us)
+  - Special case: dashes within brackets preserve dash type, only remove spaces: `( - )` → `(-)`
+- Fix direct speech introduction by replacing dashes with locale-specific punctuation:
+  - Consolidate the use of dashes (hyphen, en dash, em dash) and direct speech intro (`:` or `,`)
+  - Fix extra spacing between direct speech intro and opening double quotes
+  - Remove trailing dashes after closing quotes
+  - Remove dashes starting before opening double quotes 
+  - Examples:
+    - `She said: - “Hello” - and left.` → `She said, “Hello” and left.` (en-us)
+    - `She said: - „Hello“ - and left.` → `She said: „Hello“ and left.` (cs/sk/de-de)
+
+### 🐛 Fixes
+- Improve dash fixing between a word and punctuation, e.g. `word - ,` → `word–,` (example in `en-us` locale; dash replacement is locale-specific)
+- Fix false positives in hyphen spacing for German compound words ([#92](https://github.com/surfinzap/typopo/issues/92))
+- Preserve three consecutive hyphens `---` as Markdown `<hr>` indicators. Previously, these were incorrectly converted to an em dash `—`.
+- Preserve a space between square brackets `[ ]` as a Markdown checkbox indicator. Previously, spaces were incorrectly removed: `[ ]` → `[]`.
+
+### 🔥 Removed
+- Remove function to fix spaces around hyphens (e.g. `e-shop` → `e-shop`). This function incorrectly modified valid suspended hyphen constructions such as “A-or B-test” (English), “Ein-und Ausgang” (German), and similar patterns in Slovak and Czech.
+
+### 🔨 Maintenance
+- Update NPM packages to their latest versions 
+
+
+
 ## 2.7.1 // 2025-10-04
 
 ### 🐛 Fixes

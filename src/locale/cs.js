@@ -8,6 +8,11 @@ export const cs = {
     rightSingleQuote: "‘",
   },
 
+  /* 
+    …sentence: „Direct speech…“
+  */
+  directSpeechIntro: ":",
+
   /*
     Dash and spacing between words 
   */
@@ -52,7 +57,19 @@ export const cs = {
     Common single-word abbreviations that are followed by a non-breaking space.
     For coding purposes, they are written here without periods.
   */
-  singleWordAbbreviations: ["č", "fol", "např", "odst", "par", "r", "s", "str", "sv", "tj", "tzv"],
+  singleWordAbbreviations:   [
+    "č",
+    "fol",
+    "např",
+    "odst",
+    "par",
+    "r",
+    "s",
+    "str",
+    "sv",
+    "tj",
+    "tzv",
+  ],
   /*
     Common multi-word abbreviations that require proper spacing.
     For coding purposes, they are written here without periods and without correct spacing.

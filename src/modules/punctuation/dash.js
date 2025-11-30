@@ -3,18 +3,6 @@ import { base } from "../../const.js";
 
 //
 
-export function replaceThreeHyphensWithEmDash(string) {
-  return string.replace(/(---)/g, "—");
-}
-
-//
-
-export function replaceTwoHyphensWithEnDash(string) {
-  return string.replace(/(--)/g, "–");
-}
-
-//
-
 /**
   Identify:
   - improperly used hyphen with spaces around
@@ -39,9 +27,9 @@ export function fixDashesBetweenWords(string, locale) {
     new RegExp(
       `([${base.allChars}\\d])` + 
       `(` +
-        `[${base.spaces}]*[${base.enDash}${base.emDash}][${base.spaces}]*` + 
+        `[${base.spaces}]*[${base.enDash}${base.emDash}]{1,3}[${base.spaces}]*` + 
         `|` +
-        `[${base.spaces}]+[${base.hyphen}][${base.spaces}]+` +
+        `[${base.spaces}]+[${base.hyphen}]{1,3}[${base.spaces}]+` +
       `)` +
       `([${base.allChars}\\d])`, 
       "g"
@@ -53,7 +41,7 @@ export function fixDashesBetweenWords(string, locale) {
 //
 
 /**
-  Replace hyphen placed between a word and punctuation,
+  Replace hyphen or dash placed between a word and punctuation,
   or placed at the end of a paragaph.
 
   Examples (en-us):
@@ -66,19 +54,130 @@ export function fixDashesBetweenWords(string, locale) {
   @param {string} locale: locale option
   @returns {string} — output with locale-specific dash and spacing between a word and a punctuation.
 */
-export function fixHyphenBetweenWordAndPunctuation(string, locale) {
+export function fixDashBetweenWordAndPunctuation(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
       `([${base.allChars}])` + 
       `([${base.spaces}]?)` + 
-      `(${base.hyphen})` +
+      `([${base.hyphen}${base.enDash}${base.emDash}]{1,3})` +
       `([${base.spaces}]?)` + 
       `([${base.sentencePunctuation}\\n\\r])`, 
       "g"
     ),
     `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}$5`
   );
+}
+
+//
+
+/**
+  Replace hyphen or dash, placed between words and brackets,
+  with locale-specific dash and spacing.
+
+  Examples (en-us):
+  word-(bracket   → word—(bracket
+  bracket)-word   → bracket)—word
+  word-)          → word—)
+  (-word          → (—word
+  word)-(word     → word)—(word
+
+  Special case - dashes entirely within brackets preserve dash type, only remove spaces:
+  ( - )           → (-)
+  [ – ]           → [–]
+  { — }           → {—}
+
+  @param {string} string — input text for identification
+  @param {string} locale — locale option
+  @returns {string} — output with locale-specific dash and spacing between words and brackets
+*/
+export function fixDashBetweenWordAndBrackets(string, locale) {
+  // Dashes entirely within brackets
+  // Only remove spaces, but preserve the original dash type
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.openingBrackets}])` +
+      `[${base.spaces}]*` +
+      `([${base.hyphen}${base.enDash}${base.emDash}]+)` +
+      `[${base.spaces}]*` +
+      `([${base.closingBrackets}])`,
+      "g"
+    ),
+    `$1$2$3`
+  );
+
+  // Fix word followed by dash followed by opening bracket
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.allChars}])` +
+      `[${base.spaces}]*` +
+      `[${base.hyphen}${base.enDash}${base.emDash}]{1,3}` +
+      `[${base.spaces}]*` +
+      `([${base.openingBrackets}])`,
+      "g"
+    ),
+    `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}${locale.dashWords.spaceAfter}$2`
+  );
+
+  // Fix closing bracket followed by dash followed by word
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.closingBrackets}])` +
+      `[${base.spaces}]*` +
+      `[${base.hyphen}${base.enDash}${base.emDash}]{1,3}` +
+      `[${base.spaces}]*` +
+      `([${base.allChars}])`,
+      "g"
+    ),
+    `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}${locale.dashWords.spaceAfter}$2`
+  );
+
+  // Fix word followed by dash followed by closing bracket
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.allChars}])` +
+      `[${base.spaces}]*` +
+      `[${base.hyphen}${base.enDash}${base.emDash}]{1,3}` +
+      `[${base.spaces}]*` +
+      `([${base.closingBrackets}])`,
+      "g"
+    ),
+    `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}${locale.dashWords.spaceAfter}$2`
+  );
+
+  // Fix opening bracket followed by dash followed by word
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.openingBrackets}])` +
+      `[${base.spaces}]*` +
+      `[${base.hyphen}${base.enDash}${base.emDash}]{1,3}` +
+      `[${base.spaces}]*` +
+      `([${base.allChars}])`,
+      "g"
+    ),
+    `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}${locale.dashWords.spaceAfter}$2`
+  );
+
+  // Fix closing bracket followed by dash followed by opening bracket
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.closingBrackets}])` +
+      `[${base.spaces}]*` +
+      `[${base.hyphen}${base.enDash}${base.emDash}]` +
+      `[${base.spaces}]*` +
+      `([${base.openingBrackets}])`,
+      "g"
+    ),
+    `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}${locale.dashWords.spaceAfter}$2`
+  );
+
+  return string;
 }
 
 //
@@ -103,7 +202,7 @@ export function fixDashBetweenCardinalNumbers(string) {
     new RegExp(
       `(\\d)` +
       `([${base.spaces}]?` +
-      `[${base.hyphen}${base.enDash}${base.emDash}]` +
+      `[${base.hyphen}${base.enDash}${base.emDash}]{1,3}` +
       `[${base.spaces}]?)` +
       `(\\d)`, 
       "g"
@@ -136,7 +235,7 @@ export function fixDashBetweenPercentageRange(string) {
   return string.replace(
     new RegExp(
       `([${base.percent}${base.permille}${base.permyriad}])` + 
-      `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}][${base.spaces}]?)` + 
+      `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}]{1,3}[${base.spaces}]?)` + 
       `(\\d)`, 
       "g"
     ), 
@@ -162,7 +261,7 @@ export function fixDashBetweenOrdinalNumbers(string, locale) {
     new RegExp(
       `(\\d)` + 
       `(${locale.ordinalIndicator})` + 
-      `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}][${base.spaces}]?)` + 
+      `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}]{1,3}[${base.spaces}]?)` + 
       `(\\d)` + 
       `(${locale.ordinalIndicator})`, 
       "gi"
@@ -181,10 +280,9 @@ export function fixDashBetweenOrdinalNumbers(string, locale) {
   @returns {string} — output with fixed dashes
 */
 export function fixDash(string, locale) {
-  string = replaceThreeHyphensWithEmDash(string);
-  string = replaceTwoHyphensWithEnDash(string);
   string = fixDashesBetweenWords(string, locale);
-  string = fixHyphenBetweenWordAndPunctuation(string, locale);
+  string = fixDashBetweenWordAndPunctuation(string, locale);
+  string = fixDashBetweenWordAndBrackets(string, locale);
   string = fixDashBetweenCardinalNumbers(string);
   string = fixDashBetweenPercentageRange(string);
   string = fixDashBetweenOrdinalNumbers(string, locale);

@@ -289,14 +289,14 @@ supportedLocales.forEach((localeName) => {
 });
 
 const identifySingleQuotePairsModuleSet = {
-  "He said: ${ldq}What about 'word', is that good?${rdq}":
-    "He said: ${ldq}What about ${lsq}word${rsq}, is that good?${rdq}",
+  "He said${directSpeechIntro} ${ldq}What about 'word', is that good?${rdq}":
+    "He said${directSpeechIntro} ${ldq}What about ${lsq}word${rsq}, is that good?${rdq}",
 
-  "He said: ${ldq}What about 'word' 'word', is that good?${rdq}":
-    "He said: ${ldq}What about ${lsq}word${rsq} ${lsq}word${rsq}, is that good?${rdq}",
+  "He said${directSpeechIntro} ${ldq}What about 'word' 'word', is that good?${rdq}":
+    "He said${directSpeechIntro} ${ldq}What about ${lsq}word${rsq} ${lsq}word${rsq}, is that good?${rdq}",
 
-  "He said: ${ldq}What about 'word word', is that good?${rdq}":
-    "He said: ${ldq}What about ${lsq}word word${rsq}, is that good?${rdq}",
+  "He said${directSpeechIntro} ${ldq}What about 'word word', is that good?${rdq}":
+    "He said${directSpeechIntro} ${ldq}What about ${lsq}word word${rsq}, is that good?${rdq}",
 
   "${ldq}double quotes 'and single quotes' within${rdq}":
     "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
@@ -307,14 +307,14 @@ const identifySingleQuotePairsModuleSet = {
   "${ldq}double quotes ‚and single quotes' within${rdq}":
     "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
 
-  "He said: ${ldq}What about 'name' and 'other name'?${rdq}":
-    "He said: ${ldq}What about ${lsq}name${rsq} and ${lsq}other name${rsq}?${rdq}",
+  "He said${directSpeechIntro} ${ldq}What about 'name' and 'other name'?${rdq}":
+    "He said${directSpeechIntro} ${ldq}What about ${lsq}name${rsq} and ${lsq}other name${rsq}?${rdq}",
 
   "Within double quotes ${ldq}there are single 'quotes with mix’d punctuation', you see${rdq}.":
     "Within double quotes ${ldq}there are single ${lsq}quotes with mix’d punctuation${rsq}, you see${rdq}.",
 
-  "Let's test this: ${ldq}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${rdq}":
-    "Let’s test this: ${ldq}however, ${lsq}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${rsq} he said${rdq}",
+  "Let's test this${directSpeechIntro} ${ldq}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${rdq}":
+    "Let’s test this${directSpeechIntro} ${ldq}however, ${lsq}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${rsq} he said${rdq}",
 
   // this case is not covered, the value is false
   // the first right single quote is falsely an apostrophe
@@ -343,10 +343,10 @@ supportedLocales.forEach((localeName) => {
 });
 
 const identifySingleQuotePairAroundSingleWordModuleSet = {
-  "'word'":                                                "${lsq}word${rsq}",
-  "'word' 'word'":                                         "${lsq}word${rsq} ${lsq}word${rsq}",
-  "He said: ${ldq}What about 'word', is that good?${rdq}": "He said: ${ldq}What about ${lsq}word${rsq}, is that good?${rdq}",
-  "Press 'N' to get started":                              "Press ${lsq}N${rsq} to get started",
+  "'word'":                                                                   "${lsq}word${rsq}",
+  "'word' 'word'":                                                            "${lsq}word${rsq} ${lsq}word${rsq}",
+  "He said${directSpeechIntro} ${ldq}What about 'word', is that good?${rdq}": "He said${directSpeechIntro} ${ldq}What about ${lsq}word${rsq}, is that good?${rdq}",
+  "Press 'N' to get started":                                                 "Press ${lsq}N${rsq} to get started",
 };
 
 const identifySingleQuotePairAroundSingleWordUnitSet = {
@@ -379,10 +379,11 @@ supportedLocales.forEach((localeName) => {
 });
 
 const replaceSinglePrimeWSingleQuoteModuleSet = {
-  "He said: ${ldq}What about 'Localhost 3000', is that good?${rdq}":
-    "He said: ${ldq}What about ${lsq}Localhost 3000${rsq}, is that good?${rdq}",
+  "He said${directSpeechIntro} ${ldq}What about 'Localhost 3000', is that good?${rdq}":
+    "He said${directSpeechIntro} ${ldq}What about ${lsq}Localhost 3000${rsq}, is that good?${rdq}",
 
-  "He said: ${ldq}Here are 30 'bucks'${rdq}": "He said: ${ldq}Here are 30 ${lsq}bucks${rsq}${rdq}",
+  "He said${directSpeechIntro} ${ldq}Here are 30 'bucks'${rdq}":
+    "He said${directSpeechIntro} ${ldq}Here are 30 ${lsq}bucks${rsq}${rdq}",
 };
 
 const replaceSinglePrimeWSingleQuoteUnitSet = {
@@ -516,8 +517,8 @@ export const singleQuotesSet = {
   ...removeExtraSpaceAroundSinglePrimeSet,
   // ...swapSingleQuotesAndTerminalPunctuationSet, tbd-swapping-quotes
 
-  "Hej: ${ldq}Vin mu povil, 'ta de jes' take vidil' i neviril${rdq}":
-    "Hej: ${ldq}Vin mu povil, ${lsq}ta de jes’ take vidil${rsq} i neviril${rdq}", // tbd-single-quotes-matching
+  "Hej${directSpeechIntro} ${ldq}Vin mu povil, 'ta de jes' take vidil' i neviril${rdq}":
+    "Hej${directSpeechIntro} ${ldq}Vin mu povil, ${lsq}ta de jes’ take vidil${rsq} i neviril${rdq}", // tbd-single-quotes-matching
 };
 
 describe("Single quotes (module test) ", () => {

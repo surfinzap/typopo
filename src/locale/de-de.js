@@ -8,6 +8,11 @@ export const deDE = {
     rightSingleQuote: "‘",
   },
 
+  /* 
+    …sentence: „Direct speech…“
+  */
+  directSpeechIntro: ":",
+
   /*
     Dash and spacing between words 
   */

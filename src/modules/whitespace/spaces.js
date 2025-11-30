@@ -117,11 +117,12 @@ export function removeSpaceBeforeTerminalPunctuation(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
+      `([^${base.openingBrackets}])` +
       `([${base.spaces}])` +
       `([${base.terminalPunctuation}${base.closingBrackets}${base.degree}])`,
       "g"
     ),
-    `$2`
+    `$1$3`
   );
 }
 
@@ -160,10 +161,11 @@ export function removeSpaceAfterOpeningBrackets(string) {
   return string.replace(
     new RegExp(
       `([${base.openingBrackets}])` +
-      `([${base.spaces}])`,
+      `([${base.spaces}])` +
+      `([^${base.closingBrackets}])`,
       "g"
     ),
-    `$1`
+    `$1$3`
   );
 }
 
@@ -287,7 +289,11 @@ export function addSpaceAfterClosingBrackets(string) {
 export function addSpaceBeforeSymbol(string, symbol) {
   // prettier-ignore
   return string.replace(
-    new RegExp(`([^${base.spaces}${base.openingBrackets}${symbol}])(${symbol})`, "g"),
+    new RegExp(
+      `([^${base.spaces}${base.openingBrackets}${symbol}])` + 
+      `(${symbol})`, 
+      `g`
+    ),
     `$1${base.space}$2`
   );
 }

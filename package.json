@@ -1,6 +1,6 @@
 {
 	"name": "typopo",
-	"version": "2.7.1",
+	"version": "2.8.0",
 	"description": "Fix frequent microtypography errors in multiple languages. Write neat texts without bothering about typography rules. Typopo works for English, German, Slovak, Czech and Rusyn language.",
 	"type": "module",
 	"license": "MIT",
@@ -12,11 +12,13 @@
 		"build": "vite build",
 		"test": "vitest run",
 		"test:dev": "cross-env SOURCE_ONLY=true vitest",
+		"test:module": "vitest --exclude tests/integration/typopo.test.js",
 		"test:perf": "node tests/performance.test.js",
 		"lint": "eslint src/",
 		"lint:fix": "eslint src/ --fix",
 		"format": "prettier --write src/ tests/",
 		"debug": "node tests/debug/debug-typopo.js",
+		"debug:regex": "node tests/debug/debug-regex.js",
 		"prepare": "husky"
 	},
 	"lint-staged": {
@@ -60,16 +62,16 @@
 		"node": ">=6.9.4"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.37.0",
+		"@eslint/js": "^9.39.1",
 		"@huggingface/prettier-plugin-vertical-align": "^0.2.3",
-		"@trivago/prettier-plugin-sort-imports": "^5.2.2",
+		"@trivago/prettier-plugin-sort-imports": "^6.0.0",
 		"cross-env": "^10.1.0",
-		"eslint": "^9.37.0",
+		"eslint": "^9.39.1",
 		"husky": "^9.1.7",
-		"jsdom": "^27.0.0",
-		"lint-staged": "^16.2.3",
-		"prettier": "^3.6.2",
-		"vite": "^7.1.9",
-		"vitest": "^3.2.4"
+		"jsdom": "^27.2.0",
+		"lint-staged": "^16.2.7",
+		"prettier": "^3.7.3",
+		"vite": "^7.2.4",
+		"vitest": "^4.0.14"
 	}
 }

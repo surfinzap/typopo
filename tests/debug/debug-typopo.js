@@ -6,7 +6,6 @@ import { fixNbsp } from "../../src/modules/whitespace/nbsp.js";
 import { fixSpaces } from "../../src/modules/whitespace/spaces.js";
 import { fixPeriod } from "../../src/modules/punctuation/period.js";
 import { fixEllipsis } from "../../src/modules/punctuation/ellipsis.js";
-import { fixHyphen } from "../../src/modules/punctuation/hyphen.js";
 import { fixDash } from "../../src/modules/punctuation/dash.js";
 import { fixDoubleQuotesAndPrimes } from "../../src/modules/punctuation/double-quotes.js";
 import { fixSingleQuotesPrimesAndApostrophes } from "../../src/modules/punctuation/single-quotes.js";
@@ -27,7 +26,7 @@ import { excludeExceptions, placeExceptions } from "../../src/modules/words/exce
 
 //
 
-const testString = "Before you ask the „How often“… question";
+const testString = "word - )";
 const testLocale = "de-de";
 
 //
@@ -114,11 +113,6 @@ function debugFixTypos(inputString, locale = "en-us", configuration = {}) {
   const oldString6 = string;
   string = fixDash(string, currentLocale);
   logStep("fixDash", string, oldString6);
-
-  // Step 7: Fix punctuation - hyphen
-  const oldString7 = string;
-  string = fixHyphen(string);
-  logStep("fixHyphen", string, oldString7);
 
   // Step 8: Fix single quotes, primes, and apostrophes
   const oldString8 = string;
@@ -253,10 +247,6 @@ function getTypoTransformationSteps(inputString, locale = "en-us", configuration
   const oldString6 = string;
   string = fixDash(string, currentLocale);
   string = addStep("fixDash", string, oldString6);
-
-  const oldString7 = string;
-  string = fixHyphen(string);
-  string = addStep("fixHyphen", string, oldString7);
 
   const oldString8 = string;
   string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale, configuration);

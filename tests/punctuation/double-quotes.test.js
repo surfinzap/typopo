@@ -13,6 +13,7 @@ import {
   addSpaceBeforeLeftDoubleQuote,
   addSpaceAfterRightDoubleQuote,
   fixDoubleQuotesAndPrimes,
+  fixDirectSpeechIntro,
 } from "../../src/modules/punctuation/double-quotes.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { createTestSuite, transformTestSet } from "../test-utils.js";
@@ -180,9 +181,9 @@ const identifyDoublePrimesModuleSet = {
   '3° 5′ 30"': "3° 5′ 30″",
   '12"3′00°':  "12″3′00°",
 
-  'So it${apos}s 12" × 12", right?':    "So it${apos}s 12″ × 12″, right?",
-  'She said: “It${apos}s a 12" inch!”': "She said: ${ldq}It${apos}s a 12″ inch!${rdq}",
-  'It${apos}s 12" × 12".':              "It${apos}s 12″ × 12″.",
+  'So it${apos}s 12" × 12", right?':                       "So it${apos}s 12″ × 12″, right?",
+  'She said${directSpeechIntro} “It${apos}s a 12" inch!”': "She said${directSpeechIntro} ${ldq}It${apos}s a 12″ inch!${rdq}",
+  'It${apos}s 12" × 12".':                                 "It${apos}s 12″ × 12″.",
 
   // identify swapped inches with terminal punctuation
   '"He was 12".': "${ldq}He was 12.${rdq}",
@@ -470,7 +471,7 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-let addSpaceAfterRightDoubleQuoteSet = {
+const addSpaceAfterRightDoubleQuoteSet = {
   "It’s a ${ldq}nice${rdq}saying.":                     "It’s a ${ldq}nice${rdq} saying.",
   "${ldq}A quoted sentence.${rdq}And an unquoted one.": "${ldq}A quoted sentence.${rdq} And an unquoted one.",
   "${ldq}A quoted sentence!${rdq}And an unquoted one.": "${ldq}A quoted sentence!${rdq} And an unquoted one.",
@@ -481,6 +482,140 @@ supportedLocales.forEach((localeName) => {
     "Add a missing space after a right double quote",
     transformDoubleQuoteSet(addSpaceAfterRightDoubleQuoteSet, localeName),
     (text) => addSpaceAfterRightDoubleQuote(text, new Locale(localeName)),
+    {},
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
+});
+
+const fixDirectSpeechIntroSet = {
+  // Problem Type 1: Using hyphen, en dash, or em dash instead of proper introduction
+
+  // Hyphen with spaces
+  "She said - ${ldq}Hello${rdq} - and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said - ${ldq}Hello${rdq} and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said -${ldq}Hello${rdq} - and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said-${ldq}Hello${rdq} - and left.":
+    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+
+  // En dash with spaces
+  "She said – ${ldq}Hello${rdq} – and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said – ${ldq}Hello${rdq} and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said –${ldq}Hello${rdq} – and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said–${ldq}Hello${rdq} – and left.":
+    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+
+  // Em dash with spaces
+  "She said — ${ldq}Hello${rdq} — and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said — ${ldq}Hello${rdq} and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said —${ldq}Hello${rdq} — and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said—${ldq}Hello${rdq} — and left.":
+    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+
+  // Problem Type 2: Combination of proper and wrong direct speech introduction
+
+  // Colon/comma + hyphen
+  "She said: - ${ldq}Hello${rdq} - and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said: -${ldq}Hello${rdq} - and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said:- ${ldq}Hello${rdq} - and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said:-${ldq}Hello${rdq} - and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said${directSpeechIntro} - ${ldq}Hello${rdq} - and left.":
+    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+
+  // Colon/comma + en dash
+  "She said: – ${ldq}Hello${rdq} – and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said: –${ldq}Hello${rdq} – and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said:– ${ldq}Hello${rdq} – and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said:–${ldq}Hello${rdq} – and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+
+  // Colon/comma + em dash
+  "She said: — ${ldq}Hello${rdq} — and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said: —${ldq}Hello${rdq} — and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said:— ${ldq}Hello${rdq} — and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said:—${ldq}Hello${rdq} — and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+
+  // Problem Type 3: Extra spaces between introduction and quote
+
+  "She said:${ldq}Hello${rdq} and left.":      "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said,${ldq}Hello${rdq} and left.":      "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said:  ${ldq}Hello${rdq} and left.":    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said:   ${ldq}Hello${rdq} and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said:    ${ldq}Hello${rdq} and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said:     ${ldq}Hello${rdq} and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said,     ${ldq}Hello${rdq} and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+
+  // Combination: wrong intro + extra spaces
+  "She said: -  ${ldq}Hello${rdq} - and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said: –   ${ldq}Hello${rdq} – and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said: —    ${ldq}Hello${rdq} — and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+
+  // Multiple spaces around dashes
+  "She said  -  ${ldq}Hello${rdq}  -  and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said  –  ${ldq}Hello${rdq}  –  and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  "She said  —  ${ldq}Hello${rdq}  —  and left.":
+    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+
+  // Edge cases: No ending sentence (quote at end)
+  "She said - ${ldq}Hello${rdq}": "She said${directSpeechIntro} ${ldq}Hello${rdq}",
+  "She said – ${ldq}Hello${rdq}": "She said${directSpeechIntro} ${ldq}Hello${rdq}",
+  "She said — ${ldq}Hello${rdq}": "She said${directSpeechIntro} ${ldq}Hello${rdq}",
+
+  // // Varied content between quotes: punctuation, numbers, special chars, etc.
+  "She said - ${ldq}Hello, world!${rdq} - and left.":         "She said${directSpeechIntro} ${ldq}Hello, world!${rdq} and left.",
+  "She said - ${ldq}Hello! How are you?${rdq} - and left.":   "She said${directSpeechIntro} ${ldq}Hello! How are you?${rdq} and left.",
+  // "She said – ${ldq}It${apos}s 12″ × 12″.${rdq} – and left.":   "She said${directSpeechIntro} ${ldq}It${apos}s 12″ × 12″.${rdq} and left.",
+  "She said — ${ldq}Numbers: 123, 456.78…${rdq} — and left.": "She said${directSpeechIntro} ${ldq}Numbers: 123, 456.78…${rdq} and left.",
+
+  "She said — ${ldq}URL: http://example.com/path${rdq} — and left.":              "She said${directSpeechIntro} ${ldq}URL: http://example.com/path${rdq} and left.",
+  "She said - ${ldq}Email: test@example.com${rdq} - and left.":                   "She said${directSpeechIntro} ${ldq}Email: test@example.com${rdq} and left.",
+  "She said – ${ldq}Quote with: colon, semicolon; comma, dot.${rdq} – and left.": "She said${directSpeechIntro} ${ldq}Quote with: colon, semicolon; comma, dot.${rdq} and left.",
+  "She said — ${ldq}A very long sentence with many words and punctuation marks, including commas, periods, and other symbols!${rdq} — and left.":
+    "She said${directSpeechIntro} ${ldq}A very long sentence with many words and punctuation marks, including commas, periods, and other symbols!${rdq} and left.",
+
+  // Edge cases: Paragraph starts with a quote introduced with a dash
+  "- ${ldq}Hello${rdq} - she said.":   "${ldq}Hello${rdq} she said.",
+  "-${ldq}Hello${rdq} - she said.":    "${ldq}Hello${rdq} she said.",
+  " - ${ldq}Hello${rdq} - she said.":  "${ldq}Hello${rdq} she said.",
+  "-   ${ldq}Hello${rdq} - she said.": "${ldq}Hello${rdq} she said.",
+  "– ${ldq}Hello${rdq} – she said.":   "${ldq}Hello${rdq} she said.",
+  "— ${ldq}Hello${rdq} — she said.":   "${ldq}Hello${rdq} she said.",
+
+  // Edge cases: The following quoted sentence is introduced with a dash
+  "ends. - ${ldq}Hello${rdq} - she said.":   "ends. ${ldq}Hello${rdq} she said.",
+  "ends. -${ldq}Hello${rdq} - she said.":    "ends. ${ldq}Hello${rdq} she said.",
+  "ends.  - ${ldq}Hello${rdq} - she said.":  "ends. ${ldq}Hello${rdq} she said.",
+  "ends. -   ${ldq}Hello${rdq} - she said.": "ends. ${ldq}Hello${rdq} she said.",
+  "ends. – ${ldq}Hello${rdq} – she said.":   "ends. ${ldq}Hello${rdq} she said.",
+  "ends. — ${ldq}Hello${rdq} — she said.":   "ends. ${ldq}Hello${rdq} she said.",
+  "ends? - ${ldq}Hello${rdq} - she said.":   "ends? ${ldq}Hello${rdq} she said.",
+  "ends? -${ldq}Hello${rdq} - she said.":    "ends? ${ldq}Hello${rdq} she said.",
+  "ends?  - ${ldq}Hello${rdq} - she said.":  "ends? ${ldq}Hello${rdq} she said.",
+  "ends? -   ${ldq}Hello${rdq} - she said.": "ends? ${ldq}Hello${rdq} she said.",
+  "ends? – ${ldq}Hello${rdq} – she said.":   "ends? ${ldq}Hello${rdq} she said.",
+  "ends? — ${ldq}Hello${rdq} — she said.":   "ends? ${ldq}Hello${rdq} she said.",
+  "ends! - ${ldq}Hello${rdq} - she said.":   "ends! ${ldq}Hello${rdq} she said.",
+  "ends! -${ldq}Hello${rdq} - she said.":    "ends! ${ldq}Hello${rdq} she said.",
+  "ends!  - ${ldq}Hello${rdq} - she said.":  "ends! ${ldq}Hello${rdq} she said.",
+  "ends! -   ${ldq}Hello${rdq} - she said.": "ends! ${ldq}Hello${rdq} she said.",
+  "ends! – ${ldq}Hello${rdq} – she said.":   "ends! ${ldq}Hello${rdq} she said.",
+  "ends! — ${ldq}Hello${rdq} — she said.":   "ends! ${ldq}Hello${rdq} she said.",
+  "ends… - ${ldq}Hello${rdq} - she said.":   "ends… ${ldq}Hello${rdq} she said.",
+  "ends… -${ldq}Hello${rdq} - she said.":    "ends… ${ldq}Hello${rdq} she said.",
+  "ends…  - ${ldq}Hello${rdq} - she said.":  "ends… ${ldq}Hello${rdq} she said.",
+  "ends… -   ${ldq}Hello${rdq} - she said.": "ends… ${ldq}Hello${rdq} she said.",
+  "ends… – ${ldq}Hello${rdq} – she said.":   "ends… ${ldq}Hello${rdq} she said.",
+  "ends… — ${ldq}Hello${rdq} — she said.":   "ends… ${ldq}Hello${rdq} she said.",
+
+  // False positives: Already correct (should not change)
+  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.":
+    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+};
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Fix direct speech introduction",
+    transformDoubleQuoteSet(fixDirectSpeechIntroSet, localeName),
+    (text) => fixDirectSpeechIntro(text, new Locale(localeName)),
     {},
     (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
     localeName
@@ -522,6 +657,7 @@ export const doubleQuotesSet = {
   ...removeExtraSpacesAroundQuotesSet,
   ...addSpaceBeforeLeftDoubleQuoteSet,
   ...addSpaceAfterRightDoubleQuoteSet,
+  ...fixDirectSpeechIntroSet,
 };
 
 export function transformDoubleQuoteSet(testSet, localeName) {
