@@ -2,6 +2,8 @@
 
 ## 2.8.0 // 2025-11-30
 
+This release brings major improvements to dash and hyphen handling, including fix for German compound words (#92) and better Markdown compatibility. The update adds *direct speech introduction* formatting.
+
 ### ✨ New features
 - Fix dashes between words and brackets with locale-specific dash and spacing:
   - `word-(bracket` → `word—(bracket` (en-us)
