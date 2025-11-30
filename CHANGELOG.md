@@ -1,6 +1,6 @@
 # Changelog for Typopo
 
-## 2.8.0 // 2025-
+## 2.8.0 // 2025-11-30
 
 ### ✨ New features
 - Fix dashes between words and brackets with locale-specific dash and spacing:

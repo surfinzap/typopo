@@ -1,5 +1,5 @@
 /*!
- * Typopo v2.7.1 (https://typopo.org)
+ * Typopo v2.8.0 (https://typopo.org)
  * Copyright 2015–2025 Braňo Šandala (https://brano.me)
  * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */
