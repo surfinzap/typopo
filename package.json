@@ -62,16 +62,16 @@
 		"node": ">=6.9.4"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.39.1",
+		"@eslint/js": "^9.39.2",
 		"@huggingface/prettier-plugin-vertical-align": "^0.2.3",
 		"@trivago/prettier-plugin-sort-imports": "^6.0.0",
 		"cross-env": "^10.1.0",
-		"eslint": "^9.39.1",
+		"eslint": "^9.39.2",
 		"husky": "^9.1.7",
-		"jsdom": "^27.2.0",
+		"jsdom": "^27.3.0",
 		"lint-staged": "^16.2.7",
-		"prettier": "^3.7.3",
-		"vite": "^7.2.4",
-		"vitest": "^4.0.14"
+		"prettier": "^3.7.4",
+		"vite": "^7.3.0",
+		"vitest": "^4.0.16"
 	}
 }
