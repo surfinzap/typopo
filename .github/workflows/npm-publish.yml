@@ -21,6 +21,9 @@ jobs:
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -31,5 +34,5 @@ jobs:
         run: npm install -g pnpm
       - run: pnpm install
       - run: pnpm run build
-      - run: pnpm publish --no-git-checks
+      - run: pnpm publish --provenance --access public --no-git-checks
 
