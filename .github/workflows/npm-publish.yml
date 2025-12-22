@@ -35,5 +35,5 @@ jobs:
         run: npm install -g pnpm
       - run: pnpm install
       - run: pnpm run build
-      - run: pnpm publish --no-git-checks
+      - run: pnpm publish --provenance --access public --no-git-checks
 
