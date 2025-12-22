@@ -35,5 +35,11 @@ jobs:
         run: npm install -g pnpm
       - run: pnpm install
       - run: pnpm run build
+      - name: Debug OIDC
+        run: |
+          echo "GitHub Repository: ${{ github.repository }}"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "Event: ${{ github.event_name }}"
       - run: npm publish --provenance --access public --no-git-checks
 
