@@ -1,5 +1,12 @@
 # Changelog for Typopo
 
+## 2.8.1 // 2025-12-22
+
+### 🔨 Maintenance
+- Update dev dependencies to their latest versions 
+
+
+
 ## 2.8.0 // 2025-11-30
 
 This release brings major improvements to dash and hyphen handling, including fix for German compound words (#92) and better Markdown compatibility. The update adds *direct speech introduction* formatting.
