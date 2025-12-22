@@ -1,9 +1,11 @@
 # Changelog for Typopo
 
-## 2.9.0 // 
+## 2.8.1 // 2025-12-22
 
 ### 🔨 Maintenance
 - Update dev dependencies to their latest versions 
+
+
 
 ## 2.8.0 // 2025-11-30
 
