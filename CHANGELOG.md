@@ -1,5 +1,12 @@
 # Changelog for Typopo
 
+## 2.8.2 // 2025-12-22
+
+### 🔨 Maintenance
+- Update publishing pipeline 
+
+
+
 ## 2.8.1 // 2025-12-22
 
 ### 🔨 Maintenance

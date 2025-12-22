@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
       - name: Install pnpm
         run: npm install -g pnpm
       - run: pnpm install
@@ -29,17 +29,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           registry-url: https://registry.npmjs.org/
+      - name: Upgrade npm
+        run: npm install -g npm@latest
       - name: Install pnpm
         run: npm install -g pnpm
       - run: pnpm install
       - run: pnpm run build
-      - name: Debug OIDC
-        run: |
-          echo "GitHub Repository: ${{ github.repository }}"
-          echo "Workflow: ${{ github.workflow }}"
-          echo "Ref: ${{ github.ref }}"
-          echo "Event: ${{ github.event_name }}"
       - run: npm publish --provenance --access public --no-git-checks
 
