@@ -1,6 +1,6 @@
 /*!
  * Typopo v2.8.2 (https://typopo.org)
- * Copyright 2015–2025 Braňo Šandala (https://brano.me)
+ * Copyright 2015–2026 Braňo Šandala (https://brano.me)
  * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
  */
 const x = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях", S = "ÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŶŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ", v = "a-z" + x, k = "A-Z" + S, W = "a-z" + x + "A-Z" + S, N = "‚|'|‘|’|ʼ|‛|´|`|′|‹|›", q = "’", I = "′", z = "`", L = "„|“|”|\"|«|»|″|,{2,}|‚{2,}|[‘’'‹›′´`]{2,}", M = "″", E = " ", y = " ", A = " ", R = " ", T = E + y + A + R, C = "\\.\\!\\?", Q = "\\,\\:\\;", O = Q + C, j = "\\(\\[\\{", Z = "\\)\\]\\}", U = "…", F = "-", H = "–", X = "—", G = "/", V = "°", Y = "×", J = "&", K = "§", ee = "¶", ne = "©", pe = "℗", ae = "®", re = "℠", oe = "™", te = "+", se = "−", $e = "±", ce = "%", ue = "‰", ie = "‱", le = "#", de = "№", he = "IVXLCDM", n = {
