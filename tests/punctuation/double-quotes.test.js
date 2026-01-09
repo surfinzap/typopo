@@ -76,7 +76,7 @@ const removePunctuationBeforeQuotesUnitSet = {
 const removePunctuationBeforeQuotesModuleSet = {
   /* extra comma after terminal punctuation, 
      as it it happens in direct speech */
-  /* Module set considers the effect of fixQuotedWordPunctuation function */ 
+  /* Module set considers the effect of fixQuotedWordPunctuation function */
   "${ldq}Hey!,${rdq} she said": "${ldq}Hey!${rdq} she said",
   "${ldq}Hey?,${rdq} she said": "${ldq}Hey?${rdq} she said",
   "${ldq}Hey.,${rdq} she said": "${ldq}Hey${rdq}. she said",
@@ -179,7 +179,7 @@ const removePunctuationAfterQuotesUnitSet = {
 };
 
 const removePunctuationAfterQuotesModuleSet = {
-  /* Module set considers the effect of fixQuotedWordPunctuation function */ 
+  /* Module set considers the effect of fixQuotedWordPunctuation function */
   "${ldq}Hey!${rdq}, she said": "${ldq}Hey!${rdq} she said",
   "${ldq}Hey?${rdq}, she said": "${ldq}Hey?${rdq} she said",
   "${ldq}Hey.${rdq}, she said": "${ldq}Hey${rdq}. she said",
@@ -468,76 +468,78 @@ const fixQuotedWordPunctuationModuleSet = {
   */
 
   // Single word with period
-  "${ldq}word.${rdq}": "${ldq}word${rdq}.",
+  "${ldq}word.${rdq}":                       "${ldq}word${rdq}.",
   "Look for ${ldq}word.${rdq} In the text.": "Look for ${ldq}word${rdq}. In the text.",
-  "Look for ${ldq}Ian.${rdq} In the text.": "Look for ${ldq}Ian${rdq}. In the text.",
-  
+  "Look for ${ldq}Ian.${rdq} In the text.":  "Look for ${ldq}Ian${rdq}. In the text.",
+
   // Single word with comma
-  "${ldq}word,${rdq}": "${ldq}word${rdq},",
+  "${ldq}word,${rdq}":                     "${ldq}word${rdq},",
   "He said ${ldq}hello,${rdq} then left.": "He said ${ldq}hello${rdq}, then left.",
-  
+
   // Single word with semicolon
-  "${ldq}word;${rdq}": "${ldq}word${rdq};",
+  "${ldq}word;${rdq}":                    "${ldq}word${rdq};",
   "He used ${ldq}code;${rdq} it worked.": "He used ${ldq}code${rdq}; it worked.",
-  
+
   // Single word with colon
-  "${ldq}word:${rdq}": "${ldq}word${rdq}:",
+  "${ldq}word:${rdq}":                           "${ldq}word${rdq}:",
   "Consider ${ldq}refactoring:${rdq} it helps.": "Consider ${ldq}refactoring${rdq}: it helps.",
 
   // Contracted words
   "Say ${ldq}don${apos}t;${rdq} be firm.": "Say ${ldq}don${apos}t${rdq}; be firm.",
 
   // Numbers
-  "Version ${ldq}2.0.${rdq} is out.": "Version ${ldq}2.0${rdq}. is out.",
+  "Version ${ldq}2.0.${rdq} is out.":     "Version ${ldq}2.0${rdq}. is out.",
   "In ${ldq}2020,${rdq} things changed.": "In ${ldq}2020${rdq}, things changed.",
-  "Number ${ldq}42;${rdq} the answer.": "Number ${ldq}42${rdq}; the answer.",
+  "Number ${ldq}42;${rdq} the answer.":   "Number ${ldq}42${rdq}; the answer.",
 
   // Combinations with numbers and contractions (e.g., 69'ers)
   "The ${ldq}69${apos}ers.${rdq} were famous.": "The ${ldq}69${apos}ers${rdq}. were famous.",
-  "Those ${ldq}90${apos}s,${rdq} good times.": "Those ${ldq}90${apos}s${rdq}, good times.",
+  "Those ${ldq}90${apos}s,${rdq} good times.":  "Those ${ldq}90${apos}s${rdq}, good times.",
 
   // Hyphenated words
-  "Use ${ldq}well-known.${rdq} for clarity.": "Use ${ldq}well-known${rdq}. for clarity.",
-  "The ${ldq}state-of-the-art,${rdq} approach.": "The ${ldq}state-of-the-art${rdq}, approach.",
+  "Use ${ldq}well-known.${rdq} for clarity.":      "Use ${ldq}well-known${rdq}. for clarity.",
+  "The ${ldq}state-of-the-art,${rdq} approach.":   "The ${ldq}state-of-the-art${rdq}, approach.",
   "Try ${ldq}open-source;${rdq} it${apos}s free.": "Try ${ldq}open-source${rdq}; it${apos}s free.",
 
   // Escaped strings
   "${ldq}{{esc}},${rdq}": "${ldq}{{esc}}${rdq},",
-}
+};
 
 const fixQuotedWordPunctuationUnitSet = {
   // False positives - multiple words (should NOT be fixed in this function)
-  "She said ${ldq}hello world.${rdq} and left.": "She said ${ldq}hello world.${rdq} and left.",
-  "I heard ${ldq}good morning,${rdq} from her.": "I heard ${ldq}good morning,${rdq} from her.",
-  "The ${ldq}quick brown fox;${rdq} jumps.": "The ${ldq}quick brown fox;${rdq} jumps.",
-  "The ${ldq}quick brown fox${rdq}; jumps.": "The ${ldq}quick brown fox${rdq}; jumps.",
+  "She said ${ldq}hello world.${rdq} and left.":  "She said ${ldq}hello world.${rdq} and left.",
+  "I heard ${ldq}good morning,${rdq} from her.":  "I heard ${ldq}good morning,${rdq} from her.",
+  "The ${ldq}quick brown fox;${rdq} jumps.":      "The ${ldq}quick brown fox;${rdq} jumps.",
+  "The ${ldq}quick brown fox${rdq}; jumps.":      "The ${ldq}quick brown fox${rdq}; jumps.",
   "Note ${ldq}some important thing:${rdq} here.": "Note ${ldq}some important thing:${rdq} here.",
 
   // False positives - exclamation and question marks (should NOT be fixed)
-  "The ${ldq}Wow!${rdq} was loud.": "The ${ldq}Wow!${rdq} was loud.",
-  "The ${ldq}Wow${rdq}! was loud.": "The ${ldq}Wow${rdq}! was loud.",
+  "The ${ldq}Wow!${rdq} was loud.":         "The ${ldq}Wow!${rdq} was loud.",
+  "The ${ldq}Wow${rdq}! was loud.":         "The ${ldq}Wow${rdq}! was loud.",
   "She asked ${ldq}Why?${rdq} repeatedly.": "She asked ${ldq}Why?${rdq} repeatedly.",
   "She asked ${ldq}Why${rdq}? repeatedly.": "She asked ${ldq}Why${rdq}? repeatedly.",
 
   // False positives - regnal numbers
   "Byl to Karel ${ldq}IV.${rdq}, ktery": "Byl to Karel ${ldq}IV.${rdq}, ktery",
-  
+
   // False positives - already correct
-  "The ${ldq}word${rdq}. is correct.": "The ${ldq}word${rdq}. is correct.",
+  "The ${ldq}word${rdq}. is correct.":     "The ${ldq}word${rdq}. is correct.",
   "He said ${ldq}hello${rdq}, then left.": "He said ${ldq}hello${rdq}, then left.",
-}
+};
 
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Fix punctuation placement for single-word quoted content",
-    transformDoubleQuoteSet({...fixQuotedWordPunctuationUnitSet, ...fixQuotedWordPunctuationModuleSet}, localeName),
+    transformDoubleQuoteSet(
+      { ...fixQuotedWordPunctuationUnitSet, ...fixQuotedWordPunctuationModuleSet },
+      localeName
+    ),
     (text) => fixQuotedWordPunctuation(text, new Locale(localeName)),
     transformDoubleQuoteSet(fixQuotedWordPunctuationModuleSet, localeName),
     (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
     localeName
   );
 });
-
 
 const fixQuotedSentencePunctuationModuleSet = {
   /*
@@ -547,22 +549,22 @@ const fixQuotedSentencePunctuationModuleSet = {
   - move periods `.`, commas `,`, semicolons `;`, ellipses `…`exclamation `!` and question marks `?` inside the quoted part
   - move colons `:` and semicolons `;` outside the quoted part
   */
-  
+
   // Quoted fragment at the end of sentence
   "It can be a ${ldq}quoted fragment${rdq}.": "It can be a ${ldq}quoted fragment.${rdq}",
   "It can be a ${ldq}quoted fragment${rdq},": "It can be a ${ldq}quoted fragment,${rdq}",
   "It can be a ${ldq}quoted fragment${rdq}!": "It can be a ${ldq}quoted fragment!${rdq}",
   "It can be a ${ldq}quoted fragment${rdq}?": "It can be a ${ldq}quoted fragment?${rdq}",
   "It can be a ${ldq}quoted fragment${rdq}…": "It can be a ${ldq}quoted fragment…${rdq}",
-  
-  // Quoted sentence 
+
+  // Quoted sentence
   "${ldq}Fully quoted sentence${rdq}.": "${ldq}Fully quoted sentence.${rdq}",
   "${ldq}Fully quoted sentence${rdq},": "${ldq}Fully quoted sentence,${rdq}",
   "${ldq}Fully quoted sentence${rdq}!": "${ldq}Fully quoted sentence!${rdq}",
   "${ldq}Fully quoted sentence${rdq}?": "${ldq}Fully quoted sentence?${rdq}",
   "${ldq}Fully quoted sentence${rdq}…": "${ldq}Fully quoted sentence…${rdq}",
 
-  // Less common boundaries 
+  // Less common boundaries
   "${ldq}(Fully) quoted sentence${rdq}.": "${ldq}(Fully) quoted sentence.${rdq}",
   "${ldq}Fully quoted (sentence)${rdq}.": "${ldq}Fully quoted (sentence).${rdq}",
 
@@ -570,30 +572,31 @@ const fixQuotedSentencePunctuationModuleSet = {
   "It can be a ${ldq}{{esc}} {{esc}}{rdq}.": "It can be a ${ldq}{{esc}} {{esc}}.${rdq}",
 
   // Colon / semicolon should be placed outside the quotes
-  "${ldq}quoted fragment:${rdq} sentence continues" : "${ldq}quoted fragment${rdq}: sentence continues",
-  "${ldq}quoted fragment;${rdq} sentence continues" : "${ldq}quoted fragment${rdq}; sentence continues",
-  "${ldq}(quoted) fragment:${rdq} sentence continues" : "${ldq}(quoted) fragment${rdq}: sentence continues",
-  "${ldq}quoted (fragment);${rdq} sentence continues" : "${ldq}quoted (fragment)${rdq}; sentence continues",
-
-}
+  "${ldq}quoted fragment:${rdq} sentence continues":   "${ldq}quoted fragment${rdq}: sentence continues",
+  "${ldq}quoted fragment;${rdq} sentence continues":   "${ldq}quoted fragment${rdq}; sentence continues",
+  "${ldq}(quoted) fragment:${rdq} sentence continues": "${ldq}(quoted) fragment${rdq}: sentence continues",
+  "${ldq}quoted (fragment);${rdq} sentence continues": "${ldq}quoted (fragment)${rdq}; sentence continues",
+};
 
 const fixQuotedSentencePunctuationUnitSet = {
   // False positives - single word (should NOT be fixed in this function)
   "Look for ${ldq}word.${rdq} In the text.": "Look for ${ldq}word.${rdq} In the text.",
-  "${ldq}word.${rdq}": "${ldq}word.${rdq}",
-}
+  "${ldq}word.${rdq}":                       "${ldq}word.${rdq}",
+};
 
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Fix punctuation placement for quoted sentence",
-    transformDoubleQuoteSet({...fixQuotedSentencePunctuationUnitSet, ...fixQuotedSentencePunctuationModuleSet}, localeName),
+    transformDoubleQuoteSet(
+      { ...fixQuotedSentencePunctuationUnitSet, ...fixQuotedSentencePunctuationModuleSet },
+      localeName
+    ),
     (text) => fixQuotedSentencePunctuation(text, new Locale(localeName)),
     transformDoubleQuoteSet(fixQuotedSentencePunctuationModuleSet, localeName),
     (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
     localeName
   );
 });
-
 
 const removeExtraSpacesAroundQuotesSet = {
   "${ldq} extra space at the beginning${rdq}": "${ldq}extra space at the beginning${rdq}",
@@ -820,7 +823,7 @@ export const doubleQuotesSet = {
   ...addSpaceAfterRightDoubleQuoteSet,
   ...fixDirectSpeechIntroSet,
   ...fixQuotedWordPunctuationModuleSet,
-  ...fixQuotedSentencePunctuationModuleSet
+  ...fixQuotedSentencePunctuationModuleSet,
 };
 
 export function transformDoubleQuoteSet(testSet, localeName) {
