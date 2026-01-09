@@ -458,74 +458,13 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-/* TBD remove */ 
-const swapQuotesAndTerminalPunctuationSet = {
-  // quoted part at the
-  // end of a sentence
-  // end of a paragraph
-  "Sometimes it can be only a ${ldq}quoted part.${rdq}":             "Sometimes it can be only a ${ldq}quoted part${rdq}.",
-  "Sometimes it can be only a ${ldq}quoted${rdq} ${ldq}part.${rdq}": "Sometimes it can be only a ${ldq}quoted${rdq} ${ldq}part${rdq}.",
-
-  "Is it ${ldq}Amores Perros${rdq}?": "Is it ${ldq}Amores Perros${rdq}?",
-  "Look for ${ldq}Anguanga${rdq}.":   "Look for ${ldq}Anguanga${rdq}.",
-
-  "${ldq}A whole sentence.${rdq} Only a ${ldq}quoted part.${rdq}":
-    "${ldq}A whole sentence.${rdq} Only a ${ldq}quoted part${rdq}.",
-
-  // quoted part at the
-  // end of a sentence
-  // middle of a paragraph
-  "a ${ldq}quoted part.${rdq} A ${ldq}quoted part.${rdq}":         "a ${ldq}quoted part${rdq}. A ${ldq}quoted part${rdq}.",
-  "Only a ${ldq}quoted part.${rdq} ${ldq}A whole sentence.${rdq}": "Only a ${ldq}quoted part${rdq}. ${ldq}A whole sentence.${rdq}",
-
-  // quoted part in the middle of a sentence
-  // toto tu je asi zbytocny test
-  "Only a ${ldq}quoted part${rdq} in a sentence. ${ldq}A whole sentence.${rdq}":
-    "Only a ${ldq}quoted part${rdq} in a sentence. ${ldq}A whole sentence.${rdq}",
-
-  // place punctuation within a quoted sentence that’s in the middle of the sentence.
-  "Ask ${ldq}What’s going on in here${rdq}? so you can dig deeper.":
-    "Ask ${ldq}What’s going on in here?${rdq} so you can dig deeper.",
-  "Ask ${ldq}Question${rdq}? and ${ldq}Question${rdq}? and done.":
-    "Ask ${ldq}Question?${rdq} and ${ldq}Question?${rdq} and done.",
-  "Ask ${ldq}Question${rdq}? and done.\nAsk ${ldq}Question${rdq}? and done.":
-    "Ask ${ldq}Question?${rdq} and done.\nAsk ${ldq}Question?${rdq} and done.",
-  "Before you ask the ${ldq}How often…${rdq} question": "Before you ask the ${ldq}How often…${rdq} question",
-  "Before you ask the ${ldq}How often${rdq}… question": "Before you ask the ${ldq}How often…${rdq} question",
-
-  "${ldq}…example${rdq}":     "${ldq}…example${rdq}",
-  "abc ${ldq}…example${rdq}": "abc ${ldq}…example${rdq}",
-
-  // Bracket before the ellipsis, false positive
-  "Ask ${ldq}what if (the thing)…${rdq}": "Ask ${ldq}what if (the thing)…${rdq}",
-
-  // place punctuation within a quoted sentence
-  "He was ok. ${ldq}He was ok${rdq}.":            "He was ok. ${ldq}He was ok.${rdq}",
-  "He was ok. ${ldq}He was ok${rdq}. He was ok.": "He was ok. ${ldq}He was ok.${rdq} He was ok.",
-  "He was ok? ${ldq}He was ok${rdq}.":            "He was ok? ${ldq}He was ok.${rdq}",
-
-  // swap a right quote and terminal punctuation for the whole sentence
-  "${ldq}He was ok${rdq}.":                                               "${ldq}He was ok.${rdq}",
-  "${ldq}He was ok${rdq}.\n${ldq}He was ok${rdq}.":                       "${ldq}He was ok.${rdq}\n${ldq}He was ok.${rdq}",
-  "${ldq}He was ok${rdq}. ${ldq}He was ok${rdq}.":                        "${ldq}He was ok.${rdq} ${ldq}He was ok.${rdq}",
-  "${ldq}He was ok${rdq}. ${ldq}He was ok${rdq}. ${ldq}He was ok${rdq}.": "${ldq}He was ok.${rdq} ${ldq}He was ok.${rdq} ${ldq}He was ok.${rdq}",
-  "${ldq}He was ok${rdq}. ${ldq}He was ok${rdq}. ${ldq}He was ok${rdq}. ${ldq}He was ok${rdq}.":
-    "${ldq}He was ok.${rdq} ${ldq}He was ok.${rdq} ${ldq}He was ok.${rdq} ${ldq}He was ok.${rdq}",
-  "${ldq}He was ok${rdq}?":            "${ldq}He was ok?${rdq}",
-  "${ldq}He was ok${rdq}. He was ok.": "${ldq}He was ok.${rdq} He was ok.",
-
-  // ellipsis
-  "${ldq}Types of${rdq}…":                        "${ldq}Types of…${rdq}",
-  "${ldq}Types of${rdq}…\n${ldq}Types of${rdq}…": "${ldq}Types of…${rdq}\n${ldq}Types of…${rdq}",
-};
-
-const fixQuotedWordPunctuationSet = {
+const fixQuotedWordPunctuationModuleSet = {
   /*
   Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
 
   Fix the punctuation around a quoted word accordingly:
-  - move period (.), comma (,), semicolon (;), colon (:) outside the quoted word (e.g., “word.” → “word”.)
-  - keep the position of `!` and `?` as is (ambiguous context; we would need contextual information for proper placement: “Wow!” vs. Have you heard about the “bird”?)
+  - move periods `.`, commas `,`, semicolons `;`, colons `:` outside the quoted word (e.g., “word.” → “word”.)
+  - keep the position of `!`, `?`, and `…` as is (ambiguous context; we would need contextual information for proper placement: “Wow!” vs. Have you heard about the “bird”?)
   */
 
   // Single word with period
@@ -563,9 +502,11 @@ const fixQuotedWordPunctuationSet = {
   "Try ${ldq}open-source;${rdq} it${apos}s free.": "Try ${ldq}open-source${rdq}; it${apos}s free.",
 
   // Escaped strings
-  "${ldq}{{typopo__exception}},${rdq}": "${ldq}{{typopo__exception}}${rdq},",
+  "${ldq}{{esc}},${rdq}": "${ldq}{{esc}}${rdq},",
+}
 
-  // False positives - multiple words (should NOT be fixed)
+const fixQuotedWordPunctuationUnitSet = {
+  // False positives - multiple words (should NOT be fixed in this function)
   "She said ${ldq}hello world.${rdq} and left.": "She said ${ldq}hello world.${rdq} and left.",
   "I heard ${ldq}good morning,${rdq} from her.": "I heard ${ldq}good morning,${rdq} from her.",
   "The ${ldq}quick brown fox;${rdq} jumps.": "The ${ldq}quick brown fox;${rdq} jumps.",
@@ -586,48 +527,73 @@ const fixQuotedWordPunctuationSet = {
   "He said ${ldq}hello${rdq}, then left.": "He said ${ldq}hello${rdq}, then left.",
 }
 
-
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Fix punctuation placement for single-word quoted content",
-    transformDoubleQuoteSet(fixQuotedWordPunctuationSet, localeName),
+    transformDoubleQuoteSet({...fixQuotedWordPunctuationUnitSet, ...fixQuotedWordPunctuationModuleSet}, localeName),
     (text) => fixQuotedWordPunctuation(text, new Locale(localeName)),
-    {},
+    transformDoubleQuoteSet(fixQuotedWordPunctuationModuleSet, localeName),
     (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
     localeName
   );
 });
 
 
-const fixQuotedSentencePunctuationSet = {
-  // Colons - ALWAYS outside (even for multiple words)
-  "She said ${ldq}word word:${rdq}": "She said ${ldq}word word${rdq}:",
-  "The ${ldq}full sentence:${rdq} here.": "The ${ldq}full sentence${rdq}: here.",
-  "Consider ${ldq}this example:${rdq} important.": "Consider ${ldq}this example${rdq}: important.",
+const fixQuotedSentencePunctuationModuleSet = {
+  /*
+  Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
 
-  // Periods/commas/semicolons - INSIDE for multiple words
-  "Sometimes it can be only a ${ldq}quoted part.${rdq}": "Sometimes it can be only a ${ldq}quoted part${rdq}.",
-  "a ${ldq}quoted part.${rdq} A ${ldq}quoted part.${rdq}": "a ${ldq}quoted part${rdq}. A ${ldq}quoted part${rdq}.",
-  "She mentioned ${ldq}hello world,${rdq} yesterday.": "She mentioned ${ldq}hello world${rdq}, yesterday.",
-  "The ${ldq}multiple words;${rdq} worked.": "The ${ldq}multiple words${rdq}; worked.",
+  Fix the punctuation around a quoted word accordingly:
+  - move periods `.`, commas `,`, semicolons `;`, ellipses `…`exclamation `!` and question marks `?` inside the quoted part
+  - move colons `:` and semicolons `;` outside the quoted part
+  */
+  
+  // Quoted fragment at the end of sentence
+  "It can be a ${ldq}quoted fragment${rdq}.": "It can be a ${ldq}quoted fragment.${rdq}",
+  "It can be a ${ldq}quoted fragment${rdq},": "It can be a ${ldq}quoted fragment,${rdq}",
+  "It can be a ${ldq}quoted fragment${rdq}!": "It can be a ${ldq}quoted fragment!${rdq}",
+  "It can be a ${ldq}quoted fragment${rdq}?": "It can be a ${ldq}quoted fragment?${rdq}",
+  "It can be a ${ldq}quoted fragment${rdq}…": "It can be a ${ldq}quoted fragment…${rdq}",
+  
+  // Quoted sentence 
+  "${ldq}Fully quoted sentence${rdq}.": "${ldq}Fully quoted sentence.${rdq}",
+  "${ldq}Fully quoted sentence${rdq},": "${ldq}Fully quoted sentence,${rdq}",
+  "${ldq}Fully quoted sentence${rdq}!": "${ldq}Fully quoted sentence!${rdq}",
+  "${ldq}Fully quoted sentence${rdq}?": "${ldq}Fully quoted sentence?${rdq}",
+  "${ldq}Fully quoted sentence${rdq}…": "${ldq}Fully quoted sentence…${rdq}",
 
-  // Exclamation/question - INSIDE for multiple words
-  "Ask ${ldq}What's going on${rdq}? so you can dig.": "Ask ${ldq}What's going on?${rdq} so you can dig.",
-  "She yelled ${ldq}Watch out${rdq}! and ran.": "She yelled ${ldq}Watch out!${rdq} and ran.",
-  "He asked ${ldq}Why not${rdq}? repeatedly.": "He asked ${ldq}Why not?${rdq} repeatedly.",
+  // Less common boundaries 
+  "${ldq}(Fully) quoted sentence${rdq}.": "${ldq}(Fully) quoted sentence.${rdq}",
+  "${ldq}Fully quoted (sentence)${rdq}.": "${ldq}Fully quoted (sentence).${rdq}",
 
-  // Whole sentence scenarios
-  "${ldq}He was ok${rdq}.": "${ldq}He was ok.${rdq}",
-  "He was ok. ${ldq}He was ok${rdq}.": "He was ok. ${ldq}He was ok.${rdq}",
-  "${ldq}She was fine${rdq}. ${ldq}He was ok${rdq}.": "${ldq}She was fine.${rdq} ${ldq}He was ok.${rdq}",
+  // Escaped strings
+  "It can be a ${ldq}{{esc}} {{esc}}{rdq}.": "It can be a ${ldq}{{esc}} {{esc}}.${rdq}",
 
-  // Ellipsis
-  "${ldq}Types of${rdq}…": "${ldq}Types of…${rdq}",
-  "Before you ask the ${ldq}How often${rdq}… question": "Before you ask the ${ldq}How often…${rdq} question",
+  // Colon / semicolon should be placed outside the quotes
+  "${ldq}quoted fragment:${rdq} sentence continues" : "${ldq}quoted fragment${rdq}: sentence continues",
+  "${ldq}quoted fragment;${rdq} sentence continues" : "${ldq}quoted fragment${rdq}; sentence continues",
+  "${ldq}(quoted) fragment:${rdq} sentence continues" : "${ldq}(quoted) fragment${rdq}: sentence continues",
+  "${ldq}quoted (fragment);${rdq} sentence continues" : "${ldq}quoted (fragment)${rdq}; sentence continues",
 
-  // Exceptions - closing brackets
-  "Ask ${ldq}what if (the thing)…${rdq}": "Ask ${ldq}what if (the thing)…${rdq}",
 }
+
+const fixQuotedSentencePunctuationUnitSet = {
+  // False positives - single word (should NOT be fixed in this function)
+  "Look for ${ldq}word.${rdq} In the text.": "Look for ${ldq}word.${rdq} In the text.",
+  "${ldq}word.${rdq}": "${ldq}word.${rdq}",
+}
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Fix punctuation placement for quoted sentence",
+    transformDoubleQuoteSet({...fixQuotedSentencePunctuationUnitSet, ...fixQuotedSentencePunctuationModuleSet}, localeName),
+    (text) => fixQuotedSentencePunctuation(text, new Locale(localeName)),
+    transformDoubleQuoteSet(fixQuotedSentencePunctuationModuleSet, localeName),
+    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
+    localeName
+  );
+});
+
 
 const removeExtraSpacesAroundQuotesSet = {
   "${ldq} extra space at the beginning${rdq}": "${ldq}extra space at the beginning${rdq}",
@@ -849,12 +815,12 @@ export const doubleQuotesSet = {
   ...identifyUnpairedRightDoubleQuoteSet,
   ...removeUnidentifiedDoubleQuoteSet,
   ...replaceDoublePrimeWDoubleQuoteModuleSet,
-  // ...swapQuotesAndTerminalPunctuationSet,
   ...removeExtraSpacesAroundQuotesSet,
   ...addSpaceBeforeLeftDoubleQuoteSet,
   ...addSpaceAfterRightDoubleQuoteSet,
   ...fixDirectSpeechIntroSet,
-  ...fixQuotedWordPunctuationSet
+  ...fixQuotedWordPunctuationModuleSet,
+  ...fixQuotedSentencePunctuationModuleSet
 };
 
 export function transformDoubleQuoteSet(testSet, localeName) {
