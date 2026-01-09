@@ -36,7 +36,7 @@ const narrowNbsp = " "; // &#8239, U+202F
 const spaces = space + nbsp + hairSpace + narrowNbsp;
 
 /* Punctuation */
-const terminalPunctuation = "\\.!\\?";
+const terminalPunctuation = "\\.!?";
 const sentencePausePunctuation = ",:;";
 const sentencePunctuation = sentencePausePunctuation + terminalPunctuation; // there is no ellipsis in the set as it is being used throughout a sentence in the middle. Rethink this group to split it into end-sentence punctuation and middle sentence punctuation
 const openingBrackets = "\\(\\[\\{";
