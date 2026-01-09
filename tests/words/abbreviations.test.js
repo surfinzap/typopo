@@ -112,7 +112,7 @@ const multiWordAbbrSet = {
   "(i.e.)":                   "(i.${abbrSpace}e.)",
 };
 
-const multiWordAbbrUnitModuleSet = {
+const multiWordAbbrUnitSet = {
   "e.g. “something”":                               "e.${abbrSpace}g. “something”",
   "e.g. ‘something’":                               "e.${abbrSpace}g. ‘something’",
   "“We will continue tomorrow at 8:00 a.m.”":       "“We will continue tomorrow at 8:00 a.${abbrSpace}m.”",
@@ -128,7 +128,7 @@ supportedLocales.forEach((locale) => {
   if (locale === "en-us") {
     unitTestSet = {
       ...multiWordAbbrSet,
-      ...multiWordAbbrUnitModuleSet,
+      ...multiWordAbbrUnitSet,
     };
   }
 

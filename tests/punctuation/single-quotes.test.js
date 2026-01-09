@@ -255,11 +255,11 @@ const identifyUnpairedRightSingleQuoteModuleSet = {
   "${ldq}word›${rdq}":  "${ldq}word’${rdq}",
   "${ldq}word.'${rdq}": "${ldq}word.’${rdq}",
   "${ldq}word!'${rdq}": "${ldq}word!’${rdq}",
-  "${ldq}word':${rdq}": "${ldq}word’:${rdq}",
-  "${ldq}word',${rdq}": "${ldq}word’,${rdq}",
 };
 
 const identifyUnpairedRightSingleQuoteUnitSet = {
+  "${ldq}word':${rdq}": "${ldq}word{{typopo__rsq--unpaired}}:${rdq}",
+  "${ldq}word',${rdq}": "${ldq}word{{typopo__rsq--unpaired}},${rdq}",
   '"word\'"': '"word{{typopo__rsq--unpaired}}"',
   '"word‚"':  '"word{{typopo__rsq--unpaired}}"',
   "word‘":    "word{{typopo__rsq--unpaired}}",

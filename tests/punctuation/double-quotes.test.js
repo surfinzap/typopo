@@ -1,7 +1,8 @@
 import {
   removeExtraPunctuationBeforeQuotes,
   removeExtraPunctuationAfterQuotes,
-  swapQuotesAndTerminalPunctuation,
+  fixQuotedWordPunctuation,
+  fixQuotedSentencePunctuation,
   identifyDoublePrimes,
   identifyDoubleQuotePairs,
   identifyUnpairedLeftDoubleQuote,
@@ -26,7 +27,7 @@ const doubleQuotesFalsePositives = {
     "common to have ${ldq}namespace pollution${rdq}, where completely unrelated code shares global variables.",
 };
 
-const removePunctuationBeforeQuotesSet = {
+const removePunctuationBeforeQuotesUnitSet = {
   /* extra comma after terminal punctuation, 
      as it it happens in direct speech */
   "${ldq}Hey!,${rdq} she said": "${ldq}Hey!${rdq} she said",
@@ -50,7 +51,54 @@ const removePunctuationBeforeQuotesSet = {
   "${ldq}Hey;;${rdq} she said": "${ldq}Hey;${rdq} she said",
   "${ldq}Hey,;${rdq} she said": "${ldq}Hey,${rdq} she said",
 
-  //false positive
+  // false positive
+  "${ldq}Hey!!${rdq} she said": "${ldq}Hey!!${rdq} she said",
+  "${ldq}Hey?!${rdq} she said": "${ldq}Hey?!${rdq} she said",
+  "${ldq}Hey.!${rdq} she said": "${ldq}Hey.!${rdq} she said",
+  "${ldq}Hey:!${rdq} she said": "${ldq}Hey:!${rdq} she said",
+  "${ldq}Hey;!${rdq} she said": "${ldq}Hey;!${rdq} she said",
+  "${ldq}Hey,!${rdq} she said": "${ldq}Hey,!${rdq} she said",
+
+  "${ldq}Hey!?${rdq} she said": "${ldq}Hey!?${rdq} she said",
+  "${ldq}Hey??${rdq} she said": "${ldq}Hey??${rdq} she said",
+  "${ldq}Hey.?${rdq} she said": "${ldq}Hey.?${rdq} she said",
+  "${ldq}Hey:?${rdq} she said": "${ldq}Hey:?${rdq} she said",
+  "${ldq}Hey;?${rdq} she said": "${ldq}Hey;?${rdq} she said",
+  "${ldq}Hey,?${rdq} she said": "${ldq}Hey,?${rdq} she said",
+
+  "${ldq}Hey!.${rdq} she said": "${ldq}Hey!.${rdq} she said",
+  "${ldq}Hey?.${rdq} she said": "${ldq}Hey?.${rdq} she said",
+  "${ldq}Hey:.${rdq} she said": "${ldq}Hey:.${rdq} she said",
+  "${ldq}Hey;.${rdq} she said": "${ldq}Hey;.${rdq} she said",
+  "${ldq}Hey,.${rdq} she said": "${ldq}Hey,.${rdq} she said",
+};
+
+const removePunctuationBeforeQuotesModuleSet = {
+  /* extra comma after terminal punctuation, 
+     as it it happens in direct speech */
+  /* Module set considers the effect of fixQuotedWordPunctuation function */ 
+  "${ldq}Hey!,${rdq} she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?,${rdq} she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.,${rdq} she said": "${ldq}Hey${rdq}. she said",
+  "${ldq}Hey:,${rdq} she said": "${ldq}Hey${rdq}: she said",
+  "${ldq}Hey;,${rdq} she said": "${ldq}Hey${rdq}; she said",
+  "${ldq}Hey,,${rdq} she said": "${ldq}Hey${rdq}, she said",
+
+  "${ldq}Hey!:${rdq} she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?:${rdq} she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.:${rdq} she said": "${ldq}Hey${rdq}. she said",
+  "${ldq}Hey::${rdq} she said": "${ldq}Hey${rdq}: she said",
+  "${ldq}Hey;:${rdq} she said": "${ldq}Hey${rdq}; she said",
+  "${ldq}Hey,:${rdq} she said": "${ldq}Hey${rdq}, she said",
+
+  "${ldq}Hey!;${rdq} she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?;${rdq} she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.;${rdq} she said": "${ldq}Hey${rdq}. she said",
+  "${ldq}Hey:;${rdq} she said": "${ldq}Hey${rdq}: she said",
+  "${ldq}Hey;;${rdq} she said": "${ldq}Hey${rdq}; she said",
+  "${ldq}Hey,;${rdq} she said": "${ldq}Hey${rdq}, she said",
+
+  // false positive
   "${ldq}Hey!!${rdq} she said": "${ldq}Hey!!${rdq} she said",
   "${ldq}Hey?!${rdq} she said": "${ldq}Hey?!${rdq} she said",
   "${ldq}Hey.!${rdq} she said": "${ldq}Hey.!${rdq} she said",
@@ -75,15 +123,15 @@ const removePunctuationBeforeQuotesSet = {
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Remove an extra punctuation before double quotes",
-    transformDoubleQuoteSet(removePunctuationBeforeQuotesSet, localeName),
+    transformDoubleQuoteSet(removePunctuationBeforeQuotesUnitSet, localeName),
     removeExtraPunctuationBeforeQuotes,
-    {},
+    transformDoubleQuoteSet(removePunctuationBeforeQuotesModuleSet, localeName),
     (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
     localeName
   );
 });
 
-const removePunctuationAfterQuotesSet = {
+const removePunctuationAfterQuotesUnitSet = {
   "${ldq}Hey!${rdq}, she said": "${ldq}Hey!${rdq} she said",
   "${ldq}Hey?${rdq}, she said": "${ldq}Hey?${rdq} she said",
   "${ldq}Hey.${rdq}, she said": "${ldq}Hey.${rdq} she said",
@@ -130,12 +178,60 @@ const removePunctuationAfterQuotesSet = {
   "Byl to ${ldq}Karel IV.${rdq}, ktery": "Byl to ${ldq}Karel IV.${rdq}, ktery",
 };
 
+const removePunctuationAfterQuotesModuleSet = {
+  /* Module set considers the effect of fixQuotedWordPunctuation function */ 
+  "${ldq}Hey!${rdq}, she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}, she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}, she said": "${ldq}Hey${rdq}. she said",
+  "${ldq}Hey:${rdq}, she said": "${ldq}Hey${rdq}: she said",
+  "${ldq}Hey;${rdq}, she said": "${ldq}Hey${rdq}; she said",
+  "${ldq}Hey,${rdq}, she said": "${ldq}Hey${rdq}, she said",
+
+  "${ldq}Hey!${rdq}: she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}: she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}: she said": "${ldq}Hey${rdq}. she said",
+  "${ldq}Hey:${rdq}: she said": "${ldq}Hey${rdq}: she said",
+  "${ldq}Hey;${rdq}: she said": "${ldq}Hey${rdq}; she said",
+  "${ldq}Hey,${rdq}: she said": "${ldq}Hey${rdq}, she said",
+
+  "${ldq}Hey!${rdq}; she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}; she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}; she said": "${ldq}Hey${rdq}. she said",
+  "${ldq}Hey:${rdq}; she said": "${ldq}Hey${rdq}: she said",
+  "${ldq}Hey;${rdq}; she said": "${ldq}Hey${rdq}; she said",
+  "${ldq}Hey,${rdq}; she said": "${ldq}Hey${rdq}, she said",
+
+  "${ldq}Hey!${rdq}. she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}. she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}. she said": "${ldq}Hey${rdq}. she said",
+  "${ldq}Hey:${rdq}. she said": "${ldq}Hey${rdq}: she said",
+  "${ldq}Hey;${rdq}. she said": "${ldq}Hey${rdq}; she said",
+  "${ldq}Hey,${rdq}. she said": "${ldq}Hey${rdq}, she said",
+
+  "${ldq}Hey!${rdq}? she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}? she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}? she said": "${ldq}Hey${rdq}. she said",
+  "${ldq}Hey:${rdq}? she said": "${ldq}Hey${rdq}: she said",
+  "${ldq}Hey;${rdq}? she said": "${ldq}Hey${rdq}; she said",
+  "${ldq}Hey,${rdq}? she said": "${ldq}Hey${rdq}, she said",
+
+  "${ldq}Hey!${rdq}! she said": "${ldq}Hey!${rdq} she said",
+  "${ldq}Hey?${rdq}! she said": "${ldq}Hey?${rdq} she said",
+  "${ldq}Hey.${rdq}! she said": "${ldq}Hey${rdq}. she said",
+  "${ldq}Hey:${rdq}! she said": "${ldq}Hey${rdq}: she said",
+  "${ldq}Hey;${rdq}! she said": "${ldq}Hey${rdq}; she said",
+  "${ldq}Hey,${rdq}! she said": "${ldq}Hey${rdq}, she said",
+
+  // false positive
+  "Byl to ${ldq}Karel IV.${rdq}, ktery": "Byl to ${ldq}Karel IV.${rdq}, ktery",
+};
+
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Remove an punctuation after double quotes",
-    transformDoubleQuoteSet(removePunctuationAfterQuotesSet, localeName),
+    transformDoubleQuoteSet(removePunctuationAfterQuotesUnitSet, localeName),
     removeExtraPunctuationAfterQuotes,
-    {},
+    transformDoubleQuoteSet(removePunctuationAfterQuotesModuleSet, localeName),
     (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
     localeName
   );
@@ -422,16 +518,103 @@ const swapQuotesAndTerminalPunctuationSet = {
   "${ldq}Types of${rdq}…\n${ldq}Types of${rdq}…": "${ldq}Types of…${rdq}\n${ldq}Types of…${rdq}",
 };
 
+const fixQuotedWordPunctuationSet = {
+  /*
+  Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
+
+  Fix the punctuation around a quoted word accordingly:
+  - move period (.), comma (,), semicolon (;), colon (:) outside the quoted word (e.g., “word.” → “word”.)
+  - keep the position of `!` and `?` as is (ambiguous context; we would need contextual information for proper placement: “Wow!” vs. Have you heard about the “bird”?)
+  */
+
+  // Single word with period
+  "${ldq}word.${rdq}": "${ldq}word${rdq}.",
+  "Look for ${ldq}word.${rdq} In the text.": "Look for ${ldq}word${rdq}. In the text.",
+  "Look for ${ldq}Ian.${rdq} In the text.": "Look for ${ldq}Ian${rdq}. In the text.",
+  
+  // Single word with comma
+  "${ldq}word,${rdq}": "${ldq}word${rdq},",
+  "He said ${ldq}hello,${rdq} then left.": "He said ${ldq}hello${rdq}, then left.",
+  
+  // Single word with semicolon
+  "${ldq}word;${rdq}": "${ldq}word${rdq};",
+  "He used ${ldq}code;${rdq} it worked.": "He used ${ldq}code${rdq}; it worked.",
+
+  // Single word with colon
+  "${ldq}word:${rdq}": "${ldq}word${rdq}:",
+  "Consider ${ldq}refactoring:${rdq} it helps.": "Consider ${ldq}refactoring${rdq}: it helps.",
+
+  // Contracted words
+  "Say ${ldq}don${apos}t;${rdq} be firm.": "Say ${ldq}don${apos}t${rdq}; be firm.",
+
+  // Numbers
+  "Version ${ldq}2.0.${rdq} is out.": "Version ${ldq}2.0${rdq}. is out.",
+  "In ${ldq}2020,${rdq} things changed.": "In ${ldq}2020${rdq}, things changed.",
+  "Number ${ldq}42;${rdq} the answer.": "Number ${ldq}42${rdq}; the answer.",
+
+  // Combinations with numbers and contractions (e.g., 69'ers)
+  "The ${ldq}69${apos}ers.${rdq} were famous.": "The ${ldq}69${apos}ers${rdq}. were famous.",
+  "Those ${ldq}90${apos}s,${rdq} good times.": "Those ${ldq}90${apos}s${rdq}, good times.",
+
+  // Hyphenated words
+  "Use ${ldq}well-known.${rdq} for clarity.": "Use ${ldq}well-known${rdq}. for clarity.",
+  "The ${ldq}state-of-the-art,${rdq} approach.": "The ${ldq}state-of-the-art${rdq}, approach.",
+  "Try ${ldq}open-source;${rdq} it${apos}s free.": "Try ${ldq}open-source${rdq}; it${apos}s free.",
+
+  // Escaped strings
+  "${ldq}{{typopo__exception}},${rdq}": "${ldq}{{typopo__exception}}${rdq},",
+
+  // False positives - multiple words (should NOT be fixed)
+  "She said ${ldq}hello world.${rdq} and left.": "She said ${ldq}hello world.${rdq} and left.",
+  "I heard ${ldq}good morning,${rdq} from her.": "I heard ${ldq}good morning,${rdq} from her.",
+  "The ${ldq}quick brown fox;${rdq} jumps.": "The ${ldq}quick brown fox;${rdq} jumps.",
+  "The ${ldq}quick brown fox${rdq}; jumps.": "The ${ldq}quick brown fox${rdq}; jumps.",
+  "Note ${ldq}some important thing:${rdq} here.": "Note ${ldq}some important thing:${rdq} here.",
+
+  // False positives - exclamation and question marks (should NOT be fixed)
+  "The ${ldq}Wow!${rdq} was loud.": "The ${ldq}Wow!${rdq} was loud.",
+  "The ${ldq}Wow${rdq}! was loud.": "The ${ldq}Wow${rdq}! was loud.",
+  "She asked ${ldq}Why?${rdq} repeatedly.": "She asked ${ldq}Why?${rdq} repeatedly.",
+  "She asked ${ldq}Why${rdq}? repeatedly.": "She asked ${ldq}Why${rdq}? repeatedly.",
+
+  // False positives - regnal numbers
+  "Byl to Karel ${ldq}IV.${rdq}, ktery": "Byl to Karel ${ldq}IV.${rdq}, ktery",
+  
+  // False positives - already correct
+  "The ${ldq}word${rdq}. is correct.": "The ${ldq}word${rdq}. is correct.",
+  "He said ${ldq}hello${rdq}, then left.": "He said ${ldq}hello${rdq}, then left.",
+}
+
+
 supportedLocales.forEach((localeName) => {
   createTestSuite(
-    "Swap quotes and terminal punctuation for a quoted part",
-    transformDoubleQuoteSet(swapQuotesAndTerminalPunctuationSet, localeName),
-    (text) => swapQuotesAndTerminalPunctuation(text, new Locale(localeName)),
+    "Fix punctuation placement for single-word quoted content",
+    transformDoubleQuoteSet(fixQuotedWordPunctuationSet, localeName),
+    (text) => fixQuotedWordPunctuation(text, new Locale(localeName)),
     {},
     (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
     localeName
   );
 });
+
+const fixQuotedWordPunctuationSet = {
+  /* 
+  Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
+
+  Fix the punctuation around quoted word accordingly:
+  - move `.` `,` `;` `:` outside the quoted word (“word,” → “word”,)
+  - keep the position of `!`, `?` as is. (we would need contextual information for the proper placement: “Wow!” vs. Have you heard about the “bird”?)
+  */ 
+  // instructions for tests
+  // for double quotes on both sides of key-value pair refer as ${ldq} and ${rdq}
+  // add tests for a single word combinations of quotes and anticipated punctuation `.` `,` `;` `:`; give a bit of context before and after the tested part 
+  // also add tests with a single contracted word
+  // also add tests with a number or combination of contractions (e.g. 69'ers)
+  // also add tests with the hyphenated word
+  // false positives (shouldn't be fixed): variations of multiple words; this shouldn't be corrected in this set
+  // false positives (shouldn't be fixed): example with ! and ? 
+  // think about other positive or false positive tests that should be considered for this function
+}
 
 const removeExtraSpacesAroundQuotesSet = {
   "${ldq} extra space at the beginning${rdq}": "${ldq}extra space at the beginning${rdq}",
@@ -645,19 +828,20 @@ createTestSuite(
 );
 
 export const doubleQuotesSet = {
-  ...removePunctuationBeforeQuotesSet,
-  ...removePunctuationAfterQuotesSet,
+  ...removePunctuationBeforeQuotesModuleSet,
+  ...removePunctuationAfterQuotesModuleSet,
   ...identifyDoublePrimesModuleSet,
   ...identifyDoubleQuotePairsModuleSet,
   ...identifyUnpairedLeftDoubleQuoteSet,
   ...identifyUnpairedRightDoubleQuoteSet,
   ...removeUnidentifiedDoubleQuoteSet,
   ...replaceDoublePrimeWDoubleQuoteModuleSet,
-  ...swapQuotesAndTerminalPunctuationSet,
+  // ...swapQuotesAndTerminalPunctuationSet,
   ...removeExtraSpacesAroundQuotesSet,
   ...addSpaceBeforeLeftDoubleQuoteSet,
   ...addSpaceAfterRightDoubleQuoteSet,
   ...fixDirectSpeechIntroSet,
+  ...fixQuotedWordPunctuationSet
 };
 
 export function transformDoubleQuoteSet(testSet, localeName) {

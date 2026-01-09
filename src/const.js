@@ -11,8 +11,8 @@ const allChars = "a-z" + nonLatinLowercase + "A-Z" + nonLatinUppercase;
   (8218)    single low-9 quotation mark
   (39)			dumb single quote
   (8216)		left single quotation mark
-  (8217)		right single quotation mark
-  (700)	  	modifier letter apostrophe; https://en.wikipedia.org/wiki/Modifier_letter_apostrophe [1]
+  (8217)		right single quotation mark ’
+  (700)	  	modifier letter apostrophe ʼ https://en.wikipedia.org/wiki/Modifier_letter_apostrophe [1]
   (8219)		single high-reversed-9 quotation mark
   (180)     acute accent ´
   (96)      grave accent `
@@ -22,10 +22,10 @@ const allChars = "a-z" + nonLatinLowercase + "A-Z" + nonLatinUppercase;
   quick search at https://www.toptal.com/designers/htmlarrows/punctuation/
 */
 const singleQuoteAdepts = "‚|'|‘|’|ʼ|‛|´|`|′|‹|›";
-const apostrophe = "’"; // (8217) [1]
+const apostrophe = "’"; // (8217) is Unicode recommendation for apostrophe https://www.unicode.org/charts/nameslist/n_2000.html
 const singlePrime = "′";
 const backtick = "`";
-const doubleQuoteAdepts = "„|“|”|\"|«|»|″|,{2,}|‚{2,}|[‘’'‹›′´`]{2,}";
+const doubleQuoteAdepts = "„|“|”|\"|«|»|″|,{2,}|‚{2,}|[‘’ʼ'‹›′´`]{2,}";
 const doublePrime = "″";
 
 /* Spaces */
@@ -35,9 +35,9 @@ const hairSpace = " "; // &#8202, U+200A
 const narrowNbsp = " "; // &#8239, U+202F
 const spaces = space + nbsp + hairSpace + narrowNbsp;
 
-/* Punctuation*/
-const terminalPunctuation = "\\.\\!\\?";
-const sentencePausePunctuation = "\\,\\:\\;";
+/* Punctuation */
+const terminalPunctuation = "\\.!\\?";
+const sentencePausePunctuation = ",:;";
 const sentencePunctuation = sentencePausePunctuation + terminalPunctuation; // there is no ellipsis in the set as it is being used throughout a sentence in the middle. Rethink this group to split it into end-sentence punctuation and middle sentence punctuation
 const openingBrackets = "\\(\\[\\{";
 const closingBrackets = "\\)\\]\\}";

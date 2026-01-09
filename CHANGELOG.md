@@ -3,6 +3,15 @@
 
 ## 2.9.0 // 
 
+### 💪 Improvements
+- Fix punctuation placement for single-word quoted content by moving periods, commas, semicolons, and colons outside the quotes:
+  - `“word.” → “word”.`
+  - `“it’s,” → “it’s”,`
+  - `“well-known;” → “well-known”;`
+  - `“2020:” → “2020”:`
+  - Exclamation and question marks remain unchanged (ambiguous context)
+
+
 ### 🔨 Maintenance
 - Update dev dependencies to their latest versions 
 

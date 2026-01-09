@@ -452,6 +452,125 @@ export function swapQuotesAndTerminalPunctuation(string, locale) {
 
 //
 
+//
+
+/**
+  Fix punctuation placement for single-word quoted content
+
+  Single word = no spaces inside quotes (includes contractions, hyphenated words, numbers)
+
+  Rules:
+  - move period (.), comma (,), semicolon (;), colon (:) outside the quoted word 
+  - keep the position of `!` and `?` as is (ambiguous context)
+
+  Examples
+  “word.” → “word”.
+  “it’s,” → “it’s”,
+  “well-known;” → “well-known”;
+  “2020:” → “2020”:
+  “Wow!” → “Wow!” (unchanged—ambiguous)
+
+  @param {string} string: input text for identification
+  @param {object} locale: locale configuration
+  @returns {string} output with corrected punctuation placement
+*/
+export function fixQuotedWordPunctuation(string, locale) {
+  // prettier-ignore
+  return string.replace(
+    new RegExp(
+      `(${locale.leftDoubleQuote})` +                          
+      `([^${base.spaces}${locale.rightDoubleQuote}]+?)` +      
+      `([^${base.romanNumerals}${base.sentencePunctuation}])` +                  
+      `([${base.sentencePunctuation}]{1,})` +                                   
+      `(${locale.rightDoubleQuote})`,   
+      "g"
+    ),
+    (match, leftQuote, content, notRoman, punct, rightQuote) => {
+      if (punct.length === 1 && /[.,;:]/.test(punct)) {
+        console.log(punct);
+        return leftQuote + content + notRoman + rightQuote + punct;
+      }
+      return match; // Return unchanged for everything else
+    }
+  );
+}
+
+//
+
+/**
+  Fix punctuation placement for multi-word quoted content
+
+  Multiple words = contains spaces inside quotes
+
+  Rules:
+  - Period (.), comma (,), semicolon (;) → Keep INSIDE quotes
+  - Colon (:) → ALWAYS move OUTSIDE quotes
+  - Exclamation (!), question (?) → Keep INSIDE quotes
+
+  This handles various contexts:
+  1. Quoted sentence within unquoted sentence (lowercase continuation)
+  2. Whole quoted sentence at paragraph start
+  3. Whole quoted sentence after another sentence
+  4. Quoted sentence after quoted sentence
+
+  Examples
+  "word word." stays "word word."
+  "word word:" → "word word":
+  Ask "What's going on"? → Ask "What's going on?"
+
+  @param {string} string: input text for identification
+  @param {object} locale: locale configuration
+  @returns {string} output with corrected punctuation placement
+*/
+export function fixQuotedSentencePunctuation(string, locale) {
+  // Move colon outside quotes for any content (including multi-word)
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `(${locale.leftDoubleQuote})` +          // 1: left quote
+      `(.+?)` +                                 // 2: content (any length, including spaces)
+      `([^${base.romanNumerals}])` +           // 3: last char (not Roman numeral)
+      `(:)` +                                   // 4: colon
+      `(${locale.rightDoubleQuote})`,          // 5: right quote
+      "g"
+    ),
+    `$1` +
+    `$2` +
+    `$3` +
+    `$5` +
+    `$4`  // Move colon outside
+  );
+
+  // Match quoted sentence within an unquoted sentence
+  // and place terminal punctuation of the quoted sentence
+  // within quotes
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([^${base.sentencePunctuation}])` +
+      `([${base.spaces}])` +
+      `(${locale.leftDoubleQuote})` +
+      `(.+?)` +
+      `([^${base.romanNumerals}])` +
+      `(${locale.rightDoubleQuote})` +
+      `([${base.terminalPunctuation}${base.ellipsis}])` +
+      `([${base.spaces}])` +
+      `([${base.lowercaseChars}])`,
+
+      "g"
+    ),
+    `$1` +
+    `$2` +
+    `$3` +
+    `$4` +
+    `$6` +
+    `$5`  // Move punctuation after quote
+  );
+}
+
+
+
+
 /**
   Replace all identified punctuation with appropriate punctuation in given language
 
@@ -729,8 +848,9 @@ export function fixDoubleQuotesAndPrimes(string, locale, configuration) {
   /* [8] Fix direct speech introduction */
   string = fixDirectSpeechIntro(string, locale);
 
-  /* [9] Swap quotes and terminal punctuation */
-  string = swapQuotesAndTerminalPunctuation(string, locale);
+  /* [9] Fix punctuation placement for quoted content */
+  string = fixQuotedWordPunctuation(string, locale);
+  // string = fixQuotedSentencePunctuation(string, locale);
 
   return string;
 }
