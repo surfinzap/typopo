@@ -15,8 +15,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       '@trivago/prettier-plugin-sort-imports':
-        specifier: ^6.0.1
-        version: 6.0.1(prettier@3.7.4)
+        specifier: ^6.0.2
+        version: 6.0.2(prettier@3.7.4)
       cross-env:
         specifier: ^10.1.0
         version: 10.1.0
@@ -36,8 +36,8 @@ importers:
         specifier: ^3.7.4
         version: 3.7.4
       vite:
-        specifier: ^7.3.0
-        version: 7.3.0(terser@5.43.1)(yaml@2.8.1)
+        specifier: ^7.3.1
+        version: 7.3.1(terser@5.43.1)(yaml@2.8.1)
       vitest:
         specifier: ^4.0.16
         version: 4.0.16(jsdom@27.4.0)(terser@5.43.1)(yaml@2.8.1)
@@ -473,8 +473,8 @@ packages:
   '@standard-schema/spec@1.0.0':
     resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
 
-  '@trivago/prettier-plugin-sort-imports@6.0.1':
-    resolution: {integrity: sha512-6B13DCWDfAfh4AEJ43gRgeCSAQmlKG5LHqHzHc0lbUwgBy0rX7o41US+46Fd4XiXBx+JDGEz3NBadCbUls0dUQ==}
+  '@trivago/prettier-plugin-sort-imports@6.0.2':
+    resolution: {integrity: sha512-3DgfkukFyC/sE/VuYjaUUWoFfuVjPK55vOFDsxD56XXynFMCZDYFogH2l/hDfOsQAm1myoU/1xByJ3tWqtulXA==}
     engines: {node: '>= 20'}
     peerDependencies:
       '@vue/compiler-sfc': 3.x
@@ -1160,8 +1160,8 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-  vite@7.3.0:
-    resolution: {integrity: sha512-dZwN5L1VlUBewiP6H9s2+B3e3Jg96D0vzN+Ry73sOefebhYr9f94wwkMNN/9ouoU8pV1BqA1d1zGk8928cx0rg==}
+  vite@7.3.1:
+    resolution: {integrity: sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -1612,7 +1612,7 @@ snapshots:
 
   '@standard-schema/spec@1.0.0': {}
 
-  '@trivago/prettier-plugin-sort-imports@6.0.1(prettier@3.7.4)':
+  '@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.7.4)':
     dependencies:
       '@babel/generator': 7.28.3
       '@babel/parser': 7.28.4
@@ -1645,13 +1645,13 @@ snapshots:
       chai: 6.2.1
       tinyrainbow: 3.0.3
 
-  '@vitest/mocker@4.0.16(vite@7.3.0(terser@5.43.1)(yaml@2.8.1))':
+  '@vitest/mocker@4.0.16(vite@7.3.1(terser@5.43.1)(yaml@2.8.1))':
     dependencies:
       '@vitest/spy': 4.0.16
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.0(terser@5.43.1)(yaml@2.8.1)
+      vite: 7.3.1(terser@5.43.1)(yaml@2.8.1)
 
   '@vitest/pretty-format@4.0.16':
     dependencies:
@@ -2320,7 +2320,7 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  vite@7.3.0(terser@5.43.1)(yaml@2.8.1):
+  vite@7.3.1(terser@5.43.1)(yaml@2.8.1):
     dependencies:
       esbuild: 0.27.2
       fdir: 6.5.0(picomatch@4.0.3)
@@ -2336,7 +2336,7 @@ snapshots:
   vitest@4.0.16(jsdom@27.4.0)(terser@5.43.1)(yaml@2.8.1):
     dependencies:
       '@vitest/expect': 4.0.16
-      '@vitest/mocker': 4.0.16(vite@7.3.0(terser@5.43.1)(yaml@2.8.1))
+      '@vitest/mocker': 4.0.16(vite@7.3.1(terser@5.43.1)(yaml@2.8.1))
       '@vitest/pretty-format': 4.0.16
       '@vitest/runner': 4.0.16
       '@vitest/snapshot': 4.0.16
@@ -2353,7 +2353,7 @@ snapshots:
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.0(terser@5.43.1)(yaml@2.8.1)
+      vite: 7.3.1(terser@5.43.1)(yaml@2.8.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       jsdom: 27.4.0
