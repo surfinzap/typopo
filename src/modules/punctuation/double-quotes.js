@@ -295,175 +295,15 @@ export function replaceDoublePrimeWDoubleQuote(string) {
 //
 
 /**
- Swap quotes and terminal punctuation for a quoted part
-
-
-   There are two different rules to follow quotes:
-  1. Quotes contain only quoted material:
-  “Sometimes it can be a whole sentence.”
-  Sometimes it can be only a “quoted part”.
-  The difference is where the terminal and sentence pause punctuation is.
-
-  2. American editorial style
-  Similar as the first rule, but commas (,) and periods (.) go before closing quotation marks, regardless whether they are part of the quoted material.
-
-  The aim here is to support the first rule.
-
-
-  
-  Examples
-  “Sometimes it can be a whole sentence.”
-  Sometimes it can be only a “quoted part”.
-
-  So we’re looking to swap here:
-  Sometimes it can be only a “quoted part.” →
-  Sometimes it can be only a “quoted part”.
-
-  Exceptions
-  Byl to “Karel IV.”, ktery 
-
-
-  Algorithm
-  Three different cases, see comments in code
-
-  @param {string} string: input text for identification
-  @param {string} locale: locale option
-  @returns {string} output with swapped double quotes and terminal punctuation within a quoted part
-*/
-export function swapQuotesAndTerminalPunctuation(string, locale) {
-  // match quoted part within a sentence and
-  // place punctuation outside of quoted part
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([^${base.sentencePunctuation}])` +  // 1
-      `([${base.spaces}])` +                // 2
-      `(${locale.leftDoubleQuote})` +         // 3
-      `([^${locale.rightDoubleQuote}]+?)` +    // 4
-      `([^${base.romanNumerals}${base.closingBrackets}])` +  // 5
-      `([${base.terminalPunctuation}${base.ellipsis}])` +    // 6
-      `(${locale.rightDoubleQuote})`,       // 7
-      "g"
-    ),
-    `$1` +
-    `$2` +
-    `$3` +
-    `$4` +
-    `$5` +
-    `$7` +
-    `$6`
-  );
-
-  // Match quoted sentence within an unquoted sentence
-  // and place terminal punctuation of the quoted sentence
-  // within quotes
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([^${base.sentencePunctuation}])` +
-      `([${base.spaces}])` +
-      `(${locale.leftDoubleQuote})` +
-      `(.+?)` +
-      `([^${base.romanNumerals}])` +
-      `(${locale.rightDoubleQuote})` +
-      `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `([${base.spaces}])` +
-      `([${base.lowercaseChars}])`,
-
-      "g"
-    ),
-      `$1` +
-      `$2` +
-      `$3` +
-      `$4` +
-      `$5` +
-      `$7` +
-      `$6` +
-      `$8` +
-      `$9`
-  );
-
-  // Match the whole quoted sentence starting at the beginning of paragraph
-  // and place terminal punctuation within that sentence.
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(^${locale.leftDoubleQuote}` +
-        `[^${locale.rightDoubleQuote}]+?` +
-        `[^${base.romanNumerals}])` +
-      `(${locale.rightDoubleQuote})` +
-      `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `(\\B)`,
-      "gm"
-    ),
-      `$1` +
-      `$3` +
-      `$2` +
-      `$4`
-  );
-
-  // Match the whole quoted sentence starting after a sentence
-  // and place terminal punctuation within that sentence.
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([${base.sentencePunctuation}]` +
-        `[${base.spaces}]` +
-               `${locale.leftDoubleQuote}` +
-        `[^${locale.rightDoubleQuote}]+?` +
-        `[^${base.romanNumerals}])` +
-      `(${locale.rightDoubleQuote})` +
-      `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `(\\B)`,
-      "g"
-    ),
-      `$1` +
-      `$3` +
-      `$2` +
-      `$4`
-  );
-
-  // Match the whole quoted sentence starting after a quoted sentence
-  // and place terminal punctuation within that sentence.
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([${base.sentencePunctuation}]` +
-      `[${locale.rightDoubleQuote}]` +
-      `[${base.spaces}]` +
-      `${locale.leftDoubleQuote}` +
-      `[^${locale.rightDoubleQuote}]+?` +
-      `[^${base.romanNumerals}])` +
-
-      `(${locale.rightDoubleQuote})` +
-      `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `(\\B)`,
-
-      "g"
-    ),
-      `$1` +
-      `$3` +
-      `$2` +
-      `$4`
-  );
-
-  return string;
-}
-
-//
-
-//
-
-/**
   Fix punctuation placement for single-word quoted content
 
   Single word = no spaces inside quotes (includes contractions, hyphenated words, numbers)
 
   Rules:
-  - move period (.), comma (,), semicolon (;), colon (:) outside the quoted word 
-  - keep the position of `!` and `?` as is (ambiguous context)
+  - move periods `.`, commas `,`, semicolons `;`, colons `:` outside the quoted word
+  - keep the position of `!`, `?`, and `…` as is (ambiguous context)
 
-  Examples
+  Examples:
   “word.” → “word”.
   “it’s,” → “it’s”,
   “well-known;” → “well-known”;
@@ -498,145 +338,50 @@ export function fixQuotedWordPunctuation(string, locale) {
 //
 
 /**
-  Fix punctuation placement for multi-word quoted content
-
-  Multiple words = contains spaces inside quotes
+  Fix punctuation placement for quoted sentence or fragment of words
 
   Rules:
-  - Period (.), comma (,), semicolon (;) → Keep INSIDE quotes
-  - Colon (:) → ALWAYS move OUTSIDE quotes
-  - Exclamation (!), question (?) → Keep INSIDE quotes
-
-  This handles various contexts:
-  1. Quoted sentence within unquoted sentence (lowercase continuation)
-  2. Whole quoted sentence at paragraph start
-  3. Whole quoted sentence after another sentence
-  4. Quoted sentence after quoted sentence
-
-  Examples
-  "word word." stays "word word."
-  "word word:" → "word word":
-  Ask "What's going on"? → Ask "What's going on?"
-
+  - move periods `.`, commas `,`, semicolons `;`, ellipses `…`exclamation `!` and question marks `?` inside the quoted part
+  - move colons `:` and semicolons `;` outside the quoted part
+ 
   @param {string} string: input text for identification
   @param {object} locale: locale configuration
   @returns {string} output with corrected punctuation placement
-*/
+ */
 export function fixQuotedSentencePunctuation(string, locale) {
-  // Move colon outside quotes for any content (including multi-word)
+  // move everything inside
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `(${locale.leftDoubleQuote})` +          // 1: left quote
-      `(.+?)` +                                 // 2: content (any length, including spaces)
-      `([^${base.romanNumerals}])` +           // 3: last char (not Roman numeral)
-      `(:)` +                                   // 4: colon
-      `(${locale.rightDoubleQuote})`,          // 5: right quote
+      `(${locale.leftDoubleQuote})` + 
+      `(.+)` + 
+      `([${base.spaces}])` + 
+      `([^${base.romanNumerals}]{2,})` + 
+      `(${locale.rightDoubleQuote})` + 
+      `([${base.sentencePunctuation}${base.ellipsis}])`,
       "g"
     ),
     `$1` +
     `$2` +
     `$3` +
-    `$5` +
-    `$4`  // Move colon outside
-  );
+    `$4` +
+    `$6` +
+    `$5`
+  )
 
-  // Match quoted sentence within an unquoted sentence
-  // and place terminal punctuation of the quoted sentence
-  // within quotes
+  // move colons and semicolons outside
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([^${base.sentencePunctuation}])` +
-      `([${base.spaces}])` +
-      `(${locale.leftDoubleQuote})` +
-      `(.+?)` +
-      `([^${base.romanNumerals}])` +
-      `(${locale.rightDoubleQuote})` +
-      `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `([${base.spaces}])` +
-      `([${base.lowercaseChars}])`,
-
+      `([:;])` +
+      `(${locale.rightDoubleQuote})`,
       "g"
     ),
-      `$1` +
-      `$2` +
-      `$3` +
-      `$4` +
-      `$5` +
-      `$7` +
-      `$6` +
-      `$8` +
-      `$9`
-  );
-
-  // Match the whole quoted sentence starting at the beginning of paragraph
-  // and place terminal punctuation within that sentence.
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(^${locale.leftDoubleQuote}` +
-        `[^${locale.rightDoubleQuote}]+?` +
-        `[^${base.romanNumerals}])` +
-      `(${locale.rightDoubleQuote})` +
-      `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `(\\B)`,
-      "gm"
-    ),
-      `$1` +
-      `$3` +
-      `$2` +
-      `$4`
-  );
-
-  // Match the whole quoted sentence starting after a sentence
-  // and place terminal punctuation within that sentence.
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([${base.sentencePunctuation}]` +
-        `[${base.spaces}]` +
-               `${locale.leftDoubleQuote}` +
-        `[^${locale.rightDoubleQuote}]+?` +
-        `[^${base.romanNumerals}])` +
-      `(${locale.rightDoubleQuote})` +
-      `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `(\\B)`,
-      "g"
-    ),
-      `$1` +
-      `$3` +
-      `$2` +
-      `$4`
-  );
-
-  // Match the whole quoted sentence starting after a quoted sentence
-  // and place terminal punctuation within that sentence.
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([${base.sentencePunctuation}]` +
-      `[${locale.rightDoubleQuote}]` +
-      `[${base.spaces}]` +
-      `${locale.leftDoubleQuote}` +
-      `[^${locale.rightDoubleQuote}]+?` +
-      `[^${base.romanNumerals}])` +
-
-      `(${locale.rightDoubleQuote})` +
-      `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `(\\B)`,
-
-      "g"
-    ),
-      `$1` +
-      `$3` +
-      `$2` +
-      `$4`
-  );
+    `$2$1` 
+  )
 
   return string;
 }
-
 
 /**
   Replace all identified punctuation with appropriate punctuation in given language
@@ -873,7 +618,7 @@ export function fixDirectSpeechIntro(string, locale) {
   [6] Replace all identified punctuation with appropriate punctuation in given language
   [7] Consolidate spaces around double quotes and primes
   [8] Fix direct speech introduction
-  [9] Swap quotes and terminal punctuation for a quoted part
+  [9] Fix punctuation placement for quoted content
 
   @param {string} string: input text for identification
   @param {string} locale: locale option
@@ -917,7 +662,7 @@ export function fixDoubleQuotesAndPrimes(string, locale, configuration) {
 
   /* [9] Fix punctuation placement for quoted content */
   string = fixQuotedWordPunctuation(string, locale);
-  // string = fixQuotedSentencePunctuation(string, locale);
+  string = fixQuotedSentencePunctuation(string, locale);
 
   return string;
 }

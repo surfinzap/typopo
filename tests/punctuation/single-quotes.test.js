@@ -260,21 +260,21 @@ const identifyUnpairedRightSingleQuoteModuleSet = {
 const identifyUnpairedRightSingleQuoteUnitSet = {
   "${ldq}word':${rdq}": "${ldq}word{{typopo__rsq--unpaired}}:${rdq}",
   "${ldq}word',${rdq}": "${ldq}word{{typopo__rsq--unpaired}},${rdq}",
-  '"word\'"': '"word{{typopo__rsq--unpaired}}"',
-  '"word‚"':  '"word{{typopo__rsq--unpaired}}"',
-  "word‘":    "word{{typopo__rsq--unpaired}}",
-  wordʼ:      "word{{typopo__rsq--unpaired}}",
-  "word‛":    "word{{typopo__rsq--unpaired}}",
-  "word´":    "word{{typopo__rsq--unpaired}}",
-  "word`":    "word{{typopo__rsq--unpaired}}",
-  "word′":    "word{{typopo__rsq--unpaired}}",
-  "word‹":    "word{{typopo__rsq--unpaired}}",
-  "word›":    "word{{typopo__rsq--unpaired}}",
-  "word.'":   "word.{{typopo__rsq--unpaired}}",
-  "word!'":   "word!{{typopo__rsq--unpaired}}",
-  "word':":   "word{{typopo__rsq--unpaired}}:",
-  "word',":   "word{{typopo__rsq--unpaired}},",
-  "word' ":   "word{{typopo__rsq--unpaired}} ",
+  '"word\'"':           '"word{{typopo__rsq--unpaired}}"',
+  '"word‚"':            '"word{{typopo__rsq--unpaired}}"',
+  "word‘":              "word{{typopo__rsq--unpaired}}",
+  wordʼ:                "word{{typopo__rsq--unpaired}}",
+  "word‛":              "word{{typopo__rsq--unpaired}}",
+  "word´":              "word{{typopo__rsq--unpaired}}",
+  "word`":              "word{{typopo__rsq--unpaired}}",
+  "word′":              "word{{typopo__rsq--unpaired}}",
+  "word‹":              "word{{typopo__rsq--unpaired}}",
+  "word›":              "word{{typopo__rsq--unpaired}}",
+  "word.'":             "word.{{typopo__rsq--unpaired}}",
+  "word!'":             "word!{{typopo__rsq--unpaired}}",
+  "word':":             "word{{typopo__rsq--unpaired}}:",
+  "word',":             "word{{typopo__rsq--unpaired}},",
+  "word' ":             "word{{typopo__rsq--unpaired}} ",
 };
 
 supportedLocales.forEach((localeName) => {
@@ -310,8 +310,8 @@ const identifySingleQuotePairsModuleSet = {
   "He said${directSpeechIntro} ${ldq}What about 'name' and 'other name'?${rdq}":
     "He said${directSpeechIntro} ${ldq}What about ${lsq}name${rsq} and ${lsq}other name${rsq}?${rdq}",
 
-  "Within double quotes ${ldq}there are single 'quotes with mix’d punctuation', you see${rdq}.":
-    "Within double quotes ${ldq}there are single ${lsq}quotes with mix’d punctuation${rsq}, you see${rdq}.",
+  "Within double quotes ${ldq}there are single 'quotes with mix’d punctuation', you see.${rdq}":
+    "Within double quotes ${ldq}there are single ${lsq}quotes with mix’d punctuation${rsq}, you see.${rdq}",
 
   "Let's test this${directSpeechIntro} ${ldq}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${rdq}":
     "Let’s test this${directSpeechIntro} ${ldq}however, ${lsq}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${rsq} he said${rdq}",

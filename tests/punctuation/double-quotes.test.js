@@ -23,8 +23,6 @@ const doubleQuotesFalsePositives = {
   "č., s., fol., str.,":                 "č., s., fol., str.,",
   "Byl to ${ldq}Karel IV.${rdq}, ktery": "Byl to ${ldq}Karel IV.${rdq}, ktery",
   "Hey.${rdq}":                          "Hey.${rdq}",
-  "common to have ${ldq}namespace pollution${rdq}, where completely unrelated code shares global variables.":
-    "common to have ${ldq}namespace pollution${rdq}, where completely unrelated code shares global variables.",
 };
 
 const removePunctuationBeforeQuotesUnitSet = {
@@ -249,7 +247,7 @@ const identifyDoublePrimesUnitSet = {
   "12 ''":     "12 ″",
 
   // false positive to exclude long numbers (temporary)
-  '“Conference 2020" and “something in quotes”.': '“Conference 2020" and “something in quotes”.',
+  '“Conference 2020" and “something in quotes.”': '“Conference 2020" and “something in quotes.”',
 
   // identify swapped inches with terminal punctuation
   '"He was 12".': '"He was 12."',
@@ -322,7 +320,7 @@ const identifyDoubleQuotePairsModuleSet = {
   '"quoted material" and "quoted material"': "${ldq}quoted material${rdq} and ${ldq}quoted material${rdq}",
 
   // primes × double quotes
-  '"Conference 2020" and "something in quotes".': "${ldq}Conference 2020${rdq} and ${ldq}something in quotes${rdq}.",
+  '"Conference 2020" and "something in quotes."': "${ldq}Conference 2020${rdq} and ${ldq}something in quotes.${rdq}",
   '"Gone in 60{{typopo__double-prime}}"':         "${ldq}Gone in 60″${rdq}",
 
   '"2020"': "${ldq}2020${rdq}",
@@ -557,6 +555,9 @@ const fixQuotedSentencePunctuationModuleSet = {
   "It can be a ${ldq}quoted fragment${rdq}?": "It can be a ${ldq}quoted fragment?${rdq}",
   "It can be a ${ldq}quoted fragment${rdq}…": "It can be a ${ldq}quoted fragment…${rdq}",
 
+  // nbsp
+  "It can be ${ldq}a banana${rdq}.": "It can be ${ldq}a banana.${rdq}",
+
   // Quoted sentence
   "${ldq}Fully quoted sentence${rdq}.": "${ldq}Fully quoted sentence.${rdq}",
   "${ldq}Fully quoted sentence${rdq},": "${ldq}Fully quoted sentence,${rdq}",
@@ -569,16 +570,26 @@ const fixQuotedSentencePunctuationModuleSet = {
   "${ldq}Fully quoted (sentence)${rdq}.": "${ldq}Fully quoted (sentence).${rdq}",
 
   // Escaped strings
-  "It can be a ${ldq}{{esc}} {{esc}}{rdq}.": "It can be a ${ldq}{{esc}} {{esc}}.${rdq}",
+  "It can be a ${ldq}{{esc}} {{esc}}${rdq}.": "It can be a ${ldq}{{esc}} {{esc}}.${rdq}",
 
   // Colon / semicolon should be placed outside the quotes
   "${ldq}quoted fragment:${rdq} sentence continues":   "${ldq}quoted fragment${rdq}: sentence continues",
   "${ldq}quoted fragment;${rdq} sentence continues":   "${ldq}quoted fragment${rdq}; sentence continues",
   "${ldq}(quoted) fragment:${rdq} sentence continues": "${ldq}(quoted) fragment${rdq}: sentence continues",
   "${ldq}quoted (fragment);${rdq} sentence continues": "${ldq}quoted (fragment)${rdq}; sentence continues",
+
+  // Correct placement
+  "It can be a ${ldq}quoted fragment.${rdq}": "It can be a ${ldq}quoted fragment.${rdq}",
+  "It can be a ${ldq}quoted fragment,${rdq}": "It can be a ${ldq}quoted fragment,${rdq}",
+  "It can be a ${ldq}quoted fragment!${rdq}": "It can be a ${ldq}quoted fragment!${rdq}",
+  "It can be a ${ldq}quoted fragment?${rdq}": "It can be a ${ldq}quoted fragment?${rdq}",
+  "It can be a ${ldq}quoted fragment…${rdq}": "It can be a ${ldq}quoted fragment…${rdq}",
 };
 
 const fixQuotedSentencePunctuationUnitSet = {
+  // Exception. skip fixing name with regnal number
+  "It was ${ldq}Charles IV${rdq},": "It was ${ldq}Charles IV${rdq},",
+
   // False positives - single word (should NOT be fixed in this function)
   "Look for ${ldq}word.${rdq} In the text.": "Look for ${ldq}word.${rdq} In the text.",
   "${ldq}word.${rdq}":                       "${ldq}word.${rdq}",
