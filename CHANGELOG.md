@@ -9,7 +9,8 @@
   - `“it’s,” → “it’s”,`
   - `“well-known;” → “well-known”;`
   - `“2020:” → “2020”:`
-  - Exclamation and question marks remain unchanged (ambiguous context)
+  - Ellipses, exclamation and question marks remain unchanged (ambiguous context)
+- **tbd write update of for sentences or sentence fragments**
 
 
 ### 🔨 Maintenance
