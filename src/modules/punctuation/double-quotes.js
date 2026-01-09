@@ -559,16 +559,83 @@ export function fixQuotedSentencePunctuation(string, locale) {
 
       "g"
     ),
-    `$1` +
-    `$2` +
-    `$3` +
-    `$4` +
-    `$6` +
-    `$5`  // Move punctuation after quote
+      `$1` +
+      `$2` +
+      `$3` +
+      `$4` +
+      `$5` +
+      `$7` +
+      `$6` +
+      `$8` +
+      `$9`
   );
+
+  // Match the whole quoted sentence starting at the beginning of paragraph
+  // and place terminal punctuation within that sentence.
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `(^${locale.leftDoubleQuote}` +
+        `[^${locale.rightDoubleQuote}]+?` +
+        `[^${base.romanNumerals}])` +
+      `(${locale.rightDoubleQuote})` +
+      `([${base.terminalPunctuation}${base.ellipsis}])` +
+      `(\\B)`,
+      "gm"
+    ),
+      `$1` +
+      `$3` +
+      `$2` +
+      `$4`
+  );
+
+  // Match the whole quoted sentence starting after a sentence
+  // and place terminal punctuation within that sentence.
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.sentencePunctuation}]` +
+        `[${base.spaces}]` +
+               `${locale.leftDoubleQuote}` +
+        `[^${locale.rightDoubleQuote}]+?` +
+        `[^${base.romanNumerals}])` +
+      `(${locale.rightDoubleQuote})` +
+      `([${base.terminalPunctuation}${base.ellipsis}])` +
+      `(\\B)`,
+      "g"
+    ),
+      `$1` +
+      `$3` +
+      `$2` +
+      `$4`
+  );
+
+  // Match the whole quoted sentence starting after a quoted sentence
+  // and place terminal punctuation within that sentence.
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.sentencePunctuation}]` +
+      `[${locale.rightDoubleQuote}]` +
+      `[${base.spaces}]` +
+      `${locale.leftDoubleQuote}` +
+      `[^${locale.rightDoubleQuote}]+?` +
+      `[^${base.romanNumerals}])` +
+
+      `(${locale.rightDoubleQuote})` +
+      `([${base.terminalPunctuation}${base.ellipsis}])` +
+      `(\\B)`,
+
+      "g"
+    ),
+      `$1` +
+      `$3` +
+      `$2` +
+      `$4`
+  );
+
+  return string;
 }
-
-
 
 
 /**

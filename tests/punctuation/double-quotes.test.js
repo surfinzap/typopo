@@ -458,6 +458,7 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
+/* TBD remove */ 
 const swapQuotesAndTerminalPunctuationSet = {
   // quoted part at the
   // end of a sentence
@@ -539,7 +540,7 @@ const fixQuotedWordPunctuationSet = {
   // Single word with semicolon
   "${ldq}word;${rdq}": "${ldq}word${rdq};",
   "He used ${ldq}code;${rdq} it worked.": "He used ${ldq}code${rdq}; it worked.",
-
+  
   // Single word with colon
   "${ldq}word:${rdq}": "${ldq}word${rdq}:",
   "Consider ${ldq}refactoring:${rdq} it helps.": "Consider ${ldq}refactoring${rdq}: it helps.",
@@ -597,23 +598,35 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-const fixQuotedWordPunctuationSet = {
-  /* 
-  Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
 
-  Fix the punctuation around quoted word accordingly:
-  - move `.` `,` `;` `:` outside the quoted word (“word,” → “word”,)
-  - keep the position of `!`, `?` as is. (we would need contextual information for the proper placement: “Wow!” vs. Have you heard about the “bird”?)
-  */ 
-  // instructions for tests
-  // for double quotes on both sides of key-value pair refer as ${ldq} and ${rdq}
-  // add tests for a single word combinations of quotes and anticipated punctuation `.` `,` `;` `:`; give a bit of context before and after the tested part 
-  // also add tests with a single contracted word
-  // also add tests with a number or combination of contractions (e.g. 69'ers)
-  // also add tests with the hyphenated word
-  // false positives (shouldn't be fixed): variations of multiple words; this shouldn't be corrected in this set
-  // false positives (shouldn't be fixed): example with ! and ? 
-  // think about other positive or false positive tests that should be considered for this function
+const fixQuotedSentencePunctuationSet = {
+  // Colons - ALWAYS outside (even for multiple words)
+  "She said ${ldq}word word:${rdq}": "She said ${ldq}word word${rdq}:",
+  "The ${ldq}full sentence:${rdq} here.": "The ${ldq}full sentence${rdq}: here.",
+  "Consider ${ldq}this example:${rdq} important.": "Consider ${ldq}this example${rdq}: important.",
+
+  // Periods/commas/semicolons - INSIDE for multiple words
+  "Sometimes it can be only a ${ldq}quoted part.${rdq}": "Sometimes it can be only a ${ldq}quoted part${rdq}.",
+  "a ${ldq}quoted part.${rdq} A ${ldq}quoted part.${rdq}": "a ${ldq}quoted part${rdq}. A ${ldq}quoted part${rdq}.",
+  "She mentioned ${ldq}hello world,${rdq} yesterday.": "She mentioned ${ldq}hello world${rdq}, yesterday.",
+  "The ${ldq}multiple words;${rdq} worked.": "The ${ldq}multiple words${rdq}; worked.",
+
+  // Exclamation/question - INSIDE for multiple words
+  "Ask ${ldq}What's going on${rdq}? so you can dig.": "Ask ${ldq}What's going on?${rdq} so you can dig.",
+  "She yelled ${ldq}Watch out${rdq}! and ran.": "She yelled ${ldq}Watch out!${rdq} and ran.",
+  "He asked ${ldq}Why not${rdq}? repeatedly.": "He asked ${ldq}Why not?${rdq} repeatedly.",
+
+  // Whole sentence scenarios
+  "${ldq}He was ok${rdq}.": "${ldq}He was ok.${rdq}",
+  "He was ok. ${ldq}He was ok${rdq}.": "He was ok. ${ldq}He was ok.${rdq}",
+  "${ldq}She was fine${rdq}. ${ldq}He was ok${rdq}.": "${ldq}She was fine.${rdq} ${ldq}He was ok.${rdq}",
+
+  // Ellipsis
+  "${ldq}Types of${rdq}…": "${ldq}Types of…${rdq}",
+  "Before you ask the ${ldq}How often${rdq}… question": "Before you ask the ${ldq}How often…${rdq} question",
+
+  // Exceptions - closing brackets
+  "Ask ${ldq}what if (the thing)…${rdq}": "Ask ${ldq}what if (the thing)…${rdq}",
 }
 
 const removeExtraSpacesAroundQuotesSet = {
