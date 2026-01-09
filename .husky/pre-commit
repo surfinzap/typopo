@@ -1,3 +1,6 @@
+# Format and lint staged files
+pnpm lint-staged
+
 # run build
 pnpm build
 
