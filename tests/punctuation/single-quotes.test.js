@@ -440,20 +440,20 @@ const fixQuotedWordPunctuationModuleSet = {
   */
 
   // Single word with period
-  "${ldq}${lsq}word.${rsq}${rdq}":                       "${ldq}${lsq}word${rsq}.${rdq}",
+  "${ldq}${lsq}word.${rsq} fill${rdq}":                  "${ldq}${lsq}word${rsq}. fill${rdq}",
   "${ldq}Look for ${lsq}word.${rsq} In the text.${rdq}": "${ldq}Look for ${lsq}word${rsq}. In the text.${rdq}",
   "${ldq}Look for ${lsq}Ian.${rsq} In the text.${rdq}":  "${ldq}Look for ${lsq}Ian${rsq}. In the text.${rdq}",
 
   // Single word with comma
-  "${ldq}${lsq}word,${rsq}${rdq}":                     "${ldq}${lsq}word${rsq},${rdq}",
+  "${ldq}${lsq}word,${rsq} fill${rdq}":                "${ldq}${lsq}word${rsq}, fill${rdq}",
   "${ldq}He said ${lsq}hello,${rsq} then left.${rdq}": "${ldq}He said ${lsq}hello${rsq}, then left.${rdq}",
 
   // Single word with semicolon
-  "${ldq}${lsq}word;${rsq}${rdq}":                    "${ldq}${lsq}word${rsq};${rdq}",
+  "${ldq}${lsq}word;${rsq} fill${rdq}":               "${ldq}${lsq}word${rsq}; fill${rdq}",
   "${ldq}He used ${lsq}code;${rsq} it worked.${rdq}": "${ldq}He used ${lsq}code${rsq}; it worked.${rdq}",
 
   // Single word with colon
-  "${ldq}${lsq}word:${rsq}${rdq}":                           "${ldq}${lsq}word${rsq}:${rdq}",
+  "${ldq}${lsq}word:${rsq} fill${rdq}":                      "${ldq}${lsq}word${rsq}: fill${rdq}",
   "${ldq}Consider ${lsq}refactoring:${rsq} it helps.${rdq}": "${ldq}Consider ${lsq}refactoring${rsq}: it helps.${rdq}",
 
   //fix later
@@ -528,22 +528,22 @@ const fixQuotedSentencePunctuationModuleSet = {
   - move colons `:` and semicolons `;` outside the quoted part
   */
   // Quoted fragment at the end of sentence
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}. fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment.${rsq} fill${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}, fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment,${rsq} fill${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}! fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment!${rsq} fill${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}? fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment?${rsq} fill${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}… fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment…${rsq} fill${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment${rsq}. fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment.${rsq} fill${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment${rsq}, fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment,${rsq} fill${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment${rsq}! fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment!${rsq} fill${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment${rsq}? fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment?${rsq} fill${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment${rsq}… fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment…${rsq} fill${rdq}",
 
   // nbsp
-  "${ldq}It can be ${lsq}a banana${rsq}, right.${rdq}":
-    "${ldq}It can be ${lsq}a banana,${rsq} right.${rdq}",
+  "${ldq}It can be ${lsq}a banana${rsq}, right.${rdq}":
+    "${ldq}It can be ${lsq}a banana,${rsq} right.${rdq}",
 
   // Quoted sentence
-  "${ldq} fill ${lsq}Fully quoted sentence${rsq}. fill ${rdq}": "${ldq} fill ${lsq}Fully quoted sentence.${rsq} fill ${rdq}",
-  "${ldq} fill ${lsq}Fully quoted sentence${rsq}, fill ${rdq}": "${ldq} fill ${lsq}Fully quoted sentence,${rsq} fill ${rdq}",
-  "${ldq} fill ${lsq}Fully quoted sentence${rsq}! fill ${rdq}": "${ldq} fill ${lsq}Fully quoted sentence!${rsq} fill ${rdq}",
-  "${ldq} fill ${lsq}Fully quoted sentence${rsq}? fill ${rdq}": "${ldq} fill ${lsq}Fully quoted sentence?${rsq} fill ${rdq}",
-  "${ldq} fill ${lsq}Fully quoted sentence${rsq}… fill ${rdq}": "${ldq} fill ${lsq}Fully quoted sentence…${rsq} fill ${rdq}",
+  "${ldq}fill ${lsq}Fully quoted sentence${rsq}. fill${rdq}": "${ldq}fill ${lsq}Fully quoted sentence.${rsq} fill${rdq}",
+  "${ldq}fill ${lsq}Fully quoted sentence${rsq}, fill${rdq}": "${ldq}fill ${lsq}Fully quoted sentence,${rsq} fill${rdq}",
+  "${ldq}fill ${lsq}Fully quoted sentence${rsq}! fill${rdq}": "${ldq}fill ${lsq}Fully quoted sentence!${rsq} fill${rdq}",
+  "${ldq}fill ${lsq}Fully quoted sentence${rsq}? fill${rdq}": "${ldq}fill ${lsq}Fully quoted sentence?${rsq} fill${rdq}",
+  "${ldq}fill ${lsq}Fully quoted sentence${rsq}… fill${rdq}": "${ldq}fill ${lsq}Fully quoted sentence…${rsq} fill${rdq}",
 
   // Less common boundaries
   // fix later: single quotes identification around brackets
@@ -568,11 +568,11 @@ const fixQuotedSentencePunctuationModuleSet = {
     "${ldq}fill ${lsq}word${rsq} ${lsq}word${rsq}, fill.${rdq}",
 
   // Correct placement
-  "${ldq}It can be a ${lsq}quoted fragment.${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment.${rsq}${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment,${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment,${rsq}${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment!${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment!${rsq}${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment?${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment?${rsq}${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment…${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment…${rsq}${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment.${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment.${rsq}${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment,${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment,${rsq}${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment!${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment!${rsq}${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment?${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment?${rsq}${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment…${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment…${rsq}${rdq}",
 };
 
 const fixQuotedSentencePunctuationUnitSet = {
@@ -623,8 +623,8 @@ export const singleQuotesSet = {
   ...replaceSinglePrimeWSingleQuoteModuleSet,
   ...identifyResidualApostrophes,
   ...removeExtraSpaceAroundSinglePrimeSet,
-  ...fixQuotedWordPunctuationUnitSet,
-  ...fixQuotedSentencePunctuationUnitSet,
+  ...fixQuotedWordPunctuationModuleSet,
+  ...fixQuotedSentencePunctuationModuleSet,
 
   "Hej${directSpeechIntro} ${ldq}Vin mu povil, 'ta de jes' take vidil' i neviril${rdq}":
     "Hej${directSpeechIntro} ${ldq}Vin mu povil, ${lsq}ta de jes’ take vidil${rsq} i neviril${rdq}", // tbd-single-quotes-matching
