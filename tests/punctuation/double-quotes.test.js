@@ -581,6 +581,10 @@ const fixQuotedSentencePunctuationModuleSet = {
   "${ldq}(quoted) fragment:${rdq} sentence continues": "${ldq}(quoted) fragment${rdq}: sentence continues",
   "${ldq}quoted (fragment);${rdq} sentence continues": "${ldq}quoted (fragment)${rdq}; sentence continues",
 
+  // Single quotes + double quotes
+  "${ldq}Sentence ${lsq}quoted fragment${rsq}${rdq}.":
+    "${ldq}Sentence ${lsq}quoted fragment${rsq}.${rdq}",
+
   // Correct placement
   "It can be a ${ldq}quoted fragment.${rdq}": "It can be a ${ldq}quoted fragment.${rdq}",
   "It can be a ${ldq}quoted fragment,${rdq}": "It can be a ${ldq}quoted fragment,${rdq}",

@@ -239,21 +239,21 @@ supportedLocales.forEach((localeName) => {
 
 const identifyUnpairedRightSingleQuoteModuleSet = {
   // heads up! since it’s a unpaired quote it’s fixed as apostrophe within a module
-  "${ldq}word'${rdq}":  "${ldq}word’${rdq}",
-  "${ldq}word‚${rdq}":  "${ldq}word’${rdq}",
-  "${ldq}word‘${rdq}":  "${ldq}word’${rdq}",
-  "${ldq}wordʼ${rdq}":  "${ldq}word’${rdq}",
-  "${ldq}word‛${rdq}":  "${ldq}word’${rdq}",
-  "${ldq}word´${rdq}":  "${ldq}word’${rdq}",
-  "${ldq}word`${rdq}":  "${ldq}word’${rdq}",
-  "${ldq}word′${rdq}":  "${ldq}word’${rdq}",
-  "${ldq}word‹${rdq}":  "${ldq}word’${rdq}",
-  "${ldq}word›${rdq}":  "${ldq}word’${rdq}",
-  "${ldq}word.'${rdq}": "${ldq}word.’${rdq}",
-  "${ldq}word!'${rdq}": "${ldq}word!’${rdq}",
+  "${ldq}word'${rdq}": "${ldq}word’${rdq}",
+  "${ldq}word‚${rdq}": "${ldq}word’${rdq}",
+  "${ldq}word‘${rdq}": "${ldq}word’${rdq}",
+  "${ldq}wordʼ${rdq}": "${ldq}word’${rdq}",
+  "${ldq}word‛${rdq}": "${ldq}word’${rdq}",
+  "${ldq}word´${rdq}": "${ldq}word’${rdq}",
+  "${ldq}word`${rdq}": "${ldq}word’${rdq}",
+  "${ldq}word′${rdq}": "${ldq}word’${rdq}",
+  "${ldq}word‹${rdq}": "${ldq}word’${rdq}",
+  "${ldq}word›${rdq}": "${ldq}word’${rdq}",
 };
 
 const identifyUnpairedRightSingleQuoteUnitSet = {
+  "${ldq}word!'${rdq}": "${ldq}word!{{typopo__rsq--unpaired}}${rdq}",
+  "${ldq}word.'${rdq}": "${ldq}word.{{typopo__rsq--unpaired}}${rdq}",
   "${ldq}word':${rdq}": "${ldq}word{{typopo__rsq--unpaired}}:${rdq}",
   "${ldq}word',${rdq}": "${ldq}word{{typopo__rsq--unpaired}},${rdq}",
   '"word\'"':           '"word{{typopo__rsq--unpaired}}"',
@@ -478,9 +478,8 @@ const fixQuotedWordPunctuationModuleSet = {
   "${ldq}Try ${lsq}open-source;${rsq} it${apos}s free.${rdq}":
     "${ldq}Try ${lsq}open-source${rsq}; it${apos}s free.${rdq}",
 
-  // fix later: single quotes identification escaped content
   // Escaped strings
-  // "${ldq}${lsq}{{esc}},${rsq}${rdq}": "${ldq}${lsq}{{esc}}${rsq},${rdq}",
+  "${ldq}${lsq}{{esc}},${rsq} fill${rdq}": "${ldq}${lsq}{{esc}}${rsq}, fill${rdq}",
 };
 
 const fixQuotedWordPunctuationUnitSet = {
@@ -534,6 +533,13 @@ const fixQuotedSentencePunctuationModuleSet = {
   "${ldq}It can be a ${lsq}quoted fragment${rsq}? fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment?${rsq} fill${rdq}",
   "${ldq}It can be a ${lsq}quoted fragment${rsq}… fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment…${rsq} fill${rdq}",
 
+  // move terminal punctuation (.?!…) outside when quoted fragment is at the end of a quoted sentence
+  "${ldq}Sentence ${lsq}quoted fragment.${rsq}${rdq}":
+    "${ldq}Sentence ${lsq}quoted fragment${rsq}.${rdq}",
+
+  "${ldq}Sentence ${lsq}quoted fragment!${rsq}${rdq}":
+    "${ldq}Sentence ${lsq}quoted fragment${rsq}!${rdq}",
+
   // nbsp
   "${ldq}It can be ${lsq}a banana${rsq}, right.${rdq}":
     "${ldq}It can be ${lsq}a banana,${rsq} right.${rdq}",
@@ -546,33 +552,37 @@ const fixQuotedSentencePunctuationModuleSet = {
   "${ldq}fill ${lsq}Fully quoted sentence${rsq}… fill${rdq}": "${ldq}fill ${lsq}Fully quoted sentence…${rsq} fill${rdq}",
 
   // Less common boundaries
-  // fix later: single quotes identification around brackets
-  // "${ldq}${lsq}(Fully) quoted sentence${rsq}.${rdq}": "${ldq}${lsq}(Fully) quoted sentence.${rsq}${rdq}",
-  // "${ldq}${lsq}Fully quoted (sentence)${rsq}.${rdq}": "${ldq}${lsq}Fully quoted (sentence).${rsq}${rdq}",
+  "${ldq}${lsq}(Fully) quoted sentence${rsq}.${rdq}":
+    "${ldq}${lsq}(Fully) quoted sentence${rsq}.${rdq}",
+  "${ldq}${lsq}Fully quoted (sentence)${rsq}.${rdq}":
+    "${ldq}${lsq}Fully quoted (sentence)${rsq}.${rdq}",
 
   // Escaped strings
-  // fix later: single quotes identification escaped content
-  // "${ldq}It can be a ${lsq}{{esc}} {{esc}}${rsq}.${rdq}":
-  // "${ldq}It can be a ${lsq}{{esc}} {{esc}}.${rsq}${rdq}",
+  "${ldq}It can be a ${lsq}{{esc}} {{esc}}${rsq}.${rdq}":
+    "${ldq}It can be a ${lsq}{{esc}} {{esc}}${rsq}.${rdq}",
 
   // Colon / semicolon should be placed outside the quotes
   "${ldq}${lsq}quoted fragment:${rsq} sentence continues${rdq}": "${ldq}${lsq}quoted fragment${rsq}: sentence continues${rdq}",
   "${ldq}${lsq}quoted fragment;${rsq} sentence continues${rdq}": "${ldq}${lsq}quoted fragment${rsq}; sentence continues${rdq}",
 
-  // fix later: single quotes identification around brackets
-  // "${ldq}${lsq}(quoted) fragment:${rsq} sentence continues${rdq}": "${ldq}${lsq}(quoted) fragment${rsq}: sentence continues${rdq}",
-  // "${ldq}${lsq}quoted (fragment);${rsq} sentence continues${rdq}": "${ldq}${lsq}quoted (fragment)${rsq}; sentence continues${rdq}",
+  "${ldq}${lsq}(quoted) fragment:${rsq} sentence continues${rdq}": "${ldq}${lsq}(quoted) fragment${rsq}: sentence continues${rdq}",
+  "${ldq}${lsq}quoted (fragment);${rsq} sentence continues${rdq}": "${ldq}${lsq}quoted (fragment)${rsq}; sentence continues${rdq}",
 
   // false positive, consecutive single quotes
   "${ldq}fill ${lsq}word${rsq} ${lsq}word${rsq}, fill.${rdq}":
     "${ldq}fill ${lsq}word${rsq} ${lsq}word${rsq}, fill.${rdq}",
 
   // Correct placement
-  "${ldq}It can be a ${lsq}quoted fragment.${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment.${rsq}${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment.${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment${rsq}.${rdq}",
   "${ldq}It can be a ${lsq}quoted fragment,${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment,${rsq}${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment!${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment!${rsq}${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment?${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment?${rsq}${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment…${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment…${rsq}${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment!${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment${rsq}!${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment?${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment${rsq}?${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment…${rsq}${rdq}":
+    "${ldq}It can be a ${lsq}quoted fragment${rsq}…${rdq}",
+
+  "${ldq}It can be a ${lsq}quoted fragment!${rsq}.${rdq}": "${ldq}It can be a ${lsq}quoted fragment!${rsq}.${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment?${rsq}.${rdq}": "${ldq}It can be a ${lsq}quoted fragment?${rsq}.${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment…${rsq}.${rdq}": "${ldq}It can be a ${lsq}quoted fragment…${rsq}.${rdq}",
 };
 
 const fixQuotedSentencePunctuationUnitSet = {
@@ -580,7 +590,7 @@ const fixQuotedSentencePunctuationUnitSet = {
   "${ldq}It was ${lsq}Charles IV${rsq},${rdq}":          "${ldq}It was ${lsq}Charles IV${rsq},${rdq}",
   // False positives - single word (should NOT be fixed in this function)
   "${ldq}Look for ${lsq}word.${rsq} In the text.${rdq}": "${ldq}Look for ${lsq}word.${rsq} In the text.${rdq}",
-  "${ldq}${lsq}word.${rsq}${rdq}":                       "${ldq}${lsq}word.${rsq}${rdq}",
+  "${ldq}${lsq}word.${rsq}${rdq}":                       "${ldq}${lsq}word${rsq}.${rdq}",
 };
 
 supportedLocales.forEach((localeName) => {

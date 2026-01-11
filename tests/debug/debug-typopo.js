@@ -26,8 +26,8 @@ import { excludeExceptions, placeExceptions } from "../../src/modules/words/exce
 
 //
 
-const testString = "word - )";
-const testLocale = "de-de";
+const testString = "«‹quoted (fragment)›; sentence continues», also around {{escaped-content}}";
+const testLocale = "rue";
 
 //
 

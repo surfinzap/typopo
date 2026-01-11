@@ -199,7 +199,7 @@ export function identifyUnpairedLeftSingleQuote(string) {
     new RegExp(
         `(^|[${base.spaces}${base.emDash}${base.enDash}])` +
         `(${base.singleQuoteAdepts}|,)` +
-        `([${base.allChars}${base.ellipsis}])`,
+        `([${base.allChars}${base.ellipsis}${base.openingBrackets}\\{])`,
       "g"
     ),
       `$1{{typopo__lsq--unpaired}}$3`
@@ -224,7 +224,7 @@ export function identifyUnpairedRightSingleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.allChars}])` +
+      `([${base.allChars}${base.closingBrackets}\\}])` +
       `([${base.sentencePunctuation}${base.ellipsis}])?` +
       `(${base.singleQuoteAdepts})` +
       `([ ${base.sentencePunctuation}])?`,
@@ -480,6 +480,18 @@ export function fixQuotedSentencePunctuation(string, locale) {
       "g"
     ),
     `$2$1`
+  )
+
+  // move terminal punctuation (.?!…) outside when quoted fragment is at the end of a quoted sentence
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.terminalPunctuation}${base.ellipsis}])` +
+      `(${locale.rightSingleQuote})` +
+      `(${locale.rightDoubleQuote})`,
+      "g"
+    ),
+    `$2$1$3`
   )
 
   return string;
