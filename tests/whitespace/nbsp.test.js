@@ -197,7 +197,12 @@ createTestSuite(
 const nbspOrdinalDate = {
   "12. 1. 2017": "12.${ordinalDateFirstSpace}1.${ordinalDateSecondSpace}2017",
   "12.1.2017":   "12.${ordinalDateFirstSpace}1.${ordinalDateSecondSpace}2017",
+  "12.12.2017":  "12.${ordinalDateFirstSpace}12.${ordinalDateSecondSpace}2017",
   "10.00":       "10.00", // false positive for the example above
+  "3.0.0":       "3.0.0", // false positive, versioning
+  "3.12.0":      "3.12.0", // false positive, versioning
+  "3.12.12":     "3.12.12", // false positive, versioning
+  "3.455.21":    "3.455.21", // false positive, versioning
 };
 
 supportedLocales.forEach((locale) => {

@@ -199,7 +199,7 @@ export function identifyUnpairedLeftSingleQuote(string) {
     new RegExp(
         `(^|[${base.spaces}${base.emDash}${base.enDash}])` +
         `(${base.singleQuoteAdepts}|,)` +
-        `([${base.allChars}${base.ellipsis}])`,
+        `([${base.allChars}${base.ellipsis}${base.openingBrackets}\\{])`,
       "g"
     ),
       `$1{{typopo__lsq--unpaired}}$3`
@@ -224,7 +224,7 @@ export function identifyUnpairedRightSingleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.allChars}])` +
+      `([${base.allChars}${base.closingBrackets}\\}])` +
       `([${base.sentencePunctuation}${base.ellipsis}])?` +
       `(${base.singleQuoteAdepts})` +
       `([ ${base.sentencePunctuation}])?`,
@@ -396,93 +396,103 @@ export function replaceSinglePrimeWSingleQuote(string) {
 //
 
 /**
- Swap single quotes and terminal punctuation for a quoted part
+  Fix punctuation placement for single-word quoted content
 
+  Single word = no spaces inside quotes (includes contractions, hyphenated words, numbers)
 
-   There are two different rules to follow quotes:
-  1. Quotes contain only quoted material:
-  ‘Sometimes it can be a whole sentence.’
-  Sometimes it can be only a ‘quoted part’.
-  The difference is where the terminal and sentence pause punctuation is.
+  Rules:
+  - move periods `.`, commas `,`, semicolons `;`, colons `:` outside the quoted word
+  - keep the position of `!`, `?`, and `…` as is (ambiguous context)
 
-  2. American editorial style
-  Similar as the first rule, but commas (,) and periods (.) go before closing quotation marks, regardless whether they are part of the quoted material.
-
-  The aim here is to support the first rule.
-
-  
-  Examples
-  ‘Sometimes it can be a whole sentence.’
-  Sometimes it can be only a ‘quoted part’.
-
-  So we’re looking to swap here:
-  Sometimes it can be only a ‘quoted part.’ →
-  Sometimes it can be only a ‘quoted part’.
-
-  Exceptions
-  Byl to ‘Karel IV.’, ktery 
-
-
-  Algorithm
-  Three different cases, see comments in code
+  Examples:
+  ‘word.’ → ‘word’.
+  ‘it’s,’ → ‘it’s’,
+  ‘well-known;’ → ‘well-known’;
+  ‘2020:’ → ‘2020′:
+  ‘Wow!’ → ‘Wow!’ (unchanged—ambiguous)
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
-  @returns {string} output with swapped single quotes and terminal punctuation within a quoted part
+  @param {object} locale: locale configuration
+  @returns {string} output with corrected punctuation placement
 */
-export function swapSingleQuotesAndTerminalPunctuation(string, locale) {
-  // place punctuation outside of quoted part
+export function fixQuotedWordPunctuation(string, locale) {
   // prettier-ignore
-  string = string.replace(
+  return string.replace(
     new RegExp(
-      `([^${base.sentencePunctuation}])` +
-      `([${base.spaces}])` +
       `(${locale.leftSingleQuote})` +
-      `([^${locale.rightSingleQuote}]+?)` +
-      `([^${base.romanNumerals}])` +
-      `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `(${locale.rightSingleQuote})`, 
+      `([^${base.spaces}${locale.rightSingleQuote}]+?)` +
+      `([^${base.romanNumerals}${base.sentencePunctuation}])` +
+      `([${base.sentencePunctuation}]{1,})` +
+      `(${locale.rightSingleQuote})`,
       "g"
     ),
-      `$1$2$3$4$5$7$6`
+    (match, leftQuote, content, notRoman, punct, rightQuote) => {
+      if (punct.length === 1 && /[.,;:]/.test(punct)) {
+        return leftQuote + content + notRoman + rightQuote + punct;
+      }
+      return match; // Return unchanged for everything else
+    }
   );
+}
 
-  // place punctuation within a quoted sentence that’s in the middle of the sentence.
+//
+
+/**
+  Fix punctuation placement for quoted sentence or fragment of words
+
+  Rules:
+  - move periods `.`, commas `,`, semicolons `;`, ellipses `…`exclamation `!` and question marks `?` inside the quoted part
+  - move colons `:` and semicolons `;` outside the quoted part
+
+  @param {string} string: input text for identification
+  @param {object} locale: locale configuration
+  @returns {string} output with corrected punctuation placement
+ */
+export function fixQuotedSentencePunctuation(string, locale) {
+  // move everything inside
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([^${base.sentencePunctuation}])` +
-      `([${base.spaces}])` +
       `(${locale.leftSingleQuote})` +
-      `(.+?)` +
-      `([^${base.romanNumerals}])` +
+      `(.+)` +
+      `([${base.spaces}])(?!${locale.leftSingleQuote})` +
+      `([^${base.romanNumerals}]{2,})` +
       `(${locale.rightSingleQuote})` +
-      `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `([${base.spaces}])` +
-      `([${base.lowercaseChars}])`,
-
+      `([${base.sentencePunctuation}${base.ellipsis}])` +
+      `([^${locale.rightDoubleQuote}])`,
       "g"
     ),
-      `$1$2$3$4$5$7$6$8$9`
-  );
+    `$1` +
+    `$2` +
+    `$3` +
+    `$4` +
+    `$6` +
+    `$5` +
+    `$7`
+  )
 
-  // place punctuation within a quoted sentence
-  // following a previous sentence or starting from a beginning
+  // move colons and semicolons outside
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([${base.sentencePunctuation}][${base.spaces}]|^)` +
-      `(${locale.leftSingleQuote})` +
-      `([^${locale.rightSingleQuote}]+?)` +
-      `([^${base.romanNumerals}])` +
-      `(${locale.rightSingleQuote})` +
-      `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `(\\B)`,
-
+      `([:;])` +
+      `(${locale.rightSingleQuote})`,
       "g"
     ),
-      `$1$2$3$4$6$5$7`
-  );
+    `$2$1`
+  )
+
+  // move terminal punctuation (.?!…) outside when quoted fragment is at the end of a quoted sentence
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `([${base.terminalPunctuation}${base.ellipsis}])` +
+      `(${locale.rightSingleQuote})` +
+      `(${locale.rightDoubleQuote})`,
+      "g"
+    ),
+    `$2$1$3`
+  )
 
   return string;
 }
@@ -605,8 +615,9 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuratio
   string = placeLocaleSingleQuotes(string, locale);
   string = placeMarkdownCodeTicks(string, configuration);
 
-  /* [8] Swap quotes and terminal punctuation */
-  string = swapSingleQuotesAndTerminalPunctuation(string, locale);
+  /* [8] Fix punctuation placement for quoted content */
+  string = fixQuotedWordPunctuation(string, locale);
+  string = fixQuotedSentencePunctuation(string, locale);
 
   /* [9] Consolidate spaces around single primes */
   string = removeExtraSpaceAroundSinglePrime(string);

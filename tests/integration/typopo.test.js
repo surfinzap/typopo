@@ -152,6 +152,10 @@ const moduleCombinations = {
   "quote [ ….. ] with parts left out": "quote […] with parts left out",
 
   "Because of this, it’s common": "Because of this, it’s common",
+
+  // Single quotes + double quotes
+  "${ldq}Sentence ${lsq}quoted fragment.${rsq}${rdq}":
+    "${ldq}Sentence ${lsq}quoted fragment${rsq}.${rdq}",
 };
 
 const falsePositives = {

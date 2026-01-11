@@ -1,5 +1,32 @@
 # Changelog for Typopo
 
+
+
+## 2.9.0 // 2026-01-11
+
+### 💪 Improvements
+**Quote punctuation placement**: Standardize punctuation placement for quoted content following [Chicago Manual of Style](https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/) conventions with context-aware handling of ambiguous cases. The implementation differentiates between single-word quotes and quoted sentences or sentence fragments, applying the same approach to both single and double quotes.
+
+**Punctuation placement rules:**
+
+| Punctuation | Single words | Sentences | Example |
+|-------------|-------------|-----------|---------|
+| Period, Comma | **Outside** | **Inside** | `“word,” → “word”,` <br> `“sentence”. → “sentence.”` |
+| Colon, Semicolon | **Outside** | **Outside** | `“word:” → “word”:` |
+| !, ?, … | **Unchanged** | **Inside** | `“Wow!” → “Wow!”` <br> `“A sentence”? → “A sentence?”` |
+
+**Quoted fragment**
+When a quoted sentence contains a quoted fragment, punctuation is encapsulated only within the outer (double) quotes.
+`“Sentence ’quoted fragment’”.` → `“Sentence ’quoted fragment’.”`
+
+### 🐛 Fixes
+- Fix false positives when adding non-breaking space within an ordinal date (e.g. version number `3.0.0` was falsely changed into `3. 0. 0`)
+
+### 🔨 Maintenance
+- Update dev dependencies to their latest versions 
+
+
+
 ## 2.8.2 // 2025-12-22
 
 ### 🔨 Maintenance
