@@ -1,6 +1,7 @@
 # Changelog for Typopo
 
 
+
 ## 2.9.0 // 2026-01-11
 
 ### 💪 Improvements
@@ -17,7 +18,6 @@
 **Quoted fragment**
 When a quoted sentence contains a quoted fragment, punctuation is encapsulated only within the outer (double) quotes.
 `“Sentence ’quoted fragment’”.` → `“Sentence ’quoted fragment’.”`
-
 
 ### 🐛 Fixes
 - Fix false positives when adding non-breaking space within an ordinal date (e.g. version number `3.0.0` was falsely changed into `3. 0. 0`)
