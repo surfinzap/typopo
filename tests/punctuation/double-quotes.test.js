@@ -572,6 +572,9 @@ const fixQuotedSentencePunctuationModuleSet = {
   // Escaped strings
   "It can be a ${ldq}{{esc}} {{esc}}${rdq}.": "It can be a ${ldq}{{esc}} {{esc}}.${rdq}",
 
+  // false positive, consecutive double quotes
+  "${ldq}word${rdq} ${ldq}word${rdq},": "${ldq}word${rdq} ${ldq}word${rdq},",
+
   // Colon / semicolon should be placed outside the quotes
   "${ldq}quoted fragment:${rdq} sentence continues":   "${ldq}quoted fragment${rdq}: sentence continues",
   "${ldq}quoted fragment;${rdq} sentence continues":   "${ldq}quoted fragment${rdq}; sentence continues",

@@ -1031,7 +1031,7 @@ function yn(e, p) {
 function An(e, p) {
   return e = e.replace(
     new RegExp(
-      `(${p.leftDoubleQuote})(.+)([${n.spaces}])([^${n.romanNumerals}]{2,})(${p.rightDoubleQuote})([${n.sentencePunctuation}${n.ellipsis}])`,
+      `(${p.leftDoubleQuote})(.+)([${n.spaces}])(?!${p.leftDoubleQuote})([^${n.romanNumerals}]{2,})(${p.rightDoubleQuote})([${n.sentencePunctuation}${n.ellipsis}])`,
       "g"
     ),
     "$1$2$3$4$6$5"
