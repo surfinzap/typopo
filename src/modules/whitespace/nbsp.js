@@ -168,13 +168,13 @@ export function addNbspWithinOrdinalDate(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(\\d)` +
-        `(\\.)` +
-        `([${base.spaces}]?)` +
-        `(\\d)` +
-        `(\\.)` +
-        `([${base.spaces}]?)` +
-        `(\\d)`,
+      `(\\d{1,2})` +
+      `(\\.)` +
+      `([${base.spaces}]?)` +
+      `(\\d{1,2})` +
+      `(\\.)` +
+      `([${base.spaces}]?)` +
+      `(\\d{4})`,
       "g"
     ),
     `$1$2${locale.ordinalDate.firstSpace}$4$5${locale.ordinalDate.secondSpace}$7`

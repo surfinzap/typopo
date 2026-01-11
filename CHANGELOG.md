@@ -14,6 +14,8 @@
 | Colon, Semicolon | **Outside** | **Outside** | `“word:” → “word”:` |
 | !, ?, … | **Unchanged** | **Inside** | `“Wow!” → “Wow!”` <br> `“A sentence”? → “A sentence?”` |
 
+### 🐛 Fixes
+- Fix false positives when adding non-breaking space within an ordinal date (e.g. version number `3.0.0` was falsely changed into `3. 0. 0`)
 
 ### 🔨 Maintenance
 - Update dev dependencies to their latest versions 
