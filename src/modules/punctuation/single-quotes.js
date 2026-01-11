@@ -458,7 +458,8 @@ export function fixQuotedSentencePunctuation(string, locale) {
       `([${base.spaces}])` +
       `([^${base.romanNumerals}]{2,})` +
       `(${locale.rightSingleQuote})` +
-      `([${base.sentencePunctuation}${base.ellipsis}])`,
+      `([${base.sentencePunctuation}${base.ellipsis}])` +
+      `([^${locale.rightDoubleQuote}])`,
       "g"
     ),
     `$1` +
@@ -466,7 +467,8 @@ export function fixQuotedSentencePunctuation(string, locale) {
     `$3` +
     `$4` +
     `$6` +
-    `$5`
+    `$5` +
+    `$7`
   )
 
   // move colons and semicolons outside

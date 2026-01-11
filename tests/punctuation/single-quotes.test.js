@@ -292,7 +292,7 @@ const identifySingleQuotePairsModuleSet = {
     "He said${directSpeechIntro} ${ldq}What about ${lsq}word${rsq} ${lsq}word${rsq}, is that good?${rdq}",
 
   "He said${directSpeechIntro} ${ldq}What about 'word word', is that good?${rdq}":
-    "He said${directSpeechIntro} ${ldq}What about ${lsq}word word${rsq}, is that good?${rdq}",
+    "He said${directSpeechIntro} ${ldq}What about ${lsq}word word,${rsq} is that good?${rdq}",
 
   "${ldq}double quotes 'and single quotes' within${rdq}":
     "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
@@ -376,7 +376,7 @@ supportedLocales.forEach((localeName) => {
 
 const replaceSinglePrimeWSingleQuoteModuleSet = {
   "He said${directSpeechIntro} ${ldq}What about 'Localhost 3000', is that good?${rdq}":
-    "He said${directSpeechIntro} ${ldq}What about ${lsq}Localhost 3000${rsq}, is that good?${rdq}",
+    "He said${directSpeechIntro} ${ldq}What about ${lsq}Localhost 3000,${rsq} is that good?${rdq}",
 
   "He said${directSpeechIntro} ${ldq}Here are 30 'bucks'${rdq}":
     "He said${directSpeechIntro} ${ldq}Here are 30 ${lsq}bucks${rsq}${rdq}",
@@ -528,21 +528,22 @@ const fixQuotedSentencePunctuationModuleSet = {
   - move colons `:` and semicolons `;` outside the quoted part
   */
   // Quoted fragment at the end of sentence
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}.${rdq}": "${ldq}It can be a ${lsq}quoted fragment.${rsq}${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment${rsq},${rdq}": "${ldq}It can be a ${lsq}quoted fragment,${rsq}${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}!${rdq}": "${ldq}It can be a ${lsq}quoted fragment!${rsq}${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}?${rdq}": "${ldq}It can be a ${lsq}quoted fragment?${rsq}${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}…${rdq}": "${ldq}It can be a ${lsq}quoted fragment…${rsq}${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment${rsq}. fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment.${rsq} fill${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment${rsq}, fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment,${rsq} fill${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment${rsq}! fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment!${rsq} fill${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment${rsq}? fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment?${rsq} fill${rdq}",
+  "${ldq}It can be a ${lsq}quoted fragment${rsq}… fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment…${rsq} fill${rdq}",
 
   // nbsp
-  "${ldq}It can be ${lsq}a banana${rsq}.${rdq}": "${ldq}It can be ${lsq}a banana.${rsq}${rdq}",
+  "${ldq}It can be ${lsq}a banana${rsq}, right.${rdq}":
+    "${ldq}It can be ${lsq}a banana,${rsq} right.${rdq}",
 
   // Quoted sentence
-  "${ldq}${lsq}Fully quoted sentence${rsq}.${rdq}": "${ldq}${lsq}Fully quoted sentence.${rsq}${rdq}",
-  "${ldq}${lsq}Fully quoted sentence${rsq},${rdq}": "${ldq}${lsq}Fully quoted sentence,${rsq}${rdq}",
-  "${ldq}${lsq}Fully quoted sentence${rsq}!${rdq}": "${ldq}${lsq}Fully quoted sentence!${rsq}${rdq}",
-  "${ldq}${lsq}Fully quoted sentence${rsq}?${rdq}": "${ldq}${lsq}Fully quoted sentence?${rsq}${rdq}",
-  "${ldq}${lsq}Fully quoted sentence${rsq}…${rdq}": "${ldq}${lsq}Fully quoted sentence…${rsq}${rdq}",
+  "${ldq} fill ${lsq}Fully quoted sentence${rsq}. fill ${rdq}": "${ldq} fill ${lsq}Fully quoted sentence.${rsq} fill ${rdq}",
+  "${ldq} fill ${lsq}Fully quoted sentence${rsq}, fill ${rdq}": "${ldq} fill ${lsq}Fully quoted sentence,${rsq} fill ${rdq}",
+  "${ldq} fill ${lsq}Fully quoted sentence${rsq}! fill ${rdq}": "${ldq} fill ${lsq}Fully quoted sentence!${rsq} fill ${rdq}",
+  "${ldq} fill ${lsq}Fully quoted sentence${rsq}? fill ${rdq}": "${ldq} fill ${lsq}Fully quoted sentence?${rsq} fill ${rdq}",
+  "${ldq} fill ${lsq}Fully quoted sentence${rsq}… fill ${rdq}": "${ldq} fill ${lsq}Fully quoted sentence…${rsq} fill ${rdq}",
 
   // Less common boundaries
   // fix later: single quotes identification around brackets

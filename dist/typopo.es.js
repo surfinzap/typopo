@@ -260,7 +260,7 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     For coding purposes, they are written here without periods and without correct spacing.
   */
   multipleWordAbbreviations: ["т зн", "Е Ч", "евід ч", "род ч", "т ч", "т д"]
-}, xe = {
+}, ge = {
   quotes: {
     leftDoubleQuote: "„",
     rightDoubleQuote: "“",
@@ -347,7 +347,7 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
     "t j",
     "zodp red"
   ]
-}, ge = {
+}, xe = {
   quotes: {
     leftDoubleQuote: "„",
     rightDoubleQuote: "“",
@@ -458,12 +458,12 @@ const w = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезі�
   cs: fe,
   "en-us": be,
   rue: me,
-  sk: xe,
-  "de-de": ge
-}, x = "en-us";
+  sk: ge,
+  "de-de": xe
+}, g = "en-us";
 class we {
   constructor(p) {
-    i[p] || (console.warn(`Locale '${p}' not found, falling back to '${x}'`), p = x), this.ID = p, this.leftSingleQuote = i[p].quotes.leftSingleQuote, this.rightSingleQuote = i[p].quotes.rightSingleQuote, this.leftDoubleQuote = i[p].quotes.leftDoubleQuote, this.rightDoubleQuote = i[p].quotes.rightDoubleQuote, this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote, this.directSpeechIntro = i[p].directSpeechIntro, this.dashWords = i[p].dashWords, this.spaceAfter = i[p].spaceAfter, this.spaceBefore = i[p].spaceBefore, this.ordinalIndicator = i[p].numbers.ordinalIndicator, this.romanOrdinalIndicator = i[p].numbers.romanOrdinalIndicator, this.ordinalDate = i[p].ordinalDate, this.singleWordAbbreviations = [];
+    i[p] || (console.warn(`Locale '${p}' not found, falling back to '${g}'`), p = g), this.ID = p, this.leftSingleQuote = i[p].quotes.leftSingleQuote, this.rightSingleQuote = i[p].quotes.rightSingleQuote, this.leftDoubleQuote = i[p].quotes.leftDoubleQuote, this.rightDoubleQuote = i[p].quotes.rightDoubleQuote, this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote, this.directSpeechIntro = i[p].directSpeechIntro, this.dashWords = i[p].dashWords, this.spaceAfter = i[p].spaceAfter, this.spaceBefore = i[p].spaceBefore, this.ordinalIndicator = i[p].numbers.ordinalIndicator, this.romanOrdinalIndicator = i[p].numbers.romanOrdinalIndicator, this.ordinalDate = i[p].ordinalDate, this.singleWordAbbreviations = [];
     for (const r in i)
       this.singleWordAbbreviations = this.singleWordAbbreviations.concat(
         i[r].singleWordAbbreviations
@@ -962,7 +962,7 @@ function mn(e) {
     "$1$2{{typopo__double-prime}}"
   ), e;
 }
-function xn(e) {
+function gn(e) {
   return e = e.replace(
     new RegExp(
       `(${n.doubleQuoteAdepts})(\\d+)({{typopo__double-prime}})`,
@@ -977,7 +977,7 @@ function xn(e) {
     "{{typopo__ldq}}$2{{typopo__rdq}}"
   ), e;
 }
-function gn(e) {
+function xn(e) {
   return e.replace(
     new RegExp(
       `(${n.doubleQuoteAdepts})([0-9${n.lowercaseChars}${n.uppercaseChars}])`,
@@ -1120,7 +1120,7 @@ function Dn(e, p) {
   ), e;
 }
 function Pn(e, p, a) {
-  return a = a || {}, e = D(e, a), e = fn(e), e = bn(e), e = mn(e), e = xn(e), e = gn(e), e = wn(e), e = Sn(e), e = En(e), e = Rn(e, p), e = P(e, a), e = Cn(e, p), e = _n(e, p), e = Qn(e, p), e = Dn(e, p), e = yn(e, p), e = An(e, p), e;
+  return a = a || {}, e = D(e, a), e = fn(e), e = bn(e), e = mn(e), e = gn(e), e = xn(e), e = wn(e), e = Sn(e), e = En(e), e = Rn(e, p), e = P(e, a), e = Cn(e, p), e = _n(e, p), e = Qn(e, p), e = Dn(e, p), e = yn(e, p), e = An(e, p), e;
 }
 function Bn(e) {
   return [
@@ -1270,10 +1270,10 @@ function Zn(e, p) {
 function Un(e, p) {
   return e = e.replace(
     new RegExp(
-      `(${p.leftSingleQuote})(.+)([${n.spaces}])([^${n.romanNumerals}]{2,})(${p.rightSingleQuote})([${n.sentencePunctuation}${n.ellipsis}])`,
+      `(${p.leftSingleQuote})(.+)([${n.spaces}])([^${n.romanNumerals}]{2,})(${p.rightSingleQuote})([${n.sentencePunctuation}${n.ellipsis}])([^${p.rightDoubleQuote}])`,
       "g"
     ),
-    "$1$2$3$4$6$5"
+    "$1$2$3$4$6$5$7"
   ), e = e.replace(
     new RegExp(
       `([:;])(${p.rightSingleQuote})`,
@@ -1349,7 +1349,7 @@ function h(e, p, a) {
 function ep(e, p) {
   return e = h(e, n.sectionSign, p.spaceAfter.sectionSign), e = h(e, n.paragraphSign, p.spaceAfter.paragraphSign), e;
 }
-function g(e, p, a) {
+function x(e, p, a) {
   return e.replace(
     new RegExp(
       `(\\(${p}\\))([${n.spaces}]*)(\\d)`,
@@ -1359,7 +1359,7 @@ function g(e, p, a) {
   );
 }
 function np(e, p) {
-  return e = g(e, "c", n.copyright), e = h(e, n.copyright, p.spaceAfter.copyright), e = g(e, "p", n.soundRecordingCopyright), e = h(
+  return e = x(e, "c", n.copyright), e = h(e, n.copyright, p.spaceAfter.copyright), e = x(e, "p", n.soundRecordingCopyright), e = h(
     e,
     n.soundRecordingCopyright,
     p.spaceAfter.soundRecordingCopyright
@@ -1537,7 +1537,7 @@ function mp(e) {
     `ISBN$2${n.nbsp}$4-$6-$8-$10-$12`
   );
 }
-function xp(e) {
+function gp(e) {
   let p = `([${n.spaces}]?[${n.hyphen}${n.enDash}${n.emDash}][${n.spaces}]?)`;
   return e.replace(
     new RegExp(
@@ -1547,8 +1547,8 @@ function xp(e) {
     "$1-$3-$5-$7-$9"
   );
 }
-function gp(e) {
-  return e = fp(e), e = bp(e), e = mp(e), e = xp(e), e;
+function xp(e) {
+  return e = fp(e), e = bp(e), e = mp(e), e = gp(e), e;
 }
 function wp(e) {
   let p = [];
@@ -1579,7 +1579,7 @@ function yp(e, p, a) {
     keepMarkdownCodeBlocks: !1
   } : a;
   const { processedText: o, exceptions: t } = wp(e);
-  return e = o, a.removeLines && (e = Se(e)), e = tn(e, r), e = Fe(e, r, a), e = Xe(e), e = hn(e, r), e = Xn(e, r, a), e = Pn(e, r, a), e = Kn(e), e = ep(e, r), e = np(e, r), e = pp(e, r), e = ap(e), e = rp(e), e = sp(e), e = $p(e), e = hp(e), e = gp(e), e = dp(e, r), e = ke(e, r), e = Ep(e, t), e;
+  return e = o, a.removeLines && (e = Se(e)), e = tn(e, r), e = Fe(e, r, a), e = Xe(e), e = hn(e, r), e = Xn(e, r, a), e = Pn(e, r, a), e = Kn(e), e = ep(e, r), e = np(e, r), e = pp(e, r), e = ap(e), e = rp(e), e = sp(e), e = $p(e), e = hp(e), e = xp(e), e = dp(e, r), e = ke(e, r), e = Ep(e, t), e;
 }
 export {
   yp as fixTypos
