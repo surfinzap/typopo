@@ -455,7 +455,7 @@ export function fixQuotedSentencePunctuation(string, locale) {
     new RegExp(
       `(${locale.leftSingleQuote})` +
       `(.+)` +
-      `([${base.spaces}])` +
+      `([${base.spaces}])(?!${locale.leftSingleQuote})` +
       `([^${base.romanNumerals}]{2,})` +
       `(${locale.rightSingleQuote})` +
       `([${base.sentencePunctuation}${base.ellipsis}])` +

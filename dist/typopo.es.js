@@ -1270,7 +1270,7 @@ function Zn(e, p) {
 function Un(e, p) {
   return e = e.replace(
     new RegExp(
-      `(${p.leftSingleQuote})(.+)([${n.spaces}])([^${n.romanNumerals}]{2,})(${p.rightSingleQuote})([${n.sentencePunctuation}${n.ellipsis}])([^${p.rightDoubleQuote}])`,
+      `(${p.leftSingleQuote})(.+)([${n.spaces}])(?!${p.leftSingleQuote})([^${n.romanNumerals}]{2,})(${p.rightSingleQuote})([${n.sentencePunctuation}${n.ellipsis}])([^${p.rightDoubleQuote}])`,
       "g"
     ),
     "$1$2$3$4$6$5$7"
