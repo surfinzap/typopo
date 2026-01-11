@@ -405,11 +405,11 @@ export function replaceSinglePrimeWSingleQuote(string) {
   - keep the position of `!`, `?`, and `…` as is (ambiguous context)
 
   Examples:
-  'word.' → 'word'.
-  'it's,' → 'it's',
-  'well-known;' → 'well-known';
-  '2020:' → '2020':
-  'Wow!' → 'Wow!' (unchanged—ambiguous)
+  ‘word.’ → ‘word’.
+  ‘it’s,’ → ‘it’s’,
+  ‘well-known;’ → ‘well-known’;
+  ‘2020:’ → ‘2020′:
+  ‘Wow!’ → ‘Wow!’ (unchanged—ambiguous)
 
   @param {string} string: input text for identification
   @param {object} locale: locale configuration
