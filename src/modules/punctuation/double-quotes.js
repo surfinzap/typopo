@@ -327,7 +327,6 @@ export function fixQuotedWordPunctuation(string, locale) {
     ),
     (match, leftQuote, content, notRoman, punct, rightQuote) => {
       if (punct.length === 1 && /[.,;:]/.test(punct)) {
-        console.log(punct);
         return leftQuote + content + notRoman + rightQuote + punct;
       }
       return match; // Return unchanged for everything else

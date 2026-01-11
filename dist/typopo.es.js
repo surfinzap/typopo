@@ -1025,7 +1025,7 @@ function yn(e, p) {
       `(${p.leftDoubleQuote})([^${n.spaces}${p.rightDoubleQuote}]+?)([^${n.romanNumerals}${n.sentencePunctuation}])([${n.sentencePunctuation}]{1,})(${p.rightDoubleQuote})`,
       "g"
     ),
-    (a, r, o, t, s, c) => s.length === 1 && /[.,;:]/.test(s) ? (console.log(s), r + o + t + c + s) : a
+    (a, r, o, t, s, c) => s.length === 1 && /[.,;:]/.test(s) ? r + o + t + c + s : a
   );
 }
 function An(e, p) {

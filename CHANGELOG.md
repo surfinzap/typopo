@@ -1,16 +1,18 @@
 # Changelog for Typopo
 
 
-## 2.9.0 // 
+## 2.9.0 // 2026
 
 ### 💪 Improvements
-- Fix punctuation placement for single-word quoted content by moving periods, commas, semicolons, and colons outside the quotes:
-  - `“word.” → “word”.`
-  - `“it’s,” → “it’s”,`
-  - `“well-known;” → “well-known”;`
-  - `“2020:” → “2020”:`
-  - Ellipses, exclamation and question marks remain unchanged (ambiguous context)
-- **tbd write update of for sentences or sentence fragments**
+**Quote punctuation placement**: Standardize punctuation placement for quoted content following [Chicago Manual of Style](https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/) conventions with context-aware handling of ambiguous cases. The implementation differentiates between single-word quotes and quoted sentences or sentence fragments, applying the same approach to both single and double quotes.
+
+**Punctuation placement rules:**
+
+| Punctuation | Single words | Sentences | Example |
+|-------------|-------------|-----------|---------|
+| Period, Comma | **Outside** | **Inside** | `“word,” → “word”,` <br> `“sentence”. → “sentence.”` |
+| Colon, Semicolon | **Outside** | **Outside** | `“word:” → “word”:` |
+| !, ?, … | **Unchanged** | **Inside** | `“Wow!” → “Wow!”` <br> `“A sentence”? → “A sentence?”` |
 
 
 ### 🔨 Maintenance
