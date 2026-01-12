@@ -188,9 +188,9 @@ export function identifyUnpairedLeftDoubleQuote(string) {
   return string.replace(
     new RegExp(
        `(${base.doubleQuoteAdepts})` +
-       `([0-9${base.lowercaseChars}${base.uppercaseChars}])`, 
-       "g"
-    ), 
+       `([0-9\\p{L}])`,
+       "gu"
+    ),
     "{{typopo__ldq--unpaired}}$2"
   );
 }
@@ -214,10 +214,10 @@ export function identifyUnpairedRightDoubleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-       `([${base.lowercaseChars}${base.uppercaseChars}${base.sentencePunctuation}${base.ellipsis}])` +
-       `(${base.doubleQuoteAdepts})`, 
-       "g"
-    ), 
+       `([\\p{L}${base.sentencePunctuation}${base.ellipsis}])` +
+       `(${base.doubleQuoteAdepts})`,
+       "gu"
+    ),
     "$1{{typopo__rdq--unpaired}}"
   );
 }
@@ -239,9 +239,9 @@ export function removeUnidentifiedDoubleQuote(string) {
     new RegExp(
        `([${base.spaces}])` +
        `(${base.doubleQuoteAdepts})` +
-       `([${base.spaces}])`, 
-      "g"
-    ), 
+       `([${base.spaces}])`,
+      "gu"
+    ),
     "$1"
   );
 }
@@ -469,9 +469,9 @@ export function addSpaceBeforeLeftDoubleQuote(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([${base.sentencePunctuation}${base.allChars}])` +
+      `([${base.sentencePunctuation}\\p{L}])` +
       `([${locale.leftDoubleQuote}])`,
-    "g"),
+    "gu"),
     `$1 $2`
   );
 
@@ -498,8 +498,8 @@ export function addSpaceAfterRightDoubleQuote(string, locale) {
   return string.replace(
     new RegExp(
       `([${locale.rightDoubleQuote}])` +
-      `([${base.allChars}])`,
-    "g"),
+      `([\\p{L}])`,
+    "gu"),
     `$1 $2`
   );
 }
@@ -530,13 +530,13 @@ export function fixDirectSpeechIntro(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([${base.allChars}])` +
+      `([\\p{L}])` +
       `[${locale.directSpeechIntroAdepts}]?` +
       `[${base.spaces}]*` +
       `[${dashes}]` +
       `[${base.spaces}]*` +
       `([${locale.leftDoubleQuote}].+?[${locale.rightDoubleQuote}])`,
-      "g"
+      "gu"
     ),
     `$1${locale.directSpeechIntro} $2`
   );
@@ -545,11 +545,11 @@ export function fixDirectSpeechIntro(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([${base.allChars}])` +
+      `([\\p{L}])` +
       `[${locale.directSpeechIntroAdepts}]` +
       `[${base.spaces}]*` +
       `([${locale.leftDoubleQuote}].+?[${locale.rightDoubleQuote}])`,
-      "g"
+      "gu"
     ),
     `$1${locale.directSpeechIntro} $2`
   );
@@ -562,8 +562,8 @@ export function fixDirectSpeechIntro(string, locale) {
       `[${base.spaces}]*` +
       `[${dashes}]` +
       `[${base.spaces}]*` +
-      `([${base.allChars}])`,
-      "g"
+      `([\\p{L}])`,
+      "gu"
     ),
     `$1 $2`
   );

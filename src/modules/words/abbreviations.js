@@ -13,14 +13,14 @@ import { base } from "../../const.js";
   @returns {string} corrected output
   */
 export function fixInitials(string, locale) {
-  const initialPattern = `([${base.uppercaseChars}][${base.allChars}]?\\.)([${base.spaces}]?)`;
-  const fullNamePattern = `([${base.allChars}]{2,}[^\\.])`;
+  const initialPattern = `([\\p{Lu}][\\p{L}]?\\.)([${base.spaces}]?)`;
+  const fullNamePattern = `([\\p{L}]{2,}[^\\.])`;
 
   const patterns = [
     // prettier-ignore
-    { 
+    {
       // "I. FullName"
-      pattern: `${initialPattern}${fullNamePattern}`, 
+      pattern: `${initialPattern}${fullNamePattern}`,
       replacement: `$1${base.nbsp}$3` },
     {
       // "I. I. FullName"
@@ -35,7 +35,7 @@ export function fixInitials(string, locale) {
   ];
 
   for (const { pattern, replacement } of patterns) {
-    string = string.replace(new RegExp(pattern, "g"), replacement);
+    string = string.replace(new RegExp(pattern, "gu"), replacement);
   }
 
   return string;
@@ -62,9 +62,9 @@ export function fixInitials(string, locale) {
 */
 export function fixMultipleWordAbbreviations(string, locale) {
   /* Partial patterns for a composition */
-  let precedingNonLatinBoundary = `([^${base.allChars}${base.enDash}${base.emDash}]|^)`;
-  let followingWord = `([${base.allChars}]|\\D)`;
-  let followingNonLatinBoundary = `([^${base.allChars}${locale.leftDoubleQuote}${locale.leftSingleQuote}${base.backtick}\\p{Emoji}]|$)`;
+  let precedingNonLatinBoundary = `([^\\p{L}${base.enDash}${base.emDash}]|^)`;
+  let followingWord = `([\\p{L}]|\\D)`;
+  let followingNonLatinBoundary = `([^\\p{L}${locale.leftDoubleQuote}${locale.leftSingleQuote}${base.backtick}\\p{Emoji}]|$)`;
 
   /* [1] Change multiple-word abbreviations from all locales to abbr. patterns */
   let abbreviationPatterns = [];
@@ -97,7 +97,7 @@ export function fixMultipleWordAbbreviations(string, locale) {
     }
     replacement += `$${(abbrCount - 1) * 3 + 2}. $${abbrCount * 3 + 2}`;
 
-    string = string.replace(new RegExp(pattern, "gi"), replacement);
+    string = string.replace(new RegExp(pattern, "giu"), replacement);
   }
 
   /* [3] Identify multiple-word abbreviations after the word
@@ -151,31 +151,31 @@ export function fixSingleWordAbbreviations(string, locale) {
   /* [2] Identify single-word abbreviations before the word
    */
   // prettier-ignore
-  let precedingNonLatinBoundary = `([^${base.allChars}${base.enDash}${base.emDash}${base.nbsp}\\.]|^)`;
-  let followingWord = `([${base.allChars}\\d]+)([^\\.]|$)`;
+  let precedingNonLatinBoundary = `([^\\p{L}${base.enDash}${base.emDash}${base.nbsp}\\.]|^)`;
+  let followingWord = `([\\p{L}\\d]+)([^\\.]|$)`;
 
   for (let i = 0; i < abbreviationPatterns.length; i++) {
     // prettier-ignore
     string = string.replace(
       new RegExp(
-        `${precedingNonLatinBoundary}${abbreviationPatterns[i]}${followingWord}`, 
-        "gi"
-      ), 
+        `${precedingNonLatinBoundary}${abbreviationPatterns[i]}${followingWord}`,
+        "giu"
+      ),
       `$1$2$3${base.nbsp}$5$6`
     );
   }
 
   /* [3] Identify single-word abbreviations after the word
    */
-  let precedingWord = `([${base.allChars}\\d])([${base.spaces}])`;
-  let followingNonLatinBoundary = `([^${base.spaces}${base.allChars}\\d]|$)`;
+  let precedingWord = `([\\p{L}\\d])([${base.spaces}])`;
+  let followingNonLatinBoundary = `([^${base.spaces}\\p{L}\\d]|$)`;
   for (let i = 0; i < abbreviationPatterns.length; i++) {
     // prettier-ignore
     string = string.replace(
       new RegExp(
-        `${precedingWord}${abbreviationPatterns[i]}${followingNonLatinBoundary}`, 
-        "gi"
-      ), 
+        `${precedingWord}${abbreviationPatterns[i]}${followingNonLatinBoundary}`,
+        "giu"
+      ),
       `$1${base.nbsp}$3$4$5$6`
     );
   }

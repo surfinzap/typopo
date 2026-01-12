@@ -195,11 +195,11 @@ export function addSpaceBeforeOpeningBrackets(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.lowercaseChars}${base.uppercaseChars}])` +
+      `([\\p{L}])` +
       `([${base.openingBrackets}])` +
-      `([${base.lowercaseChars}${base.uppercaseChars}${base.ellipsis}])` +
-      `([${base.lowercaseChars}${base.uppercaseChars}${base.ellipsis}${base.closingBrackets}])`,
-      "g"
+      `([\\p{L}${base.ellipsis}])` +
+      `([\\p{L}${base.ellipsis}${base.closingBrackets}])`,
+      "gu"
     ),
     function ($0, $1, $2, $3, $4) {
       if (($3 == "s") | ($3 == "S") | ($3 + $4 == "es") | ($3 + $4 == "ES")) {
@@ -227,10 +227,10 @@ export function addSpaceAfterTerminalPunctuation(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.lowercaseChars}${base.uppercaseChars}]{2,}|[${base.ellipsis}])` +
+      `([\\p{L}]{2,}|[${base.ellipsis}])` +
       `([${base.terminalPunctuation}])` +
-      `([${base.uppercaseChars}])`,
-      "g"
+      `([\\p{Lu}])`,
+      "gu"
     ),
     `$1$2 $3`
   );
@@ -252,10 +252,10 @@ export function addSpaceAfterSentencePause(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.lowercaseChars}${base.uppercaseChars}]{2,}|[${base.ellipsis}])` +
+      `([\\p{L}]{2,}|[${base.ellipsis}])` +
       `([${base.sentencePausePunctuation}])` +
-      `([${base.lowercaseChars}${base.uppercaseChars}])`,
-      "g"
+      `([\\p{L}])`,
+      "gu"
     ),
     `$1$2 $3`
   );
@@ -277,8 +277,8 @@ export function addSpaceAfterClosingBrackets(string) {
   return string.replace(
     new RegExp(
       `([${base.closingBrackets}])` +
-      `([${base.lowercaseChars}${base.uppercaseChars}])`,
-      "g"
+      `([\\p{L}])`,
+      "gu"
     ),
     `$1 $2`
   );

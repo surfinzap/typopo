@@ -21,11 +21,11 @@ export function fixMultiplicationSignBetweenNumbers(string) {
     string,
     new RegExp(
       `([\\d]+)` +
-      `([${base.spaces}]?[${base.lowercaseChars}${base.singlePrime}${base.doublePrime}]*)` +
+      `([${base.spaces}]?[\\p{Ll}${base.singlePrime}${base.doublePrime}]*)` +
       `([${base.spaces}][x][${base.spaces}])` +
       `([\\d]+)` +
-      `([${base.spaces}]?[${base.lowercaseChars}${base.singlePrime}${base.doublePrime}]*)`,
-      "gi"
+      `([${base.spaces}]?[\\p{Ll}${base.singlePrime}${base.doublePrime}]*)`,
+      "giu"
     ),
     `$1$2${base.nbsp}${base.multiplicationSign}${base.nbsp}$4$5`
   );
@@ -49,10 +49,10 @@ export function fixMultiplicationSignBetweenWords(string) {
   return replaceWithOverlapHandling(
     string,
     new RegExp(
-      `([${base.allChars}]+)` +
+      `([\\p{L}]+)` +
       `([${base.spaces}][x][${base.spaces}])` +
-      `([${base.allChars}]+)`,
-      "g"
+      `([\\p{L}]+)`,
+      "gu"
     ),
     `$1${base.nbsp}${base.multiplicationSign}${base.nbsp}$3`
   );
@@ -78,8 +78,8 @@ export function fixMultiplicationSignBetweenNumberAndWord(string) {
       `([${base.spaces}]?)` +
       `([x|×])` +
       `([${base.spaces}])` +
-      `([${base.lowercaseChars}]+)`,
-      "gi"
+      `([\\p{Ll}]+)`,
+      "giu"
     ),
     function ($0, $1, $2, $3, $4, $5) {
       if ($2 == "") {
@@ -110,7 +110,7 @@ export function fixNbspAroundMultiplicationSign(string) {
       `([x|×])` +
       `([\\d]+)` +
       `([${base.singlePrime}${base.doublePrime}])?`,
-      "gi"
+      "giu"
     ),
     `$1$2${base.nbsp}${base.multiplicationSign}${base.nbsp}$4$5`
   );
