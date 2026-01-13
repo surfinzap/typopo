@@ -333,7 +333,8 @@ const nbspBeforeSingleLetterUnitSet = {
 };
 
 const nbspBeforeSingleLetterEnUsSet = {
-  "When I talk": "When I talk", // do not add nbsp before I
+  "When I talk":   "When I talk", // do not add nbsp before I
+  "Point X Given": "Point X Given",
 };
 
 const nbspBeforeSingleLetterOtherSet = {

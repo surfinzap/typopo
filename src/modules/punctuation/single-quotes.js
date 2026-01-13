@@ -1,5 +1,6 @@
 import { base } from "../../const.js";
 import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../../utils/markdown.js";
+import { mark } from "../../markers.js";
 
 //
 
@@ -46,7 +47,7 @@ export function identifyContractedAnd(string) {
         `([${base.spaces}]?)` +
         `(${item[1]})`, 
       "gi"),
-      `$1${base.nbsp}{{typopo__apostrophe}}$4{{typopo__apostrophe}}${base.nbsp}$7`
+      `$1${base.nbsp}${mark.apos}$4${mark.apos}${base.nbsp}$7`
     );
   });
 
@@ -76,7 +77,7 @@ export function identifyContractedBeginnings(string) {
       `(${contractedWords})`, 
       "gi"
     ),
-      `{{typopo__apostrophe}}$2`
+      `${mark.apos}$2`
   );
 }
 
@@ -99,7 +100,7 @@ export function identifyContractedEnds(string) {
       `(${base.singleQuoteAdepts})`,
       "gi"
     ),
-      `$1{{typopo__apostrophe}}`
+      `$1${mark.apos}`
   );
 }
 
@@ -118,12 +119,12 @@ export function identifyInWordContractions(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        `([\\d${base.allChars}])` +
+        `([\\d\\p{L}])` +
         `(${base.singleQuoteAdepts})+` +
-        `([${base.allChars}])`, 
-      "g"
+        `([\\p{L}])`,
+      "gu"
     ),
-      `$1{{typopo__apostrophe}}$3`
+      `$1${mark.apos}$3`
   );
 }
 
@@ -148,10 +149,10 @@ export function identifyContractedYears(string) {
       `([^0-9]|[A-Z][0-9])` +
       `([${base.spaces}])` +
       `(${base.singleQuoteAdepts})` +
-      `([\\d]{2})`, 
-      "g"
+      `([\\d]{2})`,
+      "gu"
     ),
-      `$1$2{{typopo__apostrophe}}$4`
+      `$1$2${mark.apos}$4`
   );
 }
 
@@ -174,10 +175,10 @@ export function identifyContractedYears(string) {
   We’re not using base.singleQuoteAdepts variable as commas and low-positioned quotes are ommited
 
   @param {string} string: input text for identification
-  @returns {string} output with identified single primes as a temporary variable string, e.g. {{typopo__single-prime}}
+  @returns {string} output with identified single primes as a temporary variable string, e.g. ${mark.singlePrime}
 */
 export function identifySinglePrimes(string) {
-  return string.replace(/(\d)( ?)('|‘|’|‛|′)/g, "$1$2{{typopo__single-prime}}");
+  return string.replace(/(\d)( ?)('|‘|’|‛|′)/g, `$1$2${mark.singlePrime}`);
 }
 
 //
@@ -199,10 +200,10 @@ export function identifyUnpairedLeftSingleQuote(string) {
     new RegExp(
         `(^|[${base.spaces}${base.emDash}${base.enDash}])` +
         `(${base.singleQuoteAdepts}|,)` +
-        `([${base.allChars}${base.ellipsis}${base.openingBrackets}\\{])`,
-      "g"
+        `([\\p{L}${base.ellipsis}${base.openingBrackets}\\{])`,
+      "gu"
     ),
-      `$1{{typopo__lsq--unpaired}}$3`
+      `$1${mark.lsqUnpaired}$3`
   );
 }
 
@@ -224,13 +225,13 @@ export function identifyUnpairedRightSingleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.allChars}${base.closingBrackets}\\}])` +
+      `([\\p{L}${base.closingBrackets}\\}])` +
       `([${base.sentencePunctuation}${base.ellipsis}])?` +
       `(${base.singleQuoteAdepts})` +
       `([ ${base.sentencePunctuation}])?`,
-      "g"
+      "gu"
     ),
-      `$1$2{{typopo__rsq--unpaired}}$4`
+      `$1$2${mark.rsqUnpaired}$4`
   );
 }
 
@@ -257,7 +258,7 @@ export function identifySingleQuotesWithinDoubleQuotes(string) {
         `(${base.doubleQuoteAdepts})` +
         `(.*?)` +
         `(${base.doubleQuoteAdepts})`,
-      "g"
+      "gu"
     ),
     function ($0, $1, $2, $3) {
       $2 = identifyUnpairedLeftSingleQuote($2);
@@ -290,12 +291,12 @@ export function identifySingleQuotePairs(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `({{typopo__lsq--unpaired}})` +
+      `(${mark.lsqUnpaired})` +
       `(.*)` +
-      `({{typopo__rsq--unpaired}})`,
-      "g"
+      `(${mark.rsqUnpaired})`,
+      "gu"
     ),
-      `{{typopo__lsq}}$2{{typopo__rsq}}`
+      `${mark.lsq}$2${mark.rsq}`
   );
 }
 
@@ -316,12 +317,12 @@ export function identifySingleQuotePairAroundSingleWord(string) {
     new RegExp(
         `(\\B)` +
         `(${base.singleQuoteAdepts})` +
-        `([${base.allChars}]+)` +
+        `([\\p{L}]+)` +
         `(${base.singleQuoteAdepts})` +
         `(\\B)`,
-      "g"
+      "gu"
     ),
-      `$1{{typopo__lsq}}$3{{typopo__rsq}}$5`
+      `$1${mark.lsq}$3${mark.rsq}$5`
   );
 }
 
@@ -346,7 +347,7 @@ export function identifyResidualApostrophes(string) {
       `(${base.singleQuoteAdepts})`,
       "g"
     ),
-      `{{typopo__apostrophe}}`
+      `${mark.apos}`
   );
 }
 
@@ -371,23 +372,23 @@ export function replaceSinglePrimeWSingleQuote(string) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `({{typopo__lsq--unpaired}})` +
+      `(${mark.lsqUnpaired})` +
       `(.*?)` +
-      `({{typopo__single-prime}})`,
+      `(${mark.singlePrime})`,
       "g"
     ),
-      `{{typopo__lsq}}$2{{typopo__rsq}}`
+      `${mark.lsq}$2${mark.rsq}`
   );
 
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `({{typopo__single-prime}})` +
+      `(${mark.singlePrime})` +
       `(.*?)` +
-      `({{typopo__rsq--unpaired}})`,
+      `(${mark.rsqUnpaired})`,
       "g"
     ),
-      `{{typopo__lsq}}$2{{typopo__rsq}}`
+      `${mark.lsq}$2${mark.rsq}`
   );
 
   return string;
@@ -532,7 +533,7 @@ export function removeExtraSpaceAroundSinglePrime(string) {
   Replace all identified punctuation with appropriate punctuation in given language
 
   Context
-  In single-quotes module, we first identify single quote and single prime adepts, and then we  replace them temporarily with labels as “{{typopo__single-prime}}”. 
+  In single-quotes module, we first identify single quote and single prime adepts, and then we  replace them temporarily with labels as “${mark.singlePrime}”. 
   This is the function in the sequence to swap temporary labels to desired quotes.
   
 
@@ -541,19 +542,21 @@ export function removeExtraSpaceAroundSinglePrime(string) {
   @returns {string} an output with locale-specific single quotes and single primes
 */
 export function placeLocaleSingleQuotes(string, locale) {
-  string = string.replace(/({{typopo__single-prime}})/g, base.singlePrime);
+  const replacements = [
+    { pattern: mark.singlePrime, replacement: base.singlePrime },
+    {
+      pattern: `[${mark.apos}${mark.lsqUnpaired}${mark.rsqUnpaired}]`,
+      replacement: base.apostrophe,
+    },
+    { pattern: mark.lsq, replacement: locale.leftSingleQuote },
+    { pattern: mark.rsq, replacement: locale.rightSingleQuote },
+    { pattern: mark.mdSyntaxHighlight, replacement: "```" },
+  ];
 
-  string = string.replace(
-    /{{typopo__apostrophe}}|{{typopo__lsq--unpaired}}|{{typopo__rsq--unpaired}}/g,
-    base.apostrophe
+  return replacements.reduce(
+    (text, { pattern, replacement }) => text.replace(new RegExp(pattern, "gu"), replacement),
+    string
   );
-
-  string = string.replace(/{{typopo__lsq}}/g, locale.leftSingleQuote);
-  string = string.replace(/{{typopo__rsq}}/g, locale.rightSingleQuote);
-
-  string = string.replace(/{{typopo__markdown_syntax_highlight}}/g, "```");
-
-  return string;
 }
 
 //
