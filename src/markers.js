@@ -9,7 +9,7 @@
  * mark positions where specific characters should be placed.
  */
 
-export const mark = {
+export const m = {
   /* Quotes, primes, apostrophes - U+E100 range */
   apos:        "\uE100",
   singlePrime: "\uE101",

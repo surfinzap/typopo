@@ -20,7 +20,7 @@ import {
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { createTestSuite, transformTestSet, t } from "../test-utils.js";
 import { keepMarkdownCodeBlocksSet } from "./double-quotes.test.js";
-import { mark } from "../../src/markers.js";
+import { m } from "../../src/markers.js";
 
 const identifyContractedAndModuleSet = {
   "rock 'n' roll":   "rock ’n’ roll",
@@ -213,18 +213,18 @@ const identifyUnpairedLeftSingleQuoteModuleSet = {
 };
 
 const identifyUnpairedLeftSingleQuoteUnitSet = {
-  '" \'word"': `" ${mark.lsqUnpaired}word"`,
-  '" ‚word"':  `" ${mark.lsqUnpaired}word"`,
-  " ‘word":    ` ${mark.lsqUnpaired}word`,
-  "–‘word":    `–${mark.lsqUnpaired}word`,
-  "—‘word":    `—${mark.lsqUnpaired}word`,
-  " ʼword":    ` ${mark.lsqUnpaired}word`,
-  " ‛word":    ` ${mark.lsqUnpaired}word`,
-  " ´word":    ` ${mark.lsqUnpaired}word`,
-  " `word":    ` ${mark.lsqUnpaired}word`,
-  " ′word":    ` ${mark.lsqUnpaired}word`,
-  " ‹word":    ` ${mark.lsqUnpaired}word`,
-  " ›word":    ` ${mark.lsqUnpaired}word`,
+  '" \'word"': `" ${m.lsqUnpaired}word"`,
+  '" ‚word"':  `" ${m.lsqUnpaired}word"`,
+  " ‘word":    ` ${m.lsqUnpaired}word`,
+  "–‘word":    `–${m.lsqUnpaired}word`,
+  "—‘word":    `—${m.lsqUnpaired}word`,
+  " ʼword":    ` ${m.lsqUnpaired}word`,
+  " ‛word":    ` ${m.lsqUnpaired}word`,
+  " ´word":    ` ${m.lsqUnpaired}word`,
+  " `word":    ` ${m.lsqUnpaired}word`,
+  " ′word":    ` ${m.lsqUnpaired}word`,
+  " ‹word":    ` ${m.lsqUnpaired}word`,
+  " ›word":    ` ${m.lsqUnpaired}word`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -253,25 +253,25 @@ const identifyUnpairedRightSingleQuoteModuleSet = {
 };
 
 const identifyUnpairedRightSingleQuoteUnitSet = {
-  [`${t.ldq}word!'${t.rdq}`]: `${t.ldq}word!${mark.rsqUnpaired}${t.rdq}`,
-  [`${t.ldq}word.'${t.rdq}`]: `${t.ldq}word.${mark.rsqUnpaired}${t.rdq}`,
-  [`${t.ldq}word':${t.rdq}`]: `${t.ldq}word${mark.rsqUnpaired}:${t.rdq}`,
-  [`${t.ldq}word',${t.rdq}`]: `${t.ldq}word${mark.rsqUnpaired},${t.rdq}`,
-  '"word\'"':                 `"word${mark.rsqUnpaired}"`,
-  '"word‚"':                  `"word${mark.rsqUnpaired}"`,
-  "word‘":                    `word${mark.rsqUnpaired}`,
-  "wordʼ":                    `word${mark.rsqUnpaired}`,
-  "word‛":                    `word${mark.rsqUnpaired}`,
-  "word´":                    `word${mark.rsqUnpaired}`,
-  "word`":                    `word${mark.rsqUnpaired}`,
-  "word′":                    `word${mark.rsqUnpaired}`,
-  "word‹":                    `word${mark.rsqUnpaired}`,
-  "word›":                    `word${mark.rsqUnpaired}`,
-  "word.'":                   `word.${mark.rsqUnpaired}`,
-  "word!'":                   `word!${mark.rsqUnpaired}`,
-  "word':":                   `word${mark.rsqUnpaired}:`,
-  "word',":                   `word${mark.rsqUnpaired},`,
-  "word' ":                   `word${mark.rsqUnpaired} `,
+  [`${t.ldq}word!'${t.rdq}`]: `${t.ldq}word!${m.rsqUnpaired}${t.rdq}`,
+  [`${t.ldq}word.'${t.rdq}`]: `${t.ldq}word.${m.rsqUnpaired}${t.rdq}`,
+  [`${t.ldq}word':${t.rdq}`]: `${t.ldq}word${m.rsqUnpaired}:${t.rdq}`,
+  [`${t.ldq}word',${t.rdq}`]: `${t.ldq}word${m.rsqUnpaired},${t.rdq}`,
+  '"word\'"':                 `"word${m.rsqUnpaired}"`,
+  '"word‚"':                  `"word${m.rsqUnpaired}"`,
+  "word‘":                    `word${m.rsqUnpaired}`,
+  "wordʼ":                    `word${m.rsqUnpaired}`,
+  "word‛":                    `word${m.rsqUnpaired}`,
+  "word´":                    `word${m.rsqUnpaired}`,
+  "word`":                    `word${m.rsqUnpaired}`,
+  "word′":                    `word${m.rsqUnpaired}`,
+  "word‹":                    `word${m.rsqUnpaired}`,
+  "word›":                    `word${m.rsqUnpaired}`,
+  "word.'":                   `word.${m.rsqUnpaired}`,
+  "word!'":                   `word!${m.rsqUnpaired}`,
+  "word':":                   `word${m.rsqUnpaired}:`,
+  "word',":                   `word${m.rsqUnpaired},`,
+  "word' ":                   `word${m.rsqUnpaired} `,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -322,9 +322,9 @@ const identifySingleQuotePairsModuleSet = {
 };
 
 const identifySingleQuotePairsUnitSet = {
-  [`${mark.lsqUnpaired}word${mark.rsqUnpaired}`]: `${mark.lsq}word${mark.rsq}`,
+  [`${m.lsqUnpaired}word${m.rsqUnpaired}`]: `${m.lsq}word${m.rsq}`,
 
-  [`${mark.lsqUnpaired}word word${mark.rsqUnpaired}`]: `${mark.lsq}word word${mark.rsq}`,
+  [`${m.lsqUnpaired}word word${m.rsqUnpaired}`]: `${m.lsq}word word${m.rsq}`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -383,8 +383,8 @@ const replaceSinglePrimeWSingleQuoteModuleSet = {
 };
 
 const replaceSinglePrimeWSingleQuoteUnitSet = {
-  [`${mark.lsqUnpaired}word${mark.singlePrime}`]: `${mark.lsq}word${mark.rsq}`,
-  [`${mark.singlePrime}word${mark.rsqUnpaired}`]: `${mark.lsq}word${mark.rsq}`,
+  [`${m.lsqUnpaired}word${m.singlePrime}`]: `${m.lsq}word${m.rsq}`,
+  [`${m.singlePrime}word${m.rsqUnpaired}`]: `${m.lsq}word${m.rsq}`,
 };
 
 supportedLocales.forEach((localeName) => {

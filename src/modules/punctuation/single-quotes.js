@@ -1,6 +1,6 @@
 import { base } from "../../const.js";
 import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../../utils/markdown.js";
-import { mark } from "../../markers.js";
+import { m } from "../../markers.js";
 
 //
 
@@ -47,7 +47,7 @@ export function identifyContractedAnd(string) {
         `([${base.spaces}]?)` +
         `(${item[1]})`, 
       "gi"),
-      `$1${base.nbsp}${mark.apos}$4${mark.apos}${base.nbsp}$7`
+      `$1${base.nbsp}${m.apos}$4${m.apos}${base.nbsp}$7`
     );
   });
 
@@ -77,7 +77,7 @@ export function identifyContractedBeginnings(string) {
       `(${contractedWords})`, 
       "gi"
     ),
-      `${mark.apos}$2`
+      `${m.apos}$2`
   );
 }
 
@@ -100,7 +100,7 @@ export function identifyContractedEnds(string) {
       `(${base.singleQuoteAdepts})`,
       "gi"
     ),
-      `$1${mark.apos}`
+      `$1${m.apos}`
   );
 }
 
@@ -124,7 +124,7 @@ export function identifyInWordContractions(string) {
         `([\\p{L}])`,
       "gu"
     ),
-      `$1${mark.apos}$3`
+      `$1${m.apos}$3`
   );
 }
 
@@ -152,7 +152,7 @@ export function identifyContractedYears(string) {
       `([\\d]{2})`,
       "gu"
     ),
-      `$1$2${mark.apos}$4`
+      `$1$2${m.apos}$4`
   );
 }
 
@@ -175,10 +175,10 @@ export function identifyContractedYears(string) {
   We’re not using base.singleQuoteAdepts variable as commas and low-positioned quotes are ommited
 
   @param {string} string: input text for identification
-  @returns {string} output with identified single primes as a temporary variable string, e.g. ${mark.singlePrime}
+  @returns {string} output with identified single primes as a temporary variable string, e.g. ${m.singlePrime}
 */
 export function identifySinglePrimes(string) {
-  return string.replace(/(\d)( ?)('|‘|’|‛|′)/g, `$1$2${mark.singlePrime}`);
+  return string.replace(/(\d)( ?)('|‘|’|‛|′)/g, `$1$2${m.singlePrime}`);
 }
 
 //
@@ -203,7 +203,7 @@ export function identifyUnpairedLeftSingleQuote(string) {
         `([\\p{L}${base.ellipsis}${base.openingBrackets}\\{])`,
       "gu"
     ),
-      `$1${mark.lsqUnpaired}$3`
+      `$1${m.lsqUnpaired}$3`
   );
 }
 
@@ -231,7 +231,7 @@ export function identifyUnpairedRightSingleQuote(string) {
       `([ ${base.sentencePunctuation}])?`,
       "gu"
     ),
-      `$1$2${mark.rsqUnpaired}$4`
+      `$1$2${m.rsqUnpaired}$4`
   );
 }
 
@@ -291,12 +291,12 @@ export function identifySingleQuotePairs(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${mark.lsqUnpaired})` +
+      `(${m.lsqUnpaired})` +
       `(.*)` +
-      `(${mark.rsqUnpaired})`,
+      `(${m.rsqUnpaired})`,
       "gu"
     ),
-      `${mark.lsq}$2${mark.rsq}`
+      `${m.lsq}$2${m.rsq}`
   );
 }
 
@@ -322,7 +322,7 @@ export function identifySingleQuotePairAroundSingleWord(string) {
         `(\\B)`,
       "gu"
     ),
-      `$1${mark.lsq}$3${mark.rsq}$5`
+      `$1${m.lsq}$3${m.rsq}$5`
   );
 }
 
@@ -347,7 +347,7 @@ export function identifyResidualApostrophes(string) {
       `(${base.singleQuoteAdepts})`,
       "g"
     ),
-      `${mark.apos}`
+      `${m.apos}`
   );
 }
 
@@ -372,23 +372,23 @@ export function replaceSinglePrimeWSingleQuote(string) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `(${mark.lsqUnpaired})` +
+      `(${m.lsqUnpaired})` +
       `(.*?)` +
-      `(${mark.singlePrime})`,
+      `(${m.singlePrime})`,
       "g"
     ),
-      `${mark.lsq}$2${mark.rsq}`
+      `${m.lsq}$2${m.rsq}`
   );
 
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `(${mark.singlePrime})` +
+      `(${m.singlePrime})` +
       `(.*?)` +
-      `(${mark.rsqUnpaired})`,
+      `(${m.rsqUnpaired})`,
       "g"
     ),
-      `${mark.lsq}$2${mark.rsq}`
+      `${m.lsq}$2${m.rsq}`
   );
 
   return string;
@@ -533,7 +533,7 @@ export function removeExtraSpaceAroundSinglePrime(string) {
   Replace all identified punctuation with appropriate punctuation in given language
 
   Context
-  In single-quotes module, we first identify single quote and single prime adepts, and then we  replace them temporarily with labels as “${mark.singlePrime}”. 
+  In single-quotes module, we first identify single quote and single prime adepts, and then we  replace them temporarily with labels as “${m.singlePrime}”. 
   This is the function in the sequence to swap temporary labels to desired quotes.
   
 
@@ -543,14 +543,14 @@ export function removeExtraSpaceAroundSinglePrime(string) {
 */
 export function placeLocaleSingleQuotes(string, locale) {
   const replacements = [
-    { pattern: mark.singlePrime, replacement: base.singlePrime },
+    { pattern: m.singlePrime, replacement: base.singlePrime },
     {
-      pattern: `[${mark.apos}${mark.lsqUnpaired}${mark.rsqUnpaired}]`,
+      pattern:     `[${m.apos}${m.lsqUnpaired}${m.rsqUnpaired}]`,
       replacement: base.apostrophe,
     },
-    { pattern: mark.lsq, replacement: locale.leftSingleQuote },
-    { pattern: mark.rsq, replacement: locale.rightSingleQuote },
-    { pattern: mark.mdSyntaxHighlight, replacement: "```" },
+    { pattern: m.lsq, replacement: locale.leftSingleQuote },
+    { pattern: m.rsq, replacement: locale.rightSingleQuote },
+    { pattern: m.mdSyntaxHighlight, replacement: "```" },
   ];
 
   return replacements.reduce(
