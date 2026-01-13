@@ -1122,14 +1122,14 @@ function mn(e, p, t) {
   return t = t || {}, e = A(e, t), e = nn(e), e = pn(e), e = tn(e), e = on(e), e = rn(e), e = an(e), e = sn(e), e = un(e), e = ln(e, p), e = R(e, t), e = dn(e, p), e = fn(e, p), e = hn(e, p), e = bn(e, p), e = cn(e, p), e = $n(e, p), e;
 }
 const c = {
-  /* Quotes, primes, apostrophes */
-  apos: "",
-  singlePrime: "",
-  lsq: "",
-  rsq: "",
-  lsqUnpaired: "",
-  rsqUnpaired: "",
-  mdSyntaxHighlight: ""
+  /* Quotes, primes, apostrophes - U+E100 range */
+  apos: "",
+  singlePrime: "",
+  lsq: "",
+  rsq: "",
+  lsqUnpaired: "",
+  rsqUnpaired: "",
+  mdSyntaxHighlight: ""
 };
 function gn(e) {
   return [
