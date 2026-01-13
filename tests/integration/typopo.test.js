@@ -20,7 +20,7 @@ import { multiplicationSignSet } from "../symbols/multiplication-sign.test.js";
 import { numberSignSet } from "../symbols/number-sign.test.js";
 import { plusMinusSet } from "../symbols/plus-minus.test.js";
 import { symbolSet, transformSymbolSet } from "../symbols/symbol-utils.test.js";
-import { transformTestSet } from "../test-utils.js";
+import { transformTestSet, t } from "../test-utils.js";
 import { linesSet } from "../whitespace/lines.test.js";
 import { nbspSet } from "../whitespace/nbsp.test.js";
 import { spacesSet } from "../whitespace/spaces.test.js";
@@ -141,8 +141,8 @@ const configKeepMarkdownCodeBlocks = {
 */
 
 const moduleCombinations = {
-  "We will continue tomorrow at 8:00 a.m.!": "We will continue tomorrow at 8:00 a.${abbrSpace}m.!",
-  "We will continue tomorrow at 8:00 a.m..": "We will continue tomorrow at 8:00 a.${abbrSpace}m.",
+  "We will continue tomorrow at 8:00 a.m.!": `We will continue tomorrow at 8:00 a.${t.abbrSpace}m.!`,
+  "We will continue tomorrow at 8:00 a.m..": `We will continue tomorrow at 8:00 a.${t.abbrSpace}m.`,
 
   /*	Combination of resolving issues with ellipsis and brackets together. */
   "quote [...]with parts left out":    "quote […] with parts left out",
@@ -154,8 +154,7 @@ const moduleCombinations = {
   "Because of this, it’s common": "Because of this, it’s common",
 
   // Single quotes + double quotes
-  "${ldq}Sentence ${lsq}quoted fragment.${rsq}${rdq}":
-    "${ldq}Sentence ${lsq}quoted fragment${rsq}.${rdq}",
+  [`${t.ldq}Sentence ${t.lsq}quoted fragment.${t.rsq}${t.rdq}`]: `${t.ldq}Sentence ${t.lsq}quoted fragment${t.rsq}.${t.rdq}`,
 };
 
 const falsePositives = {

@@ -71,15 +71,6 @@ export function createTestSuite(
 }
 
 /**
- * Helper function to escape regex special characters
- * @param {string} str - String to escape
- * @returns {string} Escaped string safe for use in RegExp
- */
-function escapeRegex(str) {
-  return str.replace(/[{}()[\]\\.$^*+?|]/g, "\\$&");
-}
-
-/**
  * Test token markers using Unicode Private Use Area
  *
  * Unicode Allocation:
@@ -155,38 +146,12 @@ export function transformTestSet(testSet, localeName, options = {}) {
       [t.symbol]: base[symbolName],
       [t.space]:  locale.spaceAfter[symbolName],
     }),
-
-    // Old string tokens (backward compatibility)
-    "${ldq}":                    locale.leftDoubleQuote,
-    "${rdq}":                    locale.rightDoubleQuote,
-    "${lsq}":                    locale.leftSingleQuote,
-    "${rsq}":                    locale.rightSingleQuote,
-    "${apos}":                   base.apostrophe,
-    "${directSpeechIntro}":      locale.directSpeechIntro,
-    "${spaceBeforeDash}":        locale.dashWords.spaceBefore,
-    "${dash}":                   locale.dashWords.dash,
-    "${spaceAfterDash}":         locale.dashWords.spaceAfter,
-    "${abbrSpace}":              locale.spaceAfter.abbreviation,
-    "${ordinalDateFirstSpace}":  locale.ordinalDate.firstSpace,
-    "${ordinalDateSecondSpace}": locale.ordinalDate.secondSpace,
-    "${romanOrdinalIndicator}":  locale.romanOrdinalIndicator,
-    "${spaceBeforePercent}":     locale.spaceBefore.percent,
-    ...(symbolName && {
-      "${symbol}": base[symbolName],
-      "${space}":  locale.spaceAfter[symbolName],
-    }),
   };
 
   const replaceTokens = (str) => {
     // First replace all tokens
     const tokenReplaced = Object.entries(tokenMap).reduce((result, [token, value]) => {
-      const charCode = token.charCodeAt(0);
-      if (charCode >= 0xe000 && charCode <= 0xe2ff) {
-        return result.split(token).join(value);
-      }
-      // tbd Remove this
-      // For string tokens, use regex
-      return result.replace(new RegExp(escapeRegex(token), "g"), value);
+      return result.split(token).join(value);
     }, str);
     // Then handle escaped dots (this must happen after token replacement)
     return tokenReplaced.replace(/\\\./g, ".");

@@ -200,16 +200,16 @@ supportedLocales.forEach((localeName) => {
 
 const identifyUnpairedLeftSingleQuoteModuleSet = {
   // heads up! since it’s a unpaired quote it’s fixed as apostrophe within a module
-  "${ldq}‘word${rdq}":  "${ldq}’word${rdq}",
-  "${ldq}–‘word${rdq}": "${ldq}–’word${rdq}",
-  "${ldq}—‘word${rdq}": "${ldq}—’word${rdq}",
-  "${ldq}ʼword${rdq}":  "${ldq}’word${rdq}",
-  "${ldq}‛word${rdq}":  "${ldq}’word${rdq}",
-  "${ldq}´word${rdq}":  "${ldq}’word${rdq}",
-  "${ldq}`word${rdq}":  "${ldq}’word${rdq}",
-  "${ldq}′word${rdq}":  "${ldq}’word${rdq}",
-  "${ldq}‹word${rdq}":  "${ldq}’word${rdq}",
-  "${ldq}›word${rdq}":  "${ldq}’word${rdq}",
+  [`${t.ldq}‘word${t.rdq}`]:  `${t.ldq}’word${t.rdq}`,
+  [`${t.ldq}–‘word${t.rdq}`]: `${t.ldq}–’word${t.rdq}`,
+  [`${t.ldq}—‘word${t.rdq}`]: `${t.ldq}—’word${t.rdq}`,
+  [`${t.ldq}ʼword${t.rdq}`]:  `${t.ldq}’word${t.rdq}`,
+  [`${t.ldq}‛word${t.rdq}`]:  `${t.ldq}’word${t.rdq}`,
+  [`${t.ldq}´word${t.rdq}`]:  `${t.ldq}’word${t.rdq}`,
+  [`${t.ldq}\`word${t.rdq}`]: `${t.ldq}’word${t.rdq}`,
+  [`${t.ldq}′word${t.rdq}`]:  `${t.ldq}’word${t.rdq}`,
+  [`${t.ldq}‹word${t.rdq}`]:  `${t.ldq}’word${t.rdq}`,
+  [`${t.ldq}›word${t.rdq}`]:  `${t.ldq}’word${t.rdq}`,
 };
 
 const identifyUnpairedLeftSingleQuoteUnitSet = {
@@ -240,16 +240,16 @@ supportedLocales.forEach((localeName) => {
 
 const identifyUnpairedRightSingleQuoteModuleSet = {
   // heads up! since it’s a unpaired quote it’s fixed as apostrophe within a module
-  "${ldq}word'${rdq}": "${ldq}word’${rdq}",
-  "${ldq}word‚${rdq}": "${ldq}word’${rdq}",
-  "${ldq}word‘${rdq}": "${ldq}word’${rdq}",
-  "${ldq}wordʼ${rdq}": "${ldq}word’${rdq}",
-  "${ldq}word‛${rdq}": "${ldq}word’${rdq}",
-  "${ldq}word´${rdq}": "${ldq}word’${rdq}",
-  "${ldq}word`${rdq}": "${ldq}word’${rdq}",
-  "${ldq}word′${rdq}": "${ldq}word’${rdq}",
-  "${ldq}word‹${rdq}": "${ldq}word’${rdq}",
-  "${ldq}word›${rdq}": "${ldq}word’${rdq}",
+  [`${t.ldq}word'${t.rdq}`]:  `${t.ldq}word’${t.rdq}`,
+  [`${t.ldq}word‚${t.rdq}`]:  `${t.ldq}word’${t.rdq}`,
+  [`${t.ldq}word‘${t.rdq}`]:  `${t.ldq}word’${t.rdq}`,
+  [`${t.ldq}wordʼ${t.rdq}`]:  `${t.ldq}word’${t.rdq}`,
+  [`${t.ldq}word‛${t.rdq}`]:  `${t.ldq}word’${t.rdq}`,
+  [`${t.ldq}word´${t.rdq}`]:  `${t.ldq}word’${t.rdq}`,
+  [`${t.ldq}word\`${t.rdq}`]: `${t.ldq}word’${t.rdq}`,
+  [`${t.ldq}word′${t.rdq}`]:  `${t.ldq}word’${t.rdq}`,
+  [`${t.ldq}word‹${t.rdq}`]:  `${t.ldq}word’${t.rdq}`,
+  [`${t.ldq}word›${t.rdq}`]:  `${t.ldq}word’${t.rdq}`,
 };
 
 const identifyUnpairedRightSingleQuoteUnitSet = {
@@ -286,32 +286,23 @@ supportedLocales.forEach((localeName) => {
 });
 
 const identifySingleQuotePairsModuleSet = {
-  "He said${directSpeechIntro} ${ldq}What about 'word', is that good?${rdq}":
-    "He said${directSpeechIntro} ${ldq}What about ${lsq}word${rsq}, is that good?${rdq}",
+  [`He said${t.directSpeechIntro} ${t.ldq}What about 'word', is that good?${t.rdq}`]: `He said${t.directSpeechIntro} ${t.ldq}What about ${t.lsq}word${t.rsq}, is that good?${t.rdq}`,
 
-  "He said${directSpeechIntro} ${ldq}What about 'word' 'word', is that good?${rdq}":
-    "He said${directSpeechIntro} ${ldq}What about ${lsq}word${rsq} ${lsq}word${rsq}, is that good?${rdq}",
+  [`He said${t.directSpeechIntro} ${t.ldq}What about 'word' 'word', is that good?${t.rdq}`]: `He said${t.directSpeechIntro} ${t.ldq}What about ${t.lsq}word${t.rsq} ${t.lsq}word${t.rsq}, is that good?${t.rdq}`,
 
-  "He said${directSpeechIntro} ${ldq}What about 'word word', is that good?${rdq}":
-    "He said${directSpeechIntro} ${ldq}What about ${lsq}word word,${rsq} is that good?${rdq}",
+  [`He said${t.directSpeechIntro} ${t.ldq}What about 'word word', is that good?${t.rdq}`]: `He said${t.directSpeechIntro} ${t.ldq}What about ${t.lsq}word word,${t.rsq} is that good?${t.rdq}`,
 
-  "${ldq}double quotes 'and single quotes' within${rdq}":
-    "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
+  [`${t.ldq}double quotes 'and single quotes' within${t.rdq}`]: `${t.ldq}double quotes ${t.lsq}and single quotes${t.rsq} within${t.rdq}`,
 
-  "${ldq}double quotes 'and single quotes’ within${rdq}":
-    "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
+  [`${t.ldq}double quotes 'and single quotes’ within${t.rdq}`]: `${t.ldq}double quotes ${t.lsq}and single quotes${t.rsq} within${t.rdq}`,
 
-  "${ldq}double quotes ‚and single quotes' within${rdq}":
-    "${ldq}double quotes ${lsq}and single quotes${rsq} within${rdq}",
+  [`${t.ldq}double quotes ‚and single quotes' within${t.rdq}`]: `${t.ldq}double quotes ${t.lsq}and single quotes${t.rsq} within${t.rdq}`,
 
-  "He said${directSpeechIntro} ${ldq}What about 'name' and 'other name'?${rdq}":
-    "He said${directSpeechIntro} ${ldq}What about ${lsq}name${rsq} and ${lsq}other name${rsq}?${rdq}",
+  [`He said${t.directSpeechIntro} ${t.ldq}What about 'name' and 'other name'?${t.rdq}`]: `He said${t.directSpeechIntro} ${t.ldq}What about ${t.lsq}name${t.rsq} and ${t.lsq}other name${t.rsq}?${t.rdq}`,
 
-  "Within double quotes ${ldq}there are single 'quotes with mix’d punctuation,' you see.${rdq}":
-    "Within double quotes ${ldq}there are single ${lsq}quotes with mix’d punctuation,${rsq} you see.${rdq}",
+  [`Within double quotes ${t.ldq}there are single 'quotes with mix’d punctuation,' you see.${t.rdq}`]: `Within double quotes ${t.ldq}there are single ${t.lsq}quotes with mix’d punctuation,${t.rsq} you see.${t.rdq}`,
 
-  "Let's test this${directSpeechIntro} ${ldq}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${rdq}":
-    "Let’s test this${directSpeechIntro} ${ldq}however, ${lsq}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${rsq} he said${rdq}",
+  [`Let's test this${t.directSpeechIntro} ${t.ldq}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${t.rdq}`]: `Let’s test this${t.directSpeechIntro} ${t.ldq}however, ${t.lsq}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${t.rsq} he said${t.rdq}`,
 
   // this case is not covered, the value is false
   // the first right single quote is falsely an apostrophe
@@ -339,10 +330,10 @@ supportedLocales.forEach((localeName) => {
 });
 
 const identifySingleQuotePairAroundSingleWordModuleSet = {
-  "'word'":                                                                   "${lsq}word${rsq}",
-  "'word' 'word'":                                                            "${lsq}word${rsq} ${lsq}word${rsq}",
-  "He said${directSpeechIntro} ${ldq}What about 'word', is that good?${rdq}": "He said${directSpeechIntro} ${ldq}What about ${lsq}word${rsq}, is that good?${rdq}",
-  "Press 'N' to get started":                                                 "Press ${lsq}N${rsq} to get started",
+  "'word'":                                                                           `${t.lsq}word${t.rsq}`,
+  "'word' 'word'":                                                                    `${t.lsq}word${t.rsq} ${t.lsq}word${t.rsq}`,
+  [`He said${t.directSpeechIntro} ${t.ldq}What about 'word', is that good?${t.rdq}`]: `He said${t.directSpeechIntro} ${t.ldq}What about ${t.lsq}word${t.rsq}, is that good?${t.rdq}`,
+  "Press 'N' to get started":                                                         `Press ${t.lsq}N${t.rsq} to get started`,
 };
 
 const identifySingleQuotePairAroundSingleWordUnitSet = {
@@ -375,11 +366,9 @@ supportedLocales.forEach((localeName) => {
 });
 
 const replaceSinglePrimeWSingleQuoteModuleSet = {
-  "He said${directSpeechIntro} ${ldq}What about 'Localhost 3000', is that good?${rdq}":
-    "He said${directSpeechIntro} ${ldq}What about ${lsq}Localhost 3000,${rsq} is that good?${rdq}",
+  [`He said${t.directSpeechIntro} ${t.ldq}What about 'Localhost 3000', is that good?${t.rdq}`]: `He said${t.directSpeechIntro} ${t.ldq}What about ${t.lsq}Localhost 3000,${t.rsq} is that good?${t.rdq}`,
 
-  "He said${directSpeechIntro} ${ldq}Here are 30 'bucks'${rdq}":
-    "He said${directSpeechIntro} ${ldq}Here are 30 ${lsq}bucks${rsq}${rdq}",
+  [`He said${t.directSpeechIntro} ${t.ldq}Here are 30 'bucks'${t.rdq}`]: `He said${t.directSpeechIntro} ${t.ldq}Here are 30 ${t.lsq}bucks${t.rsq}${t.rdq}`,
 };
 
 const replaceSinglePrimeWSingleQuoteUnitSet = {
@@ -439,68 +428,67 @@ const fixQuotedWordPunctuationModuleSet = {
   */
 
   // Single word with period
-  "${ldq}${lsq}word.${rsq} fill${rdq}":                  "${ldq}${lsq}word${rsq}. fill${rdq}",
-  "${ldq}Look for ${lsq}word.${rsq} In the text.${rdq}": "${ldq}Look for ${lsq}word${rsq}. In the text.${rdq}",
-  "${ldq}Look for ${lsq}Ian.${rsq} In the text.${rdq}":  "${ldq}Look for ${lsq}Ian${rsq}. In the text.${rdq}",
+  [`${t.ldq}${t.lsq}word.${t.rsq} fill${t.rdq}`]:                  `${t.ldq}${t.lsq}word${t.rsq}. fill${t.rdq}`,
+  [`${t.ldq}Look for ${t.lsq}word.${t.rsq} In the text.${t.rdq}`]: `${t.ldq}Look for ${t.lsq}word${t.rsq}. In the text.${t.rdq}`,
+  [`${t.ldq}Look for ${t.lsq}Ian.${t.rsq} In the text.${t.rdq}`]:  `${t.ldq}Look for ${t.lsq}Ian${t.rsq}. In the text.${t.rdq}`,
 
   // Single word with comma
-  "${ldq}${lsq}word,${rsq} fill${rdq}":                "${ldq}${lsq}word${rsq}, fill${rdq}",
-  "${ldq}He said ${lsq}hello,${rsq} then left.${rdq}": "${ldq}He said ${lsq}hello${rsq}, then left.${rdq}",
+  [`${t.ldq}${t.lsq}word,${t.rsq} fill${t.rdq}`]:                `${t.ldq}${t.lsq}word${t.rsq}, fill${t.rdq}`,
+  [`${t.ldq}He said ${t.lsq}hello,${t.rsq} then left.${t.rdq}`]: `${t.ldq}He said ${t.lsq}hello${t.rsq}, then left.${t.rdq}`,
 
   // Single word with semicolon
-  "${ldq}${lsq}word;${rsq} fill${rdq}":               "${ldq}${lsq}word${rsq}; fill${rdq}",
-  "${ldq}He used ${lsq}code;${rsq} it worked.${rdq}": "${ldq}He used ${lsq}code${rsq}; it worked.${rdq}",
+  [`${t.ldq}${t.lsq}word;${t.rsq} fill${t.rdq}`]:               `${t.ldq}${t.lsq}word${t.rsq}; fill${t.rdq}`,
+  [`${t.ldq}He used ${t.lsq}code;${t.rsq} it worked.${t.rdq}`]: `${t.ldq}He used ${t.lsq}code${t.rsq}; it worked.${t.rdq}`,
 
   // Single word with colon
-  "${ldq}${lsq}word:${rsq} fill${rdq}":                      "${ldq}${lsq}word${rsq}: fill${rdq}",
-  "${ldq}Consider ${lsq}refactoring:${rsq} it helps.${rdq}": "${ldq}Consider ${lsq}refactoring${rsq}: it helps.${rdq}",
+  [`${t.ldq}${t.lsq}word:${t.rsq} fill${t.rdq}`]:                      `${t.ldq}${t.lsq}word${t.rsq}: fill${t.rdq}`,
+  [`${t.ldq}Consider ${t.lsq}refactoring:${t.rsq} it helps.${t.rdq}`]: `${t.ldq}Consider ${t.lsq}refactoring${t.rsq}: it helps.${t.rdq}`,
 
   //fix later
   // Contracted words
-  // "${ldq}Say ${lsq}don${apos}t;${rsq} be firm.${rdq}":
-  //   "${ldq}Say ${lsq}don${apos}t${rsq}; be firm.${rdq}",
+  // [`${t.ldq}Say ${t.lsq}don${t.apos}t;${t.rsq} be firm.${t.rdq}`]:
+  //   "${t.ldq}Say ${t.lsq}don${t.apos}t${t.rsq}; be firm.${t.rdq}",
 
   // fix later: tokenized identification of single quotes
   // Numbers
-  // "${ldq}Version ${lsq}2.0.${rsq} is out.${rdq}":     "${ldq}Version ${lsq}2.0${rsq}. is out.${rdq}",
-  // "${ldq}In ${lsq}2020,${rsq} things changed.${rdq}": "${ldq}In ${lsq}2020${rsq}, things changed.${rdq}",
-  // "${ldq}Number ${lsq}42;${rsq} the answer.${rdq}":   "${ldq}Number ${lsq}42${rsq}; the answer.${rdq}",
+  // [`${t.ldq}Version ${t.lsq}2.0.${t.rsq} is out.${t.rdq}`]: `${t.ldq}Version ${t.lsq}2.0${t.rsq}. is out.${t.rdq}`,
+  // [`${t.ldq}In ${t.lsq}2020,${t.rsq} things changed.${t.rdq}`]: `${t.ldq}In ${t.lsq}2020${t.rsq}, things changed.${t.rdq}`,
+  // [`${t.ldq}Number ${t.lsq}42;${t.rsq} the answer.${t.rdq}`]: `${t.ldq}Number ${t.lsq}42${t.rsq}; the answer.${t.rdq}`,
 
   // fix later: tokenized identification of single quotes
   // Combinations with numbers and contractions (e.g., 69'ers)
-  // "${ldq}The ${lsq}69${apos}ers.${rsq} were famous.${rdq}": "${ldq}The ${lsq}69${apos}ers${rsq}. were famous.${rdq}",
-  // "${ldq}Those ${lsq}90${apos}s,${rsq} good times.${rdq}":  "${ldq}Those ${lsq}90${apos}s${rsq}, good times.${rdq}",
+  // [`${t.ldq}The ${t.lsq}69${t.apos}ers.${t.rsq} were famous.${t.rdq}`]: `${t.ldq}The ${t.lsq}69${t.apos}ers${t.rsq}. were famous.${t.rdq}`,
+  // [`${t.ldq}Those ${t.lsq}90${t.apos}s,${t.rsq} good times.${t.rdq}`]: `${t.ldq}Those ${t.lsq}90${t.apos}s${t.rsq}, good times.${t.rdq}`,
 
   // Hyphenated words
-  "${ldq}Use ${lsq}well-known.${rsq} for clarity.${rdq}":    "${ldq}Use ${lsq}well-known${rsq}. for clarity.${rdq}",
-  "${ldq}The ${lsq}state-of-the-art,${rsq} approach.${rdq}": "${ldq}The ${lsq}state-of-the-art${rsq}, approach.${rdq}",
-  "${ldq}Try ${lsq}open-source;${rsq} it${apos}s free.${rdq}":
-    "${ldq}Try ${lsq}open-source${rsq}; it${apos}s free.${rdq}",
+  [`${t.ldq}Use ${t.lsq}well-known.${t.rsq} for clarity.${t.rdq}`]:        `${t.ldq}Use ${t.lsq}well-known${t.rsq}. for clarity.${t.rdq}`,
+  [`${t.ldq}The ${t.lsq}state-of-the-art,${t.rsq} approach.${t.rdq}`]:     `${t.ldq}The ${t.lsq}state-of-the-art${t.rsq}, approach.${t.rdq}`,
+  [`${t.ldq}Try ${t.lsq}open-source;${t.rsq} it${t.apos}s free.${t.rdq}`]: `${t.ldq}Try ${t.lsq}open-source${t.rsq}; it${t.apos}s free.${t.rdq}`,
 
   // Escaped strings
-  "${ldq}${lsq}{{esc}},${rsq} fill${rdq}": "${ldq}${lsq}{{esc}}${rsq}, fill${rdq}",
+  [`${t.ldq}${t.lsq}{{esc}},${t.rsq} fill${t.rdq}`]: `${t.ldq}${t.lsq}{{esc}}${t.rsq}, fill${t.rdq}`,
 };
 
 const fixQuotedWordPunctuationUnitSet = {
   // False positives - multiple words (should NOT be fixed in this function)
-  "She said ${lsq}hello world.${rsq} and left.":  "She said ${lsq}hello world.${rsq} and left.",
-  "I heard ${lsq}good morning,${rsq} from her.":  "I heard ${lsq}good morning,${rsq} from her.",
-  "The ${lsq}quick brown fox;${rsq} jumps.":      "The ${lsq}quick brown fox;${rsq} jumps.",
-  "The ${lsq}quick brown fox${rsq}; jumps.":      "The ${lsq}quick brown fox${rsq}; jumps.",
-  "Note ${lsq}some important thing:${rsq} here.": "Note ${lsq}some important thing:${rsq} here.",
+  [`She said ${t.lsq}hello world.${t.rsq} and left.`]:  `She said ${t.lsq}hello world.${t.rsq} and left.`,
+  [`I heard ${t.lsq}good morning,${t.rsq} from her.`]:  `I heard ${t.lsq}good morning,${t.rsq} from her.`,
+  [`The ${t.lsq}quick brown fox;${t.rsq} jumps.`]:      `The ${t.lsq}quick brown fox;${t.rsq} jumps.`,
+  [`The ${t.lsq}quick brown fox${t.rsq}; jumps.`]:      `The ${t.lsq}quick brown fox${t.rsq}; jumps.`,
+  [`Note ${t.lsq}some important thing:${t.rsq} here.`]: `Note ${t.lsq}some important thing:${t.rsq} here.`,
 
   // False positives - exclamation and question marks (should NOT be fixed)
-  "The ${lsq}Wow!${rsq} was loud.":         "The ${lsq}Wow!${rsq} was loud.",
-  "The ${lsq}Wow${rsq}! was loud.":         "The ${lsq}Wow${rsq}! was loud.",
-  "She asked ${lsq}Why?${rsq} repeatedly.": "She asked ${lsq}Why?${rsq} repeatedly.",
-  "She asked ${lsq}Why${rsq}? repeatedly.": "She asked ${lsq}Why${rsq}? repeatedly.",
+  [`The ${t.lsq}Wow!${t.rsq} was loud.`]:         `The ${t.lsq}Wow!${t.rsq} was loud.`,
+  [`The ${t.lsq}Wow${t.rsq}! was loud.`]:         `The ${t.lsq}Wow${t.rsq}! was loud.`,
+  [`She asked ${t.lsq}Why?${t.rsq} repeatedly.`]: `She asked ${t.lsq}Why?${t.rsq} repeatedly.`,
+  [`She asked ${t.lsq}Why${t.rsq}? repeatedly.`]: `She asked ${t.lsq}Why${t.rsq}? repeatedly.`,
 
   // False positives - regnal numbers
-  "Byl to Karel ${lsq}IV.${rsq}, ktery": "Byl to Karel ${lsq}IV.${rsq}, ktery",
+  [`Byl to Karel ${t.lsq}IV.${t.rsq}, ktery`]: `Byl to Karel ${t.lsq}IV.${t.rsq}, ktery`,
 
   // False positives - already correct
-  "The ${lsq}word${rsq}. is correct.":     "The ${lsq}word${rsq}. is correct.",
-  "He said ${lsq}hello${rsq}, then left.": "He said ${lsq}hello${rsq}, then left.",
+  [`The ${t.lsq}word${t.rsq}. is correct.`]:     `The ${t.lsq}word${t.rsq}. is correct.`,
+  [`He said ${t.lsq}hello${t.rsq}, then left.`]: `He said ${t.lsq}hello${t.rsq}, then left.`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -526,70 +514,62 @@ const fixQuotedSentencePunctuationModuleSet = {
   - move colons `:` and semicolons `;` outside the quoted part
   */
   // Quoted fragment at the end of sentence
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}. fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment.${rsq} fill${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}, fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment,${rsq} fill${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}! fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment!${rsq} fill${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}? fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment?${rsq} fill${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment${rsq}… fill${rdq}": "${ldq}It can be a ${lsq}quoted fragment…${rsq} fill${rdq}",
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment${t.rsq}. fill${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment.${t.rsq} fill${t.rdq}`,
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment${t.rsq}, fill${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment,${t.rsq} fill${t.rdq}`,
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment${t.rsq}! fill${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment!${t.rsq} fill${t.rdq}`,
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment${t.rsq}? fill${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment?${t.rsq} fill${t.rdq}`,
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment${t.rsq}… fill${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment…${t.rsq} fill${t.rdq}`,
 
   // move terminal punctuation (.?!…) outside when quoted fragment is at the end of a quoted sentence
-  "${ldq}Sentence ${lsq}quoted fragment.${rsq}${rdq}":
-    "${ldq}Sentence ${lsq}quoted fragment${rsq}.${rdq}",
+  [`${t.ldq}Sentence ${t.lsq}quoted fragment.${t.rsq}${t.rdq}`]: `${t.ldq}Sentence ${t.lsq}quoted fragment${t.rsq}.${t.rdq}`,
 
-  "${ldq}Sentence ${lsq}quoted fragment!${rsq}${rdq}":
-    "${ldq}Sentence ${lsq}quoted fragment${rsq}!${rdq}",
+  [`${t.ldq}Sentence ${t.lsq}quoted fragment!${t.rsq}${t.rdq}`]: `${t.ldq}Sentence ${t.lsq}quoted fragment${t.rsq}!${t.rdq}`,
 
   // nbsp
-  "${ldq}It can be ${lsq}a banana${rsq}, right.${rdq}":
-    "${ldq}It can be ${lsq}a banana,${rsq} right.${rdq}",
+  [`${t.ldq}It can be ${t.lsq}a banana${t.rsq}, right.${t.rdq}`]: `${t.ldq}It can be ${t.lsq}a banana,${t.rsq} right.${t.rdq}`,
 
   // Quoted sentence
-  "${ldq}fill ${lsq}Fully quoted sentence${rsq}. fill${rdq}": "${ldq}fill ${lsq}Fully quoted sentence.${rsq} fill${rdq}",
-  "${ldq}fill ${lsq}Fully quoted sentence${rsq}, fill${rdq}": "${ldq}fill ${lsq}Fully quoted sentence,${rsq} fill${rdq}",
-  "${ldq}fill ${lsq}Fully quoted sentence${rsq}! fill${rdq}": "${ldq}fill ${lsq}Fully quoted sentence!${rsq} fill${rdq}",
-  "${ldq}fill ${lsq}Fully quoted sentence${rsq}? fill${rdq}": "${ldq}fill ${lsq}Fully quoted sentence?${rsq} fill${rdq}",
-  "${ldq}fill ${lsq}Fully quoted sentence${rsq}… fill${rdq}": "${ldq}fill ${lsq}Fully quoted sentence…${rsq} fill${rdq}",
+  [`${t.ldq}fill ${t.lsq}Fully quoted sentence${t.rsq}. fill${t.rdq}`]: `${t.ldq}fill ${t.lsq}Fully quoted sentence.${t.rsq} fill${t.rdq}`,
+  [`${t.ldq}fill ${t.lsq}Fully quoted sentence${t.rsq}, fill${t.rdq}`]: `${t.ldq}fill ${t.lsq}Fully quoted sentence,${t.rsq} fill${t.rdq}`,
+  [`${t.ldq}fill ${t.lsq}Fully quoted sentence${t.rsq}! fill${t.rdq}`]: `${t.ldq}fill ${t.lsq}Fully quoted sentence!${t.rsq} fill${t.rdq}`,
+  [`${t.ldq}fill ${t.lsq}Fully quoted sentence${t.rsq}? fill${t.rdq}`]: `${t.ldq}fill ${t.lsq}Fully quoted sentence?${t.rsq} fill${t.rdq}`,
+  [`${t.ldq}fill ${t.lsq}Fully quoted sentence${t.rsq}… fill${t.rdq}`]: `${t.ldq}fill ${t.lsq}Fully quoted sentence…${t.rsq} fill${t.rdq}`,
 
   // Less common boundaries
-  "${ldq}${lsq}(Fully) quoted sentence${rsq}.${rdq}":
-    "${ldq}${lsq}(Fully) quoted sentence${rsq}.${rdq}",
-  "${ldq}${lsq}Fully quoted (sentence)${rsq}.${rdq}":
-    "${ldq}${lsq}Fully quoted (sentence)${rsq}.${rdq}",
+  [`${t.ldq}${t.lsq}(Fully) quoted sentence${t.rsq}.${t.rdq}`]: `${t.ldq}${t.lsq}(Fully) quoted sentence${t.rsq}.${t.rdq}`,
+  [`${t.ldq}${t.lsq}Fully quoted (sentence)${t.rsq}.${t.rdq}`]: `${t.ldq}${t.lsq}Fully quoted (sentence)${t.rsq}.${t.rdq}`,
 
   // Escaped strings
-  "${ldq}It can be a ${lsq}{{esc}} {{esc}}${rsq}.${rdq}":
-    "${ldq}It can be a ${lsq}{{esc}} {{esc}}${rsq}.${rdq}",
+  [`${t.ldq}It can be a ${t.lsq}{{esc}} {{esc}}${t.rsq}.${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}{{esc}} {{esc}}${t.rsq}.${t.rdq}`,
 
   // Colon / semicolon should be placed outside the quotes
-  "${ldq}${lsq}quoted fragment:${rsq} sentence continues${rdq}": "${ldq}${lsq}quoted fragment${rsq}: sentence continues${rdq}",
-  "${ldq}${lsq}quoted fragment;${rsq} sentence continues${rdq}": "${ldq}${lsq}quoted fragment${rsq}; sentence continues${rdq}",
+  [`${t.ldq}${t.lsq}quoted fragment:${t.rsq} sentence continues${t.rdq}`]: `${t.ldq}${t.lsq}quoted fragment${t.rsq}: sentence continues${t.rdq}`,
+  [`${t.ldq}${t.lsq}quoted fragment;${t.rsq} sentence continues${t.rdq}`]: `${t.ldq}${t.lsq}quoted fragment${t.rsq}; sentence continues${t.rdq}`,
 
-  "${ldq}${lsq}(quoted) fragment:${rsq} sentence continues${rdq}": "${ldq}${lsq}(quoted) fragment${rsq}: sentence continues${rdq}",
-  "${ldq}${lsq}quoted (fragment);${rsq} sentence continues${rdq}": "${ldq}${lsq}quoted (fragment)${rsq}; sentence continues${rdq}",
+  [`${t.ldq}${t.lsq}(quoted) fragment:${t.rsq} sentence continues${t.rdq}`]: `${t.ldq}${t.lsq}(quoted) fragment${t.rsq}: sentence continues${t.rdq}`,
+  [`${t.ldq}${t.lsq}quoted (fragment);${t.rsq} sentence continues${t.rdq}`]: `${t.ldq}${t.lsq}quoted (fragment)${t.rsq}; sentence continues${t.rdq}`,
 
   // false positive, consecutive single quotes
-  "${ldq}fill ${lsq}word${rsq} ${lsq}word${rsq}, fill.${rdq}":
-    "${ldq}fill ${lsq}word${rsq} ${lsq}word${rsq}, fill.${rdq}",
+  [`${t.ldq}fill ${t.lsq}word${t.rsq} ${t.lsq}word${t.rsq}, fill.${t.rdq}`]: `${t.ldq}fill ${t.lsq}word${t.rsq} ${t.lsq}word${t.rsq}, fill.${t.rdq}`,
 
   // Correct placement
-  "${ldq}It can be a ${lsq}quoted fragment.${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment${rsq}.${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment,${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment,${rsq}${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment!${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment${rsq}!${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment?${rsq}${rdq}": "${ldq}It can be a ${lsq}quoted fragment${rsq}?${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment…${rsq}${rdq}":
-    "${ldq}It can be a ${lsq}quoted fragment${rsq}…${rdq}",
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment.${t.rsq}${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment${t.rsq}.${t.rdq}`,
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment,${t.rsq}${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment,${t.rsq}${t.rdq}`,
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment!${t.rsq}${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment${t.rsq}!${t.rdq}`,
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment?${t.rsq}${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment${t.rsq}?${t.rdq}`,
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment…${t.rsq}${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment${t.rsq}…${t.rdq}`,
 
-  "${ldq}It can be a ${lsq}quoted fragment!${rsq}.${rdq}": "${ldq}It can be a ${lsq}quoted fragment!${rsq}.${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment?${rsq}.${rdq}": "${ldq}It can be a ${lsq}quoted fragment?${rsq}.${rdq}",
-  "${ldq}It can be a ${lsq}quoted fragment…${rsq}.${rdq}": "${ldq}It can be a ${lsq}quoted fragment…${rsq}.${rdq}",
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment!${t.rsq}.${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment!${t.rsq}.${t.rdq}`,
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment?${t.rsq}.${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment?${t.rsq}.${t.rdq}`,
+  [`${t.ldq}It can be a ${t.lsq}quoted fragment…${t.rsq}.${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}quoted fragment…${t.rsq}.${t.rdq}`,
 };
 
 const fixQuotedSentencePunctuationUnitSet = {
   // Exception. skip fixing name with regnal number
-  "${ldq}It was ${lsq}Charles IV${rsq},${rdq}":          "${ldq}It was ${lsq}Charles IV${rsq},${rdq}",
+  [`${t.ldq}It was ${t.lsq}Charles IV${t.rsq},${t.rdq}`]:          `${t.ldq}It was ${t.lsq}Charles IV${t.rsq},${t.rdq}`,
   // False positives - single word (should NOT be fixed in this function)
-  "${ldq}Look for ${lsq}word.${rsq} In the text.${rdq}": "${ldq}Look for ${lsq}word.${rsq} In the text.${rdq}",
-  "${ldq}${lsq}word.${rsq}${rdq}":                       "${ldq}${lsq}word${rsq}.${rdq}",
+  [`${t.ldq}Look for ${t.lsq}word.${t.rsq} In the text.${t.rdq}`]: `${t.ldq}Look for ${t.lsq}word.${t.rsq} In the text.${t.rdq}`,
+  [`${t.ldq}${t.lsq}word.${t.rsq}${t.rdq}`]:                       `${t.ldq}${t.lsq}word${t.rsq}.${t.rdq}`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -635,6 +615,5 @@ export const singleQuotesSet = {
   ...fixQuotedWordPunctuationModuleSet,
   ...fixQuotedSentencePunctuationModuleSet,
 
-  "Hej${directSpeechIntro} ${ldq}Vin mu povil, 'ta de jes' take vidil' i neviril${rdq}":
-    "Hej${directSpeechIntro} ${ldq}Vin mu povil, ${lsq}ta de jes’ take vidil${rsq} i neviril${rdq}", // tbd-single-quotes-matching
+  [`Hej${t.directSpeechIntro} ${t.ldq}Vin mu povil, 'ta de jes' take vidil' i neviril${t.rdq}`]: `Hej${t.directSpeechIntro} ${t.ldq}Vin mu povil, ${t.lsq}ta de jes’ take vidil${t.rsq} i neviril${t.rdq}`, // tbd-single-quotes-matching
 };

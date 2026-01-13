@@ -17,106 +17,106 @@ import {
   fixDirectSpeechIntro,
 } from "../../src/modules/punctuation/double-quotes.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
-import { createTestSuite, transformTestSet } from "../test-utils.js";
+import { createTestSuite, transformTestSet, t } from "../test-utils.js";
 import { m } from "../../src/markers.js";
 
 const doubleQuotesFalsePositives = {
-  "č., s., fol., str.,":                 "č., s., fol., str.,",
-  "Byl to ${ldq}Karel IV.${rdq}, ktery": "Byl to ${ldq}Karel IV.${rdq}, ktery",
-  "Hey.${rdq}":                          "Hey.${rdq}",
+  "č., s., fol., str.,":                       "č., s., fol., str.,",
+  [`Byl to ${t.ldq}Karel IV.${t.rdq}, ktery`]: `Byl to ${t.ldq}Karel IV.${t.rdq}, ktery`,
+  [`Hey.${t.rdq}`]:                            `Hey.${t.rdq}`,
 };
 
 const removePunctuationBeforeQuotesUnitSet = {
   /* extra comma after terminal punctuation, 
      as it it happens in direct speech */
-  "${ldq}Hey!,${rdq} she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?,${rdq} she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.,${rdq} she said": "${ldq}Hey.${rdq} she said",
-  "${ldq}Hey:,${rdq} she said": "${ldq}Hey:${rdq} she said",
-  "${ldq}Hey;,${rdq} she said": "${ldq}Hey;${rdq} she said",
-  "${ldq}Hey,,${rdq} she said": "${ldq}Hey,${rdq} she said",
+  [`${t.ldq}Hey!,${t.rdq} she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?,${t.rdq} she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.,${t.rdq} she said`]: `${t.ldq}Hey.${t.rdq} she said`,
+  [`${t.ldq}Hey:,${t.rdq} she said`]: `${t.ldq}Hey:${t.rdq} she said`,
+  [`${t.ldq}Hey;,${t.rdq} she said`]: `${t.ldq}Hey;${t.rdq} she said`,
+  [`${t.ldq}Hey,,${t.rdq} she said`]: `${t.ldq}Hey,${t.rdq} she said`,
 
-  "${ldq}Hey!:${rdq} she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?:${rdq} she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.:${rdq} she said": "${ldq}Hey.${rdq} she said",
-  "${ldq}Hey::${rdq} she said": "${ldq}Hey:${rdq} she said",
-  "${ldq}Hey;:${rdq} she said": "${ldq}Hey;${rdq} she said",
-  "${ldq}Hey,:${rdq} she said": "${ldq}Hey,${rdq} she said",
+  [`${t.ldq}Hey!:${t.rdq} she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?:${t.rdq} she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.:${t.rdq} she said`]: `${t.ldq}Hey.${t.rdq} she said`,
+  [`${t.ldq}Hey::${t.rdq} she said`]: `${t.ldq}Hey:${t.rdq} she said`,
+  [`${t.ldq}Hey;:${t.rdq} she said`]: `${t.ldq}Hey;${t.rdq} she said`,
+  [`${t.ldq}Hey,:${t.rdq} she said`]: `${t.ldq}Hey,${t.rdq} she said`,
 
-  "${ldq}Hey!;${rdq} she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?;${rdq} she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.;${rdq} she said": "${ldq}Hey.${rdq} she said",
-  "${ldq}Hey:;${rdq} she said": "${ldq}Hey:${rdq} she said",
-  "${ldq}Hey;;${rdq} she said": "${ldq}Hey;${rdq} she said",
-  "${ldq}Hey,;${rdq} she said": "${ldq}Hey,${rdq} she said",
+  [`${t.ldq}Hey!;${t.rdq} she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?;${t.rdq} she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.;${t.rdq} she said`]: `${t.ldq}Hey.${t.rdq} she said`,
+  [`${t.ldq}Hey:;${t.rdq} she said`]: `${t.ldq}Hey:${t.rdq} she said`,
+  [`${t.ldq}Hey;;${t.rdq} she said`]: `${t.ldq}Hey;${t.rdq} she said`,
+  [`${t.ldq}Hey,;${t.rdq} she said`]: `${t.ldq}Hey,${t.rdq} she said`,
 
   // false positive
-  "${ldq}Hey!!${rdq} she said": "${ldq}Hey!!${rdq} she said",
-  "${ldq}Hey?!${rdq} she said": "${ldq}Hey?!${rdq} she said",
-  "${ldq}Hey.!${rdq} she said": "${ldq}Hey.!${rdq} she said",
-  "${ldq}Hey:!${rdq} she said": "${ldq}Hey:!${rdq} she said",
-  "${ldq}Hey;!${rdq} she said": "${ldq}Hey;!${rdq} she said",
-  "${ldq}Hey,!${rdq} she said": "${ldq}Hey,!${rdq} she said",
+  [`${t.ldq}Hey!!${t.rdq} she said`]: `${t.ldq}Hey!!${t.rdq} she said`,
+  [`${t.ldq}Hey?!${t.rdq} she said`]: `${t.ldq}Hey?!${t.rdq} she said`,
+  [`${t.ldq}Hey.!${t.rdq} she said`]: `${t.ldq}Hey.!${t.rdq} she said`,
+  [`${t.ldq}Hey:!${t.rdq} she said`]: `${t.ldq}Hey:!${t.rdq} she said`,
+  [`${t.ldq}Hey;!${t.rdq} she said`]: `${t.ldq}Hey;!${t.rdq} she said`,
+  [`${t.ldq}Hey,!${t.rdq} she said`]: `${t.ldq}Hey,!${t.rdq} she said`,
 
-  "${ldq}Hey!?${rdq} she said": "${ldq}Hey!?${rdq} she said",
-  "${ldq}Hey??${rdq} she said": "${ldq}Hey??${rdq} she said",
-  "${ldq}Hey.?${rdq} she said": "${ldq}Hey.?${rdq} she said",
-  "${ldq}Hey:?${rdq} she said": "${ldq}Hey:?${rdq} she said",
-  "${ldq}Hey;?${rdq} she said": "${ldq}Hey;?${rdq} she said",
-  "${ldq}Hey,?${rdq} she said": "${ldq}Hey,?${rdq} she said",
+  [`${t.ldq}Hey!?${t.rdq} she said`]: `${t.ldq}Hey!?${t.rdq} she said`,
+  [`${t.ldq}Hey??${t.rdq} she said`]: `${t.ldq}Hey??${t.rdq} she said`,
+  [`${t.ldq}Hey.?${t.rdq} she said`]: `${t.ldq}Hey.?${t.rdq} she said`,
+  [`${t.ldq}Hey:?${t.rdq} she said`]: `${t.ldq}Hey:?${t.rdq} she said`,
+  [`${t.ldq}Hey;?${t.rdq} she said`]: `${t.ldq}Hey;?${t.rdq} she said`,
+  [`${t.ldq}Hey,?${t.rdq} she said`]: `${t.ldq}Hey,?${t.rdq} she said`,
 
-  "${ldq}Hey!.${rdq} she said": "${ldq}Hey!.${rdq} she said",
-  "${ldq}Hey?.${rdq} she said": "${ldq}Hey?.${rdq} she said",
-  "${ldq}Hey:.${rdq} she said": "${ldq}Hey:.${rdq} she said",
-  "${ldq}Hey;.${rdq} she said": "${ldq}Hey;.${rdq} she said",
-  "${ldq}Hey,.${rdq} she said": "${ldq}Hey,.${rdq} she said",
+  [`${t.ldq}Hey!.${t.rdq} she said`]: `${t.ldq}Hey!.${t.rdq} she said`,
+  [`${t.ldq}Hey?.${t.rdq} she said`]: `${t.ldq}Hey?.${t.rdq} she said`,
+  [`${t.ldq}Hey:.${t.rdq} she said`]: `${t.ldq}Hey:.${t.rdq} she said`,
+  [`${t.ldq}Hey;.${t.rdq} she said`]: `${t.ldq}Hey;.${t.rdq} she said`,
+  [`${t.ldq}Hey,.${t.rdq} she said`]: `${t.ldq}Hey,.${t.rdq} she said`,
 };
 
 const removePunctuationBeforeQuotesModuleSet = {
   /* extra comma after terminal punctuation, 
      as it it happens in direct speech */
   /* Module set considers the effect of fixQuotedWordPunctuation function */
-  "${ldq}Hey!,${rdq} she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?,${rdq} she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.,${rdq} she said": "${ldq}Hey${rdq}. she said",
-  "${ldq}Hey:,${rdq} she said": "${ldq}Hey${rdq}: she said",
-  "${ldq}Hey;,${rdq} she said": "${ldq}Hey${rdq}; she said",
-  "${ldq}Hey,,${rdq} she said": "${ldq}Hey${rdq}, she said",
+  [`${t.ldq}Hey!,${t.rdq} she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?,${t.rdq} she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.,${t.rdq} she said`]: `${t.ldq}Hey${t.rdq}. she said`,
+  [`${t.ldq}Hey:,${t.rdq} she said`]: `${t.ldq}Hey${t.rdq}: she said`,
+  [`${t.ldq}Hey;,${t.rdq} she said`]: `${t.ldq}Hey${t.rdq}; she said`,
+  [`${t.ldq}Hey,,${t.rdq} she said`]: `${t.ldq}Hey${t.rdq}, she said`,
 
-  "${ldq}Hey!:${rdq} she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?:${rdq} she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.:${rdq} she said": "${ldq}Hey${rdq}. she said",
-  "${ldq}Hey::${rdq} she said": "${ldq}Hey${rdq}: she said",
-  "${ldq}Hey;:${rdq} she said": "${ldq}Hey${rdq}; she said",
-  "${ldq}Hey,:${rdq} she said": "${ldq}Hey${rdq}, she said",
+  [`${t.ldq}Hey!:${t.rdq} she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?:${t.rdq} she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.:${t.rdq} she said`]: `${t.ldq}Hey${t.rdq}. she said`,
+  [`${t.ldq}Hey::${t.rdq} she said`]: `${t.ldq}Hey${t.rdq}: she said`,
+  [`${t.ldq}Hey;:${t.rdq} she said`]: `${t.ldq}Hey${t.rdq}; she said`,
+  [`${t.ldq}Hey,:${t.rdq} she said`]: `${t.ldq}Hey${t.rdq}, she said`,
 
-  "${ldq}Hey!;${rdq} she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?;${rdq} she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.;${rdq} she said": "${ldq}Hey${rdq}. she said",
-  "${ldq}Hey:;${rdq} she said": "${ldq}Hey${rdq}: she said",
-  "${ldq}Hey;;${rdq} she said": "${ldq}Hey${rdq}; she said",
-  "${ldq}Hey,;${rdq} she said": "${ldq}Hey${rdq}, she said",
+  [`${t.ldq}Hey!;${t.rdq} she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?;${t.rdq} she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.;${t.rdq} she said`]: `${t.ldq}Hey${t.rdq}. she said`,
+  [`${t.ldq}Hey:;${t.rdq} she said`]: `${t.ldq}Hey${t.rdq}: she said`,
+  [`${t.ldq}Hey;;${t.rdq} she said`]: `${t.ldq}Hey${t.rdq}; she said`,
+  [`${t.ldq}Hey,;${t.rdq} she said`]: `${t.ldq}Hey${t.rdq}, she said`,
 
   // false positive
-  "${ldq}Hey!!${rdq} she said": "${ldq}Hey!!${rdq} she said",
-  "${ldq}Hey?!${rdq} she said": "${ldq}Hey?!${rdq} she said",
-  "${ldq}Hey.!${rdq} she said": "${ldq}Hey.!${rdq} she said",
-  "${ldq}Hey:!${rdq} she said": "${ldq}Hey:!${rdq} she said",
-  "${ldq}Hey;!${rdq} she said": "${ldq}Hey;!${rdq} she said",
-  "${ldq}Hey,!${rdq} she said": "${ldq}Hey,!${rdq} she said",
+  [`${t.ldq}Hey!!${t.rdq} she said`]: `${t.ldq}Hey!!${t.rdq} she said`,
+  [`${t.ldq}Hey?!${t.rdq} she said`]: `${t.ldq}Hey?!${t.rdq} she said`,
+  [`${t.ldq}Hey.!${t.rdq} she said`]: `${t.ldq}Hey.!${t.rdq} she said`,
+  [`${t.ldq}Hey:!${t.rdq} she said`]: `${t.ldq}Hey:!${t.rdq} she said`,
+  [`${t.ldq}Hey;!${t.rdq} she said`]: `${t.ldq}Hey;!${t.rdq} she said`,
+  [`${t.ldq}Hey,!${t.rdq} she said`]: `${t.ldq}Hey,!${t.rdq} she said`,
 
-  "${ldq}Hey!?${rdq} she said": "${ldq}Hey!?${rdq} she said",
-  "${ldq}Hey??${rdq} she said": "${ldq}Hey??${rdq} she said",
-  "${ldq}Hey.?${rdq} she said": "${ldq}Hey.?${rdq} she said",
-  "${ldq}Hey:?${rdq} she said": "${ldq}Hey:?${rdq} she said",
-  "${ldq}Hey;?${rdq} she said": "${ldq}Hey;?${rdq} she said",
-  "${ldq}Hey,?${rdq} she said": "${ldq}Hey,?${rdq} she said",
+  [`${t.ldq}Hey!?${t.rdq} she said`]: `${t.ldq}Hey!?${t.rdq} she said`,
+  [`${t.ldq}Hey??${t.rdq} she said`]: `${t.ldq}Hey??${t.rdq} she said`,
+  [`${t.ldq}Hey.?${t.rdq} she said`]: `${t.ldq}Hey.?${t.rdq} she said`,
+  [`${t.ldq}Hey:?${t.rdq} she said`]: `${t.ldq}Hey:?${t.rdq} she said`,
+  [`${t.ldq}Hey;?${t.rdq} she said`]: `${t.ldq}Hey;?${t.rdq} she said`,
+  [`${t.ldq}Hey,?${t.rdq} she said`]: `${t.ldq}Hey,?${t.rdq} she said`,
 
-  "${ldq}Hey!.${rdq} she said": "${ldq}Hey!.${rdq} she said",
-  "${ldq}Hey?.${rdq} she said": "${ldq}Hey?.${rdq} she said",
-  "${ldq}Hey:.${rdq} she said": "${ldq}Hey:.${rdq} she said",
-  "${ldq}Hey;.${rdq} she said": "${ldq}Hey;.${rdq} she said",
-  "${ldq}Hey,.${rdq} she said": "${ldq}Hey,.${rdq} she said",
+  [`${t.ldq}Hey!.${t.rdq} she said`]: `${t.ldq}Hey!.${t.rdq} she said`,
+  [`${t.ldq}Hey?.${t.rdq} she said`]: `${t.ldq}Hey?.${t.rdq} she said`,
+  [`${t.ldq}Hey:.${t.rdq} she said`]: `${t.ldq}Hey:.${t.rdq} she said`,
+  [`${t.ldq}Hey;.${t.rdq} she said`]: `${t.ldq}Hey;.${t.rdq} she said`,
+  [`${t.ldq}Hey,.${t.rdq} she said`]: `${t.ldq}Hey,.${t.rdq} she said`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -131,98 +131,98 @@ supportedLocales.forEach((localeName) => {
 });
 
 const removePunctuationAfterQuotesUnitSet = {
-  "${ldq}Hey!${rdq}, she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?${rdq}, she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.${rdq}, she said": "${ldq}Hey.${rdq} she said",
-  "${ldq}Hey:${rdq}, she said": "${ldq}Hey:${rdq} she said",
-  "${ldq}Hey;${rdq}, she said": "${ldq}Hey;${rdq} she said",
-  "${ldq}Hey,${rdq}, she said": "${ldq}Hey,${rdq} she said",
+  [`${t.ldq}Hey!${t.rdq}, she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?${t.rdq}, she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.${t.rdq}, she said`]: `${t.ldq}Hey.${t.rdq} she said`,
+  [`${t.ldq}Hey:${t.rdq}, she said`]: `${t.ldq}Hey:${t.rdq} she said`,
+  [`${t.ldq}Hey;${t.rdq}, she said`]: `${t.ldq}Hey;${t.rdq} she said`,
+  [`${t.ldq}Hey,${t.rdq}, she said`]: `${t.ldq}Hey,${t.rdq} she said`,
 
-  "${ldq}Hey!${rdq}: she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?${rdq}: she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.${rdq}: she said": "${ldq}Hey.${rdq} she said",
-  "${ldq}Hey:${rdq}: she said": "${ldq}Hey:${rdq} she said",
-  "${ldq}Hey;${rdq}: she said": "${ldq}Hey;${rdq} she said",
-  "${ldq}Hey,${rdq}: she said": "${ldq}Hey,${rdq} she said",
+  [`${t.ldq}Hey!${t.rdq}: she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?${t.rdq}: she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.${t.rdq}: she said`]: `${t.ldq}Hey.${t.rdq} she said`,
+  [`${t.ldq}Hey:${t.rdq}: she said`]: `${t.ldq}Hey:${t.rdq} she said`,
+  [`${t.ldq}Hey;${t.rdq}: she said`]: `${t.ldq}Hey;${t.rdq} she said`,
+  [`${t.ldq}Hey,${t.rdq}: she said`]: `${t.ldq}Hey,${t.rdq} she said`,
 
-  "${ldq}Hey!${rdq}; she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?${rdq}; she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.${rdq}; she said": "${ldq}Hey.${rdq} she said",
-  "${ldq}Hey:${rdq}; she said": "${ldq}Hey:${rdq} she said",
-  "${ldq}Hey;${rdq}; she said": "${ldq}Hey;${rdq} she said",
-  "${ldq}Hey,${rdq}; she said": "${ldq}Hey,${rdq} she said",
+  [`${t.ldq}Hey!${t.rdq}; she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?${t.rdq}; she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.${t.rdq}; she said`]: `${t.ldq}Hey.${t.rdq} she said`,
+  [`${t.ldq}Hey:${t.rdq}; she said`]: `${t.ldq}Hey:${t.rdq} she said`,
+  [`${t.ldq}Hey;${t.rdq}; she said`]: `${t.ldq}Hey;${t.rdq} she said`,
+  [`${t.ldq}Hey,${t.rdq}; she said`]: `${t.ldq}Hey,${t.rdq} she said`,
 
-  "${ldq}Hey!${rdq}. she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?${rdq}. she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.${rdq}. she said": "${ldq}Hey.${rdq} she said",
-  "${ldq}Hey:${rdq}. she said": "${ldq}Hey:${rdq} she said",
-  "${ldq}Hey;${rdq}. she said": "${ldq}Hey;${rdq} she said",
-  "${ldq}Hey,${rdq}. she said": "${ldq}Hey,${rdq} she said",
+  [`${t.ldq}Hey!${t.rdq}. she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?${t.rdq}. she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.${t.rdq}. she said`]: `${t.ldq}Hey.${t.rdq} she said`,
+  [`${t.ldq}Hey:${t.rdq}. she said`]: `${t.ldq}Hey:${t.rdq} she said`,
+  [`${t.ldq}Hey;${t.rdq}. she said`]: `${t.ldq}Hey;${t.rdq} she said`,
+  [`${t.ldq}Hey,${t.rdq}. she said`]: `${t.ldq}Hey,${t.rdq} she said`,
 
-  "${ldq}Hey!${rdq}? she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?${rdq}? she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.${rdq}? she said": "${ldq}Hey.${rdq} she said",
-  "${ldq}Hey:${rdq}? she said": "${ldq}Hey:${rdq} she said",
-  "${ldq}Hey;${rdq}? she said": "${ldq}Hey;${rdq} she said",
-  "${ldq}Hey,${rdq}? she said": "${ldq}Hey,${rdq} she said",
+  [`${t.ldq}Hey!${t.rdq}? she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?${t.rdq}? she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.${t.rdq}? she said`]: `${t.ldq}Hey.${t.rdq} she said`,
+  [`${t.ldq}Hey:${t.rdq}? she said`]: `${t.ldq}Hey:${t.rdq} she said`,
+  [`${t.ldq}Hey;${t.rdq}? she said`]: `${t.ldq}Hey;${t.rdq} she said`,
+  [`${t.ldq}Hey,${t.rdq}? she said`]: `${t.ldq}Hey,${t.rdq} she said`,
 
-  "${ldq}Hey!${rdq}! she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?${rdq}! she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.${rdq}! she said": "${ldq}Hey.${rdq} she said",
-  "${ldq}Hey:${rdq}! she said": "${ldq}Hey:${rdq} she said",
-  "${ldq}Hey;${rdq}! she said": "${ldq}Hey;${rdq} she said",
-  "${ldq}Hey,${rdq}! she said": "${ldq}Hey,${rdq} she said",
+  [`${t.ldq}Hey!${t.rdq}! she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?${t.rdq}! she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.${t.rdq}! she said`]: `${t.ldq}Hey.${t.rdq} she said`,
+  [`${t.ldq}Hey:${t.rdq}! she said`]: `${t.ldq}Hey:${t.rdq} she said`,
+  [`${t.ldq}Hey;${t.rdq}! she said`]: `${t.ldq}Hey;${t.rdq} she said`,
+  [`${t.ldq}Hey,${t.rdq}! she said`]: `${t.ldq}Hey,${t.rdq} she said`,
 
   // false positive
-  "Byl to ${ldq}Karel IV.${rdq}, ktery": "Byl to ${ldq}Karel IV.${rdq}, ktery",
+  [`Byl to ${t.ldq}Karel IV.${t.rdq}, ktery`]: `Byl to ${t.ldq}Karel IV.${t.rdq}, ktery`,
 };
 
 const removePunctuationAfterQuotesModuleSet = {
   /* Module set considers the effect of fixQuotedWordPunctuation function */
-  "${ldq}Hey!${rdq}, she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?${rdq}, she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.${rdq}, she said": "${ldq}Hey${rdq}. she said",
-  "${ldq}Hey:${rdq}, she said": "${ldq}Hey${rdq}: she said",
-  "${ldq}Hey;${rdq}, she said": "${ldq}Hey${rdq}; she said",
-  "${ldq}Hey,${rdq}, she said": "${ldq}Hey${rdq}, she said",
+  [`${t.ldq}Hey!${t.rdq}, she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?${t.rdq}, she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.${t.rdq}, she said`]: `${t.ldq}Hey${t.rdq}. she said`,
+  [`${t.ldq}Hey:${t.rdq}, she said`]: `${t.ldq}Hey${t.rdq}: she said`,
+  [`${t.ldq}Hey;${t.rdq}, she said`]: `${t.ldq}Hey${t.rdq}; she said`,
+  [`${t.ldq}Hey,${t.rdq}, she said`]: `${t.ldq}Hey${t.rdq}, she said`,
 
-  "${ldq}Hey!${rdq}: she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?${rdq}: she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.${rdq}: she said": "${ldq}Hey${rdq}. she said",
-  "${ldq}Hey:${rdq}: she said": "${ldq}Hey${rdq}: she said",
-  "${ldq}Hey;${rdq}: she said": "${ldq}Hey${rdq}; she said",
-  "${ldq}Hey,${rdq}: she said": "${ldq}Hey${rdq}, she said",
+  [`${t.ldq}Hey!${t.rdq}: she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?${t.rdq}: she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.${t.rdq}: she said`]: `${t.ldq}Hey${t.rdq}. she said`,
+  [`${t.ldq}Hey:${t.rdq}: she said`]: `${t.ldq}Hey${t.rdq}: she said`,
+  [`${t.ldq}Hey;${t.rdq}: she said`]: `${t.ldq}Hey${t.rdq}; she said`,
+  [`${t.ldq}Hey,${t.rdq}: she said`]: `${t.ldq}Hey${t.rdq}, she said`,
 
-  "${ldq}Hey!${rdq}; she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?${rdq}; she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.${rdq}; she said": "${ldq}Hey${rdq}. she said",
-  "${ldq}Hey:${rdq}; she said": "${ldq}Hey${rdq}: she said",
-  "${ldq}Hey;${rdq}; she said": "${ldq}Hey${rdq}; she said",
-  "${ldq}Hey,${rdq}; she said": "${ldq}Hey${rdq}, she said",
+  [`${t.ldq}Hey!${t.rdq}; she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?${t.rdq}; she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.${t.rdq}; she said`]: `${t.ldq}Hey${t.rdq}. she said`,
+  [`${t.ldq}Hey:${t.rdq}; she said`]: `${t.ldq}Hey${t.rdq}: she said`,
+  [`${t.ldq}Hey;${t.rdq}; she said`]: `${t.ldq}Hey${t.rdq}; she said`,
+  [`${t.ldq}Hey,${t.rdq}; she said`]: `${t.ldq}Hey${t.rdq}, she said`,
 
-  "${ldq}Hey!${rdq}. she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?${rdq}. she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.${rdq}. she said": "${ldq}Hey${rdq}. she said",
-  "${ldq}Hey:${rdq}. she said": "${ldq}Hey${rdq}: she said",
-  "${ldq}Hey;${rdq}. she said": "${ldq}Hey${rdq}; she said",
-  "${ldq}Hey,${rdq}. she said": "${ldq}Hey${rdq}, she said",
+  [`${t.ldq}Hey!${t.rdq}. she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?${t.rdq}. she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.${t.rdq}. she said`]: `${t.ldq}Hey${t.rdq}. she said`,
+  [`${t.ldq}Hey:${t.rdq}. she said`]: `${t.ldq}Hey${t.rdq}: she said`,
+  [`${t.ldq}Hey;${t.rdq}. she said`]: `${t.ldq}Hey${t.rdq}; she said`,
+  [`${t.ldq}Hey,${t.rdq}. she said`]: `${t.ldq}Hey${t.rdq}, she said`,
 
-  "${ldq}Hey!${rdq}? she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?${rdq}? she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.${rdq}? she said": "${ldq}Hey${rdq}. she said",
-  "${ldq}Hey:${rdq}? she said": "${ldq}Hey${rdq}: she said",
-  "${ldq}Hey;${rdq}? she said": "${ldq}Hey${rdq}; she said",
-  "${ldq}Hey,${rdq}? she said": "${ldq}Hey${rdq}, she said",
+  [`${t.ldq}Hey!${t.rdq}? she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?${t.rdq}? she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.${t.rdq}? she said`]: `${t.ldq}Hey${t.rdq}. she said`,
+  [`${t.ldq}Hey:${t.rdq}? she said`]: `${t.ldq}Hey${t.rdq}: she said`,
+  [`${t.ldq}Hey;${t.rdq}? she said`]: `${t.ldq}Hey${t.rdq}; she said`,
+  [`${t.ldq}Hey,${t.rdq}? she said`]: `${t.ldq}Hey${t.rdq}, she said`,
 
-  "${ldq}Hey!${rdq}! she said": "${ldq}Hey!${rdq} she said",
-  "${ldq}Hey?${rdq}! she said": "${ldq}Hey?${rdq} she said",
-  "${ldq}Hey.${rdq}! she said": "${ldq}Hey${rdq}. she said",
-  "${ldq}Hey:${rdq}! she said": "${ldq}Hey${rdq}: she said",
-  "${ldq}Hey;${rdq}! she said": "${ldq}Hey${rdq}; she said",
-  "${ldq}Hey,${rdq}! she said": "${ldq}Hey${rdq}, she said",
+  [`${t.ldq}Hey!${t.rdq}! she said`]: `${t.ldq}Hey!${t.rdq} she said`,
+  [`${t.ldq}Hey?${t.rdq}! she said`]: `${t.ldq}Hey?${t.rdq} she said`,
+  [`${t.ldq}Hey.${t.rdq}! she said`]: `${t.ldq}Hey${t.rdq}. she said`,
+  [`${t.ldq}Hey:${t.rdq}! she said`]: `${t.ldq}Hey${t.rdq}: she said`,
+  [`${t.ldq}Hey;${t.rdq}! she said`]: `${t.ldq}Hey${t.rdq}; she said`,
+  [`${t.ldq}Hey,${t.rdq}! she said`]: `${t.ldq}Hey${t.rdq}, she said`,
 
   // false positive
-  "Byl to ${ldq}Karel IV.${rdq}, ktery": "Byl to ${ldq}Karel IV.${rdq}, ktery",
+  [`Byl to ${t.ldq}Karel IV.${t.rdq}, ktery`]: `Byl to ${t.ldq}Karel IV.${t.rdq}, ktery`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -276,12 +276,12 @@ const identifyDoublePrimesModuleSet = {
   '3° 5′ 30"': "3° 5′ 30″",
   '12"3′00°':  "12″3′00°",
 
-  'So it${apos}s 12" × 12", right?':                       "So it${apos}s 12″ × 12″, right?",
-  'She said${directSpeechIntro} “It${apos}s a 12" inch!”': "She said${directSpeechIntro} ${ldq}It${apos}s a 12″ inch!${rdq}",
-  'It${apos}s 12" × 12".':                                 "It${apos}s 12″ × 12″.",
+  [`So it${t.apos}s 12" × 12", right?`]:                         `So it${t.apos}s 12″ × 12″, right?`,
+  [`She said${t.directSpeechIntro} “It${t.apos}s a 12" inch!”`]: `She said${t.directSpeechIntro} ${t.ldq}It${t.apos}s a 12″ inch!${t.rdq}`,
+  [`It${t.apos}s 12" × 12".`]:                                   `It${t.apos}s 12″ × 12″.`,
 
   // identify swapped inches with terminal punctuation
-  '"He was 12".': "${ldq}He was 12.${rdq}",
+  '"He was 12".': `${t.ldq}He was 12.${t.rdq}`,
   'He was 12".':  "He was 12″.", // failing on singleQuotes
 };
 
@@ -297,42 +297,41 @@ supportedLocales.forEach((localeName) => {
 });
 
 const identifyDoubleQuotePairsUnitSet = {
-  '" quoted material "': "${ldq} quoted material ${rdq}",
-  '"quoted material "':  "${ldq}quoted material ${rdq}",
-  '" quoted material"':  "${ldq} quoted material${rdq}",
+  '" quoted material "': `${t.ldq} quoted material ${t.rdq}`,
+  '"quoted material "':  `${t.ldq}quoted material ${t.rdq}`,
+  '" quoted material"':  `${t.ldq} quoted material${t.rdq}`,
 };
 
 const identifyDoubleQuotePairsModuleSet = {
-  '"quoted material"':     "${ldq}quoted material${rdq}",
-  '„quoted material"':     "${ldq}quoted material${rdq}",
-  "«quoted material«":     "${ldq}quoted material${rdq}",
-  "’’quoted material''":   "${ldq}quoted material${rdq}",
-  "‹‹quoted material››":   "${ldq}quoted material${rdq}",
-  ",,quoted material,,":   "${ldq}quoted material${rdq}",
-  "‘‘quoted material‘‘":   "${ldq}quoted material${rdq}",
-  "‘‘‘quoted material‘‘‘": "${ldq}quoted material${rdq}",
-  "´´quoted material´´":   "${ldq}quoted material${rdq}",
-  "``quoted material``":   "${ldq}quoted material${rdq}",
-  "“quoted material”":     "${ldq}quoted material${rdq}",
-  "„quoted material“":     "${ldq}quoted material${rdq}",
-  "«quoted material»":     "${ldq}quoted material${rdq}",
+  '"quoted material"':     `${t.ldq}quoted material${t.rdq}`,
+  '„quoted material"':     `${t.ldq}quoted material${t.rdq}`,
+  "«quoted material«":     `${t.ldq}quoted material${t.rdq}`,
+  "’’quoted material''":   `${t.ldq}quoted material${t.rdq}`,
+  "‹‹quoted material››":   `${t.ldq}quoted material${t.rdq}`,
+  ",,quoted material,,":   `${t.ldq}quoted material${t.rdq}`,
+  "‘‘quoted material‘‘":   `${t.ldq}quoted material${t.rdq}`,
+  "‘‘‘quoted material‘‘‘": `${t.ldq}quoted material${t.rdq}`,
+  "´´quoted material´´":   `${t.ldq}quoted material${t.rdq}`,
+  "``quoted material``":   `${t.ldq}quoted material${t.rdq}`,
+  "“quoted material”":     `${t.ldq}quoted material${t.rdq}`,
+  "„quoted material“":     `${t.ldq}quoted material${t.rdq}`,
+  "«quoted material»":     `${t.ldq}quoted material${t.rdq}`,
 
-  'unquoted "quoted material" material':     "unquoted ${ldq}quoted material${rdq} material",
-  '"quoted material" and "quoted material"': "${ldq}quoted material${rdq} and ${ldq}quoted material${rdq}",
+  'unquoted "quoted material" material':     `unquoted ${t.ldq}quoted material${t.rdq} material`,
+  '"quoted material" and "quoted material"': `${t.ldq}quoted material${t.rdq} and ${t.ldq}quoted material${t.rdq}`,
 
   // primes × double quotes
-  '"Conference 2020" and "something in quotes."': "${ldq}Conference 2020${rdq} and ${ldq}something in quotes.${rdq}",
-  [`"Gone in 60${m.doublePrime}"`]:               "${ldq}Gone in 60″${rdq}",
+  '"Conference 2020" and "something in quotes."': `${t.ldq}Conference 2020${t.rdq} and ${t.ldq}something in quotes.${t.rdq}`,
+  [`"Gone in 60${m.doublePrime}"`]:               `${t.ldq}Gone in 60″${t.rdq}`,
 
-  '"2020"': "${ldq}2020${rdq}",
-  '"202"':  "${ldq}202${rdq}",
+  '"2020"': `${t.ldq}2020${t.rdq}`,
+  '"202"':  `${t.ldq}202${t.rdq}`,
 
   // false positive
-  [`"starting quotes, primes 90${m.doublePrime}, ending quotes"`]:
-    "${ldq}starting quotes, primes 90″, ending quotes${rdq}",
+  [`"starting quotes, primes 90${m.doublePrime}, ending quotes"`]: `${t.ldq}starting quotes, primes 90″, ending quotes${t.rdq}`,
 
   //jibberish inside quotes
-  ",,idjsa; frilj f0d, if9,,": "${ldq}idjsa; frilj f0d, if9${rdq}",
+  ",,idjsa; frilj f0d, if9,,": `${t.ldq}idjsa; frilj f0d, if9${t.rdq}`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -350,20 +349,20 @@ supportedLocales.forEach((localeName) => {
 });
 
 const identifyUnpairedLeftDoubleQuoteSet = {
-  '"unpaired left quote.':    "${ldq}unpaired left quote.",
-  "«unpaired left quote.":    "${ldq}unpaired left quote.",
-  "„unpaired left quote.":    "${ldq}unpaired left quote.",
-  ",,unpaired left quote.":   "${ldq}unpaired left quote.",
-  "‹‹unpaired left quote.":   "${ldq}unpaired left quote.",
-  "‘‘unpaired left quote.":   "${ldq}unpaired left quote.",
-  '"Unpaired left quote.':    "${ldq}Unpaired left quote.",
-  "“Unpaired left quote.":    "${ldq}Unpaired left quote.",
-  "«Unpaired left quote.":    "${ldq}Unpaired left quote.",
-  "„Unpaired left quote.":    "${ldq}Unpaired left quote.",
-  ",,Unpaired left quote.":   "${ldq}Unpaired left quote.",
-  "‹‹Unpaired left quote.":   "${ldq}Unpaired left quote.",
-  "‘‘Unpaired left quote.":   "${ldq}Unpaired left quote.",
-  "‘‘1 unpaired left quote.": "${ldq}1 unpaired left quote.",
+  '"unpaired left quote.':    `${t.ldq}unpaired left quote.`,
+  "«unpaired left quote.":    `${t.ldq}unpaired left quote.`,
+  "„unpaired left quote.":    `${t.ldq}unpaired left quote.`,
+  ",,unpaired left quote.":   `${t.ldq}unpaired left quote.`,
+  "‹‹unpaired left quote.":   `${t.ldq}unpaired left quote.`,
+  "‘‘unpaired left quote.":   `${t.ldq}unpaired left quote.`,
+  '"Unpaired left quote.':    `${t.ldq}Unpaired left quote.`,
+  "“Unpaired left quote.":    `${t.ldq}Unpaired left quote.`,
+  "«Unpaired left quote.":    `${t.ldq}Unpaired left quote.`,
+  "„Unpaired left quote.":    `${t.ldq}Unpaired left quote.`,
+  ",,Unpaired left quote.":   `${t.ldq}Unpaired left quote.`,
+  "‹‹Unpaired left quote.":   `${t.ldq}Unpaired left quote.`,
+  "‘‘Unpaired left quote.":   `${t.ldq}Unpaired left quote.`,
+  "‘‘1 unpaired left quote.": `${t.ldq}1 unpaired left quote.`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -379,17 +378,17 @@ supportedLocales.forEach((localeName) => {
 });
 
 const identifyUnpairedRightDoubleQuoteSet = {
-  'unpaired" right quote.':  "unpaired${rdq} right quote.",
-  "unpaired« right quote.":  "unpaired${rdq} right quote.",
-  "unpaired„ right quote.":  "unpaired${rdq} right quote.",
-  "unpaired” right quote.":  "unpaired${rdq} right quote.",
-  "unpaired“ right quote.":  "unpaired${rdq} right quote.",
-  "unpaired,, right quote.": "unpaired${rdq} right quote.",
-  "unpaired›› right quote.": "unpaired${rdq} right quote.",
-  "unpaired‘‘ right quote.": "unpaired${rdq} right quote.",
-  'UNPAIRED" right quote.':  "UNPAIRED${rdq} right quote.",
-  'unpaired right quote."':  "unpaired right quote.${rdq}",
-  'unpaired right quote…"':  "unpaired right quote…${rdq}",
+  'unpaired" right quote.':  `unpaired${t.rdq} right quote.`,
+  "unpaired« right quote.":  `unpaired${t.rdq} right quote.`,
+  "unpaired„ right quote.":  `unpaired${t.rdq} right quote.`,
+  "unpaired” right quote.":  `unpaired${t.rdq} right quote.`,
+  "unpaired“ right quote.":  `unpaired${t.rdq} right quote.`,
+  "unpaired,, right quote.": `unpaired${t.rdq} right quote.`,
+  "unpaired›› right quote.": `unpaired${t.rdq} right quote.`,
+  "unpaired‘‘ right quote.": `unpaired${t.rdq} right quote.`,
+  'UNPAIRED" right quote.':  `UNPAIRED${t.rdq} right quote.`,
+  'unpaired right quote."':  `unpaired right quote.${t.rdq}`,
+  'unpaired right quote…"':  `unpaired right quote…${t.rdq}`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -441,9 +440,8 @@ const replaceDoublePrimeWDoubleQuoteUnitSet = {
 };
 
 const replaceDoublePrimeWDoubleQuoteModuleSet = {
-  'It’s called "Localhost 3000" and it’s pretty fast.':
-    "It’s called ${ldq}Localhost 3000${rdq} and it’s pretty fast.",
-  'Here are 30 "bucks"': "Here are 30 ${ldq}bucks${rdq}",
+  'It’s called "Localhost 3000" and it’s pretty fast.': `It’s called ${t.ldq}Localhost 3000${t.rdq} and it’s pretty fast.`,
+  'Here are 30 "bucks"':                                `Here are 30 ${t.ldq}bucks${t.rdq}`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -467,63 +465,63 @@ const fixQuotedWordPunctuationModuleSet = {
   */
 
   // Single word with period
-  "${ldq}word.${rdq}":                       "${ldq}word${rdq}.",
-  "Look for ${ldq}word.${rdq} In the text.": "Look for ${ldq}word${rdq}. In the text.",
-  "Look for ${ldq}Ian.${rdq} In the text.":  "Look for ${ldq}Ian${rdq}. In the text.",
+  [`${t.ldq}word.${t.rdq}`]:                       `${t.ldq}word${t.rdq}.`,
+  [`Look for ${t.ldq}word.${t.rdq} In the text.`]: `Look for ${t.ldq}word${t.rdq}. In the text.`,
+  [`Look for ${t.ldq}Ian.${t.rdq} In the text.`]:  `Look for ${t.ldq}Ian${t.rdq}. In the text.`,
 
   // Single word with comma
-  "${ldq}word,${rdq}":                     "${ldq}word${rdq},",
-  "He said ${ldq}hello,${rdq} then left.": "He said ${ldq}hello${rdq}, then left.",
+  [`${t.ldq}word,${t.rdq}`]:                     `${t.ldq}word${t.rdq},`,
+  [`He said ${t.ldq}hello,${t.rdq} then left.`]: `He said ${t.ldq}hello${t.rdq}, then left.`,
 
   // Single word with semicolon
-  "${ldq}word;${rdq}":                    "${ldq}word${rdq};",
-  "He used ${ldq}code;${rdq} it worked.": "He used ${ldq}code${rdq}; it worked.",
+  [`${t.ldq}word;${t.rdq}`]:                    `${t.ldq}word${t.rdq};`,
+  [`He used ${t.ldq}code;${t.rdq} it worked.`]: `He used ${t.ldq}code${t.rdq}; it worked.`,
 
   // Single word with colon
-  "${ldq}word:${rdq}":                           "${ldq}word${rdq}:",
-  "Consider ${ldq}refactoring:${rdq} it helps.": "Consider ${ldq}refactoring${rdq}: it helps.",
+  [`${t.ldq}word:${t.rdq}`]:                           `${t.ldq}word${t.rdq}:`,
+  [`Consider ${t.ldq}refactoring:${t.rdq} it helps.`]: `Consider ${t.ldq}refactoring${t.rdq}: it helps.`,
 
   // Contracted words
-  "Say ${ldq}don${apos}t;${rdq} be firm.": "Say ${ldq}don${apos}t${rdq}; be firm.",
+  [`Say ${t.ldq}don${t.apos}t;${t.rdq} be firm.`]: `Say ${t.ldq}don${t.apos}t${t.rdq}; be firm.`,
 
   // Numbers
-  "Version ${ldq}2.0.${rdq} is out.":     "Version ${ldq}2.0${rdq}. is out.",
-  "In ${ldq}2020,${rdq} things changed.": "In ${ldq}2020${rdq}, things changed.",
-  "Number ${ldq}42;${rdq} the answer.":   "Number ${ldq}42${rdq}; the answer.",
+  [`Version ${t.ldq}2.0.${t.rdq} is out.`]:     `Version ${t.ldq}2.0${t.rdq}. is out.`,
+  [`In ${t.ldq}2020,${t.rdq} things changed.`]: `In ${t.ldq}2020${t.rdq}, things changed.`,
+  [`Number ${t.ldq}42;${t.rdq} the answer.`]:   `Number ${t.ldq}42${t.rdq}; the answer.`,
 
   // Combinations with numbers and contractions (e.g., 69'ers)
-  "The ${ldq}69${apos}ers.${rdq} were famous.": "The ${ldq}69${apos}ers${rdq}. were famous.",
-  "Those ${ldq}90${apos}s,${rdq} good times.":  "Those ${ldq}90${apos}s${rdq}, good times.",
+  [`The ${t.ldq}69${t.apos}ers.${t.rdq} were famous.`]: `The ${t.ldq}69${t.apos}ers${t.rdq}. were famous.`,
+  [`Those ${t.ldq}90${t.apos}s,${t.rdq} good times.`]:  `Those ${t.ldq}90${t.apos}s${t.rdq}, good times.`,
 
   // Hyphenated words
-  "Use ${ldq}well-known.${rdq} for clarity.":      "Use ${ldq}well-known${rdq}. for clarity.",
-  "The ${ldq}state-of-the-art,${rdq} approach.":   "The ${ldq}state-of-the-art${rdq}, approach.",
-  "Try ${ldq}open-source;${rdq} it${apos}s free.": "Try ${ldq}open-source${rdq}; it${apos}s free.",
+  [`Use ${t.ldq}well-known.${t.rdq} for clarity.`]:        `Use ${t.ldq}well-known${t.rdq}. for clarity.`,
+  [`The ${t.ldq}state-of-the-art,${t.rdq} approach.`]:     `The ${t.ldq}state-of-the-art${t.rdq}, approach.`,
+  [`Try ${t.ldq}open-source;${t.rdq} it${t.apos}s free.`]: `Try ${t.ldq}open-source${t.rdq}; it${t.apos}s free.`,
 
   // Escaped strings
-  "${ldq}{{esc}},${rdq}": "${ldq}{{esc}}${rdq},",
+  [`${t.ldq}{{esc}},${t.rdq}`]: `${t.ldq}{{esc}}${t.rdq},`,
 };
 
 const fixQuotedWordPunctuationUnitSet = {
   // False positives - multiple words (should NOT be fixed in this function)
-  "She said ${ldq}hello world.${rdq} and left.":  "She said ${ldq}hello world.${rdq} and left.",
-  "I heard ${ldq}good morning,${rdq} from her.":  "I heard ${ldq}good morning,${rdq} from her.",
-  "The ${ldq}quick brown fox;${rdq} jumps.":      "The ${ldq}quick brown fox;${rdq} jumps.",
-  "The ${ldq}quick brown fox${rdq}; jumps.":      "The ${ldq}quick brown fox${rdq}; jumps.",
-  "Note ${ldq}some important thing:${rdq} here.": "Note ${ldq}some important thing:${rdq} here.",
+  [`She said ${t.ldq}hello world.${t.rdq} and left.`]:  `She said ${t.ldq}hello world.${t.rdq} and left.`,
+  [`I heard ${t.ldq}good morning,${t.rdq} from her.`]:  `I heard ${t.ldq}good morning,${t.rdq} from her.`,
+  [`The ${t.ldq}quick brown fox;${t.rdq} jumps.`]:      `The ${t.ldq}quick brown fox;${t.rdq} jumps.`,
+  [`The ${t.ldq}quick brown fox${t.rdq}; jumps.`]:      `The ${t.ldq}quick brown fox${t.rdq}; jumps.`,
+  [`Note ${t.ldq}some important thing:${t.rdq} here.`]: `Note ${t.ldq}some important thing:${t.rdq} here.`,
 
   // False positives - exclamation and question marks (should NOT be fixed)
-  "The ${ldq}Wow!${rdq} was loud.":         "The ${ldq}Wow!${rdq} was loud.",
-  "The ${ldq}Wow${rdq}! was loud.":         "The ${ldq}Wow${rdq}! was loud.",
-  "She asked ${ldq}Why?${rdq} repeatedly.": "She asked ${ldq}Why?${rdq} repeatedly.",
-  "She asked ${ldq}Why${rdq}? repeatedly.": "She asked ${ldq}Why${rdq}? repeatedly.",
+  [`The ${t.ldq}Wow!${t.rdq} was loud.`]:         `The ${t.ldq}Wow!${t.rdq} was loud.`,
+  [`The ${t.ldq}Wow${t.rdq}! was loud.`]:         `The ${t.ldq}Wow${t.rdq}! was loud.`,
+  [`She asked ${t.ldq}Why?${t.rdq} repeatedly.`]: `She asked ${t.ldq}Why?${t.rdq} repeatedly.`,
+  [`She asked ${t.ldq}Why${t.rdq}? repeatedly.`]: `She asked ${t.ldq}Why${t.rdq}? repeatedly.`,
 
   // False positives - regnal numbers
-  "Byl to Karel ${ldq}IV.${rdq}, ktery": "Byl to Karel ${ldq}IV.${rdq}, ktery",
+  [`Byl to Karel ${t.ldq}IV.${t.rdq}, ktery`]: `Byl to Karel ${t.ldq}IV.${t.rdq}, ktery`,
 
   // False positives - already correct
-  "The ${ldq}word${rdq}. is correct.":     "The ${ldq}word${rdq}. is correct.",
-  "He said ${ldq}hello${rdq}, then left.": "He said ${ldq}hello${rdq}, then left.",
+  [`The ${t.ldq}word${t.rdq}. is correct.`]:     `The ${t.ldq}word${t.rdq}. is correct.`,
+  [`He said ${t.ldq}hello${t.rdq}, then left.`]: `He said ${t.ldq}hello${t.rdq}, then left.`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -550,57 +548,56 @@ const fixQuotedSentencePunctuationModuleSet = {
   */
 
   // Quoted fragment at the end of sentence
-  "It can be a ${ldq}quoted fragment${rdq}.": "It can be a ${ldq}quoted fragment.${rdq}",
-  "It can be a ${ldq}quoted fragment${rdq},": "It can be a ${ldq}quoted fragment,${rdq}",
-  "It can be a ${ldq}quoted fragment${rdq}!": "It can be a ${ldq}quoted fragment!${rdq}",
-  "It can be a ${ldq}quoted fragment${rdq}?": "It can be a ${ldq}quoted fragment?${rdq}",
-  "It can be a ${ldq}quoted fragment${rdq}…": "It can be a ${ldq}quoted fragment…${rdq}",
+  [`It can be a ${t.ldq}quoted fragment${t.rdq}.`]: `It can be a ${t.ldq}quoted fragment.${t.rdq}`,
+  [`It can be a ${t.ldq}quoted fragment${t.rdq},`]: `It can be a ${t.ldq}quoted fragment,${t.rdq}`,
+  [`It can be a ${t.ldq}quoted fragment${t.rdq}!`]: `It can be a ${t.ldq}quoted fragment!${t.rdq}`,
+  [`It can be a ${t.ldq}quoted fragment${t.rdq}?`]: `It can be a ${t.ldq}quoted fragment?${t.rdq}`,
+  [`It can be a ${t.ldq}quoted fragment${t.rdq}…`]: `It can be a ${t.ldq}quoted fragment…${t.rdq}`,
 
   // nbsp
-  "It can be ${ldq}a banana${rdq}.": "It can be ${ldq}a banana.${rdq}",
+  [`It can be ${t.ldq}a banana${t.rdq}.`]: `It can be ${t.ldq}a banana.${t.rdq}`,
 
   // Quoted sentence
-  "${ldq}Fully quoted sentence${rdq}.": "${ldq}Fully quoted sentence.${rdq}",
-  "${ldq}Fully quoted sentence${rdq},": "${ldq}Fully quoted sentence,${rdq}",
-  "${ldq}Fully quoted sentence${rdq}!": "${ldq}Fully quoted sentence!${rdq}",
-  "${ldq}Fully quoted sentence${rdq}?": "${ldq}Fully quoted sentence?${rdq}",
-  "${ldq}Fully quoted sentence${rdq}…": "${ldq}Fully quoted sentence…${rdq}",
+  [`${t.ldq}Fully quoted sentence${t.rdq}.`]: `${t.ldq}Fully quoted sentence.${t.rdq}`,
+  [`${t.ldq}Fully quoted sentence${t.rdq},`]: `${t.ldq}Fully quoted sentence,${t.rdq}`,
+  [`${t.ldq}Fully quoted sentence${t.rdq}!`]: `${t.ldq}Fully quoted sentence!${t.rdq}`,
+  [`${t.ldq}Fully quoted sentence${t.rdq}?`]: `${t.ldq}Fully quoted sentence?${t.rdq}`,
+  [`${t.ldq}Fully quoted sentence${t.rdq}…`]: `${t.ldq}Fully quoted sentence…${t.rdq}`,
 
   // Less common boundaries
-  "${ldq}(Fully) quoted sentence${rdq}.": "${ldq}(Fully) quoted sentence.${rdq}",
-  "${ldq}Fully quoted (sentence)${rdq}.": "${ldq}Fully quoted (sentence).${rdq}",
+  [`${t.ldq}(Fully) quoted sentence${t.rdq}.`]: `${t.ldq}(Fully) quoted sentence.${t.rdq}`,
+  [`${t.ldq}Fully quoted (sentence)${t.rdq}.`]: `${t.ldq}Fully quoted (sentence).${t.rdq}`,
 
   // Escaped strings
-  "It can be a ${ldq}{{esc}} {{esc}}${rdq}.": "It can be a ${ldq}{{esc}} {{esc}}.${rdq}",
+  [`It can be a ${t.ldq}{{esc}} {{esc}}${t.rdq}.`]: `It can be a ${t.ldq}{{esc}} {{esc}}.${t.rdq}`,
 
   // false positive, consecutive double quotes
-  "${ldq}word${rdq} ${ldq}word${rdq},": "${ldq}word${rdq} ${ldq}word${rdq},",
+  [`${t.ldq}word${t.rdq} ${t.ldq}word${t.rdq},`]: `${t.ldq}word${t.rdq} ${t.ldq}word${t.rdq},`,
 
   // Colon / semicolon should be placed outside the quotes
-  "${ldq}quoted fragment:${rdq} sentence continues":   "${ldq}quoted fragment${rdq}: sentence continues",
-  "${ldq}quoted fragment;${rdq} sentence continues":   "${ldq}quoted fragment${rdq}; sentence continues",
-  "${ldq}(quoted) fragment:${rdq} sentence continues": "${ldq}(quoted) fragment${rdq}: sentence continues",
-  "${ldq}quoted (fragment);${rdq} sentence continues": "${ldq}quoted (fragment)${rdq}; sentence continues",
+  [`${t.ldq}quoted fragment:${t.rdq} sentence continues`]:   `${t.ldq}quoted fragment${t.rdq}: sentence continues`,
+  [`${t.ldq}quoted fragment;${t.rdq} sentence continues`]:   `${t.ldq}quoted fragment${t.rdq}; sentence continues`,
+  [`${t.ldq}(quoted) fragment:${t.rdq} sentence continues`]: `${t.ldq}(quoted) fragment${t.rdq}: sentence continues`,
+  [`${t.ldq}quoted (fragment);${t.rdq} sentence continues`]: `${t.ldq}quoted (fragment)${t.rdq}; sentence continues`,
 
   // Single quotes + double quotes
-  "${ldq}Sentence ${lsq}quoted fragment${rsq}${rdq}.":
-    "${ldq}Sentence ${lsq}quoted fragment${rsq}.${rdq}",
+  [`${t.ldq}Sentence ${t.lsq}quoted fragment${t.rsq}${t.rdq}.`]: `${t.ldq}Sentence ${t.lsq}quoted fragment${t.rsq}.${t.rdq}`,
 
   // Correct placement
-  "It can be a ${ldq}quoted fragment.${rdq}": "It can be a ${ldq}quoted fragment.${rdq}",
-  "It can be a ${ldq}quoted fragment,${rdq}": "It can be a ${ldq}quoted fragment,${rdq}",
-  "It can be a ${ldq}quoted fragment!${rdq}": "It can be a ${ldq}quoted fragment!${rdq}",
-  "It can be a ${ldq}quoted fragment?${rdq}": "It can be a ${ldq}quoted fragment?${rdq}",
-  "It can be a ${ldq}quoted fragment…${rdq}": "It can be a ${ldq}quoted fragment…${rdq}",
+  [`It can be a ${t.ldq}quoted fragment.${t.rdq}`]: `It can be a ${t.ldq}quoted fragment.${t.rdq}`,
+  [`It can be a ${t.ldq}quoted fragment,${t.rdq}`]: `It can be a ${t.ldq}quoted fragment,${t.rdq}`,
+  [`It can be a ${t.ldq}quoted fragment!${t.rdq}`]: `It can be a ${t.ldq}quoted fragment!${t.rdq}`,
+  [`It can be a ${t.ldq}quoted fragment?${t.rdq}`]: `It can be a ${t.ldq}quoted fragment?${t.rdq}`,
+  [`It can be a ${t.ldq}quoted fragment…${t.rdq}`]: `It can be a ${t.ldq}quoted fragment…${t.rdq}`,
 };
 
 const fixQuotedSentencePunctuationUnitSet = {
   // Exception. skip fixing name with regnal number
-  "It was ${ldq}Charles IV${rdq},": "It was ${ldq}Charles IV${rdq},",
+  [`It was ${t.ldq}Charles IV${t.rdq},`]: `It was ${t.ldq}Charles IV${t.rdq},`,
 
   // False positives - single word (should NOT be fixed in this function)
-  "Look for ${ldq}word.${rdq} In the text.": "Look for ${ldq}word.${rdq} In the text.",
-  "${ldq}word.${rdq}":                       "${ldq}word.${rdq}",
+  [`Look for ${t.ldq}word.${t.rdq} In the text.`]: `Look for ${t.ldq}word.${t.rdq} In the text.`,
+  [`${t.ldq}word.${t.rdq}`]:                       `${t.ldq}word.${t.rdq}`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -618,9 +615,9 @@ supportedLocales.forEach((localeName) => {
 });
 
 const removeExtraSpacesAroundQuotesSet = {
-  "${ldq} extra space at the beginning${rdq}": "${ldq}extra space at the beginning${rdq}",
-  "${ldq}extra space at the end ${rdq}":       "${ldq}extra space at the end${rdq}",
-  "${ldq}Sentence and… ${rdq}":                "${ldq}Sentence and…${rdq}",
+  [`${t.ldq} extra space at the beginning${t.rdq}`]: `${t.ldq}extra space at the beginning${t.rdq}`,
+  [`${t.ldq}extra space at the end ${t.rdq}`]:       `${t.ldq}extra space at the end${t.rdq}`,
+  [`${t.ldq}Sentence and… ${t.rdq}`]:                `${t.ldq}Sentence and…${t.rdq}`,
 
   "12′ 45 ″":       "12′ 45″",
   "3° 5′ 30 ″":     "3° 5′ 30″",
@@ -639,9 +636,9 @@ supportedLocales.forEach((localeName) => {
 });
 
 const addSpaceBeforeLeftDoubleQuoteSet = {
-  "It’s a very ${ldq}nice${rdq} saying.":               "It’s a very ${ldq}nice${rdq} saying.",
-  "It’s a${ldq}nice${rdq} saying.":                     "It’s a ${ldq}nice${rdq} saying.", //add nbsp;
-  "An unquoted sentence.${ldq}And a quoted one.${rdq}": "An unquoted sentence. ${ldq}And a quoted one.${rdq}",
+  [`It’s a very ${t.ldq}nice${t.rdq} saying.`]:               `It’s a very ${t.ldq}nice${t.rdq} saying.`,
+  [`It’s a${t.ldq}nice${t.rdq} saying.`]:                     `It’s a ${t.ldq}nice${t.rdq} saying.`, //add nbsp;
+  [`An unquoted sentence.${t.ldq}And a quoted one.${t.rdq}`]: `An unquoted sentence. ${t.ldq}And a quoted one.${t.rdq}`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -656,9 +653,9 @@ supportedLocales.forEach((localeName) => {
 });
 
 const addSpaceAfterRightDoubleQuoteSet = {
-  "It’s a ${ldq}nice${rdq}saying.":                     "It’s a ${ldq}nice${rdq} saying.",
-  "${ldq}A quoted sentence.${rdq}And an unquoted one.": "${ldq}A quoted sentence.${rdq} And an unquoted one.",
-  "${ldq}A quoted sentence!${rdq}And an unquoted one.": "${ldq}A quoted sentence!${rdq} And an unquoted one.",
+  [`It’s a ${t.ldq}nice${t.rdq}saying.`]:                     `It’s a ${t.ldq}nice${t.rdq} saying.`,
+  [`${t.ldq}A quoted sentence.${t.rdq}And an unquoted one.`]: `${t.ldq}A quoted sentence.${t.rdq} And an unquoted one.`,
+  [`${t.ldq}A quoted sentence!${t.rdq}And an unquoted one.`]: `${t.ldq}A quoted sentence!${t.rdq} And an unquoted one.`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -676,123 +673,116 @@ const fixDirectSpeechIntroSet = {
   // Problem Type 1: Using hyphen, en dash, or em dash instead of proper introduction
 
   // Hyphen with spaces
-  "She said - ${ldq}Hello${rdq} - and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said - ${ldq}Hello${rdq} and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said -${ldq}Hello${rdq} - and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said-${ldq}Hello${rdq} - and left.":
-    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  [`She said - ${t.ldq}Hello${t.rdq} - and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said - ${t.ldq}Hello${t.rdq} and left.`]:   `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said -${t.ldq}Hello${t.rdq} - and left.`]:  `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said-${t.ldq}Hello${t.rdq} - and left.`]:   `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
 
   // En dash with spaces
-  "She said – ${ldq}Hello${rdq} – and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said – ${ldq}Hello${rdq} and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said –${ldq}Hello${rdq} – and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said–${ldq}Hello${rdq} – and left.":
-    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  [`She said – ${t.ldq}Hello${t.rdq} – and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said – ${t.ldq}Hello${t.rdq} and left.`]:   `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said –${t.ldq}Hello${t.rdq} – and left.`]:  `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said–${t.ldq}Hello${t.rdq} – and left.`]:   `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
 
   // Em dash with spaces
-  "She said — ${ldq}Hello${rdq} — and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said — ${ldq}Hello${rdq} and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said —${ldq}Hello${rdq} — and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said—${ldq}Hello${rdq} — and left.":
-    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  [`She said — ${t.ldq}Hello${t.rdq} — and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said — ${t.ldq}Hello${t.rdq} and left.`]:   `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said —${t.ldq}Hello${t.rdq} — and left.`]:  `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said—${t.ldq}Hello${t.rdq} — and left.`]:   `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
 
   // Problem Type 2: Combination of proper and wrong direct speech introduction
 
   // Colon/comma + hyphen
-  "She said: - ${ldq}Hello${rdq} - and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said: -${ldq}Hello${rdq} - and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said:- ${ldq}Hello${rdq} - and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said:-${ldq}Hello${rdq} - and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said${directSpeechIntro} - ${ldq}Hello${rdq} - and left.":
-    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  [`She said: - ${t.ldq}Hello${t.rdq} - and left.`]:                      `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said: -${t.ldq}Hello${t.rdq} - and left.`]:                       `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said:- ${t.ldq}Hello${t.rdq} - and left.`]:                       `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said:-${t.ldq}Hello${t.rdq} - and left.`]:                        `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said${t.directSpeechIntro} - ${t.ldq}Hello${t.rdq} - and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
 
   // Colon/comma + en dash
-  "She said: – ${ldq}Hello${rdq} – and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said: –${ldq}Hello${rdq} – and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said:– ${ldq}Hello${rdq} – and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said:–${ldq}Hello${rdq} – and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  [`She said: – ${t.ldq}Hello${t.rdq} – and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said: –${t.ldq}Hello${t.rdq} – and left.`]:  `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said:– ${t.ldq}Hello${t.rdq} – and left.`]:  `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said:–${t.ldq}Hello${t.rdq} – and left.`]:   `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
 
   // Colon/comma + em dash
-  "She said: — ${ldq}Hello${rdq} — and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said: —${ldq}Hello${rdq} — and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said:— ${ldq}Hello${rdq} — and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said:—${ldq}Hello${rdq} — and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  [`She said: — ${t.ldq}Hello${t.rdq} — and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said: —${t.ldq}Hello${t.rdq} — and left.`]:  `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said:— ${t.ldq}Hello${t.rdq} — and left.`]:  `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said:—${t.ldq}Hello${t.rdq} — and left.`]:   `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
 
   // Problem Type 3: Extra spaces between introduction and quote
 
-  "She said:${ldq}Hello${rdq} and left.":      "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said,${ldq}Hello${rdq} and left.":      "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said:  ${ldq}Hello${rdq} and left.":    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said:   ${ldq}Hello${rdq} and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said:    ${ldq}Hello${rdq} and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said:     ${ldq}Hello${rdq} and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said,     ${ldq}Hello${rdq} and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  [`She said:${t.ldq}Hello${t.rdq} and left.`]:      `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said,${t.ldq}Hello${t.rdq} and left.`]:      `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said:  ${t.ldq}Hello${t.rdq} and left.`]:    `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said:   ${t.ldq}Hello${t.rdq} and left.`]:   `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said:    ${t.ldq}Hello${t.rdq} and left.`]:  `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said:     ${t.ldq}Hello${t.rdq} and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said,     ${t.ldq}Hello${t.rdq} and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
 
   // Combination: wrong intro + extra spaces
-  "She said: -  ${ldq}Hello${rdq} - and left.":   "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said: –   ${ldq}Hello${rdq} – and left.":  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said: —    ${ldq}Hello${rdq} — and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  [`She said: -  ${t.ldq}Hello${t.rdq} - and left.`]:   `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said: –   ${t.ldq}Hello${t.rdq} – and left.`]:  `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said: —    ${t.ldq}Hello${t.rdq} — and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
 
   // Multiple spaces around dashes
-  "She said  -  ${ldq}Hello${rdq}  -  and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said  –  ${ldq}Hello${rdq}  –  and left.": "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
-  "She said  —  ${ldq}Hello${rdq}  —  and left.":
-    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  [`She said  -  ${t.ldq}Hello${t.rdq}  -  and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said  –  ${t.ldq}Hello${t.rdq}  –  and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
+  [`She said  —  ${t.ldq}Hello${t.rdq}  —  and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
 
   // Edge cases: No ending sentence (quote at end)
-  "She said - ${ldq}Hello${rdq}": "She said${directSpeechIntro} ${ldq}Hello${rdq}",
-  "She said – ${ldq}Hello${rdq}": "She said${directSpeechIntro} ${ldq}Hello${rdq}",
-  "She said — ${ldq}Hello${rdq}": "She said${directSpeechIntro} ${ldq}Hello${rdq}",
+  [`She said - ${t.ldq}Hello${t.rdq}`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq}`,
+  [`She said – ${t.ldq}Hello${t.rdq}`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq}`,
+  [`She said — ${t.ldq}Hello${t.rdq}`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq}`,
 
   // // Varied content between quotes: punctuation, numbers, special chars, etc.
-  "She said - ${ldq}Hello, world!${rdq} - and left.":         "She said${directSpeechIntro} ${ldq}Hello, world!${rdq} and left.",
-  "She said - ${ldq}Hello! How are you?${rdq} - and left.":   "She said${directSpeechIntro} ${ldq}Hello! How are you?${rdq} and left.",
-  // "She said – ${ldq}It${apos}s 12″ × 12″.${rdq} – and left.":   "She said${directSpeechIntro} ${ldq}It${apos}s 12″ × 12″.${rdq} and left.",
-  "She said — ${ldq}Numbers: 123, 456.78…${rdq} — and left.": "She said${directSpeechIntro} ${ldq}Numbers: 123, 456.78…${rdq} and left.",
+  [`She said - ${t.ldq}Hello, world!${t.rdq} - and left.`]:         `She said${t.directSpeechIntro} ${t.ldq}Hello, world!${t.rdq} and left.`,
+  [`She said - ${t.ldq}Hello! How are you?${t.rdq} - and left.`]:   `She said${t.directSpeechIntro} ${t.ldq}Hello! How are you?${t.rdq} and left.`,
+  // [`She said – ${t.ldq}It${t.apos}s 12″ × 12″.${t.rdq} – and left.`]: `She said${t.directSpeechIntro} ${t.ldq}It${t.apos}s 12″ × 12″.${t.rdq} and left.`,
+  [`She said — ${t.ldq}Numbers: 123, 456.78…${t.rdq} — and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Numbers: 123, 456.78…${t.rdq} and left.`,
 
-  "She said — ${ldq}URL: http://example.com/path${rdq} — and left.":              "She said${directSpeechIntro} ${ldq}URL: http://example.com/path${rdq} and left.",
-  "She said - ${ldq}Email: test@example.com${rdq} - and left.":                   "She said${directSpeechIntro} ${ldq}Email: test@example.com${rdq} and left.",
-  "She said – ${ldq}Quote with: colon, semicolon; comma, dot.${rdq} – and left.": "She said${directSpeechIntro} ${ldq}Quote with: colon, semicolon; comma, dot.${rdq} and left.",
-  "She said — ${ldq}A very long sentence with many words and punctuation marks, including commas, periods, and other symbols!${rdq} — and left.":
-    "She said${directSpeechIntro} ${ldq}A very long sentence with many words and punctuation marks, including commas, periods, and other symbols!${rdq} and left.",
+  [`She said — ${t.ldq}URL: http://example.com/path${t.rdq} — and left.`]:                                                                              `She said${t.directSpeechIntro} ${t.ldq}URL: http://example.com/path${t.rdq} and left.`,
+  [`She said - ${t.ldq}Email: test@example.com${t.rdq} - and left.`]:                                                                                   `She said${t.directSpeechIntro} ${t.ldq}Email: test@example.com${t.rdq} and left.`,
+  [`She said – ${t.ldq}Quote with: colon, semicolon; comma, dot.${t.rdq} – and left.`]:                                                                 `She said${t.directSpeechIntro} ${t.ldq}Quote with: colon, semicolon; comma, dot.${t.rdq} and left.`,
+  [`She said — ${t.ldq}A very long sentence with many words and punctuation marks, including commas, periods, and other symbols!${t.rdq} — and left.`]: `She said${t.directSpeechIntro} ${t.ldq}A very long sentence with many words and punctuation marks, including commas, periods, and other symbols!${t.rdq} and left.`,
 
   // Edge cases: Paragraph starts with a quote introduced with a dash
-  "- ${ldq}Hello${rdq} - she said.":   "${ldq}Hello${rdq} she said.",
-  "-${ldq}Hello${rdq} - she said.":    "${ldq}Hello${rdq} she said.",
-  " - ${ldq}Hello${rdq} - she said.":  "${ldq}Hello${rdq} she said.",
-  "-   ${ldq}Hello${rdq} - she said.": "${ldq}Hello${rdq} she said.",
-  "– ${ldq}Hello${rdq} – she said.":   "${ldq}Hello${rdq} she said.",
-  "— ${ldq}Hello${rdq} — she said.":   "${ldq}Hello${rdq} she said.",
+  [`- ${t.ldq}Hello${t.rdq} - she said.`]:   `${t.ldq}Hello${t.rdq} she said.`,
+  [`-${t.ldq}Hello${t.rdq} - she said.`]:    `${t.ldq}Hello${t.rdq} she said.`,
+  [` - ${t.ldq}Hello${t.rdq} - she said.`]:  `${t.ldq}Hello${t.rdq} she said.`,
+  [`-   ${t.ldq}Hello${t.rdq} - she said.`]: `${t.ldq}Hello${t.rdq} she said.`,
+  [`– ${t.ldq}Hello${t.rdq} – she said.`]:   `${t.ldq}Hello${t.rdq} she said.`,
+  [`— ${t.ldq}Hello${t.rdq} — she said.`]:   `${t.ldq}Hello${t.rdq} she said.`,
 
   // Edge cases: The following quoted sentence is introduced with a dash
-  "ends. - ${ldq}Hello${rdq} - she said.":   "ends. ${ldq}Hello${rdq} she said.",
-  "ends. -${ldq}Hello${rdq} - she said.":    "ends. ${ldq}Hello${rdq} she said.",
-  "ends.  - ${ldq}Hello${rdq} - she said.":  "ends. ${ldq}Hello${rdq} she said.",
-  "ends. -   ${ldq}Hello${rdq} - she said.": "ends. ${ldq}Hello${rdq} she said.",
-  "ends. – ${ldq}Hello${rdq} – she said.":   "ends. ${ldq}Hello${rdq} she said.",
-  "ends. — ${ldq}Hello${rdq} — she said.":   "ends. ${ldq}Hello${rdq} she said.",
-  "ends? - ${ldq}Hello${rdq} - she said.":   "ends? ${ldq}Hello${rdq} she said.",
-  "ends? -${ldq}Hello${rdq} - she said.":    "ends? ${ldq}Hello${rdq} she said.",
-  "ends?  - ${ldq}Hello${rdq} - she said.":  "ends? ${ldq}Hello${rdq} she said.",
-  "ends? -   ${ldq}Hello${rdq} - she said.": "ends? ${ldq}Hello${rdq} she said.",
-  "ends? – ${ldq}Hello${rdq} – she said.":   "ends? ${ldq}Hello${rdq} she said.",
-  "ends? — ${ldq}Hello${rdq} — she said.":   "ends? ${ldq}Hello${rdq} she said.",
-  "ends! - ${ldq}Hello${rdq} - she said.":   "ends! ${ldq}Hello${rdq} she said.",
-  "ends! -${ldq}Hello${rdq} - she said.":    "ends! ${ldq}Hello${rdq} she said.",
-  "ends!  - ${ldq}Hello${rdq} - she said.":  "ends! ${ldq}Hello${rdq} she said.",
-  "ends! -   ${ldq}Hello${rdq} - she said.": "ends! ${ldq}Hello${rdq} she said.",
-  "ends! – ${ldq}Hello${rdq} – she said.":   "ends! ${ldq}Hello${rdq} she said.",
-  "ends! — ${ldq}Hello${rdq} — she said.":   "ends! ${ldq}Hello${rdq} she said.",
-  "ends… - ${ldq}Hello${rdq} - she said.":   "ends… ${ldq}Hello${rdq} she said.",
-  "ends… -${ldq}Hello${rdq} - she said.":    "ends… ${ldq}Hello${rdq} she said.",
-  "ends…  - ${ldq}Hello${rdq} - she said.":  "ends… ${ldq}Hello${rdq} she said.",
-  "ends… -   ${ldq}Hello${rdq} - she said.": "ends… ${ldq}Hello${rdq} she said.",
-  "ends… – ${ldq}Hello${rdq} – she said.":   "ends… ${ldq}Hello${rdq} she said.",
-  "ends… — ${ldq}Hello${rdq} — she said.":   "ends… ${ldq}Hello${rdq} she said.",
+  [`ends. - ${t.ldq}Hello${t.rdq} - she said.`]:   `ends. ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends. -${t.ldq}Hello${t.rdq} - she said.`]:    `ends. ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends.  - ${t.ldq}Hello${t.rdq} - she said.`]:  `ends. ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends. -   ${t.ldq}Hello${t.rdq} - she said.`]: `ends. ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends. – ${t.ldq}Hello${t.rdq} – she said.`]:   `ends. ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends. — ${t.ldq}Hello${t.rdq} — she said.`]:   `ends. ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends? - ${t.ldq}Hello${t.rdq} - she said.`]:   `ends? ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends? -${t.ldq}Hello${t.rdq} - she said.`]:    `ends? ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends?  - ${t.ldq}Hello${t.rdq} - she said.`]:  `ends? ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends? -   ${t.ldq}Hello${t.rdq} - she said.`]: `ends? ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends? – ${t.ldq}Hello${t.rdq} – she said.`]:   `ends? ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends? — ${t.ldq}Hello${t.rdq} — she said.`]:   `ends? ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends! - ${t.ldq}Hello${t.rdq} - she said.`]:   `ends! ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends! -${t.ldq}Hello${t.rdq} - she said.`]:    `ends! ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends!  - ${t.ldq}Hello${t.rdq} - she said.`]:  `ends! ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends! -   ${t.ldq}Hello${t.rdq} - she said.`]: `ends! ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends! – ${t.ldq}Hello${t.rdq} – she said.`]:   `ends! ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends! — ${t.ldq}Hello${t.rdq} — she said.`]:   `ends! ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends… - ${t.ldq}Hello${t.rdq} - she said.`]:   `ends… ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends… -${t.ldq}Hello${t.rdq} - she said.`]:    `ends… ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends…  - ${t.ldq}Hello${t.rdq} - she said.`]:  `ends… ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends… -   ${t.ldq}Hello${t.rdq} - she said.`]: `ends… ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends… – ${t.ldq}Hello${t.rdq} – she said.`]:   `ends… ${t.ldq}Hello${t.rdq} she said.`,
+  [`ends… — ${t.ldq}Hello${t.rdq} — she said.`]:   `ends… ${t.ldq}Hello${t.rdq} she said.`,
 
   // False positives: Already correct (should not change)
-  "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.":
-    "She said${directSpeechIntro} ${ldq}Hello${rdq} and left.",
+  [`She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`]: `She said${t.directSpeechIntro} ${t.ldq}Hello${t.rdq} and left.`,
 };
 
 supportedLocales.forEach((localeName) => {
