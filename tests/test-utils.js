@@ -80,6 +80,46 @@ function escapeRegex(str) {
 }
 
 /**
+ * Test token markers using Unicode Private Use Area
+ *
+ * Unicode Allocation:
+ * U+E000 - U+E0FF: Test tokens (this file) - locale-dependent test placeholders
+ * U+E100 - U+E1FF: Processing marks (src/markers.js) - internal processing markers
+ *
+ * These test tokens are replaced by transformTestSet() with locale-specific characters.
+ * This allows test cases to use template literals while maintaining locale independence.
+ */
+export const t = {
+  // Quotes
+  ldq:  "\uE000",
+  rdq:  "\uE001",
+  lsq:  "\uE002",
+  rsq:  "\uE003",
+  apos: "\uE004",
+
+  // Direct speech
+  directSpeechIntro: "\uE005",
+
+  // Dashes
+  spaceBeforeDash: "\uE010",
+  dash:            "\uE011",
+  spaceAfterDash:  "\uE012",
+
+  // Symbols
+  symbol: "\uE020",
+  space:  "\uE021",
+
+  // Abbreviations
+  abbrSpace: "\uE030",
+
+  // Ordinal dates
+  ordinalDateFirstSpace:  "\uE040",
+  ordinalDateSecondSpace: "\uE041",
+  romanOrdinalIndicator:  "\uE042",
+  spaceBeforePercent:     "\uE043",
+};
+
+/**
  * Generic test set transformation function with locale-specific token replacement
  * @param {Object} testSet - Object with test cases (input -> expected output)
  * @param {string} localeName - Locale identifier (e.g., "en-us", "cs", "sk")
@@ -96,43 +136,58 @@ export function transformTestSet(testSet, localeName, options = {}) {
   const mergedTestSet = additionalSets.reduce((acc, set) => ({ ...acc, ...set }), { ...testSet });
 
   const tokenMap = {
-    // Quotes
-    "${ldq}":  locale.leftDoubleQuote,
-    "${rdq}":  locale.rightDoubleQuote,
-    "${lsq}":  locale.leftSingleQuote,
-    "${rsq}":  locale.rightSingleQuote,
-    "${apos}": base.apostrophe,
-
-    // Direct Speech
-    "${directSpeechIntro}": locale.directSpeechIntro,
-
-    // Dashes
-    "${spaceBeforeDash}": locale.dashWords.spaceBefore,
-    "${dash}":            locale.dashWords.dash,
-    "${spaceAfterDash}":  locale.dashWords.spaceAfter,
-
-    // Symbols (only if symbolName provided)
+    // Unicode test tokens (from test-constants.js) - U+E000 range
+    [t.ldq]:                    locale.leftDoubleQuote,
+    [t.rdq]:                    locale.rightDoubleQuote,
+    [t.lsq]:                    locale.leftSingleQuote,
+    [t.rsq]:                    locale.rightSingleQuote,
+    [t.apos]:                   base.apostrophe,
+    [t.directSpeechIntro]:      locale.directSpeechIntro,
+    [t.spaceBeforeDash]:        locale.dashWords.spaceBefore,
+    [t.dash]:                   locale.dashWords.dash,
+    [t.spaceAfterDash]:         locale.dashWords.spaceAfter,
+    [t.abbrSpace]:              locale.spaceAfter.abbreviation,
+    [t.ordinalDateFirstSpace]:  locale.ordinalDate.firstSpace,
+    [t.ordinalDateSecondSpace]: locale.ordinalDate.secondSpace,
+    [t.romanOrdinalIndicator]:  locale.romanOrdinalIndicator,
+    [t.spaceBeforePercent]:     locale.spaceBefore.percent,
     ...(symbolName && {
-      "${symbol}": base[symbolName],
-      "${space}":  locale.spaceAfter[symbolName],
+      [t.symbol]: base[symbolName],
+      [t.space]:  locale.spaceAfter[symbolName],
     }),
 
-    // Abbreviations
-    "${abbrSpace}": locale.spaceAfter.abbreviation,
-
-    // Non-breaking spaces
+    // Old string tokens (backward compatibility)
+    "${ldq}":                    locale.leftDoubleQuote,
+    "${rdq}":                    locale.rightDoubleQuote,
+    "${lsq}":                    locale.leftSingleQuote,
+    "${rsq}":                    locale.rightSingleQuote,
+    "${apos}":                   base.apostrophe,
+    "${directSpeechIntro}":      locale.directSpeechIntro,
+    "${spaceBeforeDash}":        locale.dashWords.spaceBefore,
+    "${dash}":                   locale.dashWords.dash,
+    "${spaceAfterDash}":         locale.dashWords.spaceAfter,
+    "${abbrSpace}":              locale.spaceAfter.abbreviation,
     "${ordinalDateFirstSpace}":  locale.ordinalDate.firstSpace,
     "${ordinalDateSecondSpace}": locale.ordinalDate.secondSpace,
     "${romanOrdinalIndicator}":  locale.romanOrdinalIndicator,
     "${spaceBeforePercent}":     locale.spaceBefore.percent,
+    ...(symbolName && {
+      "${symbol}": base[symbolName],
+      "${space}":  locale.spaceAfter[symbolName],
+    }),
   };
 
   const replaceTokens = (str) => {
     // First replace all tokens
-    const tokenReplaced = Object.entries(tokenMap).reduce(
-      (result, [token, value]) => result.replace(new RegExp(escapeRegex(token), "g"), value),
-      str
-    );
+    const tokenReplaced = Object.entries(tokenMap).reduce((result, [token, value]) => {
+      const charCode = token.charCodeAt(0);
+      if (charCode >= 0xe000 && charCode <= 0xe2ff) {
+        return result.split(token).join(value);
+      }
+      // tbd Remove this
+      // For string tokens, use regex
+      return result.replace(new RegExp(escapeRegex(token), "g"), value);
+    }, str);
     // Then handle escaped dots (this must happen after token replacement)
     return tokenReplaced.replace(/\\\./g, ".");
   };

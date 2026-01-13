@@ -18,7 +18,7 @@ import {
   fixSingleQuotesPrimesAndApostrophes,
 } from "../../src/modules/punctuation/single-quotes.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
-import { createTestSuite, transformTestSet } from "../test-utils.js";
+import { createTestSuite, transformTestSet, t } from "../test-utils.js";
 import { keepMarkdownCodeBlocksSet } from "./double-quotes.test.js";
 import { mark } from "../../src/markers.js";
 
@@ -253,25 +253,25 @@ const identifyUnpairedRightSingleQuoteModuleSet = {
 };
 
 const identifyUnpairedRightSingleQuoteUnitSet = {
-  "${ldq}word!'${rdq}": "${ldq}word!{{typopo__rsq--unpaired}}${rdq}",
-  "${ldq}word.'${rdq}": "${ldq}word.{{typopo__rsq--unpaired}}${rdq}",
-  "${ldq}word':${rdq}": "${ldq}word{{typopo__rsq--unpaired}}:${rdq}",
-  "${ldq}word',${rdq}": "${ldq}word{{typopo__rsq--unpaired}},${rdq}",
-  '"word\'"':           '"word{{typopo__rsq--unpaired}}"',
-  '"word‚"':            '"word{{typopo__rsq--unpaired}}"',
-  "word‘":              "word{{typopo__rsq--unpaired}}",
-  wordʼ:                "word{{typopo__rsq--unpaired}}",
-  "word‛":              "word{{typopo__rsq--unpaired}}",
-  "word´":              "word{{typopo__rsq--unpaired}}",
-  "word`":              "word{{typopo__rsq--unpaired}}",
-  "word′":              "word{{typopo__rsq--unpaired}}",
-  "word‹":              "word{{typopo__rsq--unpaired}}",
-  "word›":              "word{{typopo__rsq--unpaired}}",
-  "word.'":             "word.{{typopo__rsq--unpaired}}",
-  "word!'":             "word!{{typopo__rsq--unpaired}}",
-  "word':":             "word{{typopo__rsq--unpaired}}:",
-  "word',":             "word{{typopo__rsq--unpaired}},",
-  "word' ":             "word{{typopo__rsq--unpaired}} ",
+  [`${t.ldq}word!'${t.rdq}`]: `${t.ldq}word!${mark.rsqUnpaired}${t.rdq}`,
+  [`${t.ldq}word.'${t.rdq}`]: `${t.ldq}word.${mark.rsqUnpaired}${t.rdq}`,
+  [`${t.ldq}word':${t.rdq}`]: `${t.ldq}word${mark.rsqUnpaired}:${t.rdq}`,
+  [`${t.ldq}word',${t.rdq}`]: `${t.ldq}word${mark.rsqUnpaired},${t.rdq}`,
+  '"word\'"':                 `"word${mark.rsqUnpaired}"`,
+  '"word‚"':                  `"word${mark.rsqUnpaired}"`,
+  "word‘":                    `word${mark.rsqUnpaired}`,
+  "wordʼ":                    `word${mark.rsqUnpaired}`,
+  "word‛":                    `word${mark.rsqUnpaired}`,
+  "word´":                    `word${mark.rsqUnpaired}`,
+  "word`":                    `word${mark.rsqUnpaired}`,
+  "word′":                    `word${mark.rsqUnpaired}`,
+  "word‹":                    `word${mark.rsqUnpaired}`,
+  "word›":                    `word${mark.rsqUnpaired}`,
+  "word.'":                   `word.${mark.rsqUnpaired}`,
+  "word!'":                   `word!${mark.rsqUnpaired}`,
+  "word':":                   `word${mark.rsqUnpaired}:`,
+  "word',":                   `word${mark.rsqUnpaired},`,
+  "word' ":                   `word${mark.rsqUnpaired} `,
 };
 
 supportedLocales.forEach((localeName) => {

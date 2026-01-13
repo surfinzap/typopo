@@ -2,7 +2,7 @@
  * Unicode Private Use Area markers for temporal replacements
  *
  * Unicode Allocation:
- * U+E000 - U+E0FF: Test tokens (tests/test-constants.js)
+ * U+E000 - U+E0FF: Test tokens (tests/test-utils.js)
  * U+E100 - U+E1FF: Processing marks (this file)
  *
  * These markers are used internally during text processing to temporarily
