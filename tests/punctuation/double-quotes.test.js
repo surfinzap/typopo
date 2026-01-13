@@ -18,6 +18,7 @@ import {
 } from "../../src/modules/punctuation/double-quotes.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { createTestSuite, transformTestSet } from "../test-utils.js";
+import { m } from "../../src/markers.js";
 
 const doubleQuotesFalsePositives = {
   "č., s., fol., str.,":                 "č., s., fol., str.,",
@@ -321,13 +322,13 @@ const identifyDoubleQuotePairsModuleSet = {
 
   // primes × double quotes
   '"Conference 2020" and "something in quotes."': "${ldq}Conference 2020${rdq} and ${ldq}something in quotes.${rdq}",
-  '"Gone in 60{{typopo__double-prime}}"':         "${ldq}Gone in 60″${rdq}",
+  [`"Gone in 60${m.doublePrime}"`]:               "${ldq}Gone in 60″${rdq}",
 
   '"2020"': "${ldq}2020${rdq}",
   '"202"':  "${ldq}202${rdq}",
 
   // false positive
-  '"starting quotes, primes 90{{typopo__double-prime}}, ending quotes"':
+  [`"starting quotes, primes 90${m.doublePrime}, ending quotes"`]:
     "${ldq}starting quotes, primes 90″, ending quotes${rdq}",
 
   //jibberish inside quotes
@@ -434,9 +435,9 @@ supportedLocales.forEach((localeName) => {
 });
 
 const replaceDoublePrimeWDoubleQuoteUnitSet = {
-  "{{typopo__ldq--unpaired}}word{{typopo__double-prime}}": "{{typopo__ldq}}word{{typopo__rdq}}",
+  [`${m.ldqUnpaired}word${m.doublePrime}`]: `${m.ldq}word${m.rdq}`,
 
-  "{{typopo__double-prime}}word{{typopo__rdq--unpaired}}": "{{typopo__ldq}}word{{typopo__rdq}}",
+  [`${m.doublePrime}word${m.rdqUnpaired}`]: `${m.ldq}word${m.rdq}`,
 };
 
 const replaceDoublePrimeWDoubleQuoteModuleSet = {

@@ -1,6 +1,7 @@
 import { base } from "../../const.js";
 import { addNbspAfterPreposition } from "../whitespace/nbsp.js";
 import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../../utils/markdown.js";
+import { m } from "../../markers.js";
 
 //
 
@@ -82,7 +83,7 @@ export function removeExtraPunctuationAfterQuotes(string) {
   as commas, low-positioned quotes, guillemets are ommited
 
   @param {string} string: input text for identification
-  @returns {string} output with identified double primes as a temporary variable string, e.g. {{typopo__double-prime}}
+  @returns {string} output with identified double primes as a temporary variable string, e.g. ${m.doublePrime}
 */
 export function identifyDoublePrimes(string) {
   // [1]
@@ -116,7 +117,7 @@ export function identifyDoublePrimes(string) {
     ),
       `$1` +
       `$2` +
-      `{{typopo__double-prime}}`
+      `${m.doublePrime}`
   )
 
   return string;
@@ -143,12 +144,12 @@ export function identifyDoubleQuotePairs(string) {
     new RegExp(
       `(${base.doubleQuoteAdepts})` +
       `(\\d+)` +
-      `({{typopo__double-prime}})`,
+      `(${m.doublePrime})`,
       "g"
     ),
-      `{{typopo__ldq}}` +
+      `${m.ldq}` +
       `$2` +
-      `{{typopo__rdq}}`
+      `${m.rdq}`
   );
 
   // generic rule
@@ -160,9 +161,9 @@ export function identifyDoubleQuotePairs(string) {
       `(${base.doubleQuoteAdepts})`,
       "g"
     ),
-      `{{typopo__ldq}}` +
+      `${m.ldq}` +
       `$2` +
-      `{{typopo__rdq}}`
+      `${m.rdq}`
   );
 
   return string;
@@ -191,7 +192,7 @@ export function identifyUnpairedLeftDoubleQuote(string) {
        `([0-9\\p{L}])`,
        "gu"
     ),
-    "{{typopo__ldq--unpaired}}$2"
+    `${m.ldqUnpaired}$2`
   );
 }
 
@@ -218,7 +219,7 @@ export function identifyUnpairedRightDoubleQuote(string) {
        `(${base.doubleQuoteAdepts})`,
        "gu"
     ),
-    "$1{{typopo__rdq--unpaired}}"
+    `$1${m.rdqUnpaired}`
   );
 }
 
@@ -270,25 +271,25 @@ export function replaceDoublePrimeWDoubleQuote(string) {
   return string
     .replace(
       new RegExp(
-        `({{typopo__ldq--unpaired}})` +
+        `(${m.ldqUnpaired})` +
         `(.*?)` +
-        `({{typopo__double-prime}})`,
+        `(${m.doublePrime})`,
         "g"
       ),
-      `{{typopo__ldq}}` +
+      `${m.ldq}` +
       `$2` +
-      `{{typopo__rdq}}`
+      `${m.rdq}`
     )
     .replace(
       new RegExp(
-        `({{typopo__double-prime}})` +
+        `(${m.doublePrime})` +
         `(.*?)` +
-        `({{typopo__rdq--unpaired}})`,
+        `(${m.rdqUnpaired})`,
         "g"
       ),
-      `{{typopo__ldq}}` +
+      `${m.ldq}` +
       `$2` +
-      `{{typopo__rdq}}`
+      `${m.rdq}`
     );
 }
 
@@ -386,7 +387,7 @@ export function fixQuotedSentencePunctuation(string, locale) {
   Replace all identified punctuation with appropriate punctuation in given language
 
   Context
-  In double-quotes module, we first identify double quote and double prime adepts, and replace them temporaririly with labels as “{{typopo__double-prime}}”. 
+  In double-quotes module, we first identify double quote and double prime adepts, and replace them temporaririly with labels as “${m.doublePrime}”. 
   This is the function in the sequence to swap temporary labels to desired quotes.
 
 
@@ -395,10 +396,16 @@ export function fixQuotedSentencePunctuation(string, locale) {
   @returns {string} an output with locale-specific double quotes and double primes
 */
 export function placeLocaleDoubleQuotes(string, locale) {
-  return string
-    .replace(/{{typopo__double-prime}}/g, base.doublePrime)
-    .replace(/({{typopo__ldq}}|{{typopo__ldq--unpaired}})/g, locale.leftDoubleQuote)
-    .replace(/({{typopo__rdq}}|{{typopo__rdq--unpaired}})/g, locale.rightDoubleQuote);
+  const replacements = [
+    { pattern: m.doublePrime, replacement: base.doublePrime },
+    { pattern: `[${m.ldq}${m.ldqUnpaired}]`, replacement: locale.leftDoubleQuote },
+    { pattern: `[${m.rdq}${m.rdqUnpaired}]`, replacement: locale.rightDoubleQuote },
+  ];
+
+  return replacements.reduce(
+    (text, { pattern, replacement }) => text.replace(new RegExp(pattern, "gu"), replacement),
+    string
+  );
 }
 
 //
