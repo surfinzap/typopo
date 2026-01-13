@@ -1,5 +1,6 @@
 import { replaceWithOverlapHandling } from "../../utils/regex-overlap.js";
 import { base } from "../../const.js";
+import { m } from "../../markers.js";
 
 //
 
@@ -207,14 +208,14 @@ export function fixDashBetweenCardinalNumbers(string) {
       `(\\d)`,
       "gu"
     ),
-    `$1{{typopo__endash}}$3`
+    `$1${m.enDash}$3`
   );
 
   /* [2] Replace enDash adepts with actual enDashes */
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `{{typopo__endash}}`, 
+      `${m.enDash}`, 
       "g"
     ),
     base.enDash
