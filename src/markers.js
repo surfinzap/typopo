@@ -27,6 +27,5 @@ export const m = {
   enDash: "\uE10B",
 
   /* Markdown markers */
-  mdTick:            "\uE10C",
-  mdSyntaxHighlight: "\uE10D",
+  tick: "\uE10C",
 };

@@ -2,7 +2,7 @@
   Utility functions to identify and handle exceptions for Markdown files.
 */
 
-const TICK = "{{typopo__markdown_tick}}";
+import { m } from "../markers";
 
 /** 
   Identify markdown code ticks that wrap code blocks, so they’re not fixed as apostrophes
@@ -27,9 +27,9 @@ export function identifyMarkdownCodeTicks(string, configuration) {
   if (!configuration.keepMarkdownCodeBlocks) return string;
 
   return string
-    .replace(/(\s*)(```)/g, `$1${TICK}${TICK}${TICK}`)
-    .replace(/(``)(.*?)(``)/g, `${TICK}${TICK}$2${TICK}${TICK}`)
-    .replace(/(`)(.*?)(`)/g, `${TICK}$2${TICK}`);
+    .replace(/(\s*)(```)/g, `$1${m.tick}${m.tick}${m.tick}`)
+    .replace(/(``)(.*?)(``)/g, `${m.tick}${m.tick}$2${m.tick}${m.tick}`)
+    .replace(/(`)(.*?)(`)/g, `${m.tick}$2${m.tick}`);
 }
 
 //
@@ -49,7 +49,7 @@ export function placeMarkdownCodeTicks(string, configuration) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `${TICK}`,
+      `${m.tick}`,
       "g"
     ),
       `\``

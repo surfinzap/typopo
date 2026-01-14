@@ -550,7 +550,6 @@ export function placeLocaleSingleQuotes(string, locale) {
     },
     { pattern: m.lsq, replacement: locale.leftSingleQuote },
     { pattern: m.rsq, replacement: locale.rightSingleQuote },
-    { pattern: m.mdSyntaxHighlight, replacement: "```" },
   ];
 
   return replacements.reduce(
