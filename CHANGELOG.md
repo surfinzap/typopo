@@ -2,6 +2,17 @@
 
 
 
+## 2.9.1 // 2026-
+
+### 💪 Improvements
+- Replace hardcoded letter patterns with [Unicode-aware regex matching](https://javascript.info/regexp-unicode)
+
+### 🔨 Maintenance
+- Utilize “Private Use Area” code points for temporary and test replacements
+- Update dev dependencies to their latest versions 
+
+
+
 ## 2.9.0 // 2026-01-11
 
 ### 💪 Improvements
