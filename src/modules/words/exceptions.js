@@ -1,4 +1,5 @@
 import { base } from "../../const.js";
+import { getExceptionMarker } from "../../markers.js";
 
 /**
  * Identifies and excludes following patterns
@@ -46,15 +47,15 @@ function collectExceptions(text, pattern, exceptions) {
 //
 
 /**
- * Replaces the identified exceptions in the text with placeholders.
+ * Replaces the identified exceptions in the text with PUA marker placeholders.
  *
  * @param {string} text - The input text where exceptions are replaced with placeholders.
  * @param {Array} exceptions - The array of collected exceptions.
- * @returns {string} - The text with placeholders in place of exceptions.
+ * @returns {string} - The text with PUA marker placeholders in place of exceptions.
  */
 function replaceExceptionsWithPlaceholders(text, exceptions) {
   return exceptions.reduce((updatedText, exception, index) => {
-    const placeholder = `{{typopo__exception-${index}}}`;
+    const placeholder = getExceptionMarker(index);
     return updatedText.replace(exception, placeholder);
   }, text);
 }
@@ -62,16 +63,16 @@ function replaceExceptionsWithPlaceholders(text, exceptions) {
 //
 
 /**
- * Restores the original exceptions in the text by replacing the placeholders with the actual exceptions.
+ * Restores the original exceptions in the text by replacing the PUA marker placeholders with the actual exceptions.
  *
- * @param {string} text - The input text with placeholders.
+ * @param {string} text - The input text with PUA marker placeholders.
  * @param {Array} exceptions - The array of original exceptions.
  * @returns {string} - The text with the original exceptions restored.
  */
 export function placeExceptions(text, exceptions) {
   return exceptions.reduce((updatedText, exception, index) => {
-    // prettier-ignore
-    const placeholderPattern = new RegExp(`{{typopo__exception-${index}}}`, "g");
+    const marker = getExceptionMarker(index);
+    const placeholderPattern = new RegExp(marker, "g");
     return updatedText.replace(placeholderPattern, exception);
   }, text);
 }
