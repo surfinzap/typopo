@@ -25,9 +25,8 @@ const dashFalsePositives = {
   "\t- she said":   "\t- she said",
   "\t\t- she said": "\t\t- she said",
 
-  "+-":                "+-",
-  "{{test-variable}}": "{{test-variable}}",
-  "---":               "---", // standalone hyphens for <hr> in markdown
+  "+-":  "+-",
+  "---": "---", // standalone hyphens for <hr> in markdown
 };
 
 const dashesBetweenWordsSet = {

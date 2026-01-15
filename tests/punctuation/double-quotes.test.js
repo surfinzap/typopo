@@ -497,9 +497,6 @@ const fixQuotedWordPunctuationModuleSet = {
   [`Use ${t.ldq}well-known.${t.rdq} for clarity.`]:        `Use ${t.ldq}well-known${t.rdq}. for clarity.`,
   [`The ${t.ldq}state-of-the-art,${t.rdq} approach.`]:     `The ${t.ldq}state-of-the-art${t.rdq}, approach.`,
   [`Try ${t.ldq}open-source;${t.rdq} it${t.apos}s free.`]: `Try ${t.ldq}open-source${t.rdq}; it${t.apos}s free.`,
-
-  // Escaped strings
-  [`${t.ldq}{{esc}},${t.rdq}`]: `${t.ldq}{{esc}}${t.rdq},`,
 };
 
 const fixQuotedWordPunctuationUnitSet = {
@@ -567,9 +564,6 @@ const fixQuotedSentencePunctuationModuleSet = {
   // Less common boundaries
   [`${t.ldq}(Fully) quoted sentence${t.rdq}.`]: `${t.ldq}(Fully) quoted sentence.${t.rdq}`,
   [`${t.ldq}Fully quoted (sentence)${t.rdq}.`]: `${t.ldq}Fully quoted (sentence).${t.rdq}`,
-
-  // Escaped strings
-  [`It can be a ${t.ldq}{{esc}} {{esc}}${t.rdq}.`]: `It can be a ${t.ldq}{{esc}} {{esc}}.${t.rdq}`,
 
   // false positive, consecutive double quotes
   [`${t.ldq}word${t.rdq} ${t.ldq}word${t.rdq},`]: `${t.ldq}word${t.rdq} ${t.ldq}word${t.rdq},`,

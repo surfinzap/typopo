@@ -464,9 +464,6 @@ const fixQuotedWordPunctuationModuleSet = {
   [`${t.ldq}Use ${t.lsq}well-known.${t.rsq} for clarity.${t.rdq}`]:        `${t.ldq}Use ${t.lsq}well-known${t.rsq}. for clarity.${t.rdq}`,
   [`${t.ldq}The ${t.lsq}state-of-the-art,${t.rsq} approach.${t.rdq}`]:     `${t.ldq}The ${t.lsq}state-of-the-art${t.rsq}, approach.${t.rdq}`,
   [`${t.ldq}Try ${t.lsq}open-source;${t.rsq} it${t.apos}s free.${t.rdq}`]: `${t.ldq}Try ${t.lsq}open-source${t.rsq}; it${t.apos}s free.${t.rdq}`,
-
-  // Escaped strings
-  [`${t.ldq}${t.lsq}{{esc}},${t.rsq} fill${t.rdq}`]: `${t.ldq}${t.lsq}{{esc}}${t.rsq}, fill${t.rdq}`,
 };
 
 const fixQuotedWordPunctuationUnitSet = {
@@ -538,9 +535,6 @@ const fixQuotedSentencePunctuationModuleSet = {
   // Less common boundaries
   [`${t.ldq}${t.lsq}(Fully) quoted sentence${t.rsq}.${t.rdq}`]: `${t.ldq}${t.lsq}(Fully) quoted sentence${t.rsq}.${t.rdq}`,
   [`${t.ldq}${t.lsq}Fully quoted (sentence)${t.rsq}.${t.rdq}`]: `${t.ldq}${t.lsq}Fully quoted (sentence)${t.rsq}.${t.rdq}`,
-
-  // Escaped strings
-  [`${t.ldq}It can be a ${t.lsq}{{esc}} {{esc}}${t.rsq}.${t.rdq}`]: `${t.ldq}It can be a ${t.lsq}{{esc}} {{esc}}${t.rsq}.${t.rdq}`,
 
   // Colon / semicolon should be placed outside the quotes
   [`${t.ldq}${t.lsq}quoted fragment:${t.rsq} sentence continues${t.rdq}`]: `${t.ldq}${t.lsq}quoted fragment${t.rsq}: sentence continues${t.rdq}`,

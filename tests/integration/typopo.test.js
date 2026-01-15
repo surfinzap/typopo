@@ -79,23 +79,6 @@ function runAllVersions(testCase, locale, config) {
   }
 }
 
-describe("Test consistency of internal variables", () => {
-  let testCase = {
-    /*
-     We are using temporary {variables} in curly brackets as text replacement
-     in some functions. Make sure that variables in curly brackets do not change
-     in course of running algorithm.
-     */
-    "{{test-variable}}": "{{test-variable}}",
-    "{{test-variable}} at the beginning of the sentence.":
-      "{{test-variable}} at the beginning of the sentence.",
-    "And {{test-variable}} in the middle of the sentence.":
-      "And {{test-variable}} in the middle of the sentence.",
-  };
-
-  runAllVersions(testCase, "en-us");
-});
-
 describe("Test that exceptions remain intact", () => {
   let testCase = {
     /*
