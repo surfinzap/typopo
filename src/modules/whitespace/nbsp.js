@@ -324,7 +324,7 @@ export function fixSpaceBeforePercent(string, locale) {
 export function addNbspBeforeSingleLetter(string, locale) {
   // prettier-ignore
   let pattern =
-    `([^${base.sentencePunctuation}${base.ellipsis}${base.closingBrackets}${locale.rightDoubleQuote}${locale.rightSingleQuote}${base.apostrophe}${base.multiplicationSign}${base.emDash}${base.enDash}])` +
+    `([^${base.sentencePunctuation}${base.ellipsis}${base.closingBrackets}${locale.closingDoubleQuote}${locale.closingSingleQuote}${base.apostrophe}${base.multiplicationSign}${base.emDash}${base.enDash}])` +
     `([${base.spaces}])` +
     `([\\p{Lu}])` +
     `([${base.spaces}]|\\.$|$)`;

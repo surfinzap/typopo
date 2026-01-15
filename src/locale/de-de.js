@@ -2,10 +2,10 @@ import { base } from "../const.js";
 
 export const deDE = {
   quotes: {
-    leftDoubleQuote:  "„",
-    rightDoubleQuote: "“",
-    leftSingleQuote:  "‚",
-    rightSingleQuote: "‘",
+    openingDoubleQuote: "„",
+    closingDoubleQuote: "“",
+    openingSingleQuote: "‚",
+    closingSingleQuote: "‘",
   },
 
   /* 

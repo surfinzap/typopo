@@ -82,10 +82,10 @@ export function createTestSuite(
  */
 export const t = {
   // Quotes
-  ldq:  "\uE000",
-  rdq:  "\uE001",
-  lsq:  "\uE002",
-  rsq:  "\uE003",
+  odq:  "\uE000",
+  cdq:  "\uE001",
+  osq:  "\uE002",
+  csq:  "\uE003",
   apos: "\uE004",
 
   // Direct speech
@@ -128,10 +128,10 @@ export function transformTestSet(testSet, localeName, options = {}) {
 
   const tokenMap = {
     // Unicode test tokens (from test-constants.js) - U+E000 range
-    [t.ldq]:                    locale.leftDoubleQuote,
-    [t.rdq]:                    locale.rightDoubleQuote,
-    [t.lsq]:                    locale.leftSingleQuote,
-    [t.rsq]:                    locale.rightSingleQuote,
+    [t.odq]:                    locale.openingDoubleQuote,
+    [t.cdq]:                    locale.closingDoubleQuote,
+    [t.osq]:                    locale.openingSingleQuote,
+    [t.csq]:                    locale.closingSingleQuote,
     [t.apos]:                   base.apostrophe,
     [t.directSpeechIntro]:      locale.directSpeechIntro,
     [t.spaceBeforeDash]:        locale.dashWords.spaceBefore,

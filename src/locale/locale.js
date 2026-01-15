@@ -27,11 +27,11 @@ export default class Locale {
 
     this.ID = localeID;
 
-    this.leftSingleQuote = SUPPORTED_LOCALES[localeID].quotes.leftSingleQuote;
-    this.rightSingleQuote = SUPPORTED_LOCALES[localeID].quotes.rightSingleQuote;
-    this.leftDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.leftDoubleQuote;
-    this.rightDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.rightDoubleQuote;
-    this.terminalQuotes = this.rightSingleQuote + this.rightDoubleQuote;
+    this.openingSingleQuote = SUPPORTED_LOCALES[localeID].quotes.openingSingleQuote;
+    this.closingSingleQuote = SUPPORTED_LOCALES[localeID].quotes.closingSingleQuote;
+    this.openingDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.openingDoubleQuote;
+    this.closingDoubleQuote = SUPPORTED_LOCALES[localeID].quotes.closingDoubleQuote;
+    this.terminalQuotes = this.closingSingleQuote + this.closingDoubleQuote;
     this.directSpeechIntro = SUPPORTED_LOCALES[localeID].directSpeechIntro;
 
     this.dashWords = SUPPORTED_LOCALES[localeID].dashWords;

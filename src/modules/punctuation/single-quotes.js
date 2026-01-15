@@ -194,7 +194,7 @@ export function identifySinglePrimes(string) {
   @param {string} string: input text for identification
   @returns {string} output with identified unpaired left single quote
 */
-export function identifyUnpairedLeftSingleQuote(string) {
+export function identifyUnpairedOpeningSingleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -203,7 +203,7 @@ export function identifyUnpairedLeftSingleQuote(string) {
         `([\\p{L}${base.ellipsis}${base.openingBrackets}\\{])`,
       "gu"
     ),
-      `$1${m.lsqUnpaired}$3`
+      `$1${m.osqUnpaired}$3`
   );
 }
 
@@ -221,7 +221,7 @@ export function identifyUnpairedLeftSingleQuote(string) {
   @param {string} string: input text for identification
   @returns {string} output with identified unpaired right single quote
 */
-export function identifyUnpairedRightSingleQuote(string) {
+export function identifyUnpairedClosingSingleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -231,7 +231,7 @@ export function identifyUnpairedRightSingleQuote(string) {
       `([ ${base.sentencePunctuation}])?`,
       "gu"
     ),
-      `$1$2${m.rsqUnpaired}$4`
+      `$1$2${m.csqUnpaired}$4`
   );
 }
 
@@ -261,8 +261,8 @@ export function identifySingleQuotesWithinDoubleQuotes(string) {
       "gu"
     ),
     function ($0, $1, $2, $3) {
-      $2 = identifyUnpairedLeftSingleQuote($2);
-      $2 = identifyUnpairedRightSingleQuote($2);
+      $2 = identifyUnpairedOpeningSingleQuote($2);
+      $2 = identifyUnpairedClosingSingleQuote($2);
       $2 = identifySingleQuotePairs($2);
 
       return $1 + $2 + $3;
@@ -291,12 +291,12 @@ export function identifySingleQuotePairs(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${m.lsqUnpaired})` +
+      `(${m.osqUnpaired})` +
       `(.*)` +
-      `(${m.rsqUnpaired})`,
+      `(${m.csqUnpaired})`,
       "gu"
     ),
-      `${m.lsq}$2${m.rsq}`
+      `${m.osq}$2${m.csq}`
   );
 }
 
@@ -322,7 +322,7 @@ export function identifySingleQuotePairAroundSingleWord(string) {
         `(\\B)`,
       "gu"
     ),
-      `$1${m.lsq}$3${m.rsq}$5`
+      `$1${m.osq}$3${m.csq}$5`
   );
 }
 
@@ -372,12 +372,12 @@ export function replaceSinglePrimeWSingleQuote(string) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `(${m.lsqUnpaired})` +
+      `(${m.osqUnpaired})` +
       `(.*?)` +
       `(${m.singlePrime})`,
       "g"
     ),
-      `${m.lsq}$2${m.rsq}`
+      `${m.osq}$2${m.csq}`
   );
 
   // prettier-ignore
@@ -385,10 +385,10 @@ export function replaceSinglePrimeWSingleQuote(string) {
     new RegExp(
       `(${m.singlePrime})` +
       `(.*?)` +
-      `(${m.rsqUnpaired})`,
+      `(${m.csqUnpaired})`,
       "g"
     ),
-      `${m.lsq}$2${m.rsq}`
+      `${m.osq}$2${m.csq}`
   );
 
   return string;
@@ -420,11 +420,11 @@ export function fixQuotedWordPunctuation(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${locale.leftSingleQuote})` +
-      `([^${base.spaces}${locale.rightSingleQuote}]+?)` +
+      `(${locale.openingSingleQuote})` +
+      `([^${base.spaces}${locale.closingSingleQuote}]+?)` +
       `([^${base.romanNumerals}${base.sentencePunctuation}])` +
       `([${base.sentencePunctuation}]{1,})` +
-      `(${locale.rightSingleQuote})`,
+      `(${locale.closingSingleQuote})`,
       "g"
     ),
     (match, leftQuote, content, notRoman, punct, rightQuote) => {
@@ -454,13 +454,13 @@ export function fixQuotedSentencePunctuation(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `(${locale.leftSingleQuote})` +
+      `(${locale.openingSingleQuote})` +
       `(.+)` +
-      `([${base.spaces}])(?!${locale.leftSingleQuote})` +
+      `([${base.spaces}])(?!${locale.openingSingleQuote})` +
       `([^${base.romanNumerals}]{2,})` +
-      `(${locale.rightSingleQuote})` +
+      `(${locale.closingSingleQuote})` +
       `([${base.sentencePunctuation}${base.ellipsis}])` +
-      `([^${locale.rightDoubleQuote}])`,
+      `([^${locale.closingDoubleQuote}])`,
       "g"
     ),
     `$1` +
@@ -477,7 +477,7 @@ export function fixQuotedSentencePunctuation(string, locale) {
   string = string.replace(
     new RegExp(
       `([:;])` +
-      `(${locale.rightSingleQuote})`,
+      `(${locale.closingSingleQuote})`,
       "g"
     ),
     `$2$1`
@@ -488,8 +488,8 @@ export function fixQuotedSentencePunctuation(string, locale) {
   string = string.replace(
     new RegExp(
       `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `(${locale.rightSingleQuote})` +
-      `(${locale.rightDoubleQuote})`,
+      `(${locale.closingSingleQuote})` +
+      `(${locale.closingDoubleQuote})`,
       "g"
     ),
     `$2$1$3`
@@ -545,11 +545,11 @@ export function placeLocaleSingleQuotes(string, locale) {
   const replacements = [
     { pattern: m.singlePrime, replacement: base.singlePrime },
     {
-      pattern:     `[${m.apos}${m.lsqUnpaired}${m.rsqUnpaired}]`,
+      pattern:     `[${m.apos}${m.osqUnpaired}${m.csqUnpaired}]`,
       replacement: base.apostrophe,
     },
-    { pattern: m.lsq, replacement: locale.leftSingleQuote },
-    { pattern: m.rsq, replacement: locale.rightSingleQuote },
+    { pattern: m.osq, replacement: locale.openingSingleQuote },
+    { pattern: m.csq, replacement: locale.closingSingleQuote },
   ];
 
   return replacements.reduce(

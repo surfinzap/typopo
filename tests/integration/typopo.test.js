@@ -137,7 +137,7 @@ const moduleCombinations = {
   "Because of this, it’s common": "Because of this, it’s common",
 
   // Single quotes + double quotes
-  [`${t.ldq}Sentence ${t.lsq}quoted fragment.${t.rsq}${t.rdq}`]: `${t.ldq}Sentence ${t.lsq}quoted fragment${t.rsq}.${t.rdq}`,
+  [`${t.odq}Sentence ${t.osq}quoted fragment.${t.csq}${t.cdq}`]: `${t.odq}Sentence ${t.osq}quoted fragment${t.csq}.${t.cdq}`,
 };
 
 const falsePositives = {

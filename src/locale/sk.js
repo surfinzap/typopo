@@ -2,10 +2,10 @@ import { base } from "../const.js";
 
 export const sk = {
   quotes: {
-    leftDoubleQuote:  "„",
-    rightDoubleQuote: "“",
-    leftSingleQuote:  "‚",
-    rightSingleQuote: "‘",
+    openingDoubleQuote: "„",
+    closingDoubleQuote: "“",
+    openingSingleQuote: "‚",
+    closingSingleQuote: "‘",
   },
 
   /* 

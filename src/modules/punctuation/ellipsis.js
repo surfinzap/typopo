@@ -278,7 +278,7 @@ export function fixAposiopesisEndingParagraph(string, locale) {
     new RegExp(
       `([\\p{Ll}])` +
       `([${base.spaces}])+` +
-      `([${base.ellipsis}][${locale.rightDoubleQuote}${locale.rightSingleQuote}]?$)`,
+      `([${base.ellipsis}][${locale.closingDoubleQuote}${locale.closingSingleQuote}]?$)`,
       "gmu"
     ),
     "$1$3"

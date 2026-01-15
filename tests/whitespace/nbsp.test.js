@@ -328,8 +328,8 @@ const nbspBeforeSingleLetterSet = {
 
 const nbspBeforeSingleLetterUnitSet = {
   "famous company — A Inc.":                "famous company — A Inc.",
-  [`quoted part${t.rdq} A capital letter`]: `quoted part${t.rdq} A capital letter`,
-  [`quoted part${t.rsq} A capital letter`]: `quoted part${t.rsq} A capital letter`,
+  [`quoted part${t.cdq} A capital letter`]: `quoted part${t.cdq} A capital letter`,
+  [`quoted part${t.csq} A capital letter`]: `quoted part${t.csq} A capital letter`,
   [`apostrophe${t.apos} A capital letter`]: `apostrophe${t.apos} A capital letter`,
 };
 

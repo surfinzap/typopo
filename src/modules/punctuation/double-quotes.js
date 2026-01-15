@@ -147,9 +147,9 @@ export function identifyDoubleQuotePairs(string) {
       `(${m.doublePrime})`,
       "g"
     ),
-      `${m.ldq}` +
+      `${m.odq}` +
       `$2` +
-      `${m.rdq}`
+      `${m.cdq}`
   );
 
   // generic rule
@@ -161,9 +161,9 @@ export function identifyDoubleQuotePairs(string) {
       `(${base.doubleQuoteAdepts})`,
       "g"
     ),
-      `${m.ldq}` +
+      `${m.odq}` +
       `$2` +
-      `${m.rdq}`
+      `${m.cdq}`
   );
 
   return string;
@@ -184,7 +184,7 @@ export function identifyDoubleQuotePairs(string) {
   @param {string} string: input text for identification
   @returns {string} output with identified unpaired left double quotes
 */
-export function identifyUnpairedLeftDoubleQuote(string) {
+export function identifyUnpairedOpeningDoubleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -192,7 +192,7 @@ export function identifyUnpairedLeftDoubleQuote(string) {
        `([0-9\\p{L}])`,
        "gu"
     ),
-    `${m.ldqUnpaired}$2`
+    `${m.odqUnpaired}$2`
   );
 }
 
@@ -211,7 +211,7 @@ export function identifyUnpairedLeftDoubleQuote(string) {
   @param {string} string: input text for identification
   @returns {string} output with identified unpaired right double quotes
 */
-export function identifyUnpairedRightDoubleQuote(string) {
+export function identifyUnpairedClosingDoubleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
@@ -219,7 +219,7 @@ export function identifyUnpairedRightDoubleQuote(string) {
        `(${base.doubleQuoteAdepts})`,
        "gu"
     ),
-    `$1${m.rdqUnpaired}`
+    `$1${m.cdqUnpaired}`
   );
 }
 
@@ -271,25 +271,25 @@ export function replaceDoublePrimeWDoubleQuote(string) {
   return string
     .replace(
       new RegExp(
-        `(${m.ldqUnpaired})` +
+        `(${m.odqUnpaired})` +
         `(.*?)` +
         `(${m.doublePrime})`,
         "g"
       ),
-      `${m.ldq}` +
+      `${m.odq}` +
       `$2` +
-      `${m.rdq}`
+      `${m.cdq}`
     )
     .replace(
       new RegExp(
         `(${m.doublePrime})` +
         `(.*?)` +
-        `(${m.rdqUnpaired})`,
+        `(${m.cdqUnpaired})`,
         "g"
       ),
-      `${m.ldq}` +
+      `${m.odq}` +
       `$2` +
-      `${m.rdq}`
+      `${m.cdq}`
     );
 }
 
@@ -319,11 +319,11 @@ export function fixQuotedWordPunctuation(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(${locale.leftDoubleQuote})` +                          
-      `([^${base.spaces}${locale.rightDoubleQuote}]+?)` +      
+      `(${locale.openingDoubleQuote})` +                          
+      `([^${base.spaces}${locale.closingDoubleQuote}]+?)` +      
       `([^${base.romanNumerals}${base.sentencePunctuation}])` +                  
       `([${base.sentencePunctuation}]{1,})` +                                   
-      `(${locale.rightDoubleQuote})`,   
+      `(${locale.closingDoubleQuote})`,   
       "g"
     ),
     (match, leftQuote, content, notRoman, punct, rightQuote) => {
@@ -353,11 +353,11 @@ export function fixQuotedSentencePunctuation(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `(${locale.leftDoubleQuote})` + 
+      `(${locale.openingDoubleQuote})` + 
       `(.+)` + 
-      `([${base.spaces}])(?!${locale.leftDoubleQuote})` + 
+      `([${base.spaces}])(?!${locale.openingDoubleQuote})` + 
       `([^${base.romanNumerals}]{2,})` + 
-      `(${locale.rightDoubleQuote})` + 
+      `(${locale.closingDoubleQuote})` + 
       `([${base.sentencePunctuation}${base.ellipsis}])`,
       "g"
     ),
@@ -374,7 +374,7 @@ export function fixQuotedSentencePunctuation(string, locale) {
   string = string.replace(
     new RegExp(
       `([:;])` +
-      `(${locale.rightDoubleQuote})`,
+      `(${locale.closingDoubleQuote})`,
       "g"
     ),
     `$2$1` 
@@ -398,8 +398,8 @@ export function fixQuotedSentencePunctuation(string, locale) {
 export function placeLocaleDoubleQuotes(string, locale) {
   const replacements = [
     { pattern: m.doublePrime, replacement: base.doublePrime },
-    { pattern: `[${m.ldq}${m.ldqUnpaired}]`, replacement: locale.leftDoubleQuote },
-    { pattern: `[${m.rdq}${m.rdqUnpaired}]`, replacement: locale.rightDoubleQuote },
+    { pattern: `[${m.odq}${m.odqUnpaired}]`, replacement: locale.openingDoubleQuote },
+    { pattern: `[${m.cdq}${m.cdqUnpaired}]`, replacement: locale.closingDoubleQuote },
   ];
 
   return replacements.reduce(
@@ -432,7 +432,7 @@ export function removeExtraSpacesAroundQuotes(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `(${locale.leftDoubleQuote})` +
+      `(${locale.openingDoubleQuote})` +
       `([${base.spaces}])`,
     "g"),
     `$1`
@@ -442,7 +442,7 @@ export function removeExtraSpacesAroundQuotes(string, locale) {
   string = string.replace(
     new RegExp(
       `([${base.spaces}])` +
-      `(${locale.rightDoubleQuote})`,
+      `(${locale.closingDoubleQuote})`,
     "g"),
     `$2`
   );
@@ -472,12 +472,12 @@ export function removeExtraSpacesAroundQuotes(string, locale) {
   @param {string} locale: locale option
   @returns {string} output with added space before left double quote
 */
-export function addSpaceBeforeLeftDoubleQuote(string, locale) {
+export function addSpaceBeforeopeningDoubleQuote(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
       `([${base.sentencePunctuation}\\p{L}])` +
-      `([${locale.leftDoubleQuote}])`,
+      `([${locale.openingDoubleQuote}])`,
     "gu"),
     `$1 $2`
   );
@@ -500,11 +500,11 @@ export function addSpaceBeforeLeftDoubleQuote(string, locale) {
   @param {string} locale: locale option
   @returns {string} output with added space after a right double quote
 */
-export function addSpaceAfterRightDoubleQuote(string, locale) {
+export function addSpaceAfterclosingDoubleQuote(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${locale.rightDoubleQuote}])` +
+      `([${locale.closingDoubleQuote}])` +
       `([\\p{L}])`,
     "gu"),
     `$1 $2`
@@ -542,7 +542,7 @@ export function fixDirectSpeechIntro(string, locale) {
       `[${base.spaces}]*` +
       `[${dashes}]` +
       `[${base.spaces}]*` +
-      `([${locale.leftDoubleQuote}].+?[${locale.rightDoubleQuote}])`,
+      `([${locale.openingDoubleQuote}].+?[${locale.closingDoubleQuote}])`,
       "gu"
     ),
     `$1${locale.directSpeechIntro} $2`
@@ -555,7 +555,7 @@ export function fixDirectSpeechIntro(string, locale) {
       `([\\p{L}])` +
       `[${locale.directSpeechIntroAdepts}]` +
       `[${base.spaces}]*` +
-      `([${locale.leftDoubleQuote}].+?[${locale.rightDoubleQuote}])`,
+      `([${locale.openingDoubleQuote}].+?[${locale.closingDoubleQuote}])`,
       "gu"
     ),
     `$1${locale.directSpeechIntro} $2`
@@ -565,7 +565,7 @@ export function fixDirectSpeechIntro(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([${locale.leftDoubleQuote}].+?[${locale.rightDoubleQuote}])` +
+      `([${locale.openingDoubleQuote}].+?[${locale.closingDoubleQuote}])` +
       `[${base.spaces}]*` +
       `[${dashes}]` +
       `[${base.spaces}]*` +
@@ -583,7 +583,7 @@ export function fixDirectSpeechIntro(string, locale) {
       `[${base.spaces}]*` +
       `[${dashes}]` +
       `[${base.spaces}]*` +
-      `([${locale.leftDoubleQuote}].+?[${locale.rightDoubleQuote}])`,
+      `([${locale.openingDoubleQuote}].+?[${locale.closingDoubleQuote}])`,
       "g"
     ),
     `$1`
@@ -598,7 +598,7 @@ export function fixDirectSpeechIntro(string, locale) {
       `[${base.spaces}]+` +
       `[${dashes}]` +
       `[${base.spaces}]*` +
-      `([${locale.leftDoubleQuote}].+?[${locale.rightDoubleQuote}])`,
+      `([${locale.openingDoubleQuote}].+?[${locale.closingDoubleQuote}])`,
       "g"
     ),
     `$1 $2`
@@ -647,8 +647,8 @@ export function fixDoubleQuotesAndPrimes(string, locale, configuration) {
   string = identifyDoubleQuotePairs(string);
 
   /* [4] Identify unpaired double quotes */
-  string = identifyUnpairedLeftDoubleQuote(string);
-  string = identifyUnpairedRightDoubleQuote(string);
+  string = identifyUnpairedOpeningDoubleQuote(string);
+  string = identifyUnpairedClosingDoubleQuote(string);
   string = removeUnidentifiedDoubleQuote(string);
 
   /* [5] Replace a double qoute & a double prime with a double quote pair */
@@ -660,8 +660,8 @@ export function fixDoubleQuotesAndPrimes(string, locale, configuration) {
 
   /* [7] Consolidate spaces around double quotes and primes */
   string = removeExtraSpacesAroundQuotes(string, locale);
-  string = addSpaceBeforeLeftDoubleQuote(string, locale);
-  string = addSpaceAfterRightDoubleQuote(string, locale);
+  string = addSpaceBeforeopeningDoubleQuote(string, locale);
+  string = addSpaceAfterclosingDoubleQuote(string, locale);
 
   /* [8] Fix direct speech introduction */
   string = fixDirectSpeechIntro(string, locale);
