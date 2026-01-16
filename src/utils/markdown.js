@@ -2,7 +2,7 @@
   Utility functions to identify and handle exceptions for Markdown files.
 */
 
-import { m } from "../markers";
+import { m } from "../markers.js";
 
 /** 
   Identify markdown code ticks that wrap code blocks, so they’re not fixed as apostrophes
