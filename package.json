@@ -10,7 +10,7 @@
 	},
 	"scripts": {
 		"build": "vite build",
-		"test": "vitest run",
+		"test": "vitest run  --exclude tests/idempotency.test.js",
 		"test:dev": "cross-env SOURCE_ONLY=true vitest",
 		"test:module": "vitest --exclude tests/integration/typopo.test.js",
 		"test:idempotency": "vitest run tests/idempotency.test.js",
