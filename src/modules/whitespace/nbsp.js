@@ -8,10 +8,10 @@ export function removeNbspBetweenMultiCharWords(string) {
   return replaceWithOverlapHandling(
     string,
     new RegExp(
-      `([${base.lowercaseChars}${base.uppercaseChars}]{2,})` +
+      `([\\p{L}]{2,})` +
       `([${base.nbsp}${base.narrowNbsp}])` +
-      `([${base.lowercaseChars}${base.uppercaseChars}]{2,})`, 
-      "g"
+      `([\\p{L}]{2,})`,
+      "gu"
     ),
     `$1 $3`
   );
@@ -46,10 +46,10 @@ export function addNbspAfterPreposition(string, locale) {
   string = replaceWithOverlapHandling(
     string,
     new RegExp(
-      `(^|[${base.space}]|[^${base.allChars}\\d${base.apostrophe}${base.plus}${base.minus}${base.hyphen}])` +
-      `([${base.lowercaseChars}])` +
+      `(^|[${base.space}]|[^\\p{L}\\d${base.apostrophe}${base.plus}${base.minus}${base.hyphen}])` +
+      `([\\p{Ll}])` +
       `([${base.space}])`,
-      "g"
+      "gu"
     ),
     `$1$2${base.nbsp}`
   );
@@ -58,16 +58,16 @@ export function addNbspAfterPreposition(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `(^|[${base.sentencePunctuation}` + 
-          `${base.ellipsis}` + 
-          `${base.copyright}` + 
-          `${base.registeredTrademark}` + 
-          `${base.soundRecordingCopyright}]` + 
+      `(^|[${base.sentencePunctuation}` +
+          `${base.ellipsis}` +
+          `${base.copyright}` +
+          `${base.registeredTrademark}` +
+          `${base.soundRecordingCopyright}]` +
           `)` +
       `([${base.spaces}]?)` +
-      `([${base.uppercaseChars}])` +
+      `([\\p{Lu}])` +
       `([${base.spaces}])`,
-      "g"
+      "gu"
     ),
     `$1$2$3${base.nbsp}`
   );
@@ -117,8 +117,8 @@ export function addNbspAfterCardinalNumber(string) {
         `([^${base.nbsp}\\d]|^)` +
         `(\\d{1,2})` +
         `([${base.spaces}])` +
-        `([${base.allChars}])`, 
-      "g"
+        `([\\p{L}])`,
+      "gu"
     ),
       `$1` +
       `$2` +
@@ -147,8 +147,8 @@ export function addNbspAfterOrdinalNumber(string, locale) {
       `(\\d{1,2})` +
       `(${locale.ordinalIndicator})` +
       `([${base.spaces}]?)` +
-      `([${base.allChars}])`,
-      "g"
+      `([\\p{L}])`,
+      "gu"
     ),
     `$1$2$3${base.nbsp}$5`
   );
@@ -200,16 +200,16 @@ export function addNbspAfterRomanNumeral(string, locale) {
     // prettier-ignore
     return string.replace(
       new RegExp(
-        `(\\b[${base.uppercaseChars}][${base.allChars}]?${locale.romanOrdinalIndicator}[${base.spaces}]?)?` + 
+        `(\\b[\\p{Lu}][\\p{L}]?${locale.romanOrdinalIndicator}[${base.spaces}]?)?` +
         `(\\b)` + // Ch.⎵
         `([${base.romanNumerals}]+)` +
         `(${locale.romanOrdinalIndicator})` +
         `([${base.spaces}]?)` +
-        `([${base.allChars}\\d])`,
-        "g"
+        `([\\p{L}\\d])`,
+        "gu"
       ),
       function($0, $1, $2, $3, $4, $5, $6) {
-        // Only replace if first group doesn't match 
+        // Only replace if first group doesn't match
         // to avoid false positives like G. D. Lambert
         if (!$1) {
           return `${$2}${$3}${$4}${base.nbsp}${$6}`;
@@ -242,12 +242,12 @@ export function addNbspAfterRomanNumeral(string, locale) {
 export function fixNbspForNameWithRegnalNumber(string, locale) {
   // prettier-ignore
   let pattern =
-      `(\\b[${base.uppercaseChars}][${base.lowercaseChars}]+?)` +
+      `(\\b[\\p{Lu}][\\p{Ll}]+?)` +
       `([${base.spaces}])` +
       `([${base.romanNumerals}]+\\b)` +
       `(${locale.romanOrdinalIndicator})` +
       `([${base.nbsp}]?)`;
-  let re = new RegExp(pattern, "g");
+  let re = new RegExp(pattern, "gu");
 
   return string.replace(re, function ($0, $1, $2, $3, $4, $5) {
     if ($5 == "" && $3 == "I") {
@@ -286,7 +286,7 @@ export function fixSpaceBeforePercent(string, locale) {
       `(\\d)` +
       `([${base.spaces}])` +
       `([${base.percent}${base.permille}${base.permyriad}])`,
-      "g"
+      "gu"
     ),
     `$1${locale.spaceBefore.percent}$3`
   );
@@ -322,33 +322,33 @@ export function fixSpaceBeforePercent(string, locale) {
   @returns {string} — output with correctly added non-breaking space
 */
 export function addNbspBeforeSingleLetter(string, locale) {
-  let uppercaseChars = base.uppercaseChars;
-
-  if (locale.ID == "en-us") {
-    // remove “I” from the list to avoid placing nbsp before “something I do”
-    uppercaseChars = uppercaseChars.replace(/A-Z/g, "A-HJ-Z");
-  }
-
   // prettier-ignore
-  let pattern = 
-    `([^${base.sentencePunctuation}${base.ellipsis}${base.closingBrackets}${locale.rightDoubleQuote}${locale.rightSingleQuote}${base.apostrophe}${base.multiplicationSign}${base.emDash}${base.enDash}])` +
+  let pattern =
+    `([^${base.sentencePunctuation}${base.ellipsis}${base.closingBrackets}${locale.closingDoubleQuote}${locale.closingSingleQuote}${base.apostrophe}${base.multiplicationSign}${base.emDash}${base.enDash}])` +
     `([${base.spaces}])` +
-    `([${uppercaseChars}])` +
-    `(([${base.spaces}])|(\\.$|$))`;
+    `([\\p{Lu}])` +
+    `([${base.spaces}]|\\.$|$)`;
 
-  let re = new RegExp(pattern, "g");
+  let re = new RegExp(pattern, "gu");
 
-  return string.replace(re, function ($0, $1, $2, $3, $4, $5) {
-    if (locale.ID == "en-us") {
-      // don't make changes after "I" in en-us
-      return $1 + base.nbsp + $3 + $4;
-    } else if ($3 == "I" && ($5 == base.nbsp || $5 == base.hairSpace || $5 == base.narrowNbsp)) {
-      // replace nbsp after "I" in other languages
-      return $1 + base.nbsp + $3 + base.space;
-    } else {
-      // just add nbsp before single word capital letter in the rest of the cases
-      return $1 + base.nbsp + $3 + $4;
+  return string.replace(re, function (match, beforeChar, _space, capitalLetter, endContext) {
+    // Special handling for English locale with letter 'I'
+    if (locale.ID === "en-us" && capitalLetter === "I") {
+      return match; // No change: avoid "something I do"
     }
+
+    // For English locale: add nbsp before any capital letter
+    if (locale.ID === "en-us") {
+      return beforeChar + base.nbsp + capitalLetter + endContext;
+    }
+
+    // For non-English with 'I' followed by space: replace trailing nbsp with regular space
+    if (capitalLetter === "I" && endContext && base.spaces.includes(endContext)) {
+      return beforeChar + base.nbsp + capitalLetter + base.space;
+    }
+
+    // Default: add nbsp before capital letter
+    return beforeChar + base.nbsp + capitalLetter + endContext;
   });
 }
 

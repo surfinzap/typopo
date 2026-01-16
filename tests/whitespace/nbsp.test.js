@@ -15,6 +15,7 @@ import {
 } from "../../src/modules/whitespace/nbsp.js";
 import { supportedLocales } from "../../src/locale/locale.js";
 import { createTestSuite, transformTestSet } from "../test-utils.js";
+import { t } from "../test-utils.js";
 
 const nbspBetweenMultiCharWordsSet = {
   "vo dvore":    "vo dvore",
@@ -195,9 +196,9 @@ createTestSuite(
 );
 
 const nbspOrdinalDate = {
-  "12. 1. 2017": "12.${ordinalDateFirstSpace}1.${ordinalDateSecondSpace}2017",
-  "12.1.2017":   "12.${ordinalDateFirstSpace}1.${ordinalDateSecondSpace}2017",
-  "12.12.2017":  "12.${ordinalDateFirstSpace}12.${ordinalDateSecondSpace}2017",
+  "12. 1. 2017": `12.${t.ordinalDateFirstSpace}1.${t.ordinalDateSecondSpace}2017`,
+  "12.1.2017":   `12.${t.ordinalDateFirstSpace}1.${t.ordinalDateSecondSpace}2017`,
+  "12.12.2017":  `12.${t.ordinalDateFirstSpace}12.${t.ordinalDateSecondSpace}2017`,
   "10.00":       "10.00", // false positive for the example above
   "3.0.0":       "3.0.0", // false positive, versioning
   "3.12.0":      "3.12.0", // false positive, versioning
@@ -255,15 +256,15 @@ createTestSuite(
 
 const nbspNameRegnalNumberSet = {
   // Place non-breaking space between name and roman numeral
-  "Karel IV${romanOrdinalIndicator} byl římsko-německý král.": "Karel IV${romanOrdinalIndicator} byl římsko-německý král.",
-  "Karel IV${romanOrdinalIndicator} byl římsko-německý král.": "Karel IV${romanOrdinalIndicator} byl římsko-německý král.",
-  "Karel IV${romanOrdinalIndicator}":                          "Karel IV${romanOrdinalIndicator}",
-  "Karel X${romanOrdinalIndicator}":                           "Karel X${romanOrdinalIndicator}",
+  [`Karel IV${t.romanOrdinalIndicator} byl římsko-německý král.`]: `Karel IV${t.romanOrdinalIndicator} byl římsko-německý král.`,
+  [`Karel IV${t.romanOrdinalIndicator} byl římsko-německý král.`]: `Karel IV${t.romanOrdinalIndicator} byl římsko-německý král.`,
+  [`Karel IV${t.romanOrdinalIndicator}`]:                          `Karel IV${t.romanOrdinalIndicator}`,
+  [`Karel X${t.romanOrdinalIndicator}`]:                           `Karel X${t.romanOrdinalIndicator}`,
   //false positive
-  "je to IV. cenová skupina":                                  "je to IV. cenová skupina",
-  "Try Ctrl+I":                                                "Try Ctrl+I",
+  "je to IV. cenová skupina":                                      "je to IV. cenová skupina",
+  "Try Ctrl+I":                                                    "Try Ctrl+I",
   // unsupported (It’s more common to use “I + verb” in text than citing regnal names so this case is unsupported for now)
-  "Charles I.":                                                "Charles I.",
+  "Charles I.":                                                    "Charles I.",
 };
 
 const nbspNameRegnalNumberUnitSet = {
@@ -282,12 +283,12 @@ supportedLocales.forEach((locale) => {
 });
 
 const spaceBeforePercentSet = {
-  "20 %":      "20${spaceBeforePercent}%",
-  "20 %–30 %": "20${spaceBeforePercent}%–30${spaceBeforePercent}%",
-  "20 ‰":      "20${spaceBeforePercent}‰",
-  "20 ‰–30 ‰": "20${spaceBeforePercent}‰–30${spaceBeforePercent}‰",
-  "20 ‱":      "20${spaceBeforePercent}‱",
-  "20 ‱–30 ‱": "20${spaceBeforePercent}‱–30${spaceBeforePercent}‱",
+  "20 %":      `20${t.spaceBeforePercent}%`,
+  "20 %–30 %": `20${t.spaceBeforePercent}%–30${t.spaceBeforePercent}%`,
+  "20 ‰":      `20${t.spaceBeforePercent}‰`,
+  "20 ‰–30 ‰": `20${t.spaceBeforePercent}‰–30${t.spaceBeforePercent}‰`,
+  "20 ‱":      `20${t.spaceBeforePercent}‱`,
+  "20 ‱–30 ‱": `20${t.spaceBeforePercent}‱–30${t.spaceBeforePercent}‱`,
 };
 
 supportedLocales.forEach((locale) => {
@@ -326,14 +327,15 @@ const nbspBeforeSingleLetterSet = {
 };
 
 const nbspBeforeSingleLetterUnitSet = {
-  "famous company — A Inc.":            "famous company — A Inc.",
-  "quoted part${rdq} A capital letter": "quoted part${rdq} A capital letter",
-  "quoted part${rsq} A capital letter": "quoted part${rsq} A capital letter",
-  "apostrophe${apos} A capital letter": "apostrophe${apos} A capital letter",
+  "famous company — A Inc.":                "famous company — A Inc.",
+  [`quoted part${t.cdq} A capital letter`]: `quoted part${t.cdq} A capital letter`,
+  [`quoted part${t.csq} A capital letter`]: `quoted part${t.csq} A capital letter`,
+  [`apostrophe${t.apos} A capital letter`]: `apostrophe${t.apos} A capital letter`,
 };
 
 const nbspBeforeSingleLetterEnUsSet = {
-  "When I talk": "When I talk", // do not add nbsp before I
+  "When I talk":   "When I talk", // do not add nbsp before I
+  "Point X Given": "Point X Given",
 };
 
 const nbspBeforeSingleLetterOtherSet = {

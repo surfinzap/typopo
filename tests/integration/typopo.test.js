@@ -20,7 +20,7 @@ import { multiplicationSignSet } from "../symbols/multiplication-sign.test.js";
 import { numberSignSet } from "../symbols/number-sign.test.js";
 import { plusMinusSet } from "../symbols/plus-minus.test.js";
 import { symbolSet, transformSymbolSet } from "../symbols/symbol-utils.test.js";
-import { transformTestSet } from "../test-utils.js";
+import { transformTestSet, t } from "../test-utils.js";
 import { linesSet } from "../whitespace/lines.test.js";
 import { nbspSet } from "../whitespace/nbsp.test.js";
 import { spacesSet } from "../whitespace/spaces.test.js";
@@ -79,23 +79,6 @@ function runAllVersions(testCase, locale, config) {
   }
 }
 
-describe("Test consistency of internal variables", () => {
-  let testCase = {
-    /*
-     We are using temporary {variables} in curly brackets as text replacement
-     in some functions. Make sure that variables in curly brackets do not change
-     in course of running algorithm.
-     */
-    "{{test-variable}}": "{{test-variable}}",
-    "{{test-variable}} at the beginning of the sentence.":
-      "{{test-variable}} at the beginning of the sentence.",
-    "And {{test-variable}} in the middle of the sentence.":
-      "And {{test-variable}} in the middle of the sentence.",
-  };
-
-  runAllVersions(testCase, "en-us");
-});
-
 describe("Test that exceptions remain intact", () => {
   let testCase = {
     /*
@@ -141,8 +124,8 @@ const configKeepMarkdownCodeBlocks = {
 */
 
 const moduleCombinations = {
-  "We will continue tomorrow at 8:00 a.m.!": "We will continue tomorrow at 8:00 a.${abbrSpace}m.!",
-  "We will continue tomorrow at 8:00 a.m..": "We will continue tomorrow at 8:00 a.${abbrSpace}m.",
+  "We will continue tomorrow at 8:00 a.m.!": `We will continue tomorrow at 8:00 a.${t.abbrSpace}m.!`,
+  "We will continue tomorrow at 8:00 a.m..": `We will continue tomorrow at 8:00 a.${t.abbrSpace}m.`,
 
   /*	Combination of resolving issues with ellipsis and brackets together. */
   "quote [...]with parts left out":    "quote […] with parts left out",
@@ -154,8 +137,7 @@ const moduleCombinations = {
   "Because of this, it’s common": "Because of this, it’s common",
 
   // Single quotes + double quotes
-  "${ldq}Sentence ${lsq}quoted fragment.${rsq}${rdq}":
-    "${ldq}Sentence ${lsq}quoted fragment${rsq}.${rdq}",
+  [`${t.odq}Sentence ${t.osq}quoted fragment.${t.csq}${t.cdq}`]: `${t.odq}Sentence ${t.osq}quoted fragment${t.csq}.${t.cdq}`,
 };
 
 const falsePositives = {
@@ -168,7 +150,7 @@ const falsePositives = {
   "Softwareentwicklung, -verkauf und -wartung": "Softwareentwicklung, -verkauf und -wartung",
 };
 
-function getTestModules(localeName) {
+export function getTestModules(localeName) {
   return {
     // punctuation
     ...periodSet,

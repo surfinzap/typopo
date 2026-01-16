@@ -1,4 +1,5 @@
 import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../../src/utils/markdown.js";
+import { m } from "../../src/markers.js";
 
 import { describe, it, expect } from "vitest";
 
@@ -12,36 +13,27 @@ let configIgnoreMarkdownCodeBlocks = {
 
 describe("Identify markdown code ticks:", () => {
   let testCase = {
-    "```\ncode\n```":
-      "{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}\ncode\n{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}",
+    [`\`\`\`\ncode\n\`\`\``]: `${m.tick}${m.tick}${m.tick}\ncode\n${m.tick}${m.tick}${m.tick}`,
 
-    "\t```\ncode\n```":
-      "\t{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}\ncode\n{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}",
+    [`\t\`\`\`\ncode\n\`\`\``]: `\t${m.tick}${m.tick}${m.tick}\ncode\n${m.tick}${m.tick}${m.tick}`,
 
-    "\t\t```\ncode\n```":
-      "\t\t{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}\ncode\n{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}",
+    [`\t\t\`\`\`\ncode\n\`\`\``]: `\t\t${m.tick}${m.tick}${m.tick}\ncode\n${m.tick}${m.tick}${m.tick}`,
 
-    " ```\ncode\n```":
-      " {{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}\ncode\n{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}",
+    [` \`\`\`\ncode\n\`\`\``]: ` ${m.tick}${m.tick}${m.tick}\ncode\n${m.tick}${m.tick}${m.tick}`,
 
-    "  ```\ncode\n```":
-      "  {{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}\ncode\n{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}",
+    [`  \`\`\`\ncode\n\`\`\``]: `  ${m.tick}${m.tick}${m.tick}\ncode\n${m.tick}${m.tick}${m.tick}`,
 
-    "``code``":
-      "{{typopo__markdown_tick}}{{typopo__markdown_tick}}code{{typopo__markdown_tick}}{{typopo__markdown_tick}}",
+    [`\`\`code\`\``]: `${m.tick}${m.tick}code${m.tick}${m.tick}`,
 
-    "``code code``":
-      "{{typopo__markdown_tick}}{{typopo__markdown_tick}}code code{{typopo__markdown_tick}}{{typopo__markdown_tick}}",
+    [`\`\`code code\`\``]: `${m.tick}${m.tick}code code${m.tick}${m.tick}`,
 
-    "``code`` ``code``":
-      "{{typopo__markdown_tick}}{{typopo__markdown_tick}}code{{typopo__markdown_tick}}{{typopo__markdown_tick}} {{typopo__markdown_tick}}{{typopo__markdown_tick}}code{{typopo__markdown_tick}}{{typopo__markdown_tick}}",
+    [`\`\`code\`\` \`\`code\`\``]: `${m.tick}${m.tick}code${m.tick}${m.tick} ${m.tick}${m.tick}code${m.tick}${m.tick}`,
 
-    "`code`": "{{typopo__markdown_tick}}code{{typopo__markdown_tick}}",
+    [`\`code\``]: `${m.tick}code${m.tick}`,
 
-    "`code code`": "{{typopo__markdown_tick}}code code{{typopo__markdown_tick}}",
+    [`\`code code\``]: `${m.tick}code code${m.tick}`,
 
-    "`code` `code`":
-      "{{typopo__markdown_tick}}code{{typopo__markdown_tick}} {{typopo__markdown_tick}}code{{typopo__markdown_tick}}",
+    [`\`code\` \`code\``]: `${m.tick}code${m.tick} ${m.tick}code${m.tick}`,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -53,36 +45,27 @@ describe("Identify markdown code ticks:", () => {
 
 describe("Place markdown code ticks:", () => {
   let testCase = {
-    "{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}\ncode\n{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}":
-      "```\ncode\n```",
+    [`${m.tick}${m.tick}${m.tick}\ncode\n${m.tick}${m.tick}${m.tick}`]: `\`\`\`\ncode\n\`\`\``,
 
-    "\t{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}\ncode\n{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}":
-      "\t```\ncode\n```",
+    [`\t${m.tick}${m.tick}${m.tick}\ncode\n${m.tick}${m.tick}${m.tick}`]: `\t\`\`\`\ncode\n\`\`\``,
 
-    "\t\t{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}\ncode\n{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}":
-      "\t\t```\ncode\n```",
+    [`\t\t${m.tick}${m.tick}${m.tick}\ncode\n${m.tick}${m.tick}${m.tick}`]: `\t\t\`\`\`\ncode\n\`\`\``,
 
-    " {{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}\ncode\n{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}":
-      " ```\ncode\n```",
+    [` ${m.tick}${m.tick}${m.tick}\ncode\n${m.tick}${m.tick}${m.tick}`]: ` \`\`\`\ncode\n\`\`\``,
 
-    "  {{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}\ncode\n{{typopo__markdown_tick}}{{typopo__markdown_tick}}{{typopo__markdown_tick}}":
-      "  ```\ncode\n```",
+    [`  ${m.tick}${m.tick}${m.tick}\ncode\n${m.tick}${m.tick}${m.tick}`]: `  \`\`\`\ncode\n\`\`\``,
 
-    "{{typopo__markdown_tick}}{{typopo__markdown_tick}}code{{typopo__markdown_tick}}{{typopo__markdown_tick}}":
-      "``code``",
+    [`${m.tick}${m.tick}code${m.tick}${m.tick}`]: `\`\`code\`\``,
 
-    "{{typopo__markdown_tick}}{{typopo__markdown_tick}}code code{{typopo__markdown_tick}}{{typopo__markdown_tick}}":
-      "``code code``",
+    [`${m.tick}${m.tick}code code${m.tick}${m.tick}`]: `\`\`code code\`\``,
 
-    "{{typopo__markdown_tick}}{{typopo__markdown_tick}}code{{typopo__markdown_tick}}{{typopo__markdown_tick}} {{typopo__markdown_tick}}{{typopo__markdown_tick}}code{{typopo__markdown_tick}}{{typopo__markdown_tick}}":
-      "``code`` ``code``",
+    [`${m.tick}${m.tick}code${m.tick}${m.tick} ${m.tick}${m.tick}code${m.tick}${m.tick}`]: `\`\`code\`\` \`\`code\`\``,
 
-    "{{typopo__markdown_tick}}code{{typopo__markdown_tick}}": "`code`",
+    [`${m.tick}code${m.tick}`]: `\`code\``,
 
-    "{{typopo__markdown_tick}}code code{{typopo__markdown_tick}}": "`code code`",
+    [`${m.tick}code code${m.tick}`]: `\`code code\``,
 
-    "{{typopo__markdown_tick}}code{{typopo__markdown_tick}} {{typopo__markdown_tick}}code{{typopo__markdown_tick}}":
-      "`code` `code`",
+    [`${m.tick}code${m.tick} ${m.tick}code${m.tick}`]: `\`code\` \`code\``,
   };
 
   Object.keys(testCase).forEach((key) => {
@@ -94,27 +77,27 @@ describe("Place markdown code ticks:", () => {
 
 describe("Ignore markdown code ticks:", () => {
   let testCase = {
-    "```\ncode\n```": "```\ncode\n```",
+    [`\`\`\`\ncode\n\`\`\``]: `\`\`\`\ncode\n\`\`\``,
 
-    "\t```\ncode\n```": "\t```\ncode\n```",
+    [`\t\`\`\`\ncode\n\`\`\``]: `\t\`\`\`\ncode\n\`\`\``,
 
-    "\t\t```\ncode\n```": "\t\t```\ncode\n```",
+    [`\t\t\`\`\`\ncode\n\`\`\``]: `\t\t\`\`\`\ncode\n\`\`\``,
 
-    " ```\ncode\n```": " ```\ncode\n```",
+    [` \`\`\`\ncode\n\`\`\``]: ` \`\`\`\ncode\n\`\`\``,
 
-    "  ```\ncode\n```": "  ```\ncode\n```",
+    [`  \`\`\`\ncode\n\`\`\``]: `  \`\`\`\ncode\n\`\`\``,
 
-    "``code``": "``code``",
+    [`\`\`code\`\``]: `\`\`code\`\``,
 
-    "``code code``": "``code code``",
+    [`\`\`code code\`\``]: `\`\`code code\`\``,
 
-    "``code`` ``code``": "``code`` ``code``",
+    [`\`\`code\`\` \`\`code\`\``]: `\`\`code\`\` \`\`code\`\``,
 
-    "`code`": "`code`",
+    [`\`code\``]: `\`code\``,
 
-    "`code code`": "`code code`",
+    [`\`code code\``]: `\`code code\``,
 
-    "`code` `code`": "`code` `code`",
+    [`\`code\` \`code\``]: `\`code\` \`code\``,
   };
 
   Object.keys(testCase).forEach((key) => {

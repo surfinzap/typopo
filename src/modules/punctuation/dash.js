@@ -1,5 +1,6 @@
 import { replaceWithOverlapHandling } from "../../utils/regex-overlap.js";
 import { base } from "../../const.js";
+import { m } from "../../markers.js";
 
 //
 
@@ -25,15 +26,15 @@ export function fixDashesBetweenWords(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.allChars}\\d])` + 
+      `([\\p{L}\\d])` +
       `(` +
-        `[${base.spaces}]*[${base.enDash}${base.emDash}]{1,3}[${base.spaces}]*` + 
+        `[${base.spaces}]*[${base.enDash}${base.emDash}]{1,3}[${base.spaces}]*` +
         `|` +
         `[${base.spaces}]+[${base.hyphen}]{1,3}[${base.spaces}]+` +
       `)` +
-      `([${base.allChars}\\d])`, 
-      "g"
-    ), 
+      `([\\p{L}\\d])`,
+      "gu"
+    ),
     `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}${locale.dashWords.spaceAfter}$3`
   );
 }
@@ -58,12 +59,12 @@ export function fixDashBetweenWordAndPunctuation(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.allChars}])` + 
-      `([${base.spaces}]?)` + 
+      `([\\p{L}])` +
+      `([${base.spaces}]?)` +
       `([${base.hyphen}${base.enDash}${base.emDash}]{1,3})` +
-      `([${base.spaces}]?)` + 
-      `([${base.sentencePunctuation}\\n\\r])`, 
-      "g"
+      `([${base.spaces}]?)` +
+      `([${base.sentencePunctuation}\\n\\r])`,
+      "gu"
     ),
     `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}$5`
   );
@@ -102,7 +103,7 @@ export function fixDashBetweenWordAndBrackets(string, locale) {
       `([${base.hyphen}${base.enDash}${base.emDash}]+)` +
       `[${base.spaces}]*` +
       `([${base.closingBrackets}])`,
-      "g"
+      "gu"
     ),
     `$1$2$3`
   );
@@ -111,12 +112,12 @@ export function fixDashBetweenWordAndBrackets(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([${base.allChars}])` +
+      `([\\p{L}])` +
       `[${base.spaces}]*` +
       `[${base.hyphen}${base.enDash}${base.emDash}]{1,3}` +
       `[${base.spaces}]*` +
       `([${base.openingBrackets}])`,
-      "g"
+      "gu"
     ),
     `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}${locale.dashWords.spaceAfter}$2`
   );
@@ -129,8 +130,8 @@ export function fixDashBetweenWordAndBrackets(string, locale) {
       `[${base.spaces}]*` +
       `[${base.hyphen}${base.enDash}${base.emDash}]{1,3}` +
       `[${base.spaces}]*` +
-      `([${base.allChars}])`,
-      "g"
+      `([\\p{L}])`,
+      "gu"
     ),
     `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}${locale.dashWords.spaceAfter}$2`
   );
@@ -139,12 +140,12 @@ export function fixDashBetweenWordAndBrackets(string, locale) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([${base.allChars}])` +
+      `([\\p{L}])` +
       `[${base.spaces}]*` +
       `[${base.hyphen}${base.enDash}${base.emDash}]{1,3}` +
       `[${base.spaces}]*` +
       `([${base.closingBrackets}])`,
-      "g"
+      "gu"
     ),
     `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}${locale.dashWords.spaceAfter}$2`
   );
@@ -157,8 +158,8 @@ export function fixDashBetweenWordAndBrackets(string, locale) {
       `[${base.spaces}]*` +
       `[${base.hyphen}${base.enDash}${base.emDash}]{1,3}` +
       `[${base.spaces}]*` +
-      `([${base.allChars}])`,
-      "g"
+      `([\\p{L}])`,
+      "gu"
     ),
     `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}${locale.dashWords.spaceAfter}$2`
   );
@@ -172,7 +173,7 @@ export function fixDashBetweenWordAndBrackets(string, locale) {
       `[${base.hyphen}${base.enDash}${base.emDash}]` +
       `[${base.spaces}]*` +
       `([${base.openingBrackets}])`,
-      "g"
+      "gu"
     ),
     `$1${locale.dashWords.spaceBefore}${locale.dashWords.dash}${locale.dashWords.spaceAfter}$2`
   );
@@ -198,25 +199,26 @@ export function fixDashBetweenCardinalNumbers(string) {
   /* [1] Match the pattern with overlap handling */
   // prettier-ignore
   string = replaceWithOverlapHandling(
-    string, 
+    string,
     new RegExp(
       `(\\d)` +
       `([${base.spaces}]?` +
       `[${base.hyphen}${base.enDash}${base.emDash}]{1,3}` +
       `[${base.spaces}]?)` +
-      `(\\d)`, 
-      "g"
-    ), 
-    `$1{{typopo__endash}}$3`
+      `(\\d)`,
+      "gu"
+    ),
+    `$1${m.enDash}$3`
   );
 
   /* [2] Replace enDash adepts with actual enDashes */
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `{{typopo__endash}}`, 
+      `${m.enDash}`, 
       "g"
-    ), base.enDash
+    ),
+    base.enDash
   );
 }
 
@@ -234,11 +236,11 @@ export function fixDashBetweenPercentageRange(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.percent}${base.permille}${base.permyriad}])` + 
-      `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}]{1,3}[${base.spaces}]?)` + 
-      `(\\d)`, 
-      "g"
-    ), 
+      `([${base.percent}${base.permille}${base.permyriad}])` +
+      `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}]{1,3}[${base.spaces}]?)` +
+      `(\\d)`,
+      "gu"
+    ),
     `$1${base.enDash}$3`
   );
 }
@@ -259,13 +261,13 @@ export function fixDashBetweenOrdinalNumbers(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(\\d)` + 
-      `(${locale.ordinalIndicator})` + 
-      `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}]{1,3}[${base.spaces}]?)` + 
-      `(\\d)` + 
-      `(${locale.ordinalIndicator})`, 
-      "gi"
-    ), 
+      `(\\d)` +
+      `(${locale.ordinalIndicator})` +
+      `([${base.spaces}]?[${base.hyphen}${base.enDash}${base.emDash}]{1,3}[${base.spaces}]?)` +
+      `(\\d)` +
+      `(${locale.ordinalIndicator})`,
+      "giu"
+    ),
     `$1$2${base.enDash}$4$5`
   );
 }

@@ -1,5 +1,3 @@
-import { base } from "../../const.js";
-
 /**
   Corrects accidental uppercase
 
@@ -19,11 +17,11 @@ export function fixCase(string) {
   // prettier-ignore
   string = string.replace(
     new RegExp(
-      `([^${base.allChars}]|^)` + 
-      `([${base.uppercaseChars}]{2})` + 
-      `([${base.lowercaseChars}]{2,})`, 
-      "g"
-    ), 
+      `([^\\p{L}]|^)` +
+      `([\\p{Lu}]{2})` +
+      `([\\p{Ll}]{2,})`,
+      "gu"
+    ),
     function ($0, $1, $2, $3) {
       return `${$1}${$2.substring(0, 1)}${$2.substring(1).toLowerCase()}${$3}`;
     }
@@ -36,12 +34,12 @@ export function fixCase(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `(\\b)` + 
-      `(?!iOS)` + 
-      `([${base.lowercaseChars}])` + 
-      `([${base.uppercaseChars}]{2,})`, 
-      "g"
-    ), 
+      `(\\b)` +
+      `(?!iOS)` +
+      `([\\p{Ll}])` +
+      `([\\p{Lu}]{2,})`,
+      "gu"
+    ),
     function ($0, $1, $2, $3) {
       return `${$1}${$2.toUpperCase()}${$3.toLowerCase()}`;
     }

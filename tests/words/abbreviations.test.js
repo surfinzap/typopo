@@ -4,7 +4,7 @@ import {
   fixMultipleWordAbbreviations,
   fixSingleWordAbbreviations,
 } from "../../src/modules/words/abbreviations.js";
-import { createTestSuite, transformTestSet } from "../test-utils.js";
+import { createTestSuite, transformTestSet, t } from "../test-utils.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 
 const initialsSet = {
@@ -17,18 +17,18 @@ const initialsSet = {
   "Philip K.Dick":  "Philip K. Dick", // one middle initials
 
   // test cases for two-letter initials
-  "F. X. Šalda":         "F.${abbrSpace}X. Šalda", //nbsp after 1st letter, normal space after 2nd one
-  "F.X. Šalda":          "F.${abbrSpace}X. Šalda",
-  "Ch. Ch. Šalda":       "Ch.${abbrSpace}Ch. Šalda",
-  "CH. CH. Šalda":       "CH.${abbrSpace}CH. Šalda",
+  "F. X. Šalda":         `F.${t.abbrSpace}X. Šalda`, //nbsp after 1st letter, normal space after 2nd one
+  "F.X. Šalda":          `F.${t.abbrSpace}X. Šalda`,
+  "Ch. Ch. Šalda":       `Ch.${t.abbrSpace}Ch. Šalda`,
+  "CH. CH. Šalda":       `CH.${t.abbrSpace}CH. Šalda`,
   // ch.ch gets exempted as URL. hopefully, no ones has such a name
-  // "Ch.Ch. Šalda":  "Ch.${abbrSpace}Ch. Šalda",
-  // "CH.CH. Šalda":  "CH.${abbrSpace}CH. Šalda",
+  // "Ch.Ch. Šalda": `Ch.${t.abbrSpace}Ch. Šalda`,
+  // "CH.CH. Šalda": `CH.${t.abbrSpace}CH. Šalda`,
 
   // test cases for three-letter initials
-  // "Ch. G. D. Lambert":   "Ch.${abbrSpace}G.${abbrSpace}D. Lambert", // nbsp after 2 letter, normal space after third one
-  "Ch. Ch. Ch. Lambert": "Ch.${abbrSpace}Ch.${abbrSpace}Ch. Lambert",
-  "CH. CH. CH. Lambert": "CH.${abbrSpace}CH.${abbrSpace}CH. Lambert",
+  // "Ch. G. D. Lambert": `Ch.${t.abbrSpace}G.${t.abbrSpace}D. Lambert`, // nbsp after 2 letter, normal space after third one
+  "Ch. Ch. Ch. Lambert": `Ch.${t.abbrSpace}Ch.${t.abbrSpace}Ch. Lambert`,
+  "CH. CH. CH. Lambert": `CH.${t.abbrSpace}CH.${t.abbrSpace}CH. Lambert`,
 
   // false positives, this function should leave them as they are
   "F. X.":    "F. X.",
@@ -49,56 +49,56 @@ supportedLocales.forEach((locale) => {
 
 const multiWordAbbrSet = {
   // double-word abbreviations
-  "hl. m. Praha":          "hl.${abbrSpace}m. Praha", // set proper nbsp
-  "hl.m.Praha":            "hl.${abbrSpace}m. Praha", // include proper spaces
-  "Hl.m.Praha":            "Hl.${abbrSpace}m. Praha", // catch capitalized exception
-  "Je to hl. m. Praha.":   "Je to hl.${abbrSpace}m. Praha.", // in a sentence
-  "Praha, hl. m.":         "Praha, hl.${abbrSpace}m.", // check for abbr at the end of statement
-  "(hl. m. Praha)":        "(hl.${abbrSpace}m. Praha)", // bracket & quotes variations
-  "(Praha, hl. m.)":       "(Praha, hl.${abbrSpace}m.)", // bracket & quotes variations
-  "(hl. m.)":              "(hl.${abbrSpace}m.)", // bracket & quotes variations
-  "hl. m.":                "hl.${abbrSpace}m.", // plain abbreviation
-  "č., s., hl. m., str.,": "č., s., hl.${abbrSpace}m., str.,", // in a list of abbreviations
+  "hl. m. Praha":          `hl.${t.abbrSpace}m. Praha`, // set proper nbsp
+  "hl.m.Praha":            `hl.${t.abbrSpace}m. Praha`, // include proper spaces
+  "Hl.m.Praha":            `Hl.${t.abbrSpace}m. Praha`, // catch capitalized exception
+  "Je to hl. m. Praha.":   `Je to hl.${t.abbrSpace}m. Praha.`, // in a sentence
+  "Praha, hl. m.":         `Praha, hl.${t.abbrSpace}m.`, // check for abbr at the end of statement
+  "(hl. m. Praha)":        `(hl.${t.abbrSpace}m. Praha)`, // bracket & quotes variations
+  "(Praha, hl. m.)":       `(Praha, hl.${t.abbrSpace}m.)`, // bracket & quotes variations
+  "(hl. m.)":              `(hl.${t.abbrSpace}m.)`, // bracket & quotes variations
+  "hl. m.":                `hl.${t.abbrSpace}m.`, // plain abbreviation
+  "č., s., hl. m., str.,": `č., s., hl.${t.abbrSpace}m., str.,`, // in a list of abbreviations
   "Dave Grohl. m. Praha":  "Dave Grohl. m. Praha", // false positive for not catching abbr. in a word
   "Sliačhl. m. Praha":     "Sliačhl. m. Praha", // false positive for not catching abbr. in a non-latin word
 
   // triple word abbreviations
-  "im Jahr 200 v. u. Z. als der Hunger": "im Jahr 200 v.${abbrSpace}u.${abbrSpace}Z. als der Hunger",
-  "im Jahr 200 v.u.Z. als der Hunger":   "im Jahr 200 v.${abbrSpace}u.${abbrSpace}Z. als der Hunger",
-  "im Jahr 200 v. u. Z.":                "im Jahr 200 v.${abbrSpace}u.${abbrSpace}Z.",
-  "im Jahr 200 v.u.Z.":                  "im Jahr 200 v.${abbrSpace}u.${abbrSpace}Z.",
-  "v. u. Z.":                            "v.${abbrSpace}u.${abbrSpace}Z.",
-  "v.u.Z.":                              "v.${abbrSpace}u.${abbrSpace}Z.",
+  "im Jahr 200 v. u. Z. als der Hunger": `im Jahr 200 v.${t.abbrSpace}u.${t.abbrSpace}Z. als der Hunger`,
+  "im Jahr 200 v.u.Z. als der Hunger":   `im Jahr 200 v.${t.abbrSpace}u.${t.abbrSpace}Z. als der Hunger`,
+  "im Jahr 200 v. u. Z.":                `im Jahr 200 v.${t.abbrSpace}u.${t.abbrSpace}Z.`,
+  "im Jahr 200 v.u.Z.":                  `im Jahr 200 v.${t.abbrSpace}u.${t.abbrSpace}Z.`,
+  "v. u. Z.":                            `v.${t.abbrSpace}u.${t.abbrSpace}Z.`,
+  "v.u.Z.":                              `v.${t.abbrSpace}u.${t.abbrSpace}Z.`,
 
   // random abbreviations to randomly check various localization
-  "1000 pr. n. l.":                               "1000 pr.${abbrSpace}n.${abbrSpace}l.",
-  "im Jahr 200 v. Chr.":                          "im Jahr 200 v.${abbrSpace}Chr.",
-  "Das Tier, d. h. der Fisch, lebte noch lange.": "Das Tier, d.${abbrSpace}h. der Fisch, lebte noch lange.",
-  "Das Tier (d. h. der Fisch) lebte noch lange.": "Das Tier (d.${abbrSpace}h. der Fisch) lebte noch lange.",
-  "т. зн. незвыкле":                              "т.${abbrSpace}зн. незвыкле",
+  "1000 pr. n. l.":                               `1000 pr.${t.abbrSpace}n.${t.abbrSpace}l.`,
+  "im Jahr 200 v. Chr.":                          `im Jahr 200 v.${t.abbrSpace}Chr.`,
+  "Das Tier, d. h. der Fisch, lebte noch lange.": `Das Tier, d.${t.abbrSpace}h. der Fisch, lebte noch lange.`,
+  "Das Tier (d. h. der Fisch) lebte noch lange.": `Das Tier (d.${t.abbrSpace}h. der Fisch) lebte noch lange.`,
+  "т. зн. незвыкле":                              `т.${t.abbrSpace}зн. незвыкле`,
 
-  "the U.S.":  "the U.${abbrSpace}S.",
-  "the U. S.": "the U.${abbrSpace}S.",
+  "the U.S.":  `the U.${t.abbrSpace}S.`,
+  "the U. S.": `the U.${t.abbrSpace}S.`,
 
-  ", e.g. something":    ", e.${abbrSpace}g. something",
-  "(e.g. something":     "(e.${abbrSpace}g. something",
-  "a e.g. something":    "a e.${abbrSpace}g. something",
-  "abc\ne.g. something": "abc\ne.${abbrSpace}g. something",
-  "e.g. 100 km":         "e.${abbrSpace}g. 100 km",
-  "(e.g.)":              "(e.${abbrSpace}g.)",
-  "(e.g. )":             "(e.${abbrSpace}g.)",
-  "e. g.":               "e.${abbrSpace}g.",
-  "e.g. 🥳":             "e.${abbrSpace}g. 🥳",
-  "i. e. 🥳":            "i.${abbrSpace}e. 🥳",
-  "a i.e. something":    "a i.${abbrSpace}e. something",
-  "i.e. 100 km":         "i.${abbrSpace}e. 100 km",
+  ", e.g. something":    `, e.${t.abbrSpace}g. something`,
+  "(e.g. something":     `(e.${t.abbrSpace}g. something`,
+  "a e.g. something":    `a e.${t.abbrSpace}g. something`,
+  "abc\ne.g. something": `abc\ne.${t.abbrSpace}g. something`,
+  "e.g. 100 km":         `e.${t.abbrSpace}g. 100 km`,
+  "(e.g.)":              `(e.${t.abbrSpace}g.)`,
+  "(e.g. )":             `(e.${t.abbrSpace}g.)`,
+  "e. g.":               `e.${t.abbrSpace}g.`,
+  "e.g. 🥳":             `e.${t.abbrSpace}g. 🥳`,
+  "i. e. 🥳":            `i.${t.abbrSpace}e. 🥳`,
+  "a i.e. something":    `a i.${t.abbrSpace}e. something`,
+  "i.e. 100 km":         `i.${t.abbrSpace}e. 100 km`,
 
-  "4.20 p.m.":                  "4.20 p.${abbrSpace}m.",
-  "4.20 p.m. in the afternoon": "4.20 p.${abbrSpace}m. in the afternoon",
+  "4.20 p.m.":                  `4.20 p.${t.abbrSpace}m.`,
+  "4.20 p.m. in the afternoon": `4.20 p.${t.abbrSpace}m. in the afternoon`,
 
   // Throwing extra space
-  "We will continue tomorrow at 8:00 a.m.!": "We will continue tomorrow at 8:00 a.${abbrSpace}m.!",
-  "8 a.m. is the right time":                "8 a.${abbrSpace}m. is the right time",
+  "We will continue tomorrow at 8:00 a.m.!": `We will continue tomorrow at 8:00 a.${t.abbrSpace}m.!`,
+  "8 a.m. is the right time":                `8 a.${t.abbrSpace}m. is the right time`,
 
   // false positives
   "2 PMs":                    "2 PMs",
@@ -109,18 +109,18 @@ const multiWordAbbrSet = {
   "nevieš":                   "nevieš", // false positive for non-latin boundaries
   "ieš":                      "ieš", // false positive for non-latin boundaries
   "či e-mail marketing":      "či e-mail marketing", // false positive for non-latin boundaries
-  "(i.e.)":                   "(i.${abbrSpace}e.)",
+  "(i.e.)":                   `(i.${t.abbrSpace}e.)`,
 };
 
 const multiWordAbbrUnitSet = {
-  "e.g. “something”":                               "e.${abbrSpace}g. “something”",
-  "e.g. ‘something’":                               "e.${abbrSpace}g. ‘something’",
-  "“We will continue tomorrow at 8:00 a.m.”":       "“We will continue tomorrow at 8:00 a.${abbrSpace}m.”",
-  "e.g. ```something```":                           "e.${abbrSpace}g. ```something```",
-  "e.g. `something`":                               "e.${abbrSpace}g. `something`",
-  "“e. g.”":                                        "“e.${abbrSpace}g.”",
-  "‘e. g.’":                                        "‘e.${abbrSpace}g.’",
-  "Das Tier – d. i. der Fisch – lebte noch lange.": "Das Tier – d.${abbrSpace}i. der Fisch – lebte noch lange.",
+  "e.g. “something”":                               `e.${t.abbrSpace}g. “something”`,
+  "e.g. ‘something’":                               `e.${t.abbrSpace}g. ‘something’`,
+  "“We will continue tomorrow at 8:00 a.m.”":       `“We will continue tomorrow at 8:00 a.${t.abbrSpace}m.”`,
+  "e.g. ```something```":                           `e.${t.abbrSpace}g. \`\`\`something\`\`\``,
+  "e.g. `something`":                               `e.${t.abbrSpace}g. \`something\``,
+  "“e. g.”":                                        `“e.${t.abbrSpace}g.”`,
+  "‘e. g.’":                                        `‘e.${t.abbrSpace}g.’`,
+  "Das Tier – d. i. der Fisch – lebte noch lange.": `Das Tier – d.${t.abbrSpace}i. der Fisch – lebte noch lange.`,
 };
 
 supportedLocales.forEach((locale) => {

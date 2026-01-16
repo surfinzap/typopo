@@ -2,6 +2,21 @@
 
 
 
+## 2.9.1 // 2026-01-16
+
+### 💪 Improvements
+- Replace hardcoded letter patterns with [Unicode-aware regex matching](https://javascript.info/regexp-unicode)
+
+### 🐛 Fixes
+- Fix identification of a closing single quote after a number
+
+### 🔨 Maintenance
+- Utilize “Private Use Area” code points for temporary and test replacements
+- Consolidate naming of internal variables and functions
+- Update dev dependencies to their latest versions 
+
+
+
 ## 2.9.0 // 2026-01-11
 
 ### 💪 Improvements

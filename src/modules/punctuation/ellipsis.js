@@ -141,8 +141,8 @@ export function fixAposiopesisStartingParagraph(string) {
     new RegExp(
       `(^${base.ellipsis})` +
       `([${base.spaces}])` +
-      `([${base.lowercaseChars}${base.uppercaseChars}])`,
-      "gm"
+      `([\\p{L}])`,
+      "gmu"
     ),
     "$1$3"
   );
@@ -169,8 +169,8 @@ export function fixAposiopesisStartingSentence(string, locale) {
       `([${base.spaces}]?)` +
       `([${base.ellipsis}])` +
       `([${base.spaces}]?)` +
-      `([${base.lowercaseChars}])`,
-      "g"
+      `([\\p{Ll}])`,
+      "gu"
     ),
     "$1$2 $4$6"
   );
@@ -193,12 +193,12 @@ export function fixAposiopesisBetweenSentences(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.lowercaseChars}])` +
+      `([\\p{Ll}])` +
       `([${base.spaces}])` +
       `([${base.ellipsis}])` +
       `([${base.spaces}]?)` +
-      `([${base.uppercaseChars}])`,
-      "g"
+      `([\\p{Lu}])`,
+      "gu"
     ),
     "$1$3 $5"
   );
@@ -220,10 +220,10 @@ export function fixAposiopesisBetweenWords(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.allChars}])` +
+      `([\\p{L}])` +
       `([${base.ellipsis}])` +
-      `([${base.allChars}])`,
-      "g"
+      `([\\p{L}])`,
+      "gu"
     ),
     "$1$2 $3"
   );
@@ -253,8 +253,8 @@ export function fixEllipsisBetweenSentences(string, locale) {
       `([${base.spaces}]?)` +
       `(${base.ellipsis})` +
       `([${base.spaces}]?)` +
-      `([${base.uppercaseChars}])`,
-      "g"
+      `([\\p{Lu}])`,
+      "gu"
     ),
     "$1 $3 $5"
   );
@@ -276,10 +276,10 @@ export function fixAposiopesisEndingParagraph(string, locale) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([${base.lowercaseChars}])` +
+      `([\\p{Ll}])` +
       `([${base.spaces}])+` +
-      `([${base.ellipsis}][${locale.rightDoubleQuote}${locale.rightSingleQuote}]?$)`,
-      "gm"
+      `([${base.ellipsis}][${locale.closingDoubleQuote}${locale.closingSingleQuote}]?$)`,
+      "gmu"
     ),
     "$1$3"
   );

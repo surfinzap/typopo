@@ -71,13 +71,44 @@ export function createTestSuite(
 }
 
 /**
- * Helper function to escape regex special characters
- * @param {string} str - String to escape
- * @returns {string} Escaped string safe for use in RegExp
+ * Test token markers using Unicode Private Use Area
+ *
+ * Unicode Allocation:
+ * U+E000 - U+E0FF: Test tokens (this file) - locale-dependent test placeholders
+ * U+E100 - U+E1FF: Processing marks (src/markers.js) - internal processing markers
+ *
+ * These test tokens are replaced by transformTestSet() with locale-specific characters.
+ * This allows test cases to use template literals while maintaining locale independence.
  */
-function escapeRegex(str) {
-  return str.replace(/[{}()[\]\\.$^*+?|]/g, "\\$&");
-}
+export const t = {
+  // Quotes
+  odq:  "\uE000",
+  cdq:  "\uE001",
+  osq:  "\uE002",
+  csq:  "\uE003",
+  apos: "\uE004",
+
+  // Direct speech
+  directSpeechIntro: "\uE005",
+
+  // Dashes
+  spaceBeforeDash: "\uE010",
+  dash:            "\uE011",
+  spaceAfterDash:  "\uE012",
+
+  // Symbols
+  symbol: "\uE020",
+  space:  "\uE021",
+
+  // Abbreviations
+  abbrSpace: "\uE030",
+
+  // Ordinal dates
+  ordinalDateFirstSpace:  "\uE040",
+  ordinalDateSecondSpace: "\uE041",
+  romanOrdinalIndicator:  "\uE042",
+  spaceBeforePercent:     "\uE043",
+};
 
 /**
  * Generic test set transformation function with locale-specific token replacement
@@ -96,43 +127,32 @@ export function transformTestSet(testSet, localeName, options = {}) {
   const mergedTestSet = additionalSets.reduce((acc, set) => ({ ...acc, ...set }), { ...testSet });
 
   const tokenMap = {
-    // Quotes
-    "${ldq}":  locale.leftDoubleQuote,
-    "${rdq}":  locale.rightDoubleQuote,
-    "${lsq}":  locale.leftSingleQuote,
-    "${rsq}":  locale.rightSingleQuote,
-    "${apos}": base.apostrophe,
-
-    // Direct Speech
-    "${directSpeechIntro}": locale.directSpeechIntro,
-
-    // Dashes
-    "${spaceBeforeDash}": locale.dashWords.spaceBefore,
-    "${dash}":            locale.dashWords.dash,
-    "${spaceAfterDash}":  locale.dashWords.spaceAfter,
-
-    // Symbols (only if symbolName provided)
+    // Unicode test tokens (from test-constants.js) - U+E000 range
+    [t.odq]:                    locale.openingDoubleQuote,
+    [t.cdq]:                    locale.closingDoubleQuote,
+    [t.osq]:                    locale.openingSingleQuote,
+    [t.csq]:                    locale.closingSingleQuote,
+    [t.apos]:                   base.apostrophe,
+    [t.directSpeechIntro]:      locale.directSpeechIntro,
+    [t.spaceBeforeDash]:        locale.dashWords.spaceBefore,
+    [t.dash]:                   locale.dashWords.dash,
+    [t.spaceAfterDash]:         locale.dashWords.spaceAfter,
+    [t.abbrSpace]:              locale.spaceAfter.abbreviation,
+    [t.ordinalDateFirstSpace]:  locale.ordinalDate.firstSpace,
+    [t.ordinalDateSecondSpace]: locale.ordinalDate.secondSpace,
+    [t.romanOrdinalIndicator]:  locale.romanOrdinalIndicator,
+    [t.spaceBeforePercent]:     locale.spaceBefore.percent,
     ...(symbolName && {
-      "${symbol}": base[symbolName],
-      "${space}":  locale.spaceAfter[symbolName],
+      [t.symbol]: base[symbolName],
+      [t.space]:  locale.spaceAfter[symbolName],
     }),
-
-    // Abbreviations
-    "${abbrSpace}": locale.spaceAfter.abbreviation,
-
-    // Non-breaking spaces
-    "${ordinalDateFirstSpace}":  locale.ordinalDate.firstSpace,
-    "${ordinalDateSecondSpace}": locale.ordinalDate.secondSpace,
-    "${romanOrdinalIndicator}":  locale.romanOrdinalIndicator,
-    "${spaceBeforePercent}":     locale.spaceBefore.percent,
   };
 
   const replaceTokens = (str) => {
     // First replace all tokens
-    const tokenReplaced = Object.entries(tokenMap).reduce(
-      (result, [token, value]) => result.replace(new RegExp(escapeRegex(token), "g"), value),
-      str
-    );
+    const tokenReplaced = Object.entries(tokenMap).reduce((result, [token, value]) => {
+      return result.split(token).join(value);
+    }, str);
     // Then handle escaped dots (this must happen after token replacement)
     return tokenReplaced.replace(/\\\./g, ".");
   };

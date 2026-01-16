@@ -1,11 +1,3 @@
-/* Letters */
-const nonLatinLowercase = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
-const nonLatinUppercase = "ÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŶŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ";
-const nonLatinChars = nonLatinLowercase + nonLatinUppercase;
-const lowercaseChars = "a-z" + nonLatinLowercase;
-const uppercaseChars = "A-Z" + nonLatinUppercase;
-const allChars = "a-z" + nonLatinLowercase + "A-Z" + nonLatinUppercase;
-
 /* Quotes, primes, apostrophes 
 
   (8218)    single low-9 quotation mark
@@ -47,7 +39,7 @@ const enDash = "–";
 const emDash = "—";
 const slash = "/";
 
-/* Symbols*/
+/* Symbols */
 const degree = "°";
 const multiplicationSign = "×";
 const ampersand = "&";
@@ -71,14 +63,7 @@ const numeroSign = "№";
 const romanNumerals = "IVXLCDM";
 
 export const base = {
-  /* Letters */
-  nonLatinLowercase,
-  nonLatinUppercase,
-  nonLatinChars,
-  lowercaseChars,
-  uppercaseChars,
-  allChars,
-
+  /* Quotes, primes, apostrophes */
   singleQuoteAdepts,
   apostrophe,
   singlePrime,
