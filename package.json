@@ -13,6 +13,7 @@
 		"test": "vitest run",
 		"test:dev": "cross-env SOURCE_ONLY=true vitest",
 		"test:module": "vitest --exclude tests/integration/typopo.test.js",
+		"test:idempotency": "vitest run tests/idempotency.test.js",
 		"test:perf": "node tests/performance.test.js",
 		"lint": "eslint src/",
 		"lint:fix": "eslint src/ --fix",

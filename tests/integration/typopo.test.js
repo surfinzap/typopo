@@ -150,7 +150,7 @@ const falsePositives = {
   "Softwareentwicklung, -verkauf und -wartung": "Softwareentwicklung, -verkauf und -wartung",
 };
 
-function getTestModules(localeName) {
+export function getTestModules(localeName) {
   return {
     // punctuation
     ...periodSet,
