@@ -8,7 +8,7 @@
 - Replace hardcoded letter patterns with [Unicode-aware regex matching](https://javascript.info/regexp-unicode)
 
 ### 🐛 Fixes
-- Fix identification of a closing single quote after a number
+- Fix identification of a closing single quote after a number
 
 ### 🔨 Maintenance
 - Utilize “Private Use Area” code points for temporary and test replacements
