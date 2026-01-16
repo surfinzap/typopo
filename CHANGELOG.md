@@ -12,7 +12,7 @@
 
 ### 🔨 Maintenance
 - Utilize “Private Use Area” code points for temporary and test replacements
-- Consolidate names of internal variables and functions
+- Consolidate naming of internal variables and functions
 - Update dev dependencies to their latest versions 
 
 
