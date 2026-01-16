@@ -272,6 +272,7 @@ const identifyUnpairedClosingSingleQuoteUnitSet = {
   "word':":                   `word${m.csqUnpaired}:`,
   "word',":                   `word${m.csqUnpaired},`,
   "word' ":                   `word${m.csqUnpaired} `,
+  "3000› ":                   `3000${m.csqUnpaired} `,
 };
 
 supportedLocales.forEach((localeName) => {

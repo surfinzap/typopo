@@ -1217,7 +1217,7 @@ function Pn(e) {
 function kn(e) {
   return e.replace(
     new RegExp(
-      `([\\p{L}${n.closingBrackets}\\}])([${n.sentencePunctuation}${n.ellipsis}])?(${n.singleQuoteAdepts})([ ${n.sentencePunctuation}])?`,
+      `([\\p{L}\\d${n.closingBrackets}])([${n.sentencePunctuation}${n.ellipsis}])?(${n.singleQuoteAdepts})([ ${n.sentencePunctuation}])?`,
       "gu"
     ),
     `$1$2${a.csqUnpaired}$4`

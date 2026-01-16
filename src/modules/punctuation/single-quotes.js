@@ -225,7 +225,7 @@ export function identifyUnpairedClosingSingleQuote(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([\\p{L}${base.closingBrackets}\\}])` +
+      `([\\p{L}\\d${base.closingBrackets}])` +
       `([${base.sentencePunctuation}${base.ellipsis}])?` +
       `(${base.singleQuoteAdepts})` +
       `([ ${base.sentencePunctuation}])?`,
