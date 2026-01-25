@@ -175,13 +175,8 @@ configuration = {
 
 
 
-
-
-
 ## News & Releases
-Check out the [changelog](CHANGELOG.md) for what has been released.
-
-[Subscribe to Typopo Newsletter](https://buttondown.email/Typopo) to be the first to know about all the new features and improvements.
+Check out the [Release notes](https://github.com/surfinzap/typopo/releases), or [typopo_app on X](https://x.com/typopo_app).
 
 
 
