@@ -1,8 +1,9 @@
 {
 	"name": "typopo",
-	"version": "2.9.1",
+	"version": "3.0.0",
 	"description": "Fix frequent microtypography errors in multiple languages. Write neat texts without bothering about typography rules. Typopo works for English, German, Slovak, Czech and Rusyn language.",
 	"type": "module",
+	"types": "./index.d.ts",
 	"license": "MIT",
 	"author": {
 		"name": "Braňo Šandala",
@@ -37,10 +38,17 @@
 	"browser": "./dist/typopo.umd.js",
 	"exports": {
 		".": {
+			"types": "./index.d.ts",
 			"import": "./dist/typopo.es.js",
 			"require": "./dist/typopo.cjs"
 		}
 	},
+	"files": [
+		"dist",
+		"index.d.ts",
+		"LICENSE.txt",
+		"README.md"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/surfinzap/typopo"

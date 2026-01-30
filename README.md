@@ -140,6 +140,27 @@ For direct browser usage without a bundler:
 </script>
 ```
 
+#### TypeScript Support
+
+Typopo includes TypeScript type definitions for enhanced type safety and autocomplete:
+
+```typescript
+import { fixTypos, TypopoLocale, TypopoConfiguration } from 'typopo';
+
+// TypeScript provides autocomplete for locales
+const locale: TypopoLocale = 'en-us'; // 'en-us' | 'de-de' | 'sk' | 'cs' | 'rue'
+
+// Type-safe configuration
+const config: TypopoConfiguration = {
+  removeLines: true
+};
+
+// Full type checking
+const result: string = fixTypos('Your text here', locale, config);
+```
+
+The library is written in JavaScript, but ships with type definitions for TypeScript users.
+
 Check out the [API](#api) section for usage details.
 
 

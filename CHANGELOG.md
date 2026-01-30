@@ -6,6 +6,12 @@
 
 With version 3.0.0, Typopo refocuses on its core strength: **microtypography fixes for plaintext**. Markdown-specific handling has been removed from the core library, as the previous implementation was rudimentary. For comprehensive markdown support with structure-aware processing, use the [typopo-vscode extension](https://github.com/surfinzap/typopo-vscode) (v2.0.1+), which provides better parsing that properly distinguishes code from prose.
 
+### ✨ New features
+- **TypeScript type definitions:** Added official TypeScript declaration file (`index.d.ts`) for improved type safety and IntelliSense support in TypeScript projects.
+  - exported types: `TypopoLocale`, `TypopoConfiguration`
+  - full JSDoc documentation for enhanced IDE experience
+  - no changes to implementation—library remains written in JavaScript
+
 ### ⚠️ Breaking Changes
 
 **Configuration options removed:**
