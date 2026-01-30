@@ -16,14 +16,6 @@ import {
 import { createTestSuite } from "../test-utils.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 
-const configRemoveWhitespacesBeforeParagraphs = {
-  removeWhitespacesBeforeMarkdownList: true,
-};
-
-const configKeepWhitespacesBeforeMarkdownList = {
-  removeWhitespacesBeforeMarkdownList: false,
-};
-
 const multipleSpacesSet = {
   /* Remove multiple spaces with a single one,
      even non-breaking spaces and others */
@@ -46,7 +38,7 @@ createTestSuite(
   supportedLocales
 );
 
-const removeSpacesBeforeTextSet = {
+const removeSpacesAtParagraphBeginningSet = {
   " What if paragraph starts with extra space at the beginning?":
     "What if paragraph starts with extra space at the beginning?",
 
@@ -75,9 +67,8 @@ const removeSpacesBeforeTextSet = {
 
   // double-check, that single new lines are not removed
   "If there is one line\nand another": "If there is one line\nand another",
-};
 
-const removeSpacesBeforeMarkdownListSet = {
+  // markdown
   " - list":    "- list",
   "  - list":   "- list",
   "\t- list":   "- list",
@@ -98,40 +89,12 @@ const removeSpacesBeforeMarkdownListSet = {
   "\t\t> list": "> list",
 };
 
-const keepSpacesBeforeMarkdownListSet = {
-  " - list":    " - list",
-  "   - list":  "   - list",
-  "\t- list":   "\t- list",
-  "\t\t- list": "\t\t- list",
-  " * list":    " * list",
-  "   * list":  "   * list",
-  "\t\t* list": "\t\t* list",
-  "\t* list":   "\t* list",
-  " * list":    " * list", //nbsp
-  " * list":    " * list", //narrowNbsp
-  " > list":    " > list",
-  "   > list":  "   > list",
-  "\t\t> list": "\t\t> list",
-  "\t> list":   "\t> list",
-  " > list":    " > list", //nbsp
-  " > list":    " > list", //narrowNbsp
-};
-
 createTestSuite(
   "Remove spaces and tabs at beginning of the paragraph",
-  { ...removeSpacesBeforeTextSet, ...removeSpacesBeforeMarkdownListSet },
-  (text) => removeSpacesAtParagraphBeginning(text, configRemoveWhitespacesBeforeParagraphs),
+  removeSpacesAtParagraphBeginningSet,
+  removeSpacesAtParagraphBeginning,
   {},
-  (text, locale) => fixSpaces(text, locale, configRemoveWhitespacesBeforeParagraphs),
-  supportedLocales
-);
-
-createTestSuite(
-  "Remove spaces and tabs at beginning of the paragraph, but keep spaces and tabs at the beginning of markdown lists (indicated as -/*)",
-  { ...removeSpacesBeforeTextSet, ...keepSpacesBeforeMarkdownListSet },
-  (text) => removeSpacesAtParagraphBeginning(text, configKeepWhitespacesBeforeMarkdownList),
-  {},
-  (text, locale) => fixSpaces(text, locale, configKeepWhitespacesBeforeMarkdownList),
+  fixSpaces,
   supportedLocales
 );
 
@@ -397,7 +360,7 @@ createTestSuite("Add space before a symbol, e.g. ©", spacesBeforeSymbolSet, (te
 
 export const spacesSet = {
   ...multipleSpacesSet,
-  ...removeSpacesBeforeTextSet,
+  ...removeSpacesAtParagraphBeginningSet,
   ...spacesBeforeSentencePauseSet,
   ...spacesBeforeTerminalPunctuationSet,
   // ...ordinalIndicator has unit tests only

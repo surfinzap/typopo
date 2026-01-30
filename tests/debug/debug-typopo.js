@@ -41,9 +41,7 @@ function debugFixTypos(inputString, locale = "en-us", configuration = {}) {
   let currentLocale = new Locale(locale);
 
   configuration = {
-    removeLines:                         true,
-    removeWhitespacesBeforeMarkdownList: true,
-    keepMarkdownCodeBlocks:              false,
+    removeLines: true,
     ...configuration,
   };
 
@@ -200,9 +198,7 @@ function getTypoTransformationSteps(inputString, locale = "en-us", configuration
   let currentLocale = new Locale(locale);
 
   configuration = {
-    removeLines:                         true,
-    removeWhitespacesBeforeMarkdownList: true,
-    keepMarkdownCodeBlocks:              false,
+    removeLines: true,
     ...configuration,
   };
 

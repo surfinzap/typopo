@@ -1,6 +1,5 @@
 import { base } from "../../const.js";
 import { addNbspAfterPreposition } from "../whitespace/nbsp.js";
-import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../../utils/markdown.js";
 import { m } from "../../markers.js";
 
 //
@@ -312,7 +311,7 @@ export function replaceDoublePrimeWDoubleQuote(string) {
   “Wow!” → “Wow!” (unchanged—ambiguous)
 
   @param {string} string: input text for identification
-  @param {object} locale: locale configuration
+  @param {object} locale: locale option
   @returns {string} output with corrected punctuation placement
 */
 export function fixQuotedWordPunctuation(string, locale) {
@@ -345,7 +344,7 @@ export function fixQuotedWordPunctuation(string, locale) {
   - move colons `:` and semicolons `;` outside the quoted part
  
   @param {string} string: input text for identification
-  @param {object} locale: locale configuration
+  @param {object} locale: locale option
   @returns {string} output with corrected punctuation placement
  */
 export function fixQuotedSentencePunctuation(string, locale) {
@@ -615,7 +614,6 @@ export function fixDirectSpeechIntro(string, locale) {
   i.e. authors did not forget to close double quotes in their text.
 
   Algorithm
-  [0] Identify markdown code ticks
   [1] Remove extra terminal punctuation around double quotes
   [2] Identify inches, arcseconds, seconds
   [3] Identify double quote pairs
@@ -630,12 +628,7 @@ export function fixDirectSpeechIntro(string, locale) {
   @param {string} locale: locale option
   @returns {string} output with properly replaces double qoutes and double primes
 */
-export function fixDoubleQuotesAndPrimes(string, locale, configuration) {
-  configuration = configuration || {};
-
-  /* [0] Identify markdown code ticks */
-  string = identifyMarkdownCodeTicks(string, configuration);
-
+export function fixDoubleQuotesAndPrimes(string, locale) {
   /* [1] Remove extra terminal punctuation around double quotes */
   string = removeExtraPunctuationBeforeQuotes(string);
   string = removeExtraPunctuationAfterQuotes(string);
@@ -656,7 +649,6 @@ export function fixDoubleQuotesAndPrimes(string, locale, configuration) {
 
   /* [6] Replace all identified punctuation with appropriate punctuation in given language */
   string = placeLocaleDoubleQuotes(string, locale);
-  string = placeMarkdownCodeTicks(string, configuration);
 
   /* [7] Consolidate spaces around double quotes and primes */
   string = removeExtraSpacesAroundQuotes(string, locale);

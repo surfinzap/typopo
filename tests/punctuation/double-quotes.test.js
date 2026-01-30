@@ -790,28 +790,6 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-export const keepMarkdownCodeBlocksSet = {
-  "```\ncode\n```":    "```\ncode\n```",
-  "``code``":          "``code``",
-  "``code code``":     "``code code``",
-  "``code`` ``code``": "``code`` ``code``",
-  "`code`":            "`code`",
-  "`code code`":       "`code code`",
-  "`code` `code`":     "`code` `code`",
-};
-
-createTestSuite(
-  "Test if markdown ticks are kept (double quotes) ",
-  {},
-  undefined,
-  keepMarkdownCodeBlocksSet,
-  (text, locale) =>
-    fixDoubleQuotesAndPrimes(text, locale, {
-      keepMarkdownCodeBlocks: true,
-    }),
-  supportedLocales
-);
-
 export const doubleQuotesSet = {
   ...removePunctuationBeforeQuotesModuleSet,
   ...removePunctuationAfterQuotesModuleSet,
