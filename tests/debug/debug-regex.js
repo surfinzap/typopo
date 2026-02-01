@@ -15,7 +15,12 @@ function debugRegexPattern(patternParts, flags = "g") {
 }
 
 const pattern = [
-  /*place regex pattern*/
+  `([^0-9]|^)` +
+    `(${base.doubleQuoteAdepts})` +
+    `(.+?)` +
+    `(\\d+)` +
+    `(${base.doubleQuoteAdepts})` +
+    `([${base.terminalPunctuation}${base.ellipsis}])`,
 ];
 
 debugRegexPattern(pattern, "g");

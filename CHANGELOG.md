@@ -13,9 +13,8 @@ With version 3.0.0, Typopo refocuses on its core strength: **microtypography fix
   - no changes to implementation—library remains written in JavaScript
 
 ### 🐛 Fixes
-- Fix false positive when pipe character `|` was incorrectly identified as multiplication sign in patterns like `12|3` → `12 × 3`. 
-
-
+- Fix false positive when pipe character `|` was incorrectly identified as multiplication sign in patterns like `12|3` → `12 × 3`.
+- Fix false positive when a double quote after a number was incorrectly identified as an inch marker (double prime) instead of a quotation mark in patterns like `Level 3 "with" word` → now correctly preserves `Level 3 “with” word`.
 
 ### ⚠️ Breaking Changes
 

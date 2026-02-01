@@ -26,7 +26,7 @@ import { excludeExceptions, placeExceptions } from "../../src/modules/words/exce
 
 //
 
-const testString = "«‹quoted (fragment)›; sentence continues», also";
+const testString = `Level 3 "with" multiple "quotes"`;
 const testLocale = "rue";
 
 //

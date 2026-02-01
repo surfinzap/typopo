@@ -111,12 +111,14 @@ export function identifyDoublePrimes(string) {
     new RegExp(
       `(\\b\\d{1,3})` +
       `([${base.spaces}]?)` +
-      `(${base.doubleQuoteAdepts})`,
-      "g"
+      `(${base.doubleQuoteAdepts})` +
+      `([^\\p{L}]|\\B)`,
+      "gu"
     ),
       `$1` +
       `$2` +
-      `${m.doublePrime}`
+      `${m.doublePrime}` +
+      `$4`
   )
 
   return string;
