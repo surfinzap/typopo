@@ -32,6 +32,7 @@ With version 3.0.0, Typopo refocuses on its core strength: **microtypography fix
 
 ### 🔨 Maintenance
 - Update dev dependencies to their latest versions 
+- Configure which files are included in the npm package, reducing package size and installation time by excluding unnecessary source files, tests, and development artifacts.
 
 
 
