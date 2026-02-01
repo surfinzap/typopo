@@ -2,7 +2,7 @@
 
 
 
-## 3.0.0 // 2026
+## 3.0.0 // 2026-02-01
 
 With version 3.0.0, Typopo refocuses on its core strength: **microtypography fixes for plaintext**. Markdown-specific handling has been removed from the core library, as the previous implementation was rudimentary. For comprehensive markdown support with structure-aware processing, use the [typopo-vscode extension](https://github.com/surfinzap/typopo-vscode) (v2.0.1+), which provides better parsing that properly distinguishes code from prose.
 
@@ -24,7 +24,7 @@ With version 3.0.0, Typopo refocuses on its core strength: **microtypography fix
      - for other use cases: handle list indentation outside of typopo before processing.
 
 - **`keepMarkdownCodeBlocks`:** removed as part of refocusing typopo on plaintext typography.
-   - **Previous behavior:** when enabled, protected content within markdown code blocks (`` `code` ``, ``` ```code``` ```) from quote processing.
+   - **Previous behavior:** when enabled, backticks (`,``,```) was preserved from processing.
    - **New behavior:** no special handling for backticks; they’re treated as regular characters.
    - **Migration:**
      - for markdown files: use [typopo-vscode extension](https://github.com/surfinzap/typopo-vscode) v2.0.1+, which automatically preserves inline code, code blocks, HTML, and frontmatter while fixing typography in prose.
