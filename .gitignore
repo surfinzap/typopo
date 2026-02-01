@@ -44,6 +44,7 @@ Temporary Items
 
 # Build files
 build/
+*.tgz
 
 # Libraries
 node_modules/

@@ -26,7 +26,7 @@ import { excludeExceptions, placeExceptions } from "../../src/modules/words/exce
 
 //
 
-const testString = "«‹quoted (fragment)›; sentence continues», also";
+const testString = `Level 3 "with" multiple "quotes"`;
 const testLocale = "rue";
 
 //
@@ -41,9 +41,7 @@ function debugFixTypos(inputString, locale = "en-us", configuration = {}) {
   let currentLocale = new Locale(locale);
 
   configuration = {
-    removeLines:                         true,
-    removeWhitespacesBeforeMarkdownList: true,
-    keepMarkdownCodeBlocks:              false,
+    removeLines: true,
     ...configuration,
   };
 
@@ -200,9 +198,7 @@ function getTypoTransformationSteps(inputString, locale = "en-us", configuration
   let currentLocale = new Locale(locale);
 
   configuration = {
-    removeLines:                         true,
-    removeWhitespacesBeforeMarkdownList: true,
-    keepMarkdownCodeBlocks:              false,
+    removeLines: true,
     ...configuration,
   };
 

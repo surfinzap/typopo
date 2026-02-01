@@ -32,8 +32,6 @@ import { excludeExceptions, placeExceptions } from "./modules/words/exceptions.j
  * @param {string} [locale="en-us"] - Language locale. Supported: "en-us", "de-de", "sk", "cs", "rue"
  * @param {Object} [configuration] - Configuration options
  * @param {boolean} [configuration.removeLines=true] - Remove empty lines between paragraphs
- * @param {boolean} [configuration.removeWhitespacesBeforeMarkdownList=true] - Remove whitespaces before Markdown lists
- * @param {boolean} [configuration.keepMarkdownCodeBlocks=false] - Preserve Markdown code blocks from quote processing
  * @returns {string} Text with typography corrections applied
  */
 export function fixTypos(string, locale, configuration) {
@@ -44,9 +42,7 @@ export function fixTypos(string, locale, configuration) {
   configuration =
     typeof configuration === "undefined"
       ? {
-          removeLines:                         true,
-          removeWhitespacesBeforeMarkdownList: true,
-          keepMarkdownCodeBlocks:              false,
+          removeLines: true,
         }
       : configuration;
 
@@ -62,13 +58,13 @@ export function fixTypos(string, locale, configuration) {
   string = fixEllipsis(string, currentLocale);
 
   // spaces cleanup
-  string = fixSpaces(string, currentLocale, configuration);
+  string = fixSpaces(string, currentLocale);
 
   // punctuation
   string = fixPeriod(string);
   string = fixDash(string, currentLocale);
-  string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale, configuration);
-  string = fixDoubleQuotesAndPrimes(string, currentLocale, configuration);
+  string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale);
+  string = fixDoubleQuotesAndPrimes(string, currentLocale);
 
   // symbols
   string = fixMultiplicationSign(string);

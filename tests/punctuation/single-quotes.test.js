@@ -19,7 +19,6 @@ import {
 } from "../../src/modules/punctuation/single-quotes.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { createTestSuite, transformTestSet, t } from "../test-utils.js";
-import { keepMarkdownCodeBlocksSet } from "./double-quotes.test.js";
 import { m } from "../../src/markers.js";
 
 const identifyContractedAndModuleSet = {
@@ -580,18 +579,6 @@ supportedLocales.forEach((localeName) => {
     localeName
   );
 });
-
-createTestSuite(
-  "Test if markdown ticks are kept (single quotes) ",
-  {},
-  undefined,
-  keepMarkdownCodeBlocksSet,
-  (text, locale) =>
-    fixSingleQuotesPrimesAndApostrophes(text, locale, {
-      keepMarkdownCodeBlocks: true,
-    }),
-  supportedLocales
-);
 
 export const singleQuotesSet = {
   ...identifyContractedAndModuleSet,

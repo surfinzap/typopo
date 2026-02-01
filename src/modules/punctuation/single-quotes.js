@@ -1,5 +1,4 @@
 import { base } from "../../const.js";
-import { identifyMarkdownCodeTicks, placeMarkdownCodeTicks } from "../../utils/markdown.js";
 import { m } from "../../markers.js";
 
 //
@@ -413,7 +412,7 @@ export function replaceSinglePrimeWSingleQuote(string) {
   ‘Wow!’ → ‘Wow!’ (unchanged—ambiguous)
 
   @param {string} string: input text for identification
-  @param {object} locale: locale configuration
+  @param {object} locale: locale option
   @returns {string} output with corrected punctuation placement
 */
 export function fixQuotedWordPunctuation(string, locale) {
@@ -446,7 +445,7 @@ export function fixQuotedWordPunctuation(string, locale) {
   - move colons `:` and semicolons `;` outside the quoted part
 
   @param {string} string: input text for identification
-  @param {object} locale: locale configuration
+  @param {object} locale: locale option
   @returns {string} output with corrected punctuation placement
  */
 export function fixQuotedSentencePunctuation(string, locale) {
@@ -570,7 +569,6 @@ export function placeLocaleSingleQuotes(string, locale) {
   e.g. ␣'word or sentence portion'␣ (and not like ␣'␣word␣'␣)
 
   Algorithm
-  [0] Identify markdown code ticks
   [1] Identify common apostrophe contractions
   [2] Identify feet, arcminutes, minutes
   [3] Identify single quote pair around a single word
@@ -585,12 +583,7 @@ export function placeLocaleSingleQuotes(string, locale) {
   @param {string} language — language options
   @returns {string} — corrected output
 */
-export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuration) {
-  configuration = configuration || {};
-
-  /* [0] Identify markdown code ticks */
-  string = identifyMarkdownCodeTicks(string, configuration);
-
+export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
   /* [1] Identify common apostrophe contractions */
   string = identifyContractedAnd(string);
   string = identifyContractedBeginnings(string);
@@ -615,7 +608,6 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale, configuratio
 
   /* [7] Replace all identified punctuation with appropriate punctuation in given language */
   string = placeLocaleSingleQuotes(string, locale);
-  string = placeMarkdownCodeTicks(string, configuration);
 
   /* [8] Fix punctuation placement for quoted content */
   string = fixQuotedWordPunctuation(string, locale);

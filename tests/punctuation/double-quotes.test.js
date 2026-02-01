@@ -237,6 +237,7 @@ supportedLocales.forEach((localeName) => {
 });
 
 const identifyDoublePrimesUnitSet = {
+  // tbd later inches only as double digits
   '12′ 45 "':  "12′ 45 ″",
   "12′ 45 “":  "12′ 45 ″",
   "12′ 45 ”":  "12′ 45 ″",
@@ -252,6 +253,10 @@ const identifyDoublePrimesUnitSet = {
 
   // identify swapped inches with terminal punctuation
   '"He was 12".': '"He was 12."',
+
+  // false positive, not a double prime
+  // tbd better identification of spaces
+  'Level 3 "with" word': 'Level 3 "with" word',
 
   // false positive
   'He was 12".':     "He was 12″.",
@@ -283,6 +288,9 @@ const identifyDoublePrimesModuleSet = {
   // identify swapped inches with terminal punctuation
   '"He was 12".': `${t.odq}He was 12.${t.cdq}`,
   'He was 12".':  "He was 12″.", // failing on singleQuotes
+
+  //false positive
+  'Level 3 "with" multiple': `Level 3 ${t.odq}with${t.cdq} multiple`,
 };
 
 supportedLocales.forEach((localeName) => {
@@ -789,28 +797,6 @@ supportedLocales.forEach((localeName) => {
     localeName
   );
 });
-
-export const keepMarkdownCodeBlocksSet = {
-  "```\ncode\n```":    "```\ncode\n```",
-  "``code``":          "``code``",
-  "``code code``":     "``code code``",
-  "``code`` ``code``": "``code`` ``code``",
-  "`code`":            "`code`",
-  "`code code`":       "`code code`",
-  "`code` `code`":     "`code` `code`",
-};
-
-createTestSuite(
-  "Test if markdown ticks are kept (double quotes) ",
-  {},
-  undefined,
-  keepMarkdownCodeBlocksSet,
-  (text, locale) =>
-    fixDoubleQuotesAndPrimes(text, locale, {
-      keepMarkdownCodeBlocks: true,
-    }),
-  supportedLocales
-);
 
 export const doubleQuotesSet = {
   ...removePunctuationBeforeQuotesModuleSet,

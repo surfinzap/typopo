@@ -59,6 +59,7 @@ const multiBetweenNumberWord = {
   "4 xenographs": "4 xenographs", // false positive
   "4xenographs":  "4xenographs", // false positive
   "0xd":          "0xd", //false positive, hex number
+  "4 | object":   "4 | object", // false positive, previous bug
 };
 
 createTestSuite(

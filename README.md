@@ -140,6 +140,27 @@ For direct browser usage without a bundler:
 </script>
 ```
 
+#### TypeScript Support
+
+Typopo includes TypeScript type definitions for enhanced type safety and autocomplete:
+
+```typescript
+import { fixTypos, TypopoLocale, TypopoConfiguration } from 'typopo';
+
+// TypeScript provides autocomplete for locales
+const locale: TypopoLocale = 'en-us'; // 'en-us' | 'de-de' | 'sk' | 'cs' | 'rue'
+
+// Type-safe configuration
+const config: TypopoConfiguration = {
+  removeLines: true
+};
+
+// Full type checking
+const result: string = fixTypos('Your text here', locale, config);
+```
+
+The library is written in JavaScript, but ships with type definitions for TypeScript users.
+
 Check out the [API](#api) section for usage details.
 
 
@@ -160,16 +181,7 @@ Optional configuration as a JavaScript object:
 ```javascript
 configuration = {
 	// If true, removes empty lines between paragraphs
-	removeLines : true, 
-  
-	// if true, removes empty spaces before a nested Markdown list or blockquote; 
-	// set as false when you use Typopo to fix typography of your Markdown files and you want to keep the nesting
-	removeWhitespacesBeforeMarkdownList : true, 
-
-	// if true, markdown code blocks (i.e. `code`, ``code``, ```code```) will be ignored from being identified as incorrectly used single quote or double quote pairs
-	// set as false when you want to fix typos in generic texts (non-Markdown files)
-	// set as true when you want to keep Markdown code blocks in your Markdown files
-	keepMarkdownCodeBlocks: false,
+	removeLines : true,
 }
 ```
 

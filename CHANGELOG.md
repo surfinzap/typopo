@@ -2,6 +2,44 @@
 
 
 
+## 3.0.0 // 2026-02-01
+
+With version 3.0.0, Typopo refocuses on its core strength: **microtypography fixes for plaintext**. Markdown-specific handling has been removed from the core library, as the previous implementation was rudimentary. For comprehensive markdown support with structure-aware processing, use the [typopo-vscode extension](https://github.com/surfinzap/typopo-vscode) (v2.0.1+), which provides better parsing that properly distinguishes code from prose.
+
+### ✨ New features
+- **TypeScript type definitions:** Added official TypeScript declaration file (`index.d.ts`) for improved type safety and IntelliSense support in TypeScript projects.
+  - exported types: `TypopoLocale`, `TypopoConfiguration`
+  - full JSDoc documentation for enhanced IDE experience
+  - no changes to implementation—library remains written in JavaScript
+
+### 🐛 Fixes
+- Fix false positive when pipe character `|` was incorrectly identified as multiplication sign in patterns like `12|3` → `12 × 3`.
+- Fix false positive when a double quote after a number was incorrectly identified as an inch marker (double prime) instead of a quotation mark in patterns like `Level 3 "with" word` → now correctly preserves `Level 3 “with” word`.
+
+### ⚠️ Breaking Changes
+
+**Configuration options removed:**
+
+- **`removeWhitespacesBeforeMarkdownList`:** removed as part of refocusing typopo on plaintext typography.
+   - **Previous behavior:** controlled whether whitespace before Markdown lists and blockquotes was preserved or removed.
+   - **New behavior:** whitespace before any paragraph is now always removed (previous default).
+   - **Migration:**
+     - for markdown files: use [typopo-vscode extension](https://github.com/surfinzap/typopo-vscode) v2.0.1+, which automatically preserves markdown list nesting through AST parsing.
+     - for other use cases: handle list indentation outside of typopo before processing.
+
+- **`keepMarkdownCodeBlocks`:** removed as part of refocusing typopo on plaintext typography.
+   - **Previous behavior:** when enabled, backticks (`,``,```) was preserved from processing.
+   - **New behavior:** no special handling for backticks; they’re treated as regular characters.
+   - **Migration:**
+     - for markdown files: use [typopo-vscode extension](https://github.com/surfinzap/typopo-vscode) v2.0.1+, which automatically preserves inline code, code blocks, HTML, and frontmatter while fixing typography in prose.
+     - for other use cases: pre-process your content to protect code blocks before passing to typopo.
+
+### 🔨 Maintenance
+- Update dev dependencies to their latest versions 
+- Configure which files are included in the npm package, reducing package size and installation time by excluding unnecessary source files, tests, and development artifacts.
+
+
+
 ## 2.9.1 // 2026-01-16
 
 ### 💪 Improvements

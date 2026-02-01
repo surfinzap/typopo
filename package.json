@@ -1,8 +1,9 @@
 {
 	"name": "typopo",
-	"version": "2.9.1",
+	"version": "3.0.0",
 	"description": "Fix frequent microtypography errors in multiple languages. Write neat texts without bothering about typography rules. Typopo works for English, German, Slovak, Czech and Rusyn language.",
 	"type": "module",
+	"types": "./index.d.ts",
 	"license": "MIT",
 	"author": {
 		"name": "Braňo Šandala",
@@ -13,12 +14,13 @@
 		"test": "vitest run  --exclude tests/idempotency.test.js",
 		"test:dev": "cross-env SOURCE_ONLY=true vitest --exclude tests/idempotency.test.js",
 		"test:module": "vitest --exclude tests/integration/typopo.test.js --exclude tests/idempotency.test.js",
-		"test:idempotency": "vitest run tests/idempotency.test.js",
+		"test:id": "vitest run tests/idempotency.test.js",
 		"test:perf": "node tests/performance.test.js",
 		"lint": "eslint src/",
 		"lint:fix": "eslint src/ --fix",
 		"format": "prettier --write src/ tests/",
 		"debug": "node tests/debug/debug-typopo.js",
+		"debug:dq": "node tests/debug/debug-double-quotes.js",
 		"debug:regex": "node tests/debug/debug-regex.js",
 		"prepare": "husky"
 	},
@@ -37,10 +39,17 @@
 	"browser": "./dist/typopo.umd.js",
 	"exports": {
 		".": {
+			"types": "./index.d.ts",
 			"import": "./dist/typopo.es.js",
 			"require": "./dist/typopo.cjs"
 		}
 	},
+	"files": [
+		"dist",
+		"index.d.ts",
+		"LICENSE.txt",
+		"README.md"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/surfinzap/typopo"
@@ -71,8 +80,8 @@
 		"husky": "^9.1.7",
 		"jsdom": "^27.4.0",
 		"lint-staged": "^16.2.7",
-		"prettier": "^3.8.0",
+		"prettier": "^3.8.1",
 		"vite": "^7.3.1",
-		"vitest": "^4.0.17"
+		"vitest": "^4.0.18"
 	}
 }

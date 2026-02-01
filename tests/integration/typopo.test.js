@@ -6,11 +6,7 @@ import { describe, expect, it } from "vitest";
 import { supportedLocales } from "../../src/locale/locale.js";
 import { fixTypos } from "../../src/typopo.js";
 import { dashSet } from "../punctuation/dash.test.js";
-import {
-  doubleQuotesSet,
-  keepMarkdownCodeBlocksSet,
-  transformDoubleQuoteSet,
-} from "../punctuation/double-quotes.test.js";
+import { doubleQuotesSet, transformDoubleQuoteSet } from "../punctuation/double-quotes.test.js";
 import { ellipsisSet } from "../punctuation/ellipsis.test.js";
 import { periodSet } from "../punctuation/period.test.js";
 import { singleQuotesSet } from "../punctuation/single-quotes.test.js";
@@ -100,23 +96,11 @@ describe("Test that exceptions remain intact", () => {
   typopo configurations 
 */
 const configDefault = {
-  removeLines:                         true,
-  removeWhitespacesBeforeMarkdownList: true,
+  removeLines: true,
 };
 
 const configKeepLines = {
-  removeLines:                         false,
-  removeWhitespacesBeforeMarkdownList: true,
-};
-
-const configKeepWhitespacesBeforeMarkdownList = {
-  removeLines:                         true,
-  removeWhitespacesBeforeMarkdownList: false,
-};
-
-const configKeepMarkdownCodeBlocks = {
-  keepMarkdownCodeBlocks: true,
-  removeLines:            false,
+  removeLines: false,
 };
 
 /* 
@@ -195,20 +179,6 @@ let testKeepLines = {
   ...Object.fromEntries(Object.keys(linesSet).map((key) => [key, key])),
 };
 
-let testRemoveWhitespacesBeforeMarkdownList = {
-  "  - list item":   "- list item",
-  "  * list item":   "* list item",
-  "\t\t- list item": "- list item",
-  "\t\t* list item": "* list item",
-};
-
-let testKeepWhitespacesBeforeMarkdownList = {
-  "  - list item":   "  - list item",
-  "  * list item":   "  * list item",
-  "\t\t- list item": "\t\t- list item",
-  "\t\t* list item": "\t\t* list item",
-};
-
 /* 
   Tests 
 */
@@ -222,7 +192,6 @@ supportedLocales.forEach((locale) => {
       let testCaseDefault = {
         ...testCase,
         ...testRemoveLines,
-        ...testRemoveWhitespacesBeforeMarkdownList,
       };
 
       runAllVersions(testCaseDefault, locale, configDefault);
@@ -236,24 +205,5 @@ supportedLocales.forEach((locale) => {
 
       runAllVersions(testCaseKeepLines, locale, configKeepLines);
     });
-
-    describe("with removeWhitespacesBeforeMarkdownList=false", () => {
-      let testCaseKeepWhitespacesBeforeMarkdownList = {
-        ...testCase,
-        ...testKeepWhitespacesBeforeMarkdownList,
-      };
-
-      runAllVersions(
-        testCaseKeepWhitespacesBeforeMarkdownList,
-        locale,
-        configKeepWhitespacesBeforeMarkdownList
-      );
-    });
-  });
-});
-
-supportedLocales.forEach((locale) => {
-  describe(`Markdown ticks are kept (integration) ${locale}`, () => {
-    runAllVersions(keepMarkdownCodeBlocksSet, locale, configKeepMarkdownCodeBlocks);
   });
 });

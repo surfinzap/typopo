@@ -22,37 +22,16 @@ export function removeMultipleSpaces(string) {
 //
 
 /**
-  Removes extra spaces and tabs at the beginning of each paragraph, unless user configures to keep spaces before beginning of the nested markdown lists
-  
-  [1] split the lines manually
-  [2] if removeWhitespacesBeforeMarkdownList = false; keep the spaces before the markdown lists
-  [3] otherwise remove other empty spaces or tabs at the beginning of the paragraph
-  [4] join lines together to a single string
+  Removes extra spaces and tabs at the beginning of each paragraph
 
   @param {string} string — input text for identification
-  @param {object} configuration — typopo configuration
   @returns {string} — output with removed spaces at the beginning of paragraphs
 */
-export function removeSpacesAtParagraphBeginning(string, configuration) {
-  /* [1] split the lines manually */
-  let lines = string.split(/\r?\n/);
-
-  let re = new RegExp("(^\\s+)([-\\*\\+\\>]*)", "g"); // identify whitespaces and markdown list and blockquote indicators -/*>
-
-  for (let i = 0; i < lines.length; i++) {
-    lines[i] = lines[i].replace(re, function ($0, $1, $2) {
-      /* [2] */
-      if (configuration.removeWhitespacesBeforeMarkdownList == false && $2 != "") {
-        return $1 + $2;
-        /* [3] */
-      } else {
-        return $2;
-      }
-    });
-  }
-
-  /* [4] join lines together to a single string */
-  return lines.join("\n");
+export function removeSpacesAtParagraphBeginning(string) {
+  return string
+    .split(/\r?\n/)
+    .map((line) => line.replace(/^\s+/, ""))
+    .join("\n");
 }
 
 //
@@ -60,25 +39,14 @@ export function removeSpacesAtParagraphBeginning(string, configuration) {
 /**
   Removes extra spaces and tabs at the end of each paragraph.
 
-  [1] split the lines manually
-  [2] remove empty spaces or tabs at the end of the paragraph
-  [3] join lines together to a single string
-  
   @param {string} string — input text for identification
   @returns {string} — output with removed spaces at the end of paragraphs
   */
 export function removeSpacesAtParagraphEnd(string) {
-  /* [1] split the lines manually */
-  let lines = string.split(/\r?\n/);
-  let re = new RegExp("(\\s+$)", "g");
-
-  /* [2] remove empty spaces or tabs at the end of the paragraph*/
-  for (let i = 0; i < lines.length; i++) {
-    lines[i] = lines[i].replace(re, "");
-  }
-
-  /* [3] join lines together to a single string */
-  return lines.join("\n");
+  return string
+    .split(/\r?\n/)
+    .map((line) => line.replace(/\s+$/, ""))
+    .join("\n");
 }
 
 //
@@ -300,9 +268,9 @@ export function addSpaceBeforeSymbol(string, symbol) {
 
 //
 
-export function fixSpaces(string, locale, configuration) {
+export function fixSpaces(string, locale) {
   string = removeMultipleSpaces(string);
-  string = removeSpacesAtParagraphBeginning(string, configuration);
+  string = removeSpacesAtParagraphBeginning(string);
   string = removeSpacesAtParagraphEnd(string);
   string = removeSpaceBeforeSentencePausePunctuation(string);
   string = removeSpaceBeforeTerminalPunctuation(string);
