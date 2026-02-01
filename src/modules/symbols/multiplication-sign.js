@@ -76,7 +76,7 @@ export function fixMultiplicationSignBetweenNumberAndWord(string) {
     new RegExp(
       `([\\d])` +
       `([${base.spaces}]?)` +
-      `([x|×])` +
+      `([x×])` +
       `([${base.spaces}])` +
       `([\\p{Ll}]+)`,
       "giu"

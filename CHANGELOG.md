@@ -12,6 +12,11 @@ With version 3.0.0, Typopo refocuses on its core strength: **microtypography fix
   - full JSDoc documentation for enhanced IDE experience
   - no changes to implementation—library remains written in JavaScript
 
+### 🐛 Fixes
+- Fix false positive when pipe character `|` was incorrectly identified as multiplication sign in patterns like `12|3` → `12 × 3`. 
+
+
+
 ### ⚠️ Breaking Changes
 
 **Configuration options removed:**

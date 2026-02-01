@@ -1334,7 +1334,7 @@ function zn(e) {
 function Un(e) {
   return e.replace(
     new RegExp(
-      `([\\d])([${n.spaces}]?)([x|×])([${n.spaces}])([\\p{Ll}]+)`,
+      `([\\d])([${n.spaces}]?)([x×])([${n.spaces}])([\\p{Ll}]+)`,
       "giu"
     ),
     function(p, o, s, r, t, c) {
