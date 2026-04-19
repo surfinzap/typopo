@@ -1,5 +1,10 @@
 # Changelog for Typopo
 
+## 3.0.1 // 2026-04-19
+
+### 🔨 Maintenance
+- Update dev dependencies to their latest versions 
+
 
 
 ## 3.0.0 // 2026-02-01

@@ -72,16 +72,16 @@
 		"node": ">=6.9.4"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.39.2",
-		"@huggingface/prettier-plugin-vertical-align": "^0.2.3",
+		"@eslint/js": "^10.0.1",
+		"@huggingface/prettier-plugin-vertical-align": "^0.2.4",
 		"@trivago/prettier-plugin-sort-imports": "^6.0.2",
 		"cross-env": "^10.1.0",
-		"eslint": "^9.39.2",
+		"eslint": "^10.2.1",
 		"husky": "^9.1.7",
-		"jsdom": "^27.4.0",
-		"lint-staged": "^16.2.7",
-		"prettier": "^3.8.1",
-		"vite": "^7.3.1",
-		"vitest": "^4.0.18"
+		"jsdom": "^29.0.2",
+		"lint-staged": "^16.4.0",
+		"prettier": "^3.8.3",
+		"vite": "^8.0.8",
+		"vitest": "^4.1.4"
 	}
 }
