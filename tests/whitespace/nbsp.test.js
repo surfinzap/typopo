@@ -260,11 +260,15 @@ const nbspNameRegnalNumberSet = {
   [`Karel IV${t.romanOrdinalIndicator} byl římsko-německý král.`]: `Karel IV${t.romanOrdinalIndicator} byl římsko-německý král.`,
   [`Karel IV${t.romanOrdinalIndicator}`]:                          `Karel IV${t.romanOrdinalIndicator}`,
   [`Karel X${t.romanOrdinalIndicator}`]:                           `Karel X${t.romanOrdinalIndicator}`,
+  [`Pope Leo XIV${t.romanOrdinalIndicator}`]:                      `Pope Leo XIV${t.romanOrdinalIndicator}`,
   //false positive
+  "Content MDC":                                                   "Content MDC",
+  "Washington DC":                                                 "Washington DC",
+  "Standard CD":                                                   "Standard CD",
   "je to IV. cenová skupina":                                      "je to IV. cenová skupina",
   "Try Ctrl+I":                                                    "Try Ctrl+I",
   // unsupported (It’s more common to use “I + verb” in text than citing regnal names so this case is unsupported for now)
-  "Charles I.":                                                    "Charles I.",
+  [`Charles I${t.romanOrdinalIndicator}`]:                         `Charles I${t.romanOrdinalIndicator}`,
 };
 
 const nbspNameRegnalNumberUnitSet = {
