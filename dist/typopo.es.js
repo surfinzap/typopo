@@ -330,9 +330,9 @@ var L = "‚|'|‘|’|ʼ|‛|´|`|′|‹|›", W = "’", k = "′", q = "`", 
   },
   directSpeechIntro: ":",
   dashWords: {
-    spaceBefore: n.hairSpace,
+    spaceBefore: n.nbsp,
     dash: n.enDash,
-    spaceAfter: n.hairSpace
+    spaceAfter: n.space
   },
   spaceAfter: {
     copyright: n.nbsp,
@@ -348,8 +348,8 @@ var L = "‚|'|‘|’|ʼ|‛|´|`|′|‹|›", W = "’", k = "′", q = "`", 
     romanOrdinalIndicator: "\\."
   },
   ordinalDate: {
-    firstSpace: n.nbsp,
-    secondSpace: n.space
+    firstSpace: "",
+    secondSpace: ""
   },
   singleWordAbbreviations: [
     "Abk",

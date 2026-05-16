@@ -19,9 +19,9 @@ export const deCH = {
   */
   // TBD double-check
   dashWords: {
-    spaceBefore: base.hairSpace,
+    spaceBefore: base.nbsp,
     dash:        base.enDash,
-    spaceAfter:  base.hairSpace,
+    spaceAfter:  base.space,
   },
 
   spaceAfter: {
@@ -52,8 +52,8 @@ export const deCH = {
   */
   // TBD double-check
   ordinalDate: {
-    firstSpace:  base.nbsp,
-    secondSpace: base.space,
+    firstSpace:  "",
+    secondSpace: "",
   },
 
   /* 
