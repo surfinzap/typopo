@@ -249,16 +249,16 @@ export function fixNbspForNameWithRegnalNumber(string, locale) {
       `([${base.nbsp}]?)`;
   let re = new RegExp(pattern, "gu");
 
-  return string.replace(re, function ($0, $1, $2, $3, $4, $5) {
-    if ($5 == "" && $3 == "I") {
-      return $1 + base.space + $3 + $4;
-    } else if ($5 == "" && $3 != "I") {
-      return $1 + base.nbsp + $3 + $4;
-    } else if ($5 == base.nbsp && $3 == "I") {
-      return $1 + base.space + $3 + $4 + $5;
-    } else {
-      return $1 + base.nbsp + $3 + $4 + base.space;
-    }
+  return string.replace(re, function ($0, name, _space, numeral, ordinalIndicator, trailingNbsp) {
+    const isFalsePositive =
+      numeral.startsWith("M") || numeral.startsWith("D") || numeral.startsWith("C");
+    const isRomanI = numeral === "I";
+    const hasTrailing = trailingNbsp === base.nbsp;
+
+    if (isFalsePositive) return name + base.space + numeral + ordinalIndicator + trailingNbsp;
+    if (isRomanI)
+      return name + base.space + numeral + ordinalIndicator + (hasTrailing ? trailingNbsp : "");
+    return name + base.nbsp + numeral + ordinalIndicator + (hasTrailing ? base.space : "");
   });
 }
 
