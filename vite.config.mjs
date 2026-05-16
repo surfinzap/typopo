@@ -34,7 +34,7 @@ export default defineConfig(() => {
         fileName: (format) => format === 'cjs' ? `typopo.cjs` : `typopo.${format}.js`
       },
       outDir: 'dist',
-      minify: 'esbuild',
+      minify: 'oxc',
       sourcemap: false,
       emptyOutDir: true,
       target: ['es2020', 'chrome80', 'firefox78', 'safari14', 'edge88']
