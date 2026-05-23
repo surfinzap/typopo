@@ -1,5 +1,12 @@
 # Changelog for Typopo
 
+
+## 3.1.0 // 2026-05
+
+### ✨ New features
+- Add support for Swiss Standard German (`de-ch`) locale, including locale-specific quotes (`«` `»` / `‹` `›`), spacing rules, and Swiss German single- and multi-word abbreviations.
+
+
 ## 3.0.2 // 2026-05-16
 
 ### 🐛 Fixes
