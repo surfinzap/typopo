@@ -6,6 +6,10 @@
 ### ✨ New features
 - Add support for Swiss Standard German (`de-ch`) locale, including locale-specific quotes (`«` `»` / `‹` `›`), spacing rules, and Swiss German single- and multi-word abbreviations.
 
+### 🔨 Maintenance
+- Update dev dependencies to their latest versions 
+
+
 
 ## 3.0.2 // 2026-05-16
 
