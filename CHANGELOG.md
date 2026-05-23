@@ -1,5 +1,15 @@
 # Changelog for Typopo
 
+## 3.0.2 // 2026-05-16
+
+### 🐛 Fixes
+- Fix false positives when adding a non-breaking space before a regnal number: abbreviations starting with M, D, or C (e.g. DC, CD, MDC) are no longer mistaken for Roman numerals, so “Washington DC” or “Standard CD” stay untouched while “Pope Leo XIV” is correctly fixed.
+
+### 🔨 Maintenance
+- Update dev dependencies to their latest versions 
+
+
+
 ## 3.0.1 // 2026-04-19
 
 ### 🔨 Maintenance
