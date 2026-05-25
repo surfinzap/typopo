@@ -1,6 +1,9 @@
 packages:
   - "."
 
+allowBuilds:
+  esbuild: true
+
 ignoredBuiltDependencies:
   - es5-ext
 
