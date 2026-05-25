@@ -1,7 +1,7 @@
 ![Typopo logotype](assets/typopo--logotype--2020.svg "Typopo logotype")
 
 
-> Fix frequent microtypography errors in multiple languages. Write neat texts without bothering about typography rules. Typopo works for English, German, Slovak, Czech and Rusyn language.
+> Fix frequent microtypography errors in multiple languages. Write neat texts without bothering about typography rules. Typopo works for English, German, Swiss German, Slovak, Czech and Rusyn language.
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/surfinzap/typopo?color=7b00cb&style=flat)
 ![GitHub](https://img.shields.io/github/license/surfinzap/typopo?color=7b00cb&style=flat)
@@ -37,11 +37,12 @@
 
 ## Features
 Typopo fixes microtypography hiccups in five languages:
-- English
-- German
-- Czech
-- Slovak
-- Rusyn
+- English (en-us)
+- German (de-de)
+- Swiss German (de-ch)
+- Czech (cs)
+- Slovak (sk)
+- Rusyn (rue)
 
 Typopo fixes punctuation:
 - double quotes (and accidentally typed punctuation related to the use of double quotes)
@@ -176,6 +177,7 @@ Locale options (supported languages):
 - "sk" (Slovak)
 - "cs" (Czech)
 - "de-de" (German)
+- "de-ch" (Swiss German)
 
 Optional configuration as a JavaScript object:
 ```javascript
@@ -210,5 +212,6 @@ Licensed under MIT license. (See [LICENCE.TXT](//github.com/surfinzap/typopo/blo
 
 ## Special thanks
 - [@Viclick](https://github.com/vilemj-Viclick), [@tomashruby](https://github.com/tomashruby), [@vit-svoboda](https://github.com/vit-svoboda) for technical consultancy
-- [@skurzinz](https://github.com/skurzinz) for consultation on German typography
-- Filip Blažek for consultation on Czech typography
+- [@skurzinz](https://github.com/skurzinz) for consulting on German typography rules
+- Filip Blažek for consulting on Czech typography rules
+- Flora Sohns for consulting on Swiss German typography rules
