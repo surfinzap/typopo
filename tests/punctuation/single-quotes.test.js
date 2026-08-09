@@ -592,7 +592,7 @@ export const singleQuotesSet = {
   ...identifySingleQuotePairsModuleSet,
   ...identifySingleQuotePairAroundSingleWordModuleSet,
   ...replaceSinglePrimeWSingleQuoteModuleSet,
-  ...identifyResidualApostrophes,
+  ...identifyResidualApostrophesSet,
   ...removeExtraSpaceAroundSinglePrimeSet,
   ...fixQuotedWordPunctuationModuleSet,
   ...fixQuotedSentencePunctuationModuleSet,

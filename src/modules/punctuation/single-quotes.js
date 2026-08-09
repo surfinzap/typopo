@@ -1,5 +1,22 @@
 import { base } from "../../const.js";
 import { m } from "../../markers.js";
+import {
+  fixQuotedSentencePunctuation as fixQuotedSentencePunctuationFor,
+  fixQuotedWordPunctuation as fixQuotedWordPunctuationFor,
+  placeLocaleQuotes,
+  removeExtraSpaceBefore,
+  replacePrimeWithQuotePair,
+} from "./quotes/shared.js";
+
+/**
+  The single quote pair for a locale, in the shape ./quotes/shared.js expects.
+
+  @param {object} locale: locale option
+  @returns {{open: string, close: string}}
+*/
+function singleQuotePair(locale) {
+  return { open: locale.openingSingleQuote, close: locale.closingSingleQuote };
+}
 
 //
 
@@ -368,29 +385,13 @@ export function identifyResidualApostrophes(string) {
   @returns {string} output with a single quote pair
 */
 export function replaceSinglePrimeWSingleQuote(string) {
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(${m.osqUnpaired})` +
-      `(.*?)` +
-      `(${m.singlePrime})`,
-      "g"
-    ),
-      `${m.osq}$2${m.csq}`
-  );
-
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(${m.singlePrime})` +
-      `(.*?)` +
-      `(${m.csqUnpaired})`,
-      "g"
-    ),
-      `${m.osq}$2${m.csq}`
-  );
-
-  return string;
+  return replacePrimeWithQuotePair(string, {
+    openUnpaired:  m.osqUnpaired,
+    closeUnpaired: m.csqUnpaired,
+    prime:         m.singlePrime,
+    open:          m.osq,
+    close:         m.csq,
+  });
 }
 
 //
@@ -416,23 +417,7 @@ export function replaceSinglePrimeWSingleQuote(string) {
   @returns {string} output with corrected punctuation placement
 */
 export function fixQuotedWordPunctuation(string, locale) {
-  // prettier-ignore
-  return string.replace(
-    new RegExp(
-      `(${locale.openingSingleQuote})` +
-      `([^${base.spaces}${locale.closingSingleQuote}]+?)` +
-      `([^${base.romanNumerals}${base.sentencePunctuation}])` +
-      `([${base.sentencePunctuation}]{1,})` +
-      `(${locale.closingSingleQuote})`,
-      "g"
-    ),
-    (match, leftQuote, content, notRoman, punct, rightQuote) => {
-      if (punct.length === 1 && /[.,;:]/.test(punct)) {
-        return leftQuote + content + notRoman + rightQuote + punct;
-      }
-      return match; // Return unchanged for everything else
-    }
-  );
+  return fixQuotedWordPunctuationFor(string, singleQuotePair(locale));
 }
 
 //
@@ -449,52 +434,11 @@ export function fixQuotedWordPunctuation(string, locale) {
   @returns {string} output with corrected punctuation placement
  */
 export function fixQuotedSentencePunctuation(string, locale) {
-  // move everything inside
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(${locale.openingSingleQuote})` +
-      `(.+)` +
-      `([${base.spaces}])(?!${locale.openingSingleQuote})` +
-      `([^${base.romanNumerals}]{2,})` +
-      `(${locale.closingSingleQuote})` +
-      `([${base.sentencePunctuation}${base.ellipsis}])` +
-      `([^${locale.closingDoubleQuote}])`,
-      "g"
-    ),
-    `$1` +
-    `$2` +
-    `$3` +
-    `$4` +
-    `$6` +
-    `$5` +
-    `$7`
-  )
-
-  // move colons and semicolons outside
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([:;])` +
-      `(${locale.closingSingleQuote})`,
-      "g"
-    ),
-    `$2$1`
-  )
-
-  // move terminal punctuation (.?!…) outside when quoted fragment is at the end of a quoted sentence
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([${base.terminalPunctuation}${base.ellipsis}])` +
-      `(${locale.closingSingleQuote})` +
-      `(${locale.closingDoubleQuote})`,
-      "g"
-    ),
-    `$2$1$3`
-  )
-
-  return string;
+  return fixQuotedSentencePunctuationFor(
+    string,
+    singleQuotePair(locale),
+    locale.closingDoubleQuote
+  );
 }
 
 //
@@ -515,15 +459,7 @@ export function fixQuotedSentencePunctuation(string, locale) {
   @returns {string} output with adjusted spacing around single quotes and single primes
 */
 export function removeExtraSpaceAroundSinglePrime(string) {
-  // prettier-ignore
-  return string.replace(
-    new RegExp(
-      `([${base.spaces}])` +
-      `(${base.singlePrime})`, 
-      "g"
-    ),
-    `$2`
-  )
+  return removeExtraSpaceBefore(string, base.singlePrime);
 }
 
 //
@@ -541,7 +477,7 @@ export function removeExtraSpaceAroundSinglePrime(string) {
   @returns {string} an output with locale-specific single quotes and single primes
 */
 export function placeLocaleSingleQuotes(string, locale) {
-  const replacements = [
+  return placeLocaleQuotes(string, [
     { pattern: m.singlePrime, replacement: base.singlePrime },
     {
       pattern:     `[${m.apos}${m.osqUnpaired}${m.csqUnpaired}]`,
@@ -549,12 +485,7 @@ export function placeLocaleSingleQuotes(string, locale) {
     },
     { pattern: m.osq, replacement: locale.openingSingleQuote },
     { pattern: m.csq, replacement: locale.closingSingleQuote },
-  ];
-
-  return replacements.reduce(
-    (text, { pattern, replacement }) => text.replace(new RegExp(pattern, "gu"), replacement),
-    string
-  );
+  ]);
 }
 
 //

@@ -1,6 +1,24 @@
 import { base } from "../../const.js";
 import { addNbspAfterPreposition } from "../whitespace/nbsp.js";
 import { m } from "../../markers.js";
+import {
+  fixQuotedSentencePunctuation as fixQuotedSentencePunctuationFor,
+  fixQuotedWordPunctuation as fixQuotedWordPunctuationFor,
+  placeLocaleQuotes,
+  removeExtraSpaceAfter,
+  removeExtraSpaceBefore,
+  replacePrimeWithQuotePair,
+} from "./quotes/shared.js";
+
+/**
+  The double quote pair for a locale, in the shape ./quotes/shared.js expects.
+
+  @param {object} locale: locale option
+  @returns {{open: string, close: string}}
+*/
+function doubleQuotePair(locale) {
+  return { open: locale.openingDoubleQuote, close: locale.closingDoubleQuote };
+}
 
 //
 
@@ -268,30 +286,13 @@ export function removeUnidentifiedDoubleQuote(string) {
   @returns {string} output with a double quote pair
 */
 export function replaceDoublePrimeWDoubleQuote(string) {
-  // prettier-ignore
-  return string
-    .replace(
-      new RegExp(
-        `(${m.odqUnpaired})` +
-        `(.*?)` +
-        `(${m.doublePrime})`,
-        "g"
-      ),
-      `${m.odq}` +
-      `$2` +
-      `${m.cdq}`
-    )
-    .replace(
-      new RegExp(
-        `(${m.doublePrime})` +
-        `(.*?)` +
-        `(${m.cdqUnpaired})`,
-        "g"
-      ),
-      `${m.odq}` +
-      `$2` +
-      `${m.cdq}`
-    );
+  return replacePrimeWithQuotePair(string, {
+    openUnpaired:  m.odqUnpaired,
+    closeUnpaired: m.cdqUnpaired,
+    prime:         m.doublePrime,
+    open:          m.odq,
+    close:         m.cdq,
+  });
 }
 
 //
@@ -317,23 +318,7 @@ export function replaceDoublePrimeWDoubleQuote(string) {
   @returns {string} output with corrected punctuation placement
 */
 export function fixQuotedWordPunctuation(string, locale) {
-  // prettier-ignore
-  return string.replace(
-    new RegExp(
-      `(${locale.openingDoubleQuote})` +                          
-      `([^${base.spaces}${locale.closingDoubleQuote}]+?)` +      
-      `([^${base.romanNumerals}${base.sentencePunctuation}])` +                  
-      `([${base.sentencePunctuation}]{1,})` +                                   
-      `(${locale.closingDoubleQuote})`,   
-      "g"
-    ),
-    (match, leftQuote, content, notRoman, punct, rightQuote) => {
-      if (punct.length === 1 && /[.,;:]/.test(punct)) {
-        return leftQuote + content + notRoman + rightQuote + punct;
-      }
-      return match; // Return unchanged for everything else
-    }
-  );
+  return fixQuotedWordPunctuationFor(string, doubleQuotePair(locale));
 }
 
 //
@@ -350,38 +335,7 @@ export function fixQuotedWordPunctuation(string, locale) {
   @returns {string} output with corrected punctuation placement
  */
 export function fixQuotedSentencePunctuation(string, locale) {
-  // move everything inside
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(${locale.openingDoubleQuote})` + 
-      `(.+)` + 
-      `([${base.spaces}])(?!${locale.openingDoubleQuote})` + 
-      `([^${base.romanNumerals}]{2,})` + 
-      `(${locale.closingDoubleQuote})` + 
-      `([${base.sentencePunctuation}${base.ellipsis}])`,
-      "g"
-    ),
-    `$1` +
-    `$2` +
-    `$3` +
-    `$4` +
-    `$6` +
-    `$5`
-  )
-
-  // move colons and semicolons outside
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([:;])` +
-      `(${locale.closingDoubleQuote})`,
-      "g"
-    ),
-    `$2$1` 
-  )
-
-  return string;
+  return fixQuotedSentencePunctuationFor(string, doubleQuotePair(locale));
 }
 
 /**
@@ -397,16 +351,11 @@ export function fixQuotedSentencePunctuation(string, locale) {
   @returns {string} an output with locale-specific double quotes and double primes
 */
 export function placeLocaleDoubleQuotes(string, locale) {
-  const replacements = [
+  return placeLocaleQuotes(string, [
     { pattern: m.doublePrime, replacement: base.doublePrime },
     { pattern: `[${m.odq}${m.odqUnpaired}]`, replacement: locale.openingDoubleQuote },
     { pattern: `[${m.cdq}${m.cdqUnpaired}]`, replacement: locale.closingDoubleQuote },
-  ];
-
-  return replacements.reduce(
-    (text, { pattern, replacement }) => text.replace(new RegExp(pattern, "gu"), replacement),
-    string
-  );
+  ]);
 }
 
 //
@@ -430,32 +379,9 @@ export function placeLocaleDoubleQuotes(string, locale) {
   @returns {string} output with adjusted spacing around double quotes and double primes
 */
 export function removeExtraSpacesAroundQuotes(string, locale) {
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(${locale.openingDoubleQuote})` +
-      `([${base.spaces}])`,
-    "g"),
-    `$1`
-  );
-
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([${base.spaces}])` +
-      `(${locale.closingDoubleQuote})`,
-    "g"),
-    `$2`
-  );
-
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([${base.spaces}])` +
-      `(${base.doublePrime})`,
-    "g"),
-    `$2`
-  );
+  string = removeExtraSpaceAfter(string, locale.openingDoubleQuote);
+  string = removeExtraSpaceBefore(string, locale.closingDoubleQuote);
+  string = removeExtraSpaceBefore(string, base.doublePrime);
 
   return string;
 }
