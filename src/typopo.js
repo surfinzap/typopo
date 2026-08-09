@@ -1,8 +1,3 @@
-/*!
- * Typopo v2.5.8 (https://typopo.org)
- * Copyright 2015–2025 Braňo Šandala (https://brano.me)
- * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
- */
 import Locale from "./locale/locale.js";
 import { removeEmptyLines } from "./modules/whitespace/lines.js";
 import { fixNbsp } from "./modules/whitespace/nbsp.js";

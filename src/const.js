@@ -4,7 +4,7 @@
   (39)			dumb single quote
   (8216)		left single quotation mark
   (8217)		right single quotation mark ’
-  (700)	  	modifier letter apostrophe ʼ https://en.wikipedia.org/wiki/Modifier_letter_apostrophe [1]
+  (700)	  	modifier letter apostrophe ʼ https://en.wikipedia.org/wiki/Modifier_letter_apostrophe
   (8219)		single high-reversed-9 quotation mark
   (180)     acute accent ´
   (96)      grave accent `
