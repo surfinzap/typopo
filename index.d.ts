@@ -6,7 +6,7 @@
 /**
  * Supported locale codes for typography fixes
  */
-export type TypopoLocale = "en-us" | "de-de" | "sk" | "cs" | "rue";
+export type TypopoLocale = "en-us" | "de-de" | "de-ch" | "sk" | "cs" | "rue";
 
 /**
  * Configuration options for typography fixes
@@ -26,6 +26,7 @@ export interface TypopoConfiguration {
  * @param locale - Language locale for typography rules. Defaults to "en-us" if not specified.
  *   - "en-us": English (United States)
  *   - "de-de": German (Germany)
+ *   - "de-ch": German (Switzerland)
  *   - "sk": Slovak
  *   - "cs": Czech
  *   - "rue": Rusyn

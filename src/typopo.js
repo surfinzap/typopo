@@ -24,7 +24,7 @@ import { excludeExceptions, placeExceptions } from "./modules/words/exceptions.j
  * Fixes microtypography errors in text across multiple languages
  *
  * @param {string} string - Input text for correction
- * @param {string} [locale="en-us"] - Language locale. Supported: "en-us", "de-de", "sk", "cs", "rue"
+ * @param {string} [locale="en-us"] - Language locale. Supported: "en-us", "de-de", "de-ch", "sk", "cs", "rue"
  * @param {Object} [configuration] - Configuration options
  * @param {boolean} [configuration.removeLines=true] - Remove empty lines between paragraphs
  * @returns {string} Text with typography corrections applied

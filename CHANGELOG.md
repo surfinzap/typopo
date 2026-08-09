@@ -1,6 +1,15 @@
 # Changelog for Typopo
 
 
+## 3.x.x // 2026 
+
+TBD rewrite
+
+### 🐛 Fixes
+- Add missing `de-ch` to types
+
+
+
 ## 3.1.0 // 2026-05-25
 
 ### ✨ New features
