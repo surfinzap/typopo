@@ -1,6 +1,8 @@
 import { base } from "../../const.js";
 import { addNbspAfterPreposition } from "../whitespace/nbsp.js";
 import { m } from "../../markers.js";
+import { CLOSE, OPEN, pairQuoteTokens } from "./quotes/pairing.js";
+import { replaceQuoteTokens, scanQuoteTokens } from "./quotes/scanner.js";
 import {
   fixQuotedSentencePunctuation as fixQuotedSentencePunctuationFor,
   fixQuotedWordPunctuation as fixQuotedWordPunctuationFor,
@@ -153,11 +155,20 @@ export function identifyDoublePrimes(string) {
   Assumptions and Limitations
   We assume that double primes, inches and arcseconds were identified in the previous run.
 
+  Algorithm
+  [1] a number wrapped in a quote and an already-identified double prime is a
+      quote pair, e.g. "202″ → “202”. Stays a regex: it is a local pattern,
+      not a pairing decision.
+  [2] everything else is paired by scanning the remaining adepts into tokens
+      and matching them with a stack (./scanner.js, ./pairing.js). Adepts left
+      unpaired are untouched here — identifyUnpairedOpeningDoubleQuote and
+      identifyUnpairedClosingDoubleQuote deal with them next.
+
   @param {string} string: input text for identification
   @returns {string} output with identified double quote pairs
 */
 export function identifyDoubleQuotePairs(string) {
-  // double quotes around a number
+  // [1] double quotes around a number
   // prettier-ignore
   string = string.replace(
     new RegExp(
@@ -171,21 +182,17 @@ export function identifyDoubleQuotePairs(string) {
       `${m.cdq}`
   );
 
-  // generic rule
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(${base.doubleQuoteAdepts})` +
-      `(.*?)` +
-      `(${base.doubleQuoteAdepts})`,
-      "g"
-    ),
-      `${m.odq}` +
-      `$2` +
-      `${m.cdq}`
-  );
+  // [2] generic rule
+  const tokens = scanQuoteTokens(string, base.doubleQuoteAdepts);
+  const roles = pairQuoteTokens(tokens);
 
-  return string;
+  const replacements = roles.map((role) => {
+    if (role === OPEN) return m.odq;
+    if (role === CLOSE) return m.cdq;
+    return null;
+  });
+
+  return replaceQuoteTokens(string, tokens, replacements);
 }
 
 //
