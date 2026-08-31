@@ -6,6 +6,7 @@
 var e = {
 	singleQuoteAdepts: "‚|'|‘|’|ʼ|‛|´|`|′|‹|›",
 	apostrophe: "’",
+	modifierLetterApostrophe: "ʼ",
 	singlePrime: "′",
 	backtick: "`",
 	doubleQuoteAdepts: "„|“|”|\"|«|»|″|,{2,}|‚{2,}|[‘’ʼ'‹›′´`]{2,}",
@@ -555,7 +556,8 @@ var M = {
 	odqUnpaired: "",
 	cdqUnpaired: "",
 	enDash: "",
-	tick: ""
+	tick: "",
+	mla: ""
 }, N = 57856, P = 63743, F = 5888;
 function I(e) {
 	let t = N + e;
@@ -770,29 +772,32 @@ function We(t) {
 	return t.replace(RegExp(`([^0-9]|[A-Z][0-9])([${e.spaces}])(${e.singleQuoteAdepts})([\\d]{2})`, "gu"), `$1$2${M.apos}$4`);
 }
 function Ge(e) {
+	return e.replace(/* @__PURE__ */ RegExp("(?<!ʼ)ʼ(?!ʼ)", "gu"), M.mla);
+}
+function Ke(e) {
 	return e.replace(/(\d)( ?)('|‘|’|‛|′)/g, `$1$2${M.singlePrime}`);
 }
-function Ke(t) {
+function qe(t) {
 	return t.replace(RegExp(`(^|[${e.spaces}${e.emDash}${e.enDash}])(${e.singleQuoteAdepts}|,)([\\p{L}${e.ellipsis}${e.openingBrackets}\\{])`, "gu"), `$1${M.osqUnpaired}$3`);
 }
-function qe(t) {
+function Je(t) {
 	return t.replace(RegExp(`([\\p{L}\\d${e.closingBrackets}])([${e.sentencePunctuation}${e.ellipsis}])?(${e.singleQuoteAdepts})([ ${e.sentencePunctuation}])?`, "gu"), `$1$2${M.csqUnpaired}$4`);
 }
-function Je(t) {
+function Ye(t) {
 	return t.replace(RegExp(`(${e.doubleQuoteAdepts})(.*?)(${e.doubleQuoteAdepts})`, "gu"), function(e, t, n, r) {
-		return n = Ke(n), n = qe(n), n = Ye(n), t + n + r;
+		return n = qe(n), n = Je(n), n = Xe(n), t + n + r;
 	});
 }
-function Ye(e) {
+function Xe(e) {
 	return e.replace(RegExp(`(${M.osqUnpaired})(.*)(${M.csqUnpaired})`, "gu"), `${M.osq}$2${M.csq}`);
 }
-function Xe(t) {
+function Ze(t) {
 	return t.replace(RegExp(`(\\B)(${e.singleQuoteAdepts})([\\p{L}]+)(${e.singleQuoteAdepts})(\\B)`, "gu"), `$1${M.osq}$3${M.csq}$5`);
 }
-function Ze(t) {
+function Qe(t) {
 	return t.replace(RegExp(`(${e.singleQuoteAdepts})`, "g"), `${M.apos}`);
 }
-function Qe(e) {
+function $e(e) {
 	return U(e, {
 		openUnpaired: M.osqUnpaired,
 		closeUnpaired: M.csqUnpaired,
@@ -801,16 +806,16 @@ function Qe(e) {
 		close: M.csq
 	});
 }
-function $e(e, t) {
+function et(e, t) {
 	return V(e, q(t));
 }
-function et(e, t) {
+function tt(e, t) {
 	return H(e, q(t), t.closingDoubleQuote);
 }
-function tt(t) {
+function nt(t) {
 	return G(t, e.singlePrime);
 }
-function nt(t, n) {
+function rt(t, n) {
 	return W(t, [
 		{
 			pattern: M.singlePrime,
@@ -819,6 +824,10 @@ function nt(t, n) {
 		{
 			pattern: `[${M.apos}${M.osqUnpaired}${M.csqUnpaired}]`,
 			replacement: e.apostrophe
+		},
+		{
+			pattern: M.mla,
+			replacement: e.modifierLetterApostrophe
 		},
 		{
 			pattern: M.osq,
@@ -830,27 +839,27 @@ function nt(t, n) {
 		}
 	]);
 }
-function rt(e, t) {
-	return e = Be(e), e = Ve(e), e = Ue(e), e = We(e), e = He(e), e = Ge(e), e = Xe(e), e = Je(e), e = Qe(e), e = Ze(e), e = nt(e, t), e = $e(e, t), e = et(e, t), e = tt(e), e;
+function it(e, t) {
+	return e = Be(e), e = Ve(e), e = Ue(e), e = We(e), e = He(e), e = Ge(e), e = Ke(e), e = Ze(e), e = Ye(e), e = $e(e), e = Qe(e), e = rt(e, t), e = et(e, t), e = tt(e, t), e = nt(e), e;
 }
 //#endregion
 //#region src/modules/symbols/multiplication-sign.js
-function it(t) {
+function at(t) {
 	return a(t, RegExp(`([\\d]+)([${e.spaces}]?[\\p{Ll}${e.singlePrime}${e.doublePrime}]*)([${e.spaces}][x][${e.spaces}])([\\d]+)([${e.spaces}]?[\\p{Ll}${e.singlePrime}${e.doublePrime}]*)`, "giu"), `$1$2${e.nbsp}${e.multiplicationSign}${e.nbsp}$4$5`);
 }
-function at(t) {
+function ot(t) {
 	return a(t, RegExp(`([\\p{L}]+)([${e.spaces}][x][${e.spaces}])([\\p{L}]+)`, "gu"), `$1${e.nbsp}${e.multiplicationSign}${e.nbsp}$3`);
 }
-function ot(t) {
+function st(t) {
 	return t.replace(RegExp(`([\\d])([${e.spaces}]?)([x×])([${e.spaces}])([\\p{Ll}]+)`, "giu"), function(t, n, r, i, a, o) {
 		return r == "" ? `${n}${r}${e.multiplicationSign}${e.nbsp}${o}` : `${n}${e.nbsp}${e.multiplicationSign}${e.nbsp}${o}`;
 	});
 }
-function st(t) {
+function ct(t) {
 	return t.replace(RegExp(`([\\d]+)([${e.singlePrime}${e.doublePrime}])?([x|×])([\\d]+)([${e.singlePrime}${e.doublePrime}])?`, "giu"), `$1$2${e.nbsp}${e.multiplicationSign}${e.nbsp}$4$5`);
 }
-function ct(e) {
-	return e = it(e), e = at(e), e = ot(e), e = st(e), e;
+function lt(e) {
+	return e = at(e), e = ot(e), e = st(e), e = ct(e), e;
 }
 //#endregion
 //#region src/modules/symbols/symbol-utils.js
@@ -859,7 +868,7 @@ function J(e, t, n) {
 }
 //#endregion
 //#region src/modules/symbols/section-sign.js
-function lt(t, n) {
+function ut(t, n) {
 	return t = J(t, e.sectionSign, n.spaceAfter.sectionSign), t = J(t, e.paragraphSign, n.spaceAfter.paragraphSign), t;
 }
 //#endregion
@@ -867,17 +876,17 @@ function lt(t, n) {
 function Y(t, n, r) {
 	return t.replace(RegExp(`(\\(${n}\\))([${e.spaces}]*)(\\d)`, "gi"), `${r}$2$3`);
 }
-function ut(t, n) {
+function dt(t, n) {
 	return t = Y(t, "c", e.copyright), t = J(t, e.copyright, n.spaceAfter.copyright), t = Y(t, "p", e.soundRecordingCopyright), t = J(t, e.soundRecordingCopyright, n.spaceAfter.soundRecordingCopyright), t;
 }
 //#endregion
 //#region src/modules/symbols/numero-sign.js
-function dt(t, n) {
+function ft(t, n) {
 	return t = J(t, e.numeroSign, n.spaceAfter.numeroSign), t;
 }
 //#endregion
 //#region src/modules/symbols/plus-minus.js
-function ft(t) {
+function pt(t) {
 	return t.replace(RegExp("(\\+\\-)|(\\-\\+)", "g"), e.plusMinus);
 }
 //#endregion
@@ -885,7 +894,7 @@ function ft(t) {
 function X(t, n, r) {
 	return t.replace(RegExp(`([^0-9]|^)([${e.spaces}]*)(\\(${n}\\)|${r})`, "gi"), `$1${r}`);
 }
-function pt(t) {
+function mt(t) {
 	return t = X(t, "r", e.registeredTrademark), t = X(t, "sm", e.serviceMark), t = X(t, "tm", e.trademark), t;
 }
 //#endregion
@@ -893,26 +902,26 @@ function pt(t) {
 function Z(t, n, r) {
 	return t.replace(RegExp(`([${e.spaces}${e.slash}])(m|dam|hm|km|Mm|Gm|Tm|Pm|Em|Zm|Ym|m|dm|cm|mm|µm|nm|pm|fm|am|zm|ym)(${n})`, "g"), `$1$2${r}`);
 }
-function mt(e) {
+function ht(e) {
 	return Z(e, "2", "²");
 }
-function ht(e) {
+function gt(e) {
 	return Z(e, "3", "³");
 }
-function gt(e) {
-	return e = mt(e), e = ht(e), e;
+function _t(e) {
+	return e = ht(e), e = gt(e), e;
 }
 //#endregion
 //#region src/modules/symbols/number-sign.js
-function _t(t) {
+function vt(t) {
 	return t.replace(RegExp(`([${e.spaces}]+)(${e.numberSign})([${e.spaces}]+)(\\d)`, "g"), "$1$2$4");
 }
-function vt(e) {
-	return e = _t(e), e;
+function yt(e) {
+	return e = vt(e), e;
 }
 //#endregion
 //#region src/modules/words/abbreviations.js
-function yt(t, n) {
+function bt(t, n) {
 	let r = `([\\p{Lu}][\\p{L}]?\\.)([${e.spaces}]?)`, i = "([\\p{L}]{2,}[^\\.])", a = [
 		{
 			pattern: `${r}${i}`,
@@ -930,7 +939,7 @@ function yt(t, n) {
 	for (let { pattern: e, replacement: n } of a) t = t.replace(new RegExp(e, "gu"), n);
 	return t;
 }
-function bt(t, n) {
+function Q(t, n) {
 	let r = `([^\\p{L}${e.enDash}${e.emDash}]|^)`, i = `([^\\p{L}${n.openingDoubleQuote}${n.openingSingleQuote}${e.backtick}\\p{Emoji}]|$)`, a = [];
 	for (let t = 0; t < n.multipleWordAbbreviations.length; t++) {
 		let r = n.multipleWordAbbreviations[t].split(" "), i = "";
@@ -959,7 +968,7 @@ function xt(t, n) {
 	return t;
 }
 function St(e, t) {
-	return e = yt(e, t), e = bt(e, t), e = xt(e, t), e;
+	return e = bt(e, t), e = Q(e, t), e = xt(e, t), e;
 }
 //#endregion
 //#region src/modules/words/case.js
@@ -983,19 +992,19 @@ function Et(t) {
 	let n = `([${e.spaces}]?[${e.hyphen}${e.enDash}${e.emDash}][${e.spaces}]?)`;
 	return t.replace(RegExp(`(isbn)(:?)([${e.spaces}]?)(\\d+)` + n + "(\\d+)" + n + "(\\d+)" + n + "(\\d+)" + n + "(X|\\d+)", "gi"), `ISBN$2${e.nbsp}$4-$6-$8-$10-$12`);
 }
-function Q(t) {
+function Dt(t) {
 	let n = `([${e.spaces}]?[${e.hyphen}${e.enDash}${e.emDash}][${e.spaces}]?)`;
 	return t.replace(RegExp("(\\d+)" + n + "(\\d+)" + n + "(\\d+)" + n + "(\\d+)" + n + "(X|\\d+?)", "g"), "$1-$3-$5-$7-$9");
 }
-function Dt(e) {
-	return e = wt(e), e = Tt(e), e = Et(e), e = Q(e), e;
+function Ot(e) {
+	return e = wt(e), e = Tt(e), e = Et(e), e = Dt(e), e;
 }
 //#endregion
 //#region src/modules/words/exceptions.js
-function Ot(t) {
+function kt(t) {
 	let n = [];
 	return $(t, e.emailPattern, n), $(t, e.urlPattern, n), $(t, e.filenamePattern, n), {
-		processedText: kt(t, n),
+		processedText: At(t, n),
 		exceptions: n
 	};
 }
@@ -1003,13 +1012,13 @@ function $(e, t, n) {
 	let r = new RegExp(t, "gi"), i = e.match(r);
 	return i && i.forEach((e) => n.push(e)), n;
 }
-function kt(e, t) {
+function At(e, t) {
 	return t.reduce((e, t, n) => {
 		let r = I(n);
 		return e.replace(t, r);
 	}, e);
 }
-function At(e, t) {
+function jt(e, t) {
 	return t.reduce((e, t, n) => {
 		let r = I(n), i = new RegExp(r, "g");
 		return e.replace(i, t);
@@ -1017,12 +1026,12 @@ function At(e, t) {
 }
 //#endregion
 //#region src/typopo.js
-function jt(e, t, n) {
+function Mt(e, t, n) {
 	t = t === void 0 ? "en-us" : t;
 	let a = new r(t);
 	n = n === void 0 ? { removeLines: !0 } : n;
-	let { processedText: o, exceptions: s } = Ot(e);
-	return e = o, n.removeLines && (e = i(e)), e = j(e, a), e = _(e, a), e = y(e), e = ge(e, a), e = rt(e, a), e = ze(e, a), e = ct(e), e = lt(e, a), e = ut(e, a), e = dt(e, a), e = ft(e), e = pt(e), e = gt(e), e = vt(e), e = Ct(e), e = Dt(e), e = St(e, a), e = oe(e, a), e = At(e, s), e;
+	let { processedText: o, exceptions: s } = kt(e);
+	return e = o, n.removeLines && (e = i(e)), e = j(e, a), e = _(e, a), e = y(e), e = ge(e, a), e = it(e, a), e = ze(e, a), e = lt(e), e = ut(e, a), e = dt(e, a), e = ft(e, a), e = pt(e), e = mt(e), e = _t(e), e = yt(e), e = Ct(e), e = Ot(e), e = St(e, a), e = oe(e, a), e = jt(e, s), e;
 }
 //#endregion
-export { jt as fixTypos };
+export { Mt as fixTypos };

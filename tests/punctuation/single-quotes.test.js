@@ -4,6 +4,7 @@ import {
   identifyContractedEnds,
   identifyInWordContractions,
   identifyContractedYears,
+  identifyModifierApostrophe,
   identifySinglePrimes,
   identifyUnpairedOpeningSingleQuote,
   identifyUnpairedClosingSingleQuote,
@@ -164,6 +165,40 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
+const identifyModifierApostropheModuleSet = {
+  // preserved: a character you have to go out of your way to type is not a typo
+  "ta de jesʼ take": "ta de jesʼ take",
+  "ʼwordʼ here":     "ʼwordʼ here", // two mlas
+  // …unless a contraction identifier claims it first, which runs before this one
+  "Paulʼs Diner":    "Paul’s Diner",
+};
+
+const identifyModifierApostropheUnitSet = {
+  // a lone modifier letter apostrophe is marked as itself
+  "jesʼ":         `jes${m.mla}`,
+  "ʼword":        `${m.mla}word`,
+  "aʼb":          `a${m.mla}b`,
+  "jesʼ, kedysʼ": `jes${m.mla}, kedys${m.mla}`,
+  // false positives, a run of two or more is left for base.doubleQuoteAdepts to read as a double quote, so it must come through here untouched
+  "wordʼʼ":       "wordʼʼ",
+  "ʼʼword":       "ʼʼword",
+  "ʼʼʼ":          "ʼʼʼ",
+  // false positives, every other single quote adept will be handled by other functions
+  "word'":        "word'",
+  "word’":        "word’",
+};
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify the modifier letter apostrophe as itself",
+    transformTestSet(identifyModifierApostropheUnitSet, localeName),
+    (text) => identifyModifierApostrophe(text),
+    transformTestSet(identifyModifierApostropheModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
+});
+
 const identifySinglePrimesModuleSet = {
   "12 ' 45″": "12′ 45″",
   "12 ‘ 45″": "12′ 45″",
@@ -199,10 +234,11 @@ supportedLocales.forEach((localeName) => {
 
 const identifyUnpairedOpeningSingleQuoteModuleSet = {
   // heads up! since it’s a unpaired quote it’s fixed as apostrophe within a module
+  // except U+02BC: a modifier letter is kept as itself, see identifyModifierApostrophe
   [`${t.odq}‘word${t.cdq}`]:  `${t.odq}’word${t.cdq}`,
   [`${t.odq}–‘word${t.cdq}`]: `${t.odq}–’word${t.cdq}`,
   [`${t.odq}—‘word${t.cdq}`]: `${t.odq}—’word${t.cdq}`,
-  [`${t.odq}ʼword${t.cdq}`]:  `${t.odq}’word${t.cdq}`,
+  [`${t.odq}ʼword${t.cdq}`]:  `${t.odq}ʼword${t.cdq}`,
   [`${t.odq}‛word${t.cdq}`]:  `${t.odq}’word${t.cdq}`,
   [`${t.odq}´word${t.cdq}`]:  `${t.odq}’word${t.cdq}`,
   [`${t.odq}\`word${t.cdq}`]: `${t.odq}’word${t.cdq}`,
@@ -239,10 +275,11 @@ supportedLocales.forEach((localeName) => {
 
 const identifyUnpairedClosingSingleQuoteModuleSet = {
   // heads up! since it’s a unpaired quote it’s fixed as apostrophe within a module
+  // except U+02BC: a modifier letter is kept as itself, see identifyModifierApostrophe
   [`${t.odq}word'${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
   [`${t.odq}word‚${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
   [`${t.odq}word‘${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
-  [`${t.odq}wordʼ${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
+  [`${t.odq}wordʼ${t.cdq}`]:  `${t.odq}wordʼ${t.cdq}`,
   [`${t.odq}word‛${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
   [`${t.odq}word´${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
   [`${t.odq}word\`${t.cdq}`]: `${t.odq}word’${t.cdq}`,
@@ -586,6 +623,7 @@ export const singleQuotesSet = {
   ...identifyContractedEndsModuleSet,
   ...identifyInWordContractionsSet,
   ...identifyContractedYearsModuleSet,
+  ...identifyModifierApostropheModuleSet,
   ...identifySinglePrimesModuleSet,
   ...identifyUnpairedOpeningSingleQuoteModuleSet,
   ...identifyUnpairedClosingSingleQuoteModuleSet,

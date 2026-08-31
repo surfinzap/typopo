@@ -29,6 +29,9 @@ export const m = {
 
   /* Markdown markers */
   tick: "\uE10C",
+
+  /* Letters that must not be mistaken for punctuation */
+  mla: "\uE10D", // U+02BC modifier letter apostrophe
 };
 
 /**

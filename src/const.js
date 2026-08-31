@@ -15,6 +15,7 @@
 */
 const singleQuoteAdepts = "‚|'|‘|’|ʼ|‛|´|`|′|‹|›";
 const apostrophe = "’"; // (8217) is Unicode recommendation for apostrophe https://www.unicode.org/charts/nameslist/n_2000.html
+const modifierLetterApostrophe = "ʼ"; // (700) U+02BC
 const singlePrime = "′";
 const backtick = "`";
 const doubleQuoteAdepts = "„|“|”|\"|«|»|″|,{2,}|‚{2,}|[‘’ʼ'‹›′´`]{2,}";
@@ -66,6 +67,7 @@ export const base = {
   /* Quotes, primes, apostrophes */
   singleQuoteAdepts,
   apostrophe,
+  modifierLetterApostrophe,
   singlePrime,
   backtick,
   doubleQuoteAdepts,

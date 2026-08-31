@@ -75,7 +75,6 @@ export function identifyContractedAnd(string) {
 /**
   Identify common contractions at the beginning of the word as apostrophes
 
-
   Example
   ’em, ’cause,… see list of words in the function
 
@@ -170,6 +169,23 @@ export function identifyContractedYears(string) {
     ),
       `$1$2${m.apos}$4`
   );
+}
+
+//
+
+/**
+  Identify the modifier letter apostrophe (U+02BC) as itself
+
+  Ordering
+  Runs after the contraction identifiers, which legitimately match it as part of their own patterns (rock ’nʼ roll, Paulʼs Diner). Running it  earlier would hide it from them.
+
+  Runs of two or more are left alone base.doubleQuoteAdepts treats a run of adepts as a double quote, which is the sloppy-input case that rule exists for, so wordʼʼ stays a double quote candidate. Only an isolated occurrence is a letter here.
+
+  @param {string} string: input text for identification
+  @returns {string} output with a lone modifier letter apostrophe identified
+*/
+export function identifyModifierApostrophe(string) {
+  return string.replace(/(?<!ʼ)ʼ(?!ʼ)/gu, m.mla);
 }
 
 //
@@ -483,6 +499,7 @@ export function placeLocaleSingleQuotes(string, locale) {
       pattern:     `[${m.apos}${m.osqUnpaired}${m.csqUnpaired}]`,
       replacement: base.apostrophe,
     },
+    { pattern: m.mla, replacement: base.modifierLetterApostrophe },
     { pattern: m.osq, replacement: locale.openingSingleQuote },
     { pattern: m.csq, replacement: locale.closingSingleQuote },
   ]);
@@ -501,14 +518,15 @@ export function placeLocaleSingleQuotes(string, locale) {
 
   Algorithm
   [1] Identify common apostrophe contractions
-  [2] Identify feet, arcminutes, minutes
-  [3] Identify single quote pair around a single word
-  [4] Identify single quotes
-  [5] Replace a single qoute & a single prime with a single quote pair
-  [6] Identify residual apostrophes
-  [7] Replace all identified punctuation with appropriate punctuation in given language
-  [8] Swap quotes and terminal punctuation
-  [9] Consolidate spaces around single primes
+  [2] Identify the modifier letter apostrophe
+  [3] Identify feet, arcminutes, minutes
+  [4] Identify single quote pair around a single word
+  [5] Identify single quotes
+  [6] Replace a single qoute & a single prime with a single quote pair
+  [7] Identify residual apostrophes
+  [8] Replace all identified punctuation with appropriate punctuation in given language
+  [9] Swap quotes and terminal punctuation
+  [10] Consolidate spaces around single primes
 
   @param {string} string — input text for identification
   @param {string} language — language options
@@ -522,29 +540,32 @@ export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
   string = identifyContractedYears(string);
   string = identifyContractedEnds(string);
 
-  /* [2] Identify feet, arcminutes, minutes */
+  /* [2] Identify the modifier letter apostrophe */
+  string = identifyModifierApostrophe(string);
+
+  /* [3] Identify feet, arcminutes, minutes */
   string = identifySinglePrimes(string);
 
-  /* [3] Identify single quote pair around a single word */
+  /* [4] Identify single quote pair around a single word */
   string = identifySingleQuotePairAroundSingleWord(string);
 
-  /* [4] Identify single quotes within double quotes */
+  /* [5] Identify single quotes within double quotes */
   string = identifySingleQuotesWithinDoubleQuotes(string);
 
-  /* [5] Replace a single qoute & a single prime with a single quote pair */
+  /* [6] Replace a single qoute & a single prime with a single quote pair */
   string = replaceSinglePrimeWSingleQuote(string);
 
-  /* [6] Identify residual apostrophes*/
+  /* [7] Identify residual apostrophes*/
   string = identifyResidualApostrophes(string);
 
-  /* [7] Replace all identified punctuation with appropriate punctuation in given language */
+  /* [8] Replace all identified punctuation with appropriate punctuation in given language */
   string = placeLocaleSingleQuotes(string, locale);
 
-  /* [8] Fix punctuation placement for quoted content */
+  /* [9] Fix punctuation placement for quoted content */
   string = fixQuotedWordPunctuation(string, locale);
   string = fixQuotedSentencePunctuation(string, locale);
 
-  /* [9] Consolidate spaces around single primes */
+  /* [10] Consolidate spaces around single primes */
   string = removeExtraSpaceAroundSinglePrime(string);
 
   return string;
