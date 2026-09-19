@@ -186,7 +186,7 @@ export function identifyDoubleQuotePairs(string) {
   const tokens = scanQuoteTokens(string, base.doubleQuoteAdepts);
   const roles = pairQuoteTokens(tokens);
 
-  const replacements = roles.map((role) => {
+  const replacements = roles.map(({ role }) => {
     if (role === OPEN) return m.odq;
     if (role === CLOSE) return m.cdq;
     return null;

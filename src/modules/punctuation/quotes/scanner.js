@@ -4,21 +4,47 @@
   How scanQuoteTokens works
   It runs the adept pattern over the string with matchAll and turns every hit
   into a token: where it starts and ends, the raw text matched (a greedy run
-  such as `‘‘‘` or `,,` stays one token), the 0-based line it sits on
-  (counted by walking the text skipped since the previous token), and the
-  single characters immediately before and after it. Tokens come back in
-  document order; the string itself is not modified.
+  such as `‘‘‘` or `,,` stays one token), whether it is a double or a single
+  adept, the 0-based line it sits on (counted by walking the text skipped since
+  the previous token), and the single characters immediately before and after
+  it. Tokens come back in document order; the string itself is not modified.
 */
+
+import { base } from "../../../const.js";
+
+export const DOUBLE = "double";
+export const SINGLE = "single";
+
+/**
+  The combined adept pattern, for scanning single and double quotes as one
+  stream.
+
+  The double alternatives come first on purpose. JS alternation is
+  leftmost-first at every position, so a run such as `''`, `,,` or ``` `` ```
+  matches the double alternative as a single token, and only a lone mark falls
+  through to the single alternative. Putting the single adepts first would
+  break every run into two tokens.
+*/
+export const quoteAdepts = `(?:${base.doubleQuoteAdepts})|(?:${base.singleQuoteAdepts})`;
+
+/*
+  A token is a double adept when its whole raw text is one. Deriving the kind
+  from the matched text rather than from which alternative fired keeps
+  scanQuoteTokens working for callers that pass a single adept set: a token
+  scanned with base.singleQuoteAdepts is a lone mark, which is never a double.
+*/
+const DOUBLE_ADEPT = new RegExp(`^(?:${base.doubleQuoteAdepts})$`, "u");
 
 /**
   Find every quote adept in a string.
 
   @param {string} string: text to scan
-  @param {string} adeptPattern: alternation pattern of quote adepts,
-    e.g. base.doubleQuoteAdepts
-  @returns {Array<{index: number, raw: string, end: number, line: number, before: string, after: string}>}
+  @param {string} adeptPattern: alternation pattern of quote adepts, e.g.
+    base.doubleQuoteAdepts for double quotes alone, or quoteAdepts for both
+  @returns {Array<{index: number, raw: string, end: number, kind: string, line: number, before: string, after: string}>}
     tokens in document order, where
     - index/end delimit the token in the source string
+    - kind is DOUBLE or SINGLE
     - line is the 0-based line the token starts on
     - before/after are the adjacent characters, "" at the string edges
 */
@@ -51,6 +77,7 @@ export function scanQuoteTokens(string, adeptPattern) {
       index,
       raw,
       end,
+      kind:   DOUBLE_ADEPT.test(raw) ? DOUBLE : SINGLE,
       line,
       before: index > 0 ? string[index - 1] : "",
       after:  end < string.length ? string[end] : "",

@@ -2,6 +2,9 @@ import { describe, expect, it } from "vitest";
 
 import { base } from "../../../src/const.js";
 import {
+  DOUBLE,
+  SINGLE,
+  quoteAdepts,
   replaceQuoteTokens,
   scanQuoteTokens,
 } from "../../../src/modules/punctuation/quotes/scanner.js";
@@ -14,7 +17,9 @@ import {
  */
 
 const scanDouble = (string) => scanQuoteTokens(string, base.doubleQuoteAdepts);
+const scanBoth = (string) => scanQuoteTokens(string, quoteAdepts);
 const rawsOf = (tokens) => tokens.map((token) => token.raw);
+const kindsOf = (tokens) => tokens.map((token) => token.kind);
 
 describe("scanQuoteTokens: finding double quote adepts", () => {
   it("finds nothing in text without quotes", () => {
@@ -28,6 +33,7 @@ describe("scanQuoteTokens: finding double quote adepts", () => {
       index:  1,
       raw:    '"',
       end:    2,
+      kind:   DOUBLE,
       line:   0,
       before: "a",
       after:  "b",
@@ -96,6 +102,37 @@ describe("scanQuoteTokens: finding double quote adepts", () => {
     /* `,{2,}` and friends: a single comma is not a double quote adept. */
     expect(rawsOf(scanDouble(",,,quoted,,"))).toEqual([",,,", ",,"]);
     expect(rawsOf(scanDouble("a, b"))).toEqual([]);
+  });
+});
+
+describe("scanQuoteTokens: finding both kinds in one stream", () => {
+  it("tells a double adept from a single one", () => {
+    const tokens = scanBoth("\"a 'b' c\"");
+
+    expect(rawsOf(tokens)).toEqual(['"', "'", "'", '"']);
+    expect(kindsOf(tokens)).toEqual([DOUBLE, SINGLE, SINGLE, DOUBLE]);
+  });
+
+  it("reads a run of single marks as one double adept", () => {
+    /*
+      The double alternatives come first in the combined pattern, so a run is
+      claimed by the run class before the single alternative can take the first
+      mark of it. This is what stops `''` being scanned as two single quotes.
+    */
+    expect(rawsOf(scanBoth("''double apostrophes as quotes''"))).toEqual(["''", "''"]);
+    expect(kindsOf(scanBoth("''quoted''"))).toEqual([DOUBLE, DOUBLE]);
+    expect(rawsOf(scanBoth("``backtick quotes''"))).toEqual(["``", "''"]);
+  });
+
+  it("reads a lone mark of the same character as a single adept", () => {
+    expect(kindsOf(scanBoth("'quoted'"))).toEqual([SINGLE, SINGLE]);
+    expect(kindsOf(scanBoth("a `tick` b"))).toEqual([SINGLE, SINGLE]);
+  });
+
+  it("splits a run that ends where a lone mark begins", () => {
+    /* `The ''90s were great'` — a double run, then a single. */
+    expect(rawsOf(scanBoth("The ''90s were great'"))).toEqual(["''", "'"]);
+    expect(kindsOf(scanBoth("The ''90s were great'"))).toEqual([DOUBLE, SINGLE]);
   });
 });
 
