@@ -145,7 +145,8 @@ const pairVariants = {
  * The result is in t.* tokens, ready for transformTestSet().
  *
  * @param {Object} cases - input → expected, written with q.o / q.c
- * @param {Object} variants - { [variantName]: { overrides?: { [caseKey]: expected | null } } };
+ * @param {Object} variants - { [variantName]: { frame?: [before, after], overrides?: { [caseKey]: expected | null } } };
+ *   `frame` replaces the variant's default frame, e.g. to nest a case mid-sentence in the outer quote;
  *   an override states that variant's exact expected output in t.* tokens, frame included,
  *   since a variant may move punctuation past its frame; null drops the case from that variant
  * @returns {Object} expanded test set
@@ -162,7 +163,7 @@ export function expandPairVariants(cases, variants) {
       if (!(key in cases)) throw new Error(`Override for an unknown case (${name}): ${key}`);
     });
 
-    const [before, after] = variant.frame ?? ["", ""];
+    const [before, after] = options.frame ?? variant.frame ?? ["", ""];
     const render = (text, [open, close]) =>
       before + text.split(q.o).join(open).split(q.c).join(close) + after;
 

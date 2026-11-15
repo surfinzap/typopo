@@ -14,16 +14,9 @@ import {
   fixDoubleQuotesAndPrimes,
   fixDirectSpeechIntro,
 } from "../../src/modules/punctuation/double-quotes.js";
-import { fixQuotedSentencePunctuation } from "../../src/modules/punctuation/quotes/shared.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { createTestSuite, transformTestSet, t } from "../test-utils.js";
 import { m } from "../../src/markers.js";
-
-/* The double quote pair for a locale, as ./quotes/shared.js expects it */
-function doubleQuotePair(localeName) {
-  const locale = new Locale(localeName);
-  return { open: locale.openingDoubleQuote, close: locale.closingDoubleQuote };
-}
 
 const doubleQuotesFalsePositives = {
   "č., s., fol., str.,":                       "č., s., fol., str.,",
@@ -468,79 +461,6 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-const fixQuotedSentencePunctuationModuleSet = {
-  /*
-  Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
-
-  Fix the punctuation around a quoted word accordingly:
-  - move periods `.`, commas `,`, semicolons `;`, ellipses `…`exclamation `!` and question marks `?` inside the quoted part
-  - move colons `:` and semicolons `;` outside the quoted part
-  */
-
-  // Quoted fragment at the end of sentence
-  [`It can be a ${t.odq}quoted fragment${t.cdq}.`]: `It can be a ${t.odq}quoted fragment.${t.cdq}`,
-  [`It can be a ${t.odq}quoted fragment${t.cdq},`]: `It can be a ${t.odq}quoted fragment,${t.cdq}`,
-  [`It can be a ${t.odq}quoted fragment${t.cdq}!`]: `It can be a ${t.odq}quoted fragment!${t.cdq}`,
-  [`It can be a ${t.odq}quoted fragment${t.cdq}?`]: `It can be a ${t.odq}quoted fragment?${t.cdq}`,
-  [`It can be a ${t.odq}quoted fragment${t.cdq}…`]: `It can be a ${t.odq}quoted fragment…${t.cdq}`,
-
-  // nbsp
-  [`It can be ${t.odq}a banana${t.cdq}.`]: `It can be ${t.odq}a banana.${t.cdq}`,
-
-  // Quoted sentence
-  [`${t.odq}Fully quoted sentence${t.cdq}.`]: `${t.odq}Fully quoted sentence.${t.cdq}`,
-  [`${t.odq}Fully quoted sentence${t.cdq},`]: `${t.odq}Fully quoted sentence,${t.cdq}`,
-  [`${t.odq}Fully quoted sentence${t.cdq}!`]: `${t.odq}Fully quoted sentence!${t.cdq}`,
-  [`${t.odq}Fully quoted sentence${t.cdq}?`]: `${t.odq}Fully quoted sentence?${t.cdq}`,
-  [`${t.odq}Fully quoted sentence${t.cdq}…`]: `${t.odq}Fully quoted sentence…${t.cdq}`,
-
-  // Less common boundaries
-  [`${t.odq}(Fully) quoted sentence${t.cdq}.`]: `${t.odq}(Fully) quoted sentence.${t.cdq}`,
-  [`${t.odq}Fully quoted (sentence)${t.cdq}.`]: `${t.odq}Fully quoted (sentence).${t.cdq}`,
-
-  // false positive, consecutive double quotes
-  [`${t.odq}word${t.cdq} ${t.odq}word${t.cdq},`]: `${t.odq}word${t.cdq} ${t.odq}word${t.cdq},`,
-
-  // Colon / semicolon should be placed outside the quotes
-  [`${t.odq}quoted fragment:${t.cdq} sentence continues`]:   `${t.odq}quoted fragment${t.cdq}: sentence continues`,
-  [`${t.odq}quoted fragment;${t.cdq} sentence continues`]:   `${t.odq}quoted fragment${t.cdq}; sentence continues`,
-  [`${t.odq}(quoted) fragment:${t.cdq} sentence continues`]: `${t.odq}(quoted) fragment${t.cdq}: sentence continues`,
-  [`${t.odq}quoted (fragment);${t.cdq} sentence continues`]: `${t.odq}quoted (fragment)${t.cdq}; sentence continues`,
-
-  // Single quotes + double quotes
-  [`${t.odq}Sentence ${t.osq}quoted fragment${t.csq}${t.cdq}.`]: `${t.odq}Sentence ${t.osq}quoted fragment${t.csq}.${t.cdq}`,
-
-  // Correct placement
-  [`It can be a ${t.odq}quoted fragment.${t.cdq}`]: `It can be a ${t.odq}quoted fragment.${t.cdq}`,
-  [`It can be a ${t.odq}quoted fragment,${t.cdq}`]: `It can be a ${t.odq}quoted fragment,${t.cdq}`,
-  [`It can be a ${t.odq}quoted fragment!${t.cdq}`]: `It can be a ${t.odq}quoted fragment!${t.cdq}`,
-  [`It can be a ${t.odq}quoted fragment?${t.cdq}`]: `It can be a ${t.odq}quoted fragment?${t.cdq}`,
-  [`It can be a ${t.odq}quoted fragment…${t.cdq}`]: `It can be a ${t.odq}quoted fragment…${t.cdq}`,
-};
-
-const fixQuotedSentencePunctuationUnitSet = {
-  // Exception. skip fixing name with regnal number
-  [`It was ${t.odq}Charles IV${t.cdq},`]: `It was ${t.odq}Charles IV${t.cdq},`,
-
-  // False positives - single word (should NOT be fixed in this function)
-  [`Look for ${t.odq}word.${t.cdq} In the text.`]: `Look for ${t.odq}word.${t.cdq} In the text.`,
-  [`${t.odq}word.${t.cdq}`]:                       `${t.odq}word.${t.cdq}`,
-};
-
-supportedLocales.forEach((localeName) => {
-  createTestSuite(
-    "Fix punctuation placement for quoted sentence",
-    transformDoubleQuoteSet(
-      { ...fixQuotedSentencePunctuationUnitSet, ...fixQuotedSentencePunctuationModuleSet },
-      localeName
-    ),
-    (text) => fixQuotedSentencePunctuation(text, doubleQuotePair(localeName)),
-    transformDoubleQuoteSet(fixQuotedSentencePunctuationModuleSet, localeName),
-    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
-    localeName
-  );
-});
-
 const removeExtraSpacesAroundQuotesSet = {
   [`${t.odq} extra space at the beginning${t.cdq}`]: `${t.odq}extra space at the beginning${t.cdq}`,
   [`${t.odq}extra space at the end ${t.cdq}`]:       `${t.odq}extra space at the end${t.cdq}`,
@@ -736,7 +656,6 @@ export const doubleQuotesSet = {
   ...addSpaceBeforeopeningDoubleQuoteSet,
   ...addSpaceAfterclosingDoubleQuoteSet,
   ...fixDirectSpeechIntroSet,
-  ...fixQuotedSentencePunctuationModuleSet,
 };
 
 export function transformDoubleQuoteSet(testSet, localeName) {

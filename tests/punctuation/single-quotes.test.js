@@ -14,16 +14,9 @@ import {
   removeExtraSpaceAroundSinglePrime,
   fixSingleQuotesPrimesAndApostrophes,
 } from "../../src/modules/punctuation/single-quotes.js";
-import { fixQuotedSentencePunctuation } from "../../src/modules/punctuation/quotes/shared.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { createTestSuite, transformTestSet, t } from "../test-utils.js";
 import { m } from "../../src/markers.js";
-
-/* The single quote pair for a locale, as ./quotes/shared.js expects it */
-function singleQuotePair(localeName) {
-  const locale = new Locale(localeName);
-  return { open: locale.openingSingleQuote, close: locale.closingSingleQuote };
-}
 
 const identifyContractedAndModuleSet = {
   "rock 'n' roll":   "rock ’n’ roll",
@@ -471,89 +464,6 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-const fixQuotedSentencePunctuationModuleSet = {
-  /*
-  Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
-
-  Fix the punctuation around a quoted word accordingly:
-  - move periods `.`, commas `,`, semicolons `;`, ellipses `…`exclamation `!` and question marks `?` inside the quoted part
-  - move colons `:` and semicolons `;` outside the quoted part
-  */
-  // Quoted fragment at the end of sentence
-  [`${t.odq}It can be a ${t.osq}quoted fragment${t.csq}. fill${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment.${t.csq} fill${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment${t.csq}, fill${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment,${t.csq} fill${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment${t.csq}! fill${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment!${t.csq} fill${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment${t.csq}? fill${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment?${t.csq} fill${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment${t.csq}… fill${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment…${t.csq} fill${t.cdq}`,
-
-  // move terminal punctuation (.?!…) outside when quoted fragment is at the end of a quoted sentence
-  [`${t.odq}Sentence ${t.osq}quoted fragment.${t.csq}${t.cdq}`]: `${t.odq}Sentence ${t.osq}quoted fragment${t.csq}.${t.cdq}`,
-
-  [`${t.odq}Sentence ${t.osq}quoted fragment!${t.csq}${t.cdq}`]: `${t.odq}Sentence ${t.osq}quoted fragment${t.csq}!${t.cdq}`,
-
-  // nbsp
-  [`${t.odq}It can be ${t.osq}a banana${t.csq}, right.${t.cdq}`]: `${t.odq}It can be ${t.osq}a banana,${t.csq} right.${t.cdq}`,
-
-  // Quoted sentence
-  [`${t.odq}fill ${t.osq}Fully quoted sentence${t.csq}. fill${t.cdq}`]: `${t.odq}fill ${t.osq}Fully quoted sentence.${t.csq} fill${t.cdq}`,
-  [`${t.odq}fill ${t.osq}Fully quoted sentence${t.csq}, fill${t.cdq}`]: `${t.odq}fill ${t.osq}Fully quoted sentence,${t.csq} fill${t.cdq}`,
-  [`${t.odq}fill ${t.osq}Fully quoted sentence${t.csq}! fill${t.cdq}`]: `${t.odq}fill ${t.osq}Fully quoted sentence!${t.csq} fill${t.cdq}`,
-  [`${t.odq}fill ${t.osq}Fully quoted sentence${t.csq}? fill${t.cdq}`]: `${t.odq}fill ${t.osq}Fully quoted sentence?${t.csq} fill${t.cdq}`,
-  [`${t.odq}fill ${t.osq}Fully quoted sentence${t.csq}… fill${t.cdq}`]: `${t.odq}fill ${t.osq}Fully quoted sentence…${t.csq} fill${t.cdq}`,
-
-  // Less common boundaries
-  [`${t.odq}${t.osq}(Fully) quoted sentence${t.csq}.${t.cdq}`]: `${t.odq}${t.osq}(Fully) quoted sentence${t.csq}.${t.cdq}`,
-  [`${t.odq}${t.osq}Fully quoted (sentence)${t.csq}.${t.cdq}`]: `${t.odq}${t.osq}Fully quoted (sentence)${t.csq}.${t.cdq}`,
-
-  // Colon / semicolon should be placed outside the quotes
-  [`${t.odq}${t.osq}quoted fragment:${t.csq} sentence continues${t.cdq}`]: `${t.odq}${t.osq}quoted fragment${t.csq}: sentence continues${t.cdq}`,
-  [`${t.odq}${t.osq}quoted fragment;${t.csq} sentence continues${t.cdq}`]: `${t.odq}${t.osq}quoted fragment${t.csq}; sentence continues${t.cdq}`,
-
-  [`${t.odq}${t.osq}(quoted) fragment:${t.csq} sentence continues${t.cdq}`]: `${t.odq}${t.osq}(quoted) fragment${t.csq}: sentence continues${t.cdq}`,
-  [`${t.odq}${t.osq}quoted (fragment);${t.csq} sentence continues${t.cdq}`]: `${t.odq}${t.osq}quoted (fragment)${t.csq}; sentence continues${t.cdq}`,
-
-  // false positive, consecutive single quotes
-  [`${t.odq}fill ${t.osq}word${t.csq} ${t.osq}word${t.csq}, fill.${t.cdq}`]: `${t.odq}fill ${t.osq}word${t.csq} ${t.osq}word${t.csq}, fill.${t.cdq}`,
-
-  // Correct placement
-  [`${t.odq}It can be a ${t.osq}quoted fragment.${t.csq}${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment${t.csq}.${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment,${t.csq}${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment,${t.csq}${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment!${t.csq}${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment${t.csq}!${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment?${t.csq}${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment${t.csq}?${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment…${t.csq}${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment${t.csq}…${t.cdq}`,
-
-  [`${t.odq}It can be a ${t.osq}quoted fragment!${t.csq}.${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment!${t.csq}.${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment?${t.csq}.${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment?${t.csq}.${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment…${t.csq}.${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment…${t.csq}.${t.cdq}`,
-};
-
-const fixQuotedSentencePunctuationUnitSet = {
-  // Exception. skip fixing name with regnal number
-  [`${t.odq}It was ${t.osq}Charles IV${t.csq},${t.cdq}`]:          `${t.odq}It was ${t.osq}Charles IV${t.csq},${t.cdq}`,
-  // False positives - single word (should NOT be fixed in this function)
-  [`${t.odq}Look for ${t.osq}word.${t.csq} In the text.${t.cdq}`]: `${t.odq}Look for ${t.osq}word.${t.csq} In the text.${t.cdq}`,
-  [`${t.odq}${t.osq}word.${t.csq}${t.cdq}`]:                       `${t.odq}${t.osq}word${t.csq}.${t.cdq}`,
-};
-
-supportedLocales.forEach((localeName) => {
-  createTestSuite(
-    "Fix punctuation placement for quoted sentence or fragment",
-    transformTestSet(
-      { ...fixQuotedSentencePunctuationUnitSet, ...fixQuotedSentencePunctuationModuleSet },
-      localeName
-    ),
-    (text) =>
-      fixQuotedSentencePunctuation(
-        text,
-        singleQuotePair(localeName),
-        new Locale(localeName).closingDoubleQuote
-      ),
-    transformTestSet(fixQuotedSentencePunctuationModuleSet, localeName),
-    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
-    localeName
-  );
-});
-
 export const singleQuotesSet = {
   ...identifyContractedAndModuleSet,
   ...identifyContractedBeginningsSet,
@@ -569,7 +479,6 @@ export const singleQuotesSet = {
   ...replaceSinglePrimeWSingleQuoteModuleSet,
   ...identifyResidualApostrophesSet,
   ...removeExtraSpaceAroundSinglePrimeSet,
-  ...fixQuotedSentencePunctuationModuleSet,
 
   // a word-final modifier letter apostrophe (jesʼ) is kept out of pairing, see identifyModifierApostrophe.
   // typed as a plain ' instead, nothing tells it from a closing quote and it closes the pair early

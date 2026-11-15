@@ -1,4 +1,7 @@
-import { fixQuotedWordPunctuation } from "../../../src/modules/punctuation/quotes/shared.js";
+import {
+  fixQuotedSentencePunctuation,
+  fixQuotedWordPunctuation,
+} from "../../../src/modules/punctuation/quotes/shared.js";
 import { fixQuotes } from "../../../src/modules/punctuation/quotes.js";
 import Locale, { supportedLocales } from "../../../src/locale/locale.js";
 import { createTestSuite, expandPairVariants, transformTestSet, t, q } from "../../test-utils.js";
@@ -158,7 +161,213 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
+//
+
+/*
+  Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
+
+  Fix the punctuation around a quoted sentence or fragment accordingly:
+  - move periods `.`, commas `,`, ellipses `…`, exclamation `!` and question marks `?` inside the quoted part
+  - move colons `:` and semicolons `;` outside the quoted part
+
+  Nested inside the outer quote, a quoted part that ends the outer quote keeps
+  its terminal punctuation outside: “It can be a ‘quoted fragment’.”
+
+  Each group says how its cases nest: `frame` places them mid-sentence in the
+  outer quote, otherwise they end it.
+*/
+
+/* Frame a case inside the outer quote, with text before and after it */
+function insideOuter(before, after) {
+  return [`${t.odq}${before}`, `${after}${t.cdq}`];
+}
+
+const fixQuotedSentencePunctuationGroups = {
+  fragmentAtTheEndOfSentence: {
+    cases: {
+      [`It can be a ${q.o}quoted fragment${q.c}.`]: `It can be a ${q.o}quoted fragment.${q.c}`,
+      [`It can be a ${q.o}quoted fragment${q.c},`]: `It can be a ${q.o}quoted fragment,${q.c}`,
+      [`It can be a ${q.o}quoted fragment${q.c}!`]: `It can be a ${q.o}quoted fragment!${q.c}`,
+      [`It can be a ${q.o}quoted fragment${q.c}?`]: `It can be a ${q.o}quoted fragment?${q.c}`,
+      [`It can be a ${q.o}quoted fragment${q.c}…`]: `It can be a ${q.o}quoted fragment…${q.c}`,
+
+      // nbsp
+      [`It can be ${q.o}a banana${q.c}.`]: `It can be ${q.o}a banana.${q.c}`,
+    },
+    nested: { frame: insideOuter("", " fill") },
+  },
+
+  quotedSentence: {
+    cases: {
+      [`${q.o}Fully quoted sentence${q.c}.`]: `${q.o}Fully quoted sentence.${q.c}`,
+      [`${q.o}Fully quoted sentence${q.c},`]: `${q.o}Fully quoted sentence,${q.c}`,
+      [`${q.o}Fully quoted sentence${q.c}!`]: `${q.o}Fully quoted sentence!${q.c}`,
+      [`${q.o}Fully quoted sentence${q.c}?`]: `${q.o}Fully quoted sentence?${q.c}`,
+      [`${q.o}Fully quoted sentence${q.c}…`]: `${q.o}Fully quoted sentence…${q.c}`,
+    },
+    nested: { frame: insideOuter("fill ", " fill") },
+  },
+
+  lessCommonBoundaries: {
+    cases: {
+      [`${q.o}(Fully) quoted sentence${q.c}.`]: `${q.o}(Fully) quoted sentence.${q.c}`,
+      [`${q.o}Fully quoted (sentence)${q.c}.`]: `${q.o}Fully quoted (sentence).${q.c}`,
+    },
+    nested: {
+      // ending the outer quote, the period stays outside the inner pair
+      overrides: {
+        [`${q.o}(Fully) quoted sentence${q.c}.`]: `${t.odq}${t.osq}(Fully) quoted sentence${t.csq}.${t.cdq}`,
+        [`${q.o}Fully quoted (sentence)${q.c}.`]: `${t.odq}${t.osq}Fully quoted (sentence)${t.csq}.${t.cdq}`,
+      },
+    },
+  },
+
+  consecutiveQuotes: {
+    // false positive
+    cases: {
+      [`${q.o}word${q.c} ${q.o}word${q.c},`]: `${q.o}word${q.c} ${q.o}word${q.c},`,
+    },
+    nested: { frame: insideOuter("fill ", " fill.") },
+  },
+
+  colonAndSemicolon: {
+    // placed outside the quotes
+    cases: {
+      [`${q.o}quoted fragment:${q.c} sentence continues`]:   `${q.o}quoted fragment${q.c}: sentence continues`,
+      [`${q.o}quoted fragment;${q.c} sentence continues`]:   `${q.o}quoted fragment${q.c}; sentence continues`,
+      [`${q.o}(quoted) fragment:${q.c} sentence continues`]: `${q.o}(quoted) fragment${q.c}: sentence continues`,
+      [`${q.o}quoted (fragment);${q.c} sentence continues`]: `${q.o}quoted (fragment)${q.c}; sentence continues`,
+    },
+  },
+
+  correctPlacement: {
+    cases: {
+      [`It can be a ${q.o}quoted fragment.${q.c}`]: `It can be a ${q.o}quoted fragment.${q.c}`,
+      [`It can be a ${q.o}quoted fragment,${q.c}`]: `It can be a ${q.o}quoted fragment,${q.c}`,
+      [`It can be a ${q.o}quoted fragment!${q.c}`]: `It can be a ${q.o}quoted fragment!${q.c}`,
+      [`It can be a ${q.o}quoted fragment?${q.c}`]: `It can be a ${q.o}quoted fragment?${q.c}`,
+      [`It can be a ${q.o}quoted fragment…${q.c}`]: `It can be a ${q.o}quoted fragment…${q.c}`,
+    },
+    nested: {
+      // ending the outer quote, terminal punctuation moves outside the inner pair; a comma stays
+      overrides: {
+        [`It can be a ${q.o}quoted fragment.${q.c}`]: `${t.odq}It can be a ${t.osq}quoted fragment${t.csq}.${t.cdq}`,
+        [`It can be a ${q.o}quoted fragment!${q.c}`]: `${t.odq}It can be a ${t.osq}quoted fragment${t.csq}!${t.cdq}`,
+        [`It can be a ${q.o}quoted fragment?${q.c}`]: `${t.odq}It can be a ${t.osq}quoted fragment${t.csq}?${t.cdq}`,
+        [`It can be a ${q.o}quoted fragment…${q.c}`]: `${t.odq}It can be a ${t.osq}quoted fragment${t.csq}…${t.cdq}`,
+      },
+    },
+  },
+};
+
+/* Unit tests only: what fixQuotedSentencePunctuation leaves to fixQuotedWordPunctuation or skips */
+const fixQuotedSentencePunctuationUnitGroup = {
+  cases: {
+    // Exception. skip fixing name with regnal number
+    [`It was ${q.o}Charles IV${q.c},`]: `It was ${q.o}Charles IV${q.c},`,
+    [`It was ${q.o}Charles IV${q.c},`]: `It was ${q.o}Charles IV${q.c},`,
+
+    // False positives - single word (should NOT be fixed in this function)
+    [`Look for ${q.o}word.${q.c} In the text.`]: `Look for ${q.o}word.${q.c} In the text.`,
+    [`${q.o}word.${q.c}`]:                       `${q.o}word.${q.c}`,
+  },
+  nested: {
+    // ending the outer quote, the period moves outside the inner pair, even for a single word
+    overrides: {
+      [`${q.o}word.${q.c}`]: `${t.odq}${t.osq}word${t.csq}.${t.cdq}`,
+    },
+  },
+};
+
+/* Nested only: no counterpart at the top level */
+const fixQuotedSentencePunctuationNestedSet = {
+  // terminal punctuation moves outside when the quoted fragment ends the outer quote
+  [`${t.odq}Sentence ${t.osq}quoted fragment.${t.csq}${t.cdq}`]: `${t.odq}Sentence ${t.osq}quoted fragment${t.csq}.${t.cdq}`,
+  [`${t.odq}Sentence ${t.osq}quoted fragment!${t.csq}${t.cdq}`]: `${t.odq}Sentence ${t.osq}quoted fragment${t.csq}!${t.cdq}`,
+
+  // a fragment's own !, ? or … stays inside, the sentence's period outside
+  [`${t.odq}It can be a ${t.osq}quoted fragment!${t.csq}.${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment!${t.csq}.${t.cdq}`,
+  [`${t.odq}It can be a ${t.osq}quoted fragment?${t.csq}.${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment?${t.csq}.${t.cdq}`,
+  [`${t.odq}It can be a ${t.osq}quoted fragment…${t.csq}.${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment…${t.csq}.${t.cdq}`,
+
+  // nbsp
+  [`${t.odq}It can be ${t.osq}a banana${t.csq}, right.${t.cdq}`]: `${t.odq}It can be ${t.osq}a banana,${t.csq} right.${t.cdq}`,
+};
+
+/* Both kinds typed: the outer pair's rule, with an inner pair inside */
+const fixQuotedSentencePunctuationCombinationSet = {
+  [`${t.odq}Sentence ${t.osq}quoted fragment${t.csq}${t.cdq}.`]: `${t.odq}Sentence ${t.osq}quoted fragment${t.csq}.${t.cdq}`,
+};
+
+/* Expand each group into the given variants, with the group's own options for each */
+function expandGroups(groups, variantNames) {
+  return Object.assign(
+    {},
+    ...groups.map((group) =>
+      expandPairVariants(
+        group.cases,
+        Object.fromEntries(variantNames.map((name) => [name, group[name] ?? {}]))
+      )
+    )
+  );
+}
+
+const sentenceGroups = Object.values(fixQuotedSentencePunctuationGroups);
+
+const fixQuotedSentencePunctuationModuleSet = {
+  ...expandGroups(sentenceGroups, ["outer", "nested", "typed"]),
+  ...fixQuotedSentencePunctuationNestedSet,
+  ...fixQuotedSentencePunctuationCombinationSet,
+};
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Fix punctuation placement for quoted sentence or fragment (outer pair)",
+    transformTestSet(
+      {
+        ...expandGroups([...sentenceGroups, fixQuotedSentencePunctuationUnitGroup], ["outer"]),
+        ...fixQuotedSentencePunctuationCombinationSet,
+      },
+      localeName
+    ),
+    (text) => fixQuotedSentencePunctuation(text, outerPair(localeName)),
+    {},
+    null,
+    localeName
+  );
+
+  createTestSuite(
+    "Fix punctuation placement for quoted sentence or fragment (inner pair, nested)",
+    transformTestSet(
+      {
+        ...expandGroups([...sentenceGroups, fixQuotedSentencePunctuationUnitGroup], ["nested"]),
+        ...fixQuotedSentencePunctuationNestedSet,
+      },
+      localeName
+    ),
+    (text) =>
+      fixQuotedSentencePunctuation(
+        text,
+        innerPair(localeName),
+        new Locale(localeName).closingDoubleQuote
+      ),
+    {},
+    null,
+    localeName
+  );
+
+  createTestSuite(
+    "Fix punctuation placement for quoted sentence or fragment, in the pipeline",
+    {},
+    null,
+    transformTestSet(fixQuotedSentencePunctuationModuleSet, localeName),
+    (text) => fixQuotes(text, new Locale(localeName)),
+    localeName
+  );
+});
+
 /* Module cases, in t.* tokens, for the integration and idempotency suites */
 export const quotesSet = {
   ...expandPairVariants(fixQuotedWordPunctuationModuleSet, fixQuotedWordPunctuationVariants),
+  ...fixQuotedSentencePunctuationModuleSet,
 };
