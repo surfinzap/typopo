@@ -1,6 +1,20 @@
 # Changelog for Typopo
 
 
+## 3.x.x // 2026 
+
+TBD 
+- write docs 
+- remove test\tools from the production code
+- revisit jsdocs for new files
+- prettier writes to lf by default? change to crlf? 
+- fix idempotency issue, shared test "Version ${q"
+
+### 🐛 Fixes
+- Add missing `de-ch` to types
+
+
+
 ## 3.1.0 // 2026-05-25
 
 ### ✨ New features

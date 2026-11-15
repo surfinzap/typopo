@@ -1,8 +1,3 @@
-/*!
- * Typopo v2.5.8 (https://typopo.org)
- * Copyright 2015–2025 Braňo Šandala (https://brano.me)
- * Licensed under MIT (https://github.com/surfinzap/typopo/blob/main/LICENSE.txt)
- */
 import Locale from "./locale/locale.js";
 import { removeEmptyLines } from "./modules/whitespace/lines.js";
 import { fixNbsp } from "./modules/whitespace/nbsp.js";
@@ -10,8 +5,7 @@ import { fixSpaces } from "./modules/whitespace/spaces.js";
 import { fixPeriod } from "./modules/punctuation/period.js";
 import { fixEllipsis } from "./modules/punctuation/ellipsis.js";
 import { fixDash } from "./modules/punctuation/dash.js";
-import { fixDoubleQuotesAndPrimes } from "./modules/punctuation/double-quotes.js";
-import { fixSingleQuotesPrimesAndApostrophes } from "./modules/punctuation/single-quotes.js";
+import { fixQuotes } from "./modules/punctuation/quotes.js";
 import { fixMultiplicationSign } from "./modules/symbols/multiplication-sign.js";
 import { fixSectionSign } from "./modules/symbols/section-sign.js";
 import { fixCopyrights } from "./modules/symbols/copyrights.js";
@@ -29,7 +23,7 @@ import { excludeExceptions, placeExceptions } from "./modules/words/exceptions.j
  * Fixes microtypography errors in text across multiple languages
  *
  * @param {string} string - Input text for correction
- * @param {string} [locale="en-us"] - Language locale. Supported: "en-us", "de-de", "sk", "cs", "rue"
+ * @param {string} [locale="en-us"] - Language locale. Supported: "en-us", "de-de", "de-ch", "sk", "cs", "rue"
  * @param {Object} [configuration] - Configuration options
  * @param {boolean} [configuration.removeLines=true] - Remove empty lines between paragraphs
  * @returns {string} Text with typography corrections applied
@@ -63,8 +57,7 @@ export function fixTypos(string, locale, configuration) {
   // punctuation
   string = fixPeriod(string);
   string = fixDash(string, currentLocale);
-  string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale);
-  string = fixDoubleQuotesAndPrimes(string, currentLocale);
+  string = fixQuotes(string, currentLocale);
 
   // symbols
   string = fixMultiplicationSign(string);

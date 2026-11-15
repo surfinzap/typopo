@@ -9,6 +9,7 @@ import { dashSet } from "../punctuation/dash.test.js";
 import { doubleQuotesSet, transformDoubleQuoteSet } from "../punctuation/double-quotes.test.js";
 import { ellipsisSet } from "../punctuation/ellipsis.test.js";
 import { periodSet } from "../punctuation/period.test.js";
+import { quotesSet } from "../punctuation/quotes/shared.test.js";
 import { singleQuotesSet } from "../punctuation/single-quotes.test.js";
 import { exponentSet } from "../symbols/exponents.test.js";
 import { marksSet } from "../symbols/marks.test.js";
@@ -141,6 +142,7 @@ export function getTestModules(localeName) {
     ...ellipsisSet,
     ...transformDoubleQuoteSet(doubleQuotesSet, localeName),
     ...transformTestSet(singleQuotesSet, localeName),
+    ...transformTestSet(quotesSet, localeName),
     ...transformTestSet(dashSet, localeName),
 
     // symbols

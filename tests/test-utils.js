@@ -111,6 +111,78 @@ export const t = {
 };
 
 /**
+ * Placeholder tokens for "the quote pair under test", in cases written once and
+ * expanded by expandPairVariants() into each kind and nesting position.
+ */
+export const q = {
+  o: "\uE006",
+  c: "\uE007",
+};
+
+/*
+  How each variant renders q.o / q.c, in the input and in the expected output.
+  `frame` wraps both sides of the case, e.g. inside an outer double quote pair.
+*/
+const pairVariants = {
+  // the outer pair at the top level
+  outer:       { input: [t.odq, t.cdq], expected: [t.odq, t.cdq] },
+  // the inner pair, on its own; meant for pair-level unit tests
+  inner:       { input: [t.osq, t.csq], expected: [t.osq, t.csq] },
+  // the inner pair, nested one level inside the outer pair
+  nested:      { input: [t.osq, t.csq], expected: [t.osq, t.csq], frame: [t.odq, t.cdq] },
+  // typed as plain marks at the top level; depth, not kind, picks the outer glyphs
+  typedSingle: { input: ["'", "'"], expected: [t.odq, t.cdq] },
+  typedDouble: { input: ['"', '"'], expected: [t.odq, t.cdq] },
+  // typed as plain single marks, nested one level inside the outer pair
+  nestedTyped: { input: ["'", "'"], expected: [t.osq, t.csq], frame: [t.odq, t.cdq] },
+};
+
+/**
+ * Expand cases written with q.o / q.c into one or more pair variants
+ *
+ * A case written once is run as several variants, e.g. as the outer pair, the
+ * inner pair, nested, or typed with plain marks. Where a variant legitimately
+ * gives a different answer, say so in `overrides` rather than in a second copy
+ * of the case.
+ *
+ * The result is in t.* tokens, ready for transformTestSet().
+ *
+ * @param {Object} cases - input → expected, written with q.o / q.c
+ * @param {Object} variants - { [variantName]: { frame?: [before, after], overrides?: { [caseKey]: expected | null } } };
+ *   `frame` replaces the variant's default frame, e.g. to nest a case mid-sentence in the outer quote;
+ *   an override states that variant's exact expected output in t.* tokens, frame included,
+ *   since a variant may move punctuation past its frame; null drops the case from that variant
+ * @returns {Object} expanded test set
+ */
+export function expandPairVariants(cases, variants) {
+  const expanded = {};
+
+  Object.entries(variants).forEach(([name, options = {}]) => {
+    const variant = pairVariants[name];
+    if (!variant) throw new Error(`Unknown pair variant: ${name}`);
+
+    const overrides = options.overrides ?? {};
+    Object.keys(overrides).forEach((key) => {
+      if (!(key in cases)) throw new Error(`Override for an unknown case (${name}): ${key}`);
+    });
+
+    const [before, after] = options.frame ?? variant.frame ?? ["", ""];
+    const render = (text, [open, close]) =>
+      before + text.split(q.o).join(open).split(q.c).join(close) + after;
+
+    Object.entries(cases).forEach(([key, value]) => {
+      if (overrides[key] === null) return;
+
+      const input = render(key, variant.input);
+      if (input in expanded) throw new Error(`Two variants produce the same input: ${input}`);
+      expanded[input] = key in overrides ? overrides[key] : render(value, variant.expected);
+    });
+  });
+
+  return expanded;
+}
+
+/**
  * Generic test set transformation function with locale-specific token replacement
  * @param {Object} testSet - Object with test cases (input -> expected output)
  * @param {string} localeName - Locale identifier (e.g., "en-us", "cs", "sk")

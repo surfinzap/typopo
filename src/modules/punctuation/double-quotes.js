@@ -1,8 +1,13 @@
 import { base } from "../../const.js";
 import { addNbspAfterPreposition } from "../whitespace/nbsp.js";
 import { m } from "../../markers.js";
-
-//
+import { fixQuotes, identifyQuotePairs } from "./quotes.js";
+import {
+  placeLocaleQuotes,
+  removeExtraSpaceAfter,
+  removeExtraSpaceBefore,
+  replacePrimeWithQuotePair,
+} from "./quotes/shared.js";
 
 /**
   Remove extra punctuation before double quotes
@@ -127,47 +132,16 @@ export function identifyDoublePrimes(string) {
 //
 
 /**
-  Identify double quote pairs 
+  Identify double quote pairs
 
-  Example
-  "quoted material" → “quoted material”
-
-  Assumptions and Limitations
-  We assume that double primes, inches and arcseconds were identified in the previous run.
+  Single and double quotes are now paired in one pass, see identifyQuotePairs
+  in ../quotes.js. This name is kept because the unit tests call it.
 
   @param {string} string: input text for identification
-  @returns {string} output with identified double quote pairs
+  @returns {string} output with identified quote pairs
 */
 export function identifyDoubleQuotePairs(string) {
-  // double quotes around a number
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(${base.doubleQuoteAdepts})` +
-      `(\\d+)` +
-      `(${m.doublePrime})`,
-      "g"
-    ),
-      `${m.odq}` +
-      `$2` +
-      `${m.cdq}`
-  );
-
-  // generic rule
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(${base.doubleQuoteAdepts})` +
-      `(.*?)` +
-      `(${base.doubleQuoteAdepts})`,
-      "g"
-    ),
-      `${m.odq}` +
-      `$2` +
-      `${m.cdq}`
-  );
-
-  return string;
+  return identifyQuotePairs(string);
 }
 
 //
@@ -268,121 +242,16 @@ export function removeUnidentifiedDoubleQuote(string) {
   @returns {string} output with a double quote pair
 */
 export function replaceDoublePrimeWDoubleQuote(string) {
-  // prettier-ignore
-  return string
-    .replace(
-      new RegExp(
-        `(${m.odqUnpaired})` +
-        `(.*?)` +
-        `(${m.doublePrime})`,
-        "g"
-      ),
-      `${m.odq}` +
-      `$2` +
-      `${m.cdq}`
-    )
-    .replace(
-      new RegExp(
-        `(${m.doublePrime})` +
-        `(.*?)` +
-        `(${m.cdqUnpaired})`,
-        "g"
-      ),
-      `${m.odq}` +
-      `$2` +
-      `${m.cdq}`
-    );
+  return replacePrimeWithQuotePair(string, {
+    openUnpaired:  m.odqUnpaired,
+    closeUnpaired: m.cdqUnpaired,
+    prime:         m.doublePrime,
+    open:          m.odq,
+    close:         m.cdq,
+  });
 }
 
 //
-
-/**
-  Fix punctuation placement for single-word quoted content
-
-  Single word = no spaces inside quotes (includes contractions, hyphenated words, numbers)
-
-  Rules:
-  - move periods `.`, commas `,`, semicolons `;`, colons `:` outside the quoted word
-  - keep the position of `!`, `?`, and `…` as is (ambiguous context)
-
-  Examples:
-  “word.” → “word”.
-  “it’s,” → “it’s”,
-  “well-known;” → “well-known”;
-  “2020:” → “2020”:
-  “Wow!” → “Wow!” (unchanged—ambiguous)
-
-  @param {string} string: input text for identification
-  @param {object} locale: locale option
-  @returns {string} output with corrected punctuation placement
-*/
-export function fixQuotedWordPunctuation(string, locale) {
-  // prettier-ignore
-  return string.replace(
-    new RegExp(
-      `(${locale.openingDoubleQuote})` +                          
-      `([^${base.spaces}${locale.closingDoubleQuote}]+?)` +      
-      `([^${base.romanNumerals}${base.sentencePunctuation}])` +                  
-      `([${base.sentencePunctuation}]{1,})` +                                   
-      `(${locale.closingDoubleQuote})`,   
-      "g"
-    ),
-    (match, leftQuote, content, notRoman, punct, rightQuote) => {
-      if (punct.length === 1 && /[.,;:]/.test(punct)) {
-        return leftQuote + content + notRoman + rightQuote + punct;
-      }
-      return match; // Return unchanged for everything else
-    }
-  );
-}
-
-//
-
-/**
-  Fix punctuation placement for quoted sentence or fragment of words
-
-  Rules:
-  - move periods `.`, commas `,`, semicolons `;`, ellipses `…`exclamation `!` and question marks `?` inside the quoted part
-  - move colons `:` and semicolons `;` outside the quoted part
- 
-  @param {string} string: input text for identification
-  @param {object} locale: locale option
-  @returns {string} output with corrected punctuation placement
- */
-export function fixQuotedSentencePunctuation(string, locale) {
-  // move everything inside
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(${locale.openingDoubleQuote})` + 
-      `(.+)` + 
-      `([${base.spaces}])(?!${locale.openingDoubleQuote})` + 
-      `([^${base.romanNumerals}]{2,})` + 
-      `(${locale.closingDoubleQuote})` + 
-      `([${base.sentencePunctuation}${base.ellipsis}])`,
-      "g"
-    ),
-    `$1` +
-    `$2` +
-    `$3` +
-    `$4` +
-    `$6` +
-    `$5`
-  )
-
-  // move colons and semicolons outside
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([:;])` +
-      `(${locale.closingDoubleQuote})`,
-      "g"
-    ),
-    `$2$1` 
-  )
-
-  return string;
-}
 
 /**
   Replace all identified punctuation with appropriate punctuation in given language
@@ -397,16 +266,11 @@ export function fixQuotedSentencePunctuation(string, locale) {
   @returns {string} an output with locale-specific double quotes and double primes
 */
 export function placeLocaleDoubleQuotes(string, locale) {
-  const replacements = [
+  return placeLocaleQuotes(string, [
     { pattern: m.doublePrime, replacement: base.doublePrime },
     { pattern: `[${m.odq}${m.odqUnpaired}]`, replacement: locale.openingDoubleQuote },
     { pattern: `[${m.cdq}${m.cdqUnpaired}]`, replacement: locale.closingDoubleQuote },
-  ];
-
-  return replacements.reduce(
-    (text, { pattern, replacement }) => text.replace(new RegExp(pattern, "gu"), replacement),
-    string
-  );
+  ]);
 }
 
 //
@@ -430,32 +294,9 @@ export function placeLocaleDoubleQuotes(string, locale) {
   @returns {string} output with adjusted spacing around double quotes and double primes
 */
 export function removeExtraSpacesAroundQuotes(string, locale) {
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(${locale.openingDoubleQuote})` +
-      `([${base.spaces}])`,
-    "g"),
-    `$1`
-  );
-
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([${base.spaces}])` +
-      `(${locale.closingDoubleQuote})`,
-    "g"),
-    `$2`
-  );
-
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `([${base.spaces}])` +
-      `(${base.doublePrime})`,
-    "g"),
-    `$2`
-  );
+  string = removeExtraSpaceAfter(string, locale.openingDoubleQuote);
+  string = removeExtraSpaceBefore(string, locale.closingDoubleQuote);
+  string = removeExtraSpaceBefore(string, base.doublePrime);
 
   return string;
 }
@@ -611,58 +452,13 @@ export function fixDirectSpeechIntro(string, locale) {
 /**
   Correct improper use of double quotes and double primes
 
-  Assumptions and Limitations
-  This function assumes that double quotes are always used in pair,
-  i.e. authors did not forget to close double quotes in their text.
-
-  Algorithm
-  [1] Remove extra terminal punctuation around double quotes
-  [2] Identify inches, arcseconds, seconds
-  [3] Identify double quote pairs
-  [4] Identify unpaired double quotes
-  [5] Replace a double qoute & a double prime with a double quote pair
-  [6] Replace all identified punctuation with appropriate punctuation in given language
-  [7] Consolidate spaces around double quotes and primes
-  [8] Fix direct speech introduction
-  [9] Fix punctuation placement for quoted content
+  Single and double quotes are now fixed in one pass, see fixQuotes in
+  ../quotes.js. This name is kept because the module test sets call it.
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
-  @returns {string} output with properly replaces double qoutes and double primes
+  @param {object} locale: locale option
+  @returns {string} corrected output
 */
 export function fixDoubleQuotesAndPrimes(string, locale) {
-  /* [1] Remove extra terminal punctuation around double quotes */
-  string = removeExtraPunctuationBeforeQuotes(string);
-  string = removeExtraPunctuationAfterQuotes(string);
-
-  /* [2] Identify inches, arcseconds, seconds */
-  string = identifyDoublePrimes(string);
-
-  /* [3] Identify double quote pairs */
-  string = identifyDoubleQuotePairs(string);
-
-  /* [4] Identify unpaired double quotes */
-  string = identifyUnpairedOpeningDoubleQuote(string);
-  string = identifyUnpairedClosingDoubleQuote(string);
-  string = removeUnidentifiedDoubleQuote(string);
-
-  /* [5] Replace a double qoute & a double prime with a double quote pair */
-  string = replaceDoublePrimeWDoubleQuote(string);
-
-  /* [6] Replace all identified punctuation with appropriate punctuation in given language */
-  string = placeLocaleDoubleQuotes(string, locale);
-
-  /* [7] Consolidate spaces around double quotes and primes */
-  string = removeExtraSpacesAroundQuotes(string, locale);
-  string = addSpaceBeforeopeningDoubleQuote(string, locale);
-  string = addSpaceAfterclosingDoubleQuote(string, locale);
-
-  /* [8] Fix direct speech introduction */
-  string = fixDirectSpeechIntro(string, locale);
-
-  /* [9] Fix punctuation placement for quoted content */
-  string = fixQuotedWordPunctuation(string, locale);
-  string = fixQuotedSentencePunctuation(string, locale);
-
-  return string;
+  return fixQuotes(string, locale);
 }

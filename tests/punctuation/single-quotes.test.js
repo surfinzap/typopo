@@ -4,16 +4,13 @@ import {
   identifyContractedEnds,
   identifyInWordContractions,
   identifyContractedYears,
+  identifyModifierApostrophe,
   identifySinglePrimes,
   identifyUnpairedOpeningSingleQuote,
   identifyUnpairedClosingSingleQuote,
-  identifySingleQuotePairAroundSingleWord,
-  identifySingleQuotePairs,
   replaceSinglePrimeWSingleQuote,
   identifyResidualApostrophes,
   placeLocaleSingleQuotes,
-  fixQuotedWordPunctuation,
-  fixQuotedSentencePunctuation,
   removeExtraSpaceAroundSinglePrime,
   fixSingleQuotesPrimesAndApostrophes,
 } from "../../src/modules/punctuation/single-quotes.js";
@@ -122,7 +119,6 @@ const identifyInWordContractionsSet = {
   "don''’t":      "don’t",
   "Paul‘s Diner": "Paul’s Diner",
   "Paul’s Diner": "Paul’s Diner",
-  "Paulʼs Diner": "Paul’s Diner",
   "Paul‛s Diner": "Paul’s Diner",
   "Paul`s Diner": "Paul’s Diner",
   "Paul‚s Diner": "Paul’s Diner",
@@ -142,15 +138,24 @@ supportedLocales.forEach((localeName) => {
 });
 
 const identifyContractedYearsModuleSet = {
-  "INCHEBA '89": "INCHEBA ’89",
-  "in '70s":     "in ’70s",
-  "Q1 '23":      "Q1 ’23",
+  "INCHEBA '89":             "INCHEBA ’89",
+  "in '70s":                 "in ’70s",
+  "the '90s were 'great'":   `the ’90s were ${t.odq}great${t.cdq}`,
+  "Q1 '23":                  "Q1 ’23",
+  // any other year is left to pairing; an odd mark out degrades to an apostrophe
+  "INCHEBA '89, the 'year'": `INCHEBA ’89, the ${t.odq}year${t.cdq}`,
+  "In '89, '90, we moved":   "In ’89, ’90, we moved",
 };
 
 const identifyContractedYearsUnitSet = {
   ...identifyContractedYearsModuleSet,
   // false positive, when there is a wrongly spaced feet
-  "12 '45″": "12 '45″",
+  "12 '45″":                 "12 '45″",
+  // false positives, these are left to pairing, see the module sets
+  "INCHEBA '89":             "INCHEBA '89",
+  "INCHEBA '89, the 'year'": "INCHEBA '89, the 'year'",
+  "In '89, '90, we moved":   "In '89, '90, we moved",
+  "the '90s were 'great'":   "the ’90s were 'great'",
 };
 
 supportedLocales.forEach((localeName) => {
@@ -159,6 +164,70 @@ supportedLocales.forEach((localeName) => {
     transformTestSet(identifyContractedYearsUnitSet, localeName),
     (text) => placeLocaleSingleQuotes(identifyContractedYears(text), new Locale(localeName)),
     transformTestSet(identifyContractedYearsModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
+});
+
+/*
+  Module only, not part of singleQuotesSet: fixTypos adds a non-breaking space
+  after a two-digit number (between 90 and bottles), so the integration run
+  would not match.
+  The full pipeline is covered by the behaviour snapshot.
+*/
+const contractedYearOrQuotePairModuleSet = {
+  "He sold '90 bottles' today":  `He sold ${t.odq}90 bottles${t.cdq} today`,
+  "'90 bottles' were sold":      `${t.odq}90 bottles${t.cdq} were sold`,
+  "INCHEBA '89 was the year":    "INCHEBA ’89 was the year",
+  "INCHEBA '89 was the 'year'":  `INCHEBA ’89 was the ${t.odq}year${t.cdq}`,
+  // the second mark sits after a letter, so it closes; nothing in the text says otherwise
+  "INCHEBA '89 was' the 'year'": `INCHEBA ${t.odq}89 was${t.cdq} the ${t.odq}year${t.cdq}`,
+  "In '89 and '90 we moved":     "In ’89 and ’90 we moved",
+
+  [`He said${t.directSpeechIntro} ${t.odq}We sold '90 bottles' today${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}We sold ${t.osq}90 bottles${t.csq} today${t.cdq}`,
+};
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Tell a contracted year from an opening single quote",
+    {},
+    null,
+    transformTestSet(contractedYearOrQuotePairModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
+});
+
+const identifyModifierApostropheModuleSet = {
+  // preserved: a character you have to go out of your way to type is not a typo
+  "ta de jesʼ take": "ta de jesʼ take",
+  "kincʼa":          "kincʼa",
+  "Paulʼs Diner":    "Paulʼs Diner",
+};
+
+const identifyModifierApostropheUnitSet = {
+  // a modifier letter apostrophe after a letter, word-final or in-word, is marked as itself
+  "jesʼ":         `jes${m.mla}`,
+  "jesʼ, kedysʼ": `jes${m.mla}, kedys${m.mla}`,
+  "aʼb":          `a${m.mla}b`,
+  // false positives, anywhere else it is taken for a mistyped single quote adept
+  "ʼword":        "ʼword",
+  " ʼword":       " ʼword",
+  // false positives, a run of two or more is left for base.doubleQuoteAdepts to read as a double quote, so it must come through here untouched
+  "wordʼʼ":       "wordʼʼ",
+  "ʼʼword":       "ʼʼword",
+  "ʼʼʼ":          "ʼʼʼ",
+  // false positives, every other single quote adept will be handled by other functions
+  "word'":        "word'",
+  "word’":        "word’",
+};
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify the modifier letter apostrophe as itself",
+    transformTestSet(identifyModifierApostropheUnitSet, localeName),
+    (text) => identifyModifierApostrophe(text),
+    transformTestSet(identifyModifierApostropheModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
   );
@@ -239,10 +308,11 @@ supportedLocales.forEach((localeName) => {
 
 const identifyUnpairedClosingSingleQuoteModuleSet = {
   // heads up! since it’s a unpaired quote it’s fixed as apostrophe within a module
+  // except a word-final U+02BC: a modifier letter is kept as itself, see identifyModifierApostrophe
   [`${t.odq}word'${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
   [`${t.odq}word‚${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
   [`${t.odq}word‘${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
-  [`${t.odq}wordʼ${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
+  [`${t.odq}wordʼ${t.cdq}`]:  `${t.odq}wordʼ${t.cdq}`,
   [`${t.odq}word‛${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
   [`${t.odq}word´${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
   [`${t.odq}word\`${t.cdq}`]: `${t.odq}word’${t.cdq}`,
@@ -280,86 +350,6 @@ supportedLocales.forEach((localeName) => {
     transformTestSet(identifyUnpairedClosingSingleQuoteUnitSet, localeName),
     (text) => identifyUnpairedClosingSingleQuote(text),
     transformTestSet(identifyUnpairedClosingSingleQuoteModuleSet, localeName),
-    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
-    localeName
-  );
-});
-
-const identifySingleQuotePairsModuleSet = {
-  [`He said${t.directSpeechIntro} ${t.odq}What about 'word', is that good?${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}word${t.csq}, is that good?${t.cdq}`,
-
-  [`He said${t.directSpeechIntro} ${t.odq}What about 'word' 'word', is that good?${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}word${t.csq} ${t.osq}word${t.csq}, is that good?${t.cdq}`,
-
-  [`He said${t.directSpeechIntro} ${t.odq}What about 'word word', is that good?${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}word word,${t.csq} is that good?${t.cdq}`,
-
-  [`${t.odq}double quotes 'and single quotes' within${t.cdq}`]: `${t.odq}double quotes ${t.osq}and single quotes${t.csq} within${t.cdq}`,
-
-  [`${t.odq}double quotes 'and single quotes’ within${t.cdq}`]: `${t.odq}double quotes ${t.osq}and single quotes${t.csq} within${t.cdq}`,
-
-  [`${t.odq}double quotes ‚and single quotes' within${t.cdq}`]: `${t.odq}double quotes ${t.osq}and single quotes${t.csq} within${t.cdq}`,
-
-  [`He said${t.directSpeechIntro} ${t.odq}What about 'name' and 'other name'?${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}name${t.csq} and ${t.osq}other name${t.csq}?${t.cdq}`,
-
-  [`Within double quotes ${t.odq}there are single 'quotes with mix’d punctuation,' you see.${t.cdq}`]: `Within double quotes ${t.odq}there are single ${t.osq}quotes with mix’d punctuation,${t.csq} you see.${t.cdq}`,
-
-  [`Let's test this${t.directSpeechIntro} ${t.odq}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${t.cdq}`]: `Let’s test this${t.directSpeechIntro} ${t.odq}however, ${t.osq}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${t.csq} he said${t.cdq}`,
-
-  // this case is not covered, the value is false
-  // the first right single quote is falsely an apostrophe
-  // the second left single quote is falsely an apostrophe
-  // tbd-single-quotes-matching
-  // "He said: “What about 'word word' 'word word', is that good?”":
-  //   "He said: “What about ‘word word’ ’word word’, is that good?”",
-};
-
-const identifySingleQuotePairsUnitSet = {
-  [`${m.osqUnpaired}word${m.csqUnpaired}`]: `${m.osq}word${m.csq}`,
-
-  [`${m.osqUnpaired}word word${m.csqUnpaired}`]: `${m.osq}word word${m.csq}`,
-};
-
-supportedLocales.forEach((localeName) => {
-  createTestSuite(
-    "Identify single quote pairs",
-    transformTestSet(identifySingleQuotePairsUnitSet, localeName),
-    (text) => identifySingleQuotePairs(text),
-    transformTestSet(identifySingleQuotePairsModuleSet, localeName),
-    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
-    localeName
-  );
-});
-
-const identifySingleQuotePairAroundSingleWordModuleSet = {
-  "'word'":                                                                           `${t.osq}word${t.csq}`,
-  "'word' 'word'":                                                                    `${t.osq}word${t.csq} ${t.osq}word${t.csq}`,
-  [`He said${t.directSpeechIntro} ${t.odq}What about 'word', is that good?${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}word${t.csq}, is that good?${t.cdq}`,
-  "Press 'N' to get started":                                                         `Press ${t.osq}N${t.csq} to get started`,
-};
-
-const identifySingleQuotePairAroundSingleWordUnitSet = {
-  ...identifySingleQuotePairAroundSingleWordModuleSet,
-
-  // false positives
-  "... don't'": "... don't'",
-  "'don't ...": "'don't ...",
-
-  // false positive
-  // this function does fix multiple words within single quotes
-  // limitation: contractions at the end of the word, e.g. jes'
-  // tbd-single-quotes-matching
-  "'word word'": "'word word'",
-};
-
-supportedLocales.forEach((localeName) => {
-  createTestSuite(
-    "Identify single quote pairs around single word",
-    transformTestSet(identifySingleQuotePairAroundSingleWordUnitSet, localeName),
-    (text) =>
-      placeLocaleSingleQuotes(
-        identifySingleQuotePairAroundSingleWord(text),
-        new Locale(localeName)
-      ),
-    transformTestSet(identifySingleQuotePairAroundSingleWordModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
   );
@@ -418,184 +408,22 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-const fixQuotedWordPunctuationModuleSet = {
-  /*
-  Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
-
-  Fix the punctuation around a quoted word accordingly:
-  - move periods `.`, commas `,`, semicolons `;`, colons `:` outside the quoted word (e.g., 'word.' → 'word'.)
-  - keep the position of `!`, `?`, and `…` as is (ambiguous context; we would need contextual information for proper placement: 'Wow!' vs. Have you heard about the 'bird'?)
-  */
-
-  // Single word with period
-  [`${t.odq}${t.osq}word.${t.csq} fill${t.cdq}`]:                  `${t.odq}${t.osq}word${t.csq}. fill${t.cdq}`,
-  [`${t.odq}Look for ${t.osq}word.${t.csq} In the text.${t.cdq}`]: `${t.odq}Look for ${t.osq}word${t.csq}. In the text.${t.cdq}`,
-  [`${t.odq}Look for ${t.osq}Ian.${t.csq} In the text.${t.cdq}`]:  `${t.odq}Look for ${t.osq}Ian${t.csq}. In the text.${t.cdq}`,
-
-  // Single word with comma
-  [`${t.odq}${t.osq}word,${t.csq} fill${t.cdq}`]:                `${t.odq}${t.osq}word${t.csq}, fill${t.cdq}`,
-  [`${t.odq}He said ${t.osq}hello,${t.csq} then left.${t.cdq}`]: `${t.odq}He said ${t.osq}hello${t.csq}, then left.${t.cdq}`,
-
-  // Single word with semicolon
-  [`${t.odq}${t.osq}word;${t.csq} fill${t.cdq}`]:               `${t.odq}${t.osq}word${t.csq}; fill${t.cdq}`,
-  [`${t.odq}He used ${t.osq}code;${t.csq} it worked.${t.cdq}`]: `${t.odq}He used ${t.osq}code${t.csq}; it worked.${t.cdq}`,
-
-  // Single word with colon
-  [`${t.odq}${t.osq}word:${t.csq} fill${t.cdq}`]:                      `${t.odq}${t.osq}word${t.csq}: fill${t.cdq}`,
-  [`${t.odq}Consider ${t.osq}refactoring:${t.csq} it helps.${t.cdq}`]: `${t.odq}Consider ${t.osq}refactoring${t.csq}: it helps.${t.cdq}`,
-
-  //fix later
-  // Contracted words
-  // [`${t.odq}Say ${t.osq}don${t.apos}t;${t.csq} be firm.${t.cdq}`]:
-  //   "${t.odq}Say ${t.osq}don${t.apos}t${t.csq}; be firm.${t.cdq}",
-
-  // fix later: tokenized identification of single quotes
-  // Numbers
-  // [`${t.odq}Version ${t.osq}2.0.${t.csq} is out.${t.cdq}`]: `${t.odq}Version ${t.osq}2.0${t.csq}. is out.${t.cdq}`,
-  // [`${t.odq}In ${t.osq}2020,${t.csq} things changed.${t.cdq}`]: `${t.odq}In ${t.osq}2020${t.csq}, things changed.${t.cdq}`,
-  // [`${t.odq}Number ${t.osq}42;${t.csq} the answer.${t.cdq}`]: `${t.odq}Number ${t.osq}42${t.csq}; the answer.${t.cdq}`,
-
-  // fix later: tokenized identification of single quotes
-  // Combinations with numbers and contractions (e.g., 69'ers)
-  // [`${t.odq}The ${t.osq}69${t.apos}ers.${t.csq} were famous.${t.cdq}`]: `${t.odq}The ${t.osq}69${t.apos}ers${t.csq}. were famous.${t.cdq}`,
-  // [`${t.odq}Those ${t.osq}90${t.apos}s,${t.csq} good times.${t.cdq}`]: `${t.odq}Those ${t.osq}90${t.apos}s${t.csq}, good times.${t.cdq}`,
-
-  // Hyphenated words
-  [`${t.odq}Use ${t.osq}well-known.${t.csq} for clarity.${t.cdq}`]:        `${t.odq}Use ${t.osq}well-known${t.csq}. for clarity.${t.cdq}`,
-  [`${t.odq}The ${t.osq}state-of-the-art,${t.csq} approach.${t.cdq}`]:     `${t.odq}The ${t.osq}state-of-the-art${t.csq}, approach.${t.cdq}`,
-  [`${t.odq}Try ${t.osq}open-source;${t.csq} it${t.apos}s free.${t.cdq}`]: `${t.odq}Try ${t.osq}open-source${t.csq}; it${t.apos}s free.${t.cdq}`,
-};
-
-const fixQuotedWordPunctuationUnitSet = {
-  // False positives - multiple words (should NOT be fixed in this function)
-  [`She said ${t.osq}hello world.${t.csq} and left.`]:  `She said ${t.osq}hello world.${t.csq} and left.`,
-  [`I heard ${t.osq}good morning,${t.csq} from her.`]:  `I heard ${t.osq}good morning,${t.csq} from her.`,
-  [`The ${t.osq}quick brown fox;${t.csq} jumps.`]:      `The ${t.osq}quick brown fox;${t.csq} jumps.`,
-  [`The ${t.osq}quick brown fox${t.csq}; jumps.`]:      `The ${t.osq}quick brown fox${t.csq}; jumps.`,
-  [`Note ${t.osq}some important thing:${t.csq} here.`]: `Note ${t.osq}some important thing:${t.csq} here.`,
-
-  // False positives - exclamation and question marks (should NOT be fixed)
-  [`The ${t.osq}Wow!${t.csq} was loud.`]:         `The ${t.osq}Wow!${t.csq} was loud.`,
-  [`The ${t.osq}Wow${t.csq}! was loud.`]:         `The ${t.osq}Wow${t.csq}! was loud.`,
-  [`She asked ${t.osq}Why?${t.csq} repeatedly.`]: `She asked ${t.osq}Why?${t.csq} repeatedly.`,
-  [`She asked ${t.osq}Why${t.csq}? repeatedly.`]: `She asked ${t.osq}Why${t.csq}? repeatedly.`,
-
-  // False positives - regnal numbers
-  [`Byl to Karel ${t.osq}IV.${t.csq}, ktery`]: `Byl to Karel ${t.osq}IV.${t.csq}, ktery`,
-
-  // False positives - already correct
-  [`The ${t.osq}word${t.csq}. is correct.`]:     `The ${t.osq}word${t.csq}. is correct.`,
-  [`He said ${t.osq}hello${t.csq}, then left.`]: `He said ${t.osq}hello${t.csq}, then left.`,
-};
-
-supportedLocales.forEach((localeName) => {
-  createTestSuite(
-    "Fix punctuation placement for single-word quoted content",
-    transformTestSet(
-      { ...fixQuotedWordPunctuationUnitSet, ...fixQuotedWordPunctuationModuleSet },
-      localeName
-    ),
-    (text) => fixQuotedWordPunctuation(text, new Locale(localeName)),
-    transformTestSet(fixQuotedWordPunctuationModuleSet, localeName),
-    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
-    localeName
-  );
-});
-
-const fixQuotedSentencePunctuationModuleSet = {
-  /*
-  Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
-
-  Fix the punctuation around a quoted word accordingly:
-  - move periods `.`, commas `,`, semicolons `;`, ellipses `…`exclamation `!` and question marks `?` inside the quoted part
-  - move colons `:` and semicolons `;` outside the quoted part
-  */
-  // Quoted fragment at the end of sentence
-  [`${t.odq}It can be a ${t.osq}quoted fragment${t.csq}. fill${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment.${t.csq} fill${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment${t.csq}, fill${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment,${t.csq} fill${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment${t.csq}! fill${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment!${t.csq} fill${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment${t.csq}? fill${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment?${t.csq} fill${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment${t.csq}… fill${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment…${t.csq} fill${t.cdq}`,
-
-  // move terminal punctuation (.?!…) outside when quoted fragment is at the end of a quoted sentence
-  [`${t.odq}Sentence ${t.osq}quoted fragment.${t.csq}${t.cdq}`]: `${t.odq}Sentence ${t.osq}quoted fragment${t.csq}.${t.cdq}`,
-
-  [`${t.odq}Sentence ${t.osq}quoted fragment!${t.csq}${t.cdq}`]: `${t.odq}Sentence ${t.osq}quoted fragment${t.csq}!${t.cdq}`,
-
-  // nbsp
-  [`${t.odq}It can be ${t.osq}a banana${t.csq}, right.${t.cdq}`]: `${t.odq}It can be ${t.osq}a banana,${t.csq} right.${t.cdq}`,
-
-  // Quoted sentence
-  [`${t.odq}fill ${t.osq}Fully quoted sentence${t.csq}. fill${t.cdq}`]: `${t.odq}fill ${t.osq}Fully quoted sentence.${t.csq} fill${t.cdq}`,
-  [`${t.odq}fill ${t.osq}Fully quoted sentence${t.csq}, fill${t.cdq}`]: `${t.odq}fill ${t.osq}Fully quoted sentence,${t.csq} fill${t.cdq}`,
-  [`${t.odq}fill ${t.osq}Fully quoted sentence${t.csq}! fill${t.cdq}`]: `${t.odq}fill ${t.osq}Fully quoted sentence!${t.csq} fill${t.cdq}`,
-  [`${t.odq}fill ${t.osq}Fully quoted sentence${t.csq}? fill${t.cdq}`]: `${t.odq}fill ${t.osq}Fully quoted sentence?${t.csq} fill${t.cdq}`,
-  [`${t.odq}fill ${t.osq}Fully quoted sentence${t.csq}… fill${t.cdq}`]: `${t.odq}fill ${t.osq}Fully quoted sentence…${t.csq} fill${t.cdq}`,
-
-  // Less common boundaries
-  [`${t.odq}${t.osq}(Fully) quoted sentence${t.csq}.${t.cdq}`]: `${t.odq}${t.osq}(Fully) quoted sentence${t.csq}.${t.cdq}`,
-  [`${t.odq}${t.osq}Fully quoted (sentence)${t.csq}.${t.cdq}`]: `${t.odq}${t.osq}Fully quoted (sentence)${t.csq}.${t.cdq}`,
-
-  // Colon / semicolon should be placed outside the quotes
-  [`${t.odq}${t.osq}quoted fragment:${t.csq} sentence continues${t.cdq}`]: `${t.odq}${t.osq}quoted fragment${t.csq}: sentence continues${t.cdq}`,
-  [`${t.odq}${t.osq}quoted fragment;${t.csq} sentence continues${t.cdq}`]: `${t.odq}${t.osq}quoted fragment${t.csq}; sentence continues${t.cdq}`,
-
-  [`${t.odq}${t.osq}(quoted) fragment:${t.csq} sentence continues${t.cdq}`]: `${t.odq}${t.osq}(quoted) fragment${t.csq}: sentence continues${t.cdq}`,
-  [`${t.odq}${t.osq}quoted (fragment);${t.csq} sentence continues${t.cdq}`]: `${t.odq}${t.osq}quoted (fragment)${t.csq}; sentence continues${t.cdq}`,
-
-  // false positive, consecutive single quotes
-  [`${t.odq}fill ${t.osq}word${t.csq} ${t.osq}word${t.csq}, fill.${t.cdq}`]: `${t.odq}fill ${t.osq}word${t.csq} ${t.osq}word${t.csq}, fill.${t.cdq}`,
-
-  // Correct placement
-  [`${t.odq}It can be a ${t.osq}quoted fragment.${t.csq}${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment${t.csq}.${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment,${t.csq}${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment,${t.csq}${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment!${t.csq}${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment${t.csq}!${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment?${t.csq}${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment${t.csq}?${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment…${t.csq}${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment${t.csq}…${t.cdq}`,
-
-  [`${t.odq}It can be a ${t.osq}quoted fragment!${t.csq}.${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment!${t.csq}.${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment?${t.csq}.${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment?${t.csq}.${t.cdq}`,
-  [`${t.odq}It can be a ${t.osq}quoted fragment…${t.csq}.${t.cdq}`]: `${t.odq}It can be a ${t.osq}quoted fragment…${t.csq}.${t.cdq}`,
-};
-
-const fixQuotedSentencePunctuationUnitSet = {
-  // Exception. skip fixing name with regnal number
-  [`${t.odq}It was ${t.osq}Charles IV${t.csq},${t.cdq}`]:          `${t.odq}It was ${t.osq}Charles IV${t.csq},${t.cdq}`,
-  // False positives - single word (should NOT be fixed in this function)
-  [`${t.odq}Look for ${t.osq}word.${t.csq} In the text.${t.cdq}`]: `${t.odq}Look for ${t.osq}word.${t.csq} In the text.${t.cdq}`,
-  [`${t.odq}${t.osq}word.${t.csq}${t.cdq}`]:                       `${t.odq}${t.osq}word${t.csq}.${t.cdq}`,
-};
-
-supportedLocales.forEach((localeName) => {
-  createTestSuite(
-    "Fix punctuation placement for quoted sentence or fragment",
-    transformTestSet(
-      { ...fixQuotedSentencePunctuationUnitSet, ...fixQuotedSentencePunctuationModuleSet },
-      localeName
-    ),
-    (text) => fixQuotedSentencePunctuation(text, new Locale(localeName)),
-    transformTestSet(fixQuotedSentencePunctuationModuleSet, localeName),
-    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
-    localeName
-  );
-});
-
 export const singleQuotesSet = {
   ...identifyContractedAndModuleSet,
   ...identifyContractedBeginningsSet,
   ...identifyContractedEndsModuleSet,
   ...identifyInWordContractionsSet,
   ...identifyContractedYearsModuleSet,
+  ...identifyModifierApostropheModuleSet,
   ...identifySinglePrimesModuleSet,
   ...identifyUnpairedOpeningSingleQuoteModuleSet,
   ...identifyUnpairedClosingSingleQuoteModuleSet,
-  ...identifySingleQuotePairsModuleSet,
-  ...identifySingleQuotePairAroundSingleWordModuleSet,
   ...replaceSinglePrimeWSingleQuoteModuleSet,
-  ...identifyResidualApostrophes,
+  ...identifyResidualApostrophesSet,
   ...removeExtraSpaceAroundSinglePrimeSet,
-  ...fixQuotedWordPunctuationModuleSet,
-  ...fixQuotedSentencePunctuationModuleSet,
 
-  [`Hej${t.directSpeechIntro} ${t.odq}Vin mu povil, 'ta de jes' take vidil' i neviril${t.cdq}`]: `Hej${t.directSpeechIntro} ${t.odq}Vin mu povil, ${t.osq}ta de jes’ take vidil${t.csq} i neviril${t.cdq}`, // tbd-single-quotes-matching
+  // a word-final modifier letter apostrophe (jesʼ) is kept out of pairing, see identifyModifierApostrophe.
+  // typed as a plain ' instead, nothing tells it from a closing quote and it closes the pair early
+  // (accepted limitation, pinned in quotes/pairing.test.js)
+  [`Hej${t.directSpeechIntro} ${t.odq}Vin mu povil, 'ta de jesʼ take vidil' i neviril${t.cdq}`]: `Hej${t.directSpeechIntro} ${t.odq}Vin mu povil, ${t.osq}ta de jesʼ take vidil${t.csq} i neviril${t.cdq}`,
 };
