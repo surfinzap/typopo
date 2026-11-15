@@ -125,13 +125,16 @@ export const q = {
 */
 const pairVariants = {
   // the outer pair at the top level
-  outer:  { input: [t.odq, t.cdq], expected: [t.odq, t.cdq] },
+  outer:       { input: [t.odq, t.cdq], expected: [t.odq, t.cdq] },
   // the inner pair, on its own; meant for pair-level unit tests
-  inner:  { input: [t.osq, t.csq], expected: [t.osq, t.csq] },
+  inner:       { input: [t.osq, t.csq], expected: [t.osq, t.csq] },
   // the inner pair, nested one level inside the outer pair
-  nested: { input: [t.osq, t.csq], expected: [t.osq, t.csq], frame: [t.odq, t.cdq] },
-  // typed as plain single marks at the top level; depth, not kind, picks the outer glyphs
-  typed:  { input: ["'", "'"], expected: [t.odq, t.cdq] },
+  nested:      { input: [t.osq, t.csq], expected: [t.osq, t.csq], frame: [t.odq, t.cdq] },
+  // typed as plain marks at the top level; depth, not kind, picks the outer glyphs
+  typedSingle: { input: ["'", "'"], expected: [t.odq, t.cdq] },
+  typedDouble: { input: ['"', '"'], expected: [t.odq, t.cdq] },
+  // typed as plain single marks, nested one level inside the outer pair
+  nestedTyped: { input: ["'", "'"], expected: [t.osq, t.csq], frame: [t.odq, t.cdq] },
 };
 
 /**

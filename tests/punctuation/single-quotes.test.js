@@ -355,62 +355,6 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-const identifySingleQuotePairsModuleSet = {
-  [`He said${t.directSpeechIntro} ${t.odq}What about 'word', is that good?${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}word${t.csq}, is that good?${t.cdq}`,
-
-  [`He said${t.directSpeechIntro} ${t.odq}What about 'word' 'word', is that good?${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}word${t.csq} ${t.osq}word${t.csq}, is that good?${t.cdq}`,
-
-  [`He said${t.directSpeechIntro} ${t.odq}What about 'word word', is that good?${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}word word,${t.csq} is that good?${t.cdq}`,
-
-  [`${t.odq}double quotes 'and single quotes' within${t.cdq}`]: `${t.odq}double quotes ${t.osq}and single quotes${t.csq} within${t.cdq}`,
-
-  [`${t.odq}double quotes 'and single quotes’ within${t.cdq}`]: `${t.odq}double quotes ${t.osq}and single quotes${t.csq} within${t.cdq}`,
-
-  [`${t.odq}double quotes ‚and single quotes' within${t.cdq}`]: `${t.odq}double quotes ${t.osq}and single quotes${t.csq} within${t.cdq}`,
-
-  [`He said${t.directSpeechIntro} ${t.odq}What about 'name' and 'other name'?${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}name${t.csq} and ${t.osq}other name${t.csq}?${t.cdq}`,
-
-  [`Within double quotes ${t.odq}there are single 'quotes with mix’d punctuation,' you see.${t.cdq}`]: `Within double quotes ${t.odq}there are single ${t.osq}quotes with mix’d punctuation,${t.csq} you see.${t.cdq}`,
-
-  [`Let's test this${t.directSpeechIntro} ${t.odq}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${t.cdq}`]: `Let’s test this${t.directSpeechIntro} ${t.odq}however, ${t.osq}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${t.csq} he said${t.cdq}`,
-
-  // this case is not covered, the value is false
-  // the first right single quote is falsely an apostrophe
-  // the second left single quote is falsely an apostrophe
-  // tbd-single-quotes-matching
-  // "He said: “What about 'word word' 'word word', is that good?”":
-  //   "He said: “What about ‘word word’ ’word word’, is that good?”",
-};
-
-supportedLocales.forEach((localeName) => {
-  createTestSuite(
-    "Identify single quote pairs",
-    {},
-    null,
-    transformTestSet(identifySingleQuotePairsModuleSet, localeName),
-    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
-    localeName
-  );
-});
-
-const identifySingleQuotePairAroundSingleWordModuleSet = {
-  "'word'":                                                                           `${t.odq}word${t.cdq}`,
-  "'word' 'word'":                                                                    `${t.odq}word${t.cdq} ${t.odq}word${t.cdq}`,
-  [`He said${t.directSpeechIntro} ${t.odq}What about 'word', is that good?${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}word${t.csq}, is that good?${t.cdq}`,
-  "Press 'N' to get started":                                                         `Press ${t.odq}N${t.cdq} to get started`,
-};
-
-supportedLocales.forEach((localeName) => {
-  createTestSuite(
-    "Identify single quote pairs around single word",
-    {},
-    null,
-    transformTestSet(identifySingleQuotePairAroundSingleWordModuleSet, localeName),
-    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
-    localeName
-  );
-});
-
 const replaceSinglePrimeWSingleQuoteModuleSet = {
   [`He said${t.directSpeechIntro} ${t.odq}What about 'Localhost 3000', is that good?${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}Localhost 3000,${t.csq} is that good?${t.cdq}`,
 
@@ -474,8 +418,6 @@ export const singleQuotesSet = {
   ...identifySinglePrimesModuleSet,
   ...identifyUnpairedOpeningSingleQuoteModuleSet,
   ...identifyUnpairedClosingSingleQuoteModuleSet,
-  ...identifySingleQuotePairsModuleSet,
-  ...identifySingleQuotePairAroundSingleWordModuleSet,
   ...replaceSinglePrimeWSingleQuoteModuleSet,
   ...identifyResidualApostrophesSet,
   ...removeExtraSpaceAroundSinglePrimeSet,

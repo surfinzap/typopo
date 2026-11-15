@@ -11,7 +11,8 @@ import { createTestSuite, expandPairVariants, transformTestSet, t, q } from "../
   expanded into variants by expandPairVariants():
   - unit tests run each function with the outer pair and with the inner pair
   - module tests run fixQuotes with the pair at the top level, nested inside the
-    outer pair, and typed with plain single marks
+    outer pair, and typed with plain marks
+  See pairVariants in ../../test-utils.js for the full list.
 */
 
 /* The quote pairs for a locale, as ./quotes/shared.js expects them */
@@ -125,7 +126,7 @@ const fixQuotedWordPunctuationVariants = {
       [`Number ${q.o}42;${q.c} the answer.`]:   null,
     },
   },
-  typed: {},
+  typedSingle: {},
 };
 
 Object.entries(pairs).forEach(([pairName, pairOf]) => {
@@ -315,7 +316,7 @@ function expandGroups(groups, variantNames) {
 const sentenceGroups = Object.values(fixQuotedSentencePunctuationGroups);
 
 const fixQuotedSentencePunctuationModuleSet = {
-  ...expandGroups(sentenceGroups, ["outer", "nested", "typed"]),
+  ...expandGroups(sentenceGroups, ["outer", "nested", "typedSingle"]),
   ...fixQuotedSentencePunctuationNestedSet,
   ...fixQuotedSentencePunctuationCombinationSet,
 };
@@ -366,8 +367,92 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
+//
+
+/*
+  Identify quote pairs
+
+  Which marks pair up does not depend on the kind typed: a pair typed with
+  double or single marks renders with the outer glyphs at the top level, and
+  with the inner glyphs one level down.
+*/
+
+const directSpeech = [`He said${t.directSpeechIntro} ${t.odq}`, t.cdq];
+
+/* Ending the outer quote, the question mark stays outside the inner pair */
+const endsTheOuterQuote = {
+  [`What about ${q.o}name${q.c} and ${q.o}other name${q.c}?`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}name${t.csq} and ${t.osq}other name${t.csq}?${t.cdq}`,
+};
+
+const identifyQuotePairsGroups = {
+  standalone: {
+    cases: {
+      [`${q.o}quoted material${q.c}`]:                                 `${q.o}quoted material${q.c}`,
+      [`unquoted ${q.o}quoted material${q.c} material`]:               `unquoted ${q.o}quoted material${q.c} material`,
+      [`${q.o}quoted material${q.c} and ${q.o}quoted material${q.c}`]: `${q.o}quoted material${q.c} and ${q.o}quoted material${q.c}`,
+      [`double quotes ${q.o}and single quotes${q.c} within`]:          `double quotes ${q.o}and single quotes${q.c} within`,
+
+      // single word
+      [`${q.o}word${q.c}`]:                   `${q.o}word${q.c}`,
+      [`${q.o}word${q.c} ${q.o}word${q.c}`]:  `${q.o}word${q.c} ${q.o}word${q.c}`,
+      [`Press ${q.o}N${q.c} to get started`]: `Press ${q.o}N${q.c} to get started`,
+    },
+  },
+
+  inDirectSpeech: {
+    cases: {
+      [`What about ${q.o}word${q.c}, is that good?`]:                            `What about ${q.o}word${q.c}, is that good?`,
+      [`What about ${q.o}word${q.c} ${q.o}word${q.c}, is that good?`]:           `What about ${q.o}word${q.c} ${q.o}word${q.c}, is that good?`,
+      [`What about ${q.o}word word${q.c}, is that good?`]:                       `What about ${q.o}word word,${q.c} is that good?`,
+      [`What about ${q.o}word word${q.c} ${q.o}word word${q.c}, is that good?`]: `What about ${q.o}word word${q.c} ${q.o}word word,${q.c} is that good?`,
+      [`What about ${q.o}name${q.c} and ${q.o}other name${q.c}?`]:               `What about ${q.o}name${q.c} and ${q.o}other name?${q.c}`,
+    },
+    nested:      { frame: directSpeech, overrides: endsTheOuterQuote },
+    nestedTyped: { frame: directSpeech, overrides: endsTheOuterQuote },
+  },
+
+  inASentence: {
+    cases: {
+      [`there are single ${q.o}quotes with mix’d punctuation,${q.c} you see.`]: `there are single ${q.o}quotes with mix’d punctuation,${q.c} you see.`,
+    },
+    nested:      { frame: [`Within double quotes ${t.odq}`, t.cdq] },
+    nestedTyped: { frame: [`Within double quotes ${t.odq}`, t.cdq] },
+  },
+};
+
+/* Nested only: mixed marks, and a frame that is itself corrected */
+const identifyQuotePairsNestedSet = {
+  [`${t.odq}double quotes 'and single quotes’ within${t.cdq}`]: `${t.odq}double quotes ${t.osq}and single quotes${t.csq} within${t.cdq}`,
+  [`${t.odq}double quotes ‚and single quotes' within${t.cdq}`]: `${t.odq}double quotes ${t.osq}and single quotes${t.csq} within${t.cdq}`,
+
+  [`Let's test this${t.directSpeechIntro} ${t.odq}however, 'quote this or nottin' rock 'n' roll this will be corrected for 69'ers,' he said${t.cdq}`]: `Let’s test this${t.directSpeechIntro} ${t.odq}however, ${t.osq}quote this or nottin’ rock ’n’ roll this will be corrected for 69’ers,${t.csq} he said${t.cdq}`,
+};
+
+const identifyQuotePairsModuleSet = {
+  ...expandGroups(Object.values(identifyQuotePairsGroups), [
+    "outer",
+    "typedDouble",
+    "typedSingle",
+    "nested",
+    "nestedTyped",
+  ]),
+  ...identifyQuotePairsNestedSet,
+};
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Identify quote pairs, in the pipeline",
+    {},
+    null,
+    transformTestSet(identifyQuotePairsModuleSet, localeName),
+    (text) => fixQuotes(text, new Locale(localeName)),
+    localeName
+  );
+});
+
 /* Module cases, in t.* tokens, for the integration and idempotency suites */
 export const quotesSet = {
   ...expandPairVariants(fixQuotedWordPunctuationModuleSet, fixQuotedWordPunctuationVariants),
   ...fixQuotedSentencePunctuationModuleSet,
+  ...identifyQuotePairsModuleSet,
 };

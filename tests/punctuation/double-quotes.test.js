@@ -306,10 +306,14 @@ const identifyDoubleQuotePairsUnitSet = {
   '" quoted material "': `${t.odq} quoted material ${t.cdq}`,
   '"quoted material "':  `${t.odq}quoted material ${t.cdq}`,
   '" quoted material"':  `${t.odq} quoted material${t.cdq}`,
+
+  // the pipeline runs these for every kind and nesting, see quotes/shared.test.js
+  '"quoted material"':                       `${t.odq}quoted material${t.cdq}`,
+  'unquoted "quoted material" material':     `unquoted ${t.odq}quoted material${t.cdq} material`,
+  '"quoted material" and "quoted material"': `${t.odq}quoted material${t.cdq} and ${t.odq}quoted material${t.cdq}`,
 };
 
 const identifyDoubleQuotePairsModuleSet = {
-  '"quoted material"':     `${t.odq}quoted material${t.cdq}`,
   '„quoted material"':     `${t.odq}quoted material${t.cdq}`,
   "«quoted material«":     `${t.odq}quoted material${t.cdq}`,
   "’’quoted material''":   `${t.odq}quoted material${t.cdq}`,
@@ -322,9 +326,6 @@ const identifyDoubleQuotePairsModuleSet = {
   "“quoted material”":     `${t.odq}quoted material${t.cdq}`,
   "„quoted material“":     `${t.odq}quoted material${t.cdq}`,
   "«quoted material»":     `${t.odq}quoted material${t.cdq}`,
-
-  'unquoted "quoted material" material':     `unquoted ${t.odq}quoted material${t.cdq} material`,
-  '"quoted material" and "quoted material"': `${t.odq}quoted material${t.cdq} and ${t.odq}quoted material${t.cdq}`,
 
   // primes × double quotes
   '"Conference 2020" and "something in quotes."': `${t.odq}Conference 2020${t.cdq} and ${t.odq}something in quotes.${t.cdq}`,
