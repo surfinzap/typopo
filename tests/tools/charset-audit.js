@@ -52,6 +52,7 @@ export const AUDITED_FILES = [
   "src/const.js",
   "tests/punctuation/double-quotes.test.js",
   "tests/punctuation/single-quotes.test.js",
+  "tests/punctuation/quotes/shared.test.js",
   "tests/integration/typopo.test.js",
 ];
 

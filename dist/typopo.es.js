@@ -659,7 +659,7 @@ function De(e) {
 //#endregion
 //#region src/modules/punctuation/quotes/shared.js
 function U(t, n) {
-	return t.replace(RegExp(`(${n.open})([^${e.spaces}${n.close}]+?)([^${e.romanNumerals}${e.sentencePunctuation}])([${e.sentencePunctuation}]{1,})(${n.close})`, "g"), (e, t, n, r, i, a) => i.length === 1 && /[.,;:]/.test(i) ? t + n + r + a + i : e);
+	return t.replace(RegExp(`(${n.open})((?:[^${e.spaces}${n.close}]|(?<=[\\d\\p{L}])${n.close}(?=\\p{L}))+?)([^${e.romanNumerals}${e.sentencePunctuation}])([${e.sentencePunctuation}]{1,})(${n.close})`, "gu"), (e, t, n, r, i, a) => i.length === 1 && /[.,;:]/.test(i) ? t + n + r + a + i : e);
 }
 function W(t, n, r) {
 	let i = r !== void 0;

@@ -8,6 +8,7 @@ TBD
 - remove test\tools from the production code
 - revisit jsdocs for new files
 - prettier writes to lf by default? change to crlf? 
+- fix idempotency issue, shared test "Version ${q"
 
 ### 🐛 Fixes
 - Add missing `de-ch` to types

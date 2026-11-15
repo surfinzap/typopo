@@ -31,6 +31,12 @@ import { base } from "../../../const.js";
   “2020:” → “2020”:
   “Wow!” → “Wow!” (unchanged—ambiguous)
 
+  Assumptions and Limitations
+  A closing mark after a letter or digit and before a letter is read as an
+  apostrophe, part of the word, not as the end of the quote (as in
+  identifyInWordContractions). That matters where the closing quote and the
+  apostrophe are the same glyph, e.g. en-us single quotes: ‘69’ers.’ → ‘69’ers’.
+
   @param {string} string: input text for identification
   @param {{open: string, close: string}} pair: quote pair to operate on
   @returns {string} output with corrected punctuation placement
@@ -40,11 +46,11 @@ export function fixQuotedWordPunctuation(string, pair) {
   return string.replace(
     new RegExp(
       `(${pair.open})` +
-      `([^${base.spaces}${pair.close}]+?)` +
+      `((?:[^${base.spaces}${pair.close}]|(?<=[\\d\\p{L}])${pair.close}(?=\\p{L}))+?)` +
       `([^${base.romanNumerals}${base.sentencePunctuation}])` +
       `([${base.sentencePunctuation}]{1,})` +
       `(${pair.close})`,
-      "g"
+      "gu"
     ),
     (match, leftQuote, content, notRoman, punct, rightQuote) => {
       if (punct.length === 1 && /[.,;:]/.test(punct)) {

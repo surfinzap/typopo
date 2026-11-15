@@ -109,6 +109,14 @@ export const quoteCorpus = {
     "'word.'",
     "'well-known;'",
     "'2020:'",
+    // a contraction inside the quoted word: in en-us the closing single quote is the apostrophe glyph
+    "\"The '69'ers.' were famous\"",
+    "\"Those '90's,' good times\"",
+    "\"Say 'don't;' be firm\"",
+    "'69'ers.' were famous",
+    // a number ends the quoted word: after the move, the closing mark sits right after a digit
+    "\"Version '2.0.' is out\"",
+    "\"In '2020,' things changed\"",
   ],
 
   "rusyn / MLA transliteration (U+02BC)": [

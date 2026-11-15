@@ -14,10 +14,7 @@ import {
   fixDoubleQuotesAndPrimes,
   fixDirectSpeechIntro,
 } from "../../src/modules/punctuation/double-quotes.js";
-import {
-  fixQuotedWordPunctuation,
-  fixQuotedSentencePunctuation,
-} from "../../src/modules/punctuation/quotes/shared.js";
+import { fixQuotedSentencePunctuation } from "../../src/modules/punctuation/quotes/shared.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { createTestSuite, transformTestSet, t } from "../test-utils.js";
 import { m } from "../../src/markers.js";
@@ -471,86 +468,6 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-const fixQuotedWordPunctuationModuleSet = {
-  /*
-  Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
-
-  Fix the punctuation around a quoted word accordingly:
-  - move periods `.`, commas `,`, semicolons `;`, colons `:` outside the quoted word (e.g., “word.” → “word”.)
-  - keep the position of `!`, `?`, and `…` as is (ambiguous context; we would need contextual information for proper placement: “Wow!” vs. Have you heard about the “bird”?)
-  */
-
-  // Single word with period
-  [`${t.odq}word.${t.cdq}`]:                       `${t.odq}word${t.cdq}.`,
-  [`Look for ${t.odq}word.${t.cdq} In the text.`]: `Look for ${t.odq}word${t.cdq}. In the text.`,
-  [`Look for ${t.odq}Ian.${t.cdq} In the text.`]:  `Look for ${t.odq}Ian${t.cdq}. In the text.`,
-
-  // Single word with comma
-  [`${t.odq}word,${t.cdq}`]:                     `${t.odq}word${t.cdq},`,
-  [`He said ${t.odq}hello,${t.cdq} then left.`]: `He said ${t.odq}hello${t.cdq}, then left.`,
-
-  // Single word with semicolon
-  [`${t.odq}word;${t.cdq}`]:                    `${t.odq}word${t.cdq};`,
-  [`He used ${t.odq}code;${t.cdq} it worked.`]: `He used ${t.odq}code${t.cdq}; it worked.`,
-
-  // Single word with colon
-  [`${t.odq}word:${t.cdq}`]:                           `${t.odq}word${t.cdq}:`,
-  [`Consider ${t.odq}refactoring:${t.cdq} it helps.`]: `Consider ${t.odq}refactoring${t.cdq}: it helps.`,
-
-  // Contracted words
-  [`Say ${t.odq}don${t.apos}t;${t.cdq} be firm.`]: `Say ${t.odq}don${t.apos}t${t.cdq}; be firm.`,
-
-  // Numbers
-  [`Version ${t.odq}2.0.${t.cdq} is out.`]:     `Version ${t.odq}2.0${t.cdq}. is out.`,
-  [`In ${t.odq}2020,${t.cdq} things changed.`]: `In ${t.odq}2020${t.cdq}, things changed.`,
-  [`Number ${t.odq}42;${t.cdq} the answer.`]:   `Number ${t.odq}42${t.cdq}; the answer.`,
-
-  // Combinations with numbers and contractions (e.g., 69'ers)
-  [`The ${t.odq}69${t.apos}ers.${t.cdq} were famous.`]: `The ${t.odq}69${t.apos}ers${t.cdq}. were famous.`,
-  [`Those ${t.odq}90${t.apos}s,${t.cdq} good times.`]:  `Those ${t.odq}90${t.apos}s${t.cdq}, good times.`,
-
-  // Hyphenated words
-  [`Use ${t.odq}well-known.${t.cdq} for clarity.`]:        `Use ${t.odq}well-known${t.cdq}. for clarity.`,
-  [`The ${t.odq}state-of-the-art,${t.cdq} approach.`]:     `The ${t.odq}state-of-the-art${t.cdq}, approach.`,
-  [`Try ${t.odq}open-source;${t.cdq} it${t.apos}s free.`]: `Try ${t.odq}open-source${t.cdq}; it${t.apos}s free.`,
-};
-
-const fixQuotedWordPunctuationUnitSet = {
-  // False positives - multiple words (should NOT be fixed in this function)
-  [`She said ${t.odq}hello world.${t.cdq} and left.`]:  `She said ${t.odq}hello world.${t.cdq} and left.`,
-  [`I heard ${t.odq}good morning,${t.cdq} from her.`]:  `I heard ${t.odq}good morning,${t.cdq} from her.`,
-  [`The ${t.odq}quick brown fox;${t.cdq} jumps.`]:      `The ${t.odq}quick brown fox;${t.cdq} jumps.`,
-  [`The ${t.odq}quick brown fox${t.cdq}; jumps.`]:      `The ${t.odq}quick brown fox${t.cdq}; jumps.`,
-  [`Note ${t.odq}some important thing:${t.cdq} here.`]: `Note ${t.odq}some important thing:${t.cdq} here.`,
-
-  // False positives - exclamation and question marks (should NOT be fixed)
-  [`The ${t.odq}Wow!${t.cdq} was loud.`]:         `The ${t.odq}Wow!${t.cdq} was loud.`,
-  [`The ${t.odq}Wow${t.cdq}! was loud.`]:         `The ${t.odq}Wow${t.cdq}! was loud.`,
-  [`She asked ${t.odq}Why?${t.cdq} repeatedly.`]: `She asked ${t.odq}Why?${t.cdq} repeatedly.`,
-  [`She asked ${t.odq}Why${t.cdq}? repeatedly.`]: `She asked ${t.odq}Why${t.cdq}? repeatedly.`,
-
-  // False positives - regnal numbers
-  [`Byl to Karel ${t.odq}IV.${t.cdq}, ktery`]: `Byl to Karel ${t.odq}IV.${t.cdq}, ktery`,
-
-  // False positives - already correct
-  [`The ${t.odq}word${t.cdq}. is correct.`]:     `The ${t.odq}word${t.cdq}. is correct.`,
-  [`He said ${t.odq}hello${t.cdq}, then left.`]: `He said ${t.odq}hello${t.cdq}, then left.`,
-};
-
-supportedLocales.forEach((localeName) => {
-  createTestSuite(
-    "Fix punctuation placement for single-word quoted content",
-    transformDoubleQuoteSet(
-      { ...fixQuotedWordPunctuationUnitSet, ...fixQuotedWordPunctuationModuleSet },
-      localeName
-    ),
-    (text) => fixQuotedWordPunctuation(text, doubleQuotePair(localeName)),
-    transformDoubleQuoteSet(fixQuotedWordPunctuationModuleSet, localeName),
-    (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
-    localeName
-  );
-});
-
 const fixQuotedSentencePunctuationModuleSet = {
   /*
   Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
@@ -819,7 +736,6 @@ export const doubleQuotesSet = {
   ...addSpaceBeforeopeningDoubleQuoteSet,
   ...addSpaceAfterclosingDoubleQuoteSet,
   ...fixDirectSpeechIntroSet,
-  ...fixQuotedWordPunctuationModuleSet,
   ...fixQuotedSentencePunctuationModuleSet,
 };
 

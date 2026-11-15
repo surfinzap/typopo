@@ -522,6 +522,54 @@ in  '2020:'
     de-de  „2020“:
     de-ch  «2020»:
 
+in  "The '69'ers.' were famous"
+    cs     „The ‚69’ers‘. were famous“
+    en-us  “The ‘69’ers’. were famous”
+    rue    «The ‹69’ers›. were famous»
+    sk     „The ‚69’ers‘. were famous“
+    de-de  „The ‚69’ers‘. were famous“
+    de-ch  «The ‹69’ers›. were famous»
+
+in  "Those '90's,' good times"
+    cs     „Those ‚90’s‘, good times“
+    en-us  “Those ‘90’s’, good times”
+    rue    «Those ‹90’s›, good times»
+    sk     „Those ‚90’s‘, good times“
+    de-de  „Those ‚90’s‘, good times“
+    de-ch  «Those ‹90’s›, good times»
+
+in  "Say 'don't;' be firm"
+    cs     „Say ‚don’t‘; be firm“
+    en-us  “Say ‘don’t’; be firm”
+    rue    «Say ‹don’t›; be firm»
+    sk     „Say ‚don’t‘; be firm“
+    de-de  „Say ‚don’t‘; be firm“
+    de-ch  «Say ‹don’t›; be firm»
+
+in  '69'ers.' were famous
+    cs     „69’ers“. were famous
+    en-us  “69’ers”. were famous
+    rue    «69’ers». were famous
+    sk     „69’ers“. were famous
+    de-de  „69’ers“. were famous
+    de-ch  «69’ers». were famous
+
+in  "Version '2.0.' is out"
+    cs     „Version ‚2.0‘. is out“
+    en-us  “Version ‘2.0’. is out”
+    rue    «Version ‹2.0›. is out»
+    sk     „Version ‚2.0‘. is out“
+    de-de  „Version ‚2.0‘. is out“
+    de-ch  «Version ‹2.0›. is out»
+
+in  "In '2020,' things changed"
+    cs     „In ‚2020‘, things changed“
+    en-us  “In ‘2020’, things changed”
+    rue    «In ‹2020›, things changed»
+    sk     „In ‚2020‘, things changed“
+    de-de  „In ‚2020‘, things changed“
+    de-ch  «In ‹2020›, things changed»
+
 ## rusyn / MLA transliteration (U+02BC)
 
 in  Vin mu povil, ta de jes\u02BC take vidil i neviril

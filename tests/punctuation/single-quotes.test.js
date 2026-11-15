@@ -14,10 +14,7 @@ import {
   removeExtraSpaceAroundSinglePrime,
   fixSingleQuotesPrimesAndApostrophes,
 } from "../../src/modules/punctuation/single-quotes.js";
-import {
-  fixQuotedWordPunctuation,
-  fixQuotedSentencePunctuation,
-} from "../../src/modules/punctuation/quotes/shared.js";
+import { fixQuotedSentencePunctuation } from "../../src/modules/punctuation/quotes/shared.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { createTestSuite, transformTestSet, t } from "../test-utils.js";
 import { m } from "../../src/markers.js";
@@ -474,90 +471,6 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
-const fixQuotedWordPunctuationModuleSet = {
-  /*
-  Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
-
-  Fix the punctuation around a quoted word accordingly:
-  - move periods `.`, commas `,`, semicolons `;`, colons `:` outside the quoted word (e.g., 'word.' → 'word'.)
-  - keep the position of `!`, `?`, and `…` as is (ambiguous context; we would need contextual information for proper placement: 'Wow!' vs. Have you heard about the 'bird'?)
-  */
-
-  // Single word with period
-  [`${t.odq}${t.osq}word.${t.csq} fill${t.cdq}`]:                  `${t.odq}${t.osq}word${t.csq}. fill${t.cdq}`,
-  [`${t.odq}Look for ${t.osq}word.${t.csq} In the text.${t.cdq}`]: `${t.odq}Look for ${t.osq}word${t.csq}. In the text.${t.cdq}`,
-  [`${t.odq}Look for ${t.osq}Ian.${t.csq} In the text.${t.cdq}`]:  `${t.odq}Look for ${t.osq}Ian${t.csq}. In the text.${t.cdq}`,
-
-  // Single word with comma
-  [`${t.odq}${t.osq}word,${t.csq} fill${t.cdq}`]:                `${t.odq}${t.osq}word${t.csq}, fill${t.cdq}`,
-  [`${t.odq}He said ${t.osq}hello,${t.csq} then left.${t.cdq}`]: `${t.odq}He said ${t.osq}hello${t.csq}, then left.${t.cdq}`,
-
-  // Single word with semicolon
-  [`${t.odq}${t.osq}word;${t.csq} fill${t.cdq}`]:               `${t.odq}${t.osq}word${t.csq}; fill${t.cdq}`,
-  [`${t.odq}He used ${t.osq}code;${t.csq} it worked.${t.cdq}`]: `${t.odq}He used ${t.osq}code${t.csq}; it worked.${t.cdq}`,
-
-  // Single word with colon
-  [`${t.odq}${t.osq}word:${t.csq} fill${t.cdq}`]:                      `${t.odq}${t.osq}word${t.csq}: fill${t.cdq}`,
-  [`${t.odq}Consider ${t.osq}refactoring:${t.csq} it helps.${t.cdq}`]: `${t.odq}Consider ${t.osq}refactoring${t.csq}: it helps.${t.cdq}`,
-
-  //fix later
-  // Contracted words
-  // [`${t.odq}Say ${t.osq}don${t.apos}t;${t.csq} be firm.${t.cdq}`]:
-  //   "${t.odq}Say ${t.osq}don${t.apos}t${t.csq}; be firm.${t.cdq}",
-
-  // fix later: tokenized identification of single quotes
-  // Numbers
-  // [`${t.odq}Version ${t.osq}2.0.${t.csq} is out.${t.cdq}`]: `${t.odq}Version ${t.osq}2.0${t.csq}. is out.${t.cdq}`,
-  // [`${t.odq}In ${t.osq}2020,${t.csq} things changed.${t.cdq}`]: `${t.odq}In ${t.osq}2020${t.csq}, things changed.${t.cdq}`,
-  // [`${t.odq}Number ${t.osq}42;${t.csq} the answer.${t.cdq}`]: `${t.odq}Number ${t.osq}42${t.csq}; the answer.${t.cdq}`,
-
-  // fix later: tokenized identification of single quotes
-  // Combinations with numbers and contractions (e.g., 69'ers)
-  // [`${t.odq}The ${t.osq}69${t.apos}ers.${t.csq} were famous.${t.cdq}`]: `${t.odq}The ${t.osq}69${t.apos}ers${t.csq}. were famous.${t.cdq}`,
-  // [`${t.odq}Those ${t.osq}90${t.apos}s,${t.csq} good times.${t.cdq}`]: `${t.odq}Those ${t.osq}90${t.apos}s${t.csq}, good times.${t.cdq}`,
-
-  // Hyphenated words
-  [`${t.odq}Use ${t.osq}well-known.${t.csq} for clarity.${t.cdq}`]:        `${t.odq}Use ${t.osq}well-known${t.csq}. for clarity.${t.cdq}`,
-  [`${t.odq}The ${t.osq}state-of-the-art,${t.csq} approach.${t.cdq}`]:     `${t.odq}The ${t.osq}state-of-the-art${t.csq}, approach.${t.cdq}`,
-  [`${t.odq}Try ${t.osq}open-source;${t.csq} it${t.apos}s free.${t.cdq}`]: `${t.odq}Try ${t.osq}open-source${t.csq}; it${t.apos}s free.${t.cdq}`,
-};
-
-const fixQuotedWordPunctuationUnitSet = {
-  // False positives - multiple words (should NOT be fixed in this function)
-  [`She said ${t.osq}hello world.${t.csq} and left.`]:  `She said ${t.osq}hello world.${t.csq} and left.`,
-  [`I heard ${t.osq}good morning,${t.csq} from her.`]:  `I heard ${t.osq}good morning,${t.csq} from her.`,
-  [`The ${t.osq}quick brown fox;${t.csq} jumps.`]:      `The ${t.osq}quick brown fox;${t.csq} jumps.`,
-  [`The ${t.osq}quick brown fox${t.csq}; jumps.`]:      `The ${t.osq}quick brown fox${t.csq}; jumps.`,
-  [`Note ${t.osq}some important thing:${t.csq} here.`]: `Note ${t.osq}some important thing:${t.csq} here.`,
-
-  // False positives - exclamation and question marks (should NOT be fixed)
-  [`The ${t.osq}Wow!${t.csq} was loud.`]:         `The ${t.osq}Wow!${t.csq} was loud.`,
-  [`The ${t.osq}Wow${t.csq}! was loud.`]:         `The ${t.osq}Wow${t.csq}! was loud.`,
-  [`She asked ${t.osq}Why?${t.csq} repeatedly.`]: `She asked ${t.osq}Why?${t.csq} repeatedly.`,
-  [`She asked ${t.osq}Why${t.csq}? repeatedly.`]: `She asked ${t.osq}Why${t.csq}? repeatedly.`,
-
-  // False positives - regnal numbers
-  [`Byl to Karel ${t.osq}IV.${t.csq}, ktery`]: `Byl to Karel ${t.osq}IV.${t.csq}, ktery`,
-
-  // False positives - already correct
-  [`The ${t.osq}word${t.csq}. is correct.`]:     `The ${t.osq}word${t.csq}. is correct.`,
-  [`He said ${t.osq}hello${t.csq}, then left.`]: `He said ${t.osq}hello${t.csq}, then left.`,
-};
-
-supportedLocales.forEach((localeName) => {
-  createTestSuite(
-    "Fix punctuation placement for single-word quoted content",
-    transformTestSet(
-      { ...fixQuotedWordPunctuationUnitSet, ...fixQuotedWordPunctuationModuleSet },
-      localeName
-    ),
-    (text) => fixQuotedWordPunctuation(text, singleQuotePair(localeName)),
-    transformTestSet(fixQuotedWordPunctuationModuleSet, localeName),
-    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
-    localeName
-  );
-});
-
 const fixQuotedSentencePunctuationModuleSet = {
   /*
   Related source: https://cmosshoptalk.com/2020/10/20/commas-and-periods-with-quotation-marks/
@@ -656,7 +569,6 @@ export const singleQuotesSet = {
   ...replaceSinglePrimeWSingleQuoteModuleSet,
   ...identifyResidualApostrophesSet,
   ...removeExtraSpaceAroundSinglePrimeSet,
-  ...fixQuotedWordPunctuationModuleSet,
   ...fixQuotedSentencePunctuationModuleSet,
 
   // a word-final modifier letter apostrophe (jesʼ) is kept out of pairing, see identifyModifierApostrophe.
