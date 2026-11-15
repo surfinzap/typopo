@@ -15,9 +15,15 @@ import {
   addSpaceBeforeopeningDoubleQuote,
   addSpaceAfterclosingDoubleQuote,
   fixDirectSpeechIntro,
+} from "../../src/modules/punctuation/double-quotes.js";
+import {
   fixQuotedWordPunctuation,
   fixQuotedSentencePunctuation,
-} from "../../src/modules/punctuation/double-quotes.js";
+} from "../../src/modules/punctuation/quotes/shared.js";
+
+function doubleQuotePair(locale) {
+  return { open: locale.openingDoubleQuote, close: locale.closingDoubleQuote };
+}
 
 //
 
@@ -142,12 +148,12 @@ function debugFixDoubleQuotes(inputString, locale = "en-us", configuration = {})
 
   // Step 14: Fix quoted word punctuation
   const oldString14 = string;
-  string = fixQuotedWordPunctuation(string, currentLocale);
+  string = fixQuotedWordPunctuation(string, doubleQuotePair(currentLocale));
   logStep("fixQuotedWordPunctuation", string, oldString14);
 
   // Step 15: Fix quoted sentence punctuation
   const oldString15 = string;
-  string = fixQuotedSentencePunctuation(string, currentLocale);
+  string = fixQuotedSentencePunctuation(string, doubleQuotePair(currentLocale));
   logStep("fixQuotedSentencePunctuation", string, oldString15);
 
   console.log("=".repeat(80));
@@ -234,11 +240,11 @@ function getDoubleQuotesTransformationSteps(inputString, locale = "en-us", confi
   string = addStep("fixDirectSpeechIntro", string, oldString13);
 
   const oldString14 = string;
-  string = fixQuotedWordPunctuation(string, currentLocale);
+  string = fixQuotedWordPunctuation(string, doubleQuotePair(currentLocale));
   string = addStep("fixQuotedWordPunctuation", string, oldString14);
 
   const oldString15 = string;
-  string = fixQuotedSentencePunctuation(string, currentLocale);
+  string = fixQuotedSentencePunctuation(string, doubleQuotePair(currentLocale));
   string = addStep("fixQuotedSentencePunctuation", string, oldString15);
 
   return {

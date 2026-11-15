@@ -1,8 +1,6 @@
 import {
   removeExtraPunctuationBeforeQuotes,
   removeExtraPunctuationAfterQuotes,
-  fixQuotedWordPunctuation,
-  fixQuotedSentencePunctuation,
   identifyDoublePrimes,
   identifyDoubleQuotePairs,
   identifyUnpairedOpeningDoubleQuote,
@@ -16,9 +14,19 @@ import {
   fixDoubleQuotesAndPrimes,
   fixDirectSpeechIntro,
 } from "../../src/modules/punctuation/double-quotes.js";
+import {
+  fixQuotedWordPunctuation,
+  fixQuotedSentencePunctuation,
+} from "../../src/modules/punctuation/quotes/shared.js";
 import Locale, { supportedLocales } from "../../src/locale/locale.js";
 import { createTestSuite, transformTestSet, t } from "../test-utils.js";
 import { m } from "../../src/markers.js";
+
+/* The double quote pair for a locale, as ./quotes/shared.js expects it */
+function doubleQuotePair(localeName) {
+  const locale = new Locale(localeName);
+  return { open: locale.openingDoubleQuote, close: locale.closingDoubleQuote };
+}
 
 const doubleQuotesFalsePositives = {
   "č., s., fol., str.,":                       "č., s., fol., str.,",
@@ -536,7 +544,7 @@ supportedLocales.forEach((localeName) => {
       { ...fixQuotedWordPunctuationUnitSet, ...fixQuotedWordPunctuationModuleSet },
       localeName
     ),
-    (text) => fixQuotedWordPunctuation(text, new Locale(localeName)),
+    (text) => fixQuotedWordPunctuation(text, doubleQuotePair(localeName)),
     transformDoubleQuoteSet(fixQuotedWordPunctuationModuleSet, localeName),
     (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
     localeName
@@ -609,7 +617,7 @@ supportedLocales.forEach((localeName) => {
       { ...fixQuotedSentencePunctuationUnitSet, ...fixQuotedSentencePunctuationModuleSet },
       localeName
     ),
-    (text) => fixQuotedSentencePunctuation(text, new Locale(localeName)),
+    (text) => fixQuotedSentencePunctuation(text, doubleQuotePair(localeName)),
     transformDoubleQuoteSet(fixQuotedSentencePunctuationModuleSet, localeName),
     (text) => fixDoubleQuotesAndPrimes(text, new Locale(localeName)),
     localeName

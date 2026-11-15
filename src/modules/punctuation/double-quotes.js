@@ -3,25 +3,11 @@ import { addNbspAfterPreposition } from "../whitespace/nbsp.js";
 import { m } from "../../markers.js";
 import { fixQuotes, identifyQuotePairs } from "./quotes.js";
 import {
-  fixQuotedSentencePunctuation as fixQuotedSentencePunctuationFor,
-  fixQuotedWordPunctuation as fixQuotedWordPunctuationFor,
   placeLocaleQuotes,
   removeExtraSpaceAfter,
   removeExtraSpaceBefore,
   replacePrimeWithQuotePair,
 } from "./quotes/shared.js";
-
-/**
-  The double quote pair for a locale, in the shape ./quotes/shared.js expects.
-
-  @param {object} locale: locale option
-  @returns {{open: string, close: string}}
-*/
-function doubleQuotePair(locale) {
-  return { open: locale.openingDoubleQuote, close: locale.closingDoubleQuote };
-}
-
-//
 
 /**
   Remove extra punctuation before double quotes
@@ -266,47 +252,6 @@ export function replaceDoublePrimeWDoubleQuote(string) {
 }
 
 //
-
-/**
-  Fix punctuation placement for single-word quoted content
-
-  Single word = no spaces inside quotes (includes contractions, hyphenated words, numbers)
-
-  Rules:
-  - move periods `.`, commas `,`, semicolons `;`, colons `:` outside the quoted word
-  - keep the position of `!`, `?`, and `…` as is (ambiguous context)
-
-  Examples:
-  “word.” → “word”.
-  “it’s,” → “it’s”,
-  “well-known;” → “well-known”;
-  “2020:” → “2020”:
-  “Wow!” → “Wow!” (unchanged—ambiguous)
-
-  @param {string} string: input text for identification
-  @param {object} locale: locale option
-  @returns {string} output with corrected punctuation placement
-*/
-export function fixQuotedWordPunctuation(string, locale) {
-  return fixQuotedWordPunctuationFor(string, doubleQuotePair(locale));
-}
-
-//
-
-/**
-  Fix punctuation placement for quoted sentence or fragment of words
-
-  Rules:
-  - move periods `.`, commas `,`, semicolons `;`, ellipses `…`exclamation `!` and question marks `?` inside the quoted part
-  - move colons `:` and semicolons `;` outside the quoted part
- 
-  @param {string} string: input text for identification
-  @param {object} locale: locale option
-  @returns {string} output with corrected punctuation placement
- */
-export function fixQuotedSentencePunctuation(string, locale) {
-  return fixQuotedSentencePunctuationFor(string, doubleQuotePair(locale));
-}
 
 /**
   Replace all identified punctuation with appropriate punctuation in given language
