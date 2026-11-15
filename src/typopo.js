@@ -5,8 +5,7 @@ import { fixSpaces } from "./modules/whitespace/spaces.js";
 import { fixPeriod } from "./modules/punctuation/period.js";
 import { fixEllipsis } from "./modules/punctuation/ellipsis.js";
 import { fixDash } from "./modules/punctuation/dash.js";
-import { fixDoubleQuotesAndPrimes } from "./modules/punctuation/double-quotes.js";
-import { fixSingleQuotesPrimesAndApostrophes } from "./modules/punctuation/single-quotes.js";
+import { fixQuotes } from "./modules/punctuation/quotes.js";
 import { fixMultiplicationSign } from "./modules/symbols/multiplication-sign.js";
 import { fixSectionSign } from "./modules/symbols/section-sign.js";
 import { fixCopyrights } from "./modules/symbols/copyrights.js";
@@ -58,8 +57,7 @@ export function fixTypos(string, locale, configuration) {
   // punctuation
   string = fixPeriod(string);
   string = fixDash(string, currentLocale);
-  string = fixSingleQuotesPrimesAndApostrophes(string, currentLocale);
-  string = fixDoubleQuotesAndPrimes(string, currentLocale);
+  string = fixQuotes(string, currentLocale);
 
   // symbols
   string = fixMultiplicationSign(string);

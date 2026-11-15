@@ -1,8 +1,7 @@
 import { base } from "../../const.js";
 import { addNbspAfterPreposition } from "../whitespace/nbsp.js";
 import { m } from "../../markers.js";
-import { CLOSE, OPEN, pairQuoteTokens } from "./quotes/pairing.js";
-import { replaceQuoteTokens, scanQuoteTokens } from "./quotes/scanner.js";
+import { fixQuotes, identifyQuotePairs } from "./quotes.js";
 import {
   fixQuotedSentencePunctuation as fixQuotedSentencePunctuationFor,
   fixQuotedWordPunctuation as fixQuotedWordPunctuationFor,
@@ -147,52 +146,16 @@ export function identifyDoublePrimes(string) {
 //
 
 /**
-  Identify double quote pairs 
+  Identify double quote pairs
 
-  Example
-  "quoted material" → “quoted material”
-
-  Assumptions and Limitations
-  We assume that double primes, inches and arcseconds were identified in the previous run.
-
-  Algorithm
-  [1] a number wrapped in a quote and an already-identified double prime is a
-      quote pair, e.g. "202″ → “202”. Stays a regex: it is a local pattern,
-      not a pairing decision.
-  [2] everything else is paired by scanning the remaining adepts into tokens
-      and matching them with a stack (./scanner.js, ./pairing.js). Adepts left
-      unpaired are untouched here — identifyUnpairedOpeningDoubleQuote and
-      identifyUnpairedClosingDoubleQuote deal with them next.
+  Single and double quotes are now paired in one pass, see identifyQuotePairs
+  in ../quotes.js. This name is kept because the unit tests call it.
 
   @param {string} string: input text for identification
-  @returns {string} output with identified double quote pairs
+  @returns {string} output with identified quote pairs
 */
 export function identifyDoubleQuotePairs(string) {
-  // [1] double quotes around a number
-  // prettier-ignore
-  string = string.replace(
-    new RegExp(
-      `(${base.doubleQuoteAdepts})` +
-      `(\\d+)` +
-      `(${m.doublePrime})`,
-      "g"
-    ),
-      `${m.odq}` +
-      `$2` +
-      `${m.cdq}`
-  );
-
-  // [2] generic rule
-  const tokens = scanQuoteTokens(string, base.doubleQuoteAdepts);
-  const roles = pairQuoteTokens(tokens);
-
-  const replacements = roles.map(({ role }) => {
-    if (role === OPEN) return m.odq;
-    if (role === CLOSE) return m.cdq;
-    return null;
-  });
-
-  return replaceQuoteTokens(string, tokens, replacements);
+  return identifyQuotePairs(string);
 }
 
 //
@@ -544,58 +507,13 @@ export function fixDirectSpeechIntro(string, locale) {
 /**
   Correct improper use of double quotes and double primes
 
-  Assumptions and Limitations
-  This function assumes that double quotes are always used in pair,
-  i.e. authors did not forget to close double quotes in their text.
-
-  Algorithm
-  [1] Remove extra terminal punctuation around double quotes
-  [2] Identify inches, arcseconds, seconds
-  [3] Identify double quote pairs
-  [4] Identify unpaired double quotes
-  [5] Replace a double qoute & a double prime with a double quote pair
-  [6] Replace all identified punctuation with appropriate punctuation in given language
-  [7] Consolidate spaces around double quotes and primes
-  [8] Fix direct speech introduction
-  [9] Fix punctuation placement for quoted content
+  Single and double quotes are now fixed in one pass, see fixQuotes in
+  ../quotes.js. This name is kept because the module test sets call it.
 
   @param {string} string: input text for identification
-  @param {string} locale: locale option
-  @returns {string} output with properly replaces double qoutes and double primes
+  @param {object} locale: locale option
+  @returns {string} corrected output
 */
 export function fixDoubleQuotesAndPrimes(string, locale) {
-  /* [1] Remove extra terminal punctuation around double quotes */
-  string = removeExtraPunctuationBeforeQuotes(string);
-  string = removeExtraPunctuationAfterQuotes(string);
-
-  /* [2] Identify inches, arcseconds, seconds */
-  string = identifyDoublePrimes(string);
-
-  /* [3] Identify double quote pairs */
-  string = identifyDoubleQuotePairs(string);
-
-  /* [4] Identify unpaired double quotes */
-  string = identifyUnpairedOpeningDoubleQuote(string);
-  string = identifyUnpairedClosingDoubleQuote(string);
-  string = removeUnidentifiedDoubleQuote(string);
-
-  /* [5] Replace a double qoute & a double prime with a double quote pair */
-  string = replaceDoublePrimeWDoubleQuote(string);
-
-  /* [6] Replace all identified punctuation with appropriate punctuation in given language */
-  string = placeLocaleDoubleQuotes(string, locale);
-
-  /* [7] Consolidate spaces around double quotes and primes */
-  string = removeExtraSpacesAroundQuotes(string, locale);
-  string = addSpaceBeforeopeningDoubleQuote(string, locale);
-  string = addSpaceAfterclosingDoubleQuote(string, locale);
-
-  /* [8] Fix direct speech introduction */
-  string = fixDirectSpeechIntro(string, locale);
-
-  /* [9] Fix punctuation placement for quoted content */
-  string = fixQuotedWordPunctuation(string, locale);
-  string = fixQuotedSentencePunctuation(string, locale);
-
-  return string;
+  return fixQuotes(string, locale);
 }

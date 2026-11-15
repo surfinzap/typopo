@@ -1,0 +1,799 @@
+# Quote behaviour snapshot
+#
+# Generated: node tests/tools/behaviour-snapshot.js --update
+# Corpus:    tests/tools/quote-corpus.js
+#
+# Records what typopo currently does, not what it should do. A diff here
+# is a change in behaviour that needs a decision, not necessarily a bug.
+#
+# Invisible and ASCII-confusable characters are shown as \uXXXX; newlines
+# as \n. Private Use Area codepoints indicate a processing marker that
+# escaped the pipeline and are always a bug.
+
+## double quotes — basic
+
+in  He said "hello" and left.
+    cs     He said „hello“ and left.
+    en-us  He said “hello” and left.
+    rue    He said «hello» and left.
+    sk     He said „hello“ and left.
+    de-de  He said „hello“ and left.
+    de-ch  He said «hello» and left.
+
+in  He said "hello."
+    cs     He said „hello“.
+    en-us  He said “hello”.
+    rue    He said «hello».
+    sk     He said „hello“.
+    de-de  He said „hello“.
+    de-ch  He said «hello».
+
+in  "Whole sentence in quotes."
+    cs     „Whole sentence in quotes.“
+    en-us  “Whole sentence in quotes.”
+    rue    «Whole sentence in quotes.»
+    sk     „Whole sentence in quotes.“
+    de-de  „Whole sentence in quotes.“
+    de-ch  «Whole sentence in quotes.»
+
+in  A "quoted" word, and another "quoted" word.
+    cs     A\u00A0„quoted“ word, and another „quoted“ word.
+    en-us  A\u00A0“quoted” word, and another “quoted” word.
+    rue    A\u00A0«quoted» word, and another «quoted» word.
+    sk     A\u00A0„quoted“ word, and another „quoted“ word.
+    de-de  A\u00A0„quoted“ word, and another „quoted“ word.
+    de-ch  A\u00A0«quoted» word, and another «quoted» word.
+
+in  Nested "outer with 'inner' inside" here.
+    cs     Nested „outer with ‚inner‘ inside“ here.
+    en-us  Nested “outer with ‘inner’ inside” here.
+    rue    Nested «outer with ‹inner› inside» here.
+    sk     Nested „outer with ‚inner‘ inside“ here.
+    de-de  Nested „outer with ‚inner‘ inside“ here.
+    de-ch  Nested «outer with ‹inner› inside» here.
+
+in  Two pairs "first" and "second" in one line.
+    cs     Two pairs „first“ and „second“ in one line.
+    en-us  Two pairs “first” and “second” in one line.
+    rue    Two pairs «first» and «second» in one line.
+    sk     Two pairs „first“ and „second“ in one line.
+    de-de  Two pairs „first“ and „second“ in one line.
+    de-ch  Two pairs «first» and «second» in one line.
+
+in  Unclosed "quote at the end of a line
+    cs     Unclosed „quote at the end of a\u00A0line
+    en-us  Unclosed “quote at the end of a\u00A0line
+    rue    Unclosed «quote at the end of a\u00A0line
+    sk     Unclosed „quote at the end of a\u00A0line
+    de-de  Unclosed „quote at the end of a\u00A0line
+    de-ch  Unclosed «quote at the end of a\u00A0line
+
+in  Unopened quote at the end"
+    cs     Unopened quote at the end“
+    en-us  Unopened quote at the end”
+    rue    Unopened quote at the end»
+    sk     Unopened quote at the end“
+    de-de  Unopened quote at the end“
+    de-ch  Unopened quote at the end»
+
+in  Three "quotes "in a "row
+    cs     Three „quotes“ in a\u00A0„row
+    en-us  Three “quotes” in a\u00A0“row
+    rue    Three «quotes» in a\u00A0«row
+    sk     Three „quotes“ in a\u00A0„row
+    de-de  Three „quotes“ in a\u00A0„row
+    de-ch  Three «quotes» in a\u00A0«row
+
+## double quotes — sloppy spacing
+
+in  " quotes with spaces around "
+    cs     „quotes with spaces around“
+    en-us  “quotes with spaces around”
+    rue    «quotes with spaces around»
+    sk     „quotes with spaces around“
+    de-de  „quotes with spaces around“
+    de-ch  «quotes with spaces around»
+
+in  a" tight open and close "b
+    cs     a\u00A0„tight open and close“ b
+    en-us  a\u00A0“tight open and close” b
+    rue    a\u00A0«tight open and close» b
+    sk     a\u00A0„tight open and close“ b
+    de-de  a\u00A0„tight open and close“ b
+    de-ch  a\u00A0«tight open and close» b
+
+in  It’s a"nice" saying.
+    cs     It’s a\u00A0„nice“ saying.
+    en-us  It’s a\u00A0“nice” saying.
+    rue    It’s a\u00A0«nice» saying.
+    sk     It’s a\u00A0„nice“ saying.
+    de-de  It’s a\u00A0„nice“ saying.
+    de-ch  It’s a\u00A0«nice» saying.
+
+in  It’s a "nice"saying.
+    cs     It’s a\u00A0„nice“ saying.
+    en-us  It’s a\u00A0“nice” saying.
+    rue    It’s a\u00A0«nice» saying.
+    sk     It’s a\u00A0„nice“ saying.
+    de-de  It’s a\u00A0„nice“ saying.
+    de-ch  It’s a\u00A0«nice» saying.
+
+in  word " word
+    cs     word word
+    en-us  word word
+    rue    word word
+    sk     word word
+    de-de  word word
+    de-ch  word word
+
+in  "\u00A0nbsp just inside the quotes\u00A0"
+    cs     „nbsp just inside the quotes“
+    en-us  “nbsp just inside the quotes”
+    rue    «nbsp just inside the quotes»
+    sk     „nbsp just inside the quotes“
+    de-de  „nbsp just inside the quotes“
+    de-ch  «nbsp just inside the quotes»
+
+## double quotes — dumb variants
+
+in  ,,German style low quotes''
+    cs     „German style low quotes“
+    en-us  “German style low quotes”
+    rue    «German style low quotes»
+    sk     „German style low quotes“
+    de-de  „German style low quotes“
+    de-ch  «German style low quotes»
+
+in  „German style low quotes“
+    cs     „German style low quotes“
+    en-us  “German style low quotes”
+    rue    «German style low quotes»
+    sk     „German style low quotes“
+    de-de  „German style low quotes“
+    de-ch  «German style low quotes»
+
+in  «Guillemets here»
+    cs     „Guillemets here“
+    en-us  “Guillemets here”
+    rue    «Guillemets here»
+    sk     „Guillemets here“
+    de-de  „Guillemets here“
+    de-ch  «Guillemets here»
+
+in  ''double apostrophes as quotes''
+    cs     „double apostrophes as quotes“
+    en-us  “double apostrophes as quotes”
+    rue    «double apostrophes as quotes»
+    sk     „double apostrophes as quotes“
+    de-de  „double apostrophes as quotes“
+    de-ch  «double apostrophes as quotes»
+
+in  ``backtick quotes''
+    cs     „backtick quotes“
+    en-us  “backtick quotes”
+    rue    «backtick quotes»
+    sk     „backtick quotes“
+    de-de  „backtick quotes“
+    de-ch  «backtick quotes»
+
+## punctuation around quotes
+
+in  "Hey!," she said
+    cs     „Hey!“ she said
+    en-us  “Hey!” she said
+    rue    «Hey!» she said
+    sk     „Hey!“ she said
+    de-de  „Hey!“ she said
+    de-ch  «Hey!» she said
+
+in  "We will continue tomorrow.".
+    cs     „We will continue tomorrow.“
+    en-us  “We will continue tomorrow.”
+    rue    «We will continue tomorrow.»
+    sk     „We will continue tomorrow.“
+    de-de  „We will continue tomorrow.“
+    de-ch  «We will continue tomorrow.»
+
+in  "word."
+    cs     „word“.
+    en-us  “word”.
+    rue    «word».
+    sk     „word“.
+    de-de  „word“.
+    de-ch  «word».
+
+in  "word",
+    cs     „word“,
+    en-us  “word”,
+    rue    «word»,
+    sk     „word“,
+    de-de  „word“,
+    de-ch  «word»,
+
+in  "Wow!"
+    cs     „Wow!“
+    en-us  “Wow!”
+    rue    «Wow!»
+    sk     „Wow!“
+    de-de  „Wow!“
+    de-ch  «Wow!»
+
+in  "Is it?"
+    cs     „Is it?“
+    en-us  “Is it?”
+    rue    «Is it?»
+    sk     „Is it?“
+    de-de  „Is it?“
+    de-ch  «Is it?»
+
+in  "a fragment", he said.
+    cs     „a\u00A0fragment,“ he said.
+    en-us  “a\u00A0fragment,” he said.
+    rue    «a\u00A0fragment,» he said.
+    sk     „a\u00A0fragment,“ he said.
+    de-de  „a\u00A0fragment,“ he said.
+    de-ch  «a\u00A0fragment,» he said.
+
+in  He said: "a whole sentence".
+    cs     He said: „a\u00A0whole sentence.“
+    en-us  He said, “a\u00A0whole sentence.”
+    rue    He said: «a\u00A0whole sentence.»
+    sk     He said: „a\u00A0whole sentence.“
+    de-de  He said: „a\u00A0whole sentence.“
+    de-ch  He said: «a\u00A0whole sentence.»
+
+in  (cs/sk) Byl to „Karel IV.“, ktery neco
+    cs     (cs/sk) Byl to „Karel\u00A0IV.“, ktery neco
+    en-us  (cs/sk) Byl to “Karel\u00A0IV.”, ktery neco
+    rue    (cs/sk) Byl to «Karel\u00A0IV.», ktery neco
+    sk     (cs/sk) Byl to „Karel\u00A0IV.“, ktery neco
+    de-de  (cs/sk) Byl to „Karel\u00A0IV.“, ktery neco
+    de-ch  (cs/sk) Byl to «Karel\u00A0IV.», ktery neco
+
+## primes vs quotes
+
+in  12' 45" is a length
+    cs     12\u2032 45\u2033 is a\u00A0length
+    en-us  12\u2032 45\u2033 is a\u00A0length
+    rue    12\u2032 45\u2033 is a\u00A0length
+    sk     12\u2032 45\u2033 is a\u00A0length
+    de-de  12\u2032 45\u2033 is a\u00A0length
+    de-ch  12\u2032 45\u2033 is a\u00A0length
+
+in  She is 5'11" tall
+    cs     She is 5\u203211\u2033 tall
+    en-us  She is 5\u203211\u2033 tall
+    rue    She is 5\u203211\u2033 tall
+    sk     She is 5\u203211\u2033 tall
+    de-de  She is 5\u203211\u2033 tall
+    de-ch  She is 5\u203211\u2033 tall
+
+in  "Konference 2020" in quotes
+    cs     „Konference 2020“ in quotes
+    en-us  “Konference 2020” in quotes
+    rue    «Konference 2020» in quotes
+    sk     „Konference 2020“ in quotes
+    de-de  „Konference 2020“ in quotes
+    de-ch  «Konference 2020» in quotes
+
+in  It’s called "Localhost 3000" and it’s pretty fast.
+    cs     It’s called „Localhost 3000“ and it’s pretty fast.
+    en-us  It’s called “Localhost 3000” and it’s pretty fast.
+    rue    It’s called «Localhost 3000» and it’s pretty fast.
+    sk     It’s called „Localhost 3000“ and it’s pretty fast.
+    de-de  It’s called „Localhost 3000“ and it’s pretty fast.
+    de-ch  It’s called «Localhost 3000» and it’s pretty fast.
+
+in  He said: "What about 'Localhost 3000', is that good?"
+    cs     He said: „What about ‚Localhost 3000,‘ is that good?“
+    en-us  He said, “What about ‘Localhost 3000,’ is that good?”
+    rue    He said: «What about ‹Localhost 3000,› is that good?»
+    sk     He said: „What about ‚Localhost 3000,‘ is that good?“
+    de-de  He said: „What about ‚Localhost 3000,‘ is that good?“
+    de-ch  He said: «What about ‹Localhost 3000,› is that good?»
+
+in  12 \u2032 45 \u2033 with stray spaces
+    cs     12\u2032 45\u2033 with stray spaces
+    en-us  12\u2032 45\u2033 with stray spaces
+    rue    12\u2032 45\u2033 with stray spaces
+    sk     12\u2032 45\u2033 with stray spaces
+    de-de  12\u2032 45\u2033 with stray spaces
+    de-ch  12\u2032 45\u2033 with stray spaces
+
+in  a 12" pizza
+    cs     a\u00A012\u2033 pizza
+    en-us  a\u00A012\u2033 pizza
+    rue    a\u00A012\u2033 pizza
+    sk     a\u00A012\u2033 pizza
+    de-de  a\u00A012\u2033 pizza
+    de-ch  a\u00A012\u2033 pizza
+
+in  "12" is the answer
+    cs     „12“ is the answer
+    en-us  “12” is the answer
+    rue    «12» is the answer
+    sk     „12“ is the answer
+    de-de  „12“ is the answer
+    de-ch  «12» is the answer
+
+## apostrophes — english contractions
+
+in  Don't stop believin'
+    cs     Don’t stop believin’
+    en-us  Don’t stop believin’
+    rue    Don’t stop believin’
+    sk     Don’t stop believin’
+    de-de  Don’t stop believin’
+    de-ch  Don’t stop believin’
+
+in  rock 'n' roll and fish 'n' chips
+    cs     rock\u00A0’n’\u00A0roll and fish\u00A0’n’\u00A0chips
+    en-us  rock\u00A0’n’\u00A0roll and fish\u00A0’n’\u00A0chips
+    rue    rock\u00A0’n’\u00A0roll and fish\u00A0’n’\u00A0chips
+    sk     rock\u00A0’n’\u00A0roll and fish\u00A0’n’\u00A0chips
+    de-de  rock\u00A0’n’\u00A0roll and fish\u00A0’n’\u00A0chips
+    de-ch  rock\u00A0’n’\u00A0roll and fish\u00A0’n’\u00A0chips
+
+in  Press 'N' to continue
+    cs     Press „N“ to continue
+    en-us  Press “N” to continue
+    rue    Press «N» to continue
+    sk     Press „N“ to continue
+    de-de  Press „N“ to continue
+    de-ch  Press «N» to continue
+
+in  'cause I said so
+    cs     ’cause\u00A0I said so
+    en-us  ’cause I\u00A0said so
+    rue    ’cause\u00A0I said so
+    sk     ’cause\u00A0I said so
+    de-de  ’cause\u00A0I said so
+    de-ch  ’cause\u00A0I said so
+
+in  'em, 'tis, 'twas, 'til
+    cs     ’em, ’tis, ’twas, ’til
+    en-us  ’em, ’tis, ’twas, ’til
+    rue    ’em, ’tis, ’twas, ’til
+    sk     ’em, ’tis, ’twas, ’til
+    de-de  ’em, ’tis, ’twas, ’til
+    de-ch  ’em, ’tis, ’twas, ’til
+
+in  O'Doole and the 69'ers
+    cs     O’Doole and the 69’ers
+    en-us  O’Doole and the 69’ers
+    rue    O’Doole and the 69’ers
+    sk     O’Doole and the 69’ers
+    de-de  O’Doole and the 69’ers
+    de-ch  O’Doole and the 69’ers
+
+in  in '70s and INCHEBA '89
+    cs     in ’70s and INCHEBA ’89
+    en-us  in ’70s and INCHEBA ’89
+    rue    in ’70s and INCHEBA ’89
+    sk     in ’70s and INCHEBA ’89
+    de-de  in ’70s and INCHEBA ’89
+    de-ch  in ’70s and INCHEBA ’89
+
+in  We were living in '90s and it was nottin'.
+    cs     We were living in ’90s and it was nottin’.
+    en-us  We were living in ’90s and it was nottin’.
+    rue    We were living in ’90s and it was nottin’.
+    sk     We were living in ’90s and it was nottin’.
+    de-de  We were living in ’90s and it was nottin’.
+    de-ch  We were living in ’90s and it was nottin’.
+
+in  In '90, she said 'don't quote me' on the 'net
+    cs     In ’90, she said „don’t quote me“ on the ’net
+    en-us  In ’90, she said “don’t quote me” on the ’net
+    rue    In ’90, she said «don’t quote me» on the ’net
+    sk     In ’90, she said „don’t quote me“ on the ’net
+    de-de  In ’90, she said „don’t quote me“ on the ’net
+    de-ch  In ’90, she said «don’t quote me» on the ’net
+
+## single quotes — the gate (outside double quotes)
+
+in  a 'quoted fragment' outside any double quotes
+    cs     a\u00A0„quoted fragment“ outside any double quotes
+    en-us  a\u00A0“quoted fragment” outside any double quotes
+    rue    a\u00A0«quoted fragment» outside any double quotes
+    sk     a\u00A0„quoted fragment“ outside any double quotes
+    de-de  a\u00A0„quoted fragment“ outside any double quotes
+    de-ch  a\u00A0«quoted fragment» outside any double quotes
+
+in  'single word' outside double quotes
+    cs     „single word“ outside double quotes
+    en-us  “single word” outside double quotes
+    rue    «single word» outside double quotes
+    sk     „single word“ outside double quotes
+    de-de  „single word“ outside double quotes
+    de-ch  «single word» outside double quotes
+
+in  "a 'quoted fragment' inside double quotes"
+    cs     „a\u00A0‚quoted fragment‘ inside double quotes“
+    en-us  “a\u00A0‘quoted fragment’ inside double quotes”
+    rue    «a\u00A0‹quoted fragment› inside double quotes»
+    sk     „a\u00A0‚quoted fragment‘ inside double quotes“
+    de-de  „a\u00A0‚quoted fragment‘ inside double quotes“
+    de-ch  «a\u00A0‹quoted fragment› inside double quotes»
+
+in  "first 'one' and second 'two' in one double pair"
+    cs     „first ‚one‘ and second ‚two‘ in one double pair“
+    en-us  “first ‘one’ and second ‘two’ in one double pair”
+    rue    «first ‹one› and second ‹two› in one double pair»
+    sk     „first ‚one‘ and second ‚two‘ in one double pair“
+    de-de  „first ‚one‘ and second ‚two‘ in one double pair“
+    de-ch  «first ‹one› and second ‹two› in one double pair»
+
+in  'a quoted sentence outside doubles.'
+    cs     „a\u00A0quoted sentence outside doubles.“
+    en-us  “a\u00A0quoted sentence outside doubles.”
+    rue    «a\u00A0quoted sentence outside doubles.»
+    sk     „a\u00A0quoted sentence outside doubles.“
+    de-de  „a\u00A0quoted sentence outside doubles.“
+    de-ch  «a\u00A0quoted sentence outside doubles.»
+
+in  He said 'hello' and she said 'goodbye'
+    cs     He said „hello“ and she said „goodbye“
+    en-us  He said “hello” and she said “goodbye”
+    rue    He said «hello» and she said «goodbye»
+    sk     He said „hello“ and she said „goodbye“
+    de-de  He said „hello“ and she said „goodbye“
+    de-ch  He said «hello» and she said «goodbye»
+
+in  '90 bottles' were sold
+    cs     „90\u00A0bottles“ were sold
+    en-us  “90\u00A0bottles” were sold
+    rue    «90\u00A0bottles» were sold
+    sk     „90\u00A0bottles“ were sold
+    de-de  „90\u00A0bottles“ were sold
+    de-ch  «90\u00A0bottles» were sold
+
+in  He sold '90 bottles' today
+    cs     He sold „90\u00A0bottles“ today
+    en-us  He sold “90\u00A0bottles” today
+    rue    He sold «90\u00A0bottles» today
+    sk     He sold „90\u00A0bottles“ today
+    de-de  He sold „90\u00A0bottles“ today
+    de-ch  He sold «90\u00A0bottles» today
+
+in  INCHEBA '89 was a 'year'
+    cs     INCHEBA ’89\u00A0was a\u00A0„year“
+    en-us  INCHEBA ’89\u00A0was a\u00A0“year”
+    rue    INCHEBA ’89\u00A0was a\u00A0«year»
+    sk     INCHEBA ’89\u00A0was a\u00A0„year“
+    de-de  INCHEBA ’89\u00A0was a\u00A0„year“
+    de-ch  INCHEBA ’89\u00A0was a\u00A0«year»
+
+in  In '89 and '90 we moved
+    cs     In ’89\u00A0and ’90\u00A0we moved
+    en-us  In ’89\u00A0and ’90\u00A0we moved
+    rue    In ’89\u00A0and ’90\u00A0we moved
+    sk     In ’89\u00A0and ’90\u00A0we moved
+    de-de  In ’89\u00A0and ’90\u00A0we moved
+    de-ch  In ’89\u00A0and ’90\u00A0we moved
+
+in  The ''90s were great'
+    cs     The „90s were great’
+    en-us  The “90s were great’
+    rue    The «90s were great’
+    sk     The „90s were great’
+    de-de  The „90s were great’
+    de-ch  The «90s were great’
+
+## single quotes — punctuation placement
+
+in  "Sentence 'quoted fragment.'"
+    cs     „Sentence ‚quoted fragment‘.“
+    en-us  “Sentence ‘quoted fragment’.”
+    rue    «Sentence ‹quoted fragment›.»
+    sk     „Sentence ‚quoted fragment‘.“
+    de-de  „Sentence ‚quoted fragment‘.“
+    de-ch  «Sentence ‹quoted fragment›.»
+
+in  "Sentence 'quoted fragment'."
+    cs     „Sentence ‚quoted fragment‘.“
+    en-us  “Sentence ‘quoted fragment’.”
+    rue    «Sentence ‹quoted fragment›.»
+    sk     „Sentence ‚quoted fragment‘.“
+    de-de  „Sentence ‚quoted fragment‘.“
+    de-ch  «Sentence ‹quoted fragment›.»
+
+in  'word.'
+    cs     „word“.
+    en-us  “word”.
+    rue    «word».
+    sk     „word“.
+    de-de  „word“.
+    de-ch  «word».
+
+in  'well-known;'
+    cs     „well-known“;
+    en-us  “well-known”;
+    rue    «well-known»;
+    sk     „well-known“;
+    de-de  „well-known“;
+    de-ch  «well-known»;
+
+in  '2020:'
+    cs     „2020“:
+    en-us  “2020”:
+    rue    «2020»:
+    sk     „2020“:
+    de-de  „2020“:
+    de-ch  «2020»:
+
+## rusyn / MLA transliteration (U+02BC)
+
+in  Vin mu povil, ta de jes\u02BC take vidil i neviril
+    cs     Vin mu povil, ta de jes\u02BC take vidil i\u00A0neviril
+    en-us  Vin mu povil, ta de jes\u02BC take vidil i\u00A0neviril
+    rue    Vin mu povil, ta de jes\u02BC take vidil i\u00A0neviril
+    sk     Vin mu povil, ta de jes\u02BC take vidil i\u00A0neviril
+    de-de  Vin mu povil, ta de jes\u02BC take vidil i\u00A0neviril
+    de-ch  Vin mu povil, ta de jes\u02BC take vidil i\u00A0neviril
+
+in  "Vin mu povil, 'ta de jes\u02BC take vidil' i neviril"
+    cs     „Vin mu povil, ‚ta de jes\u02BC take vidil‘ i\u00A0neviril“
+    en-us  “Vin mu povil, ‘ta de jes\u02BC take vidil’ i\u00A0neviril”
+    rue    «Vin mu povil, ‹ta de jes\u02BC take vidil› i\u00A0neviril»
+    sk     „Vin mu povil, ‚ta de jes\u02BC take vidil‘ i\u00A0neviril“
+    de-de  „Vin mu povil, ‚ta de jes\u02BC take vidil‘ i\u00A0neviril“
+    de-ch  «Vin mu povil, ‹ta de jes\u02BC take vidil› i\u00A0neviril»
+
+in  Paul\u02BCs Diner
+    cs     Paul\u02BCs Diner
+    en-us  Paul\u02BCs Diner
+    rue    Paul\u02BCs Diner
+    sk     Paul\u02BCs Diner
+    de-de  Paul\u02BCs Diner
+    de-ch  Paul\u02BCs Diner
+
+in  \u02BCword at the start
+    cs     ’word at the start
+    en-us  ’word at the start
+    rue    ’word at the start
+    sk     ’word at the start
+    de-de  ’word at the start
+    de-ch  ’word at the start
+
+in  word\u02BC at the end
+    cs     word\u02BC at the end
+    en-us  word\u02BC at the end
+    rue    word\u02BC at the end
+    sk     word\u02BC at the end
+    de-de  word\u02BC at the end
+    de-ch  word\u02BC at the end
+
+in  kinc\u02BCa inside a word
+    cs     kinc\u02BCa inside a\u00A0word
+    en-us  kinc\u02BCa inside a\u00A0word
+    rue    kinc\u02BCa inside a\u00A0word
+    sk     kinc\u02BCa inside a\u00A0word
+    de-de  kinc\u02BCa inside a\u00A0word
+    de-ch  kinc\u02BCa inside a\u00A0word
+
+in  jes\u02BC, kedys\u02BC, ne\u02BC — several in a row
+    cs     jes\u02BC, kedys\u02BC, ne\u02BC\u00A0– several in a\u00A0row
+    en-us  jes\u02BC, kedys\u02BC, ne\u02BC—several in a\u00A0row
+    rue    jes\u02BC, kedys\u02BC, ne\u02BC\u200A—\u200Aseveral in a\u00A0row
+    sk     jes\u02BC, kedys\u02BC, ne\u02BC\u200A—\u200Aseveral in a\u00A0row
+    de-de  jes\u02BC, kedys\u02BC, ne\u02BC\u200A–\u200Aseveral in a\u00A0row
+    de-ch  jes\u02BC, kedys\u02BC, ne\u02BC\u00A0– several in a\u00A0row
+
+in  word\u02BC\u02BC at the end
+    cs     word“ at the end
+    en-us  word” at the end
+    rue    word» at the end
+    sk     word“ at the end
+    de-de  word“ at the end
+    de-ch  word» at the end
+
+in  \u02BC\u02BCword at the start
+    cs     „word at the start
+    en-us  “word at the start
+    rue    «word at the start
+    sk     „word at the start
+    de-de  „word at the start
+    de-ch  «word at the start
+
+## slovak / czech archaic contractions
+
+in  Mňa kedys’ zvádzal svet
+    cs     Mňa kedys’ zvádzal svet
+    en-us  Mňa kedys’ zvádzal svet
+    rue    Mňa kedys’ zvádzal svet
+    sk     Mňa kedys’ zvádzal svet
+    de-de  Mňa kedys’ zvádzal svet
+    de-ch  Mňa kedys’ zvádzal svet
+
+in  „Mňa kedys’ zvádzal svet“
+    cs     „Mňa kedys’ zvádzal svet“
+    en-us  “Mňa kedys’ zvádzal svet”
+    rue    «Mňa kedys’ zvádzal svet»
+    sk     „Mňa kedys’ zvádzal svet“
+    de-de  „Mňa kedys’ zvádzal svet“
+    de-ch  «Mňa kedys’ zvádzal svet»
+
+## apostrophe adjacent to a single quote pair
+
+in  Mňa kedys’ zvádzal 'to' svet
+    cs     Mňa kedys’ zvádzal „to“ svet
+    en-us  Mňa kedys’ zvádzal “to” svet
+    rue    Mňa kedys’ zvádzal «to» svet
+    sk     Mňa kedys’ zvádzal „to“ svet
+    de-de  Mňa kedys’ zvádzal „to“ svet
+    de-ch  Mňa kedys’ zvádzal «to» svet
+
+in  Mňa 'to' zvádzal kedys’ svet
+    cs     Mňa „to“ zvádzal kedys’ svet
+    en-us  Mňa “to” zvádzal kedys’ svet
+    rue    Mňa «to» zvádzal kedys’ svet
+    sk     Mňa „to“ zvádzal kedys’ svet
+    de-de  Mňa „to“ zvádzal kedys’ svet
+    de-ch  Mňa «to» zvádzal kedys’ svet
+
+in  kedys’ a 'quoted bit' here
+    cs     kedys’ a\u00A0„quoted bit“ here
+    en-us  kedys’ a\u00A0“quoted bit” here
+    rue    kedys’ a\u00A0«quoted bit» here
+    sk     kedys’ a\u00A0„quoted bit“ here
+    de-de  kedys’ a\u00A0„quoted bit“ here
+    de-ch  kedys’ a\u00A0«quoted bit» here
+
+in  a 'quoted bit' and kedys’ here
+    cs     a\u00A0„quoted bit“ and kedys’ here
+    en-us  a\u00A0“quoted bit” and kedys’ here
+    rue    a\u00A0«quoted bit» and kedys’ here
+    sk     a\u00A0„quoted bit“ and kedys’ here
+    de-de  a\u00A0„quoted bit“ and kedys’ here
+    de-ch  a\u00A0«quoted bit» and kedys’ here
+
+## direct speech intro
+
+in  She said - "Hello" - and left.
+    cs     She said: „Hello“ and left.
+    en-us  She said, “Hello” and left.
+    rue    She said: «Hello» and left.
+    sk     She said: „Hello“ and left.
+    de-de  She said: „Hello“ and left.
+    de-ch  She said: «Hello» and left.
+
+in  She said "Hello" and left.
+    cs     She said „Hello“ and left.
+    en-us  She said “Hello” and left.
+    rue    She said «Hello» and left.
+    sk     She said „Hello“ and left.
+    de-de  She said „Hello“ and left.
+    de-ch  She said «Hello» and left.
+
+in  She said, "Hello" and left.
+    cs     She said: „Hello“ and left.
+    en-us  She said, “Hello” and left.
+    rue    She said: «Hello» and left.
+    sk     She said: „Hello“ and left.
+    de-de  She said: „Hello“ and left.
+    de-ch  She said: «Hello» and left.
+
+in  She said: "Hello" and left.
+    cs     She said: „Hello“ and left.
+    en-us  She said, “Hello” and left.
+    rue    She said: «Hello» and left.
+    sk     She said: „Hello“ and left.
+    de-de  She said: „Hello“ and left.
+    de-ch  She said: «Hello» and left.
+
+in  - "Hello" at the start of a paragraph
+    cs     „Hello“ at the start of a\u00A0paragraph
+    en-us  “Hello” at the start of a\u00A0paragraph
+    rue    «Hello» at the start of a\u00A0paragraph
+    sk     „Hello“ at the start of a\u00A0paragraph
+    de-de  „Hello“ at the start of a\u00A0paragraph
+    de-ch  «Hello» at the start of a\u00A0paragraph
+
+in  And then. - "Hello" after terminal punctuation
+    cs     And then. „Hello“ after terminal punctuation
+    en-us  And then. “Hello” after terminal punctuation
+    rue    And then. «Hello» after terminal punctuation
+    sk     And then. „Hello“ after terminal punctuation
+    de-de  And then. „Hello“ after terminal punctuation
+    de-ch  And then. «Hello» after terminal punctuation
+
+## interaction with other modules
+
+in  quote [...]with parts left out and "quotes"
+    cs     quote […] with parts left out and „quotes“
+    en-us  quote […] with parts left out and “quotes”
+    rue    quote […] with parts left out and «quotes»
+    sk     quote […] with parts left out and „quotes“
+    de-de  quote […] with parts left out and „quotes“
+    de-ch  quote […] with parts left out and «quotes»
+
+in  a "quoted" text with a\u00A0nbsp preposition
+    cs     a\u00A0„quoted“ text with a\u00A0nbsp preposition
+    en-us  a\u00A0“quoted” text with a\u00A0nbsp preposition
+    rue    a\u00A0«quoted» text with a\u00A0nbsp preposition
+    sk     a\u00A0„quoted“ text with a\u00A0nbsp preposition
+    de-de  a\u00A0„quoted“ text with a\u00A0nbsp preposition
+    de-ch  a\u00A0«quoted» text with a\u00A0nbsp preposition
+
+in  „Quoted“ 12\u00A0×\u00A012
+    cs     „Quoted“ 12\u00A0×\u00A012
+    en-us  “Quoted” 12\u00A0×\u00A012
+    rue    «Quoted» 12\u00A0×\u00A012
+    sk     „Quoted“ 12\u00A0×\u00A012
+    de-de  „Quoted“ 12\u00A0×\u00A012
+    de-ch  «Quoted» 12\u00A0×\u00A012
+
+in  an email in "quotes": help@typopo.org
+    cs     an email in „quotes“: help@typopo.org
+    en-us  an email in “quotes”: help@typopo.org
+    rue    an email in «quotes»: help@typopo.org
+    sk     an email in „quotes“: help@typopo.org
+    de-de  an email in „quotes“: help@typopo.org
+    de-ch  an email in «quotes»: help@typopo.org
+
+in  a url in "quotes": https://typopo.org/page
+    cs     a\u00A0url in „quotes“: https://typopo.org/page
+    en-us  a\u00A0url in “quotes”: https://typopo.org/page
+    rue    a\u00A0url in «quotes»: https://typopo.org/page
+    sk     a\u00A0url in „quotes“: https://typopo.org/page
+    de-de  a\u00A0url in „quotes“: https://typopo.org/page
+    de-ch  a\u00A0url in «quotes»: https://typopo.org/page
+
+in  a `backtick` inside "quotes"
+    cs     a\u00A0„backtick“ inside „quotes“
+    en-us  a\u00A0“backtick” inside “quotes”
+    rue    a\u00A0«backtick» inside «quotes»
+    sk     a\u00A0„backtick“ inside „quotes“
+    de-de  a\u00A0„backtick“ inside „quotes“
+    de-ch  a\u00A0«backtick» inside «quotes»
+
+## multiline and empty edges
+
+in  First line with "quotes"\nSecond line with "quotes"
+    cs     First line with „quotes“\nSecond line with „quotes“
+    en-us  First line with “quotes”\nSecond line with “quotes”
+    rue    First line with «quotes»\nSecond line with «quotes»
+    sk     First line with „quotes“\nSecond line with „quotes“
+    de-de  First line with „quotes“\nSecond line with „quotes“
+    de-ch  First line with «quotes»\nSecond line with «quotes»
+
+in  "Quote opened on one line\nand closed on the next"
+    cs     „Quote opened on one line\nand closed on the next“
+    en-us  “Quote opened on one line\nand closed on the next”
+    rue    «Quote opened on one line\nand closed on the next»
+    sk     „Quote opened on one line\nand closed on the next“
+    de-de  „Quote opened on one line\nand closed on the next“
+    de-ch  «Quote opened on one line\nand closed on the next»
+
+in  ""
+    cs     „“
+    en-us  “”
+    rue    «»
+    sk     „“
+    de-de  „“
+    de-ch  «»
+
+in  ''
+    cs     ’’
+    en-us  ’’
+    rue    ’’
+    sk     ’’
+    de-de  ’’
+    de-ch  ’’
+
+in  "
+    cs     "
+    en-us  "
+    rue    "
+    sk     "
+    de-de  "
+    de-ch  "
+
+in  '
+    cs     ’
+    en-us  ’
+    rue    ’
+    sk     ’
+    de-de  ’
+    de-ch  ’

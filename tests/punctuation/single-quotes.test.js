@@ -8,8 +8,6 @@ import {
   identifySinglePrimes,
   identifyUnpairedOpeningSingleQuote,
   identifyUnpairedClosingSingleQuote,
-  identifySingleQuotePairAroundSingleWord,
-  identifySingleQuotePairs,
   replaceSinglePrimeWSingleQuote,
   identifyResidualApostrophes,
   placeLocaleSingleQuotes,
@@ -123,7 +121,6 @@ const identifyInWordContractionsSet = {
   "don''’t":      "don’t",
   "Paul‘s Diner": "Paul’s Diner",
   "Paul’s Diner": "Paul’s Diner",
-  "Paulʼs Diner": "Paul’s Diner",
   "Paul‛s Diner": "Paul’s Diner",
   "Paul`s Diner": "Paul’s Diner",
   "Paul‚s Diner": "Paul’s Diner",
@@ -143,15 +140,24 @@ supportedLocales.forEach((localeName) => {
 });
 
 const identifyContractedYearsModuleSet = {
-  "INCHEBA '89": "INCHEBA ’89",
-  "in '70s":     "in ’70s",
-  "Q1 '23":      "Q1 ’23",
+  "INCHEBA '89":             "INCHEBA ’89",
+  "in '70s":                 "in ’70s",
+  "the '90s were 'great'":   `the ’90s were ${t.odq}great${t.cdq}`,
+  "Q1 '23":                  "Q1 ’23",
+  // any other year is left to pairing; an odd mark out degrades to an apostrophe
+  "INCHEBA '89, the 'year'": `INCHEBA ’89, the ${t.odq}year${t.cdq}`,
+  "In '89, '90, we moved":   "In ’89, ’90, we moved",
 };
 
 const identifyContractedYearsUnitSet = {
   ...identifyContractedYearsModuleSet,
   // false positive, when there is a wrongly spaced feet
-  "12 '45″": "12 '45″",
+  "12 '45″":                 "12 '45″",
+  // false positives, these are left to pairing, see the module sets
+  "INCHEBA '89":             "INCHEBA '89",
+  "INCHEBA '89, the 'year'": "INCHEBA '89, the 'year'",
+  "In '89, '90, we moved":   "In '89, '90, we moved",
+  "the '90s were 'great'":   "the ’90s were 'great'",
 };
 
 supportedLocales.forEach((localeName) => {
@@ -165,20 +171,50 @@ supportedLocales.forEach((localeName) => {
   );
 });
 
+/*
+  Module only, not part of singleQuotesSet: fixTypos adds a non-breaking space
+  after a two-digit number (between 90 and bottles), so the integration run
+  would not match.
+  The full pipeline is covered by the behaviour snapshot.
+*/
+const contractedYearOrQuotePairModuleSet = {
+  "He sold '90 bottles' today":  `He sold ${t.odq}90 bottles${t.cdq} today`,
+  "'90 bottles' were sold":      `${t.odq}90 bottles${t.cdq} were sold`,
+  "INCHEBA '89 was the year":    "INCHEBA ’89 was the year",
+  "INCHEBA '89 was the 'year'":  `INCHEBA ’89 was the ${t.odq}year${t.cdq}`,
+  // the second mark sits after a letter, so it closes; nothing in the text says otherwise
+  "INCHEBA '89 was' the 'year'": `INCHEBA ${t.odq}89 was${t.cdq} the ${t.odq}year${t.cdq}`,
+  "In '89 and '90 we moved":     "In ’89 and ’90 we moved",
+
+  [`He said${t.directSpeechIntro} ${t.odq}We sold '90 bottles' today${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}We sold ${t.osq}90 bottles${t.csq} today${t.cdq}`,
+};
+
+supportedLocales.forEach((localeName) => {
+  createTestSuite(
+    "Tell a contracted year from an opening single quote",
+    {},
+    null,
+    transformTestSet(contractedYearOrQuotePairModuleSet, localeName),
+    (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
+    localeName
+  );
+});
+
 const identifyModifierApostropheModuleSet = {
   // preserved: a character you have to go out of your way to type is not a typo
   "ta de jesʼ take": "ta de jesʼ take",
-  "ʼwordʼ here":     "ʼwordʼ here", // two mlas
-  // …unless a contraction identifier claims it first, which runs before this one
-  "Paulʼs Diner":    "Paul’s Diner",
+  "kincʼa":          "kincʼa",
+  "Paulʼs Diner":    "Paulʼs Diner",
 };
 
 const identifyModifierApostropheUnitSet = {
-  // a lone modifier letter apostrophe is marked as itself
+  // a modifier letter apostrophe after a letter, word-final or in-word, is marked as itself
   "jesʼ":         `jes${m.mla}`,
-  "ʼword":        `${m.mla}word`,
-  "aʼb":          `a${m.mla}b`,
   "jesʼ, kedysʼ": `jes${m.mla}, kedys${m.mla}`,
+  "aʼb":          `a${m.mla}b`,
+  // false positives, anywhere else it is taken for a mistyped single quote adept
+  "ʼword":        "ʼword",
+  " ʼword":       " ʼword",
   // false positives, a run of two or more is left for base.doubleQuoteAdepts to read as a double quote, so it must come through here untouched
   "wordʼʼ":       "wordʼʼ",
   "ʼʼword":       "ʼʼword",
@@ -234,11 +270,10 @@ supportedLocales.forEach((localeName) => {
 
 const identifyUnpairedOpeningSingleQuoteModuleSet = {
   // heads up! since it’s a unpaired quote it’s fixed as apostrophe within a module
-  // except U+02BC: a modifier letter is kept as itself, see identifyModifierApostrophe
   [`${t.odq}‘word${t.cdq}`]:  `${t.odq}’word${t.cdq}`,
   [`${t.odq}–‘word${t.cdq}`]: `${t.odq}–’word${t.cdq}`,
   [`${t.odq}—‘word${t.cdq}`]: `${t.odq}—’word${t.cdq}`,
-  [`${t.odq}ʼword${t.cdq}`]:  `${t.odq}ʼword${t.cdq}`,
+  [`${t.odq}ʼword${t.cdq}`]:  `${t.odq}’word${t.cdq}`,
   [`${t.odq}‛word${t.cdq}`]:  `${t.odq}’word${t.cdq}`,
   [`${t.odq}´word${t.cdq}`]:  `${t.odq}’word${t.cdq}`,
   [`${t.odq}\`word${t.cdq}`]: `${t.odq}’word${t.cdq}`,
@@ -275,7 +310,7 @@ supportedLocales.forEach((localeName) => {
 
 const identifyUnpairedClosingSingleQuoteModuleSet = {
   // heads up! since it’s a unpaired quote it’s fixed as apostrophe within a module
-  // except U+02BC: a modifier letter is kept as itself, see identifyModifierApostrophe
+  // except a word-final U+02BC: a modifier letter is kept as itself, see identifyModifierApostrophe
   [`${t.odq}word'${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
   [`${t.odq}word‚${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
   [`${t.odq}word‘${t.cdq}`]:  `${t.odq}word’${t.cdq}`,
@@ -349,17 +384,11 @@ const identifySingleQuotePairsModuleSet = {
   //   "He said: “What about ‘word word’ ’word word’, is that good?”",
 };
 
-const identifySingleQuotePairsUnitSet = {
-  [`${m.osqUnpaired}word${m.csqUnpaired}`]: `${m.osq}word${m.csq}`,
-
-  [`${m.osqUnpaired}word word${m.csqUnpaired}`]: `${m.osq}word word${m.csq}`,
-};
-
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify single quote pairs",
-    transformTestSet(identifySingleQuotePairsUnitSet, localeName),
-    (text) => identifySingleQuotePairs(text),
+    {},
+    null,
     transformTestSet(identifySingleQuotePairsModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
@@ -367,35 +396,17 @@ supportedLocales.forEach((localeName) => {
 });
 
 const identifySingleQuotePairAroundSingleWordModuleSet = {
-  "'word'":                                                                           `${t.osq}word${t.csq}`,
-  "'word' 'word'":                                                                    `${t.osq}word${t.csq} ${t.osq}word${t.csq}`,
+  "'word'":                                                                           `${t.odq}word${t.cdq}`,
+  "'word' 'word'":                                                                    `${t.odq}word${t.cdq} ${t.odq}word${t.cdq}`,
   [`He said${t.directSpeechIntro} ${t.odq}What about 'word', is that good?${t.cdq}`]: `He said${t.directSpeechIntro} ${t.odq}What about ${t.osq}word${t.csq}, is that good?${t.cdq}`,
-  "Press 'N' to get started":                                                         `Press ${t.osq}N${t.csq} to get started`,
-};
-
-const identifySingleQuotePairAroundSingleWordUnitSet = {
-  ...identifySingleQuotePairAroundSingleWordModuleSet,
-
-  // false positives
-  "... don't'": "... don't'",
-  "'don't ...": "'don't ...",
-
-  // false positive
-  // this function does fix multiple words within single quotes
-  // limitation: contractions at the end of the word, e.g. jes'
-  // tbd-single-quotes-matching
-  "'word word'": "'word word'",
+  "Press 'N' to get started":                                                         `Press ${t.odq}N${t.cdq} to get started`,
 };
 
 supportedLocales.forEach((localeName) => {
   createTestSuite(
     "Identify single quote pairs around single word",
-    transformTestSet(identifySingleQuotePairAroundSingleWordUnitSet, localeName),
-    (text) =>
-      placeLocaleSingleQuotes(
-        identifySingleQuotePairAroundSingleWord(text),
-        new Locale(localeName)
-      ),
+    {},
+    null,
     transformTestSet(identifySingleQuotePairAroundSingleWordModuleSet, localeName),
     (text) => fixSingleQuotesPrimesAndApostrophes(text, new Locale(localeName)),
     localeName
@@ -635,5 +646,8 @@ export const singleQuotesSet = {
   ...fixQuotedWordPunctuationModuleSet,
   ...fixQuotedSentencePunctuationModuleSet,
 
-  [`Hej${t.directSpeechIntro} ${t.odq}Vin mu povil, 'ta de jes' take vidil' i neviril${t.cdq}`]: `Hej${t.directSpeechIntro} ${t.odq}Vin mu povil, ${t.osq}ta de jes’ take vidil${t.csq} i neviril${t.cdq}`, // tbd-single-quotes-matching
+  // a word-final modifier letter apostrophe (jesʼ) is kept out of pairing, see identifyModifierApostrophe.
+  // typed as a plain ' instead, nothing tells it from a closing quote and it closes the pair early
+  // (accepted limitation, pinned in quotes/pairing.test.js)
+  [`Hej${t.directSpeechIntro} ${t.odq}Vin mu povil, 'ta de jesʼ take vidil' i neviril${t.cdq}`]: `Hej${t.directSpeechIntro} ${t.odq}Vin mu povil, ${t.osq}ta de jesʼ take vidil${t.csq} i neviril${t.cdq}`,
 };

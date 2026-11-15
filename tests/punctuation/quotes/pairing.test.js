@@ -147,9 +147,79 @@ describe("pairQuoteTokens: matching quotes with a stack", () => {
     });
   });
 
-  describe("depth is not reported for what never paired", () => {
+  describe("single marks need evidence to open", () => {
+    /*
+      A word-final apostrophe that no contraction rule caught sits after a
+      letter, so it may close a pair but never opens one. The four orderings
+      of such an apostrophe next to a pair, from the behaviour corpus.
+    */
+    it("does not let a word-final apostrophe shift a pair after it", () => {
+      expect(rolesForBoth("Mňa kedys’ zvádzal 'to' svet")).toEqual([unpaired, open(0), close(0)]);
+      expect(rolesForBoth("kedys’ a 'quoted bit' here")).toEqual([unpaired, open(0), close(0)]);
+    });
+
+    it("leaves a word-final apostrophe after a pair unpaired", () => {
+      expect(rolesForBoth("Mňa 'to' zvádzal kedys’ svet")).toEqual([open(0), close(0), unpaired]);
+      expect(rolesForBoth("a 'quoted bit' and kedys’ here")).toEqual([open(0), close(0), unpaired]);
+    });
+
+    it("closes early on a word-final apostrophe inside the pair", () => {
+      /* The known limitation: this apostrophe and a closing quote look the same. */
+      expect(rolesForBoth("'bol som tam kedys’ a vravím'")).toEqual([open(0), close(0), unpaired]);
+    });
+
+    it("does not hold double marks to it", () => {
+      expect(rolesForBoth('a" tight open and close "b')).toEqual([open(0), close(0)]);
+    });
+  });
+
+  describe("single marks need evidence to close", () => {
+    /*
+      A single mark after a space and before a letter or a digit reads as an
+      opening or a word-initial apostrophe, such as a contracted year, so it
+      never closes.
+    */
+    it("does not pair two word-initial marks", () => {
+      expect(rolesForBoth("In '89 and '90 we moved")).toEqual([unpaired, unpaired]);
+    });
+
+    it("leaves the odd mark out unpaired rather than the last one", () => {
+      expect(rolesForBoth("INCHEBA '89 was the 'year'")).toEqual([unpaired, open(0), close(0)]);
+    });
+
+    it("still closes on a mark after a letter", () => {
+      expect(rolesForBoth("INCHEBA '89 was' the 'year'")).toEqual([
+        open(0),
+        close(0),
+        open(0),
+        close(0),
+      ]);
+    });
+
+    it("does not hold double marks to it", () => {
+      /* The second mark is after a space and before a letter, yet it closes. */
+      expect(rolesForBoth('"a "b c')).toEqual([open(0), close(0)]);
+    });
+  });
+
+  describe("depth", () => {
     it("gives an unpaired token no depth", () => {
       expect(rolesFor('"')).toEqual([unpaired]);
+    });
+
+    it("does not count an abandoned candidate towards the depth of a later pair", () => {
+      /* '89 stays on the stack, unpaired; 'year' encloses nothing and sits at depth 0. */
+      expect(rolesForBoth("'89 then 'year'")).toEqual([unpaired, open(0), close(0)]);
+    });
+
+    it("still counts a real enclosing pair", () => {
+      expect(rolesForBoth("\"'89 then 'year'\"")).toEqual([
+        open(0),
+        unpaired,
+        open(1),
+        close(1),
+        close(0),
+      ]);
     });
   });
 });

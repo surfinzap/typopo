@@ -1,5 +1,6 @@
 import { base } from "../../const.js";
 import { m } from "../../markers.js";
+import { fixQuotes } from "./quotes.js";
 import {
   fixQuotedSentencePunctuation as fixQuotedSentencePunctuationFor,
   fixQuotedWordPunctuation as fixQuotedWordPunctuationFor,
@@ -127,6 +128,12 @@ export function identifyContractedEnds(string) {
   Examples
   Don’t, I’m, O’Doole, 69’ers,…
 
+  Implementation note
+  "ʼ" MLA (U+02BC) is a letter to \p{L}, so it is kept out of both neighbours. It may
+  still be the contraction mark (Paulʼs → Paul’s), but in a run such as
+  `wordʼʼ` one U+02BC must not pass for the letter beside the other: the run
+  is a double quote.
+
   @param {string} string: input text for identification
   @returns {string} output with identified contractions as apostrophes
 */
@@ -134,9 +141,9 @@ export function identifyInWordContractions(string) {
   // prettier-ignore
   return string.replace(
     new RegExp(
-        `([\\d\\p{L}])` +
+        `((?!${base.modifierLetterApostrophe})[\\d\\p{L}])` +
         `(${base.singleQuoteAdepts})+` +
-        `([\\p{L}])`,
+        `((?!${base.modifierLetterApostrophe})[\\p{L}])`,
       "gu"
     ),
       `$1${m.apos}$3`
@@ -149,7 +156,18 @@ export function identifyInWordContractions(string) {
   Identify contracted years
 
   Example
-  in ’70s, INCHEBA ’89,…
+  in ’70s, the ’90s, Q1 ’23
+
+  Assumptions and Limitations
+  Only the two shapes that cannot be a quote are identified here:
+  [1] a decade, '90s, which takes precedence over any quote reading
+  [2] a year after a quarter or a similar code, Q1 '23, which would otherwise
+      read as a wrongly spaced prime (12 '45″)
+
+  Any other contracted year, INCHEBA '89, is left to pairing: if a mark later
+  on the line closes it, it is a quote ('90 bottles' → ‘90 bottles’); if not,
+  it is unpaired and degrades to an apostrophe (INCHEBA ’89).
+  See Single marks need evidence to close in ./quotes/pairing.js.
 
   Exceptions
   12 '45″ // when there is a wrongly spaced feet
@@ -158,10 +176,23 @@ export function identifyInWordContractions(string) {
   @returns {string} output with identified contractions as apostrophes
 */
 export function identifyContractedYears(string) {
+  // [1] decades
+  // prettier-ignore
+  string = string.replace(
+    new RegExp(
+      `(?<![^\\s(])` +
+      `(${base.singleQuoteAdepts})` +
+      `(\\d0s)`,
+      "gu"
+    ),
+      `${m.apos}$2`
+  );
+
+  // [2] a year after a capital letter and a digit
   // prettier-ignore
   return string.replace(
     new RegExp(
-      `([^0-9]|[A-Z][0-9])` +
+      `([A-Z][0-9])` +
       `([${base.spaces}])` +
       `(${base.singleQuoteAdepts})` +
       `([\\d]{2})`,
@@ -176,16 +207,33 @@ export function identifyContractedYears(string) {
 /**
   Identify the modifier letter apostrophe (U+02BC) as itself
 
-  Ordering
-  Runs after the contraction identifiers, which legitimately match it as part of their own patterns (rock ’nʼ roll, Paulʼs Diner). Running it  earlier would hide it from them.
+  Example
+  ta de jesʼ take → ta de jesʼ take
+  kincʼa → kincʼa
+  'ta de jesʼ take vidil' → ‚ta de jesʼ take vidil‘
 
-  Runs of two or more are left alone base.doubleQuoteAdepts treats a run of adepts as a double quote, which is the sloppy-input case that rule exists for, so wordʼʼ stays a double quote candidate. Only an isolated occurrence is a letter here.
+  Scope
+  U+02BC is on no keyboard layout, so it is typed on purpose almost only in
+  transliteration, where it follows a letter: inside a word (kincʼa) or at its
+  end (jesʼ, kedysʼ). Only those positions are identified. Anywhere else, e.g.
+  at the start of a word, it is far more likely a mistyped quote, and it is
+  left as a single quote adept for the rest of the algorithm.
+
+  \p{L} matches U+02BC itself (category Lm), so the preceding letter excludes
+  it explicitly.
+
+  Ordering
+  Runs right after identifyContractedAnd, which claims the mark in rock ’nʼ roll
+  for an apostrophe, and before the other contraction identifiers, which would
+  otherwise turn an in-word or word-final U+02BC into ’ (Paulʼs, nottinʼ).
+
+  Runs of two or more are left alone: base.doubleQuoteAdepts treats a run of adepts as a double quote, which is the sloppy-input case that rule exists for, so wordʼʼ stays a double quote candidate.
 
   @param {string} string: input text for identification
-  @returns {string} output with a lone modifier letter apostrophe identified
+  @returns {string} output with a modifier letter apostrophe after a letter identified
 */
 export function identifyModifierApostrophe(string) {
-  return string.replace(/(?<!ʼ)ʼ(?!ʼ)/gu, m.mla);
+  return string.replace(/(?<!ʼ)(?<=\p{L})ʼ(?!ʼ)/gu, m.mla);
 }
 
 //
@@ -266,99 +314,6 @@ export function identifyUnpairedClosingSingleQuote(string) {
       `$1$2${m.csqUnpaired}$4`
   );
 }
-
-/**
-  Identify single quotes within double quotes
-
-  Limitations
-  Since it’s difficult to identify apostrophe contracting end of the word (e.g. “jes’”), it’s difficult to identify single quotes universally. Therefore we’re identifying only single quotes and single quote pairs that are enclosed in double quote pairs.
-
-  Algorithm
-  - find text in double quotes
-  - in quoted text find
-    - unpaired left single quote
-    - unpaired right single quote
-    - single quote pairs
-
-  @param {string} string: input text for identification
-  @returns {string} output with identified unpaired left single quote
-*/
-export function identifySingleQuotesWithinDoubleQuotes(string) {
-  return string.replace(
-    // prettier-ignore
-    new RegExp(
-        `(${base.doubleQuoteAdepts})` +
-        `(.*?)` +
-        `(${base.doubleQuoteAdepts})`,
-      "gu"
-    ),
-    function ($0, $1, $2, $3) {
-      $2 = identifyUnpairedOpeningSingleQuote($2);
-      $2 = identifyUnpairedClosingSingleQuote($2);
-      $2 = identifySingleQuotePairs($2);
-
-      return $1 + $2 + $3;
-    }
-  );
-}
-
-//
-
-/**
-  Identify single quote pairs 
-
-  Example
-  "a 'quoted material' here" → “a ‘quoted material’ here”
-
-  Assumptions and Limitations
-  - This function assumes apostrophes and unpaired single quotes were identified. The function itself is part of the identifySingleQuotesWithinDoubleQuotes.
-  - It is difficult to identify all contractions at the end of the word, and thus it is difficult to identify single quote pairs. This function therefore only identifies one single quote pair with a double quote pair
-
-  @param {string} string: input text for identification
-  @returns {string} output with identified single quote pair
-*/
-export function identifySingleQuotePairs(string) {
-  // identify one phrase wrapped in single quotes
-  // note the greediness is because of Rusyn contractions
-  // prettier-ignore
-  return string.replace(
-    new RegExp(
-      `(${m.osqUnpaired})` +
-      `(.*)` +
-      `(${m.csqUnpaired})`,
-      "gu"
-    ),
-      `${m.osq}$2${m.csq}`
-  );
-}
-
-//
-
-/**
-  Identify single quote pair around   a single word
-
-  Example
- 'word' → ‘word’
-
-  @param {string} string: input text for identification
-  @returns {string} output with identified single quote pairs around single word
-*/
-export function identifySingleQuotePairAroundSingleWord(string) {
-  // prettier-ignore
-  return string.replace(
-    new RegExp(
-        `(\\B)` +
-        `(${base.singleQuoteAdepts})` +
-        `([\\p{L}]+)` +
-        `(${base.singleQuoteAdepts})` +
-        `(\\B)`,
-      "gu"
-    ),
-      `$1${m.osq}$3${m.csq}$5`
-  );
-}
-
-//
 
 /**
   Identify residual apostrophes 
@@ -510,63 +465,13 @@ export function placeLocaleSingleQuotes(string, locale) {
 /**
   Corrects improper use of single quotes, single primes and apostrophes
 
-  Assumptions and Limitations
-  This function assumes that double quotes are always used in pair,
-  i.e. authors did not forget to close double quotes in their text.
-  Further, single quotes are used as secondary and they're properly spaced,
-  e.g. ␣'word or sentence portion'␣ (and not like ␣'␣word␣'␣)
+  Single and double quotes are now fixed in one pass, see fixQuotes in
+  ../quotes.js. This name is kept because the module test sets call it.
 
-  Algorithm
-  [1] Identify common apostrophe contractions
-  [2] Identify the modifier letter apostrophe
-  [3] Identify feet, arcminutes, minutes
-  [4] Identify single quote pair around a single word
-  [5] Identify single quotes
-  [6] Replace a single qoute & a single prime with a single quote pair
-  [7] Identify residual apostrophes
-  [8] Replace all identified punctuation with appropriate punctuation in given language
-  [9] Swap quotes and terminal punctuation
-  [10] Consolidate spaces around single primes
-
-  @param {string} string — input text for identification
-  @param {string} language — language options
-  @returns {string} — corrected output
+  @param {string} string: input text for identification
+  @param {object} locale: locale option
+  @returns {string} corrected output
 */
 export function fixSingleQuotesPrimesAndApostrophes(string, locale) {
-  /* [1] Identify common apostrophe contractions */
-  string = identifyContractedAnd(string);
-  string = identifyContractedBeginnings(string);
-  string = identifyInWordContractions(string);
-  string = identifyContractedYears(string);
-  string = identifyContractedEnds(string);
-
-  /* [2] Identify the modifier letter apostrophe */
-  string = identifyModifierApostrophe(string);
-
-  /* [3] Identify feet, arcminutes, minutes */
-  string = identifySinglePrimes(string);
-
-  /* [4] Identify single quote pair around a single word */
-  string = identifySingleQuotePairAroundSingleWord(string);
-
-  /* [5] Identify single quotes within double quotes */
-  string = identifySingleQuotesWithinDoubleQuotes(string);
-
-  /* [6] Replace a single qoute & a single prime with a single quote pair */
-  string = replaceSinglePrimeWSingleQuote(string);
-
-  /* [7] Identify residual apostrophes*/
-  string = identifyResidualApostrophes(string);
-
-  /* [8] Replace all identified punctuation with appropriate punctuation in given language */
-  string = placeLocaleSingleQuotes(string, locale);
-
-  /* [9] Fix punctuation placement for quoted content */
-  string = fixQuotedWordPunctuation(string, locale);
-  string = fixQuotedSentencePunctuation(string, locale);
-
-  /* [10] Consolidate spaces around single primes */
-  string = removeExtraSpaceAroundSinglePrime(string);
-
-  return string;
+  return fixQuotes(string, locale);
 }

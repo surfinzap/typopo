@@ -3,7 +3,10 @@
 
 ## 3.x.x // 2026 
 
-TBD rewrite
+TBD 
+- write docs 
+- remove test\tools from the production code
+- revisit jsdocs for new files
 
 ### 🐛 Fixes
 - Add missing `de-ch` to types
